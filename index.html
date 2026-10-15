@@ -4322,6 +4322,11 @@ function drawOneUnit(key, kind, mode, tgt, t){
   spr(n, motion ? frameOf(n, t) : 0, p.x, p.y, kind === 'feed' ? Math.cos(t*.2) < 0 : p.fx);
   return p;
 }
+function rentTag(x, y){ // small corner tag beside the robot (never covers its body)
+  ctx.save(); ctx.font = '700 7px ' + getComputedStyle(document.documentElement).getPropertyValue('--font-body');
+  const w = 11, h = 10; ctx.globalAlpha = .92; ctx.fillStyle = '#f4b63c'; ctx.strokeStyle = '#1e3a2a'; ctx.lineWidth = .8;
+  ctx.beginPath(); ctx.roundRect(x - w/2, y - h/2, w, h, 3); ctx.fill(); ctx.stroke();
+  ctx.globalAlpha = 1; ctx.fillStyle = '#1e3a2a'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('租', x, y + .5); ctx.restore(); }
 function drawUnits(M, t, now){
   const b = mapBounds(M), mx = (b.minX+b.maxX)/2, my = (b.minY+b.maxY)/2, hp = housePos(M), f = M.blocks[0], corner = center(f[0]*BS, f[1]*BS);
   const live = new Set();
@@ -4329,7 +4334,7 @@ function drawUnits(M, t, now){
     const J = (RT.jobs && RT.jobs[kind]) || {}, rent = rentActive(kind, now), U = S.robots[kind];
     const restAt = hp ? { x: hp.x - 14 + i*9, y: hp.y - 46 + (i % 2)*4 } : { x: corner.cx - 12 + i*8, y: corner.cy + 18 };
     if (rent){ const key = kind + ':r', tgt = J.job ? unitTarget(kind, M, t, now, b, mx, my) : restAt;
-      if (tgt){ live.add(key); const p = drawOneUnit(key, kind, J.job ? 'work' : 'rest', tgt, t); bubble(p.x, p.y - 26, '租'); } }
+      if (tgt){ live.add(key); const p = drawOneUnit(key, kind, J.job ? 'work' : 'rest', tgt, t); const air = kind === 'water' || kind === 'feed' || kind === 'honey'; if (!J.job) rentTag(p.x, p.y + 8); else rentTag(p.x + (air ? 17 : 13), p.y - (air ? 27 : 4)); } }
     if (tierOf(kind) && U.on !== false){ const key = kind + ':o';
       if (U.state === 'work' && !rent){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); drawOneUnit(key, kind, 'work', tgt, t); } }
       else if (U.state === 'rest'){ const base = findBase(RK(kind).base); if (!base || base.mi === S.cur){ live.add(key); drawOneUnit(key, kind, 'rest', restAt, t); } }
