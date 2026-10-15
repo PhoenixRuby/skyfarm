@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.0.3",
+    "configVersion": "2.1.0",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -805,7 +805,9 @@ window.GAME_CONFIG = {
         "beehive",
         "queen_bee",
         "rapeseed",
-        "milk_vetch"
+        "milk_vetch",
+        "well",
+        "solar_panel"
       ],
       "animalCap": 6,
       "fishPoolTileCap": 4,
@@ -831,7 +833,8 @@ window.GAME_CONFIG = {
         "snowbot",
         "poopbot",
         "wildflower",
-        "buckwheat"
+        "buckwheat",
+        "wellbot"
       ],
       "animalCap": 8,
       "fishPoolTileCap": 4,
@@ -1719,6 +1722,31 @@ window.GAME_CONFIG = {
       "kind": "hive",
       "buildCost": 600,
       "replacesDeco": "beehive"
+    },
+    "well": {
+      "name": "水井",
+      "kind": "well",
+      "buildCost": 800,
+      "limitTotal": 4,
+      "onlyOn": "grass",
+      "dropsPerHour": 20,
+      "maxDrops": 100,
+      "rainMult": 2,
+      "bucketDrops": 20,
+      "pumpTool": "hand",
+      "autoToTower": false
+    },
+    "solar_panel": {
+      "name": "太陽能板",
+      "kind": "solar",
+      "buildCost": 900,
+      "limitTotal": 8,
+      "onlyOn": "grass",
+      "kwhPerHourSunny": 0.25,
+      "cloudyMult": 0.3,
+      "rainSnowMult": 0.1,
+      "nightMult": 0,
+      "snowCoveredStops": true
     }
   },
   "power": {
@@ -1742,7 +1770,14 @@ window.GAME_CONFIG = {
       "pasture": 0.1
     },
     "deviceSellRate": 0.5,
-    "lampEffect": "nightOrCloudyDay"
+    "lampEffect": "nightOrCloudyDay",
+    "solarSell": {
+      "enabled": true,
+      "needsGrid": true,
+      "priceRate": 0.5,
+      "onlyAfterBatteryFull": true,
+      "creditOnlyNoCashback": true
+    }
   },
   "weeds": {
     "growsOn": "emptyGrass",
@@ -2780,6 +2815,33 @@ window.GAME_CONFIG = {
         ],
         "collectAtJars": 10,
         "flies": true
+      },
+      "wellbot": {
+        "name": "水井機器人",
+        "base": "robot_charger",
+        "unlockLevel": 5,
+        "tiers": [
+          {
+            "id": "wellbot",
+            "name": "標準",
+            "buy": 1200,
+            "workHours": 2,
+            "kwh": 0.2,
+            "chargeHours": 1
+          }
+        ],
+        "rent": [
+          {
+            "hours": 4,
+            "cost": 80
+          }
+        ],
+        "bucketDrops": 20,
+        "tilesPerSecond": 1,
+        "fillSeconds": 2,
+        "pourSeconds": 2,
+        "minWellDrops": 20,
+        "look": "cute tracked cart with a mini crane holding a bucket, no humanoid head"
       }
     },
     "solarChargeMultiplier": 2,
@@ -3077,7 +3139,21 @@ window.GAME_CONFIG = {
     "bumps": 9,
     "taper": 0.8,
     "roundness": 0.55,
-    "decorOnly": true
+    "decorOnly": true,
+    "strata": [
+      "topsoil",
+      "clay",
+      "sandstone",
+      "bedrock"
+    ],
+    "fossils": [
+      "ammonite",
+      "skull",
+      "spine",
+      "leg"
+    ],
+    "fossilsPerIsland": "3-9 by width",
+    "grassLip": false
   },
   "sweeperWalk": {
     "tilesPerSecond": 1,

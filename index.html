@@ -1476,7 +1476,7 @@ function UIbuildTray(){
       el.onclick = pick('build', id, lk); add(el); }
     sep();
     for (const [id,D] of Object.entries(DEV)){ const lk = !isUnlocked(id);
-      const l2 = D.kind === 'lamp' ? `${D.kwhPerHour} 度／時 · ${D.range*2+1}×${D.range*2+1}` : D.kind === 'battery' ? `${D.capacityKwh} 度電池` : D.kind === 'crank' ? '用手搖發電' : D.kind === 'melter' ? `融雪 · ${D.kwhPerHour} 度／時` : D.kind === 'hive' ? '養蜂 · 放蜂王產蜜' : `燒雜草／牧草發電`;
+      const l2 = D.kind === 'lamp' ? `${D.kwhPerHour} 度／時 · ${D.range*2+1}×${D.range*2+1}` : D.kind === 'battery' ? `${D.capacityKwh} 度電池` : D.kind === 'crank' ? '用手搖發電' : D.kind === 'melter' ? `融雪 · ${D.kwhPerHour} 度／時` : D.kind === 'hive' ? '養蜂 · 放蜂王產蜜' : D.kind === 'well' ? `每時 ${D.dropsPerHour} 滴 · 存 ${D.maxDrops}` : D.kind === 'solar' ? `晴天 ${D.kwhPerHourSunny} 度／時` : `燒雜草／牧草發電`;
       const el = trayItem('device', id, D.name, [`${coinImg()}${fmtN(D.buildCost)}`, l2], S.sel.build === id, lk, { book: 'devices' });
       el.onclick = pick('build', id, lk); add(el); }
   } else if (tool === 'deco'){
@@ -1593,6 +1593,9 @@ function openBook(tab, focusId){
         tbl([H(''),H('名稱'),H('解鎖'),H('價格',1),H('規格')], Object.entries(DEV).map(([id,D]) => ({ cls: id === focusId ? 'cur' : (isUnlocked(id) ? '' : 'locked'), cells: [icon('device',id), D.name, lockCell(id), fmtN(D.buildCost),
           D.kind === 'lamp' ? `${D.range*2+1}×${D.range*2+1} 範圍，耗電 ${D.kwhPerHour} 度／時；手動、自動（天黑或陰天）、定時` :
           D.kind === 'battery' ? `容量 ${D.capacityKwh} 度，充放電最快 ${D.maxRateKwhPerHour} 度／時，效率 ${Math.round((POW.batteryEfficiency || .9)*100)}%` :
+          D.kind === 'well' ? `每小時出水 ${D.dropsPerHour} 滴（下雨 ×${D.rainMult}），最多存 ${D.maxDrops} 滴；用「收成」點井打一桶 ${D.bucketDrops} 滴進水塔，或讓水井機器人搬；最多 ${D.limitTotal} 口` :
+          D.kind === 'solar' ? `晴天白天每小時 ${D.kwhPerHourSunny} 度，陰天 ×${D.cloudyMult}、雨雪 ×${D.rainSnowMult}、晚上不發電、積雪不發電；先供生長燈，多的充電池，電池滿了賣給市電（電價一半，從電費扣）；最多 ${D.limitTotal} 片` :
+          D.kind === 'hive' ? '放蜂王產蜂蜜，附近有花產量才高' : D.kind === 'melter' ? `融雪，耗電 ${D.kwhPerHour} 度／時` :
           D.kind === 'crank' ? `點一下開始 ${D.sessionSeconds} 秒，每下 ${D.kwhPerTap} 度、最多 ${D.maxTaps} 下，冷卻 ${D.cooldownSeconds} 秒；先充電池，沒有電池存 ${D.bufferKwh} 度` :
           `每小時 ${D.kwhPerHour} 度，燃料 ${D.fuelSlots} 格：${Object.entries(POW.fuels || {}).map(([i,v]) => `${itemName(i)} ${v} 度`).join('、')}`] })));
     } else if (k === 'bills'){
@@ -2326,7 +2329,7 @@ function openUtilities(tab){
         <h3>結帳</h3>
         <div class="row"><label for="cycleSel">結帳週期</label><select id="cycleSel">${CYCLE_IDS.map(id => `<option value="${id}" ${S.bill.cycle === id ? 'selected' : ''}>${BILL.cycles[id].name}</option>`).join('')}</select>
           <label><input type="checkbox" id="autoPayT" ${S.settings.autoPay ? 'checked' : ''}> 自動扣款（出帳當下扣，95 折）</label></div>
-        <p class="small">本期從 ${fmtDate(cur.start)} 開始，${fmtDate(nextClose())} 出帳。到目前約 ${fmtN(est.total)} 金幣（電 ${est.elec.toFixed(1)}＋電基本 ${est.elecBase.toFixed(1)}＋水 ${est.water.toFixed(1)}＋水基本 ${est.waterBase.toFixed(1)}）。換週期會先把這期結清。</p>
+        <p class="small">本期從 ${fmtDate(cur.start)} 開始，${fmtDate(nextClose())} 出帳。到目前約 ${fmtN(est.total)} 金幣（電 ${est.elec.toFixed(1)}＋電基本 ${est.elecBase.toFixed(1)}＋水 ${est.water.toFixed(1)}＋水基本 ${est.waterBase.toFixed(1)}${est.sell ? `－賣電折抵 ${est.sell.toFixed(1)}` : ''}）。換週期會先把這期結清。</p>
         <h3>用電設定</h3>
         <div class="row"><label for="prioSel">燈先用</label><select id="prioSel"><option value="battery" ${S.settings.powerPriority !== 'grid' ? 'selected' : ''}>電池優先</option><option value="grid" ${S.settings.powerPriority === 'grid' ? 'selected' : ''}>市電優先</option></select>
           <label for="gcSel">電池從市電充電</label><select id="gcSel">${[['off','不充'],['night','只在夜間充'],['always','隨時充']].map(([v,l]) => `<option value="${v}" ${S.settings.batteryGridCharge === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`;
@@ -2344,7 +2347,7 @@ function openUtilities(tab){
           return `<div class="card"><h4>${fmtDate(b.from)}～${fmtDate(b.to)}</h4><div class="kv"><span>原價</span><span>${fmtN(b.total)} 金幣</span><span>現在繳</span><span>${fmtN(amt)} 金幣（${r < 1 ? Math.round(r*100) + ' 折' : '原價'}）</span><span>期限</span><span>${fmtDate(b.dueAt)}</span></div>
             <div class="row"><button class="btn" data-pay="${b.id}">繳費 ${fmtN(amt)}</button></div></div>`; }).join('') : '<p>目前沒有未繳的帳單。</p>'}
         <h3>最近帳單</h3>` + tbl([H('期間'),H('用電（白／夜）'),H('自來水',1),H('電費',1),H('水費',1),H('金額',1),H('實付',1),H('狀態')],
-          S.bill.list.slice(0, BILL.historyKeep).map(b => ({ cells: [`${fmtDate(b.from)}～${fmtDate(b.to)}`, `${b.kwhDay.toFixed(1)}／${b.kwhNight.toFixed(1)} 度`, fmtN(b.water), (b.elec + b.elecBase).toFixed(1), (b.water + b.waterBase).toFixed(1), fmtN(b.total), b.paid ? fmtN(b.paid) : '—', billStatusText(b)] })));
+          S.bill.list.slice(0, BILL.historyKeep).map(b => ({ cells: [`${fmtDate(b.from)}～${fmtDate(b.to)}`, `${b.kwhDay.toFixed(1)}／${b.kwhNight.toFixed(1)} 度`, fmtN(b.water), (b.elec + b.elecBase - (b.sell || 0)).toFixed(1), (b.water + b.waterBase).toFixed(1), fmtN(b.total), b.paid ? fmtN(b.paid) : '—', billStatusText(b)] })));
       el.onclick = e => { const b = e.target.closest('button[data-pay]'); if (!b) return; const bill = S.bill.list.find(x => x.id === b.dataset.pay); const paid = payBill(bill); toast(`繳了 ${fmtN(paid)} 金幣`); afterAction(); openUtilities('bills'); };
     } else {
       const devs = allDevices(), lamps = devs.filter(d => DEV[d.T.id].kind === 'lamp'), gens = devs.filter(d => DEV[d.T.id].kind === 'generator');
@@ -3635,7 +3638,7 @@ function applyQuake(t, level, live){
 
 /* ---------- tilted things, debris, weed balls, fallen fences ---------- */
 const softTile = T => !!T && (T.t === 'debris' || T.t === 'weedball' || T.t === 'poop' || (T.t === 'deco' && T.id === 'fence' && T.fallen));
-const stepOk = T => !T || T.t === 'weed' || softTile(T);
+const stepOk = T => !T || T.t === 'weed' || softTile(T) || isRoadTile(T);   // v2.1: animals may walk on roads (not fields, buildings, trees, devices)
 function collectWeeds(n, cx, cy){
   const room = Math.min(n, invFree()), rest = n - room;
   if (room > 0) invAdd(WEED.item, room);
@@ -4241,7 +4244,7 @@ function robotCard(kind){
   h += `<h5>租用 ${rent ? `<span class="pill ok">租用中 · 剩 ${fmtDur((S.automation[rentKey(kind)] - now)/1000)}</span>` : ''}</h5><div class="row">${rentOptions(kind).map(o => { const ol = !isUnlocked(o.unlock);
     return `<button class="btn${ol ? ' ghost' : ' alt'}" data-rent="${o.id}" ${ol ? 'disabled' : ''}>${fmtHours(o.hours)} · ${fmtN(o.cost)}${ol ? `（Lv ${UNLOCK[o.unlock]}）` : ''}</button>`; }).join('')}</div>`;
   const tr0 = K.tiers[0];
-  h += `<p class="small">${{ water: '無人機把所有田和果樹保持全濕，枯萎的會復活；下雨或龍捲風時暫停。', feed: '自動餵所有動物和魚，飼料費照扣。', snow: `積雪時每分鐘清掉 ${SNOWBOT_TPM} 格雪（清掉的雪直接推走，不進水塔）。`, sweep: `從房子大門（自己買的從基座）出發，沿著格子走到雜草、垃圾和草球那裡掃掉，不會穿過田；掃完走回去休息。被田或柵欄圍住的走不到。`, honey: `飛到存了 ${K.collectAtJars || 10} 罐以上的蜂箱，把蜂蜜收進倉庫；倉庫滿了就停下來等。`, poop: `把地上的糞便鏟進倉庫，每分鐘 ${K.perMinute || 4} 坨，拿去堆肥桶做有機肥；倉庫滿了就停下來等。` }[kind] || ''}
+  h += `<p class="small">${{ water: '無人機把所有田和果樹保持全濕，枯萎的會復活；下雨或龍捲風時暫停。', feed: '自動餵所有動物和魚，飼料費照扣。', snow: `積雪時每分鐘清掉 ${SNOWBOT_TPM} 格雪（清掉的雪直接推走，不進水塔）。`, wellbot: `提著水桶沿格子走：到井邊裝一桶（${K.bucketDrops || 20} 滴），走到水塔邊倒進去；水塔滿了或井都不夠一桶時回去休息。不會穿過田。`, sweep: `從房子大門（自己買的從基座）出發，沿著格子走到雜草、垃圾和草球那裡掃掉，不會穿過田；掃完走回去休息。被田或柵欄圍住的走不到。`, honey: `飛到存了 ${K.collectAtJars || 10} 罐以上的蜂箱，把蜂蜜收進倉庫；倉庫滿了就停下來等。`, poop: `把地上的糞便鏟進倉庫，每分鐘 ${K.perMinute || 4} 坨，拿去堆肥桶做有機肥；倉庫滿了就停下來等。` }[kind] || ''}
     買斷：充滿電可以工作 ${K.tiers.map(x => fmtHours(x.workHours)).join('／')}，沒電回${kind === 'sweep' ? '基座' : BLD[K.base].name}充電${kind === 'water' ? `、補 ${K.tankDrops} 滴水箱` : ''}，長期比較划算；升級時舊的折價 ${Math.round((RB.upgradeTradeInRate || .5)*100)}%。租用：不用充電、不用基座，時間到就離開，短期比較便宜${kind === 'water' ? '，直接用水塔的水' : ''}。兩個都有時，租的工作、自己的回去充電。</p></div>`;
   return h;
 }
@@ -5250,10 +5253,12 @@ function drawUnits(M, t, now){
   const live = new Set(); let away = false;
   KINDS.forEach((kind, i) => {
     const J = (RT.jobs && RT.jobs[kind]) || {}, rent = rentActive(kind, now), U = S.robots[kind];
-    const restAt = hp ? { x: hp.x - 14 + i*9, y: hp.y - 46 + (i % 2)*4 } : { x: corner.cx - 12 + i*8, y: corner.cy + 18 };
+    const restAt = hp ? { x: hp.x - 14 + (i % 6)*9, y: hp.y - 46 + (i % 2)*4 } : { x: corner.cx - 12 + i*8, y: corner.cy + 18 };
     const air = kind === 'water' || kind === 'feed' || kind === 'honey';
     if (rent){ const key = kind + ':r';
       if (kind === 'water' && J.on){ const s = dwScreen(); if (s){ live.add(key); const { p } = drawDroneAt(key, s, t, s.spray); rentTag(p.x + 17, p.y - 27); if (RT.dw.wait) bubble(p.x, p.y - 40, '等水', 'ui_water_drop'); } }
+      else if (kind === 'wellbot' && RT.wb && RT.wb.rent && !wbAtHome(RT.wb)){ const p = drawWellbotWalk(key, t); if (p){ live.add(key); rentTag(p.x + 13, p.y - 4); } }
+      else if (kind === 'wellbot'){ live.add(key); RT.unitPos[key] = { x: restAt.x, y: restAt.y, fx: false }; const p = drawOneUnit(key, kind, 'rest', restAt, t); rentTag(p.x, p.y + 8); zzzFx(p.x + 6, p.y - 16, t, i * .17); }
       else if (kind === 'sweep' && RT.sw && RT.sw.rent && !swAtHome(RT.sw)){ const p = drawSweeperWalk(key, t); if (p){ live.add(key); rentTag(p.x + 13, p.y - 4); } }
       else if (kind === 'sweep'){ live.add(key); RT.unitPos[key] = { x: restAt.x, y: restAt.y, fx: false }; const p = drawOneUnit(key, kind, 'rest', restAt, t); rentTag(p.x, p.y + 8); zzzFx(p.x + 6, p.y - 16, t, i * .17); }   // back inside → appears on the roof
       else { const tgt = J.job ? unitTarget(kind, M, t, now, b, mx, my) : restAt;
@@ -5268,6 +5273,7 @@ function drawUnits(M, t, now){
           if (base && base.mi === S.cur){ const [x, y] = pkey(base.k), c = center(x, y), r = drawDroneAt(key, { x: c.cx, y: c.cy - 6 }, t, false);
             if (r.arrived) delete RT.unitPos[key]; else { live.add(key); away = true; } } }
       }
+      else if (kind === 'wellbot' && U.state === 'work' && !rent){ const p = drawWellbotWalk(key, t); if (p) live.add(key); }
       else if (kind === 'sweep' && U.state === 'work' && !rent){ const p = drawSweeperWalk(key, t); if (p) live.add(key); }
       else if (U.state === 'work' && !rent){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); drawOneUnit(key, kind, 'work', tgt, t); } }
       else if (U.state === 'rest'){ const base = findBase(RK(kind).base); if (!base || base.mi === S.cur){ live.add(key); drawOneUnit(key, kind, 'rest', restAt, t); } }
@@ -5318,12 +5324,25 @@ function drawUnderside(M){
     g.addColorStop(0, c[0]); g.addColorStop(.5, c[1]); g.addColorStop(1, c[2]); ctx.fillStyle = g; ctx.fillRect(x0 - 50, corner.y - W, W + 100, W * 2);
     ctx.restore(); }
   ctx.save(); path(); ctx.clip();
-  // strata following the outline
-  ctx.strokeStyle = 'rgba(35,20,10,.25)'; ctx.lineWidth = 1.3;
-  for (const fr of [.22, .45, .7]){ ctx.beginPath(); top.forEach((p, i) => { const q = bot[i], xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr + Math.sin(xx / 17 + fr * 9) * 2; i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }); ctx.stroke(); }
+  // strata: topsoil / clay / sandstone / bedrock, wavy boundaries (v2.1)
+  const lerpLine = fr => top.map((p, i) => { const q = bot[i], xx = p[0] + (q[0] - p[0]) * fr; return [xx, p[1] + (q[1] - p[1]) * fr + Math.sin(xx / 19 + fr * 11) * 2.2 + Math.sin(xx / 7 + fr * 3) * .8]; });
+  const BANDS = [[0, .2, ['#6b4528', '#573720']], [.2, .46, ['#9a5a33', '#7e4728']], [.46, .74, ['#c9a06a', '#a9824f']], [.74, 1.02, ['#857c70', '#6a6258']]];
+  for (const [a, b2, col] of BANDS){ const A2 = lerpLine(a), B2 = lerpLine(b2);
+    for (const side of ['L', 'R']){ ctx.save(); ctx.beginPath(); if (side === 'L') ctx.rect(x0 - 50, corner.y - W, corner.x - x0 + 50, W * 2); else ctx.rect(corner.x, corner.y - W, x1 - corner.x + 50, W * 2); ctx.clip();
+      ctx.fillStyle = side === 'R' ? col[0] : col[1]; ctx.beginPath(); A2.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); for (let i = B2.length - 1; i >= 0; i--) ctx.lineTo(B2[i][0], B2[i][1]); ctx.closePath(); ctx.fill(); ctx.restore(); }
+    ctx.strokeStyle = 'rgba(30,18,8,.3)'; ctx.lineWidth = 1.2; ctx.beginPath(); A2.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); if (a > 0) ctx.stroke(); }
+  // soft shading towards the bottom
+  { const sg = ctx.createLinearGradient(0, corner.y, 0, maxY); sg.addColorStop(0, 'rgba(0,0,0,0)'); sg.addColorStop(1, 'rgba(20,10,5,.35)'); ctx.fillStyle = sg; ctx.fillRect(x0 - 50, corner.y - W, W + 100, W * 2); }
   // pebbles
-  for (let i = 0; i < top.length; i += 3){ const h = islHash(i * 7.3 + 1); if (h < .5) continue; const p = top[i], q = bot[i], fr = .15 + .7 * islHash(i * 3.1), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr;
-    ctx.fillStyle = xx > corner.x ? 'rgba(200,170,130,.4)' : 'rgba(160,130,95,.35)'; ctx.beginPath(); ctx.ellipse(xx, yy, 2.5 + 2.5 * h, 1.6 + h, 0, 0, 7); ctx.fill(); }
+  for (let i = 0; i < top.length; i += 3){ const h = islHash(i * 7.3 + 1); if (h < .55) continue; const p = top[i], q = bot[i], fr = .1 + .8 * islHash(i * 3.1), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr;
+    ctx.fillStyle = 'rgba(225,205,170,.35)'; ctx.beginPath(); ctx.ellipse(xx, yy, 2.2 + 2.2 * h, 1.4 + h, 0, 0, 7); ctx.fill(); }
+  // fossils hidden in the clay / sandstone / bedrock (fixed per island; more appear as it grows)
+  { const kinds = ['fossil_ammonite', 'fossil_skull', 'fossil_spine', 'fossil_leg', 'fossil_ammonite'], seed = (S.cur + 1) * 17.3, nF = Math.max(3, Math.min(9, Math.round(W / 190)));
+    ctx.globalAlpha = .62;
+    for (let j = 0; j < nF; j++){ const i = Math.floor(top.length * (.12 + .76 * ((j + islHash(seed + j * 3.7)) / nF))), p = top[i], q = bot[i]; if (!p) continue;
+      const fr = .3 + .5 * islHash(seed + j * 9.1), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr, k = kinds[(j + Math.floor(islHash(seed) * 4)) % 4];   // cycle so neighbours differ
+      if (yy > q[1] - 10) continue; spr(k, 0, xx, yy, islHash(seed + j) > .5); }
+    ctx.globalAlpha = 1; }
   ctx.restore();
   // roots under the soil band
   ctx.strokeStyle = 'rgba(70,45,25,.55)'; ctx.lineWidth = 1; ctx.lineCap = 'round';
@@ -5336,7 +5355,7 @@ function drawGrassLip(M){
     for (const [has, ax, ay, bx, by] of [[!inMap(M,x+1,y), cx + HW, cy, cx, cy + HH], [!inMap(M,x,y+1), cx - HW, cy, cx, cy + HH]]){ if (!has) continue;
       for (let i = 1; i < 6; i++){ const f = i / 6, px = ax + (bx - ax) * f, py = ay + (by - ay) * f, L = 3 + 4 * islHash(px * .9 + py); ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + (islHash(px) - .5) * 2, py + L); ctx.stroke(); } } }
 }
-{ const _dw = drawWorld; drawWorld = function(t, now){ drawUnderside(curMap()); _dw(t, now); drawGrassLip(curMap()); }; }
+{ const _dw = drawWorld; drawWorld = function(t, now){ drawUnderside(curMap()); _dw(t, now); }; }   // v2.1: hanging grass lip removed
 
 /* ---------- night overlay covers the underside too ---------- */
 function islandClip(c, scale){
@@ -5485,6 +5504,218 @@ function drawSweeperWalk(key, t){
 }
 function spriteFxDust(x, y, t){ ctx.save(); ctx.fillStyle = 'rgba(160,140,110,.45)'; for (let i = 0; i < 4; i++){ const a = t * 6 + i * 1.6; ctx.beginPath(); ctx.arc(x + Math.cos(a) * 9, y - 3 + Math.sin(a) * 4, 1.8, 0, 7); ctx.fill(); } ctx.restore(); }
 window.__farm203 = { sweepStep, swTrashInfo, swHome, swDoor, get sw(){ return RT.sw; }, houseLitNow, drawUnderside };
+
+/* ===== 22. v2.1: dug wells, well robot, solar panels (sell back to the grid) ===== */
+const WELL = DEV.well || { dropsPerHour: 20, maxDrops: 100, rainMult: 2, bucketDrops: 20, limitTotal: 4 };
+const SOLAR = DEV.solar_panel || { kwhPerHourSunny: .25, cloudyMult: .3, rainSnowMult: .1, limitTotal: 8 };
+const SELL = (POW.solarSell) || { enabled: true, priceRate: .5 };
+const isWell = T => !!T && T.t === 'device' && T.id === 'well';
+const isSolar = T => !!T && T.t === 'device' && T.id === 'solar_panel';
+const countDev = id => { let n = 0; for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (T.t === 'device' && T.id === id) n++; } return n; };
+const wellLevel = T => { const w = T.water || 0, mx = WELL.maxDrops || 100; return w < 1 ? 'dry' : w < mx * .4 ? 'low' : w < mx * .8 ? 'half' : 'full'; };
+
+/* ---------- wells fill up slowly ---------- */
+{ const _sa5 = stepAll; stepAll = function(dt, t){ _sa5(dt, t);
+  const rain = farmRain(t), add = (WELL.dropsPerHour || 20) * (rain ? (WELL.rainMult || 2) : 1) * dt / 3600;
+  for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (isWell(T)) T.water = Math.min(WELL.maxDrops || 100, (T.water || 0) + add); } }; }
+function towerRoom(){ return Math.max(0, rainCapC() - S.player.water); }
+function pumpWell(T, cx, cy){
+  const room = towerRoom(), w = T.water || 0;
+  if (w < 1){ toast('井裡還沒有水，每小時會慢慢滿 ' + (WELL.dropsPerHour || 20) + ' 滴'); return false; }
+  if (room < 1){ toast('水塔滿了，打不進去'); return false; }
+  const n = Math.floor(Math.min(WELL.bucketDrops || 20, w, room)); T.water = w - n; S.player.water += n;
+  floatText(cx, cy - 30, `打一桶 +${n} 滴進水塔`, '#2f7fa8', 10); sfx('water'); return true;
+}
+
+/* ---------- solar panels + selling surplus to the grid (stepPower from v1.6, extended) ---------- */
+function solarOutput(d, t, h){
+  const ph = dayPhase(t); if (ph.light <= 0) return 0;
+  if (snowyAt(d.mi, d.k)) return 0;
+  const wx = farmRain(t) || farmSnow(t) ? (SOLAR.rainSnowMult ?? .1) : farmCloudy(t) ? (SOLAR.cloudyMult ?? .3) : 1;
+  return (SOLAR.kwhPerHourSunny || .25) * ph.light * wx * h;
+}
+function stepPower(dt, t){
+  const P = S.power, devs = allDevices(), h = dt/3600;
+  const lamps = devs.filter(d => DEV[d.T.id].kind === 'lamp'), gens = devs.filter(d => DEV[d.T.id].kind === 'generator'), suns = devs.filter(d => DEV[d.T.id].kind === 'solar');
+  const bCap = batteryCap(), bRate = batteryRate() * h, cCap = crankCap();
+  P.battery = Math.min(P.battery, bCap); P.crank = Math.min(P.crank, cCap);
+  let gen = 0;
+  for (const g of gens){ const run = Math.min(g.T.fuel || 0, DEV[g.T.id].kwhPerHour * h); g.T.fuel = (g.T.fuel || 0) - run; g.T.running = run > 0; gen += run; }
+  for (const s of suns){ const out = solarOutput(s, t, h); s.T.gen = out > 0; gen += out; }
+  const want = lamps.filter(d => lampOnWanted(d.T, t)), demand = want.reduce((a,d) => a + DEV[d.T.id].kwhPerHour * h, 0);
+  const order = POW.priorityOrder[S.settings.powerPriority === 'grid' ? 'grid' : 'battery'];
+  const price = elecPrice(t), night = isNightAt(t);
+  // power made on the farm is always used first
+  const ord2 = ['generator', ...order.filter(s => s !== 'generator')];
+  const avail = { battery: Math.min(P.battery, bRate), crankBuffer: P.crank, generator: gen, grid: gridOn() ? Infinity : 0 };
+  const powered = demand <= 1e-12 || ord2.reduce((a,src) => a + avail[src], 0) >= demand - 1e-12;
+  let batOut = 0;
+  if (powered && demand > 0){
+    let need = demand;
+    for (const src of ord2){
+      if (need <= 1e-12) break;
+      const n = Math.min(need, avail[src]); if (n <= 0) continue;
+      if (src === 'battery'){ P.battery -= n; batOut += n; }
+      else if (src === 'crankBuffer') P.crank -= n;
+      else if (src === 'generator') gen -= n;
+      else if (src === 'grid'){ S.bill.cur.elecKwh[night ? 'night' : 'day'] += n; S.bill.cur.elecCost += n * price; }
+      need -= n;
+    }
+  }
+  for (const d of lamps) d.T.lit = powered && demand > 0 && want.includes(d);
+  let room = Math.max(0, bCap - P.battery), rateLeft = Math.max(0, bRate - batOut);
+  if (gen > 0 && room > 0){ const n = Math.min(gen, rateLeft, room / POW.batteryEfficiency); P.battery += n * POW.batteryEfficiency; rateLeft -= n; gen -= n; room = bCap - P.battery; }
+  // leftover farm power is sold to the grid (credited against the electricity bill)
+  if (gen > 1e-9 && SELL.enabled !== false && gridOn() && suns.length){ const cur = S.bill.cur; cur.sellKwh = (cur.sellKwh || 0) + gen; cur.sellCredit = (cur.sellCredit || 0) + gen * price * (SELL.priceRate ?? .5); gen = 0; }
+  const gc = S.settings.batteryGridCharge;
+  if (gridOn() && room > 1e-9 && rateLeft > 0 && (gc === 'always' || (gc === 'night' && night))){
+    const n = Math.min(rateLeft, room / POW.batteryEfficiency);
+    P.battery += n * POW.batteryEfficiency; S.bill.cur.elecKwh[night ? 'night' : 'day'] += n; S.bill.cur.elecCost += n * price;
+  }
+  for (const k in litTiles) delete litTiles[k];
+  for (const d of lamps) if (d.T.lit){ const r = DEV[d.T.id].range, [x0,y0] = pkey(d.k), set = litTiles[d.mi] || (litTiles[d.mi] = new Set());
+    for (let dy=-r; dy<=r; dy++) for (let dx=-r; dx<=r; dx++) set.add(tkey(x0+dx, y0+dy)); }
+  if (gridOn()) S.bill.cur.gridDays += dt/86400;
+}
+{ const _cb = computeBill; computeBill = function(cur, days){ const c = _cb(cur, days), credit = Math.min(cur.sellCredit || 0, c.elec + c.elecBase);
+  c.sell = credit; c.sellKwh = cur.sellKwh || 0; c.total = Math.round(c.elec + c.elecBase + c.water + c.waterBase - credit); return c; }; }
+
+/* ---------- placing, drawing, tapping wells and panels ---------- */
+{ const _act5 = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _act5(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (tool === 'build' && (S.sel.build === 'well' || S.sel.build === 'solar_panel') && (!T || T.t === 'weed')){
+    const id = S.sel.build, D = DEV[id], n = countDev(id);
+    if (n >= (D.limitTotal || 99)){ toast(`${D.name}整個農場最多 ${D.limitTotal} ${id === 'well' ? '口' : '片'}`); return; }
+    if (glassAt(S.cur, k)){ toast(`${D.name}不能蓋在溫室裡`); return; }
+  }
+  if (tool === 'hand' && isWell(T)){ pumpWell(T, cx, cy); afterAction(); return; }
+  return _act5(x, y); }; }
+{ const _dd3 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  if (isWell(T)){ const n = `device_well_${wellLevel(T)}`; spr(n, motion ? frameOf(n, t, cx * .01) : 0, cx, cy); return; }
+  if (isSolar(T)){ const [x, y] = pkey(k), snow = snowyAt(S.cur, k), n = snow ? 'device_solar_snow' : T.gen ? 'device_solar_day' : 'device_solar_night';
+    spr(n, motion && n === 'device_solar_day' ? frameOf(n, t, x + y) : 0, cx, cy); return; }
+  return _dd3(T, k, cx, cy, t); }; }
+{ const _is4 = itemSprite; itemSprite = function(kind, id){
+  if (kind === 'device' && id === 'well') return ['device_well_full', 0];
+  if (kind === 'device' && id === 'solar_panel') return ['device_solar_day', 0];
+  return _is4(kind, id); }; }
+{ const _od3 = openDevice; openDevice = function(M, k, T){
+  if (isWell(T)){ openModal('水井', null, (kk, el) => { const w = Math.floor(T.water || 0);
+      el.innerHTML = `<div class="card"><div class="kv"><span>井裡的水</span><span>${w} / ${WELL.maxDrops} 滴</span><span>出水</span><span>每小時 ${WELL.dropsPerHour} 滴（下雨 ×${WELL.rainMult}）</span><span>水塔</span><span>${fmtN(Math.floor(S.player.water))} / ${fmtN(rainCapC())} 滴</span></div>
+        <p class="small">井的水不會自己流進水塔：用「收成」工具點井打一桶（${WELL.bucketDrops} 滴），或讓水井機器人幫你搬。</p>
+        <button class="btn" id="pumpBtn" ${w < 1 || towerRoom() < 1 ? 'disabled' : ''}>打一桶水進水塔</button></div>`;
+      $('pumpBtn').onclick = () => { const [x, y] = pkey(k), c = center(x, y); pumpWell(T, c.cx, c.cy); afterAction(); openDevice(M, k, T); }; }); return; }
+  if (isSolar(T)){ openModal('太陽能板', null, (kk, el) => { const cur = S.bill.cur, n = countDev('solar_panel');
+      el.innerHTML = `<div class="card"><div class="kv"><span>現在</span><span>${snowyAt(S.cur, k) ? '被雪蓋住，不發電' : T.gen ? '發電中' : '沒有發電（晚上）'}</span><span>晴天</span><span>每片每小時 ${SOLAR.kwhPerHourSunny} 度</span><span>陰天／雨雪</span><span>×${SOLAR.cloudyMult}／×${SOLAR.rainSnowMult}</span><span>農場共有</span><span>${n} / ${SOLAR.limitTotal} 片</span><span>本期賣電</span><span>${(cur.sellKwh || 0).toFixed(2)} 度 · 折抵 ${(cur.sellCredit || 0).toFixed(1)} 金幣</span></div>
+        <p class="small">發的電先給生長燈用，多的存進電池；電池滿了、有接市電時，以當時電價的 ${Math.round((SELL.priceRate ?? .5)*100)}% 賣給市電，從電費扣（最多扣到 0）。</p></div>`; }); return; }
+  return _od3(M, k, T); }; }
+
+/* ---------- well robot: walks the grid with a bucket (well → tower) ---------- */
+const WB = RB && RB.kinds.wellbot;
+if (WB){
+  KINDS.push('wellbot'); R_ICON.wellbot = 'ui_wellbot'; BASE_OF.wellbot = WB.base; UNIT_NAME.wellbot = WB.name;
+  UNIT_SPR.wellbot = { move: 'robot_wellbot_move', work: 'robot_wellbot_move', rest: 'robot_wellbot_rest' };
+}
+function wbMap(rent){ if (!rent){ const b = findBase('robot_charger'); if (b) return b.mi; } return houseMapIndex(); }
+function wbHome(rent){
+  const mi = wbMap(rent);
+  if (!rent){ const b = findBase('robot_charger'); if (b && b.mi === mi){ const [x, y] = pkey(b.k); return { mi, x, y }; } }
+  const d = swDoor(mi); return d ? { mi, x: d.x, y: d.y } : null;
+}
+// tiles next to a target (well / tower) that the robot can stand on
+function wbStandTiles(M, pred){ const out = new Map();
+  for (const k in M.tiles){ if (!pred(M.tiles[k], k)) continue; const [x, y] = pkey(k);
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const n = tkey(x + dx, y + dy); if (inMap(M, x + dx, y + dy) && swPass(M, n) && !out.has(n)) out.set(n, k); } }
+  return out; }
+function wbPathToAny(M, sx, sy, stands){ const prev = swBFS(M, sx, sy); let best = null, bl = Infinity, tgt = null;
+  for (const [n, k] of stands){ if (!prev.has(n)) continue; const p = swPathTo(prev, n); if (p.length < bl){ bl = p.length; best = p; tgt = k; } }
+  return best ? { path: best, target: tgt } : null; }
+const wbMin = () => WB.minWellDrops || WB.bucketDrops || 20;
+function wbInfo(rent){
+  const mi = wbMap(rent), M = S.maps[mi], h = wbHome(rent); if (!h) return { reach: 0, unreach: 0 };
+  const prev = swBFS(M, h.x, h.y, tkey(h.x, h.y)); let reach = 0, unreach = 0;
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!isWell(T)) continue; const [x, y] = pkey(k);
+    const ok = [[1,0],[-1,0],[0,1],[0,-1]].some(([dx, dy]) => prev.has(tkey(x + dx, y + dy)));
+    if (!ok) unreach++; else if ((T.water || 0) >= wbMin()) reach++; }
+  return { reach, unreach };
+}
+function wbState(rent){ const h = wbHome(rent); if (!h) return null;
+  let W = RT.wb; if (!W || W.rent !== rent || W.mi !== h.mi) W = RT.wb = { rent, mi: h.mi, x: h.x, y: h.y, path: null, i: 0, el: 0, phase: 'home', goal: null, target: null };
+  W.carry = S.robots.wellbot ? (S.robots.wellbot.carry || 0) : 0; return W; }
+function wbAtHome(W){ const h = wbHome(W.rent); return !h || (W.phase === 'home' && W.x === h.x && W.y === h.y); }
+function wbGoHome(W, M){ const h = wbHome(W.rent); if (!h){ W.phase = 'home'; return; } const hk = tkey(h.x, h.y), p = swPathTo(swBFS(M, W.x, W.y, hk), hk);
+  if (!p){ W.x = h.x; W.y = h.y; W.phase = 'home'; W.path = null; return; } W.path = p; W.i = 0; W.el = 0; W.goal = 'home'; W.phase = 'walk'; }
+function wbStep(dt, t){
+  const rent = rentActive('wellbot', t), W = wbState(rent); if (!W) return;
+  const U = S.robots.wellbot, M = S.maps[W.mi], stepT = 1 / (WB.tilesPerSecond || 1);
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      let plan = null;
+      if ((U.carry || 0) > 0 && towerRoom() >= 1) plan = wbPathToAny(M, W.x, W.y, wbStandTiles(M, T => isTowerTile(T))), plan && (plan.goal = 'tower');
+      else if (!(U.carry > 0) && towerRoom() >= 1){ plan = wbPathToAny(M, W.x, W.y, wbStandTiles(M, T => isWell(T) && (T.water || 0) >= wbMin())); if (plan) plan.goal = 'well'; }
+      if (plan && !rent){ const h = wbHome(false), last = pkey(plan.path[plan.path.length - 1]), back = h ? (swPathTo(swBFS(M, last[0], last[1], tkey(h.x, h.y)), tkey(h.x, h.y)) || []).length : 0;
+        if (U.batt < (plan.path.length + back) * stepT + 8) plan = null; }
+      if (!plan){ if (W.phase === 'pick' && !wbAtHome(W)) wbGoHome(W, M); else { W.phase = 'home'; } if (W.phase === 'home') return; continue; }
+      W.path = plan.path; W.i = 0; W.el = 0; W.goal = plan.goal; W.target = plan.target; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; return; } W.phase = W.goal === 'well' ? 'fill' : 'pour'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue;
+    }
+    if (W.phase === 'fill' || W.phase === 'pour'){
+      const need = W.phase === 'fill' ? (WB.fillSeconds || 2) : (WB.pourSeconds || 2), left = need - W.el;
+      if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0;
+      const T = M.tiles[W.target];
+      if (W.phase === 'fill'){ if (isWell(T) && (T.water || 0) >= 1){ const n = Math.min(WB.bucketDrops || 20, T.water); T.water -= n; U.carry = (U.carry || 0) + n; } }
+      else { const n = Math.min(U.carry || 0, towerRoom()); S.player.water += n; U.carry = (U.carry || 0) - n; U.poured = (U.poured || 0) + n;
+        if (Date.now() - t < 5000 && W.mi === S.cur && n > 0){ const c = center(W.x, W.y); floatText(c.cx, c.cy - 30, `+${Math.round(n)} 滴進水塔`, '#2f7fa8', 10); } }
+      W.phase = 'pick'; continue;
+    }
+  }
+}
+if (WB){
+  robotJob.wellbot = () => { const rent = rentActive('wellbot', Date.now()), W = RT.wb, U = S.robots.wellbot, info = wbInfo(rent), away = !!W && W.rent === rent && !wbAtHome(W); RT.wbUnreach = info.unreach;
+    if (!rent && !away){ const tr = tierOf('wellbot'); if (tr && U.batt < tr.workHours * 3600 * .25) return false; }
+    return away || (towerRoom() >= 1 && ((U.carry || 0) > 0 || info.reach > 0)); };
+}
+{ const _sr = stepRobots; stepRobots = function(dt, t, rainNow){ const res = _sr(dt, t, rainNow); if (res && res.wellbot) wbStep(dt, t); return res; }; }
+{ const _ust2 = unitStateText; unitStateText = function(kind){ const s = _ust2(kind); return kind === 'wellbot' && RT.wbUnreach && /待命/.test(s) ? `${s}（有 ${RT.wbUnreach} 口井走不到）` : s; }; }
+function wbScreen(){
+  const W = RT.wb; if (!W || W.mi !== S.cur) return null;
+  let x = W.x, y = W.y, fx = null;
+  if (W.phase === 'walk' && W.path && W.i < W.path.length - 1){ const [nx, ny] = pkey(W.path[W.i + 1]), stepT = 1 / (WB.tilesPerSecond || 1);
+    const el = Math.min(stepT, W.el + Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))), a = el / stepT; x += (nx - x) * a; y += (ny - y) * a; fx = (nx - ny) < (W.x - W.y); }
+  else if ((W.phase === 'fill' || W.phase === 'pour') && W.target){ const [tx, ty] = pkey(W.target); fx = (tx - ty) < (W.x - W.y); }
+  const c = center(x, y); return { x: c.cx, y: c.cy, fx, phase: W.phase };
+}
+function drawWellbotWalk(key, t){
+  const s = wbScreen(); if (!s) return null; let p = RT.unitPos[key]; if (!p) p = RT.unitPos[key] = { x: s.x, y: s.y, fx: false };
+  if (s.fx !== null) p.fx = s.fx; p.x = s.x; p.y = s.y;
+  const carry = (S.robots.wellbot.carry || 0) > 0, n = s.phase === 'fill' ? 'robot_wellbot_fill' : s.phase === 'pour' ? 'robot_wellbot_pour' : carry ? 'robot_wellbot_carry' : 'robot_wellbot_move';
+  spr(n, motion ? frameOf(n, t) : 0, p.x, p.y, p.fx); return p;
+}
+// owned well robot resting / charging on the shared robot charger
+{ const _db5 = drawBase; drawBase = function(T, x, y, t){ _db5(T, x, y, t);
+  if (T.id !== 'robot_charger' || !WB || !tierOf('wellbot')) return; const U = S.robots.wellbot; if (!['idle','queue','charge','refill'].includes(U.state)) return;
+  const { cx, cy } = center(x, y), on = U.state === 'charge';
+  spr('robot_wellbot_rest', on && motion ? frameOf('robot_wellbot_rest', t) : 0, on ? cx + 1 : cx + 4, on ? cy - 4 : cy - 9);
+  if (U.state === 'queue') bubble(cx + 4, cy - 28, '排隊中'); else if (on) bubble(cx + 1, cy - 40, '充電', 'ui_electric');
+  else if (U.on !== false) zzzFx(cx + 12, cy - 30, t, .8); }; }
+
+/* ---------- texts, trays, save data ---------- */
+{ const _nm3 = nameOf; nameOf = function(id){ if (id === 'wellbot') return WB ? WB.name : '水井機器人'; return _nm3(id); }; }
+function normalizeV21(d){
+  if (WB){ d.robots.wellbot = Object.assign({ tier: -1, batt: 0, tank: 0, state: 'none', on: true, refill: 0, carry: 0 }, d.robots.wellbot || {}); d.automation.wellbotUntil = d.automation.wellbotUntil || 0; }
+  d.bill = d.bill || {}; if (d.bill.cur){ d.bill.cur.sellKwh = d.bill.cur.sellKwh || 0; d.bill.cur.sellCredit = d.bill.cur.sellCredit || 0; }
+}
+{ const _n20 = normalizeV20; normalizeV20 = function(d){ _n20(d); normalizeV21(d); }; }
+{ const _nbp = newBillPeriod; newBillPeriod = function(t){ const b = _nbp(t); b.sellKwh = 0; b.sellCredit = 0; return b; }; }
+window.__farm21 = { pumpWell, wbStep, wbInfo, get wb(){ return RT.wb; }, solarOutput, towerRoom, countDev };
 
   })(CFG, ATLAS_JSON);
 })();
