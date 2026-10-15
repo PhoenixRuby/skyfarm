@@ -4241,7 +4241,7 @@ function robotCard(kind){
   h += `<h5>租用 ${rent ? `<span class="pill ok">租用中 · 剩 ${fmtDur((S.automation[rentKey(kind)] - now)/1000)}</span>` : ''}</h5><div class="row">${rentOptions(kind).map(o => { const ol = !isUnlocked(o.unlock);
     return `<button class="btn${ol ? ' ghost' : ' alt'}" data-rent="${o.id}" ${ol ? 'disabled' : ''}>${fmtHours(o.hours)} · ${fmtN(o.cost)}${ol ? `（Lv ${UNLOCK[o.unlock]}）` : ''}</button>`; }).join('')}</div>`;
   const tr0 = K.tiers[0];
-  h += `<p class="small">${{ water: '無人機把所有田和果樹保持全濕，枯萎的會復活；下雨或龍捲風時暫停。', feed: '自動餵所有動物和魚，飼料費照扣。', snow: `積雪時每分鐘清掉 ${SNOWBOT_TPM} 格雪（清掉的雪直接推走，不進水塔）。`, sweep: `沿著草地和道路來回掃，每分鐘 ${K.tilesPerMinute || 15} 格，收雜草、垃圾和草球。`, honey: `飛到存了 ${K.collectAtJars || 10} 罐以上的蜂箱，把蜂蜜收進倉庫；倉庫滿了就停下來等。`, poop: `把地上的糞便鏟進倉庫，每分鐘 ${K.perMinute || 4} 坨，拿去堆肥桶做有機肥；倉庫滿了就停下來等。` }[kind] || ''}
+  h += `<p class="small">${{ water: '無人機把所有田和果樹保持全濕，枯萎的會復活；下雨或龍捲風時暫停。', feed: '自動餵所有動物和魚，飼料費照扣。', snow: `積雪時每分鐘清掉 ${SNOWBOT_TPM} 格雪（清掉的雪直接推走，不進水塔）。`, sweep: `從房子大門（自己買的從基座）出發，沿著格子走到雜草、垃圾和草球那裡掃掉，不會穿過田；掃完走回去休息。被田或柵欄圍住的走不到。`, honey: `飛到存了 ${K.collectAtJars || 10} 罐以上的蜂箱，把蜂蜜收進倉庫；倉庫滿了就停下來等。`, poop: `把地上的糞便鏟進倉庫，每分鐘 ${K.perMinute || 4} 坨，拿去堆肥桶做有機肥；倉庫滿了就停下來等。` }[kind] || ''}
     買斷：充滿電可以工作 ${K.tiers.map(x => fmtHours(x.workHours)).join('／')}，沒電回${kind === 'sweep' ? '基座' : BLD[K.base].name}充電${kind === 'water' ? `、補 ${K.tankDrops} 滴水箱` : ''}，長期比較划算；升級時舊的折價 ${Math.round((RB.upgradeTradeInRate || .5)*100)}%。租用：不用充電、不用基座，時間到就離開，短期比較便宜${kind === 'water' ? '，直接用水塔的水' : ''}。兩個都有時，租的工作、自己的回去充電。</p></div>`;
   return h;
 }
@@ -5254,6 +5254,8 @@ function drawUnits(M, t, now){
     const air = kind === 'water' || kind === 'feed' || kind === 'honey';
     if (rent){ const key = kind + ':r';
       if (kind === 'water' && J.on){ const s = dwScreen(); if (s){ live.add(key); const { p } = drawDroneAt(key, s, t, s.spray); rentTag(p.x + 17, p.y - 27); if (RT.dw.wait) bubble(p.x, p.y - 40, '等水', 'ui_water_drop'); } }
+      else if (kind === 'sweep' && RT.sw && RT.sw.rent && !swAtHome(RT.sw)){ const p = drawSweeperWalk(key, t); if (p){ live.add(key); rentTag(p.x + 13, p.y - 4); } }
+      else if (kind === 'sweep'){ live.add(key); RT.unitPos[key] = { x: restAt.x, y: restAt.y, fx: false }; const p = drawOneUnit(key, kind, 'rest', restAt, t); rentTag(p.x, p.y + 8); zzzFx(p.x + 6, p.y - 16, t, i * .17); }   // back inside → appears on the roof
       else { const tgt = J.job ? unitTarget(kind, M, t, now, b, mx, my) : restAt;
         if (tgt){ live.add(key); const p = drawOneUnit(key, kind, J.job ? 'work' : 'rest', tgt, t);
           if (!J.job){ rentTag(p.x, p.y + 8); if (Math.hypot(restAt.x - p.x, restAt.y - p.y) < 3) zzzFx(p.x + 6, p.y - 16, t, i * .17); }
@@ -5266,6 +5268,7 @@ function drawUnits(M, t, now){
           if (base && base.mi === S.cur){ const [x, y] = pkey(base.k), c = center(x, y), r = drawDroneAt(key, { x: c.cx, y: c.cy - 6 }, t, false);
             if (r.arrived) delete RT.unitPos[key]; else { live.add(key); away = true; } } }
       }
+      else if (kind === 'sweep' && U.state === 'work' && !rent){ const p = drawSweeperWalk(key, t); if (p) live.add(key); }
       else if (U.state === 'work' && !rent){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); drawOneUnit(key, kind, 'work', tgt, t); } }
       else if (U.state === 'rest'){ const base = findBase(RK(kind).base); if (!base || base.mi === S.cur){ live.add(key); drawOneUnit(key, kind, 'rest', restAt, t); } }
     }
@@ -5274,6 +5277,214 @@ function drawUnits(M, t, now){
   for (const k in RT.unitPos) if (!live.has(k)) delete RT.unitPos[k];
 }
 window.__farm202 = { dwStep, dwPick, needsWater, get dw(){ return RT.dw; }, zzzFx };
+
+/* ===== 21. v2.0.3: the floating island's underside; house lights need power ===== */
+const ISL = CFG.islandUnderside || { depthRatio: .2, minRatio: .08, bumps: 9, taper: .8 };
+function islHash(n){ const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+// depth (px) of rock under the soil band at screen-x `sx`
+function islDepth(sx, x0, x1){
+  const W = Math.max(64, x1 - x0), u = Math.max(-1, Math.min(1, (sx - (x0 + x1)/2) / (W/2)));
+  const D = W * (ISL.depthRatio || .25), base = (ISL.minRatio || .16) + (1 - (ISL.minRatio || .16)) * Math.pow(Math.max(0, 1 - u*u), .75);
+  let n = 0; for (let i = 1; i <= 3; i++) n += Math.sin(sx / (38 + i*29) + islHash(i) * 6.28) * (6 / i);
+  // a few soft hanging lobes
+  const lobes = ISL.bumps || 9; let lobe = 0;
+  for (let i = 0; i < lobes; i++){ const cxl = x0 + W * (.1 + .8 * islHash(i + 10)), w = W * (.035 + .04 * islHash(i + 30)), h = D * (.08 + .12 * islHash(i + 50)); const d = (sx - cxl) / w; if (Math.abs(d) < 1) lobe = Math.max(lobe, h * Math.cos(d * Math.PI / 2) ** 2); }
+  return Math.max(6, D * base + n + lobe * (1 - Math.abs(u) * .5));
+}
+function drawUnderside(M){
+  const b = mapBounds(M), x0 = b.minX, x1 = b.maxX, tiles = mapTiles(M), W = x1 - x0;
+  // lower outline of the island sides (bottom of the soil band), sampled across screen-x
+  const STEP = 6, n = Math.ceil(W / STEP), yb = new Array(n + 1).fill(-1e9);
+  for (const [x,y] of tiles){ const { cx, cy } = center(x,y);
+    for (const [has, ax, ay] of [[!inMap(M,x+1,y), cx + HW, cy + DEPTH], [!inMap(M,x,y+1), cx - HW, cy + DEPTH]]){ if (!has) continue;
+      const bx = cx, by = cy + HH + DEPTH, lo = Math.min(ax, bx), hi = Math.max(ax, bx);
+      for (let i = Math.max(0, Math.floor((lo - x0) / STEP)); i <= Math.min(n, Math.ceil((hi - x0) / STEP)); i++){ const sx = x0 + i * STEP; if (sx < lo - .01 || sx > hi + .01) continue;
+        const f = (sx - ax) / (bx - ax), yy = ay + (by - ay) * f; if (yy > yb[i]) yb[i] = yy; } } }
+  const top = [], bot = []; let corner = { x: (x0 + x1)/2, y: -1e9 };
+  const xc = (x0 + x1) / 2, taper = ISL.taper || .8;
+  for (let i = 0; i <= n; i++){ if (yb[i] < -1e8) continue; const sx = x0 + i * STEP; top.push([sx, yb[i] - 1]); if (yb[i] > corner.y) corner = { x: sx, y: yb[i] }; }
+  // the bottom is a rounded mound: it follows the outline only partly, so it is not a sharp V
+  const flat = ISL.roundness ?? .55;
+  for (const [sx, ty] of top){ const d = islDepth(sx, x0, x1), base = ty + (corner.y - ty) * flat; bot.push([xc + (sx - xc) * taper, Math.max(ty + 8, base + d * (1 - flat * .35))]); }
+  if (top.length < 2) return;
+  const path = () => { ctx.beginPath(); ctx.moveTo(top[0][0], top[0][1]); for (const p of top) ctx.lineTo(p[0], p[1]);
+    for (let i = bot.length - 1; i >= 0; i--) ctx.lineTo(bot[i][0], bot[i][1]); ctx.closePath(); };
+  const maxY = Math.max(...bot.map(p => p[1]));
+  for (const side of ['L', 'R']){
+    ctx.save(); path(); ctx.clip(); ctx.beginPath();
+    if (side === 'L') ctx.rect(x0 - 50, corner.y - W, corner.x - x0 + 50, W * 2); else ctx.rect(corner.x, corner.y - W, x1 - corner.x + 50, W * 2);
+    ctx.clip();
+    const g = ctx.createLinearGradient(0, corner.y - HH, 0, maxY); const c = side === 'R' ? ['#8d5f3a', '#6a4329', '#4a2e1b'] : ['#714729', '#56351e', '#3a2414'];
+    g.addColorStop(0, c[0]); g.addColorStop(.5, c[1]); g.addColorStop(1, c[2]); ctx.fillStyle = g; ctx.fillRect(x0 - 50, corner.y - W, W + 100, W * 2);
+    ctx.restore(); }
+  ctx.save(); path(); ctx.clip();
+  // strata following the outline
+  ctx.strokeStyle = 'rgba(35,20,10,.25)'; ctx.lineWidth = 1.3;
+  for (const fr of [.22, .45, .7]){ ctx.beginPath(); top.forEach((p, i) => { const q = bot[i], xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr + Math.sin(xx / 17 + fr * 9) * 2; i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); }); ctx.stroke(); }
+  // pebbles
+  for (let i = 0; i < top.length; i += 3){ const h = islHash(i * 7.3 + 1); if (h < .5) continue; const p = top[i], q = bot[i], fr = .15 + .7 * islHash(i * 3.1), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr;
+    ctx.fillStyle = xx > corner.x ? 'rgba(200,170,130,.4)' : 'rgba(160,130,95,.35)'; ctx.beginPath(); ctx.ellipse(xx, yy, 2.5 + 2.5 * h, 1.6 + h, 0, 0, 7); ctx.fill(); }
+  ctx.restore();
+  // roots under the soil band
+  ctx.strokeStyle = 'rgba(70,45,25,.55)'; ctx.lineWidth = 1; ctx.lineCap = 'round';
+  for (let i = 0; i < top.length; i += 2){ if (islHash(i * 1.71) < .6) continue; const p = top[i], L = 6 + 12 * islHash(i * 2.3); ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.quadraticCurveTo(p[0] + 3, p[1] + L * .6, p[0] - 1, p[1] + L); ctx.stroke(); }
+}
+// grass hanging over the soil band (drawn after the sides)
+function drawGrassLip(M){
+  const tiles = mapTiles(M); ctx.strokeStyle = '#6fae45'; ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+  for (const [x,y] of tiles){ const { cx, cy } = center(x,y);
+    for (const [has, ax, ay, bx, by] of [[!inMap(M,x+1,y), cx + HW, cy, cx, cy + HH], [!inMap(M,x,y+1), cx - HW, cy, cx, cy + HH]]){ if (!has) continue;
+      for (let i = 1; i < 6; i++){ const f = i / 6, px = ax + (bx - ax) * f, py = ay + (by - ay) * f, L = 3 + 4 * islHash(px * .9 + py); ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px + (islHash(px) - .5) * 2, py + L); ctx.stroke(); } } }
+}
+{ const _dw = drawWorld; drawWorld = function(t, now){ drawUnderside(curMap()); _dw(t, now); drawGrassLip(curMap()); }; }
+
+/* ---------- night overlay covers the underside too ---------- */
+function islandClip(c, scale){
+  const M = curMap(), b = mapBounds(M), W = b.maxX - b.minX, under = W * ((ISL.depthRatio || .2) + .05) + DEPTH; c.beginPath();
+  for (const [bx,by] of M.blocks){
+    const P = [[bx*BS,by*BS],[bx*BS+BS,by*BS],[bx*BS+BS,by*BS+BS],[bx*BS,by*BS+BS]].map(([x,y]) => [(x-y)*HW, (x+y)*HH]);
+    const top = P[0], right = P[1], bot = P[2], left = P[3];
+    const pts = [[top[0], top[1] - 90], [right[0] + 6, right[1] - 60], [right[0] + 6, right[1] + DEPTH + 4], [bot[0], bot[1] + under], [left[0] - 6, left[1] + DEPTH + 4], [left[0] - 6, left[1] - 60]];
+    pts.forEach(([x,y], i) => { const sx = (cam.x + x*cam.z)*scale, sy = (cam.y + y*cam.z)*scale; i ? c.lineTo(sx, sy) : c.moveTo(sx, sy); }); c.closePath(); }
+}
+
+/* ---------- house lights need power ---------- */
+const LIGHT = CFG.houseLight || { kwhPerHour: .05 };
+{ const _sa4 = stepAll; stepAll = function(dt, t){ _sa4(dt, t);
+  if (dayPhase(t).light < .5) S.houseLit = drawFarmPower((LIGHT.kwhPerHour || .05) * dt / 3600, t);
+  else S.houseLit = false; }; }
+const houseLitNow = now => dayPhase(now).light < .5 && !!S.houseLit;
+function drawHouse(T, x, y, now){
+  if (x !== T.rx + 1 || y !== T.ry + 1) return;
+  const c = center(T.rx, T.ry), hx = c.cx, hy = c.cy + HH;
+  spr(houseLitNow(now) ? 'building_farmhouse_night' : 'building_farmhouse_idle', 0, hx, hy);
+  spr(S.settings.grid ? 'utility_pole_on' : 'utility_pole_off', 0, hx - 58, hy + 2);
+}
+function drawSky(t, now){
+  const ph = dayPhase(now), cloudy = farmCloudy(now) && !farmRain(now);
+  const dark = (1 - ph.light) * 0.55;
+  if (cloudy && ph.light > 0){ ctx.fillStyle = `rgba(95,105,115,${0.16 * ph.light})`; ctx.fillRect(0, 0, VW, VH); }
+  if ((ph.phase === 'dawn' || ph.phase === 'dusk')){ const a = 0.16 * (1 - Math.abs(ph.light - 0.5) * 2); ctx.fillStyle = ph.phase === 'dawn' ? `rgba(255,170,90,${a})` : `rgba(255,120,70,${a})`; ctx.fillRect(0, 0, VW, VH); }
+  if (dark < 0.01) return;
+  if (!nightCv) nightCv = document.createElement('canvas');
+  if (nightCv.width !== cv.width || nightCv.height !== cv.height){ nightCv.width = cv.width; nightCv.height = cv.height; }
+  const n = nightCv.getContext('2d'); n.setTransform(1,0,0,1,0,0); n.clearRect(0, 0, nightCv.width, nightCv.height);
+  n.fillStyle = `rgba(12,22,58,${dark})`; n.fillRect(0, 0, nightCv.width, nightCv.height);
+  n.globalCompositeOperation = 'destination-out';
+  const holes = [], M = curMap();
+  for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && T.lit){ const [x,y] = pkey(k), c = center(x,y), r = (DEV[T.id].range + 0.7) * HW * 1.6; holes.push({ x: c.cx, y: c.cy - 6, r, col: 'rgba(255,150,230,' }); } }
+  if (houseLitNow(now)){ const hp = housePos(M); if (hp) holes.push({ x: hp.x - 20, y: hp.y - 10, r: 46, col: 'rgba(255,210,120,' }); }
+  for (const h of holes){ const sx = (cam.x + h.x*cam.z) * dpr, sy = (cam.y + h.y*cam.z) * dpr, r = h.r * cam.z * dpr;
+    const g = n.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, 'rgba(0,0,0,.95)'); g.addColorStop(1, 'rgba(0,0,0,0)'); n.fillStyle = g; n.beginPath(); n.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); n.fill(); }
+  n.globalCompositeOperation = 'source-over';
+  ctx.setTransform(1,0,0,1,0,0); n.globalCompositeOperation = 'destination-in'; n.drawImage(islandMask(), 0, 0); n.globalCompositeOperation = 'source-over'; ctx.drawImage(nightCv, 0, 0); ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.globalCompositeOperation = 'lighter';
+  for (const h of holes){ const sx = cam.x + h.x*cam.z, sy = cam.y + h.y*cam.z, r = h.r * cam.z * 0.7;
+    const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, h.col + (0.18*dark/0.55) + ')'); g.addColorStop(1, h.col + '0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); ctx.fill(); }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+/* ---------- sweeper walks the grid: door (or dock) → trash → … → back home ---------- */
+const SWK = CFG.sweeperWalk || { tilesPerSecond: 1, cleanSeconds: 2 };
+function houseMapIndex(){ for (let mi = 0; mi < S.maps.length; mi++) if (housePos(S.maps[mi])) return mi; return 0; }
+function swMap(rent){ if (!rent){ const b = findBase('sweeper_dock'); if (b) return b.mi; } return houseMapIndex(); }
+function swPass(M, k){ return walkK(M, k); }
+function swDoor(mi){
+  const M = S.maps[mi], hp = housePos(M); if (!hp) return null;
+  const cand = [[hp.rx + 2, hp.ry], [hp.rx + 2, hp.ry + 1], [hp.rx, hp.ry + 2], [hp.rx + 1, hp.ry + 2], [hp.rx - 1, hp.ry], [hp.rx, hp.ry - 1]];
+  for (const [x, y] of cand) if (inMap(M, x, y) && swPass(M, tkey(x, y))) return { x, y };
+  return null;
+}
+function swHome(rent){
+  const mi = swMap(rent);
+  if (!rent){ const b = findBase('sweeper_dock'); if (b && b.mi === mi){ const [x, y] = pkey(b.k); return { mi, x, y, dock: true }; } }
+  const d = swDoor(mi); return d ? { mi, x: d.x, y: d.y, dock: false } : null;
+}
+// BFS from (sx,sy); start tile always allowed (the dock itself is a building)
+function swBFS(M, sx, sy, allow){
+  const start = tkey(sx, sy), prev = new Map([[start, null]]), q = [start]; let qi = 0;
+  while (qi < q.length){ const c = q[qi++], [x, y] = pkey(c);
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx = x + dx, ny = y + dy, n = tkey(nx, ny); if (prev.has(n) || !inMap(M, nx, ny) || (!swPass(M, n) && n !== allow)) continue; prev.set(n, c); q.push(n); } }
+  return prev;
+}
+function swPathTo(prev, k){ if (!prev.has(k)) return null; const out = []; let c = k; while (c !== null){ out.push(c); c = prev.get(c); } return out.reverse(); }
+function swTrashInfo(rent){
+  const mi = swMap(rent), M = S.maps[mi], h = swHome(rent); if (!h) return { mi, reach: 0, unreach: 0 };
+  const prev = swBFS(M, h.x, h.y); let reach = 0, unreach = 0;
+  for (const k in M.tiles) if (isTrash(M.tiles[k])) (prev.has(k) ? reach++ : unreach++);
+  return { mi, reach, unreach };
+}
+function swState(rent){
+  const h = swHome(rent); if (!h) return null;
+  let W = RT.sw; if (!W || W.rent !== rent || W.mi !== h.mi){ W = RT.sw = { rent, mi: h.mi, x: h.x, y: h.y, path: null, i: 0, el: 0, phase: 'home', goal: null }; }
+  return W;
+}
+function swAtHome(W){ const h = swHome(W.rent); return !h || (W.phase === 'home' && W.x === h.x && W.y === h.y); }
+function swNearest(W, M){   // nearest reachable trash by walking distance
+  const prev = swBFS(M, W.x, W.y); let best = null, bl = Infinity;
+  for (const k in M.tiles){ if (!isTrash(M.tiles[k]) || !prev.has(k)) continue; const p = swPathTo(prev, k); if (p.length < bl){ bl = p.length; best = p; } }
+  return best;
+}
+function swClean(M, mi, k, t){
+  const SW = S.sweep, T = M.tiles[k]; if (!isTrash(T)) return; const dk = dayKeyLocal(t); if (SW.day !== dk){ SW.day = dk; SW.todayWeeds = 0; SW.todayTrash = 0; }
+  const live = Date.now() - t < 5000 && mi === S.cur, [x,y] = pkey(k), c = center(x,y);
+  if (T.t === 'weed'){ delete M.tiles[k]; collectWeeds(1, live ? c.cx : undefined, c.cy); SW.todayWeeds++; SW.totalWeeds++; }
+  else if (T.t === 'weedball'){ delete M.tiles[k]; collectWeeds(T.n, live ? c.cx : undefined, c.cy); SW.todayWeeds += T.n; SW.totalWeeds += T.n; SW.todayTrash++; SW.totalTrash++; }
+  else { delete M.tiles[k]; SW.todayTrash++; SW.totalTrash++; if (live) floatText(c.cx, c.cy - 18, '掃掉垃圾', '#6b5a48', 10); }
+  RT.regionsAt = 0;
+}
+function swHeat(mi, k, t){ const SW = S.sweep, h = SW.heat[mi] || (SW.heat[mi] = {}), e = h[k], v = e ? e[0] * Math.exp(-(t - e[1]) / 86400e3) : 0; h[k] = [Math.round((v + 1) * 100) / 100, Math.round(t)]; }
+function swGoHome(W, M){ const h = swHome(W.rent); if (!h){ W.phase = 'home'; return; } const p = swPathTo(swBFS(M, W.x, W.y, tkey(h.x, h.y)), tkey(h.x, h.y));
+  if (!p){ W.x = h.x; W.y = h.y; W.phase = 'home'; W.path = null; return; } W.path = p; W.i = 0; W.el = 0; W.goal = 'home'; W.phase = 'walk'; }
+function sweepStep(dt, t){
+  const rent = rentActive('sweep', t), W = swState(rent); if (!W) return;
+  const M = S.maps[W.mi], stepT = 1 / (SWK.tilesPerSecond || 1), cleanT = SWK.cleanSeconds || 2, U = S.robots.sweep;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      const p = swNearest(W, M);
+      if (!p){ if (W.phase === 'pick') swGoHome(W, M); else return; continue; }
+      if (!rent){ // keep enough battery to walk back home
+        const h = swHome(false), [tx, ty] = pkey(p[p.length - 1]), back = h ? (swPathTo(swBFS(M, tx, ty, tkey(h.x, h.y)), tkey(h.x, h.y)) || []).length : 0;
+        if (U.batt < (p.length + back) * stepT + cleanT + 2){ if (W.phase === 'pick') swGoHome(W, M); else return; continue; } }
+      W.path = p; W.i = 0; W.el = 0; W.goal = 'trash'; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.goal === 'trash' && !isTrash(M.tiles[W.path[W.path.length - 1]])){ W.phase = 'pick'; continue; }   // someone else cleaned it
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; return; } W.phase = 'clean'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1];
+      if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ W.phase = W.goal === 'home' ? 'pick' : 'pick'; if (W.goal === 'home'){ swGoHome(W, M); } continue; }   // path got blocked: re-plan
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); swHeat(W.mi, nk, t); continue;
+    }
+    if (W.phase === 'clean'){
+      const left = cleanT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; swClean(M, W.mi, tkey(W.x, W.y), t); W.phase = 'pick'; W.el = 0; continue;
+    }
+  }
+}
+robotJob.sweep = () => { const rent = rentActive('sweep', Date.now()), W = RT.sw, info = swTrashInfo(rent), away = !!W && W.rent === rent && !swAtHome(W); RT.swUnreach = info.unreach;
+  if (!rent && !away){ const U = S.robots.sweep, tr = tierOf('sweep'); if (tr && U.batt < tr.workHours * 3600 * .25) return false; }   // low battery at home: charge first
+  return info.reach > 0 || away; };
+{ const _ust = unitStateText; unitStateText = function(kind){ const s = _ust(kind); return kind === 'sweep' && RT.swUnreach && /待命/.test(s) ? `${s}（有 ${RT.swUnreach} 處走不到）` : s; }; }
+{ const _osT = ownedStateText; ownedStateText = function(kind){ const s = _osT(kind); return kind === 'sweep' && RT.swUnreach && /待命/.test(s) ? `${s}（有 ${RT.swUnreach} 處走不到）` : s; }; }
+// screen position of the walking sweeper (interpolated between tiles)
+function swScreen(){
+  const W = RT.sw; if (!W || W.mi !== S.cur) return null;
+  let x = W.x, y = W.y, fx = null;
+  if (W.phase === 'walk' && W.path && W.i < W.path.length - 1){ const [nx, ny] = pkey(W.path[W.i + 1]), stepT = 1 / (SWK.tilesPerSecond || 1);
+    const el = Math.min(stepT, W.el + Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))), a = el / stepT; x += (nx - x) * a; y += (ny - y) * a; fx = (nx - ny) < (W.x - W.y); }
+  const c = center(x, y); return { x: c.cx, y: c.cy, fx, cleaning: W.phase === 'clean' };
+}
+function drawSweeperWalk(key, t){
+  const s = swScreen(); if (!s) return null; let p = RT.unitPos[key]; if (!p) p = RT.unitPos[key] = { x: s.x, y: s.y, fx: false };
+  if (s.fx !== null) p.fx = s.fx; p.x = s.x; p.y = s.y;
+  const n = 'robot_sweeper_move'; spr(n, motion ? frameOf(n, t) : 0, p.x, p.y, p.fx);
+  if (s.cleaning) spriteFxDust(p.x, p.y, t);
+  return p;
+}
+function spriteFxDust(x, y, t){ ctx.save(); ctx.fillStyle = 'rgba(160,140,110,.45)'; for (let i = 0; i < 4; i++){ const a = t * 6 + i * 1.6; ctx.beginPath(); ctx.arc(x + Math.cos(a) * 9, y - 3 + Math.sin(a) * 4, 1.8, 0, 7); ctx.fill(); } ctx.restore(); }
+window.__farm203 = { sweepStep, swTrashInfo, swHome, swDoor, get sw(){ return RT.sw; }, houseLitNow, drawUnderside };
 
   })(CFG, ATLAS_JSON);
 })();

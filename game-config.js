@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.0.2",
+    "configVersion": "2.0.3",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -3060,5 +3060,43 @@ window.GAME_CONFIG = {
       "owned": "drone_pad",
       "rented": "house"
     }
+  },
+  "houseLight": {
+    "needsPower": true,
+    "kwhPerHour": 0.05,
+    "sources": [
+      "grid",
+      "battery",
+      "crankBuffer"
+    ],
+    "whenLightBelow": 0.5
+  },
+  "islandUnderside": {
+    "depthRatio": 0.2,
+    "minRatio": 0.08,
+    "bumps": 9,
+    "taper": 0.8,
+    "roundness": 0.55,
+    "decorOnly": true
+  },
+  "sweeperWalk": {
+    "tilesPerSecond": 1,
+    "cleanSeconds": 2,
+    "fourWay": true,
+    "rentedHome": "house door",
+    "ownedHome": "sweeper_dock",
+    "cannotCross": [
+      "soil",
+      "building",
+      "deco",
+      "tree",
+      "fence",
+      "pool",
+      "pond",
+      "greenhouse"
+    ],
+    "nearestByWalk": true,
+    "ownedReturnBeforeBatteryOut": true,
+    "lowBatteryChargeFirst": 0.25
   }
 };
