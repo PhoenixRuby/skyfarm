@@ -5119,6 +5119,162 @@ function stepChickens(dt, t){
   return out.slice(0, NEWS.maxItems || 12); }; }
 window.__farm201 = { stepChickens, chickenRegionTargets, trayEdges, fitTrayText, get newsItems(){ return newsItems; } };
 
+/* ===== 20. v2.0.2: the watering drone flies to dry tiles and sprays only there; idle robots show Zzz ===== */
+const DW = CFG.droneWatering || { dryThreshold: 0, tilesPerSecond: 3, spraySeconds: 2 };
+const dwNeeds = T => !!T && (T.t === 'tree' || (T.t === 'soil' && (T.crop || T.flower))) && T.m <= (DW.dryThreshold || 0) + 1e-6;
+const dwNeed = T => (R.moistMaxLevel - T.m) * (WAT.droneDropsPerLevel || 1);
+
+/* ---------- simulation (tile coordinates; works the same online and offline) ---------- */
+function needsWater(){ for (const M of S.maps) for (const k in M.tiles) if (dwNeeds(M.tiles[k])) return true; return false; }
+function dwHomeTile(rent){
+  if (!rent){ const b = findBase('drone_pad'); if (b){ const [x, y] = pkey(b.k); return { mi: b.mi, x, y }; } }
+  const mi = S.cur, hp = housePos(S.maps[mi]); if (hp) return { mi, x: hp.rx + 1, y: hp.ry + 1 };
+  const M = S.maps[mi], f = M.blocks[0]; return { mi, x: f[0]*BS + 2, y: f[1]*BS + 2 };
+}
+function dwState(rent){ if (!RT.dw){ const h = dwHomeTile(rent); RT.dw = { mi: h.mi, x: h.x, y: h.y, tgt: null, el: 0, ft: 0, ax: h.x, ay: h.y }; } return RT.dw; }
+function dwPick(D){
+  let best = null, bd = Infinity;
+  const order = [S.cur, ...S.maps.map((_, i) => i).filter(i => i !== S.cur)];
+  for (const mi of order){ const M = S.maps[mi];
+    for (const k in M.tiles){ if (!dwNeeds(M.tiles[k])) continue; const [x, y] = pkey(k), d = mi === D.mi ? Math.hypot(x - D.x, y - D.y) : 1e6 + Math.hypot(x - D.x, y - D.y);
+      if (d < bd){ bd = d; best = { mi, k, x, y }; } }
+    if (best && mi === S.cur) break;   // current map first
+  }
+  return best;
+}
+function dwStep(dt, t, rent){
+  const D = dwState(rent), U = S.robots.water;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 600){
+    if (!D.tgt || !dwNeeds(S.maps[D.tgt.mi].tiles[D.tgt.k])){
+      const n = dwPick(D); if (!n){ D.tgt = null; D.el = 0; return; }
+      if (!rent && U.tank < dwNeed(S.maps[n.mi].tiles[n.k]) - 1e-6){ U.tankLow = true; D.tgt = null; D.el = 0; return; }   // go home to refill first
+      D.tgt = n; D.ax = D.x; D.ay = D.y; D.el = 0; D.ft = (n.mi === D.mi ? Math.hypot(n.x - D.x, n.y - D.y) : 6) / (DW.tilesPerSecond || 3);
+    }
+    const total = D.ft + (DW.spraySeconds || 2), left = total - D.el;
+    if (budget < left){ D.el += budget; D.simAt = t; return; }
+    budget -= left; D.el = total;
+    const M = S.maps[D.tgt.mi], T = M.tiles[D.tgt.k], need = dwNeed(T);
+    if (rent){ if (!useWater(need, false, t)){ D.wait = true; return; } }
+    else { if (U.tank < need - 1e-6){ U.tankLow = true; return; } U.tank -= need; }
+    D.wait = false; D.simAt = t; T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false;
+    D.mi = D.tgt.mi; D.x = D.tgt.x; D.y = D.tgt.y; D.ax = D.x; D.ay = D.y; D.tgt = null; D.el = 0; D.ft = 0;
+  }
+}
+function stepDrone(dt, t){ dwStep(dt, t, true); return true; }
+function droneWater(dt, t){ dwStep(dt, t, false); }
+// owned robots: same as v1.8, plus "tank too low for the next tile → go home and refill" (leftover water is kept)
+function stepOwned(kind, dt, t, wantWork){
+  const U = S.robots[kind], tier = tierOf(kind);
+  if (!tier){ U.state = 'none'; dequeue(kind); return false; }
+  const K = RK(kind), base = findBase(K.base), full = tier.workHours * 3600, water = kind === 'water', tankMax = K.tankDrops || 0, low = water && !!U.tankLow;
+  if (U.on === false) wantWork = false;
+  U.waitWater = false;
+  if (base){
+    if (U.batt <= 0) U.mustFull = true;
+    const topUp = U.batt < full - 1e-6 && (U.batt <= 0 || !wantWork || U.state === 'charge' || U.state === 'queue');
+    if (topUp && water && wantWork && !U.mustFull){ dequeue(kind); }   // drone: idle top-up charging stops as soon as a tile is dry
+    else if (topUp){
+      if (!chargerTurn(kind, base)){ U.state = 'queue'; return false; }
+      const f = chargeFrac(tier, base, dt, t);
+      if (f > 0 || U.batt <= 0 || !wantWork){
+        U.state = 'charge'; U.batt = Math.min(full, U.batt + f * full);
+        if (U.batt >= full - 1e-6){ U.batt = full; U.mustFull = false; dequeue(kind); U.state = 'idle'; }
+        return false;
+      }
+      dequeue(kind);
+    } else dequeue(kind);
+    if (water && U.tank < tankMax && (U.tank <= 0 || low || !wantWork || U.state === 'refill')){
+      U.state = 'refill'; U.refill = (U.refill || 0) + dt;
+      if (U.refill >= AU.water.refillSeconds){
+        if (useWater(tankMax - U.tank, false, t)){ U.tank = tankMax; U.tankLow = false; U.refill = 0; U.state = 'idle'; }
+        else { U.refill = AU.water.refillSeconds; U.waitWater = true; if (U.tank <= 0 || low || !wantWork) return false; U.refill = 0; }
+      } else return false;
+    }
+  } else {
+    dequeue(kind);
+    if (U.batt <= 0 || (water && (U.tank <= 0 || low))){ U.state = 'rest'; return false; }
+  }
+  if (!wantWork){ U.state = 'idle'; return false; }
+  U.state = 'work'; U.batt = Math.max(0, U.batt - dt); return true;
+}
+// when the active drone is not working, the next flight starts from its home
+{ const _sa3 = stepAll; stepAll = function(dt, t){ _sa3(dt, t);
+  const rent = rentActive('water', t), U = S.robots.water, D = RT.dw; if (!D) return;
+  const working = RT.jobs && RT.jobs.water && RT.jobs.water.on;
+  if (!working && !D.tgt){ const h = dwHomeTile(rent); D.mi = h.mi; D.x = h.x; D.y = h.y; D.ax = h.x; D.ay = h.y; }
+  if (!working && D.tgt && (!rent && U.state !== 'work')){ const h = dwHomeTile(false); Object.assign(D, { mi: h.mi, x: h.x, y: h.y, ax: h.x, ay: h.y, tgt: null, el: 0, ft: 0 }); }
+}; }
+
+/* ---------- Zzz for every idle robot ---------- */
+function zzzFx(x, y, t, seed = 0){
+  ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  const fam = getComputedStyle(document.documentElement).getPropertyValue('--font-display') || 'sans-serif';
+  for (let i = 0; i < 3; i++){
+    const k = motion ? ((t / 2.4) + i / 3 + seed) % 1 : i / 3, px = x + k * 9, py = y - k * 15;
+    ctx.globalAlpha = k < .15 ? k / .15 : 1 - (k - .15) / .85;
+    ctx.font = `800 ${(7 + k * 4).toFixed(1)}px ${fam}`;
+    ctx.strokeStyle = 'rgba(255,255,255,.95)'; ctx.lineWidth = 2.4; ctx.strokeText('Z', px, py);
+    ctx.fillStyle = '#3d5a8a'; ctx.fillText('Z', px, py);
+  }
+  ctx.restore();
+}
+const idleOwned = kind => !!tierOf(kind) && S.robots[kind] && S.robots[kind].on !== false && S.robots[kind].state === 'idle';
+{ const _db4 = drawBase; drawBase = function(T, x, y, t){
+  const U = S.robots.water, away = T.id === 'drone_pad' && RT.dwAway && U;
+  if (away){ const s = U.state; U.state = 'work'; _db4(T, x, y, t); U.state = s; } else _db4(T, x, y, t);
+  const { cx, cy } = center(x, y);
+  if (T.id === 'drone_pad'){ if (idleOwned('water') && !RT.dwAway) zzzFx(cx + 8, cy - 22, t, 0); if (KINDS.includes('honey') && idleOwned('honey')) zzzFx(cx + 22, cy - 10, t, .5); }
+  else if (T.id === 'robot_charger'){ if (idleOwned('feed')) zzzFx(cx - 10, cy - 12, t, .2); if (idleOwned('snow')) zzzFx(cx + 24, cy - 10, t, .6); if (KINDS.includes('poop') && idleOwned('poop')) zzzFx(cx + 4, cy - 4, t, .4); }
+  else if (T.id === 'sweeper_dock'){ if (idleOwned('sweep')) zzzFx(cx + 6, cy - 14, t, .3); }
+}; }
+
+/* ---------- drawing robots (drone uses the simulation; everyone idle gets Zzz) ---------- */
+function dwScreen(){
+  const D = RT.dw; if (!D || D.mi !== S.cur) return null;
+  if (!D.tgt){ const c = center(D.x, D.y); return { x: c.cx, y: c.cy, spray: false }; }
+  const el = D.wait ? D.el : Math.min(D.ft + (DW.spraySeconds || 2), D.el + Math.max(0, Math.min(1.5, (Date.now() - (D.simAt || Date.now())) / 1000)));
+  const a = D.ft > 0 ? Math.min(1, el / D.ft) : 1, tx = D.ax + (D.tgt.x - D.ax) * a, ty = D.ay + (D.tgt.y - D.ay) * a, c = center(tx, ty);
+  return { x: c.cx, y: c.cy, spray: el >= D.ft && !D.wait };
+}
+function drawDroneAt(key, tgt, t, spraying){
+  let p = RT.unitPos[key]; if (!p || !motion) p = RT.unitPos[key] = { x: tgt.x, y: tgt.y, fx: false };
+  const dt = Math.min(.1, RT.frameDt || .016), d = Math.hypot(tgt.x - p.x, tgt.y - p.y);
+  if (d > 3){ const sp = Math.min(d, 320 * dt); if (Math.abs(tgt.x - p.x) > .5) p.fx = tgt.x < p.x; p.x += (tgt.x - p.x) / d * sp; p.y += (tgt.y - p.y) / d * sp; }
+  else { if (Math.abs(tgt.x - p.x) > .2) p.fx = tgt.x < p.x; p.x = tgt.x; p.y = tgt.y; }
+  const n = spraying && d <= 3 ? 'drone_water_work' : 'drone_water_fly';
+  spr(n, motion ? frameOf(n, t) : 0, p.x, p.y, p.fx); return { p, arrived: d <= 3 };
+}
+function drawUnits(M, t, now){
+  const b = mapBounds(M), mx = (b.minX+b.maxX)/2, my = (b.minY+b.maxY)/2, hp = housePos(M), f = M.blocks[0], corner = center(f[0]*BS, f[1]*BS);
+  const live = new Set(); let away = false;
+  KINDS.forEach((kind, i) => {
+    const J = (RT.jobs && RT.jobs[kind]) || {}, rent = rentActive(kind, now), U = S.robots[kind];
+    const restAt = hp ? { x: hp.x - 14 + i*9, y: hp.y - 46 + (i % 2)*4 } : { x: corner.cx - 12 + i*8, y: corner.cy + 18 };
+    const air = kind === 'water' || kind === 'feed' || kind === 'honey';
+    if (rent){ const key = kind + ':r';
+      if (kind === 'water' && J.on){ const s = dwScreen(); if (s){ live.add(key); const { p } = drawDroneAt(key, s, t, s.spray); rentTag(p.x + 17, p.y - 27); if (RT.dw.wait) bubble(p.x, p.y - 40, '等水', 'ui_water_drop'); } }
+      else { const tgt = J.job ? unitTarget(kind, M, t, now, b, mx, my) : restAt;
+        if (tgt){ live.add(key); const p = drawOneUnit(key, kind, J.job ? 'work' : 'rest', tgt, t);
+          if (!J.job){ rentTag(p.x, p.y + 8); if (Math.hypot(restAt.x - p.x, restAt.y - p.y) < 3) zzzFx(p.x + 6, p.y - 16, t, i * .17); }
+          else rentTag(p.x + (air ? 17 : 13), p.y - (air ? 27 : 4)); } } }
+    if (tierOf(kind) && U.on !== false){ const key = kind + ':o';
+      if (kind === 'water'){
+        if (U.state === 'work' && !rent){ const s = dwScreen(); if (s){ live.add(key); drawDroneAt(key, s, t, s.spray); } }
+        else if (U.state === 'rest'){ const base = findBase(RK(kind).base); if (!base || base.mi === S.cur){ live.add(key); drawOneUnit(key, kind, 'rest', restAt, t); } }
+        else if (RT.unitPos[key]){ const base = findBase('drone_pad');   // fly home before landing on the pad
+          if (base && base.mi === S.cur){ const [x, y] = pkey(base.k), c = center(x, y), r = drawDroneAt(key, { x: c.cx, y: c.cy - 6 }, t, false);
+            if (r.arrived) delete RT.unitPos[key]; else { live.add(key); away = true; } } }
+      }
+      else if (U.state === 'work' && !rent){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); drawOneUnit(key, kind, 'work', tgt, t); } }
+      else if (U.state === 'rest'){ const base = findBase(RK(kind).base); if (!base || base.mi === S.cur){ live.add(key); drawOneUnit(key, kind, 'rest', restAt, t); } }
+    }
+  });
+  RT.dwAway = away;
+  for (const k in RT.unitPos) if (!live.has(k)) delete RT.unitPos[k];
+}
+window.__farm202 = { dwStep, dwPick, needsWater, get dw(){ return RT.dw; }, zzzFx };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>

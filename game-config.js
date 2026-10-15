@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.0.1",
+    "configVersion": "2.0.2",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -3038,6 +3038,27 @@ window.GAME_CONFIG = {
     "trayTextFit": {
       "minFontPx": 11,
       "ellipsis": true
+    },
+    "idleZzz": true
+  },
+  "droneWatering": {
+    "dryThreshold": 0,
+    "targets": [
+      "planted soil",
+      "tree"
+    ],
+    "tilesPerSecond": 3,
+    "spraySeconds": 2,
+    "oneTileAtATime": true,
+    "noFlyInRain": true,
+    "ownedSource": "tank",
+    "rentedSource": "tower",
+    "ownedReturnToRefillWhenTankShort": true,
+    "keepLeftoverTank": true,
+    "currentMapFirst": true,
+    "idleAt": {
+      "owned": "drone_pad",
+      "rented": "house"
     }
   }
 };
