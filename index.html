@@ -148,6 +148,11 @@ tr.cur td{background:#fffbe9}
 .btn.ghost{background:#fff;color:var(--ink)}
 .btn.warn{background:#fff;border-color:var(--warn);color:var(--warn)}
 .btn.warn.armed{background:var(--warn);color:#fff}
+.units{display:flex;flex-direction:column;gap:4px;margin:4px 0 6px}
+.unitrow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:12px;background:#f6f2e6;border:1px solid var(--line);border-radius:10px;padding:4px 8px}
+.unitrow b{color:var(--accent,#3d7a4f)}
+.unitrow{flex-wrap:nowrap}.unitrow>span:nth-of-type(2){flex:1;min-width:0}.unitrow .btn.sm{flex:none;white-space:nowrap}
+.btn.sm{font-size:11px;padding:2px 8px;min-height:0;border-radius:8px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 textarea{width:100%;min-height:90px;font:12px ui-monospace,monospace;border:2px solid var(--line);border-radius:10px;padding:8px;resize:vertical;background:#fff;color:var(--ink)}
 input[type=number]{width:80px;font:inherit;border:2px solid var(--line);border-radius:8px;padding:4px 6px;background:#fff;color:var(--ink)}
@@ -280,6 +285,21 @@ body.m-land .seedtabs{flex-direction:row}
 body.m .traywrap{display:contents}
 body.m .tfade,body.m .tarr{display:none}
 body.m-land .item b,body.m-land .item small{text-align:left;justify-self:stretch}
+
+/* v2.2 Google Drive cloud saves */
+.gd{border:2px solid #cfe3c4;border-radius:14px;padding:12px;background:#f6fbf2;margin:2px 0 14px}.gd.off{opacity:.65}
+.gd h3{margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gd .acct{display:flex;align-items:center;gap:8px;margin:6px 0}.gd .av{width:28px;height:28px;border-radius:50%;background:#4285f4;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.gd .tog,.tog{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-top:1px dashed #d7e6cd;cursor:pointer}
+.swc{appearance:none;-webkit-appearance:none;width:38px;height:22px;border-radius:11px;background:#c9d3c2;position:relative;flex:none;cursor:pointer;margin:0}
+.swc::after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+.swc:checked{background:#2f8a3a}.swc:checked::after{left:19px}
+.cl{display:inline-flex;align-items:center;gap:3px;font-size:12px;border-radius:999px;padding:1px 8px;font-weight:600}.cl.ok{background:#e1f3e3;color:#2f7a3a}.cl.wait{background:#fff0dc;color:#b06a12}
+.gbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid #dadce0;background:#fff;border-radius:999px;padding:7px 14px;font-weight:600;cursor:pointer}.gbtn i{font-style:normal;font-weight:800;color:#4285f4}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cmp .card{border:2px solid #d7e6cd;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px}.cmp .card.new{border-color:#2f8a3a;background:#f2faef}.cmp .btn{width:100%}
+@media (max-width:520px){.cmp{grid-template-columns:1fr}}
+.cloudbadge{border:0;background:#e1f3e3;color:#2f7a3a;border-radius:999px;font-size:11px;padding:0 7px;margin-left:4px;cursor:pointer;font-weight:700;line-height:18px}
+.cloudbadge.sync{background:#e3eefb;color:#2f6fb0}.cloudbadge.login,.cloudbadge.err{background:#fff0dc;color:#b06a12}
 </style>
 </head>
 <body>
@@ -1392,7 +1412,7 @@ function renderHUD(){
   const now = Date.now();
   renderClockChip();
   const st = [];
-  const dl = activeDoll(); if (dl) st.push(`<div class="chip"><img src="${IMGSRC[dl.type === 'sun' ? 'ui_doll_sun' : 'ui_doll_rain']}" alt="">${dollName(dl)}作用中 · 剩 ${fmtDur(dl.left)}</div>`);
+  const dl = activeDoll(); if (dl) st.push(`<div class="chip"><img src="${IMGSRC['ui_doll_' + dl.type]}" alt="">${dollName(dl)}作用中 · 剩 ${fmtDur(dl.left)}</div>`);
   if (P.coins < 0) st.push(`<div class="chip warnchip"><img src="${IMGSRC.ui_bill}" alt="">金幣是負的：不能買東西，自來水和市電暫停</div>`);
   const unpaid = S.bill.list.filter(b => b.status === 'unpaid');
   if (unpaid.length) st.push(`<div class="chip billchip" data-open="bills"><img src="${IMGSRC.ui_bill}" alt="">有 ${unpaid.length} 張帳單 · ${fmtN(unpaid.reduce((a,b) => a + b.total, 0))} 金幣</div>`);
@@ -1419,7 +1439,7 @@ const TOOLS = [
     const V = DEV[S.sel.build]; return V ? `點草地蓋${V.name} · ${fmtN(V.buildCost)} 金幣 · 蓋好點它可以設定` : '選一個機器或設備'; } },
   { id: 'deco', label: '裝飾', icon: 'ui_tool_deco', hint: () => { const sd = String(S.sel.deco);
     if (sd.startsWith('bld:')){ const B = BLD[sd.slice(4)]; return `點草地放${B.name}（${B.size[0]}×${B.size[1]}，從點的格子往右下）· 免費`; }
-    if (sd.startsWith('dollbuy:')){ const [,t,s] = sd.split(':'); return `點草地放${DOLL.types[t].name}（${SIZE_NAME[s]}）· ${DOLL.prices[t][s]} 金幣 · ${t === 'rain' ? '沒下雨時才能用' : '下雨或陰天時才能用'}`; }
+    if (sd.startsWith('dollbuy:')){ const [,t,s] = sd.split(':'); return `點草地放${DOLL.types[t].name}（${SIZE_NAME[s]}）· ${DOLL.prices[t][s]} 金幣 · ${t === 'rain' ? '沒下雨時才能用' : t === 'snow' ? '沒在下雪時才能用' : '下雨或陰天時才能用'}`; }
     if (sd.startsWith('dollown:')){ const [,t,s] = sd.split(':'); return s === 'spent' ? `點草地放用完的${DOLL.types[t].name}（只是裝飾）` : `點草地放倉庫裡的${DOLL.types[t].name}（${SIZE_NAME[s]}），先用剩最少的那個`; }
     const D = CFG.decos[S.sel.deco], n = S.storage[S.sel.deco] || 0; return n ? `點草地放${D.name} · 倉庫還有 ${n} 個，免費` : D.source === 'shop' ? `點草地放${D.name} · ${fmtN(D.cost)} 金幣` : `${D.name}是升級獎勵`; } },
   { id: 'move', label: '搬移', icon: 'ui_tool_move', hint: () => RT.mv ? `點空地放下${RT.mv.name} · 綠色可以放、紅色不行 · Esc 取消` : '點要搬的東西拿起來（裝飾、建物、水池、設備、機器、動物）；任何工具下長按也可以拖曳搬移' },
@@ -1649,7 +1669,7 @@ function renderWeather(el){
     cells.push(`<div class="${r ? 'rain' : ''}">${String(hr).padStart(2,'0')}:00<img src="${IMGSRC[r ? 'ui_weather_rain' : 'ui_weather_sun']}" alt="${r ? '雨' : '晴'}">${r ? fmtClock(r.start) : ''}</div>`); }
   const nr = nextRain(now);
   const dl = activeDoll();
-  el.innerHTML = (dl ? `<p class="card"><b>${dollName(dl)}作用中</b>：到 ${fmtClock(now + dl.left*1000)} 為止，你的農場${dl.type === 'rain' ? '一直下雨' : '是晴天（晚上只有不下雨）'}。下面的預報是大家共用的天氣。</p>` : '') + `<p>${rainAt(now) ? '現在正在下大雨，水塔已補滿，所有田都是全濕。' : nr ? `下一場大雨在 ${fmtClock(nr.start)}，下 ${W.rainMinutes} 分鐘。` : '未來 24 小時沒有雨。'}所有玩家看到的天氣都一樣（以台灣時間計算）。</p><div class="forecast">${cells.join('')}</div>`;
+  el.innerHTML = (dl ? `<p class="card"><b>${dollName(dl)}作用中</b>：到 ${fmtClock(now + dl.left*1000)} 為止，你的農場${dl.type === 'rain' ? '一直下雨' : dl.type === 'snow' ? '一直下雪' : '是晴天（晚上只有不下雨）'}。下面的預報是大家共用的天氣。</p>` : '') + `<p>${rainAt(now) ? '現在正在下大雨，水塔已補滿，所有田都是全濕。' : nr ? `下一場大雨在 ${fmtClock(nr.start)}，下 ${W.rainMinutes} 分鐘。` : '未來 24 小時沒有雨。'}所有玩家看到的天氣都一樣（以台灣時間計算）。</p><div class="forecast">${cells.join('')}</div>`;
 }
 function openAuto(){
   openModal('自動化', null, (k, el) => {
@@ -2449,7 +2469,7 @@ function renderClockChip(){
   const s = ph.sun; let nxt = '';
   if (s && s.rise){ if (now < s.rise) nxt = `日出 ${fmtHM(s.rise)}`; else if (now < s.set) nxt = `日落 ${fmtHM(s.set)}`; else { const t2 = sunTimes(now + DAY); nxt = t2.rise ? `日出 ${fmtHM(t2.rise)}` : ''; } }
   const src = IMGSRC[icon]; if ($('weatherIcon').getAttribute('src') !== src) $('weatherIcon').src = src;
-  { const html = `<b class="wt-time">${fmtHM(now)}</b><span class="wt-more">${rain ? ' 大雨' : cloudy && ph.phase !== 'night' ? ' 陰天' : ''}${dl ? (dl.type === 'sun' ? '（晴天娃娃）' : '（雨天娃娃）') : ''} · ${nxt}</span>`; if ($('weatherText').innerHTML !== html) $('weatherText').innerHTML = html; }
+  { const html = `<b class="wt-time">${fmtHM(now)}</b><span class="wt-more">${rain ? ' 大雨' : (typeof farmSnow === 'function' && farmSnow(now)) ? ' 下雪' : cloudy && ph.phase !== 'night' ? ' 陰天' : ''}${dl ? `（${DOLL.types[dl.type].name}）` : ''} · ${nxt}</span>`; if ($('weatherText').innerHTML !== html) $('weatherText').innerHTML = html; }
   const ub = $('utilitiesBtn'); if (ub){ ub.querySelector('.u-tap').classList.toggle('off', !tapOn()); ub.querySelector('.u-elec').classList.toggle('off', !gridOn()); }
 }
 function renderBillBook(){
@@ -2594,7 +2614,7 @@ function putDoll(M, k, d, cx, cy){
   M.tiles[k] = { t: 'doll', did: d.id };
   if (d.left > 0){ S.activeDoll = d.id; RT.dollStart = performance.now();
     if (d.type === 'rain'){ S.player.water = Math.max(S.player.water, rainCapC()); for (const MM of S.maps) for (const kk in MM.tiles){ const T = MM.tiles[kk]; if (T.t === 'soil' || T.t === 'tree'){ T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false; } } }
-    toast(d.type === 'rain' ? `${dollName(d)}開始下雨了，田都濕了、水塔補滿（${fmtLeft(d.left)}）` : `${dollName(d)}讓天氣放晴了（${fmtLeft(d.left)}）${isNightAt(Date.now()) ? '。晚上只有不下雨的效果' : ''}`, true, 3200);
+    toast(d.type === 'rain' ? `${dollName(d)}開始下雨了，田都濕了、水塔補滿（${fmtLeft(d.left)}）` : d.type === 'snow' ? `${dollName(d)}開始下雪了，害蟲會被凍死，積雪可以鏟進水塔（${fmtLeft(d.left)}）` : `${dollName(d)}讓天氣放晴了（${fmtLeft(d.left)}）${isNightAt(Date.now()) ? '。晚上只有不下雨的效果' : ''}`, true, 3200);
   } else floatText(cx, cy - 24, '放好了（用完的娃娃）', '#2f7fa8', 11);
 }
 function returnDoll(d){ const p = dollTile(d.id); if (p) delete p.M.tiles[p.k]; if (S.activeDoll === d.id) S.activeDoll = null; }
@@ -2638,7 +2658,7 @@ function drawDollTile(T, cx, cy, t){
   const d = dollById(T.did); if (!d) return;
   const n = d.left > 0 ? `doll_${d.type}_${d.size}_sway` : `doll_${d.type}_spent`;
   spr(n, motion && d.left > 0 ? frameOf(n, t, cx*.01) : 0, cx, cy);
-  if (S.activeDoll === d.id) bubble(cx, cy - 66, fmtDur(d.left), d.type === 'sun' ? 'ui_doll_sun' : 'ui_doll_rain');
+  if (S.activeDoll === d.id) bubble(cx, cy - 66, fmtDur(d.left), `ui_doll_${d.type}`);
 }
 // owned (in-storage) doll groups for the tray / storage
 function dollGroups(){
@@ -4240,7 +4260,7 @@ function robotCard(kind){
     return `<button class="btn${tl || needBase ? ' ghost' : ''}" data-rbuy="${kind}:${i}" ${tl || needBase ? 'disabled' : ''}>${U.tier >= 0 ? '升級' : '買'}${tr.name === '標準' ? '' : tr.name} · 工作 ${fmtHours(tr.workHours)} · ${fmtN(tr.buy - trade)}${trade ? `（折 ${fmtN(trade)}）` : ''}${tl ? `（Lv ${UNLOCK[tr.id]}）` : ''}</button>`; }).join('');
   if (tiers) h += `<h5>買斷</h5><div class="row">${tiers}</div>`;
   if (kind !== 'sweep' && !owned) h += `<p class="small" style="color:var(--warn)">買斷要先用「建設」蓋${BLD[K.base].name}（Lv ${UNLOCK[K.base]}、${fmtN(BLD[K.base].cost)} 金幣）。租的不用。</p>`;
-  else if (owned && !base && tier) h += `<p class="small" style="color:var(--warn)">${BLD[K.base].name}在倉庫裡，沒放出來的話沒電就會躺著。</p>`;
+  else if (owned && !base && tier) h += `<p class="small" style="color:var(--warn)">${BLD[K.base].name}在倉庫裡，要用「裝飾」工具擺出來，掃地機器人才會出動。</p>`;
   h += `<h5>租用 ${rent ? `<span class="pill ok">租用中 · 剩 ${fmtDur((S.automation[rentKey(kind)] - now)/1000)}</span>` : ''}</h5><div class="row">${rentOptions(kind).map(o => { const ol = !isUnlocked(o.unlock);
     return `<button class="btn${ol ? ' ghost' : ' alt'}" data-rent="${o.id}" ${ol ? 'disabled' : ''}>${fmtHours(o.hours)} · ${fmtN(o.cost)}${ol ? `（Lv ${UNLOCK[o.unlock]}）` : ''}</button>`; }).join('')}</div>`;
   const tr0 = K.tiers[0];
@@ -5416,7 +5436,7 @@ function swDoor(mi){
 }
 function swHome(rent){
   const mi = swMap(rent);
-  if (!rent){ const b = findBase('sweeper_dock'); if (b && b.mi === mi){ const [x, y] = pkey(b.k); return { mi, x, y, dock: true }; } }
+  if (!rent){ const b = findBase('sweeper_dock'); if (!b) return null; const [x, y] = pkey(b.k); return { mi: b.mi, x, y, dock: true }; }   // v2.2.1: owned robot needs its dock on the farm
   const d = swDoor(mi); return d ? { mi, x: d.x, y: d.y, dock: false } : null;
 }
 // BFS from (sx,sy); start tile always allowed (the dock itself is a building)
@@ -5434,8 +5454,9 @@ function swTrashInfo(rent){
   return { mi, reach, unreach };
 }
 function swState(rent){
-  const h = swHome(rent); if (!h) return null;
+  const h = swHome(rent); if (!h){ if (RT.sw && RT.sw.rent === rent) RT.sw = null; return null; }
   let W = RT.sw; if (!W || W.rent !== rent || W.mi !== h.mi){ W = RT.sw = { rent, mi: h.mi, x: h.x, y: h.y, path: null, i: 0, el: 0, phase: 'home', goal: null }; }
+  if (W.phase === 'home' && (W.x !== h.x || W.y !== h.y)){ W.x = h.x; W.y = h.y; }   // dock moved while it was home
   return W;
 }
 function swAtHome(W){ const h = swHome(W.rent); return !h || (W.phase === 'home' && W.x === h.x && W.y === h.y); }
@@ -5470,11 +5491,15 @@ function sweepStep(dt, t){
     }
     if (W.phase === 'walk'){
       if (W.goal === 'trash' && !isTrash(M.tiles[W.path[W.path.length - 1]])){ W.phase = 'pick'; continue; }   // someone else cleaned it
-      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; return; } W.phase = 'clean'; W.el = 0; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.path = null; if (!W.rent){ W.phase = 'dockclean'; W.el = 0; continue; } W.phase = 'home'; return; } W.phase = 'clean'; W.el = 0; continue; }
       const nk = W.path[W.i + 1];
       if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ W.phase = W.goal === 'home' ? 'pick' : 'pick'; if (W.goal === 'home'){ swGoHome(W, M); } continue; }   // path got blocked: re-plan
       const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
       budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); swHeat(W.mi, nk, t); continue;
+    }
+    if (W.phase === 'dockclean'){   // v2.2.1: the dock empties the robot's bin for 30 s
+      const left = (SWK.dockCleanSeconds || 30) - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.phase = 'home'; continue;
     }
     if (W.phase === 'clean'){
       const left = cleanT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
@@ -5482,14 +5507,15 @@ function sweepStep(dt, t){
     }
   }
 }
-robotJob.sweep = () => { const rent = rentActive('sweep', Date.now()), W = RT.sw, info = swTrashInfo(rent), away = !!W && W.rent === rent && !swAtHome(W); RT.swUnreach = info.unreach;
+robotJob.sweep = () => { const rent = rentActive('sweep', Date.now()); if (!rent && !findBase('sweeper_dock')){ RT.swUnreach = 0; return false; }
+  const W = RT.sw, info = swTrashInfo(rent), away = !!W && W.rent === rent && !swAtHome(W); RT.swUnreach = info.unreach;
   if (!rent && !away){ const U = S.robots.sweep, tr = tierOf('sweep'); if (tr && U.batt < tr.workHours * 3600 * .25) return false; }   // low battery at home: charge first
   return info.reach > 0 || away; };
 { const _ust = unitStateText; unitStateText = function(kind){ const s = _ust(kind); return kind === 'sweep' && RT.swUnreach && /待命/.test(s) ? `${s}（有 ${RT.swUnreach} 處走不到）` : s; }; }
 { const _osT = ownedStateText; ownedStateText = function(kind){ const s = _osT(kind); return kind === 'sweep' && RT.swUnreach && /待命/.test(s) ? `${s}（有 ${RT.swUnreach} 處走不到）` : s; }; }
 // screen position of the walking sweeper (interpolated between tiles)
 function swScreen(){
-  const W = RT.sw; if (!W || W.mi !== S.cur) return null;
+  const W = RT.sw; if (!W || W.mi !== S.cur || W.phase === 'dockclean') return null;
   let x = W.x, y = W.y, fx = null;
   if (W.phase === 'walk' && W.path && W.i < W.path.length - 1){ const [nx, ny] = pkey(W.path[W.i + 1]), stepT = 1 / (SWK.tilesPerSecond || 1);
     const el = Math.min(stepT, W.el + Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))), a = el / stepT; x += (nx - x) * a; y += (ny - y) * a; fx = (nx - ny) < (W.x - W.y); }
@@ -5716,6 +5742,748 @@ function normalizeV21(d){
 { const _n20 = normalizeV20; normalizeV20 = function(d){ _n20(d); normalizeV21(d); }; }
 { const _nbp = newBillPeriod; newBillPeriod = function(t){ const b = _nbp(t); b.sellKwh = 0; b.sellCredit = 0; return b; }; }
 window.__farm21 = { pumpWell, wbStep, wbInfo, get wb(){ return RT.wb; }, solarOutput, towerRoom, countDev };
+
+/* ===== 23. v2.2: optional Google Drive cloud saves (drive.appdata, browser token flow, client ID only) ===== */
+const CLOUD = CFG.cloudSave || {};
+const CLOUD_KEY = 'skyfarm-cloud-v1', CLOUD_TOK = 'skyfarm-cloud-token';
+const DRIVE = 'https://www.googleapis.com/drive/v3', DRIVE_UP = 'https://www.googleapis.com/upload/drive/v3';
+const cloudOK = () => !!CLOUD.clientId && (CLOUD.allowedOrigins || []).includes(location.origin);
+const CL = { tok: null, exp: 0, client: null, status: 'off', busy: 0, files: null, pending: {}, gisP: null };
+function clState(){ try { const s = JSON.parse(lsGet(CLOUD_KEY)); if (s && typeof s === 'object') return Object.assign({ linked: false, user: null, slots: {} }, s); } catch(e){} return { linked: false, user: null, slots: {} }; }
+function clSave(s){ lsSet(CLOUD_KEY, JSON.stringify(s)); }
+function clSlot(id){ const s = clState(); return s.slots[id] || null; }
+function clSetSlot(id, patch){ const s = clState(); s.slots[id] = Object.assign({ on: false, fileId: null, lastUp: 0 }, s.slots[id] || {}, patch); clSave(s); }
+function deviceName(){ const u = navigator.userAgent; return /iPhone/.test(u) ? 'iPhone' : /iPad/.test(u) ? 'iPad' : /Android/.test(u) ? 'Android' : /Mac/.test(u) ? 'Mac' : /Windows/.test(u) ? 'Windows' : '電腦'; }
+try { const t = JSON.parse(sessionStorage.getItem(CLOUD_TOK) || 'null'); if (t && t.exp > Date.now() + 60e3){ CL.tok = t.tok; CL.exp = t.exp; } } catch(e){}
+const tokValid = () => !!CL.tok && Date.now() < CL.exp - 60e3;
+
+/* ---------- Google Identity Services (token client) ---------- */
+function loadGIS(){
+  if (window.google && google.accounts && google.accounts.oauth2) return Promise.resolve();
+  if (CL.gisP) return CL.gisP;
+  CL.gisP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.onload = () => ok(); s.onerror = () => { CL.gisP = null; no(new Error('gis')); }; document.head.appendChild(s); });
+  return CL.gisP;
+}
+function tokenClient(){
+  if (CL.client) return CL.client;
+  CL.client = google.accounts.oauth2.initTokenClient({ client_id: CLOUD.clientId, scope: CLOUD.scope || 'https://www.googleapis.com/auth/drive.appdata', callback: () => {} });
+  return CL.client;
+}
+// must be called from a click (opens Google's popup)
+function cloudLogin(consent){
+  return new Promise((ok, no) => {
+    const go = () => { const c = tokenClient();
+      c.callback = r => { if (r && r.access_token){ CL.tok = r.access_token; CL.exp = Date.now() + (r.expires_in || 3600) * 1000; try { sessionStorage.setItem(CLOUD_TOK, JSON.stringify({ tok: CL.tok, exp: CL.exp })); } catch(e){} ok(); } else no(new Error((r && r.error) || 'denied')); };
+      c.error_callback = e => no(new Error((e && e.type) || 'popup'));
+      c.requestAccessToken({ prompt: consent ? 'consent' : '' }); };
+    if (window.google && google.accounts && google.accounts.oauth2) go(); else loadGIS().then(go, no);
+  });
+}
+async function gfetch(url, opt = {}){
+  if (!tokValid()){ CL.status = 'login'; cloudBadge(); throw new Error('login'); }
+  const r = await fetch(url, Object.assign({}, opt, { headers: Object.assign({ Authorization: 'Bearer ' + CL.tok }, opt.headers || {}) }));
+  if (r.status === 401){ CL.tok = null; CL.status = 'login'; cloudBadge(); throw new Error('login'); }
+  if (!r.ok) throw new Error('http ' + r.status);
+  return r;
+}
+async function driveUser(){ const r = await gfetch(`${DRIVE}/about?fields=user(displayName,emailAddress)`); const j = await r.json(); return { name: j.user && j.user.displayName || '', email: j.user && j.user.emailAddress || '' }; }
+async function driveList(){
+  const r = await gfetch(`${DRIVE}/files?spaces=appDataFolder&pageSize=200&fields=files(id,name,modifiedTime,appProperties)`); const j = await r.json();
+  CL.files = (j.files || []).filter(f => f.appProperties && f.appProperties.slot); return CL.files;
+}
+const fileOf = id => (CL.files || []).find(f => f.appProperties.slot === id);
+function multipart(meta, text){
+  const b = 'skyfarm' + Math.random().toString(36).slice(2);
+  return { body: `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(meta)}\r\n--${b}\r\nContent-Type: application/json\r\n\r\n${text}\r\n--${b}--`, type: `multipart/related; boundary=${b}` };
+}
+async function driveUpload(id){
+  if (id === SLOT && S) save();
+  const raw = lsGet(SLOT_PREFIX + id), e = slotList().find(x => x.id === id); if (!raw || !e) return false;
+  const d = parseSaved(raw); if (!d) return false;
+  const m = summarize(d), props = { slot: id, name: String(e.name).slice(0, 12), level: String(m.level), coins: String(m.coins), blocks: String(m.blocks), savedAt: String(d.savedAt || 0), device: deviceName() };
+  const st = clSlot(id) || {}, f = st.fileId ? { id: st.fileId } : fileOf(id);
+  const meta = f ? { appProperties: props } : { name: `skyfarm-slot-${id}.json`, parents: ['appDataFolder'], appProperties: props };
+  const mp = multipart(meta, raw);
+  let r; try { r = await gfetch(f ? `${DRIVE_UP}/files/${f.id}?uploadType=multipart&fields=id,appProperties` : `${DRIVE_UP}/files?uploadType=multipart&fields=id,appProperties`, { method: f ? 'PATCH' : 'POST', headers: { 'Content-Type': mp.type }, body: mp.body }); }
+  catch(err){ if (f && /404/.test(err.message)){ clSetSlot(id, { fileId: null }); CL.files = null; return driveUpload(id); } throw err; }
+  const j = await r.json(); clSetSlot(id, { fileId: j.id, lastUp: d.savedAt || 0, syncedAt: Date.now() }); return true;
+}
+async function driveDownload(fid){ const r = await gfetch(`${DRIVE}/files/${fid}?alt=media`); return r.text(); }
+async function driveDelete(fid){ await gfetch(`${DRIVE}/files/${fid}`, { method: 'DELETE' }); }
+
+/* ---------- sync ---------- */
+function cloudBusy(on){ CL.busy += on ? 1 : -1; if (CL.busy < 0) CL.busy = 0; if (on) CL.status = 'sync'; cloudBadge(); }
+async function syncSlot(id, opts = {}){
+  const st = clSlot(id); if (!st || !st.on || CL.pending[id]) return;
+  cloudBusy(true);
+  try {
+    if (id === SLOT && S && opts.localAt === undefined) save();   // make sure the latest play is in the slot list
+    await driveList(); const f = fileOf(id), e = slotList().find(x => x.id === id), localAt = opts.localAt ?? (e && e.savedAt) ?? 0;
+    if (f) clSetSlot(id, { fileId: f.id });
+    const remoteAt = f ? +f.appProperties.savedAt || 0 : 0;
+    if (f && remoteAt > localAt + 1000 && remoteAt !== (clSlot(id).lastUp || 0)){ CL.pending[id] = true; cloudConflict(id, f, localAt); }
+    else if (!f || (e && (e.savedAt || 0) > (clSlot(id).lastUp || 0))) await driveUpload(id);
+    CL.status = 'ok';
+  } catch(err){ CL.status = /login/.test(err.message) ? 'login' : 'err'; }
+  finally { cloudBusy(false); }
+}
+async function syncAll(){ const s = clState(); if (!s.linked) return; for (const id in s.slots) if (s.slots[id].on && slotList().some(x => x.id === id)) await syncSlot(id); }
+setInterval(() => { if (clState().linked && tokValid()) syncAll(); }, (CLOUD.intervalMinutes || 5) * 60e3);
+document.addEventListener('visibilitychange', () => { if (document.hidden && SLOT && clState().linked && tokValid() && (clSlot(SLOT) || {}).on) syncSlot(SLOT); });
+
+/* both copies differ: ask which one to keep (never overwrite silently) */
+async function cloudConflict(id, f, localAt){
+  let remote = null; try { remote = await driveDownload(f.id); } catch(e){ CL.pending[id] = false; return; }
+  const rd = parseSaved(remote); if (!rd){ CL.pending[id] = false; toast('雲端那份存檔讀不到（校驗失敗），先保留這台的進度'); return; }
+  const ld = parseSaved(lsGet(SLOT_PREFIX + id)), lm = ld ? summarize(ld) : {}, rm = summarize(rd), name = (slotList().find(x => x.id === id) || {}).name || '農場';
+  const when = ms => { const d = new Date(ms); return `${d.getMonth()+1}/${d.getDate()} ${fmtHM(ms)}`; };
+  openModal('要用哪一份？', null, (k, el) => {
+    el.innerHTML = `<p>「${escapeHTML(name)}」在雲端有比較新的進度。選一份繼續玩，另一份會先備份起來，之後可以在「存檔與換電腦」復原。</p>
+      <div class="cmp"><div class="card"><h4>這台裝置</h4><div class="kv"><span>等級</span><span>Lv ${lm.level ?? '—'}</span><span>金幣</span><span>${fmtN(lm.coins || 0)}</span><span>土地</span><span>${lm.blocks || 1} 塊</span><span>存檔時間</span><span>${when(localAt)}</span></div><button class="btn ghost" id="cfLocal">用這台的</button></div>
+      <div class="card new"><h4>Google Drive <span class="cl ok">比較新</span></h4><div class="kv"><span>等級</span><span>Lv ${rm.level}</span><span>金幣</span><span>${fmtN(rm.coins)}</span><span>土地</span><span>${rm.blocks} 塊</span><span>存檔時間</span><span>${when(+f.appProperties.savedAt)} · ${escapeHTML(f.appProperties.device || '')}</span></div><button class="btn" id="cfRemote">用雲端的</button></div></div>`;
+    $('cfRemote').onclick = () => { const cur = lsGet(SLOT_PREFIX + id); if (cur) lsSet(BACKUP_PREFIX + id, cur);
+      clSetSlot(id, { lastUp: rd.savedAt || 0 }); CL.pending[id] = false;
+      if (id === SLOT){ adoptState(rd); } else { lsSet(SLOT_PREFIX + id, remote); const l = slotList(), e = l.find(x => x.id === id); if (e){ e.savedAt = rd.savedAt; e.summary = rm; writeSlotList(l); } }
+      clSetSlot(id, { lastUp: (slotList().find(x => x.id === id) || {}).savedAt || rd.savedAt });
+      closeModal(); toast('已改用雲端的進度；這台原本的進度已備份', true, 3200); renderHUD(); };
+    $('cfLocal').onclick = async () => { lsSet(BACKUP_PREFIX + id, remote); CL.pending[id] = false; closeModal(); cloudBusy(true);
+      try { await driveUpload(id); CL.status = 'ok'; toast('已用這台的進度覆蓋雲端；雲端原本那份已備份', true, 3200); } catch(e){ CL.status = 'err'; } finally { cloudBusy(false); } };
+  });
+  $('modalClose').onclick = () => { CL.pending[id] = false; closeModal(); };
+}
+// entering a farm: compare with the cloud using the save time from BEFORE catch-up
+{ const _es = enterSlot; enterSlot = function(id, fresh){ const e = slotList().find(x => x.id === id), pre = e ? e.savedAt || 0 : 0; const r = _es(id, fresh);
+  if (r && !fresh && clState().linked && (clSlot(id) || {}).on && tokValid()) syncSlot(id, { localAt: pre });
+  if (r && fresh && clState().linked && tokValid()){ clSetSlot(SLOT, { on: true }); syncSlot(SLOT); }
+  cloudBadge(); return r; }; }
+
+/* ---------- status badge next to the farm name ---------- */
+function cloudBadge(){
+  let b = $('cloudBadge'); const fn = $('farmName'); if (!fn) return;
+  if (!b){ b = document.createElement('button'); b.id = 'cloudBadge'; b.className = 'cloudbadge'; b.type = 'button'; fn.insertAdjacentElement('afterend', b); b.onclick = e => { e.stopPropagation(); openMenu('save'); }; }
+  const s = clState(), on = s.linked && SLOT && (s.slots[SLOT] || {}).on;
+  if (!on){ b.hidden = true; return; } b.hidden = false;
+  const st = !tokValid() ? 'login' : CL.busy ? 'sync' : CL.status === 'err' ? 'err' : 'ok';
+  b.className = 'cloudbadge ' + st; b.textContent = st === 'sync' ? '☁ 同步中' : st === 'login' ? '☁ 雲端待登入' : st === 'err' ? '☁ 同步失敗' : '☁';
+  b.title = st === 'ok' ? '已同步到 Google Drive' : st === 'login' ? 'Google 登入過期了，點一下重新登入' : st === 'err' ? '同步失敗，點一下查看' : '同步中…';
+}
+{ const _rh = renderHUD; renderHUD = function(){ _rh(); cloudBadge(); }; }
+
+/* ---------- 存檔與換電腦: the Google Drive card ---------- */
+function cloudCardHTML(){
+  if (!cloudOK()) return `<div class="gd off"><h3>☁ Google Drive 雲端存檔</h3><p class="small">要到網頁版（${escapeHTML(CLOUD.siteUrl || '')}）才能用。雙擊打開的離線版請用下面的匯出／匯入。</p></div>`;
+  const s = clState();
+  if (!s.linked) return `<div class="gd"><h3>☁ Google Drive 雲端存檔</h3><p class="small">把農場也存到你自己的 Google Drive（遊戲專屬的隱藏資料夾，看不到你的其他檔案）。換電腦、換手機登入同一個帳號就能接著玩。</p><button class="gbtn" id="gdLink"><i>G</i>連結 Google 帳號</button></div>`;
+  const st = !tokValid() ? '<span class="cl wait">登入過期</span>' : CL.status === 'err' ? '<span class="cl wait">同步失敗</span>' : '<span class="cl ok">✓ 已連結</span>';
+  const rows = slotList().map(e => `<label class="tog"><span>${escapeHTML(e.name)}${e.id === SLOT ? ' <span class="small">（現在在玩）</span>' : ''}${(s.slots[e.id] || {}).syncedAt ? ` <span class="small">· 上次同步 ${fmtAgo(s.slots[e.id].syncedAt)}</span>` : ''}</span><input type="checkbox" class="swc" data-slot="${e.id}" ${(s.slots[e.id] || {}).on ? 'checked' : ''}></label>`).join('');
+  return `<div class="gd"><h3>☁ Google Drive 雲端存檔 ${st}</h3>
+    <div class="acct"><div class="av">${escapeHTML(((s.user && (s.user.name || s.user.email)) || 'G').slice(0, 1).toUpperCase())}</div><div><b>${escapeHTML((s.user && s.user.name) || '')}</b><div class="small">${escapeHTML((s.user && s.user.email) || '')}</div></div></div>
+    ${rows}
+    <div class="row" style="margin-top:8px">${tokValid() ? '<button class="btn" id="gdSync">立即同步</button>' : '<button class="gbtn" id="gdRelog"><i>G</i>重新登入</button>'}<button class="btn ghost" id="gdUnlink">中斷連結</button></div>
+    <p class="small">每 ${CLOUD.intervalMinutes || 5} 分鐘、以及關閉頁面時會自動同步。本機一直都有一份，斷網照樣能玩。</p></div>`;
+}
+function wireCloudCard(el, rerender){
+  const L = el.querySelector('#gdLink'); if (L) L.onclick = async () => { loadGIS();
+    try { await cloudLogin(true); const u = await driveUser(); const s = clState(); s.linked = true; s.user = u; if (SLOT) s.slots[SLOT] = Object.assign({ on: true, fileId: null, lastUp: 0 }, s.slots[SLOT] || {}, { on: true }); clSave(s);
+      toast(`已連結 ${u.email || 'Google 帳號'}`, true); if (SLOT) await syncSlot(SLOT); rerender(); }
+    catch(e){ toast(/popup/.test(e.message) ? '登入視窗被擋住了，請允許彈出視窗後再按一次' : '沒有完成 Google 登入'); } };
+  const R2 = el.querySelector('#gdRelog'); if (R2) R2.onclick = async () => { try { await cloudLogin(false); CL.status = 'ok'; await syncAll(); rerender(); } catch(e){ toast('沒有完成 Google 登入'); } };
+  const Y = el.querySelector('#gdSync'); if (Y) Y.onclick = async () => { Y.disabled = true; await syncAll(); toast(CL.status === 'ok' ? '同步好了' : CL.status === 'login' ? 'Google 登入過期，請重新登入' : '同步失敗，等一下再試', CL.status === 'ok'); rerender(); };
+  el.querySelectorAll('.swc').forEach(c => c.onchange = async () => { clSetSlot(c.dataset.slot, { on: c.checked }); if (c.checked && tokValid()) await syncSlot(c.dataset.slot); cloudBadge(); });
+  const U = el.querySelector('#gdUnlink'); if (U) U.onclick = () => openModal('中斷連結 Google Drive', null, (k, e2) => {
+    e2.innerHTML = `<p>停止同步。這台裝置上的存檔不會受影響。</p><label class="tog"><span>一併刪除雲端上的存檔</span><input type="checkbox" id="gdDel"></label><div class="row" style="margin-top:10px"><button class="btn warn" id="gdOk">中斷連結</button><button class="btn ghost" id="gdNo">取消</button></div>`;
+    $('gdNo').onclick = () => openMenu('save');
+    $('gdOk').onclick = async () => { const del = $('gdDel').checked;
+      if (del && tokValid()){ try { await driveList(); for (const f of CL.files || []) await driveDelete(f.id); } catch(e){ toast('雲端存檔沒刪成功，可以之後再到 Google Drive 設定移除'); } }
+      try { if (CL.tok && window.google && google.accounts) google.accounts.oauth2.revoke(CL.tok, () => {}); } catch(e){}
+      CL.tok = null; CL.exp = 0; try { sessionStorage.removeItem(CLOUD_TOK); } catch(e){} clSave({ linked: false, user: null, slots: {} }); CL.files = null;
+      toast(del ? '已中斷連結，雲端存檔也刪除了' : '已中斷連結'); cloudBadge(); openMenu('save'); }; });
+}
+
+/* ---------- 選擇農場: cloud badges + farms that only exist in the cloud ---------- */
+async function cloudOnlyFarms(){ if (!clState().linked || !tokValid()) return []; try { await driveList(); } catch(e){ return []; } const local = new Set(slotList().map(x => x.id)); return (CL.files || []).filter(f => !local.has(f.appProperties.slot)); }
+async function downloadFarm(f){
+  const raw = await driveDownload(f.id), d = parseSaved(raw); if (!d){ toast('這份雲端存檔讀不到（校驗失敗）'); return; }
+  const id = f.appProperties.slot; lsSet(SLOT_PREFIX + id, raw);
+  const l = slotList(); l.push({ id, name: f.appProperties.name || (d.profile && d.profile.name) || '雲端農場', savedAt: d.savedAt, createdAt: d.savedAt, summary: summarize(d) }); writeSlotList(l);
+  clSetSlot(id, { on: true, fileId: f.id, lastUp: d.savedAt || 0 }); closeModal(); enterSlot(id); toast(`已從雲端下載「${f.appProperties.name || '農場'}」`, true);
+}
+{ const _om = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '選單'){ const r0 = render; render = (k, el) => { r0(k, el); if (k === 'save'){ const box = document.createElement('div'); box.innerHTML = cloudCardHTML(); el.insertBefore(box, el.firstChild); wireCloudCard(box, () => openMenu('save')); } }; }
+  if (title === '選擇農場'){ const r0 = render; render = (k, el) => { r0(k, el);
+      const s = clState(); if (!s.linked) return;
+      el.querySelectorAll('.slot[data-id]').forEach(box => { const id = box.dataset.id; if ((s.slots[id] || {}).on){ const h = box.querySelector('h4 span'); if (h) h.insertAdjacentHTML('beforeend', ' <span class="cl ok">☁ 同步</span>'); } });
+      el.addEventListener('click', ev => { const b = ev.target.closest('button[data-act="del"]'); if (!b || !b.classList.contains('armed')) return;
+        const id = b.closest('.slot').dataset.id, st = clSlot(id); if (!st || !st.on) return; const fid = st.fileId;
+        setTimeout(() => openModal('雲端那份要一起刪嗎？', null, (k2, e2) => { e2.innerHTML = `<p>這個農場有同步到 Google Drive。要連雲端上的那份一起刪掉嗎？</p><div class="row"><button class="btn warn" id="dcYes">一起刪</button><button class="btn ghost" id="dcNo">保留雲端那份</button></div>`;
+          $('dcYes').onclick = async () => { try { if (fid) await driveDelete(fid); toast('雲端那份也刪掉了'); } catch(e){ toast('雲端那份沒刪成功'); } const s2 = clState(); delete s2.slots[id]; clSave(s2); openSlotPicker(); };
+          $('dcNo').onclick = () => { const s2 = clState(); delete s2.slots[id]; clSave(s2); openSlotPicker(); }; }), 30); }, true);
+      cloudOnlyFarms().then(list => { if (!list.length || !el.isConnected) return;
+        const sec = document.createElement('div'); sec.innerHTML = `<h3>☁ 雲端上的農場 <span class="small">（${escapeHTML((s.user && s.user.email) || 'Google Drive')}，這台裝置還沒有）</span></h3><div class="slots">${list.map(f => { const a = f.appProperties; return `<div class="slot" data-fid="${f.id}"><h4><span>${escapeHTML(a.name || '農場')} <span class="cl ok">☁ 雲端</span></span></h4><div class="stats"><div><b>Lv ${escapeHTML(a.level || '—')}</b>等級</div><div><b>${fmtN(+a.coins || 0)}</b>金幣</div><div><b>${escapeHTML(a.blocks || '1')} 塊</b>土地</div></div><div class="small">最後存檔：${fmtAgo(+a.savedAt || 0)}${a.device ? ' · 在 ' + escapeHTML(a.device) + ' 上' : ''}</div><div class="row"><button class="btn" data-cact="get">下載並進入</button><button class="btn warn" data-cact="cdel">從雲端刪除</button></div></div>`; }).join('')}</div>`;
+        const nb = el.querySelector('h3'); el.insertBefore(sec, nb || null);
+        sec.onclick = async ev => { const b = ev.target.closest('button[data-cact]'); if (!b) return; const f = list.find(x => x.id === b.closest('.slot').dataset.fid);
+          if (b.dataset.cact === 'get'){ b.disabled = true; try { await downloadFarm(f); } catch(e){ toast('下載失敗，等一下再試'); b.disabled = false; } }
+          else { if (!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent = '確定刪除？再按一次'; return; } try { await driveDelete(f.id); toast('已從雲端刪除'); } catch(e){ toast('沒刪成功'); } openSlotPicker(); } }; });
+    }; }
+  return _om(title, tabs, render, initial); }; }
+if (clState().linked && cloudOK()) loadGIS().catch(() => {});
+window.__cloud = { CL, clState, clSave, clSlot, clSetSlot, syncSlot, syncAll, driveUpload, driveList, cloudOK, cloudBadge, setToken(t, s = 3600){ CL.tok = t; CL.exp = Date.now() + s * 1000; } };
+
+/* ===== 24. v2.2.1: sweeper dock (must be placed; 30 s bin cleaning) + snow-woman weather doll ===== */
+
+/* ---------- sweeper dock ---------- */
+{ const _db6 = drawBase; drawBase = function(T, x, y, t){ _db6(T, x, y, t);
+  if (T.id !== 'sweeper_dock') return; const W = RT.sw; if (!W || W.rent || W.phase !== 'dockclean') return;
+  const { cx, cy } = center(x, y), n = 'building_sweeper_dock_clean'; spr(n, motion ? frameOf(n, t) : 0, cx, cy);
+  const left = Math.max(0, Math.ceil((SWK.dockCleanSeconds || 30) - W.el - Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))));
+  bubble(cx, cy - 34, `清潔 0:${String(left).padStart(2, '0')}`); }; }
+{ const _ost = ownedStateText; ownedStateText = function(kind){
+  if (kind === 'sweep' && tierOf('sweep') && !findBase('sweeper_dock')) return S.buildStore.sweeper_dock > 0 ? '等你擺掃地基座（在飾品倉庫）' : '等你擺掃地基座';
+  if (kind === 'sweep' && RT.sw && !RT.sw.rent && RT.sw.phase === 'dockclean') return '回基座清潔中';
+  return _ost(kind); }; }
+{ const _ust3 = unitStateText; unitStateText = function(kind){ if (kind === 'sweep' && !rentActive('sweep', Date.now())) return ownedStateText(kind); return _ust3(kind); }; }
+
+/* ---------- snow-woman doll: makes it snow anywhere, like natural snow ---------- */
+function farmSnow(t){
+  if (RT.dbgSnowUntil && t < RT.dbgSnowUntil && t >= (RT.dbgSnowFrom || 0)) return true;
+  const d = activeDoll(); if (d) return d.type === 'snow';
+  return !!snowAt(t);
+}
+function farmCloudy(t){ const d = activeDoll(); if (d) return d.type === 'rain' || d.type === 'snow'; return cloudyAt(t); }
+function dollUsable(type, t = Date.now()){
+  const rain = farmRain(t), cloudy = farmCloudy(t);
+  if (type === 'rain') return rain ? '現在正在下雨，雨天娃娃要在沒下雨的時候用' : null;
+  if (type === 'snow') return farmSnow(t) ? '現在正在下雪，雪女娃娃要在沒下雪的時候用' : null;
+  return rain || cloudy ? null : '現在是晴天，晴天娃娃要在下雨或陰天的時候用';
+}
+function stepSnow(dt, t, snowNow){
+  const Sn = S.snow, d = activeDoll();
+  if (snowNow){
+    const r = snowAt(t), byDoll = d && d.type === 'snow', id = byDoll ? 'doll' + d.id : r ? r.slot : 'dbg' + (RT.dbgSnowFrom || 0);
+    if (Sn.slot !== id){ Sn.slot = id; Sn.cleared = {}; if (!byDoll) RT.notices.push({ kind: 'snow', t }); }   // the doll already announced its own snow
+    Sn.cover = true; Sn.end = byDoll ? t + d.left * 1000 : r ? r.end : RT.dbgSnowUntil; Sn.meltAt = null;
+    return;
+  }
+  if (!Sn.cover) return;
+  if (!Sn.meltAt){ const e = Sn.end || t, probe = e + 3600e3, sunny = !isNightAt(probe) && !slotCloudy(slotOf(probe));
+    Sn.meltAt = e + (sunny ? SN.coverMeltHoursSunnyDay : SN.coverMeltHours) * 3600e3; Sn.sunnyMelt = sunny; }
+  if (t >= Sn.meltAt){
+    Sn.cover = false; Sn.cleared = {}; Sn.meltAt = null;
+    const cap = rainCapC(), add = Math.min(cap - S.player.water, cap * SN.meltRefillTowerPct);
+    if (add > 0) S.player.water += add;
+    RT.notices.push({ kind: 'melt', t, add: Math.max(0, Math.round(add)) });
+  }
+}
+window.__farm221 = { farmSnow, dollUsable, get sw(){ return RT.sw; } };
+
+/* ===== 25. v2.3: many robots per kind; bases (pad / charger / sweeper dock) up to 3 each, 1–2 slots ===== */
+const FLC = CFG.fleet || { maxPerKind: 5, perLevelAfterUnlock: 1, baseMax: 3, slotsMax: 2, expandRate: .5, dockBuildCost: 300, lowBatteryStay: .25 };
+const BASE_TYPES = ['drone_pad', 'robot_charger', 'sweeper_dock'];
+const AIR = new Set(['water', 'honey']);
+const REST_SPR = { water: 'drone_water_rest', feed: 'robot_feeder_rest', snow: 'robot_snow_rest', sweep: 'robot_sweeper_rest', poop: 'robot_poop_rest', honey: 'robot_honey_rest', wellbot: 'robot_wellbot_rest' };
+// 2 slots (v2.3.1): drone pad = lower/upper deck on one post (F shape); charger & sweeper dock = left/right of a taller post
+const SLOT_POS = { drone_pad: { 1: [[0, -6]], 2: [[0, -6], [0, -32]] }, robot_charger: { 1: [[-14, 6]], 2: [[-23, 7], [15, 7]] }, sweeper_dock: { 1: [[-3, 1]], 2: [[-12, 3], [12, 3]] } };
+if (BLD.sweeper_dock) BLD.sweeper_dock.cost = FLC.dockBuildCost;
+const WS = RT.ws = {};      // worker simulation state per 'kind:unitId' or 'kind:r' (rented)
+RT.park = {}; RT.beside = {}; RT.awayKeys = new Set(); RT.rw = {};
+
+/* ---------- fleet data ---------- */
+function fleet(kind){ S.fleet = S.fleet || {}; return (S.fleet[kind] = S.fleet[kind] || []); }
+const unitTier = (kind, u) => u && u.tier >= 0 ? RK(kind).tiers[u.tier] : null;
+const unitFull = (kind, u) => (unitTier(kind, u) || { workHours: 1 }).workHours * 3600;
+const unitPct = (kind, u) => Math.round(u.batt / unitFull(kind, u) * 100);
+function unlockLv(kind){ const K = RK(kind); return UNLOCK[K.tiers[0].id] || K.unlockLevel || 1; }
+function maxUnits(kind){ const lv = S.player.level, ul = unlockLv(kind); if (lv < ul) return 0; return Math.min(FLC.maxPerKind, 1 + Math.floor((lv - ul) * (FLC.perLevelAfterUnlock || 1))); }
+function syncLegacy(){ for (const kind of KINDS){ const f = fleet(kind), U = S.robots[kind] || (S.robots[kind] = { tier: -1, batt: 0, tank: 0, state: 'none', on: true, refill: 0 });
+  U.tier = f.length ? Math.max(...f.map(u => u.tier)) : -1; U.state = f.some(u => u.state === 'work') ? 'work' : f.length ? f[0].state : 'none'; U.on = !f.length || f.some(u => u.on !== false); if (f.length) U.batt = f[0].batt; } }
+function newUnitId(kind){ const f = fleet(kind); let n = f.length + 1; while (f.some(u => u.id === kind + n)) n++; return kind + n; }
+
+/* ---------- bases and slots ---------- */
+function basesOf(id){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (T.t === 'building' && T.id === id){ const [x, y] = pkey(k); out.push({ mi, k, T, M, x, y }); } } });
+  return out.sort((a, b) => a.mi - b.mi || a.y - b.y || a.x - b.x); }
+const slotsOfT = T => Math.min(FLC.slotsMax || 2, Math.max(1, T.slots || 1));
+function slotsOf(id){ const out = []; for (const b of basesOf(id)) for (let i = 0; i < slotsOfT(b.T); i++) out.push({ key: `${b.mi}|${b.k}|${i}`, mi: b.mi, k: b.k, x: b.x, y: b.y, i, T: b.T }); return out; }
+function slotByKey(sk){ if (!sk) return null; const [mi, k, i] = sk.split('|'); const M = S.maps[+mi]; if (!M) return null; const T = M.tiles[k]; if (!T || T.t !== 'building' || !BASE_TYPES.includes(T.id) || +i >= slotsOfT(T)) return null; const [x, y] = pkey(k); return { key: sk, mi: +mi, k, x, y, i: +i, T }; }
+const capacityOf = id => slotsOf(id).length;
+const baseCount = id => basesOf(id).length + (S.buildStore[id] || 0);
+function slotScreen(s){ const c = center(s.x, s.y), o = SLOT_POS[s.T.id][slotsOfT(s.T)][s.i] || [0, 0]; return { x: c.cx + o[0], y: c.cy + o[1] }; }
+// fixed homes: every unit of the kinds sharing a base type gets a slot in order (sweepers need one to be dispatched)
+function assignHomes(){
+  for (const id of BASE_TYPES){ const sl = slotsOf(id), kinds = KINDS.filter(k => RK(k).base === id); let i = 0;
+    for (const kind of kinds) for (const u of fleet(kind)){ if (!unitTier(kind, u)) continue; u.home = i < sl.length ? sl[i].key : null; i++; } }
+}
+
+/* ---------- one owned unit: battery, charging (slots = capacity), water tank ---------- */
+function stepUnit(kind, u, dt, t, want, occ){
+  const tier = unitTier(kind, u); if (!tier){ u.state = 'none'; return false; }
+  const K = RK(kind), baseId = K.base, cap = capacityOf(baseId), full = tier.workHours * 3600, water = kind === 'water', tankMax = K.tankDrops || 0, low = water && !!u.tankLow;
+  if (u.on === false) want = false;
+  u.waitWater = false;
+  if (kind === 'sweep' && !u.home){ u.state = 'nohome'; return false; }
+  if (cap > 0){
+    if (u.batt <= 0) u.mustFull = true;
+    const topUp = u.batt < full - 1e-6 && (u.batt <= 0 || !want || u.state === 'charge' || u.state === 'queue');
+    if (!(topUp && want && !u.mustFull) && topUp){
+      const used = occ[baseId] || 0; if (used >= cap){ u.state = 'queue'; return false; }
+      occ[baseId] = used + 1;
+      const b = slotByKey(u.home) || slotsOf(baseId)[0], f = chargeFrac(tier, b ? { T: b.T } : { T: {} }, dt, t);
+      if (f > 0 || u.batt <= 0 || !want){ u.state = 'charge'; u.batt = Math.min(full, u.batt + f * full); if (u.batt >= full - 1e-6){ u.batt = full; u.mustFull = false; u.state = 'idle'; } return false; }
+      occ[baseId]--;
+    }
+    if (water && u.tank < tankMax && (u.tank <= 0 || low || !want || u.state === 'refill')){
+      u.state = 'refill'; u.refill = (u.refill || 0) + dt;
+      if (u.refill >= AU.water.refillSeconds){
+        if (useWater(tankMax - u.tank, false, t)){ u.tank = tankMax; u.tankLow = false; u.refill = 0; u.state = 'idle'; }
+        else { u.refill = AU.water.refillSeconds; u.waitWater = true; if (u.tank <= 0 || low || !want) return false; u.refill = 0; }
+      } else return false;
+    }
+  } else if (u.batt <= 0 || (water && (u.tank <= 0 || low))){ u.state = 'rest'; return false; }
+  if (!want){ u.state = 'idle'; return false; }
+  u.state = 'work'; u.batt = Math.max(0, u.batt - dt); return true;
+}
+
+/* ---------- worker homes ---------- */
+function houseTile(){ const mi = houseMapIndex(), hp = housePos(S.maps[mi]); return hp ? { mi, x: hp.rx + 1, y: hp.ry + 1 } : { mi: 0, x: 2, y: 2 }; }
+function workerHome(kind, u){
+  if (u){ const s = slotByKey(u.home) || slotsOf(RK(kind).base)[0]; return s ? { mi: s.mi, x: s.x, y: s.y, allow: s.k } : (kind === 'sweep' ? null : houseTile()); }
+  if (kind === 'water') return houseTile();
+  const mi = houseMapIndex(), d = swDoor(mi); return d ? { mi, x: d.x, y: d.y } : houseTile();
+}
+const wKey = (kind, u) => kind + ':' + (u ? u.id : 'r');
+const lowAtHome = (kind, u) => u && u.batt < unitFull(kind, u) * (FLC.lowBatteryStay ?? .25);
+
+/* ---------- drone workers (fly to dry tiles; never two on the same tile) ---------- */
+function droneClaims(ex){ const s = new Set(); for (const k in WS) if (k !== ex && k.startsWith('water:') && WS[k] && WS[k].tgt) s.add(WS[k].tgt.mi + '|' + WS[k].tgt.k); return s; }
+function droneState(key, home){ let D = WS[key]; if (!D) D = WS[key] = { mi: home.mi, x: home.x, y: home.y, tgt: null, el: 0, ft: 0, ax: home.x, ay: home.y }; return D; }
+function dronePick(D, key){ const cl = droneClaims(key); let best = null, bd = Infinity;
+  for (const mi of [S.cur, ...S.maps.map((_, i) => i).filter(i => i !== S.cur)]){ const M = S.maps[mi];
+    for (const k in M.tiles){ if (!dwNeeds(M.tiles[k]) || cl.has(mi + '|' + k)) continue; const [x, y] = pkey(k), d = (mi === D.mi ? 0 : 1e6) + Math.hypot(x - D.x, y - D.y); if (d < bd){ bd = d; best = { mi, k, x, y }; } }
+    if (best && mi === S.cur) break; }
+  return best; }
+function droneWants(key, u){ const D = WS[key]; if (D && D.tgt) return true; return !!dronePick(D || { mi: S.cur, x: 0, y: 0 }, key); }
+function droneStep(key, u, dt, t){
+  const home = workerHome('water', u), D = droneState(key, home);
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 600){
+    if (!D.tgt || !dwNeeds(S.maps[D.tgt.mi].tiles[D.tgt.k])){
+      const n = dronePick(D, key); if (!n){ D.tgt = null; D.el = 0; return; }
+      if (u && u.tank < dwNeed(S.maps[n.mi].tiles[n.k]) - 1e-6){ u.tankLow = true; D.tgt = null; D.el = 0; return; }
+      D.tgt = n; D.ax = D.x; D.ay = D.y; D.el = 0; D.ft = (n.mi === D.mi ? Math.hypot(n.x - D.x, n.y - D.y) : 6) / (DW.tilesPerSecond || 3);
+    }
+    const total = D.ft + (DW.spraySeconds || 2), left = total - D.el;
+    if (budget < left){ D.el += budget; D.simAt = t; return; }
+    budget -= left; D.el = total;
+    const T = S.maps[D.tgt.mi].tiles[D.tgt.k], need = dwNeed(T);
+    if (!u){ if (!useWater(need, false, t)){ D.wait = true; return; } }
+    else { if (u.tank < need - 1e-6){ u.tankLow = true; return; } u.tank -= need; }
+    D.wait = false; D.simAt = t; T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false;
+    D.mi = D.tgt.mi; D.x = D.tgt.x; D.y = D.tgt.y; D.ax = D.x; D.ay = D.y; D.tgt = null; D.el = 0; D.ft = 0;
+  }
+}
+function droneScreenOf(D){
+  if (!D || D.mi !== S.cur) return null;
+  if (!D.tgt){ const c = center(D.x, D.y); return { x: c.cx, y: c.cy, spray: false }; }
+  const el = D.wait ? D.el : Math.min(D.ft + (DW.spraySeconds || 2), D.el + Math.max(0, Math.min(1.5, (Date.now() - (D.simAt || Date.now())) / 1000)));
+  const a = D.ft > 0 ? Math.min(1, el / D.ft) : 1, c = center(D.ax + (D.tgt.x - D.ax) * a, D.ay + (D.tgt.y - D.ay) * a);
+  return { x: c.cx, y: c.cy, spray: el >= D.ft && !D.wait };
+}
+
+/* ---------- walking workers: sweepers + well robots ---------- */
+function walkState(key, home){ let W = WS[key]; if (!W || W.mi !== home.mi){ W = WS[key] = { mi: home.mi, x: home.x, y: home.y, path: null, i: 0, el: 0, phase: 'home', goal: null }; }
+  if (W.phase === 'home' && (W.x !== home.x || W.y !== home.y)){ W.x = home.x; W.y = home.y; } return W; }
+const walkAway = (W, home) => !!W && home && !(W.phase === 'home' && W.x === home.x && W.y === home.y);
+function walkGoHome(W, M, home){ const hk = tkey(home.x, home.y), p = swPathTo(swBFS(M, W.x, W.y, hk), hk);
+  if (!p){ W.x = home.x; W.y = home.y; W.phase = 'home'; W.path = null; return; } W.path = p; W.i = 0; W.el = 0; W.goal = 'home'; W.phase = 'walk'; }
+function walkerClaims(kind, ex){ const s = new Set(); for (const k in WS){ if (k === ex || !k.startsWith(kind + ':')) continue; const W = WS[k]; if (W && W.target && W.phase !== 'home') s.add(W.target); } return s; }
+function sweepPickPath(W, M, key){ const cl = walkerClaims('sweep', key), prev = swBFS(M, W.x, W.y); let best = null, bl = Infinity;
+  for (const k in M.tiles){ if (!isTrash(M.tiles[k]) || !prev.has(k) || cl.has(k)) continue; const p = swPathTo(prev, k); if (p.length < bl){ bl = p.length; best = p; } } return best; }
+function sweepWants(key, u){ const home = workerHome('sweep', u); if (!home) return false; const W = WS[key]; if (walkAway(W, home)) return true; if (lowAtHome('sweep', u)) return false;
+  return !!sweepPickPath(W || { x: home.x, y: home.y }, S.maps[home.mi], key); }
+function sweepWorker(key, u, dt, t){
+  const home = workerHome('sweep', u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = 1 / (SWK.tilesPerSecond || 1), cleanT = SWK.cleanSeconds || 2;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      const p = sweepPickPath(W, M, key);
+      if (p && u){ const [tx, ty] = pkey(p[p.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length; if (u.batt < (p.length + back) * stepT + cleanT + 2){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; } }
+      if (!p){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; }
+      W.path = p; W.i = 0; W.el = 0; W.goal = 'trash'; W.target = p[p.length - 1]; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.goal === 'trash' && !isTrash(M.tiles[W.target])){ W.phase = 'pick'; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.path = null; W.target = null; if (u){ W.phase = 'dockclean'; W.el = 0; continue; } W.phase = 'home'; return; } W.phase = 'clean'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ if (W.goal === 'home') walkGoHome(W, M, home); else W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); swHeat(W.mi, nk, t); continue;
+    }
+    if (W.phase === 'dockclean'){ const left = (SWK.dockCleanSeconds || 30) - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; W.phase = 'home'; continue; }
+    if (W.phase === 'clean'){ const left = cleanT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; swClean(M, W.mi, tkey(W.x, W.y), t); W.target = null; W.phase = 'pick'; W.el = 0; continue; }
+  }
+}
+function wellPlan(W, M, key, u){
+  const carry = u ? (u.carry || 0) : (W.carry || 0);
+  if (carry > 0 && towerRoom() >= 1){ const p = wbPathToAny(M, W.x, W.y, wbStandTiles(M, T => isTowerTile(T))); if (p) p.goal = 'tower'; return p; }
+  if (!(carry > 0) && towerRoom() >= 1){ const cl = walkerClaims('wellbot', key); const p = wbPathToAny(M, W.x, W.y, wbStandTiles(M, (T, k) => isWell(T) && (T.water || 0) >= wbMin() && !cl.has(k))); if (p) p.goal = 'well'; return p; }
+  return null;
+}
+function wellWants(key, u){ const home = workerHome('wellbot', u); if (!home) return false; const W = WS[key]; if (walkAway(W, home)) return true; if (lowAtHome('wellbot', u)) return false;
+  return !!wellPlan(W || { x: home.x, y: home.y, carry: 0 }, S.maps[home.mi], key, u); }
+function wellWorker(key, u, dt, t){
+  const home = workerHome('wellbot', u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = 1 / (WB.tilesPerSecond || 1);
+  const getC = () => u ? (u.carry || 0) : (W.carry || 0), setC = v => { if (u) u.carry = v; else W.carry = v; };
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      let plan = wellPlan(W, M, key, u);
+      if (plan && u){ const last = pkey(plan.path[plan.path.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, last[0], last[1], hk), hk) || []).length; if (u.batt < (plan.path.length + back) * stepT + 8) plan = null; }
+      if (!plan){ if (W.phase === 'pick' && walkAway(W, home)) walkGoHome(W, M, home); else { W.phase = 'home'; W.target = null; } if (W.phase === 'home') return; continue; }
+      W.path = plan.path; W.i = 0; W.el = 0; W.goal = plan.goal; W.target = plan.target; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; W.target = null; return; } W.phase = W.goal === 'well' ? 'fill' : 'pour'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue;
+    }
+    if (W.phase === 'fill' || W.phase === 'pour'){
+      const need = W.phase === 'fill' ? (WB.fillSeconds || 2) : (WB.pourSeconds || 2), left = need - W.el;
+      if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0;
+      const T = M.tiles[W.target];
+      if (W.phase === 'fill'){ if (isWell(T) && (T.water || 0) >= 1){ const n = Math.min(WB.bucketDrops || 20, T.water); T.water -= n; setC(getC() + n); } }
+      else { const n = Math.min(getC(), towerRoom()); S.player.water += n; setC(getC() - n);
+        if (Date.now() - t < 5000 && W.mi === S.cur && n > 0){ const c = center(W.x, W.y); floatText(c.cx, c.cy - 30, `+${Math.round(n)} 滴進水塔`, '#2f7fa8', 10); } }
+      W.target = null; W.phase = 'pick'; continue;
+    }
+  }
+}
+function walkScreenOf(W, stepT){
+  if (!W || W.mi !== S.cur || W.phase === 'dockclean') return null;
+  let x = W.x, y = W.y, fx = null;
+  if (W.phase === 'walk' && W.path && W.i < W.path.length - 1){ const [nx, ny] = pkey(W.path[W.i + 1]); const el = Math.min(stepT, W.el + Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))), a = el / stepT; x += (nx - x) * a; y += (ny - y) * a; fx = (nx - ny) < (W.x - W.y); }
+  else if ((W.phase === 'fill' || W.phase === 'pour') && W.target){ const [tx, ty] = pkey(W.target); fx = (tx - ty) < (W.x - W.y); }
+  const c = center(x, y); return { x: c.cx, y: c.cy, fx, phase: W.phase };
+}
+
+/* ---------- the robot step (replaces v1.8 → v2.2) ---------- */
+const workerWants = { water: droneWants, sweep: sweepWants, wellbot: wellWants };
+stepRobots = function(dt, t, rainNow){
+  const res = {}; RT.jobs = RT.jobs || {}; assignHomes(); const occ = {};
+  for (const kind of KINDS){
+    const job = robotJob[kind](t, rainNow), rent = rentActive(kind, t);
+    const until = S.automation[rentKey(kind)] || 0; S.rentSeen = S.rentSeen || {};
+    if (!rent && until > 0 && S.rentSeen[kind] !== until){ S.rentSeen[kind] = until; if (t - until < 90e3) RT.notices.push({ kind: 'rentEnd', name: KIND_NAME(kind), icon: R_ICON[kind], t }); }
+    const ww = workerWants[kind], working = [];
+    for (const u of fleet(kind)){ const key = wKey(kind, u), home = workerHome(kind, u), away = ww && kind !== 'water' && walkAway(WS[key], home);
+      const want = away || (job && (!ww || ww(key, u)));
+      if (stepUnit(kind, u, dt, t, want, occ)) working.push(u);
+      else if (kind === 'water' && WS[key] && u.state !== 'work'){ const h = workerHome('water', u); Object.assign(WS[key], { mi: h.mi, x: h.x, y: h.y, ax: h.x, ay: h.y, tgt: null, el: 0, ft: 0 }); }
+    }
+    const rk = wKey(kind, null), rentWant = rent && (ww ? (kind !== 'water' && walkAway(WS[rk], workerHome(kind, null))) || (job && ww(rk, null)) : job);
+    RT.rw[kind] = !!rentWant;
+    if (rent && !rentWant && kind === 'water' && WS[rk]){ const h = houseTile(); Object.assign(WS[rk], { mi: h.mi, x: h.x, y: h.y, ax: h.x, ay: h.y, tgt: null, el: 0 }); }
+    const n = working.length + (rentWant ? 1 : 0), on = n > 0;
+    res[kind] = on; RT.jobs[kind] = { job, rent, on, workers: n };
+    if (!on) continue;
+    if (kind === 'water'){ for (const u of working) droneStep(wKey(kind, u), u, dt, t); if (rentWant) droneStep(rk, null, dt, t); }
+    else if (kind === 'sweep'){ for (const u of working) sweepWorker(wKey(kind, u), u, dt, t); if (rentWant) sweepWorker(rk, null, dt, t); }
+    else if (kind === 'wellbot'){ for (const u of working) wellWorker(wKey(kind, u), u, dt, t); if (rentWant) wellWorker(rk, null, dt, t); }
+    else if (kind === 'snow') snowbotStep(dt * n);
+    else if (kind === 'poop') poopStep(dt * n);
+    else if (kind === 'honey') honeyStep(dt * n);
+  }
+  parkUnits(); syncLegacy();
+  return res;
+};
+robotJob.sweep = () => { for (const M of S.maps) for (const k in M.tiles) if (isTrash(M.tiles[k])) return true; return false; };
+if (RB.kinds.wellbot) robotJob.wellbot = () => towerRoom() >= 1;
+// who sits where on the bases (charging units first, then idle units on their own home slot)
+function parkUnits(){
+  const park = {}, beside = {};
+  for (const id of BASE_TYPES){ const sl = slotsOf(id), kinds = KINDS.filter(k => RK(k).base === id), free = new Set(sl.map(s => s.key)), list = [];
+    for (const kind of kinds) for (const u of fleet(kind)) if (unitTier(kind, u) && u.state !== 'work' && u.state !== 'none') list.push({ kind, u });
+    list.sort((a, b) => (b.u.state === 'charge') - (a.u.state === 'charge'));
+    for (const e of list){ let s = null;
+      if (e.u.state === 'charge' && e.u.park && free.has(e.u.park)) s = e.u.park;
+      else if (e.u.home && free.has(e.u.home)) s = e.u.home;
+      else if (e.u.state === 'charge' || e.u.state === 'refill') s = [...free][0] || null;
+      if (s){ free.delete(s); park[s] = e; e.u.park = s; }
+      else { e.u.park = null; const b = sl[0]; if (b){ const bk = b.mi + '|' + b.k; (beside[bk] = beside[bk] || []).push(e); } } } }
+  RT.park = park; RT.beside = beside;
+}
+
+/* ---------- drawing ---------- */
+function drawParked(e, x, y, t){
+  const { kind, u } = e, n = REST_SPR[kind]; spr(n, motion && u.state === 'charge' ? frameOf(n, t) : 0, x, y);
+  if (u.state === 'charge') bubble(x, y - 24, '', 'ui_electric');
+  else if (u.state === 'queue') bubble(x, y - 24, '排隊');
+  else if (u.state === 'refill') bubble(x, y - 24, u.waitWater ? '等水' : '補水', 'ui_water_drop');
+  else if (u.state === 'rest') bubble(x, y - 24, '沒電');
+  else if (u.state === 'idle' && u.on !== false) zzzFx(x + 6, y - 18, t, (x % 7) / 7);
+}
+drawBase = function(T, x, y, t){
+  const { cx, cy } = center(x, y), two = slotsOfT(T) === 2;
+  spr(two ? `building_${T.id}_x2` : `building_${T.id}_idle`, 0, cx, cy);
+  const k = tkey(x, y), mi = S.cur;
+  for (let i = 0; i < slotsOfT(T); i++){ const sk = `${mi}|${k}|${i}`, s = slotByKey(sk), p = slotScreen(s);
+    if (T.id === 'sweeper_dock'){ const owner = fleet('sweep').find(u => u.home === sk); const W = owner && WS[wKey('sweep', owner)];
+      if (W && W.phase === 'dockclean'){ spr('robot_sweeper_rest', 0, p.x, p.y);
+        for (let j = 0; j < 5; j++){ const kk = ((t * 1.2) + j / 5) % 1; ctx.fillStyle = j % 2 ? `rgba(110,170,70,${.9 - kk * .7})` : `rgba(150,130,100,${.85 - kk * .7})`; ctx.beginPath(); ctx.arc(p.x - 4 + kk * 10, p.y - 4 - kk * 12, 1.4, 0, 7); ctx.fill(); }
+        const left = Math.max(0, Math.ceil((SWK.dockCleanSeconds || 30) - W.el - Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))));
+        bubble(p.x, p.y - 24 - i * 16, `清潔 0:${String(left).padStart(2, '0')}`); continue; } }
+    const e = RT.park[sk]; if (e && !RT.awayKeys.has(wKey(e.kind, e.u))) drawParked(e, p.x, p.y, t); }
+  (RT.beside[mi + '|' + k] || []).forEach((e, j) => { if (!RT.awayKeys.has(wKey(e.kind, e.u))) drawParked(e, cx - 26 + j * 12, cy + 12 + (j % 2) * 4, t); });
+};
+function drawWalkerKey(kind, key, W, t, carry){
+  const s = walkScreenOf(W, 1 / ((kind === 'sweep' ? SWK : WB).tilesPerSecond || 1)); if (!s) return null;
+  let p = RT.unitPos[key]; if (!p) p = RT.unitPos[key] = { x: s.x, y: s.y, fx: false }; if (s.fx !== null) p.fx = s.fx; p.x = s.x; p.y = s.y;
+  let n = 'robot_sweeper_move';
+  if (kind === 'wellbot') n = s.phase === 'fill' ? 'robot_wellbot_fill' : s.phase === 'pour' ? 'robot_wellbot_pour' : carry ? 'robot_wellbot_carry' : 'robot_wellbot_move';
+  spr(n, motion ? frameOf(n, t) : 0, p.x, p.y, p.fx);
+  if (kind === 'sweep' && s.phase === 'clean') spriteFxDust(p.x, p.y, t);
+  return p;
+}
+drawUnits = function(M, t, now){
+  const b = mapBounds(M), mx = (b.minX + b.maxX) / 2, my = (b.minY + b.maxY) / 2, hp = housePos(M), f = M.blocks[0], corner = center(f[0] * BS, f[1] * BS);
+  const live = new Set(), away = new Set();
+  KINDS.forEach((kind, i) => {
+    const rent = rentActive(kind, now);
+    const restAt = hp ? { x: hp.x - 14 + (i % 6) * 9, y: hp.y - 46 + (i % 2) * 4 } : { x: corner.cx - 12 + i * 8, y: corner.cy + 18 };
+    const air = kind === 'water' || kind === 'feed' || kind === 'honey';
+    // rented one (extra worker)
+    if (rent){ const key = wKey(kind, null), on = RT.rw[kind];
+      if (kind === 'water' && on){ const s = droneScreenOf(WS[key]); if (s){ live.add(key); const { p } = drawDroneAt(key, s, t, s.spray); rentTag(p.x + 17, p.y - 27); if (WS[key].wait) bubble(p.x, p.y - 40, '等水', 'ui_water_drop'); } }
+      else if ((kind === 'sweep' || kind === 'wellbot') && walkAway(WS[key], workerHome(kind, null))){ const p = drawWalkerKey(kind, key, WS[key], t, (WS[key].carry || 0) > 0); if (p){ live.add(key); rentTag(p.x + 13, p.y - 4); } }
+      else if (on && kind !== 'water' && kind !== 'sweep' && kind !== 'wellbot'){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); const p = drawOneUnit(key, kind, 'work', tgt, t); rentTag(p.x + (air ? 17 : 13), p.y - (air ? 27 : 4)); } }
+      else { live.add(key); if (kind === 'sweep' || kind === 'wellbot') RT.unitPos[key] = { x: restAt.x, y: restAt.y, fx: false };
+        const p = drawOneUnit(key, kind, 'rest', restAt, t); rentTag(p.x, p.y + 8); if (Math.hypot(restAt.x - p.x, restAt.y - p.y) < 3) zzzFx(p.x + 6, p.y - 16, t, i * .17); } }
+    // owned ones
+    fleet(kind).forEach((u, j) => { if (!unitTier(kind, u) || u.on === false) return; const key = wKey(kind, u);
+      if (u.state === 'work'){
+        if (kind === 'water'){ const s = droneScreenOf(WS[key]); if (s){ live.add(key); drawDroneAt(key, s, t, s.spray); away.add(key); } }
+        else if (kind === 'sweep' || kind === 'wellbot'){ const p = drawWalkerKey(kind, key, WS[key], t, (u.carry || 0) > 0); if (p){ live.add(key); away.add(key); } }
+        else { const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); away.add(key); drawOneUnit(key, kind, 'work', { x: tgt.x + j * 16, y: tgt.y + (j % 2) * 10, walk: tgt.walk }, t); } }
+      } else if (AIR.has(kind) && RT.unitPos[key]){   // fly back to its slot before landing
+        const s = slotByKey(u.park) || slotByKey(u.home); if (s && s.mi === S.cur){ const p = slotScreen(s), r = drawDroneLike(kind, key, p, t); if (r){ live.add(key); away.add(key); } }
+      }
+    });
+  });
+  RT.awayKeys = away;
+  for (const k in RT.unitPos) if (!live.has(k)) delete RT.unitPos[k];
+};
+function drawDroneLike(kind, key, p, t){
+  const q = RT.unitPos[key]; if (!q) return false; const d = Math.hypot(p.x - q.x, p.y - q.y); if (d < 3) return false;
+  if (kind === 'water'){ drawDroneAt(key, { x: p.x, y: p.y }, t, false); return true; }
+  drawOneUnit(key, kind, 'rest', p, t); return true;
+}
+
+/* ---------- buying, upgrading, bases ---------- */
+function buyRobot(kind, ti){
+  const K = RK(kind), tier = K.tiers[ti], f = fleet(kind), mx = maxUnits(kind);
+  if (!isUnlocked(tier.id)){ toast(`${tier.name}${K.name}要到第 ${UNLOCK[tier.id]} 級才解鎖`); return false; }
+  if (f.length >= mx){ toast(mx >= FLC.maxPerKind ? `${K.name}最多 ${FLC.maxPerKind} 台` : `現在最多 ${mx} 台，第 ${Math.min(FLC.maxPerKind, mx + 1)} 台要到第 ${unlockLv(kind) + mx} 級`); return false; }
+  if (kind !== 'sweep' && baseCount(K.base) === 0){ toast(`要先用「建設」蓋${BLD[K.base].name}，才能買${K.name}`); return false; }
+  if (!spend(tier.buy)) return false;
+  f.push({ id: newUnitId(kind), tier: ti, batt: tier.workHours * 3600, tank: K.tankDrops || 0, state: 'idle', on: true, refill: 0, carry: 0 });
+  if (kind === 'sweep' && baseCount('sweeper_dock') === 0){ S.buildStore.sweeper_dock = (S.buildStore.sweeper_dock || 0) + 1; toast('掃地機器人買好了！附送的掃地基座在飾品倉庫，用「裝飾」工具擺出來，它才會出動', true, 4200); }
+  else if (kind === 'sweep' && capacityOf('sweeper_dock') < f.length) toast(`買了第 ${f.length} 台掃地機器人。基座位子不夠，要再蓋一座掃地基座或擴充成 2 個位子，它才會出動`, true, 4200);
+  else toast(`買了第 ${f.length} 台${tier.name === '標準' ? '' : tier.name}${K.name}`, true, 3000);
+  sfx('coin'); assignHomes(); afterAction(); UIbuildTray(); return true;
+}
+function upgradeUnit(kind, id){
+  const K = RK(kind), u = fleet(kind).find(x => x.id === id); if (!u) return false; const ti = u.tier + 1, tier = K.tiers[ti]; if (!tier) return false;
+  if (!isUnlocked(tier.id)){ toast(`${tier.name}要到第 ${UNLOCK[tier.id]} 級`); return false; }
+  const trade = Math.floor(K.tiers[u.tier].buy * (RB.upgradeTradeInRate || .5)); if (!spend(tier.buy - trade)) return false;
+  u.tier = ti; u.batt = tier.workHours * 3600; toast(`升級成${tier.name}${K.name}，舊的折價 ${fmtN(trade)} 金幣`, true); sfx('coin'); afterAction(); return true;
+}
+function rentRobot(kind, opt){
+  const K = RK(kind);
+  if (!isUnlocked(opt.unlock)){ toast(`租${K.name}要到第 ${UNLOCK[opt.unlock]} 級`); return false; }
+  const key = rentKey(kind), base = Math.max(Date.now(), S.automation[key] || 0), cap = Date.now() + R.autoMaxHours * 3600e3;
+  if (base >= cap - 60e3){ toast(`已經租到最長 ${R.autoMaxHours} 小時了`); return false; }
+  if (!spend(opt.cost)) return false;
+  S.automation[key] = Math.min(cap, base + opt.hours * 3600e3); sfx('coin'); afterAction();
+  toast(`租了${K.name} ${opt.hours} 小時，會和你自己的一起工作，時間到就離開`, true, 3600); return true;
+}
+function buyBase(M, x, y, id, cx, cy){
+  const B = BLD[id];
+  if (!isUnlocked(id)){ toast(lockedMsg(id)); return; }
+  if (baseCount(id) >= FLC.baseMax){ toast(`${B.name}最多 ${FLC.baseMax} 座${S.buildStore[id] ? '（倉庫裡還有，用「裝飾」工具擺出來）' : ''}`); return; }
+  const k = tkey(x, y), U = M.tiles[k]; if (U && U.t !== 'weed'){ toast(`${B.name}要蓋在空的草地上`); return; }
+  const cost = id === 'sweeper_dock' ? FLC.dockBuildCost : B.cost; if (!spend(cost)) return;
+  if (U) pullWeed(M, k, cx, cy);
+  M.tiles[k] = { t: 'building', id, rx: x, ry: y, slots: 1 }; RT.decoVer++; RT.regionsAt = 0; sfx('place');
+  floatText(cx, cy - 38, `-${fmtN(cost)}`, '#8a5d36', 11); toast(`${B.name}蓋好了（${baseCount(id)}/${FLC.baseMax}）。點它可以擴充成 2 個位子`, true); assignHomes(); UIbuildTray();
+}
+function expandBase(T){
+  if (slotsOfT(T) >= (FLC.slotsMax || 2)){ toast('已經是 2 個位子了'); return false; }
+  const cost = Math.round((T.id === 'sweeper_dock' ? FLC.dockBuildCost : BLD[T.id].cost) * (FLC.expandRate || .5)); if (!spend(cost)) return false;
+  T.slots = 2; sfx('place'); toast(`${BLD[T.id].name}擴充成 2 個位子了`, true); assignHomes(); afterAction(); return true;
+}
+{ const _ut7 = UIbuildTray; UIbuildTray = function(){ _ut7(); if (!S || S.sel.tool !== 'build') return;
+  const tray = $('tray'); tray.querySelectorAll('.item').forEach(el => { if (BASE_TYPES.includes(el.dataset.id)) el.remove(); });
+  const first = tray.firstChild;
+  for (const id of BASE_TYPES){ const B = BLD[id], lk = !isUnlocked(id), n = baseCount(id), full = n >= FLC.baseMax, cost = id === 'sweeper_dock' ? FLC.dockBuildCost : B.cost;
+    const el = trayItem('building', id, B.name, [full ? '已達上限' : `${coinImg()}${fmtN(cost)}`, `${n}/${FLC.baseMax} 座 · 可擴充 2 位`], S.sel.build === id, lk, { lockLv: UNLOCK[id] });
+    if (full) el.classList.add('locked');
+    el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } if (full){ toast(`${B.name}最多 ${FLC.baseMax} 座`); return; } S.sel.build = id; UIbuildTray(); updateHint(); };
+    tray.insertBefore(el, first); } }; }
+
+/* ---------- texts, chips, panels ---------- */
+const UNIT_TXT = { none: '還沒有', idle: '待命', work: '工作中', charge: '充電中', queue: '排隊等充電', refill: '補水中', rest: '沒電躺著', nohome: '等掃地基座位子' };
+function unitText(kind, u){
+  if (u.on === false) return '關閉中';
+  if (kind === 'sweep' && u.state === 'nohome') return baseCount('sweeper_dock') ? (basesOf('sweeper_dock').length ? '等基座位子（再蓋一座或擴充）' : '等你擺掃地基座（在飾品倉庫）') : '等基座位子';
+  const W = WS[wKey(kind, u)]; if (kind === 'sweep' && W && W.phase === 'dockclean') return '回基座清潔中';
+  if (u.state === 'refill' && u.waitWater) return '等水塔有水';
+  if (u.state === 'charge'){ const s = slotByKey(u.park) || slotByKey(u.home); if (s && (s.T.src || 'solar') === 'solar' && isNightAt(Date.now())) return '等天亮充電'; }
+  return UNIT_TXT[u.state] || u.state;
+}
+function robotChips(st, now){
+  for (const kind of KINDS){ const f = fleet(kind).filter(u => unitTier(kind, u)), rent = rentActive(kind, now); if (!f.length && !rent) continue;
+    const img = `<img src="${IMGSRC[R_ICON[kind]]}" alt="">`, cl = kind === 'sweep' ? f.filter(u => { const W = WS[wKey(kind, u)]; return W && W.phase === 'dockclean'; }).length : 0, w = f.filter(u => u.state === 'work').length - cl, c = f.filter(u => u.state === 'charge').length;
+    if (!rent && !w && !c && !f.some(u => u.state === 'rest' || u.state === 'nohome')) continue;
+    const parts = []; if (w) parts.push(`${w} 工作`); if (cl) parts.push(`${cl} 清潔`); if (c) parts.push(`${c} 充電`); const bad = f.filter(u => u.state === 'rest' || u.state === 'nohome').length; if (bad) parts.push(`${bad} 等待`);
+    st.push(`<div class="chip${bad ? ' warnchip' : ''}" data-open="robot:${kind}">${img}${KIND_NAME(kind)}${f.length ? ` ×${f.length}` : ''}${parts.length ? '：' + parts.join('、') : ''}${rent ? ` · 租用剩 ${fmtDur((S.automation[rentKey(kind)] - now) / 1000)}` : ''}</div>`); }
+}
+const KIND_DESC = {
+  water: '飛到乾掉的田和果樹上方灑水；下雨或龍捲風時暫停。很多台時各自找不同的格子。', feed: '自動餵所有動物和魚，飼料費照扣；多台可以輪流充電、不中斷。',
+  snow: `積雪時每台每分鐘清掉 ${SNOWBOT_TPM} 格雪，台數越多越快。`, sweep: '從自己的掃地基座位子出發，沿格子走去掃雜草和垃圾，回基座清潔 30 秒再充電。每台都要一個基座位子。',
+  poop: `把地上的糞便鏟進倉庫，每台每分鐘 ${(RB.kinds.poop && RB.kinds.poop.perMinute) || 4} 坨。`, honey: `飛到存了 ${(RB.kinds.honey && RB.kinds.honey.collectAtJars) || 10} 罐以上的蜂箱收蜂蜜，台數越多越快。`,
+  wellbot: '提著水桶沿格子走：到井邊裝水、倒進水塔；很多台時各自去不同的井。' };
+function robotCard(kind){
+  const K = RK(kind), f = fleet(kind), now = Date.now(), mx = maxUnits(kind), rent = rentActive(kind, now), lk = !isUnlocked(K.tiers[0].id), baseN = baseCount(K.base);
+  let h = `<div class="card robot"><h4><img src="${IMGSRC[R_ICON[kind]]}" alt="">${K.name} <span class="pill">${f.length} / ${mx || 0} 台</span>${lk ? ` <span class="pill lock">Lv ${unlockLv(kind)}</span>` : ''}</h4>`;
+  if (f.length) h += `<div class="units">${f.map((u, i) => { const tr = unitTier(kind, u), nx = K.tiers[u.tier + 1], trade = Math.floor(tr.buy * (RB.upgradeTradeInRate || .5));
+    return `<div class="unitrow"><b>#${i + 1}</b><span>${tr.name}</span><span>${unitText(kind, u)}</span><span>電 ${unitPct(kind, u)}%${kind === 'water' ? ` · 水 ${Math.floor(u.tank)}` : ''}</span>
+      ${nx ? `<button class="btn ghost sm" data-rup="${kind}:${u.id}" ${isUnlocked(nx.id) ? '' : 'disabled'}>升級${nx.name} ${fmtN(nx.buy - trade)}</button>` : ''}<button class="btn ghost sm" data-ron2="${kind}:${u.id}">${u.on === false ? '開啟' : '關閉'}</button></div>`; }).join('')}</div>`;
+  const can = f.length < mx && (kind === 'sweep' || baseN > 0);
+  h += `<h5>買${f.length ? '一台新的' : '斷'}</h5><div class="row">${K.tiers.map((tr, i) => { const tl = !isUnlocked(tr.id); return `<button class="btn${tl || !can ? ' ghost' : ''}" data-rbuy="${kind}:${i}" ${tl || !can ? 'disabled' : ''}>${tr.name === '標準' ? '' : tr.name}${K.name} · 工作 ${fmtHours(tr.workHours)} · ${fmtN(tr.buy)}${tl ? `（Lv ${UNLOCK[tr.id]}）` : ''}</button>`; }).join('')}</div>`;
+  if (!lk && f.length >= mx) h += `<p class="small">${mx >= FLC.maxPerKind ? `已經買滿 ${FLC.maxPerKind} 台。` : `現在最多 ${mx} 台，到第 ${unlockLv(kind) + mx} 級可以買第 ${mx + 1} 台。`}</p>`;
+  if (kind !== 'sweep' && !baseN) h += `<p class="small" style="color:var(--warn)">買斷要先用「建設」蓋${BLD[K.base].name}（${fmtN(BLD[K.base].cost)} 金幣）。租的不用。</p>`;
+  if (kind === 'sweep' && f.length > capacityOf('sweeper_dock')) h += `<p class="small" style="color:var(--warn)">掃地基座位子 ${capacityOf('sweeper_dock')} 個，不夠 ${f.length} 台用：用「建設」再蓋（${fmtN(FLC.dockBuildCost)}）或點基座擴充成 2 位。</p>`;
+  h += `<h5>租用（額外一台，一起工作）${rent ? ` <span class="pill ok">租用中 · 剩 ${fmtDur((S.automation[rentKey(kind)] - now) / 1000)}</span>` : ''}</h5><div class="row">${rentOptions(kind).map(o => { const ol = !isUnlocked(o.unlock); return `<button class="btn${ol ? ' ghost' : ' alt'}" data-rent="${o.id}" ${ol ? 'disabled' : ''}>${fmtHours(o.hours)} · ${fmtN(o.cost)}${ol ? `（Lv ${UNLOCK[o.unlock]}）` : ''}</button>`; }).join('')}</div>`;
+  h += `<p class="small">${KIND_DESC[kind] || ''} 可以買的台數隨等級增加，最多 ${FLC.maxPerKind} 台，每台同價；每台各自充電、升級（舊的折價 ${Math.round((RB.upgradeTradeInRate || .5) * 100)}%）。</p></div>`;
+  return h;
+}
+function wireRobotButtons(el, again){
+  el.onclick = e => { const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.rbuy){ const [k, i] = b.dataset.rbuy.split(':'); if (buyRobot(k, +i)) again(); }
+    else if (b.dataset.rup){ const [k, id] = b.dataset.rup.split(':'); if (upgradeUnit(k, id)) again(); }
+    else if (b.dataset.ron2){ const [k, id] = b.dataset.ron2.split(':'), u = fleet(k).find(x => x.id === id); if (u){ u.on = u.on === false; toast(u.on ? '開啟了' : '關閉了，不會出去工作'); afterAction(); again(); } }
+    else if (b.dataset.rent){ if (buyAuto(b.dataset.rent)) again(); }
+    else if (b.dataset.expand){ const [mi, k] = b.dataset.expand.split('|'), T = S.maps[+mi].tiles[k]; if (T && expandBase(T)) again(); }
+  };
+}
+function openAuto(focus){
+  openModal('自動化', null, (k, el) => {
+    const list = focus && KINDS.includes(focus) ? [focus, ...KINDS.filter(x => x !== focus)] : KINDS;
+    el.innerHTML = `<p class="small">每種機器人最多可以買 ${FLC.maxPerKind} 台（隨等級開放），也可以另外「租用」一台一起工作。停機坪、充電站、掃地基座各最多蓋 ${FLC.baseMax} 座，每座可擴充成 2 個位子。</p><div class="cards robots">${list.map(robotCard).join('')}</div>`;
+    wireRobotButtons(el, () => openAuto(focus));
+  });
+}
+$('autoBtn').onclick = () => openAuto();
+{ const _act6 = act; act = function(x, y){ const M = curMap(); if (inMap(M, x, y)){ const k = tkey(x, y), T = M.tiles[k]; if (T && T.t === 'building' && BASE_TYPES.includes(T.id)) RT.tapBase = { mi: S.cur, k }; } return _act6(x, y); }; }
+function openUnitPanel(kind){
+  const baseId = BASE_OF[kind] || RK(kind).base, B = BLD[baseId], kinds = KINDS.filter(k => RK(k).base === baseId);
+  openModal(B.name, null, (k, el) => {
+    const tb = RT.tapBase && S.maps[RT.tapBase.mi] && S.maps[RT.tapBase.mi].tiles[RT.tapBase.k], T = tb && tb.id === baseId ? tb : (basesOf(baseId)[0] || {}).T;
+    const cap = capacityOf(baseId), cost = Math.round((baseId === 'sweeper_dock' ? FLC.dockBuildCost : B.cost) * (FLC.expandRate || .5));
+    el.innerHTML = `<div class="card"><div class="kv"><span>這座</span><span>${T ? slotsOfT(T) : 0} 個位子</span><span>全部 ${B.name}</span><span>${basesOf(baseId).length} 座（倉庫 ${S.buildStore[baseId] || 0}）· 共 ${cap} 個位子</span></div>
+      ${T && slotsOfT(T) < 2 ? `<button class="btn" data-expand="${RT.tapBase ? RT.tapBase.mi + '|' + RT.tapBase.k : ''}">擴充成 2 個位子 · ${fmtN(cost)} 金幣</button>` : '<p class="small">這座已經是 2 個位子（最多）。</p>'}
+      <p class="small">${baseId === 'sweeper_dock' ? '每台掃地機器人要一個位子當家：從這裡出發、回來清潔 30 秒、充電。' : `${kinds.map(KIND_NAME).join('、')}共用這種機座充電；位子都在充時其他的排隊。`}</p></div>
+      <div class="cards robots">${kinds.map(robotCard).join('')}</div>
+      <h3>充電來源</h3><div class="row"><select id="srcSel">${Object.entries(AU.chargeSources).map(([id, s]) => `<option value="${id}" ${((T && T.src) || 'solar') === id ? 'selected' : ''}>${s.name}</option>`).join('')}</select></div>
+      <p class="small">太陽能免費，但充電時間是 ${RB.solarChargeMultiplier || 2} 倍，晚上充不了。農場電力會從電池、手搖小儲電、市電拿電。</p>
+      ${kind === 'sweep' ? sweepReportHTML() : ''}`;
+    const hb = $('heatBox'); if (hb) hb.appendChild(heatmapCanvas(sweepMapIndex()));
+    wireRobotButtons(el, () => openUnitPanel(kind));
+    $('srcSel').onchange = e => { if (T){ T.src = e.target.value; save(); toast(`這座的充電來源改成${AU.chargeSources[e.target.value].name}`); } };
+  });
+}
+
+/* ---------- save data ---------- */
+function normalizeV23(d){
+  d.fleet = d.fleet || {};
+  for (const kind of KINDS){ if (d.fleet[kind]) continue; const U = d.robots && d.robots[kind];
+    d.fleet[kind] = U && U.tier >= 0 ? [{ id: kind + '1', tier: U.tier, batt: U.batt || 0, tank: U.tank || 0, state: 'idle', on: U.on !== false, refill: 0, carry: U.carry || 0 }] : []; }
+}
+{ const _n21 = normalizeV21; normalizeV21 = function(d){ _n21(d); normalizeV23(d); }; }
+window.__farm23 = { fleet, maxUnits, buyRobot, upgradeUnit, expandBase, basesOf, slotsOf, capacityOf, get WS(){ return WS; }, assignHomes, parkUnits };
+
+/* ===== 26. v2.3.2: night darkening only touches what is actually drawn (no dark "wall" behind the island) =====
+   At night the background is drawn first, copied aside, and the canvas cleared; the world is then drawn on a
+   transparent canvas, the night tint is applied with 'source-atop' (so only island/objects/underside pixels darken,
+   with no blurred halo over the sky), and the saved background is put back behind with 'destination-over'. */
+let bgCv = null;
+const nightDark = now => (1 - dayPhase(now).light) * 0.55;
+function frame(){
+  if (!S){ ctx.setTransform(dpr,0,0,dpr,0,0); drawBackground(performance.now()/1000, false); requestAnimationFrame(frame); return; }
+  const t = performance.now()/1000, now = Date.now(), raining = farmRain(now), snowing = !raining && farmSnow(now);
+  RT.frameDt = RT.lastT ? t - RT.lastT : .016; RT.lastT = t;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  drawBackground(t, raining);
+  const night = nightDark(now) >= 0.01;
+  if (night){
+    if (!bgCv) bgCv = document.createElement('canvas');
+    if (bgCv.width !== cv.width || bgCv.height !== cv.height){ bgCv.width = cv.width; bgCv.height = cv.height; }
+    const b = bgCv.getContext('2d'); b.setTransform(1,0,0,1,0,0); b.globalCompositeOperation = 'copy'; b.drawImage(cv, 0, 0); b.globalCompositeOperation = 'source-over';
+    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0, 0, cv.width, cv.height);
+  }
+  let sx = 0, sy = 0;
+  if (RT.shake){ const e = performance.now() - RT.shake.t0; if (e < RT.shake.dur){ const a = RT.shake.amp * (motion ? 1 - e/RT.shake.dur : .3); sx = (Math.random()*2 - 1) * a; sy = (Math.random()*2 - 1) * a * .6; } else RT.shake = null; }
+  ctx.setTransform(dpr*cam.z,0,0,dpr*cam.z,dpr*(cam.x + sx),dpr*(cam.y + sy));
+  drawWorld(t, now);
+  if (night) fillIslandSeams();
+  drawCloudShadows(t, now);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  drawSky(t, now, night);
+  if (raining && motion) drawRain(t);
+  if (snowing && motion) drawSnowFall(t);
+  drawCarry(t);
+  requestAnimationFrame(frame);
+}
+// tiny gaps between tiles used to show the sky through; at night fill exactly the island's own top + side walls
+// behind the world (no extra band, no blur) so the gaps read as dark grid lines instead of revealing the moon/stars
+function fillIslandSeams(){
+  const M = curMap(); ctx.save(); ctx.globalCompositeOperation = 'destination-over'; ctx.fillStyle = '#2b3a36'; ctx.beginPath();
+  for (const [bx,by] of M.blocks){
+    const P = [[bx*BS,by*BS],[bx*BS+BS,by*BS],[bx*BS+BS,by*BS+BS],[bx*BS,by*BS+BS]].map(([x,y]) => [(x-y)*HW, (x+y)*HH]);
+    const [top, right, bot, left] = P, pts = [top, right, [right[0], right[1] + DEPTH], [bot[0], bot[1] + DEPTH], [left[0], left[1] + DEPTH], left];
+    pts.forEach(([x,y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); }
+  ctx.fill(); ctx.restore();
+}
+function drawSky(t, now, atop){
+  const ph = dayPhase(now), cloudy = farmCloudy(now) && !farmRain(now), dark = nightDark(now);
+  let holes = [];
+  if (dark >= 0.01){
+    if (!nightCv) nightCv = document.createElement('canvas');
+    if (nightCv.width !== cv.width || nightCv.height !== cv.height){ nightCv.width = cv.width; nightCv.height = cv.height; }
+    const n = nightCv.getContext('2d'); n.setTransform(1,0,0,1,0,0); n.clearRect(0, 0, nightCv.width, nightCv.height);
+    n.fillStyle = `rgba(12,22,58,${dark})`; n.fillRect(0, 0, nightCv.width, nightCv.height);
+    n.globalCompositeOperation = 'destination-out';
+    const M = curMap();
+    for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && T.lit){ const [x,y] = pkey(k), c = center(x,y), r = (DEV[T.id].range + 0.7) * HW * 1.6; holes.push({ x: c.cx, y: c.cy - 6, r, col: 'rgba(255,150,230,' }); } }
+    if (houseLitNow(now)){ const hp = housePos(M); if (hp) holes.push({ x: hp.x - 20, y: hp.y - 10, r: 46, col: 'rgba(255,210,120,' }); }
+    for (const h of holes){ const sx = (cam.x + h.x*cam.z) * dpr, sy = (cam.y + h.y*cam.z) * dpr, r = h.r * cam.z * dpr;
+      const g = n.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, 'rgba(0,0,0,.95)'); g.addColorStop(1, 'rgba(0,0,0,0)'); n.fillStyle = g; n.beginPath(); n.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); n.fill(); }
+    n.globalCompositeOperation = 'source-over';
+    ctx.setTransform(1,0,0,1,0,0);
+    if (atop && bgCv){
+      ctx.globalCompositeOperation = 'source-atop'; ctx.drawImage(nightCv, 0, 0);          // darken only drawn pixels
+      ctx.globalCompositeOperation = 'destination-over'; ctx.drawImage(bgCv, 0, 0);       // sky goes back behind
+      ctx.globalCompositeOperation = 'source-over';
+    } else { n.globalCompositeOperation = 'destination-in'; n.drawImage(islandMask(), 0, 0); n.globalCompositeOperation = 'source-over'; ctx.drawImage(nightCv, 0, 0); }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  if (cloudy && ph.light > 0){ ctx.fillStyle = `rgba(95,105,115,${0.16 * ph.light})`; ctx.fillRect(0, 0, VW, VH); }
+  if ((ph.phase === 'dawn' || ph.phase === 'dusk')){ const a = 0.16 * (1 - Math.abs(ph.light - 0.5) * 2); ctx.fillStyle = ph.phase === 'dawn' ? `rgba(255,170,90,${a})` : `rgba(255,120,70,${a})`; ctx.fillRect(0, 0, VW, VH); }
+  if (!holes.length) return;
+  ctx.globalCompositeOperation = 'lighter';
+  for (const h of holes){ const sx = cam.x + h.x*cam.z, sy = cam.y + h.y*cam.z, r = h.r * cam.z * 0.7;
+    const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, h.col + (0.18*dark/0.55) + ')'); g.addColorStop(1, h.col + '0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); ctx.fill(); }
+  ctx.globalCompositeOperation = 'source-over';
+}
+window.__farm232 = { get bg(){ return bgCv; }, get night(){ return nightCv; } };
 
   })(CFG, ATLAS_JSON);
 })();

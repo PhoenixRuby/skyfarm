@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.1.0",
+    "configVersion": "2.3.2",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -833,7 +833,8 @@
         "poopbot",
         "wildflower",
         "buckwheat",
-        "wellbot"
+        "wellbot",
+        "doll_snow"
       ],
       "animalCap": 8,
       "fishPoolTileCap": 4,
@@ -1493,7 +1494,13 @@
     "twilightMinutes": 30,
     "nightGrowthRate": 0.7,
     "cloudyDayGrowthRate": 0.85,
-    "animalsAffected": false
+    "animalsAffected": false,
+    "nightTint": {
+      "appliesTo": "drawnPixelsOnly",
+      "noSkyHalo": true,
+      "coversUnderside": true,
+      "tileGapsAtNight": "filledDark"
+    }
   },
   "seasons": {
     "north": {
@@ -1866,7 +1873,7 @@
         1,
         1
       ],
-      "limit": 1,
+      "limit": 3,
       "cost": 500,
       "unlockLevel": 3,
       "buyWith": "build",
@@ -1875,7 +1882,10 @@
       "storable": true,
       "movable": true,
       "serves": "water",
-      "chargeSourceDefault": "solar"
+      "chargeSourceDefault": "solar",
+      "perMapLimit": 3,
+      "slotsMax": 2,
+      "slots": 1
     },
     "robot_charger": {
       "name": "機器人充電站",
@@ -1883,7 +1893,7 @@
         1,
         1
       ],
-      "limit": 1,
+      "limit": 3,
       "cost": 800,
       "unlockLevel": 4,
       "buyWith": "build",
@@ -1892,7 +1902,10 @@
       "storable": true,
       "movable": true,
       "serves": "feed",
-      "chargeSourceDefault": "solar"
+      "chargeSourceDefault": "solar",
+      "perMapLimit": 3,
+      "slotsMax": 2,
+      "slots": 1
     },
     "water_tower_extra": {
       "name": "加掛水塔",
@@ -1918,12 +1931,15 @@
         1
       ],
       "limit": 3,
-      "cost": 0,
+      "cost": 300,
       "comesWith": "sweeper",
       "sellable": false,
       "storable": true,
       "movable": true,
-      "perMapLimit": 1
+      "perMapLimit": 3,
+      "slotsMax": 2,
+      "slots": 1,
+      "firstComesWithSweeper": true
     }
   },
   "weatherDolls": {
@@ -1947,6 +1963,15 @@
           "dronePause",
           "countsAsCloudy"
         ]
+      },
+      "snow": {
+        "name": "雪女娃娃",
+        "unlockLevel": 5,
+        "usableWhen": "notSnowingNow",
+        "effect": "snow",
+        "anyClimate": true,
+        "dayAndNight": true,
+        "sameAsNaturalSnow": true
       }
     },
     "sizes": {
@@ -1973,6 +1998,11 @@
         "s": 60,
         "m": 200,
         "l": 350
+      },
+      "snow": {
+        "s": 50,
+        "m": 180,
+        "l": 300
       }
     },
     "rules": {
@@ -3172,6 +3202,51 @@
     ],
     "nearestByWalk": true,
     "ownedReturnBeforeBatteryOut": true,
-    "lowBatteryChargeFirst": 0.25
+    "lowBatteryChargeFirst": 0.25,
+    "ownedNeedsDockPlaced": true,
+    "dockCleanSeconds": 30,
+    "dockCleanNoCharge": true,
+    "afterCleanIdleZzzWhenFull": true
+  },
+  "cloudSave": {
+    "provider": "googleDrive",
+    "clientId": "838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com",
+    "scope": "https://www.googleapis.com/auth/drive.appdata",
+    "allowedOrigins": [
+      "https://phoenixruby.github.io",
+      "http://localhost:8765"
+    ],
+    "siteUrl": "https://phoenixruby.github.io/skyfarm/",
+    "intervalMinutes": 5,
+    "perSlotToggle": true,
+    "localCopyAlways": true,
+    "askWhenCloudNewer": true,
+    "uploadWhenLocalNewer": true,
+    "backupLoser": true,
+    "noClientSecret": true
+  },
+  "fleet": {
+    "maxPerKind": 5,
+    "perLevelAfterUnlock": 1,
+    "firstUnitAtUnlockLevel": true,
+    "samePricePerUnit": true,
+    "baseMax": 3,
+    "slotsMax": 2,
+    "expandRate": 0.5,
+    "dockBuildCost": 300,
+    "lowBatteryStay": 0.25,
+    "rentIsExtraUnit": true,
+    "firstSweeperFreeDock": true,
+    "eachUnitOwnTier": true,
+    "baseTypes": [
+      "drone_pad",
+      "robot_charger",
+      "sweeper_dock"
+    ],
+    "twoSlotLayout": {
+      "drone_pad": "stacked: ground pad + upper deck on one post (F shape); slot 1 lower, slot 2 upper",
+      "robot_charger": "taller post, plug on left and right",
+      "sweeper_dock": "taller post, bay on left and right"
+    }
   }
 }
