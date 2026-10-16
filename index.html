@@ -463,6 +463,103 @@ body:not(.night) .sheet .card,body:not(.night) .sheet .slot,body:not(.night) .sh
 .sheet .item{border-color:var(--gline)}
 body.m-land .hud{flex-direction:row}
 body.m-land #utilitiesBtn{flex:1 1 100%}
+
+/* ===== v2.6: page layouts ===== */
+.sheet.pg-wide{width:min(1120px,100%)}
+.sheet.pg header{position:relative;display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:14px;align-items:center;padding:14px 18px 10px;
+  background:linear-gradient(180deg,rgba(150,205,245,.35),rgba(255,255,255,0));border-radius:18px 18px 0 0}
+body.night .sheet.pg header{background:linear-gradient(180deg,rgba(60,90,160,.35),rgba(0,0,0,0))}
+.sheet.pg header .pgic{grid-row:1/3;width:76px;height:64px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.2))}
+.sheet.pg header h2{grid-column:2;font-size:26px}.sheet.pg header .pgsub{grid-column:2;grid-row:2;font-size:13px;color:var(--gsub)}
+.sheet.pg header .close{grid-column:3;grid-row:1/3}
+.sheet.pg .tabs{padding:0 18px 10px}.sheet.pg .tabs button{padding:6px 16px;border-radius:12px;font-weight:700}
+.sheet.pg .body{padding:6px 18px 18px}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:8px 0}
+.pgrid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pgrid.kindgrid{grid-template-columns:1.1fr 1fr 1fr}
+.pcard{background:var(--gcard);border:1px solid var(--gline);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+body:not(.night) .pcard{background:rgba(255,255,255,.75)}
+.pcard.span2{grid-column:1/-1}
+.pcard h4{margin:0;font-family:var(--font-display);font-size:17px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pcard h4 img{width:30px;height:30px;object-fit:contain}.pcard .hic{font-size:20px}
+.pcard .small.warn{color:var(--gwarn)}
+.tip{background:rgba(79,168,240,.12);border:1px solid rgba(79,168,240,.3);border-radius:12px;padding:8px 12px;margin:6px 0;font-size:13px;line-height:1.6}
+.tip.warn{background:rgba(255,120,100,.14);border-color:var(--gwarn)}
+.empty{text-align:center;color:var(--gsub);padding:18px;border:1px dashed var(--gline);border-radius:14px}.empty.sm{padding:8px}
+.ci{width:16px;height:16px;vertical-align:-3px;margin-right:2px}
+.btn.big{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;font-size:15px;border-radius:14px;width:100%}
+.btn.big img{width:28px;height:28px}.btn.mid{padding:9px 18px;font-size:15px;border-radius:14px}
+.chk{display:flex;align-items:center;gap:6px}
+.banner{position:relative;border-radius:16px;overflow:hidden;margin:2px 0 10px;background:linear-gradient(180deg,rgba(150,205,245,.3),rgba(150,205,245,0))}
+.banner img{display:block;width:100%;max-height:150px;object-fit:contain;object-position:right center}
+/* storage */
+.stcap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 10px;font-size:16px}.stcap>img{width:32px;height:32px}
+.stcap b{font-size:20px}.stcap b.warn{color:var(--gwarn)}.stcap .bar{width:220px;height:10px;margin:0}.stcap .chk{margin-left:auto;font-size:14px}
+.stsec{display:grid;grid-template-columns:190px 1fr;border-radius:16px;overflow:hidden;margin:0 0 12px;border:1px solid var(--gline)}
+.stside{display:flex;flex-direction:column;padding:10px 12px;gap:6px}.stside b{font-family:var(--font-display);font-size:20px}
+.stpic{width:130px;max-height:96px;object-fit:contain;align-self:center;margin-top:auto}.stpic .ico.big{width:84px;height:84px}
+.c-g .stside{background:linear-gradient(160deg,rgba(76,175,80,.35),rgba(76,175,80,.1))}.c-o .stside{background:linear-gradient(160deg,rgba(200,120,50,.35),rgba(200,120,50,.1))}
+.c-b .stside{background:linear-gradient(160deg,rgba(60,130,210,.35),rgba(60,130,210,.1))}.c-p .stside{background:linear-gradient(160deg,rgba(230,90,140,.3),rgba(230,90,140,.08))}
+.c-r .stside{background:linear-gradient(160deg,rgba(210,70,60,.3),rgba(210,70,60,.08))}.c-y .stside{background:linear-gradient(160deg,rgba(230,180,40,.35),rgba(230,180,40,.1))}
+.stmain{overflow-x:auto}.stmain table{font-size:14px}.stmain td,.stmain th{padding:7px 10px}.stmain td.acts{text-align:right;white-space:nowrap}.stmain td.acts .btn{margin-left:6px}
+.stmain .ico{width:30px;height:30px}
+/* base panel */
+.basecard{display:grid!important;grid-template-columns:110px 1fr 1.2fr;align-items:center;gap:14px}
+.bpic{width:110px}.bnum{display:flex;flex-direction:column;gap:2px}.bnum b{font-size:26px;color:var(--gsel)}body.night .bnum b{color:#8cc4ff}
+.bexp{display:flex;flex-direction:column;gap:6px}
+.unitrow .ust{flex:1}.batt{display:inline-block;width:36px;height:12px;border:2px solid var(--gline);border-radius:3px;position:relative;overflow:hidden}.batt i{position:absolute;inset:0 auto 0 0;background:#5fcf5a}
+.bigbtns{display:flex;flex-direction:column;gap:8px}
+.legend .lg{width:14px;height:14px}
+/* utilities */
+.ucard{flex-direction:row!important;align-items:flex-start;gap:12px}.ucard>div{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.upic{width:120px;flex:none;object-fit:contain}.ucard h4{flex-wrap:nowrap}.tsw{margin-left:auto}
+.wbar{width:100%;height:10px}.wbar i{background:linear-gradient(90deg,#4fa8f0,#2f86d6)}
+.pwr{align-items:center;text-align:center}.ppic{width:110px;height:90px;object-fit:contain}.pwr .kv{text-align:left;width:100%}
+/* settings */
+.setgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:12px}
+.setl,.setr{display:flex;flex-direction:column;gap:12px;min-width:0}
+.setl .pcard h3{margin:0;font-size:17px}
+.wmap{position:relative;border-radius:12px;overflow:hidden}.wmap img{display:block;width:100%}
+.pin{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid #fff;background:#2f86d6;padding:0;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.pin.on{background:#ff5a4a;width:18px;height:18px;margin:-9px 0 0 -9px}.pin:hover{transform:scale(1.3)}
+.wmap .here{position:absolute;transform:translate(-50%,-100%);font-size:22px;pointer-events:none}
+.cities{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.city{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 6px 8px;border-radius:14px;border:1px solid var(--gline);background:var(--gcard);color:var(--gtx);text-align:left}
+body:not(.night) .city{background:#fff}
+.city img{width:100%;height:84px;object-fit:cover;border-radius:10px;margin-bottom:4px}.city .noimg{width:100%;height:84px;display:grid;place-items:center;font-size:30px}
+.city b{font-size:15px}.city.on{border:2px solid var(--gsel);box-shadow:0 0 0 3px rgba(47,134,214,.2)}
+/* save */
+.gdcard{position:relative;padding-right:200px}.gdpic{position:absolute;right:14px;top:12px;width:180px}
+.gd label.tog .thumb{width:64px;height:40px;flex:none;margin-right:8px}.gd label.tog{justify-content:flex-start}.gd label.tog>span{flex:1}
+#importBox.drop{outline:3px dashed var(--gsel)}
+/* picker */
+.viewtog{position:absolute;right:10px;bottom:10px;display:flex;gap:4px}.viewtog button{border:1px solid var(--gline);background:var(--gl);color:var(--gtx);border-radius:10px;padding:4px 10px;font-weight:700}
+.viewtog button.on{background:var(--gsel);color:#fff}
+.slot .thumb{width:100%;height:auto;aspect-ratio:180/110;border-radius:12px;background:linear-gradient(180deg,rgba(150,205,245,.45),rgba(150,205,245,.1))}
+.slot .stats{display:flex;flex-wrap:wrap;gap:6px 12px}.sti{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--gtx)}.sti img{width:18px;height:18px}
+.slot.newcard{align-items:center;text-align:center;border-style:dashed}.nfpic{width:150px}.newcard .newslot{width:100%}
+.listview .slots{grid-template-columns:1fr}.listview .slot{display:grid;grid-template-columns:120px 1fr auto;align-items:center;column-gap:12px}
+.listview .slot .thumb{grid-row:1/4}.listview .slot.newcard{display:flex;flex-direction:row;flex-wrap:wrap}.listview .nfpic{width:80px}
+/* book */
+.bk{display:grid;grid-template-columns:150px minmax(0,1fr) 280px;gap:12px;align-items:start}
+.bkcat{display:flex;flex-direction:column;gap:4px;position:sticky;top:0}
+.bkcat button{display:flex;justify-content:space-between;border:1px solid var(--gline);background:var(--gcard);color:var(--gtx);border-radius:10px;padding:7px 10px;text-align:left;font-weight:600}
+.bkcat button span{color:var(--gsub);font-weight:400}.bkcat button.on{background:var(--gsel);color:#fff}.bkcat button.on span{color:#dbe9ff}
+.bktool{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.bksearch{flex:1 1 160px;min-width:0;font:inherit;border:1px solid var(--gline);border-radius:10px;padding:6px 10px;background:var(--gin);color:var(--gtx)}
+.bktool select{border-radius:10px;padding:5px 8px}
+.bksec{margin:10px 0 4px;font-size:14px}
+.bk tbody tr{cursor:pointer}.bk tbody tr:hover td{background:rgba(79,168,240,.1)}.bk tbody tr.pick td{background:rgba(79,168,240,.22)}
+.bkdet{position:sticky;top:0;background:var(--gcard);border:1px solid var(--gline);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px}
+body:not(.night) .bkdet{background:rgba(255,255,255,.8)}
+.dhead{display:flex;align-items:center;gap:10px}.dico{width:84px;height:84px;background:radial-gradient(circle,rgba(150,205,245,.35),rgba(150,205,245,0) 70%);border-radius:14px}
+.dhead h4{margin:0 0 4px;font-family:var(--font-display);font-size:20px}
+.dkv{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:13px}.dkv span{color:var(--gsub)}.dkv b{font-weight:600}
+@media (max-width:900px){.bk{grid-template-columns:minmax(0,1fr)}.bkmain{overflow-x:auto}.bkcat{position:static;flex-direction:row;overflow-x:auto}.bkcat button{flex:none}.bkdet{position:static;order:-1}
+  .setgrid{grid-template-columns:1fr}.pgrid.four{grid-template-columns:repeat(2,1fr)}.pgrid.kindgrid{grid-template-columns:1fr}}
+@media (max-width:640px){.pgrid,.pgrid.four{grid-template-columns:1fr}.basecard{grid-template-columns:70px 1fr!important}.bexp{grid-column:1/-1}.bpic{width:70px}
+  .stsec{grid-template-columns:1fr}.stside{flex-direction:row;align-items:center}.stpic{width:64px;margin:0 0 0 auto}.stmain td.acts{white-space:normal}.stmain td.acts .btn{margin:2px 0 2px 4px}
+  .ucard{flex-direction:column!important}.upic{width:90px;align-self:center}.gdcard{padding-right:14px}.gdpic{position:static;width:140px;align-self:center}
+  .sheet.pg header .pgic{width:52px;height:46px}.sheet.pg header h2{font-size:20px}.stcap .chk{margin-left:0}.cities{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -6964,6 +7061,304 @@ TSHEET.addEventListener('click', e => { e.stopPropagation(); const b = e.target.
     if (tog.style.top !== top + 'px') tog.style.top = top + 'px'; if (tray.style.top !== (top + 28) + 'px') tray.style.top = (top + 28) + 'px'; if (tray.style.bottom !== bot + 'px') tray.style.bottom = bot + 'px'; } }; }
 document.body.classList.toggle('ui-col', !!UIS.col); $('hudHandle').textContent = UIS.col ? '︿' : '﹀';
 window.__farm25 = { setCollapsed, setHideAll, openUtilPanel, closeUtilPanel, openToolSheet, needsAttention, powerSummary, get UIS(){ return UIS; } };
+
+/* ===== 29. v2.6: page layouts — hero headers with illustrations, storage sections, base panel cards,
+   utilities cards, settings with world map + city cards, save/import cards, farm picker cards with island thumbnails,
+   book with categories / search / filter / sort / detail card ===== */
+const PIMG = n => IMGSRC['ui_pg_' + n] || '';
+const PAGE = {
+  '倉庫': { ic: 'ui_barn', sub: '收成先放在這裡，可以賣掉換金幣、買飼料、收放裝飾', wide: 1 },
+  '選單': { ic: 'ui_shed', sub: '存檔、換電腦、設定與切換農場', wide: 1 },
+  '選擇農場': { ic: PIMG('newfarm'), raw: 1, sub: '每座農場的進度分開保存，登入 Google 帳號可以在不同裝置接著玩', wide: 1 },
+  '圖鑑': { ic: 'ui_tool_book', sub: '查看所有作物、動物、機器與設備的資料', wide: 1 },
+  '水電與帳單': { ic: PIMG('tower'), raw: 1, sub: '管理自來水、市電與電力設備，查看帳單', wide: 1 },
+  '掃地基座': { ic: PIMG('basepin'), raw: 1, sub: '設定農場的掃地機器人基座，維持農場乾淨整潔', wide: 1 },
+  '無人機停機坪': { ic: PIMG('basepin'), raw: 1, sub: '無人機停靠、充電和補水的地方', wide: 1 },
+  '機器人充電站': { ic: PIMG('basepin'), raw: 1, sub: '機器人回來充電的地方，位子都在充時其他的排隊', wide: 1 },
+  '自動化': { ic: 'ui_robot_charger', sub: '買斷或租用機器人，幫你照顧農場', wide: 1 },
+};
+{ const _om9 = openModal; openModal = function(title, tabs, render, initial){
+  const sh = document.querySelector('#modal .sheet'), hd = sh.querySelector('header'), P = PAGE[title];
+  sh.classList.toggle('pg', !!P); sh.classList.toggle('pg-wide', !!(P && P.wide));
+  hd.querySelectorAll('.pgic,.pgsub').forEach(n => n.remove());
+  if (P){ const src = P.raw ? P.ic : IMGSRC[P.ic]; if (src) hd.insertAdjacentHTML('afterbegin', `<img class="pgic" src="${src}" alt="">`);
+    $('modalTitle').insertAdjacentHTML('afterend', `<div class="pgsub">${P.sub}</div>`); }
+  return _om9(title, tabs, render, initial); }; }
+const coinI = () => `<img class="ci" src="${IMGSRC.ui_coin}" alt="">`;
+
+/* ---------- 倉庫 · 農產倉庫: one block per category, illustration on the left ---------- */
+const ST_CAT = [['crop', '作物', 'st_crop', 'g'], ['fruit', '水果', null, 'p'], ['product', '動物產物', 'st_product', 'o'], ['meat', '肉', null, 'r'], ['fish', '魚', null, 'b'],
+  ['honey', '蜂蜜', null, 'y'], ['material', '材料', 'st_material', 'o'], ['feed', '飼料', 'st_feed', 'b']];
+function storageProduceHTML(){
+  const used = invUsed(), cap = invCap(), full = used >= cap;
+  const secs = ST_CAT.map(([c, label, art, col]) => {
+    const ids = Object.keys(S.inv).filter(id => (S.inv[id] || 0) > 0 && CFG.items[id] && CFG.items[id].category === c); if (!ids.length) return '';
+    const pic = art ? `<img class="stpic" src="${PIMG(art)}" alt="">` : `<span class="stpic">${itemIconHTML(ids[0]).replace('class="ico"', 'class="ico big"')}</span>`;
+    return `<section class="stsec c-${col}"><div class="stside"><b>${label}</b>${pic}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th class="num">售價</th><th></th></tr></thead><tbody>
+      ${ids.map(id => `<tr><td>${itemIconHTML(id)}</td><td>${itemName(id)}</td><td class="num">${fmtN(S.inv[id])}</td><td class="num">${coinI()}${CFG.items[id].sellPrice}</td>
+        <td class="acts"><button class="btn ghost" data-sell="${id}" data-q="1">賣 1 個</button><button class="btn" data-sell="${id}" data-q="all">全部賣 +${fmtN(S.inv[id] * CFG.items[id].sellPrice)}</button></td></tr>`).join('')}</tbody></table></div></section>`; }).join('');
+  return `<div class="stcap"><img src="${IMGSRC.ui_barn}" alt=""><span>容量 <b class="${full ? 'warn' : ''}">${fmtN(used)}</b> / ${fmtN(cap)}</span><div class="bar"><i style="width:${Math.min(100, used / cap * 100)}%;background:${full ? 'var(--warn)' : 'var(--accent)'}"></i></div>
+    <label class="chk"><input type="checkbox" id="autoBuy" ${S.settings.autoBuyFeed ? 'checked' : ''}> 飼料不夠時自動用金幣照商店價買</label></div>
+    ${secs || '<div class="empty">倉庫是空的。收成的作物、水果、動物產物、肉和魚都會先放在這裡。</div>'}`;
+}
+
+/* ---------- base panel (停機坪 / 充電站 / 掃地基座): cards ---------- */
+function unitsCardHTML(kind){
+  const K = RK(kind), f = fleet(kind), mx = maxUnits(kind), lk = !isUnlocked(K.tiers[0].id);
+  return `<div class="pcard"><h4><img src="${IMGSRC[R_ICON[kind]]}" alt="">${K.name}<span class="pill">${f.length} / ${mx || 0} 台</span>${lk ? `<span class="pill lock">Lv ${unlockLv(kind)}</span>` : ''}</h4>
+    ${f.length ? `<div class="units">${f.map((u, i) => { const tr = unitTier(kind, u), nx = K.tiers[u.tier + 1], trade = Math.floor(tr.buy * (RB.upgradeTradeInRate || .5)), pct = unitPct(kind, u);
+      return `<div class="unitrow"><b>#${i + 1}</b><span>${tr.name}</span><span class="ust">${unitText(kind, u)}</span><span class="batt"><i style="width:${pct}%"></i></span><span>${pct}%${kind === 'water' ? ` · 水 ${Math.floor(u.tank)}` : ''}</span>
+        ${nx ? `<button class="btn ghost sm" data-rup="${kind}:${u.id}" ${isUnlocked(nx.id) ? '' : 'disabled'}>升級${nx.name} ${fmtN(nx.buy - trade)}</button>` : ''}<button class="btn sm" data-ron2="${kind}:${u.id}">${u.on === false ? '開啟' : '關閉'}</button></div>`; }).join('')}</div>`
+      : `<div class="empty sm">還沒有${K.name}。</div>`}</div>`;
+}
+function buyCardHTML(kind){
+  const K = RK(kind), f = fleet(kind), mx = maxUnits(kind), lk = !isUnlocked(K.tiers[0].id), baseN = baseCount(K.base), can = f.length < mx && (kind === 'sweep' || baseN > 0);
+  let h = `<div class="pcard"><h4><span class="hic">🛒</span>買${f.length ? '一台新的' : '斷'}</h4><div class="bigbtns">${K.tiers.map((tr, i) => { const tl = !isUnlocked(tr.id);
+    return `<button class="btn big${tl || !can ? ' ghost' : ''}" data-rbuy="${kind}:${i}" ${tl || !can ? 'disabled' : ''}><img src="${IMGSRC[R_ICON[kind]]}" alt="">${tr.name === '標準' ? '' : tr.name}${K.name} · 工作 ${fmtHours(tr.workHours)} · ${coinI()}${fmtN(tr.buy)}${tl ? `（Lv ${UNLOCK[tr.id]}）` : ''}</button>`; }).join('')}</div>`;
+  if (!lk && f.length >= mx) h += `<p class="small">${mx >= FLC.maxPerKind ? `已經買滿 ${FLC.maxPerKind} 台。` : `現在最多 ${mx} 台，到第 ${unlockLv(kind) + mx} 級可以買第 ${mx + 1} 台。`}</p>`;
+  if (kind !== 'sweep' && !baseN) h += `<p class="small warn">買斷要先用「建設」蓋${BLD[K.base].name}（${fmtN(BLD[K.base].cost)} 金幣）。租的不用。</p>`;
+  if (kind === 'sweep' && f.length > capacityOf('sweeper_dock')) h += `<p class="small warn">掃地基座位子 ${capacityOf('sweeper_dock')} 個，不夠 ${f.length} 台用：再蓋一座（${fmtN(FLC.dockBuildCost)}）或擴充成 2 位。</p>`;
+  return h + '</div>';
+}
+function rentCardHTML(kind){
+  const now = Date.now(), rent = rentActive(kind, now);
+  return `<div class="pcard"><h4><span class="hic">⏱</span>租用（額外一台，一起工作）${rent ? `<span class="pill ok">租用中 · 剩 ${fmtDur((S.automation[rentKey(kind)] - now) / 1000)}</span>` : ''}</h4>
+    <div class="row">${rentOptions(kind).map(o => { const ol = !isUnlocked(o.unlock); return `<button class="btn alt mid" data-rent="${o.id}" ${ol ? 'disabled' : ''}>${fmtHours(o.hours)} · ${coinI()}${fmtN(o.cost)}${ol ? `（Lv ${UNLOCK[o.unlock]}）` : ''}</button>`; }).join('')}</div>
+    <p class="small">${KIND_DESC[kind] || ''} 可以買的台數隨等級增加，最多 ${FLC.maxPerKind} 台，每台同價；每台各自充電、升級（舊的折價 ${Math.round((RB.upgradeTradeInRate || .5) * 100)}%）。</p></div>`;
+}
+function openUnitPanel(kind){
+  const baseId = BASE_OF[kind] || RK(kind).base, B = BLD[baseId], kinds = KINDS.filter(k => RK(k).base === baseId);
+  openModal(B.name, null, (k, el) => {
+    const tb = RT.tapBase && S.maps[RT.tapBase.mi] && S.maps[RT.tapBase.mi].tiles[RT.tapBase.k], T = tb && tb.id === baseId ? tb : (basesOf(baseId)[0] || {}).T;
+    const cap = capacityOf(baseId), cost = Math.round((baseId === 'sweeper_dock' ? FLC.dockBuildCost : B.cost) * (FLC.expandRate || .5)), src = (T && T.src) || 'solar';
+    const SW = S.sweep;
+    el.innerHTML = `<div class="pgrid">
+      <div class="pcard span2 basecard"><img class="bpic" src="${PIMG('basepin')}" alt=""><div class="bnum"><span class="small">這座</span><b>${T ? slotsOfT(T) : 0} 個位子</b><span class="small">全部${B.name} ${basesOf(baseId).length} 座（倉庫 ${S.buildStore[baseId] || 0}）· 共 ${cap} 個位子</span></div>
+        <div class="bexp">${T && slotsOfT(T) < 2 ? `<b>擴充成 2 個位子 · ${fmtN(cost)} 金幣</b><button class="btn big" data-expand="${RT.tapBase ? RT.tapBase.mi + '|' + RT.tapBase.k : ''}">${coinI()}擴充成 2 個位子 · ${fmtN(cost)} 金幣</button>` : '<b>這座已經是 2 個位子（最多）</b>'}
+        <p class="small">${baseId === 'sweeper_dock' ? '每台掃地機器人要一個位子當家：從這裡出發、回來清潔 30 秒、充電。' : `${kinds.map(KIND_NAME).join('、')}共用這種機座充電；位子都在充時其他的排隊。`}</p></div></div>
+      ${kinds.map(kd => unitsCardHTML(kd) + buyCardHTML(kd) + rentCardHTML(kd)).join('')}
+      <div class="pcard"><h4><span class="hic">⚡</span>充電來源</h4><select id="srcSel">${Object.entries(AU.chargeSources).map(([id, s]) => `<option value="${id}" ${src === id ? 'selected' : ''}>${id === 'solar' ? '☀ ' : '🔌 '}${s.name}</option>`).join('')}</select>
+        <p class="small">太陽能免費，但充電時間是 ${RB.solarChargeMultiplier || 2} 倍，晚上充不了。農場電力會從電池、手搖小儲電、市電拿電。</p></div>
+      ${kind === 'sweep' ? `<div class="pcard"><h4><span class="hic">🧹</span>掃地報告</h4><div class="kv"><span>今天</span><span><b>${SW.todayWeeds}</b> 根雜草 · <b>${SW.todayTrash}</b> 件垃圾</span><span>累計</span><span><b>${fmtN(SW.totalWeeds)}</b> 根雜草 · <b>${fmtN(SW.totalTrash)}</b> 件垃圾</span></div>
+        <p class="small">農場 ${sweepMapIndex() + 1} 最近 24 小時掃過的地方：越紅掃得越多，黑點是基座。</p></div>
+        <div class="pcard span2"><div id="heatBox" class="heatbox"></div><p class="small legend"><span class="lg" style="background:#cfe3b8"></span>沒掃過的草地／道路　<span class="lg" style="background:#ffbe3c"></span>掃過　<span class="lg" style="background:#ff2814"></span>常掃　<span class="lg" style="background:#1e2a3a;border-radius:50%"></span>基座</p></div>` : ''}
+    </div>`;
+    const hb = $('heatBox'); if (hb) hb.appendChild(heatmapCanvas(sweepMapIndex()));
+    wireRobotButtons(el, () => openUnitPanel(kind));
+    $('srcSel').onchange = e => { if (T){ T.src = e.target.value; save(); toast(`這座的充電來源改成${AU.chargeSources[e.target.value].name}`); } };
+  });
+}
+function openAuto(focus){
+  openModal('自動化', null, (k, el) => {
+    const list = focus && KINDS.includes(focus) ? [focus, ...KINDS.filter(x => x !== focus)] : KINDS;
+    el.innerHTML = `<div class="tip">每種機器人最多可以買 ${FLC.maxPerKind} 台（隨等級開放），也可以另外「租用」一台一起工作。停機坪、充電站、掃地基座各最多蓋 ${FLC.baseMax} 座，每座可擴充成 2 個位子。</div>
+      ${list.map(kd => `<div class="pgrid kindgrid">${unitsCardHTML(kd)}${buyCardHTML(kd)}${rentCardHTML(kd)}</div>`).join('')}`;
+    wireRobotButtons(el, () => openAuto(focus));
+  });
+}
+$('autoBtn').onclick = () => openAuto();
+
+/* ---------- 水電與帳單: banner + big cards ---------- */
+function utilSetupHTML(){
+  const now = Date.now(), cur = S.bill.cur, est = computeBill(cur, cycleDays()), cap = rainCapC(), w = Math.floor(S.player.water);
+  return `<div class="banner"><img src="${PIMG('banner_util')}" alt=""></div>
+    ${utilCut() ? '<div class="tip warn">金幣是負數，自來水和市電暫停中。雨水、電池、發電機、手搖發電照常可用；賺錢讓金幣回到 0 以上就會恢復。</div>' : ''}
+    <div class="pgrid">
+      <div class="pcard ucard"><img class="upic" src="${PIMG('tower')}" alt=""><div><h4><img src="${IMGSRC.ui_tap}" alt="">自來水 ${statusPill(tapOn(), '供水中', S.settings.tapWater ? '暫停' : '沒接')}<label class="tsw"><input type="checkbox" class="swc" id="tapToggle" ${S.settings.tapWater ? 'checked' : ''}></label></h4>
+        <p class="small">接上後自來水會把水塔補到補水線（現在 ${fillLineName(fillLine())}），水錶轉的時候才計費；當天有注水才收基本費 ${WAT.baseFeePerDay}。</p>
+        <div class="kv"><span>水塔</span><span>${w} / ${fmtN(cap)} 滴</span></div><div class="bar wbar"><i style="width:${Math.min(100, w / cap * 100)}%"></i></div>
+        <div class="kv"><span>水錶</span><span>${METER_TEXT[meterState()]}</span><span>本期自來水</span><span>${fmtN(cur.water)} 滴</span></div>
+        <button class="btn ghost" id="toTower">水塔與補水線</button></div></div>
+      <div class="pcard ucard"><img class="upic" src="${PIMG('pole')}" alt=""><div><h4><img src="${IMGSRC.ui_electric}" alt="">市電 ${statusPill(gridOn(), '供電中', S.settings.grid ? '暫停' : '沒接')}<label class="tsw"><input type="checkbox" class="swc" id="gridToggle" ${S.settings.grid ? 'checked' : ''}></label></h4>
+        <p class="small">現在是${seasonAt(now) === 'summer' ? '夏季' : '冬季'}${isNightAt(now) ? '夜間' : '白天'}電價，每度 ${elecPrice(now)} 金幣。基本費每天 ${ELEC.baseFeePerDay}。</p>
+        <div class="kv"><span>本期用電</span><span>白天 ${cur.elecKwh.day.toFixed(2)} 度</span><span></span><span>夜間 ${cur.elecKwh.night.toFixed(2)} 度</span></div></div></div>
+      <div class="pcard"><h4><span class="hic">🧾</span>結帳</h4><div class="row"><label for="cycleSel">結帳週期</label><select id="cycleSel">${CYCLE_IDS.map(id => `<option value="${id}" ${S.bill.cycle === id ? 'selected' : ''}>${BILL.cycles[id].name}</option>`).join('')}</select></div>
+        <label class="chk"><input type="checkbox" id="autoPayT" ${S.settings.autoPay ? 'checked' : ''}> 自動扣款（出帳當下扣，95 折）</label>
+        <p class="small">本期從 ${fmtDate(cur.start)} 開始，${fmtDate(nextClose())} 出帳。</p></div>
+      <div class="pcard"><h4><span class="hic">💰</span>本期到目前約 ${coinI()}<b>${fmtN(est.total)}</b> 金幣</h4>
+        <div class="kv"><span>電</span><span>${est.elec.toFixed(1)}</span><span>電基本</span><span>${est.elecBase.toFixed(1)}</span><span>水</span><span>${est.water.toFixed(1)}</span><span>水基本</span><span>${est.waterBase.toFixed(1)}</span>${est.sell ? `<span>賣電</span><span>－${est.sell.toFixed(1)}</span>` : ''}</div></div>
+      <div class="pcard span2"><h4><span class="hic">⚙</span>用電設定</h4><div class="row"><label for="prioSel">燈先用</label><select id="prioSel"><option value="battery" ${S.settings.powerPriority !== 'grid' ? 'selected' : ''}>電池優先</option><option value="grid" ${S.settings.powerPriority === 'grid' ? 'selected' : ''}>市電優先</option></select>
+        <label for="gcSel">電池從市電充電</label><select id="gcSel">${[['off', '不充'], ['night', '只在夜間充'], ['always', '隨時充']].map(([v, l]) => `<option value="${v}" ${S.settings.batteryGridCharge === v ? 'selected' : ''}>${l}</option>`).join('')}</select></div></div>
+    </div>`;
+}
+function wireUtilSetup(){
+  $('toTower').onclick = openTower;
+  $('tapToggle').onchange = e => { S.settings.tapWater = e.target.checked; toast(e.target.checked ? '接上自來水了，開始計費' : '已拆掉自來水'); afterAction(); openUtilities('setup'); };
+  $('gridToggle').onchange = e => { S.settings.grid = e.target.checked; toast(e.target.checked ? '接上市電了，開始計費' : '已斷開市電'); afterAction(); openUtilities('setup'); };
+  $('cycleSel').onchange = e => { changeCycle(e.target.value); S.settings.billingCycle = e.target.value; flushNotices(false); afterAction(); openUtilities('setup'); };
+  $('autoPayT').onchange = e => { S.settings.autoPay = e.target.checked; save(); };
+  $('prioSel').onchange = e => { S.settings.powerPriority = e.target.value; save(); };
+  $('gcSel').onchange = e => { S.settings.batteryGridCharge = e.target.value; save(); };
+}
+function utilPowerHTML(){
+  const devs = allDevices(), lamps = devs.filter(d => DEV[d.T.id].kind === 'lamp'), gens = devs.filter(d => DEV[d.T.id].kind === 'generator'), bc = batteryCap(), cc = crankCap();
+  const card = (pic, name, rows) => `<div class="pcard pwr"><img class="ppic" src="${PIMG(pic)}" alt=""><h4>${name}</h4><div class="kv">${rows.map(([a, b]) => `<span>${a}</span><span>${b}</span>`).join('')}</div></div>`;
+  return `<div class="pgrid four">
+    ${card('battery', '電池', [['電量', `${S.power.battery.toFixed(2)} / ${bc} 度`], ['最快充放', `${batteryRate()} 度／小時`], ['充放效率', `${Math.round((POW.batteryEfficiency || .9) * 100)}%`]])}
+    ${card('crank', '手搖小儲電', [['電量', `${S.power.crank.toFixed(2)} / ${cc} 度`]])}
+    ${card('generator', '發電機', [['台數', gens.length], ['剩餘燃料', `${gens.reduce((a, g) => a + (g.T.fuel || 0), 0).toFixed(1)} 度`]])}
+    ${card('lamp', '生長燈', [['總數', lamps.length], ['亮著', lamps.filter(d => d.T.lit).length]])}</div>
+    <div class="tip">燈先用的順序：${S.settings.powerPriority === 'grid' ? '市電 → 電池 → 手搖小儲電 → 發電機' : '電池 → 手搖小儲電 → 發電機 → 市電'}。發電機發的電沒用完會先充電池，電池滿了就浪費。</div>`;
+}
+
+/* ---------- 設定: two columns, world map with city pins + city cards ---------- */
+function sunsetAt(lat, lon, ms){
+  const rad = Math.PI / 180, d = new Date(ms), J = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), 12) / DAY + 2440587.5;
+  const n = Math.round(J - 2451545.0 + 0.0008), Js = n - lon / 360, M = ((357.5291 + 0.98560028 * Js) % 360 + 360) % 360;
+  const C = 1.9148 * Math.sin(M * rad) + 0.02 * Math.sin(2 * M * rad) + 0.0003 * Math.sin(3 * M * rad), lam = (M + C + 180 + 102.9372) % 360;
+  const Jt = 2451545.0 + Js + 0.0053 * Math.sin(M * rad) - 0.0069 * Math.sin(2 * lam * rad), dec = Math.asin(Math.sin(lam * rad) * Math.sin(23.44 * rad));
+  const cw = (Math.sin(-0.833 * rad) - Math.sin(lat * rad) * Math.sin(dec)) / (Math.cos(lat * rad) * Math.cos(dec)); if (cw < -1 || cw > 1) return null;
+  return (Jt + Math.acos(cw) / rad / 360 - 2440587.5) * DAY;
+}
+const cityTZ = c => (c.tz && c.tz[0]) || (Math.abs(c.lon - 121) < 3 && Math.abs(c.lat - 23.5) < 3 ? 'Asia/Taipei' : null);
+function localHM(ms, tz){ try { return new Date(ms).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz || undefined }); } catch(e){ return fmtHM(ms); } }
+function cityInfo(c){
+  const z = climateZone(c.lat), ss = climSeason(Date.now(), c.lat), snow = CLIM && CLIM.snowShare && CLIM.snowShare[z];
+  const set = sunsetAt(c.lat, c.lon, Date.now());
+  return { zone: ZONE_NAME(z), season: SEASON_NAME[ss] + '季', snow: !!snow, set: set ? localHM(set, cityTZ(c)) : '—' };
+}
+// map position: the painted map spans roughly lon -170…190, lat 80…-58
+const MAPB = { lon0: -170, lon1: 190, lat0: 80, lat1: -58 };
+const mapXY = (lat, lon) => ({ x: (lon - MAPB.lon0) / (MAPB.lon1 - MAPB.lon0) * 100, y: (MAPB.lat0 - lat) / (MAPB.lat0 - MAPB.lat1) * 100 });
+{ const _rs9 = renderSettings; renderSettings = function(el){ _rs9(el);
+  const L = S.settings.location, curId = L.mode === 'city' ? L.cityId : L.mode === 'auto' ? guessCity().id : null, cur = getLatLon(), night = document.body.classList.contains('night');
+  const left = document.createElement('div'); left.className = 'setl'; while (el.firstChild) left.appendChild(el.firstChild);
+  // wrap each h3 section of the original settings into a card
+  const cards = []; let c = null;
+  [...left.childNodes].forEach(n => { if (n.nodeName === 'H3'){ c = document.createElement('div'); c.className = 'pcard'; cards.push(c); left.appendChild(c); } if (c && n !== c) c.appendChild(n); });
+  const pos = mapXY(cur.lat, cur.lon);
+  const right = document.createElement('div'); right.className = 'setr';
+  right.innerHTML = `<div class="pcard"><h4><span class="hic">🌏</span>在世界地圖上選地點</h4>
+      <div class="wmap"><img src="${PIMG(night ? 'world_night' : 'world_day')}" alt="世界地圖">${CFG.cities.map(cc => { const p = mapXY(cc.lat, cc.lon); return `<button class="pin${cc.id === curId ? ' on' : ''}" data-city="${cc.id}" style="left:${p.x}%;top:${p.y}%" title="${cc.name}"></button>`; }).join('')}
+        <span class="here" style="left:${pos.x}%;top:${pos.y}%">📍</span></div>
+      <p class="small">目前：${cur.name}（${cur.lat.toFixed(2)}, ${cur.lon.toFixed(2)}）。點地圖上的點或下面的城市就會換地點。</p></div>
+    <div class="pcard"><h4><span class="hic">🏙</span>城市</h4><div class="cities">${CFG.cities.map(cc => { const i = cityInfo(cc), img = PIMG('city_' + cc.id);
+      return `<button class="city${cc.id === curId ? ' on' : ''}" data-city="${cc.id}">${img ? `<img src="${img}" alt="" loading="lazy">` : '<span class="noimg">🏙</span>'}<b>${cc.name}</b><span class="small">${i.zone} · ${i.season}${i.snow ? ' · 會下雪' : ''}</span><span class="small">日落 ${i.set}</span></button>`; }).join('')}</div></div>`;
+  const wrap = document.createElement('div'); wrap.className = 'setgrid'; wrap.append(left, right); el.appendChild(wrap);
+  right.addEventListener('click', e => { const b = e.target.closest('[data-city]'); if (!b) return; S.settings.location = { mode: 'city', cityId: b.dataset.city }; sunCache.clear(); RT.geo = null; save();
+    toast(`地點改成${cityById(b.dataset.city).name}`, true); renderHUD(); el.innerHTML = ''; renderSettings(el); });
+}; }
+
+/* ---------- 選單 · 存檔與換電腦: Google Drive card + export / import cards ---------- */
+function islandThumb(d, w = 180, h = 110){
+  const cv = document.createElement('canvas'), dp = 2; cv.width = w * dp; cv.height = h * dp; cv.className = 'thumb'; const g = cv.getContext('2d'); g.scale(dp, dp);
+  const M = d && d.maps && d.maps[0]; if (!M) return cv;
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const tiles = [];
+  for (const [bx, by] of M.blocks) for (let y = by * BS; y < by * BS + BS; y++) for (let x = bx * BS; x < bx * BS + BS; x++){ tiles.push([x, y]); const sx = x - y, sy = x + y; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
+  const s = Math.min((w - 16) / ((x1 - x0 + 2) * 2), (h - 26) / ((y1 - y0 + 2) * 1 + 8)), ox = w / 2 - (x0 + x1) / 2 * s * 2, oy = 6 - y0 * s;
+  const P = (x, y) => [ox + (x - y) * s * 2, oy + (x + y) * s];
+  // underside: a rounded wedge hanging below the island's bottom edges
+  const ext = (f) => tiles.reduce((a, t) => f(t) > f(a) ? t : a);
+  const L = P(...ext(t => t[1] - t[0])), R2 = P(...ext(t => t[0] - t[1])), B = P(...ext(t => t[0] + t[1]));
+  const lx = L[0] - s * 2, ly = L[1] + s, rx = R2[0] + s * 2, ry = R2[1] + s, bx = B[0], byy = B[1] + s * 2, dep = (rx - lx) * .32;
+  g.fillStyle = '#9a6a42'; g.beginPath(); g.moveTo(lx, ly); g.lineTo(bx, byy); g.lineTo(bx, byy + dep * .2); g.quadraticCurveTo(lx + (bx - lx) * .3, ly + dep * .9, lx, ly); g.fill();
+  g.fillStyle = '#7a5032'; g.beginPath(); g.moveTo(rx, ry); g.lineTo(bx, byy); g.lineTo(bx, byy + dep * .2); g.quadraticCurveTo(rx - (rx - bx) * .3, ry + dep * .9, rx, ry); g.fill();
+  g.fillStyle = '#6a4329'; g.beginPath(); g.moveTo(lx + (bx - lx) * .35, ly + dep * .55); g.quadraticCurveTo(bx, byy + dep * 1.1, rx - (rx - bx) * .35, ry + dep * .55); g.quadraticCurveTo(bx, byy + dep * .2, lx + (bx - lx) * .35, ly + dep * .55); g.fill();
+  const snow = d.snow && d.snow.cover;
+  const col = T => !T ? (snow ? '#eef4fa' : '#79c25e') : T.t === 'soil' ? (T.crop ? '#6fa53f' : '#9b6a3f') : T.t === 'tree' ? '#2f7a34' : T.t === 'pool' || T.t === 'pond' ? '#4aa7e0' : T.t === 'animal' ? '#f2efe2'
+    : T.t === 'house' ? '#d0603e' : T.t === 'building' || T.t === 'machine' || T.t === 'device' || T.t === 'tower' ? '#c9a46a' : T.t === 'weed' ? '#5f9a3a' : T.t === 'greenhouse' ? '#bfe6f0' : T.t === 'deco' ? '#a3b18a' : (snow ? '#eef4fa' : '#79c25e');
+  tiles.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [x, y] of tiles){ const T = M.tiles[x + ',' + y], [px, py] = P(x, y); g.fillStyle = snow && T && T.t !== 'pool' && T.t !== 'pond' ? '#f4f8fc' : col(T);
+    g.beginPath(); g.moveTo(px, py); g.lineTo(px + s * 2, py + s); g.lineTo(px, py + s * 2); g.lineTo(px - s * 2, py + s); g.closePath(); g.fill();
+    if (T && (T.t === 'tree' || T.t === 'house' || T.t === 'building' || T.t === 'machine' || T.t === 'tower')){ g.fillStyle = T.t === 'tree' ? '#256b2c' : T.t === 'house' ? '#b84a2e' : '#a77d45'; g.fillRect(px - s * .9, py - s * 1.2, s * 1.8, s * 2); } }
+  return cv;
+}
+{ const _om10 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '選單'){ const r0 = render; render = (k, el) => { r0(k, el); if (k === 'save') queueMicrotask(() => layoutSaveTab(el)); }; }   // later-registered wrappers render after us
+  if (title === '倉庫'){ const r0 = render; render = (k, el) => { r0(k, el); if (k === 'produce'){ el.innerHTML = storageProduceHTML(); paintIcons(el); $('autoBuy').onchange = e => { S.settings.autoBuyFeed = e.target.checked; save(); }; } }; }
+  if (title === '水電與帳單'){ const r0 = render; render = (k, el) => { r0(k, el);
+    if (k === 'setup'){ el.innerHTML = utilSetupHTML(); wireUtilSetup(); } else if (k === 'power') el.innerHTML = utilPowerHTML(); }; }
+  if (title === '選擇農場'){ const r0 = render; render = (k, el) => { r0(k, el); queueMicrotask(() => layoutPicker(el)); }; }
+  if (title === '圖鑑'){ const r0 = render; render = (k, el) => { r0(k, el); layoutBook(k, el); }; }
+  return _om10(title, tabs, render, initial); }; }
+function layoutSaveTab(el){
+  const gd = el.querySelector('.gd');
+  if (gd && !gd.classList.contains('off')){ gd.classList.add('pcard', 'gdcard'); gd.insertAdjacentHTML('afterbegin', `<img class="gdpic" src="${PIMG('cloud')}" alt="">`);
+    gd.querySelectorAll('label.tog').forEach(t => { const id = (t.querySelector('[data-slot]') || {}).dataset; if (!id) return; const d = load(id.slot); if (d){ const th = islandThumb(d, 64, 40); t.insertBefore(th, t.firstChild); } }); }
+  const ex = $('exportBox'), im = $('importBox'); if (!ex || !im) return;
+  const kids = [...el.children].filter(n => !n.contains(gd) && n !== gd);
+  const intro = kids.find(n => n.nodeName === 'P'), hEx = kids.find(n => n.nodeName === 'H3' && /匯出/.test(n.textContent)), hIm = kids.find(n => n.nodeName === 'H3' && /匯入/.test(n.textContent));
+  const exCard = document.createElement('div'), imCard = document.createElement('div'); exCard.className = 'pcard'; imCard.className = 'pcard';
+  exCard.innerHTML = '<h4><span class="hic">⬆</span>匯出</h4>'; imCard.innerHTML = '<h4><span class="hic">⬇</span>匯入</h4>';
+  let mode = null; for (const n of kids){ if (n === hEx){ mode = exCard; n.remove(); continue; } if (n === hIm){ mode = imCard; n.remove(); continue; } if (mode && n !== intro) mode.appendChild(n); }
+  if (intro){ intro.className = 'tip'; }
+  const grid = document.createElement('div'); grid.className = 'pgrid'; grid.append(exCard, imCard); el.appendChild(grid);
+  im.placeholder = '把存檔代碼貼在這裡，或把存檔檔案拖進來';
+  im.addEventListener('dragover', e => { e.preventDefault(); im.classList.add('drop'); }); im.addEventListener('dragleave', () => im.classList.remove('drop'));
+  im.addEventListener('drop', e => { e.preventDefault(); im.classList.remove('drop'); const f = e.dataTransfer.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { im.value = r.result; const cb = $('checkBtn'); if (cb) cb.click(); }; r.readAsText(f); });
+}
+
+/* ---------- 選擇農場: banner, big cards with island thumbnails, "new farm" card, card / list toggle ---------- */
+let PICK_LIST = false;
+function layoutPicker(el){
+  const bar = el.querySelector('.acctbar'); const ban = document.createElement('div'); ban.className = 'banner'; ban.innerHTML = `<img src="${PIMG('banner_farm')}" alt="">`;
+  if (bar && bar.parentElement) bar.parentElement.insertAdjacentElement('afterend', ban); else el.insertBefore(ban, el.firstChild);
+  const intro = [...el.children].find(n => n.nodeName === 'P' && /每個人可以有自己的農場/.test(n.textContent)); if (intro) intro.remove();
+  el.querySelectorAll('.slot[data-id]').forEach(box => { const d = load(box.dataset.id), e = slotList().find(x => x.id === box.dataset.id), m = (e && e.summary) || (d ? summarize(d) : {});
+    if (d) box.insertBefore(islandThumb(d), box.firstChild);
+    const st = box.querySelector('.stats'); if (st) st.innerHTML = [['ui_xp_star', `Lv ${m.level ?? '—'}`], ['ui_coin', fmtN(m.coins ?? 0)], ['ui_shed', `${m.blocks ?? 1} 塊地`], ['ui_tool_seed', `${m.crops ?? 0} 作物`], ['ui_tool_animal', `${m.animals ?? 0} 動物`], ['ui_tool_harvest', `${m.trees ?? 0} 果樹`]]
+      .map(([ic, t]) => `<span class="sti"><img src="${IMGSRC[ic]}" alt="">${t}</span>`).join(''); });
+  const ns = el.querySelector('.newslot');
+  if (ns){ const h = ns.previousElementSibling; if (h && h.nodeName === 'H3') h.remove();
+    const card = document.createElement('div'); card.className = 'slot newcard'; card.innerHTML = `<img class="nfpic" src="${PIMG('newfarm')}" alt=""><h4><span>＋ 建立新農場</span></h4><p class="small">取個名字，從一塊小浮島開始。</p>`; card.appendChild(ns);
+    const grids = el.querySelectorAll('.slots'); const last = grids[grids.length - 1];
+    if (last && !last.closest('[data-fid]') && !(last.querySelector('[data-fid]'))) last.appendChild(card); else { const g = document.createElement('div'); g.className = 'slots'; g.appendChild(card); el.appendChild(g); } }
+  const tg = document.createElement('div'); tg.className = 'viewtog'; tg.innerHTML = `<button data-v="card" class="${PICK_LIST ? '' : 'on'}">▦ 卡片</button><button data-v="list" class="${PICK_LIST ? 'on' : ''}">☰ 列表</button>`;
+  ban.appendChild(tg); el.classList.toggle('listview', PICK_LIST);
+  tg.onclick = e => { const b = e.target.closest('[data-v]'); if (!b) return; e.stopPropagation(); PICK_LIST = b.dataset.v === 'list'; el.classList.toggle('listview', PICK_LIST); tg.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); };
+}
+
+/* ---------- 圖鑑: categories · search · unlocked filter · sort · detail card ---------- */
+const BOOK_LIST = ['crops', 'trees', 'animals', 'fish', 'items', 'machines', 'decos', 'devices'];
+function layoutBook(k, el){
+  if (!BOOK_LIST.includes(k)) return;
+  const tws = [...el.querySelectorAll('.tw')].filter(tw => tw.querySelector('td canvas'));
+  if (!tws.length) return;
+  const intro = el.querySelector('p'), introText = intro ? intro.innerHTML : '';
+  // sections: preceding h3 of each list table, or a 類別 column
+  const secs = tws.map((tw, i) => { let h = tw.previousElementSibling; while (h && h.nodeName !== 'H3' && h.nodeName !== 'DIV') h = h.previousElementSibling; return h && h.nodeName === 'H3' ? h.textContent : (i ? `第 ${i + 1} 類` : ''); });
+  const heads = tws.map(tw => [...tw.querySelectorAll('th')].map(t => t.textContent));
+  const rows = []; tws.forEach((tw, ti) => tw.querySelectorAll('tbody tr').forEach(tr => { const catCol = heads[ti].indexOf('類別'); tr.dataset.sec = secs[ti] || ''; if (catCol >= 0) tr.dataset.cat = tr.children[catCol].textContent; rows.push({ tr, ti }); }));
+  const cats = []; if (secs.filter(Boolean).length > 1 || (secs.length === 1 && secs[0])) secs.forEach((s, i) => cats.push({ key: 'sec:' + (s || '一般'), label: s || (k === 'animals' ? '產物型' : '一般'), n: tws[i].querySelectorAll('tbody tr').length }));
+  const cc = {}; rows.forEach(r => { if (r.tr.dataset.cat) cc[r.tr.dataset.cat] = (cc[r.tr.dataset.cat] || 0) + 1; }); const CATN = { material: '材料', honey: '蜂蜜', crop: '作物', fruit: '水果', product: '動物產物', meat: '肉', fish: '魚', feed: '飼料' };
+  Object.entries(cc).forEach(([c, n]) => cats.push({ key: 'cat:' + c, label: CATN[c] || c, n }));
+  if (k === 'animals' && cats[0]) cats[0].label = '產物型';
+  const hasLock = rows.some(r => r.tr.querySelector('.pill.lock') || r.tr.querySelector('.pill.ok'));
+  const sortable = [...new Set(heads.flat())].filter(t => t && t !== '解鎖');
+  const wrap = document.createElement('div'); wrap.className = 'bk';
+  wrap.innerHTML = `<aside class="bkcat"><button class="on" data-c="">全部 <span>${rows.length}</span></button>${cats.map(c => `<button data-c="${c.key}">${c.label} <span>${c.n}</span></button>`).join('')}</aside>
+    <div class="bkmain"><div class="bktool"><input type="text" class="bksearch" placeholder="🔍 搜尋名稱" aria-label="搜尋">${hasLock ? `<select class="bklock"><option value="">全部</option><option value="ok">已解鎖</option><option value="lock">未解鎖</option></select>` : ''}
+      <select class="bksort"><option value="">預設排序</option>${sortable.map(t => `<option value="${t}">依${t}</option>`).join('')}</select><button class="btn ghost sm bkdir" title="反向">↕</button></div><div class="bktables"></div><div class="empty bkno" hidden>沒有符合的項目。</div></div>
+    <aside class="bkdet"></aside>`;
+  const host = wrap.querySelector('.bktables');
+  tws.forEach((tw, i) => { if (secs[i]){ const h = document.createElement('h5'); h.textContent = secs[i]; h.className = 'bksec'; h.dataset.sec = secs[i]; host.appendChild(h); } host.appendChild(tw); });
+  el.querySelectorAll(':scope > h3').forEach(h => { if (secs.includes(h.textContent)) h.remove(); });
+  if (intro) intro.remove();
+  const extra = [...el.children]; el.innerHTML = ''; el.appendChild(wrap); extra.forEach(n => { if (n.classList && n.classList.contains('tw')) host.appendChild(n); else if (n.textContent.trim()) wrap.querySelector('.bkmain').appendChild(n); });
+  const det = wrap.querySelector('.bkdet');
+  const show = tr => { rows.forEach(r => r.tr.classList.toggle('pick', r.tr === tr)); const ti = rows.find(r => r.tr === tr).ti, hs = heads[ti], cells = [...tr.children];
+    const cvs = cells[0].querySelector('canvas'), name = cells[1] ? cells[1].textContent : '', lockCellIdx = hs.indexOf('解鎖');
+    det.innerHTML = `<div class="dhead">${cvs ? `<canvas data-spr="${cvs.dataset.spr}" data-f="${cvs.dataset.f || 0}" class="dico"></canvas>` : ''}<div><h4>${name}</h4>${lockCellIdx >= 0 ? cells[lockCellIdx].innerHTML : ''}</div></div>
+      <div class="dkv">${hs.map((h, i) => i < 2 || i === lockCellIdx || !h ? '' : `<span>${h}</span><b>${cells[i].innerHTML}</b>`).join('')}</div>
+      ${introText ? `<div class="tip"><b>小提醒</b><br>${introText}</div>` : ''}`;
+    det.querySelectorAll('canvas[data-spr]').forEach(c => { const n = iconCanvas(c.dataset.spr, +c.dataset.f, 96); c.width = n.width; c.height = n.height; c.getContext('2d').drawImage(n, 0, 0); }); };
+  rows.forEach(r => r.tr.addEventListener('click', () => show(r.tr)));
+  let cat = '', dir = 1;
+  const apply = () => { const q = wrap.querySelector('.bksearch').value.trim(), lk = (wrap.querySelector('.bklock') || {}).value || '', sk = wrap.querySelector('.bksort').value; let vis = 0;
+    rows.forEach(r => { const nm = r.tr.children[1] ? r.tr.children[1].textContent : '', isLock = r.tr.classList.contains('locked') || !!r.tr.querySelector('.pill.lock');
+      const okC = !cat || (cat.startsWith('sec:') ? (r.tr.dataset.sec || '一般') === cat.slice(4) || (!r.tr.dataset.sec && cat.slice(4) === (cats[0] && cats[0].key.slice(4))) : r.tr.dataset.cat === cat.slice(4));
+      const ok = okC && (!q || nm.includes(q)) && (!lk || (lk === 'lock') === isLock); r.tr.hidden = !ok; if (ok) vis++; });
+    tws.forEach((tw, i) => { const any = [...tw.querySelectorAll('tbody tr')].some(tr => !tr.hidden); tw.hidden = !any; const h = host.querySelector(`.bksec[data-sec="${secs[i]}"]`); if (h) h.hidden = !any; });
+    wrap.querySelector('.bkno').hidden = vis > 0;
+    if (sk) tws.forEach((tw, ti) => { const ci = heads[ti].indexOf(sk); if (ci < 0) return; const tb = tw.querySelector('tbody'), trs = [...tb.children];
+      const val = tr => { const t = tr.children[ci].textContent.replace(/[,，]/g, ''), n = parseFloat(t.replace(/^[^\d-]+/, '')); return isFinite(n) ? n : t; };
+      trs.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'number' && typeof y === 'number' ? x - y : String(x).localeCompare(String(y), 'zh-Hant')) * dir; }).forEach(tr => tb.appendChild(tr)); }); };
+  wrap.querySelector('.bkcat').onclick = e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; wrap.querySelectorAll('.bkcat button').forEach(x => x.classList.toggle('on', x === b)); apply(); };
+  wrap.querySelector('.bksearch').oninput = apply; wrap.querySelector('.bksort').onchange = apply; const lkS = wrap.querySelector('.bklock'); if (lkS) lkS.onchange = apply;
+  wrap.querySelector('.bkdir').onclick = () => { dir = -dir; apply(); };
+  const first = rows.find(r => r.tr.classList.contains('cur')) || rows[0]; if (first){ show(first.tr); if (first.tr.classList.contains('cur')) setTimeout(() => first.tr.scrollIntoView({ block: 'center' }), 50); }
+}
+window.__farm26 = { islandThumb, cityInfo, mapXY, layoutBook };
 
   })(CFG, ATLAS_JSON);
 })();

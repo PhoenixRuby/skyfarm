@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.5.1",
+    "configVersion": "2.6.0",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -3193,6 +3193,16 @@ window.GAME_CONFIG = {
       ],
       "phonePortrait": "current-tool button + slide-up 4x3 tool sheet; panels as bottom sheets",
       "pagesAndTraysFollowTheme": true
+    },
+    "pagesV26": {
+      "hero": true,
+      "storageSections": true,
+      "basePanelCards": true,
+      "utilitiesCards": true,
+      "settingsWorldMap": true,
+      "saveCards": true,
+      "pickerIslandThumbs": true,
+      "bookSearchFilterSortDetail": true
     }
   },
   "droneWatering": {

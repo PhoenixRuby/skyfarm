@@ -7792,6 +7792,390 @@ window.GAME_ATLAS = {
       ],
       "sx": 2816,
       "sy": 1184
+    },
+    "ui_pg_generator": {
+      "file": "ui_pg_generator.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 209,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_banner_farm": {
+      "file": "ui_pg_banner_farm.webp",
+      "frames": 1,
+      "frameWidth": 1100,
+      "frameHeight": 383,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_sweeper": {
+      "file": "ui_pg_sweeper.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 182,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_basepin": {
+      "file": "ui_pg_basepin.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 245,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_world_night": {
+      "file": "ui_pg_world_night.webp",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 557,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_battery": {
+      "file": "ui_pg_battery.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 136,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_pole": {
+      "file": "ui_pg_pole.webp",
+      "frames": 1,
+      "frameWidth": 360,
+      "frameHeight": 353,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_crank": {
+      "file": "ui_pg_crank.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_newfarm": {
+      "file": "ui_pg_newfarm.webp",
+      "frames": 1,
+      "frameWidth": 360,
+      "frameHeight": 272,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_tower": {
+      "file": "ui_pg_tower.webp",
+      "frames": 1,
+      "frameWidth": 360,
+      "frameHeight": 348,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_world_day": {
+      "file": "ui_pg_world_day.webp",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 532,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_lamp": {
+      "file": "ui_pg_lamp.webp",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 252,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_banner_util": {
+      "file": "ui_pg_banner_util.webp",
+      "frames": 1,
+      "frameWidth": 1100,
+      "frameHeight": 275,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_cloud": {
+      "file": "ui_pg_cloud.webp",
+      "frames": 1,
+      "frameWidth": 700,
+      "frameHeight": 272,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_hualien": {
+      "file": "ui_pg_city_hualien.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 314,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_hongkong": {
+      "file": "ui_pg_city_hongkong.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 305,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_tokyo": {
+      "file": "ui_pg_city_tokyo.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 309,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_seoul": {
+      "file": "ui_pg_city_seoul.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 316,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_singapore": {
+      "file": "ui_pg_city_singapore.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 266,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_shanghai": {
+      "file": "ui_pg_city_shanghai.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 318,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_sydney": {
+      "file": "ui_pg_city_sydney.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 266,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_losangeles": {
+      "file": "ui_pg_city_losangeles.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 287,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_newyork": {
+      "file": "ui_pg_city_newyork.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 318,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_london": {
+      "file": "ui_pg_city_london.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_taipei": {
+      "file": "ui_pg_city_taipei.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 304,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_taichung": {
+      "file": "ui_pg_city_taichung.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 315,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_tainan": {
+      "file": "ui_pg_city_tainan.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 292,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_city_kaohsiung": {
+      "file": "ui_pg_city_kaohsiung.webp",
+      "frames": 1,
+      "frameWidth": 480,
+      "frameHeight": 318,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_feed": {
+      "file": "ui_pg_st_feed.webp",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_crop": {
+      "file": "ui_pg_st_crop.webp",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 244,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_product": {
+      "file": "ui_pg_st_product.webp",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_material": {
+      "file": "ui_pg_st_material.webp",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 189,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };
