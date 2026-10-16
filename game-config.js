@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.3.2",
+    "configVersion": "2.4.0",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -1294,7 +1294,7 @@ window.GAME_CONFIG = {
     "steps": [
       {
         "id": "welcome",
-        "title": "歡迎來到綠丘小農場",
+        "title": "歡迎來到浮島農場",
         "text": "上面是你的等級、金幣和水桶。跟著幾個步驟，學會怎麼經營農場。",
         "target": "hud"
       },
@@ -3224,7 +3224,21 @@ window.GAME_CONFIG = {
     "askWhenCloudNewer": true,
     "uploadWhenLocalNewer": true,
     "backupLoser": true,
-    "noClientSecret": true
+    "noClientSecret": true,
+    "accounts": {
+      "loginOnStartScreen": true,
+      "farmOwnerByEmail": true,
+      "pickerShows": [
+        "currentAccount",
+        "unbound"
+      ],
+      "otherAccountsFarms": "hiddenNotUploaded",
+      "afterLoginAskAdoptUnbound": true,
+      "cloudFarmsListToPick": true,
+      "newFarmWhileLoggedIn": "ownedBySyncOn",
+      "logoutHidesAccountFarms": true,
+      "tokenExpiryKeepsLoggedIn": true
+    }
   },
   "fleet": {
     "maxPerKind": 5,

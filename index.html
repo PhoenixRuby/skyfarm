@@ -6485,6 +6485,167 @@ function drawSky(t, now, atop){
 }
 window.__farm232 = { get bg(){ return bgCv; }, get night(){ return nightCv; } };
 
+/* ===== 27. v2.4: Google account login on the start screen + farm ownership =====
+   - every farm remembers which Google account (email) it belongs to; farms made before logging in are "unbound"
+   - the farm picker shows only the current account's farms + unbound farms (other accounts' farms stay on the device, hidden)
+   - logging in from the picker loads cloud farms on a brand-new device; unbound farms are offered to the account (opt-in)
+   - sync records are kept per account, so a different account never uploads someone else's farm */
+const OWN_KEY = 'skyfarm-owner-v1';
+function owners(){ try { const o = JSON.parse(lsGet(OWN_KEY)); return o && typeof o === 'object' ? o : {}; } catch(e){ return {}; } }
+function setOwner(id, email){ const o = owners(); if (email) o[id] = email; else delete o[id]; lsSet(OWN_KEY, JSON.stringify(o)); }
+const ownerOf = id => owners()[id] || null;
+const curEmail = () => { const s = clState(); return s.linked && s.user && s.user.email ? s.user.email : null; };
+const slotVisible = id => { const o = ownerOf(id); return !o || o === curEmail(); };
+const maskEmail = e => { const [a, d] = String(e || '').split('@'); return d ? `${a.slice(0, 1)}…@${d}` : e; };
+
+// one-time migration from v2.2: farms with sync switched on belong to the linked account
+{ const s = clState(); if (!s.v24){ s.v24 = true; s.acct = s.acct || {};
+    if (s.linked && s.user && s.user.email){ const o = owners(); for (const id in s.slots) if (s.slots[id].on && !o[id]) o[id] = s.user.email; lsSet(OWN_KEY, JSON.stringify(o)); }
+    clSave(s); } }
+
+/* ---------- login / switch / logout ---------- */
+function gisToken(prompt){
+  return new Promise((ok, no) => {
+    const go = () => { const c = tokenClient();
+      c.callback = r => { if (r && r.access_token){ CL.tok = r.access_token; CL.exp = Date.now() + (r.expires_in || 3600) * 1000; try { sessionStorage.setItem(CLOUD_TOK, JSON.stringify({ tok: CL.tok, exp: CL.exp })); } catch(e){} ok(); } else no(new Error((r && r.error) || 'denied')); };
+      c.error_callback = e => no(new Error((e && e.type) || 'popup'));
+      c.requestAccessToken({ prompt }); };
+    if (window.google && google.accounts && google.accounts.oauth2) go(); else loadGIS().then(go, no);
+  });
+}
+function leaveFarm(){ if (S && SLOT) save(); S = null; SLOT = null; const tb = $('tut'); if (tb) tb.hidden = true; const cb = $('cloudBadge'); if (cb) cb.hidden = true; }
+// switch the stored per-account sync records
+function useAccount(u){
+  const s = clState(), prev = s.linked && s.user ? s.user.email : null; s.acct = s.acct || {};
+  if (prev) s.acct[prev] = s.slots;
+  s.linked = !!u; s.user = u || null; s.slots = u ? (s.acct[u.email] || {}) : {}; clSave(s);
+  return prev;
+}
+async function googleLogin(opts = {}){
+  if (!cloudOK()){ toast('Google 登入要到網頁版才能用'); return false; }
+  loadGIS();
+  try { await gisToken(opts.switching ? 'select_account consent' : (curEmail() ? '' : 'consent')); }
+  catch(e){ toast(/popup/.test(e.message) ? '登入視窗被擋住了，請允許彈出視窗後再按一次' : '沒有完成 Google 登入'); return false; }
+  let u; try { u = await driveUser(); } catch(e){ toast('讀不到 Google 帳號資料，等一下再試'); return false; }
+  const prev = useAccount(u); CL.files = null; CL.status = 'ok';
+  if (prev && prev !== u.email){ const hid = slotList().filter(e => ownerOf(e.id) === prev).length;
+    toast(`已切換到 ${maskEmail(u.email)}${hid ? `，前一個帳號的 ${hid} 座農場先收起來` : ''}`, true, 4200); }
+  else toast(`已用 ${u.email} 登入`, true);
+  if (SLOT && !slotVisible(SLOT)) leaveFarm();
+  afterLogin(opts.from);
+  return true;
+}
+function afterLogin(from){
+  const me = curEmail(), unbound = slotList().filter(e => !ownerOf(e.id));
+  const next = () => { if (SLOT && S && from === 'menu'){ syncAll(); openMenu('save'); } else { syncAll(); openSlotPicker(); } };
+  if (!unbound.length){ next(); return; }
+  openModal('要加入這個帳號嗎？', null, (k, el) => {
+    el.innerHTML = `<p>這台裝置上有還沒綁帳號的農場。打勾的會加入 <b>${escapeHTML(me)}</b> 並上傳到你的 Google Drive；沒勾的維持未綁帳號，其他人登入時也看得到。</p>
+      ${unbound.map(e => `<label class="tog"><span>${escapeHTML(e.name)} · Lv ${(e.summary && e.summary.level) ?? '—'}${e.id === SLOT ? ' <span class="small">（現在在玩）</span>' : ''}</span><input type="checkbox" class="adopt" data-id="${e.id}" ${e.id === SLOT ? 'checked' : ''}></label>`).join('')}
+      <div class="row" style="margin-top:10px"><button class="btn" id="adOk">確定</button><button class="btn ghost" id="adNo">都不要</button></div>`;
+    $('adOk').onclick = () => { let n = 0; el.querySelectorAll('.adopt').forEach(c => { if (c.checked){ setOwner(c.dataset.id, me); clSetSlot(c.dataset.id, { on: true }); n++; } });
+      if (n) toast(`${n} 座農場加入 ${maskEmail(me)}，開始同步`, true); next(); };
+    $('adNo').onclick = next;
+  });
+  $('modalClose').onclick = () => { closeModal(); next(); };
+}
+async function googleLogout(delCloud){
+  const me = curEmail();
+  if (delCloud && tokValid()){ try { await driveList(); for (const f of CL.files || []) await driveDelete(f.id); } catch(e){ toast('雲端存檔沒刪成功，可以之後再到 Google Drive 設定移除'); } }
+  else if (tokValid() && SLOT && (clSlot(SLOT) || {}).on){ try { await syncSlot(SLOT); } catch(e){} }   // last upload before leaving
+  try { if (CL.tok && window.google && google.accounts) google.accounts.oauth2.revoke(CL.tok, () => {}); } catch(e){}
+  CL.tok = null; CL.exp = 0; CL.files = null; try { sessionStorage.removeItem(CLOUD_TOK); } catch(e){}
+  if (delCloud){ const s = clState(); if (s.acct && me) delete s.acct[me]; s.slots = {}; clSave(s); }
+  useAccount(null);
+  const hid = slotList().filter(e => ownerOf(e.id) === me).length;
+  if (SLOT && !slotVisible(SLOT)) leaveFarm();
+  toast(`已登出${hid ? `，這個帳號的 ${hid} 座農場先收起來，登入後就會出現` : ''}`, true, 4000);
+  openSlotPicker();
+}
+function logoutDialog(){
+  openModal('登出 Google 帳號', null, (k, el) => {
+    el.innerHTML = `<p>登出後，這個帳號的農場會先收起來（還留在這台裝置），下次用同一個帳號登入就會出現。</p><label class="tog"><span>一併刪除雲端上的存檔</span><input type="checkbox" id="loDel"></label><div class="row" style="margin-top:10px"><button class="btn warn" id="loOk">登出</button><button class="btn ghost" id="loNo">取消</button></div>`;
+    $('loNo').onclick = () => { if (S) openMenu('save'); else openSlotPicker(); };
+    $('loOk').onclick = () => googleLogout($('loDel').checked);
+  });
+}
+
+/* ---------- account bar (picker) and Google Drive card (menu) ---------- */
+function accountBarHTML(){
+  const s = clState();
+  if (!s.linked) return `<div class="gd acctbar"><h3>☁ Google 帳號</h3><p class="small">登入後可以載入你在別台裝置玩的農場，進度也會自動存到你自己的 Google Drive（遊戲專屬的隱藏資料夾，看不到你的其他檔案）。</p><button class="gbtn" data-gact="login"><i>G</i>用 Google 帳號登入／載入雲端農場</button></div>`;
+  const u = s.user || {}, ok = tokValid();
+  return `<div class="gd acctbar"><div class="acct"><div class="av">${escapeHTML((u.name || u.email || 'G').slice(0, 1).toUpperCase())}</div><div><b>${escapeHTML(u.name || '')}</b><div class="small">${escapeHTML(u.email || '')}</div></div>${ok ? '<span class="cl ok">✓ 已登入</span>' : '<span class="cl wait">要重新登入才能同步</span>'}</div>
+    <div class="row">${ok ? '' : '<button class="gbtn" data-gact="relog"><i>G</i>重新登入</button>'}<button class="btn ghost" data-gact="switch">換帳號</button><button class="btn ghost" data-gact="logout">登出</button></div></div>`;
+}
+function wireAccount(el, from){
+  el.querySelectorAll('[data-gact]').forEach(b => b.onclick = async ev => { ev.stopPropagation(); const a = b.dataset.gact;
+    if (a === 'login') await googleLogin({ from });
+    else if (a === 'switch') await googleLogin({ from, switching: true });
+    else if (a === 'logout') logoutDialog();
+    else if (a === 'relog'){ try { await gisToken(''); const u = await driveUser();
+        if (u.email !== curEmail()){ useAccount(u); if (SLOT && !slotVisible(SLOT)) leaveFarm(); toast(`已切換到 ${maskEmail(u.email)}`, true); afterLogin(from); return; }
+        CL.status = 'ok'; toast('重新登入了', true); await syncAll(); } catch(e){ toast('沒有完成 Google 登入'); }
+      if (from === 'menu' && S) openMenu('save'); else openSlotPicker(); } });
+}
+function cloudCardHTML(){
+  if (!cloudOK()) return `<div class="gd off"><h3>☁ Google Drive 雲端存檔</h3><p class="small">要到網頁版（${escapeHTML(CLOUD.siteUrl || '')}）才能用。雙擊打開的離線版請用下面的匯出／匯入。</p></div>`;
+  const s = clState();
+  if (!s.linked) return accountBarHTML().replace('acctbar', 'acctbar menu');
+  const st = !tokValid() ? '<span class="cl wait">登入過期</span>' : CL.status === 'err' ? '<span class="cl wait">同步失敗</span>' : '<span class="cl ok">✓ 已登入</span>', me = curEmail();
+  const mine = slotList().filter(e => ownerOf(e.id) === me);
+  const rows = mine.map(e => `<label class="tog"><span>${escapeHTML(e.name)}${e.id === SLOT ? ' <span class="small">（現在在玩）</span>' : ''}${(s.slots[e.id] || {}).syncedAt ? ` <span class="small">· 上次同步 ${fmtAgo(s.slots[e.id].syncedAt)}</span>` : ''}</span><input type="checkbox" class="swc" data-slot="${e.id}" ${(s.slots[e.id] || {}).on ? 'checked' : ''}></label>`).join('');
+  const adopt = SLOT && !ownerOf(SLOT) ? `<div class="tog"><span>現在這座農場還沒綁帳號</span><button class="btn sm" id="gdAdopt">加入這個帳號</button></div>` : '';
+  const u = s.user || {};
+  return `<div class="gd"><h3>☁ Google Drive 雲端存檔 ${st}</h3>
+    <div class="acct"><div class="av">${escapeHTML((u.name || u.email || 'G').slice(0, 1).toUpperCase())}</div><div><b>${escapeHTML(u.name || '')}</b><div class="small">${escapeHTML(u.email || '')}</div></div></div>
+    ${rows}${adopt}
+    <div class="row" style="margin-top:8px">${tokValid() ? '<button class="btn" id="gdSync">立即同步</button>' : '<button class="gbtn" data-gact="relog"><i>G</i>重新登入</button>'}<button class="btn ghost" data-gact="switch">換帳號</button><button class="btn ghost" data-gact="logout">登出</button></div>
+    <p class="small">每 ${CLOUD.intervalMinutes || 5} 分鐘、以及關閉頁面時會自動同步。本機一直都有一份，斷網照樣能玩。</p></div>`;
+}
+function wireCloudCard(el, rerender){
+  wireAccount(el, 'menu');
+  const Y = el.querySelector('#gdSync'); if (Y) Y.onclick = async () => { Y.disabled = true; await syncAll(); toast(CL.status === 'ok' ? '同步好了' : CL.status === 'login' ? 'Google 登入過期，請重新登入' : '同步失敗，等一下再試', CL.status === 'ok'); rerender(); };
+  el.querySelectorAll('.swc').forEach(c => c.onchange = async () => { clSetSlot(c.dataset.slot, { on: c.checked }); if (c.checked && tokValid()) await syncSlot(c.dataset.slot); cloudBadge(); });
+  const A = el.querySelector('#gdAdopt'); if (A) A.onclick = async () => { setOwner(SLOT, curEmail()); clSetSlot(SLOT, { on: true }); toast(`這座農場加入 ${maskEmail(curEmail())}`, true); if (tokValid()) await syncSlot(SLOT); rerender(); };
+}
+// only sync farms that belong to the logged-in account
+async function syncAll(){ const s = clState(), me = curEmail(); if (!s.linked) return; for (const id in s.slots) if (s.slots[id].on && ownerOf(id) === me && slotList().some(x => x.id === id)) await syncSlot(id); }
+{ const _ss = syncSlot; syncSlot = function(id, opts){ if (ownerOf(id) !== curEmail()) return Promise.resolve(); return _ss(id, opts); }; }
+// a farm downloaded from the cloud belongs to that account
+async function downloadFarm(f){
+  const raw = await driveDownload(f.id), d = parseSaved(raw); if (!d){ toast('這份雲端存檔讀不到（校驗失敗）'); return; }
+  const id = f.appProperties.slot; lsSet(SLOT_PREFIX + id, raw); setOwner(id, curEmail());
+  const l = slotList().filter(x => x.id !== id); l.push({ id, name: f.appProperties.name || (d.profile && d.profile.name) || '雲端農場', savedAt: d.savedAt, createdAt: d.savedAt, summary: summarize(d) }); writeSlotList(l);
+  clSetSlot(id, { on: true, fileId: f.id, lastUp: d.savedAt || 0 }); closeModal(); enterSlot(id); toast(`已從雲端下載「${f.appProperties.name || '農場'}」`, true);
+}
+// cloud farms not on this device (a hidden local copy owned by someone else does not count as "on this device")
+async function cloudOnlyFarms(){ if (!clState().linked || !tokValid()) return []; try { await driveList(); } catch(e){ return []; } const me = curEmail(), local = new Set(slotList().filter(x => ownerOf(x.id) === me).map(x => x.id)); return (CL.files || []).filter(f => !local.has(f.appProperties.slot)); }
+// a farm created while logged in belongs to the account
+{ const _cs = createSlot; createSlot = function(name){ const r = _cs(name); const me = curEmail(); if (r && me && SLOT){ setOwner(SLOT, me); clSetSlot(SLOT, { on: true }); if (tokValid()) syncSlot(SLOT); cloudBadge(); } return r; }; }
+// hidden farms can't be entered
+{ const _es2 = enterSlot; enterSlot = function(id, fresh){ if (!fresh && !slotVisible(id)){ toast('這座農場屬於別的 Google 帳號'); return false; } return _es2(id, fresh); }; }
+
+/* ---------- picker: account bar on top, "my farms" / "unbound" groups, other accounts' farms hidden ---------- */
+const MODAL_CLOSE0 = $('modalClose').onclick;   // default close; dialogs that set their own are reset on the next openModal
+{ const _om2 = openModal; openModal = function(title, tabs, render, initial){
+  $('modalClose').onclick = MODAL_CLOSE0;
+  if (title === '選擇農場'){ const r0 = render; render = (k, el) => { r0(k, el);
+      const me = curEmail(), grid = el.querySelector('.slots');
+      if (grid){ const cards = [...grid.querySelectorAll('.slot[data-id]')];
+        cards.forEach(c => { if (!slotVisible(c.dataset.id)) c.remove(); });
+        const mine = cards.filter(c => c.isConnected && me && ownerOf(c.dataset.id) === me), free = cards.filter(c => c.isConnected && !ownerOf(c.dataset.id));
+        const frag = document.createDocumentFragment();
+        if (mine.length){ const h = document.createElement('h3'); h.textContent = '我的農場'; const g = document.createElement('div'); g.className = 'slots'; mine.forEach(c => g.appendChild(c)); frag.append(h, g); }
+        if (free.length){ const h = document.createElement('h3'); h.innerHTML = `這台裝置上的農場${me ? ' <span class="small">（未綁帳號）</span>' : ''}`; const g = document.createElement('div'); g.className = 'slots'; free.forEach(c => g.appendChild(c)); frag.append(h, g); }
+        if (!mine.length && !free.length){ const p = document.createElement('p'); p.innerHTML = `<b>${me ? '這個帳號在這台裝置上還沒有農場。' : '還沒有農場。'}</b>${me && tokValid() ? '雲端上的農場會列在上面，也可以建立新的。' : '先幫你的農場取個名字吧。'}`; frag.append(p); }
+        grid.replaceWith(frag);
+      } else { const nb = el.querySelector('p b'); if (nb && me) nb.textContent = '這個帳號在這台裝置上還沒有農場。'; }
+      if (cloudOK()){ const bar = document.createElement('div'); bar.innerHTML = accountBarHTML(); el.insertBefore(bar, el.firstChild); wireAccount(bar, 'picker'); }
+    }; }
+  return _om2(title, tabs, render, initial); }; }
+window.__farm24 = { owners, ownerOf, setOwner, curEmail, slotVisible, googleLogin, googleLogout, useAccount };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>
