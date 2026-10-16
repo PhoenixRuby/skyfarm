@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.6.0",
+    "configVersion": "2.7.0",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -3279,7 +3279,24 @@ window.GAME_CONFIG = {
     "ownedNeedsDockPlaced": true,
     "dockCleanSeconds": 30,
     "dockCleanNoCharge": true,
-    "afterCleanIdleZzzWhenFull": true
+    "afterCleanIdleZzzWhenFull": true,
+    "dockWater": {
+      "tankDrops": 100,
+      "dropsPerClean": 10,
+      "refillWhenEmpty": true,
+      "pumpKwhPerTank": 0.01,
+      "battery": {
+        "kwh": 0.05,
+        "solarKwhPerHourSunny": 0.01,
+        "cloudyMult": 0.5,
+        "night": 0
+      },
+      "manualRefill": "hand tool tap when empty, or panel button; free",
+      "emptySkipsCleaning": true,
+      "lowWarn": 0.2
+    },
+    "drawDepthSorted": true,
+    "noTeleport": true
   },
   "cloudSave": {
     "provider": "googleDrive",
@@ -3334,6 +3351,12 @@ window.GAME_CONFIG = {
       "drone_pad": "stacked: ground pad + upper deck on one post (F shape); slot 1 lower, slot 2 upper",
       "robot_charger": "taller post, plug on left and right",
       "sweeper_dock": "taller post, bay on left and right"
+    },
+    "shrinkRefundRate": 0.5,
+    "pump": {
+      "kwhPerDrop": 0.00016666666666666666,
+      "droneOwnBatteryWhenNoFarmPower": true,
+      "farmPowerFirst": true
     }
   }
 };

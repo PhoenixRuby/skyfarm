@@ -560,6 +560,19 @@ body:not(.night) .bkdet{background:rgba(255,255,255,.8)}
   .stsec{grid-template-columns:1fr}.stside{flex-direction:row;align-items:center}.stpic{width:64px;margin:0 0 0 auto}.stmain td.acts{white-space:normal}.stmain td.acts .btn{margin:2px 0 2px 4px}
   .ucard{flex-direction:column!important}.upic{width:90px;align-self:center}.gdcard{padding-right:14px}.gdpic{position:static;width:140px;align-self:center}
   .sheet.pg header .pgic{width:52px;height:46px}.sheet.pg header h2{font-size:20px}.stcap .chk{margin-left:0}.cities{grid-template-columns:repeat(2,1fr)}}
+
+/* v2.7 forecast */
+.fcloc{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:15px;color:var(--gsub)}.fcloc b{white-space:nowrap;font-size:22px;color:var(--gtx);font-family:var(--font-display)}.fcloc .fcpin{font-size:20px}
+.fcday{background:var(--gcard);border:1px solid var(--gline);border-radius:16px;padding:10px 12px 12px;margin:0 0 12px}
+body:not(.night) .fcday{background:rgba(255,255,255,.6)}
+.fctop{display:flex;align-items:center;gap:14px;margin:0 0 8px;flex-wrap:wrap}.fctop b{font-family:var(--font-display);font-size:20px}.fctop .sun{color:var(--gsub);font-size:14px}.fctop .rk{margin-left:auto}
+.fctop .fc-risks{margin:0}
+.fcday .fc-row{margin:0;gap:8px}.fcday .fc-cell{padding:8px 2px;border-radius:12px;font-size:13px;gap:4px}.fcday .fc-cell span{font-weight:700}.fcday .fc-cell img{width:34px;height:34px}
+.fcday .fc-cell small{font-size:13px;color:var(--gtx)}
+.fcday .fc-cell.rain,.fcday .fc-cell.snow{border:1px solid rgba(79,168,240,.8);background:rgba(47,134,214,.28)}
+.fcbot{display:flex;align-items:center;gap:16px;margin:4px 0 6px}.fcbot .fc-tip{flex:1;margin:0;display:flex;align-items:center;gap:10px;font-size:15px;padding:10px 14px;border-radius:14px;border:1px solid rgba(217,180,74,.45)}
+.fcbot .drop{font-size:20px}.fcauto{display:flex;align-items:center;gap:8px;white-space:nowrap;padding-left:16px;border-left:1px solid var(--gline);font-size:14px}
+@media (max-width:640px){.fcbot{flex-direction:column;align-items:stretch}.fcauto{border:0;padding:0}.fctop .rk{margin-left:0}.fcday .fc-row{gap:4px}}
 </style>
 </head>
 <body>
@@ -7082,7 +7095,7 @@ const PAGE = {
   sh.classList.toggle('pg', !!P); sh.classList.toggle('pg-wide', !!(P && P.wide));
   hd.querySelectorAll('.pgic,.pgsub').forEach(n => n.remove());
   if (P){ const src = P.raw ? P.ic : IMGSRC[P.ic]; if (src) hd.insertAdjacentHTML('afterbegin', `<img class="pgic" src="${src}" alt="">`);
-    $('modalTitle').insertAdjacentHTML('afterend', `<div class="pgsub">${P.sub}</div>`); }
+    if (P.sub) $('modalTitle').insertAdjacentHTML('afterend', `<div class="pgsub">${P.sub}</div>`); }
   return _om9(title, tabs, render, initial); }; }
 const coinI = () => `<img class="ci" src="${IMGSRC.ui_coin}" alt="">`;
 
@@ -7359,6 +7372,204 @@ function layoutBook(k, el){
   const first = rows.find(r => r.tr.classList.contains('cur')) || rows[0]; if (first){ show(first.tr); if (first.tr.classList.contains('cur')) setTimeout(() => first.tr.scrollIntoView({ block: 'center' }), 50); }
 }
 window.__farm26 = { islandThumb, cityInfo, mapXY, layoutBook };
+
+/* ===== 30. v2.7: shrink a base back to 1 slot (refund half the expansion), pumping costs power
+   (farm power first, else the drone's own battery / the sweeper dock's little solar battery),
+   sweeper-dock water tank (100 drops, 10 per clean, manual refill), walkers depth-sorted + never teleport,
+   book banner ===== */
+const DWT = (SWK.dockWater) || { tankDrops: 100, dropsPerClean: 10, pumpKwhPerTank: .01, battery: { kwh: .05, solarKwhPerHourSunny: .01, cloudyMult: .5 }, lowWarn: .2 };
+const PUMP_DRONE = ((CFG.fleet || {}).pump || {}).kwhPerDrop || .01 / 60;
+const DOCK_BAT = DWT.battery || { kwh: .05, solarKwhPerHourSunny: .01, cloudyMult: .5 };
+
+/* ---------- power for pumping: farm power (grid / battery / crank buffer, or solar panels producing now) ---------- */
+function solarNow(t){ try { return allDevices().some(d => d.T.id === 'solar_panel' && solarOutput(d, t, 1) > 0); } catch(e){ return false; } }
+function farmPump(kwh, t){ if (kwh <= 0) return true; if (drawFarmPower(kwh, t)) return true; return solarNow(t); }
+const farmPowerSource = t => gridOn() ? '市電' : (S.power.battery > 1e-6 ? '電池' : S.power.crank > 1e-6 ? '手搖小儲電' : solarNow(t) ? '太陽能板' : null);
+
+/* ---------- one owned unit (v2.3 + pumping power + walkers never jump home to charge) ---------- */
+function stepUnit(kind, u, dt, t, want, occ){
+  const tier = unitTier(kind, u); if (!tier){ u.state = 'none'; return false; }
+  const K = RK(kind), baseId = K.base, cap = capacityOf(baseId), full = tier.workHours * 3600, water = kind === 'water', tankMax = K.tankDrops || 0, low = water && !!u.tankLow;
+  if (u.on === false) want = false;
+  u.waitWater = false;
+  if (kind === 'sweep' && !u.home){ u.state = 'nohome'; return false; }
+  // a walker that is out on the farm always walks back on its own wheels first (no teleport to the base)
+  if ((kind === 'sweep' || kind === 'wellbot') && walkAway(WS[wKey(kind, u)], workerHome(kind, u))){ u.state = 'work'; u.batt = Math.max(0, u.batt - dt); return true; }
+  if (cap > 0){
+    if (u.batt <= 0) u.mustFull = true;
+    const topUp = u.batt < full - 1e-6 && (u.batt <= 0 || !want || u.state === 'charge' || u.state === 'queue');
+    if (!(topUp && want && !u.mustFull) && topUp){
+      const used = occ[baseId] || 0; if (used >= cap){ u.state = 'queue'; return false; }
+      occ[baseId] = used + 1;
+      const b = slotByKey(u.home) || slotsOf(baseId)[0], f = chargeFrac(tier, b ? { T: b.T } : { T: {} }, dt, t);
+      if (f > 0 || u.batt <= 0 || !want){ u.state = 'charge'; u.batt = Math.min(full, u.batt + f * full); if (u.batt >= full - 1e-6){ u.batt = full; u.mustFull = false; u.state = 'idle'; } return false; }
+      occ[baseId]--;
+    }
+    if (water && u.tank < tankMax && (u.tank <= 0 || low || !want || u.state === 'refill')){
+      u.state = 'refill'; u.refill = (u.refill || 0) + dt;
+      if (u.refill >= AU.water.refillSeconds){
+        const need = tankMax - u.tank, kwh = need * PUMP_DRONE;
+        if (!useWater(need, true, t)){ u.refill = AU.water.refillSeconds; u.waitWater = true; if (u.tank <= 0 || low || !want) return false; u.refill = 0; }
+        else if (farmPump(kwh, t)){ useWater(need, false, t); u.tank = tankMax; u.tankLow = false; u.refill = 0; u.state = 'idle'; u.pumpOwn = false; }
+        else { const sec = kwh / tier.kwh * full;   // pump with its own battery
+          if (u.batt > sec + 1){ u.batt -= sec; useWater(need, false, t); u.tank = tankMax; u.tankLow = false; u.refill = 0; u.state = 'idle'; u.pumpOwn = true; }
+          else { u.refill = 0; u.mustFull = true; u.state = 'idle'; return false; } }
+      } else return false;
+    }
+  } else if (u.batt <= 0 || (water && (u.tank <= 0 || low))){ u.state = 'rest'; return false; }
+  if (!want){ u.state = 'idle'; return false; }
+  u.state = 'work'; u.batt = Math.max(0, u.batt - dt); return true;
+}
+
+/* ---------- sweeper dock water tank + little solar battery ---------- */
+const dockOf = u => { const s = u && slotByKey(u.home); return s && s.T.id === 'sweeper_dock' ? s.T : null; };
+function dockInit(T){ if (T.water == null) T.water = DWT.tankDrops; if (T.dbat == null) T.dbat = DOCK_BAT.kwh; return T; }
+function dockRefill(T, t, manual){
+  dockInit(T); const room = DWT.tankDrops - T.water; if (room < 1) return 'full';
+  const have = Math.min(room, Math.floor(S.player.water)); if (have < 1 && !(tapOn() && useWater(room, true, t))) return 'nowater';
+  const n = have >= 1 ? have : room, kwh = DWT.pumpKwhPerTank * n / DWT.tankDrops;
+  if (!manual){ if (farmPump(kwh, t)) T.pump = 'farm'; else if (T.dbat >= kwh){ T.dbat -= kwh; T.pump = 'dock'; } else return 'nopower'; }
+  if (!useWater(n, false, t)) return 'nowater';
+  T.water += n; return 'ok';
+}
+function stepDocks(dt, t){
+  const ph = dayPhase(t), sun = ph.light > 0 ? ph.light * (farmCloudy(t) || farmRain(t) ? (DOCK_BAT.cloudyMult ?? .5) : 1) : 0;
+  for (const b of basesOf('sweeper_dock')){ const T = dockInit(b.T);
+    if (sun > 0 && !snowyAt(b.mi, b.k)) T.dbat = Math.min(DOCK_BAT.kwh, T.dbat + (DOCK_BAT.solarKwhPerHourSunny || .01) * sun * dt / 3600);
+    if (T.water < 1){ T.refillTry = (T.refillTry || 0) + dt; if (T.refillTry >= 5){ T.refillTry = 0; T.lastRefill = dockRefill(T, t, false); } } }
+}
+{ const _sa9 = stepAll; stepAll = function(dt, t){ _sa9(dt, t); stepDocks(dt, t); }; }
+function manualDockRefill(T){ const r = dockRefill(T, Date.now(), true); sfx(r === 'ok' ? 'water' : 'click');
+  toast(r === 'ok' ? `基座水箱補滿了（${Math.floor(T.water)} / ${DWT.tankDrops} 滴）` : r === 'full' ? '基座水箱是滿的' : '水塔沒有水，先讓水塔有水再補', r === 'ok'); afterAction(); return r === 'ok'; }
+// hand tool on an empty dock = manual refill (otherwise opens the panel as before)
+{ const _act9 = act; act = function(x, y){ const M = curMap(), T = inMap(M, x, y) && M.tiles[tkey(x, y)];
+  if (T && T.t === 'building' && T.id === 'sweeper_dock' && S.sel.tool === 'hand' && dockInit(T).water < 1){ manualDockRefill(T); return; }
+  return _act9(x, y); }; }
+
+/* ---------- sweeper worker: the dock clean uses 10 drops; no water → skip cleaning, charge directly ---------- */
+function sweepWorker(key, u, dt, t){
+  const home = workerHome('sweep', u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = 1 / (SWK.tilesPerSecond || 1), cleanT = SWK.cleanSeconds || 2;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      const p = sweepPickPath(W, M, key);
+      if (p && u){ const [tx, ty] = pkey(p[p.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length; if (u.batt < (p.length + back) * stepT + cleanT + 2){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; } }
+      if (!p){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; }
+      W.path = p; W.i = 0; W.el = 0; W.goal = 'trash'; W.target = p[p.length - 1]; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.goal === 'trash' && !isTrash(M.tiles[W.target])){ W.phase = 'pick'; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.path = null; W.target = null;
+          if (u){ const D = dockOf(u); if (D && dockInit(D).water >= DWT.dropsPerClean){ D.water -= DWT.dropsPerClean; W.phase = 'dockclean'; W.el = 0; D.dry = false; continue; } if (D) D.dry = true; }
+          W.phase = 'home'; return; }
+        W.phase = 'clean'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ if (W.goal === 'home') walkGoHome(W, M, home); else W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); swHeat(W.mi, nk, t); continue;
+    }
+    if (W.phase === 'dockclean'){ const left = (SWK.dockCleanSeconds || 30) - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; W.phase = 'home'; continue; }
+    if (W.phase === 'clean'){ const left = cleanT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; swClean(M, W.mi, tkey(W.x, W.y), t); W.target = null; W.phase = 'pick'; W.el = 0; continue; }
+  }
+}
+// no path home (something was built in the way): drive straight back cell by cell instead of jumping home
+function walkGoHome(W, M, home){ const hk = tkey(home.x, home.y); let p = swPathTo(swBFS(M, W.x, W.y, hk), hk);
+  if (!p){ if (W.x === home.x && W.y === home.y){ W.phase = 'home'; W.path = null; return; }
+    p = [tkey(W.x, W.y)]; let x = W.x, y = W.y; while (x !== home.x || y !== home.y){ if (x !== home.x) x += Math.sign(home.x - x); else y += Math.sign(home.y - y); p.push(tkey(x, y)); }
+    W.forced = true; }
+  else W.forced = false;
+  W.path = p; W.i = 0; W.el = 0; W.goal = 'home'; W.phase = 'walk'; }
+const _swPass0 = swPass; swPass = function(M, k){ return _swPass0(M, k) || Object.values(WS).some(W => W && W.forced && W.path && W.path.includes(k)); };
+
+/* ---------- shrink a 2-slot base back to 1 slot ---------- */
+const expandCostOf = T => Math.round((T.id === 'sweeper_dock' ? FLC.dockBuildCost : BLD[T.id].cost) * (FLC.expandRate || .5));
+function shrinkBase(T){
+  if (slotsOfT(T) < 2) return false;
+  const back = Math.floor(expandCostOf(T) * ((CFG.fleet && CFG.fleet.shrinkRefundRate) || .5));
+  T.slots = 1; S.player.coins += back; assignHomes(); sfx('coin');
+  toast(`拆回 1 個位子，退 ${fmtN(back)} 金幣。原本在第 2 個位子的機器人會改去別的空位子或排隊`, true, 4200); afterAction(); return true;
+}
+
+/* ---------- base panel: water card + shrink button (rebuilds v2.6 panel then adds) ---------- */
+{ const _oup = openUnitPanel; openUnitPanel = function(kind){ _oup(kind);
+  const el = $('modalBody'), baseId = BASE_OF[kind] || RK(kind).base, tb = RT.tapBase && S.maps[RT.tapBase.mi] && S.maps[RT.tapBase.mi].tiles[RT.tapBase.k], T = tb && tb.id === baseId ? tb : (basesOf(baseId)[0] || {}).T;
+  if (!T) return;
+  const bexp = el.querySelector('.bexp'); const back = Math.floor(expandCostOf(T) * .5);
+  if (bexp && slotsOfT(T) === 2) bexp.insertAdjacentHTML('beforeend', `<button class="btn ghost" id="shrinkBtn">拆回 1 個位子 · 退 ${fmtN(back)} 金幣</button>`);
+  const sb = $('shrinkBtn'); if (sb) sb.onclick = e => { e.stopPropagation(); if (!sb.classList.contains('armed')){ sb.classList.add('armed'); sb.textContent = `確定拆回？第 2 個位子上的機器人會改去別的位子或排隊`; return; } if (shrinkBase(T)) openUnitPanel(kind); };
+  if (baseId === 'sweeper_dock'){ dockInit(T); const pct = Math.round(T.water / DWT.tankDrops * 100), src = farmPowerSource(Date.now()), ph = dayPhase(Date.now());
+    const card = document.createElement('div'); card.className = 'pcard';
+    card.innerHTML = `<h4><span class="hic">💧</span>水箱</h4><div class="bar wbar"><i style="width:${pct}%;background:${pct < DWT.lowWarn * 100 ? '#f0a030' : 'linear-gradient(90deg,#4fa8f0,#2f86d6)'}"></i></div>
+      <div class="kv"><span>水量</span><b>${Math.floor(T.water)} / ${DWT.tankDrops} 滴（可清潔 ${Math.floor(T.water / DWT.dropsPerClean)} 次）</b>
+      <span>基座小電池</span><b>${T.dbat.toFixed(3)} / ${DOCK_BAT.kwh} 度 ${ph.light > 0 ? '☀ 充電中' : '🌙 晚上不充'}</b>
+      <span>下次補水用</span><b>${src ? `農場電力（${src}）` : '基座小電池（農場沒有供電）'}</b></div>
+      <p class="small">每次回來清潔用 ${DWT.dropsPerClean} 滴，水箱用完才從水塔補滿；沒水時機器人不清潔、直接充電。電都不夠時，用「收成」工具點基座或按下面的按鈕人工補水（不耗電）。</p>
+      <div class="row"><button class="btn" id="dockFill" ${T.water >= DWT.tankDrops ? 'disabled' : ''}>手動補水（從水塔）</button></div>`;
+    const grid = el.querySelector('.pgrid'), first = grid && grid.children[1]; if (grid) grid.insertBefore(card, first || null);
+    $('dockFill').onclick = e => { e.stopPropagation(); manualDockRefill(T); openUnitPanel(kind); }; }
+}; }
+
+/* ---------- drawing: dock water gauge, "no water" bubble ---------- */
+{ const _db9 = drawBase; drawBase = function(T, x, y, t){ _db9(T, x, y, t);
+  if (T.id !== 'sweeper_dock') return; dockInit(T); const { cx, cy } = center(x, y), f = T.water / DWT.tankDrops, w = 26, top = cy - (slotsOfT(T) === 2 ? 46 : 30);
+  ctx.fillStyle = 'rgba(20,30,40,.45)'; ctx.fillRect(cx - w / 2 - 1, top - 1, w + 2, 6); ctx.fillStyle = f < (DWT.lowWarn || .2) ? '#f0a030' : '#3f9be6'; ctx.fillRect(cx - w / 2, top, w * f, 4);
+  if (T.water < DWT.dropsPerClean) bubble(cx, top - 12, '基座沒水', 'ui_water_drop'); }; }
+
+/* ---------- walkers: depth-sorted with the farm objects and moving smoothly (never a jump) ---------- */
+RT.walkAt = new Map(); RT.walkDone = new Set();
+function walkerList(now){
+  const out = [];
+  for (const kind of ['sweep', 'wellbot']){ if (!RK(kind)) continue;
+    if (rentActive(kind, now)){ const key = wKey(kind, null), W = WS[key]; if (W && walkAway(W, workerHome(kind, null))) out.push({ kind, key, W, carry: (W.carry || 0) > 0 }); }
+    for (const u of fleet(kind)){ if (!unitTier(kind, u) || u.on === false || u.state !== 'work') continue; const key = wKey(kind, u), W = WS[key]; if (W) out.push({ kind, key, W, carry: (u.carry || 0) > 0 }); } }
+  return out;
+}
+function walkerScreenSmooth(e){
+  const stepT = 1 / ((e.kind === 'sweep' ? SWK : WB).tilesPerSecond || 1), s = walkScreenOf(e.W, stepT); if (!s) return null;
+  let p = RT.unitPos[e.key]; if (!p) p = RT.unitPos[e.key] = { x: s.x, y: s.y, fx: false };
+  if (s.fx !== null) p.fx = s.fx;
+  const dx = s.x - p.x, dy = s.y - p.y, d = Math.hypot(dx, dy), maxd = Math.max(2, 70 * (1 / stepT) * Math.min(.1, RT.frameDt || .016) * 1.6);
+  if (d > 400){ p.x = s.x; p.y = s.y; } else if (d > maxd){ p.x += dx / d * maxd; p.y += dy / d * maxd; } else { p.x = s.x; p.y = s.y; }
+  // the tile it is drawn with: the deeper of its current and next cell
+  let cx = e.W.x, cy = e.W.y; if (e.W.phase === 'walk' && e.W.path && e.W.i < e.W.path.length - 1){ const [nx, ny] = pkey(e.W.path[e.W.i + 1]); if (nx + ny > cx + cy){ cx = nx; cy = ny; } }
+  return { p, s, k: tkey(cx, cy) };
+}
+{ const _dw9 = drawWorld; drawWorld = function(t, now){
+  RT.walkAt.clear(); RT.walkDone.clear();
+  for (const e of walkerList(now)){ if (e.W.mi !== S.cur) continue; const r = walkerScreenSmooth(e); if (!r) continue;
+    const list = RT.walkAt.get(r.k) || []; list.push(() => { let n = 'robot_sweeper_move';
+      if (e.kind === 'wellbot') n = r.s.phase === 'fill' ? 'robot_wellbot_fill' : r.s.phase === 'pour' ? 'robot_wellbot_pour' : e.carry ? 'robot_wellbot_carry' : 'robot_wellbot_move';
+      spr(n, motion ? frameOf(n, t) : 0, r.p.x, r.p.y, r.p.fx); if (e.kind === 'sweep' && r.s.phase === 'clean') spriteFxDust(r.p.x, r.p.y, t); RT.walkDone.add(e.key); });
+    RT.walkAt.set(r.k, list); }
+  _dw9(t, now); }; }
+{ const _da9 = drawAnimalsAt; drawAnimalsAt = function(k, t){ _da9(k, t); const l = RT.walkAt.get(k); if (l){ RT.walkAt.delete(k); l.forEach(f => f()); } }; }
+// drawUnits keeps its bookkeeping but does not draw a walker twice
+{ const _dwk = drawWalkerKey; drawWalkerKey = function(kind, key, W, t, carry){ if (RT.walkDone.has(key)) return RT.unitPos[key]; return _dwk(kind, key, W, t, carry); }; }
+
+/* ---------- book banner ---------- */
+{ const _om11 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑'){ const r0 = render; render = (k, el) => { r0(k, el); queueMicrotask(() => { if (el.querySelector(':scope > .banner')) return; const b = document.createElement('div'); b.className = 'banner'; b.innerHTML = `<img src="${PIMG('banner_book')}" alt="">`; el.insertBefore(b, el.firstChild); }); }; }
+  return _om11(title, tabs, render, initial); }; }
+window.__farm27 = { shrinkBase, dockRefill, manualDockRefill, stepDocks, farmPump, walkerList, DWT };
+
+/* ---------- 天氣預報: location line, one card per day (title + sun times + risk at the right), tip + auto checkbox in one row ---------- */
+PAGE['天氣預報'] = PAGE['今日天氣預報'] = { ic: 'ui_forecast', sub: '', wide: 1 };
+function layoutForecast(el){
+  const head = el.querySelector('.fc-head'); if (head){ const b = head.querySelector('b'), s = head.querySelector('.small');
+    head.className = 'fcloc'; head.innerHTML = `<span class="fcpin">📍</span><b>${b ? b.textContent : ''}</b><span>${s ? s.textContent.trim().replace(/^　/, '') : ''}</span>`; }
+  [...el.querySelectorAll(':scope > h3')].forEach(h => {
+    const card = document.createElement('section'); card.className = 'fcday'; h.before(card);
+    const sm = h.querySelector('.small'), sun = sm ? sm.textContent.replace(/^\s*·\s*/, '').replace('、', ' · ') : ''; if (sm) sm.remove();
+    const top = document.createElement('div'); top.className = 'fctop'; top.innerHTML = `<b>${h.textContent.trim()}</b><span class="sun">${sun}</span><span class="rk"></span>`; card.appendChild(top); h.remove();
+    let n = card.nextElementSibling;
+    while (n && n.nodeName !== 'H3' && !n.classList.contains('fc-tip')){ const nx = n.nextElementSibling;
+      if (n.classList.contains('fc-risks')) top.querySelector('.rk').appendChild(n); else card.appendChild(n); n = nx; } });
+  const tip = el.querySelector(':scope > .fc-tip'), auto = $('fcAuto'), note = [...el.querySelectorAll(':scope > p.small')].pop();
+  if (tip && auto){ const row = document.createElement('div'); row.className = 'fcbot'; tip.before(row); tip.innerHTML = `<span class="drop">💧</span>${tip.innerHTML}`; row.appendChild(tip);
+    const lab = auto.closest('label'), r0 = lab.parentElement; lab.className = 'fcauto'; row.appendChild(lab); if (r0 && !r0.children.length) r0.remove(); if (note) row.after(note); }
+}
+{ const _om12 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '天氣預報' || title === '今日天氣預報'){ const r0 = render; render = (k, el) => { r0(k, el); layoutForecast(el); }; }
+  return _om12(title, tabs, render, initial); }; }
 
   })(CFG, ATLAS_JSON);
 })();

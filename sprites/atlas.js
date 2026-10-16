@@ -8176,6 +8176,18 @@ window.GAME_ATLAS = {
         0,
         0
       ]
+    },
+    "ui_pg_banner_book": {
+      "file": "ui_pg_banner_book.webp",
+      "frames": 1,
+      "frameWidth": 900,
+      "frameHeight": 481,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };
