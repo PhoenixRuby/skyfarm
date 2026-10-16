@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.4.0",
+    "configVersion": "2.5.1",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -2226,6 +2226,19 @@ window.GAME_CONFIG = {
       "horizonY": 0.8,
       "topY": 0.04,
       "altitudeCurve": 0.55
+    },
+    "daytimePainted": {
+      "keys": [
+        "dawn",
+        "noon",
+        "afternoon",
+        "evening",
+        "dusk"
+      ],
+      "source": "player-provided illustrations",
+      "cartoonClouds": false,
+      "movingSun": true,
+      "portraitAlign": 0.8
     }
   },
   "easterEggs": {
@@ -3131,7 +3144,56 @@ window.GAME_CONFIG = {
       "minFontPx": 11,
       "ellipsis": true
     },
-    "idleZzz": true
+    "idleZzz": true,
+    "layoutV25": {
+      "theme": "glass; dark when daylight < 0.5",
+      "topRow": [
+        "player",
+        "coins",
+        "utilitiesBar"
+      ],
+      "secondRow": [
+        "timeWeather",
+        "storage",
+        "automation"
+      ],
+      "moreMenu": [
+        "book",
+        "expand",
+        "news",
+        "forecast",
+        "automation",
+        "bills",
+        "save",
+        "settings",
+        "slots",
+        "help",
+        "hideAll"
+      ],
+      "toolbar": [
+        "hand",
+        "plow",
+        "water",
+        "seed",
+        "animal",
+        "fish",
+        "build",
+        "deco",
+        "move",
+        "store",
+        "remove",
+        "care"
+      ],
+      "collapse": "handle hides top panels and robot chips; toolbar shows only the current tool",
+      "hideAll": "everything hidden except a small show button; taps only pan/zoom",
+      "redDot": [
+        "unreadNews",
+        "robotsNeedHelp",
+        "unpaidBills"
+      ],
+      "phonePortrait": "current-tool button + slide-up 4x3 tool sheet; panels as bottom sheets",
+      "pagesAndTraysFollowTheme": true
+    }
   },
   "droneWatering": {
     "dryThreshold": 0,

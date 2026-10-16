@@ -300,6 +300,169 @@ body.m-land .item b,body.m-land .item small{text-align:left;justify-self:stretch
 @media (max-width:520px){.cmp{grid-template-columns:1fr}}
 .cloudbadge{border:0;background:#e1f3e3;color:#2f7a3a;border-radius:999px;font-size:11px;padding:0 7px;margin-left:4px;cursor:pointer;font-weight:700;line-height:18px}
 .cloudbadge.sync{background:#e3eefb;color:#2f6fb0}.cloudbadge.login,.cloudbadge.err{background:#fff0dc;color:#b06a12}
+
+/* ===== v2.5: glass panels, day / night theme ===== */
+body{--gl:rgba(255,255,255,.62);--glb:rgba(255,255,255,.85);--gtx:#17384a;--gsub:#4f6b7a;--gsel:#1f5f8a;--gsh:0 6px 18px rgba(20,60,90,.18)}
+body.night{--gl:rgba(14,26,52,.66);--glb:rgba(150,185,255,.28);--gtx:#eaf2ff;--gsub:#a9bbd8;--gsel:#2c5f99;--gsh:0 6px 20px rgba(0,0,0,.35)}
+.hud .chip,.status .chip,.dock,.tray,.hint,.zoomctl button,.traytog,.gbtnx,.gpanel,.movebar,#toolSheet .tsp{background:var(--gl);border:1px solid var(--glb);box-shadow:var(--gsh);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--gtx);transition:background-color .8s,color .8s,border-color .8s}
+.hud .small,.status .small{color:var(--gsub)}
+.hud .chip{border-radius:16px}
+.bar{background:rgba(120,140,160,.25)}
+.hud .maps button.on{background:var(--gsel);color:#fff}
+.hint{color:var(--gtx);font-weight:500}
+.dock{border-radius:20px;padding:6px;gap:4px}
+.tool{width:62px;color:var(--gtx)}.tool img{width:30px;height:30px}.tool span{font-weight:700}
+.tool.on{background:var(--gsel);color:#fff}
+.tool:hover:not(.on){background:rgba(255,255,255,.28)}
+
+#app .status .warnchip{border-color:var(--warn);color:var(--warn)}
+body.night .status .warnchip{color:#ff9b8a}
+/* desktop layout: row 1 = player · coins · 水電 bar, row 2 = time/weather · 倉庫 · 自動化; ☰ top-right */
+.hud{flex-direction:column;align-items:flex-start;justify-content:flex-start;padding-right:max(70px,env(safe-area-inset-right,0px))}
+#expandBtn,#bookBtn,#menuBtn,#moreBtn{display:none!important}
+.ubar{display:flex;align-items:center;gap:10px;padding:6px 12px;min-width:380px;text-align:left}
+.ubar .us{display:flex;flex-direction:column;gap:3px;min-width:140px;flex:1}
+.ubar .t{display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}.ubar .t img{width:18px;height:18px}
+.ubar .t b{font-weight:700}.ubar .bar{width:100%;margin-top:2px}.ubar .sep{width:1px;align-self:stretch;background:var(--glb)}
+.ubar .arr{font-size:14px;opacity:.75}
+#powerbar{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,#ffd54a,#f2b52c);transition:width .3s}
+#powerbarw.flat #powerbar{background:linear-gradient(90deg,#9fd0a8,#6fbf80);opacity:.6}
+#waterbar{background:linear-gradient(90deg,#4fa8f0,#2f86d6)}
+.gbtnx{border-radius:14px;cursor:pointer}
+#hamb{position:absolute;top:8px;right:max(12px,env(safe-area-inset-right,0px));width:46px;height:46px;font-size:22px;z-index:4;display:flex;align-items:center;justify-content:center}
+#hamb .rdot{position:absolute;top:6px;right:7px;width:9px;height:9px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 2px var(--gl)}
+.gpanel{position:absolute;z-index:8;border-radius:16px;padding:10px 12px}
+#morePanel{top:60px;right:max(12px,env(safe-area-inset-right,0px));width:230px;padding:6px 12px}
+.mi{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:9px 4px;border-top:1px solid var(--glb);font-size:14px;text-align:left;color:inherit}
+#morePanel .small+.mi{border-top:0}
+.mi img{width:22px;height:22px}.mi .sym{width:22px;text-align:center;font-size:16px}.mi .rd{margin-left:auto;width:8px;height:8px;border-radius:50%;background:#ff4d4d}
+.mi:hover{background:rgba(255,255,255,.18);border-radius:8px}
+#utilPanel{width:450px;font-size:13px}
+#utilPanel .uh{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin:2px 0 4px;gap:8px}
+#utilPanel .ur{display:flex;align-items:center;gap:8px;font-size:12.5px;padding:3px 0}
+#utilPanel .ur img{width:20px;height:20px}
+#utilPanel .ur .v{margin-left:auto;color:var(--gsub);font-size:12px;text-align:right}
+#utilPanel .ur .v.ok{color:#2f9a58;font-weight:700}body.night #utilPanel .ur .v.ok{color:#6fdc94}
+#utilPanel .ur .v.off{color:#b8862a}
+#utilPanel .ub{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--glb);background:rgba(255,255,255,.3);color:var(--gtx);border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700;white-space:nowrap}
+#utilPanel .ub img{width:16px;height:16px}
+#utilPanel .usep{border-top:1px dashed var(--glb);margin:8px 0}
+#utilPanel .small,#morePanel .small{color:var(--gsub)}
+#handleRow{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:-4px}
+#hudHandle{border-radius:12px 12px 0 0;padding:0 24px;height:24px;font-size:14px;border-bottom:0}
+#hideBtn{border-radius:10px;padding:2px 10px;font-size:12px}
+#showUI{position:absolute;right:max(14px,env(safe-area-inset-right,0px));bottom:14px;padding:8px 12px;font-size:13px;opacity:.6;display:none;z-index:6}
+#showUI:hover{opacity:1}
+#mHide{display:none;position:absolute;right:12px;bottom:16px;width:40px;height:40px;border-radius:50%;padding:0;font-size:16px;z-index:4}
+#toolBtn{display:none;align-items:center;gap:10px;border-radius:999px;padding:8px 18px 8px 10px;font-size:16px}
+#toolBtn img{width:32px;height:32px}#toolBtn b{font-weight:800}#toolBtn .sw{font-size:13px;opacity:.7}
+#toolSheet{position:absolute;inset:0;z-index:9;background:rgba(10,30,50,.25)}
+#toolSheet .tsp{position:absolute;left:0;right:0;bottom:0;border-radius:22px 22px 0 0;padding:10px 14px calc(18px + env(safe-area-inset-bottom,0px));animation:tsUp .18s ease-out}
+#toolSheet .grab{width:44px;height:5px;border-radius:3px;background:var(--gsub);opacity:.5;margin:0 auto 10px}
+#toolSheet .small{color:var(--gsub)}
+.tsg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stool{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0;border-radius:12px;border:1px solid var(--glb);background:rgba(255,255,255,.28);color:var(--gtx);font-weight:700;font-size:13px}
+.stool img{width:32px;height:32px}.stool.on{background:var(--gsel);color:#fff}
+@keyframes tsUp{from{transform:translateY(40%);opacity:.4}to{transform:none;opacity:1}}
+#sheetBack{position:absolute;inset:0;z-index:7;background:rgba(10,30,50,.25)}
+/* collapsed: only ☰ and the current tool stay */
+body.ui-col .hud,body.ui-col #status,body.ui-col .traywrap,body.ui-col #trayTog,body.ui-col .hint,body.ui-col #zoomCtl,body.ui-col #hideBtn{display:none!important}
+body.ui-col .dock .tool:not(.on){display:none}
+body.ui-col #hudHandle{border-radius:12px;border-bottom:1px solid var(--glb);margin-bottom:2px}
+/* hide-all: just the small "show" button */
+body.ui-hide .hud,body.ui-hide #status,body.ui-hide .bottom,body.ui-hide #zoomCtl,body.ui-hide #hamb,body.ui-hide .gpanel,body.ui-hide #tut,body.ui-hide #mHide,body.ui-hide #moveBar,body.ui-hide #sheetBack{display:none!important}
+body.ui-hide #showUI{display:block}
+/* phones */
+body.m .hud{padding-right:64px}
+body.m #hamb{top:6px;width:44px;height:44px}
+body.m .ubar{min-width:0;padding:5px 10px;gap:8px}body.m .ubar .us{min-width:0}
+body.m #watertext{display:inline}
+body.m-port .hud .grp:first-child{flex-wrap:wrap}
+body.m-port #utilitiesBtn{flex:1 1 100%;order:5}
+body.m .gpanel{left:0!important;right:0!important;top:auto!important;bottom:0;width:auto!important;border-radius:22px 22px 0 0;max-height:72vh;overflow:auto;padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+body.m-port .dock,body.m-port #handleRow{display:none!important}
+body.m-port #toolBtn{display:flex}
+body.m-port #mHide{display:block}
+body.m-port.ui-col .hud,body.m-port.ui-col #status{display:revert!important}
+
+/* ===== v2.5.1: sub-menus and small parts follow the glass theme ===== */
+.item{background:rgba(255,255,255,.4);border:1px solid var(--glb);color:var(--gtx);border-radius:14px;transition:background-color .8s,border-color .8s}
+body.night .item{background:rgba(255,255,255,.07)}
+.item small{color:var(--gsub)}
+.item:hover:not(.sel){background:rgba(255,255,255,.55)}body.night .item:hover:not(.sel){background:rgba(255,255,255,.14)}
+.item.sel{border:2px solid var(--gsel);background:rgba(255,255,255,.72);box-shadow:0 0 0 3px rgba(47,134,214,.18)}
+body.night .item.sel{border-color:#6fb4ff;background:rgba(111,180,255,.2);box-shadow:0 0 0 3px rgba(111,180,255,.18)}
+.item .info{background:rgba(255,255,255,.35);border:1px solid var(--glb);color:var(--gtx)}
+.item .tag{background:var(--gsel);color:#fff}
+.seedtabs button{background:rgba(255,255,255,.3);border:1px solid var(--glb);color:var(--gtx)}
+.seedtabs button.on{background:var(--gsel);color:#fff;border-color:transparent}
+.tray .sep{background:var(--glb)}
+.tfade{display:none}
+.tarr{background:var(--gl);border:1px solid var(--glb);color:var(--gtx);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:var(--gsh)}
+.tarr:hover{background:var(--gl)}
+.traytog{color:var(--gtx);border-radius:999px;padding:2px 12px;font-size:12px}
+.cloudbadge{background:rgba(255,255,255,.3);color:var(--gtx);border:1px solid var(--glb);line-height:16px}
+.cloudbadge.sync{color:#2f86d6}.cloudbadge.login,.cloudbadge.err{color:#c98a2c;border-color:#e0b25a}
+.hud .loc{color:var(--gsub);text-decoration-color:var(--glb)}
+.tut{background:var(--gl);color:var(--gtx);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.tut-k{color:var(--gsub)}
+.movebar span{color:var(--gtx)}
+body.m .status{background:var(--gl);border:1px solid var(--glb);box-shadow:var(--gsh);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--gtx);border-radius:14px}
+body.m .status::after{color:var(--gsub)}
+body.m .status:not(.open) .chip{background:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+body.m .status:not(.open) .chip.warnchip{background:rgba(255,120,100,.25)!important;border-radius:6px}
+body.m .status.open{background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+body.m .status.open::after{background:var(--gl);border:1px solid var(--glb);color:var(--gtx);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:999px;padding:2px 12px}
+
+/* ===== v2.5.1: pages (modals) follow the glass theme ===== */
+body{--gsheet:rgba(247,251,255,.9);--gth:#eaf2f9;--gcard:rgba(255,255,255,.5);--gin:rgba(255,255,255,.7);--gok:#2f9a58;--gwarn:#c5452f}
+body.night{--gsheet:rgba(16,28,54,.92);--gth:#1e2e50;--gcard:rgba(255,255,255,.06);--gin:rgba(255,255,255,.08);--gok:#6fdc94;--gwarn:#ff9b8a}
+body.night .sheet,body.night .gpanel,body.night #toolSheet{color-scheme:dark}
+.modal{background:rgba(10,30,50,.3)}
+.sheet{background:var(--gsheet);border:1px solid var(--glb);color:var(--gtx);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 16px 44px rgba(0,0,0,.28);transition:background-color .8s,color .8s}
+.close{background:rgba(255,255,255,.3);border:1px solid var(--glb);color:var(--gtx)}
+.tabs button{background:rgba(255,255,255,.28);border:1px solid var(--glb);color:var(--gtx)}
+.tabs button.on{background:var(--gsel);color:#fff;border-color:transparent}
+.sheet .small,.sheet .kv>span:nth-child(odd),.sheet .tut-k{color:var(--gsub)}
+.tw{background:var(--gcard);border:1px solid var(--glb)}
+th,td{border-bottom:1px solid var(--glb)}
+th{background:var(--gth);color:var(--gtx)}
+tr.locked td{color:var(--gsub)}
+tr.cur td{background:rgba(255,213,74,.18)}
+.pill{background:rgba(255,255,255,.35);color:var(--gtx);border:1px solid var(--glb)}
+.pill.ok{background:rgba(63,176,106,.18);color:var(--gok);border-color:transparent}
+.pill.lock{background:rgba(128,128,128,.18);color:var(--gsub);border-color:transparent}
+.btn{background:var(--gsel);border:1px solid var(--gsel);color:#fff}
+.btn.ghost,.btn.alt{background:rgba(255,255,255,.28);border:1px solid var(--glb);color:var(--gtx)}
+.btn.warn{background:transparent;border:1px solid var(--gwarn);color:var(--gwarn)}
+.btn.warn.armed{background:var(--gwarn);color:#fff}
+.card,.slot,.unitrow,.gd,.heatbox,.news li,.fc-cell,.fc-risk,.forecast div,.moregrid button,.cmp .card{background:var(--gcard);border:1px solid var(--glb);color:var(--gtx)}
+.slot.last{border:2px solid var(--accent)}
+.slot .stats{color:var(--gsub)}.slot .stats b{color:var(--gtx)}
+.cmp .card.new{border:2px solid #3fb06a;background:rgba(63,176,106,.12)}
+.fc-cell.rain,.forecast div.rain{background:rgba(79,168,240,.22);border-color:rgba(79,168,240,.45)}
+.fc-cell.snow{background:rgba(200,225,255,.22)}
+.fc-cell small{color:var(--gsub)}
+.fc-risk.r1{background:rgba(255,213,74,.18);border-color:#d9b44a}.fc-risk.r2{background:rgba(255,120,100,.18);border-color:var(--gwarn);color:var(--gwarn)}
+.fc-tip{background:rgba(255,213,74,.15)}
+.gd .tog,.tog{border-top:1px dashed var(--glb)}
+.unitrow b{color:var(--gsel)}body.night .unitrow b{color:#8cc4ff}
+textarea,input[type=number],input[type=text],.newslot input,.sheet select,.gpanel select{background:var(--gin);border:1px solid var(--glb);color:var(--gtx)}
+.sheet select{border-radius:8px;padding:3px 6px;font:inherit}
+.modal.bsheet .sheet{border-radius:22px 22px 0 0}
+.swc{background:rgba(128,140,150,.45)}
+
+/* inside pages: lines and secondary buttons need contrast on the light sheet */
+body{--gline:rgba(23,56,74,.16)}body.night{--gline:rgba(150,185,255,.24)}
+.sheet .tabs button,.sheet .btn.ghost,.sheet .btn.alt,.sheet .close,.sheet .card,.sheet .slot,.sheet .unitrow,.sheet .gd,.sheet .heatbox,.sheet .news li,.sheet .fc-cell,.sheet .fc-risk,.sheet .moregrid button,.sheet .cmp .card,.sheet .tw,.sheet .pill,.sheet textarea,.sheet input[type=number],.sheet input[type=text],.sheet .newslot input,.sheet select{border-color:var(--gline)}
+.sheet th,.sheet td{border-bottom-color:var(--gline)}
+.sheet .gd .tog,.sheet .tog{border-top-color:var(--gline)}
+body:not(.night) .sheet .btn.ghost,body:not(.night) .sheet .btn.alt,body:not(.night) .sheet .tabs button:not(.on),body:not(.night) .sheet .close{background:#fff}
+body:not(.night) .sheet .card,body:not(.night) .sheet .slot,body:not(.night) .sheet .tw,body:not(.night) .sheet .fc-cell{background:rgba(255,255,255,.75)}
+.sheet .slot.last{border-color:var(--accent)}.sheet .cmp .card.new{border-color:#3fb06a}
+.sheet .item{border-color:var(--gline)}
+body.m-land .hud{flex-direction:row}
+body.m-land #utilitiesBtn{flex:1 1 100%}
 </style>
 </head>
 <body>
@@ -6645,6 +6808,162 @@ const MODAL_CLOSE0 = $('modalClose').onclick;   // default close; dialogs that s
     }; }
   return _om2(title, tabs, render, initial); }; }
 window.__farm24 = { owners, ownerOf, setOwner, curEmail, slotVisible, googleLogin, googleLogout, useAccount };
+
+/* ===== 28. v2.5: new HUD layout (glass panels, day/night theme), 水電 bar + dropdown, ☰ 更多功能, collapse / hide-all,
+   phone portrait: one "current tool" button + slide-up tool sheet; painted sea backgrounds without cartoon clouds ===== */
+const UIK = 'skyfarm-ui-v1';
+const UIS = (() => { try { return Object.assign({ col: false }, JSON.parse(lsGet(UIK)) || {}); } catch(e){ return { col: false }; } })();
+const saveUIS = () => lsSet(UIK, JSON.stringify(UIS));
+const APP = $('app');
+
+/* ---------- background: painted sea by day (no cartoon clouds), right-aligned on tall phones ---------- */
+{ const _db = drawBackground; drawBackground = function(t, r){ if (IMG.bg_cloud_a || IMG.bg_cloud_b || IMG.bg_cloud_c){ delete IMG.bg_cloud_a; delete IMG.bg_cloud_b; delete IMG.bg_cloud_c; } return _db(t, r); }; }
+function drawCover(name, alpha){ const im = IMG['sky_' + name]; if (!im || alpha <= 0) return false;
+  const s = Math.max(VW / im.width, VH / im.height), w = im.width * s, h = im.height * s, x = VW >= VH ? (VW - w) / 2 : (VW - w) * .8;
+  ctx.globalAlpha = alpha; ctx.drawImage(im, x, (VH - h) / 2, w, h); ctx.globalAlpha = 1; return true; }
+
+/* ---------- day / night theme for the panels ---------- */
+function themeTick(){ if (!S) return; const night = dayPhase(Date.now()).light < .5; if (document.body.classList.contains('night') !== night) document.body.classList.toggle('night', night); }
+setInterval(themeTick, 5000);
+
+/* ---------- 水電 bar (re-uses #utilitiesBtn so the tutorial still points at it) ---------- */
+const UBAR = $('utilitiesBtn');
+{ const wt = $('watertext'), wb = $('waterbar'), wc = wt.closest('.chip');
+  UBAR.className = 'chip ubar'; UBAR.title = '水電';
+  UBAR.innerHTML = `<img class="u-tap" hidden alt=""><img class="u-elec" hidden alt="">
+    <div class="us"><div class="t"><img data-icon="ui_water_drop" alt=""><b class="wslot"></b></div><div class="bar"></div></div><div class="sep"></div>
+    <div class="us"><div class="t"><img data-icon="ui_electric" alt=""><b id="powertext">電力</b></div><div class="bar" id="powerbarw"><i id="powerbar"></i></div></div><div class="arr" id="ubArr">﹀</div>`;
+  UBAR.querySelector('.wslot').appendChild(wt); UBAR.querySelector('.bar').appendChild(wb); wc.remove();
+  $('coinChip').insertAdjacentElement('afterend', UBAR); }
+function powerSummary(){
+  const cap = batteryCap(), solar = allDevices().filter(d => d.T.id === 'solar_panel').length;
+  if (cap > 0) return { text: `電池 ${S.power.battery.toFixed(1)} / ${cap} 度`, pct: Math.min(100, S.power.battery / cap * 100), bar: true };
+  if (gridOn()) return { text: solar ? '市電＋太陽能' : '市電供電中', pct: 100, bar: false };
+  return { text: solar ? '太陽能' : '沒有供電', pct: 0, bar: false };
+}
+function renderUBar(){ if (!S) return; const p = powerSummary(); if ($('powertext').textContent !== p.text) $('powertext').textContent = p.text;
+  $('powerbar').style.width = p.pct + '%'; $('powerbarw').classList.toggle('flat', !p.bar); }
+
+/* dropdown (desktop) / bottom sheet (phone) */
+const UPAN = document.createElement('div'); UPAN.id = 'utilPanel'; UPAN.className = 'gpanel'; UPAN.hidden = true; APP.appendChild(UPAN);
+const firstDev = kind => allDevices().find(d => DEV[d.T.id] && DEV[d.T.id].kind === kind);
+function utilPanelHTML(){
+  const now = Date.now(), wells = allDevices().filter(d => d.T.id === 'well'), wDrops = wells.reduce((a, d) => a + (d.T.water || 0), 0);
+  const solar = allDevices().filter(d => d.T.id === 'solar_panel').length, gens = allDevices().filter(d => DEV[d.T.id] && DEV[d.T.id].kind === 'generator'), cap = batteryCap(), crankC = crankCap();
+  const est = computeBill(S.bill.cur, cycleDays()), ms = meterState();
+  const row = (ic, name, val, cls = '') => `<div class="ur"><img src="${IMGSRC[ic]}" alt=""><span>${name}</span><span class="v ${cls}">${val}</span></div>`;
+  return `<div class="uh"><span>💧 水源 <span class="small">水塔 ${Math.floor(S.player.water)} / ${fmtN(rainCapC())}</span></span><button class="ub" data-u="tower">補水線 ${fillLineName(fillLine())}</button></div>
+    ${row('ui_rainwater', '雨水', farmRain(now) ? '正在下雨，集水中' : '下雨時自動存進水塔', farmRain(now) ? 'ok' : '')}
+    ${row('ui_well', `井水${wells.length ? `（${wells.length} 口井）` : ''}`, wells.length ? `井裡共 ${Math.floor(wDrops)} 滴` : '還沒有挖井')}
+    ${row('ui_tap', '自來水', tapOn() ? (ms === 'flow' ? '● 注水中' : '● 接上了，待命') : S.settings.tapWater ? '暫停（金幣是負的）' : '沒接', tapOn() ? 'ok' : 'off')}
+    <div class="usep"></div>
+    <div class="uh"><span>⚡ 電源</span><button class="ub" data-u="crank"><img src="${IMGSRC.ui_crank}" alt="">手搖發電</button></div>
+    ${row('ui_electric', '市電', gridOn() ? `● 供電中 · 每度 ${elecPrice(now)} 金幣` : S.settings.grid ? '暫停（金幣是負的）' : '沒接', gridOn() ? 'ok' : 'off')}
+    ${row('ui_solar', `太陽能板${solar ? ` ×${solar}` : ''}`, solar ? (isNightAt(now) ? '晚上不發電' : '發電中 · 多的賣給市電') : '還沒有太陽能板')}
+    ${row('ui_electric', `發電機${gens.length ? ` ×${gens.length}` : ''}`, gens.length ? `燃料 ${gens.reduce((a, g) => a + (g.T.fuel || 0), 0).toFixed(1)} 度` : '還沒有發電機')}
+    ${row('ui_battery', '電池', cap ? `${S.power.battery.toFixed(2)} / ${cap} 度` : '還沒有電池')}
+    ${crankC ? row('ui_crank', '手搖小儲電', `${S.power.crank.toFixed(2)} / ${crankC} 度`) : ''}
+    <div class="usep"></div>
+    <div class="uh" style="font-weight:400"><span class="small">本期到目前約 ${fmtN(est.total)} 金幣</span><button class="ub" data-u="bill"><img src="${IMGSRC.ui_bill}" alt="">水電與帳單</button></div>`;
+}
+function placePanel(P, anchor){
+  if (isM()){ P.style.left = P.style.top = ''; return; }
+  const r = anchor.getBoundingClientRect(), a = APP.getBoundingClientRect(), w = P.offsetWidth || 440;
+  P.style.left = Math.max(8, Math.min(a.width - w - 8, r.left - a.left)) + 'px'; P.style.top = (r.bottom - a.top + 6) + 'px';
+}
+function openUtilPanel(){ closePanels(UPAN); UPAN.innerHTML = utilPanelHTML(); UPAN.hidden = false; placePanel(UPAN, UBAR); $('ubArr').textContent = '︿'; sheetBack(true); }
+function closeUtilPanel(){ if (UPAN.hidden) return; UPAN.hidden = true; $('ubArr').textContent = '﹀'; sheetBack(false); }
+UBAR.onclick = e => { e.stopPropagation(); if (UPAN.hidden) openUtilPanel(); else closeUtilPanel(); };
+UPAN.addEventListener('click', e => { e.stopPropagation(); const b = e.target.closest('[data-u]'); if (!b) return; const u = b.dataset.u; closeUtilPanel();
+  if (u === 'tower') openTower();
+  else if (u === 'bill') openUtilities('setup');
+  else if (u === 'crank'){ const d = firstDev('crank'); if (d) openDevice(d.M, d.k, d.T); else toast('還沒有手搖發電機，可以用「建設」蓋一台'); } });
+setInterval(() => { if (!UPAN.hidden && S) UPAN.innerHTML = utilPanelHTML(); }, 2000);
+
+/* ---------- ☰ 更多功能 ---------- */
+const HAMB = document.createElement('button'); HAMB.id = 'hamb'; HAMB.className = 'gbtnx'; HAMB.setAttribute('aria-label', '更多功能'); HAMB.innerHTML = '☰<i class="rdot" hidden></i>'; APP.appendChild(HAMB);
+const MPAN = document.createElement('div'); MPAN.id = 'morePanel'; MPAN.className = 'gpanel'; MPAN.hidden = true; APP.appendChild(MPAN);
+function needsAttention(){
+  const r = { news: false, robots: false, bills: false }; if (!S) return r;
+  r.news = !!(S.lastNews && S.lastNews.items && S.lastNews.items.length && S.lastNews.t > (S.newsSeenAt || 0));
+  try { r.robots = KINDS.some(k => fleet(k).some(u => u.on !== false && (u.state === 'nohome' || u.state === 'rest'))); } catch(e){}
+  r.bills = !!(S.bill && S.bill.list && S.bill.list.some(b => b.status === 'unpaid' || b.status === 'late'));
+  return r;
+}
+function moreHTML(){ const a = needsAttention(), dot = on => on ? '<i class="rd"></i>' : '';
+  const it = (id, ic, label, extra = '') => `<button class="mi" data-m="${id}">${ic.startsWith('ui_') ? `<img src="${IMGSRC[ic]}" alt="">` : `<b class="sym">${ic}</b>`}<span>${label}</span>${extra}</button>`;
+  return `<div class="small" style="padding:2px 4px 4px">⋯ 更多功能</div>
+    ${it('book', 'ui_tool_book', '圖鑑')}${it('expand', 'ui_shed', '擴地')}${it('news', 'ui_news', '農場新聞', dot(a.news))}${it('fc', 'ui_forecast', '天氣預報')}
+    ${it('auto', 'ui_robot_charger', '自動化', dot(a.robots))}${it('bills', 'ui_bill', '水電與帳單', dot(a.bills))}
+    ${it('save', '☁', '存檔與換電腦')}${it('settings', '⚙', '設定')}${it('slots', '⇄', '切換農場')}${it('help', '？', '怎麼玩')}${it('hide', '◉', '全部隱藏')}`; }
+HAMB.onclick = e => { e.stopPropagation(); if (!MPAN.hidden){ closeMore(); return; } closePanels(MPAN); MPAN.innerHTML = moreHTML(); MPAN.hidden = false; sheetBack(true); };
+function closeMore(){ if (MPAN.hidden) return; MPAN.hidden = true; sheetBack(false); }
+MPAN.addEventListener('click', e => { e.stopPropagation(); const b = e.target.closest('[data-m]'); if (!b) return; const m = b.dataset.m; closeMore();
+  if (m === 'book') openBook('crops'); else if (m === 'expand') openExpand();
+  else if (m === 'news'){ S.newsSeenAt = Date.now(); if (S.lastNews && S.lastNews.items.length) openNews(S.lastNews.items, S.lastNews.t); else toast('最近沒有新聞'); renderAttention(); }
+  else if (m === 'fc') openForecast(false); else if (m === 'auto') openAuto(); else if (m === 'bills') openUtilities('bills');
+  else if (m === 'save') openMenu('save'); else if (m === 'settings') openMenu('settings'); else if (m === 'slots'){ save(); openSlotPicker(); }
+  else if (m === 'help') openMenu('help'); else if (m === 'hide') setHideAll(true); });
+{ const _on2 = openNews; openNews = function(items, t){ const r = _on2(items, t); if (S) S.newsSeenAt = Date.now(); renderAttention(); return r; }; }
+function renderAttention(){ const a = needsAttention(), on = a.news || a.robots || a.bills, d = HAMB.querySelector('.rdot'); if (d.hidden === on) d.hidden = !on; }
+
+/* panels: only one open; click outside closes; phones get a dimmed backdrop */
+const SBACK = document.createElement('div'); SBACK.id = 'sheetBack'; SBACK.hidden = true; APP.appendChild(SBACK);
+function sheetBack(on){ SBACK.hidden = !(on && isM()); }
+function closePanels(except){ if (except !== UPAN) closeUtilPanel(); if (except !== MPAN) closeMore(); if (except !== TSHEET) closeToolSheet(); }
+SBACK.onclick = () => closePanels(null);
+document.addEventListener('click', e => { if (!e.target.closest('#utilPanel,#morePanel,#toolSheet,#utilitiesBtn,#hamb,#toolBtn')) closePanels(null); });
+cv.addEventListener('pointerdown', () => closePanels(null));
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ if (document.body.classList.contains('ui-hide')) setHideAll(false); closePanels(null); } });
+
+/* ---------- collapse handle + hide-all ---------- */
+const HROW = document.createElement('div'); HROW.id = 'handleRow';
+HROW.innerHTML = `<button id="hudHandle" class="gbtnx" aria-label="收合介面">﹀</button><button id="hideBtn" class="gbtnx" title="把介面全部藏起來，好好欣賞浮島">◉ 全部隱藏</button>`;
+$('dock').insertAdjacentElement('beforebegin', HROW);
+const SHOWB = document.createElement('button'); SHOWB.id = 'showUI'; SHOWB.className = 'gbtnx'; SHOWB.textContent = '◉ 顯示介面'; APP.appendChild(SHOWB);
+const MHIDEB = document.createElement('button'); MHIDEB.id = 'mHide'; MHIDEB.className = 'gbtnx'; MHIDEB.setAttribute('aria-label', '全部隱藏'); MHIDEB.textContent = '◉'; APP.appendChild(MHIDEB);
+function setCollapsed(on){ UIS.col = !!on; saveUIS(); document.body.classList.toggle('ui-col', UIS.col); $('hudHandle').textContent = UIS.col ? '︿' : '﹀'; $('hudHandle').setAttribute('aria-label', UIS.col ? '展開介面' : '收合介面'); closePanels(null); if (S) setTimeout(fitCamera, 30); }
+function setHideAll(on){ document.body.classList.toggle('ui-hide', !!on); closePanels(null); if (on) toast('介面都藏起來了，按右下角「顯示介面」或 Esc 就回來', false, 2600); if (S) setTimeout(fitCamera, 30); }
+$('hudHandle').onclick = e => { e.stopPropagation(); setCollapsed(!UIS.col); };
+$('hideBtn').onclick = e => { e.stopPropagation(); setHideAll(true); };
+SHOWB.onclick = e => { e.stopPropagation(); setHideAll(false); };
+MHIDEB.onclick = e => { e.stopPropagation(); setHideAll(true); };
+// collapsed: tapping the only visible tool expands again
+$('dock').addEventListener('click', e => { if (UIS.col && e.target.closest('.tool')){ e.stopPropagation(); setCollapsed(false); } }, true);
+// while everything is hidden, taps only look around (pan / zoom), they never change the farm
+{ const _act = act; act = function(...a){ if (document.body.classList.contains('ui-hide')) return; return _act(...a); }; }
+
+/* ---------- phone portrait: current-tool button + slide-up tool sheet ---------- */
+const TOOLB = document.createElement('button'); TOOLB.id = 'toolBtn'; TOOLB.className = 'gbtnx'; $('dock').insertAdjacentElement('afterend', TOOLB);
+const TSHEET = document.createElement('div'); TSHEET.id = 'toolSheet'; TSHEET.hidden = true;
+TSHEET.innerHTML = `<div class="tsp"><div class="grab"></div><div class="small" style="margin-bottom:6px">選工具（選好會自動收起）</div><div class="tsg">${TOOLS.map(t => `<button class="stool" data-tool="${t.id}"><img src="${IMGSRC[t.icon]}" alt=""><span>${t.label}</span></button>`).join('')}</div></div>`;
+APP.appendChild(TSHEET);
+function renderToolBtn(){ if (!S) return; const t = TOOLS.find(x => x.id === S.sel.tool) || TOOLS[0], html = `<img src="${IMGSRC[t.icon]}" alt=""><b>${t.label}</b><span class="sw">︿ 換工具</span>`;
+  if (TOOLB.dataset.t !== t.id){ TOOLB.dataset.t = t.id; TOOLB.innerHTML = html; }
+  TSHEET.querySelectorAll('.stool').forEach(b => { b.classList.toggle('on', b.dataset.tool === t.id); const d = document.querySelector(`#dock .tool[data-tool="${b.dataset.tool}"]`), hid = !!(d && d.hidden); if (b.hidden !== hid) b.hidden = hid; }); }
+function openToolSheet(){ closePanels(TSHEET); TSHEET.hidden = false; renderToolBtn(); }
+function closeToolSheet(){ if (!TSHEET.hidden) TSHEET.hidden = true; }
+TOOLB.onclick = e => { e.stopPropagation(); if (TSHEET.hidden) openToolSheet(); else closeToolSheet(); };
+TSHEET.addEventListener('click', e => { e.stopPropagation(); const b = e.target.closest('.stool'); if (b){ setTool(b.dataset.tool); closeToolSheet(); renderToolBtn(); return; } if (!e.target.closest('.tsp')) closeToolSheet(); });
+{ let y0 = null; TSHEET.addEventListener('pointerdown', e => { if (e.target.closest('.grab,.tsp')) y0 = e.clientY; }); TSHEET.addEventListener('pointerup', e => { if (y0 != null && e.clientY - y0 > 60) closeToolSheet(); y0 = null; }); }
+{ const _st2 = setTool; setTool = function(id){ const r = _st2(id); renderToolBtn(); return r; }; }
+// tutorial: on a phone the tools live in the sheet
+{ const _tt = tutTarget; tutTarget = function(){ const r = _tt(); if (r && r.kind === 'ui' && /^\.tool\[/.test(r.sel || '') && document.body.classList.contains('m-port')) return { kind: 'ui', sel: TSHEET.hidden ? '#toolBtn' : '#toolSheet ' + r.sel.replace('.tool', '.stool') }; return r; }; }
+
+/* camera: hidden / collapsed UI leaves the whole screen to the island */
+{ const _fc = fitCamera; fitCamera = function(){ const B = document.body.classList;
+  if (!B.contains('ui-hide')) return _fc();
+  const bnd = mapBounds(curMap()), top = 24, bot = VH - 24, h = bot - top, z = Math.min((VW - 48) / (bnd.maxX - bnd.minX), h / (bnd.maxY - bnd.minY + 40));
+  cam.z = Math.max(0.45, Math.min(1.6, z)); cam.x = VW / 2 - (bnd.minX + bnd.maxX) / 2 * cam.z; cam.y = top + h / 2 - (bnd.minY + bnd.maxY) / 2 * cam.z + 10 * cam.z; }; }
+/* ---------- keep everything fresh ---------- */
+{ const _rh8 = renderHUD; renderHUD = function(){ _rh8(); if (!S) return; themeTick(); renderUBar(); renderAttention(); renderToolBtn(); }; }
+{ const _lh = layoutHUD; layoutHUD = function(){ _lh(); if (!UPAN.hidden && !isM()) placePanel(UPAN, UBAR);
+  // phone landscape: the side tray sits under ☰ and ends above the handle row / dock
+  if (MOB.mode === 'land'){ const hb = HAMB.getBoundingClientRect(), dk = $('dock').getBoundingClientRect(), hr = HROW.getBoundingClientRect(), tray = $('tray'), tog = $('trayTog');
+    const top = Math.round(hb.bottom + 6), lim = hr.height ? Math.min(dk.top, hr.top) : dk.top, bot = Math.round(innerHeight - lim + 6);
+    if (tog.style.top !== top + 'px') tog.style.top = top + 'px'; if (tray.style.top !== (top + 28) + 'px') tray.style.top = (top + 28) + 'px'; if (tray.style.bottom !== bot + 'px') tray.style.bottom = bot + 'px'; } }; }
+document.body.classList.toggle('ui-col', !!UIS.col); $('hudHandle').textContent = UIS.col ? '︿' : '﹀';
+window.__farm25 = { setCollapsed, setHideAll, openUtilPanel, closeUtilPanel, openToolSheet, needsAttention, powerSummary, get UIS(){ return UIS; } };
 
   })(CFG, ATLAS_JSON);
 })();

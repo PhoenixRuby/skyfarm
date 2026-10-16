@@ -4462,8 +4462,8 @@ window.GAME_ATLAS = {
     "sky_dawn": {
       "file": "sky_dawn.jpg",
       "frames": 1,
-      "frameWidth": 1600,
-      "frameHeight": 900,
+      "frameWidth": 1672,
+      "frameHeight": 941,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -4474,8 +4474,8 @@ window.GAME_ATLAS = {
     "sky_noon": {
       "file": "sky_noon.jpg",
       "frames": 1,
-      "frameWidth": 1600,
-      "frameHeight": 900,
+      "frameWidth": 1672,
+      "frameHeight": 941,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -4486,8 +4486,8 @@ window.GAME_ATLAS = {
     "sky_afternoon": {
       "file": "sky_afternoon.jpg",
       "frames": 1,
-      "frameWidth": 1600,
-      "frameHeight": 900,
+      "frameWidth": 1672,
+      "frameHeight": 941,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -4498,8 +4498,8 @@ window.GAME_ATLAS = {
     "sky_evening": {
       "file": "sky_evening.jpg",
       "frames": 1,
-      "frameWidth": 1600,
-      "frameHeight": 900,
+      "frameWidth": 1672,
+      "frameHeight": 941,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -4510,8 +4510,8 @@ window.GAME_ATLAS = {
     "sky_dusk": {
       "file": "sky_dusk.jpg",
       "frames": 1,
-      "frameWidth": 1600,
-      "frameHeight": 900,
+      "frameWidth": 1672,
+      "frameHeight": 941,
       "fps": 0,
       "loop": false,
       "anchor": [
