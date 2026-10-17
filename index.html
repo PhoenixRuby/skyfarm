@@ -628,6 +628,16 @@ body:not(.m) .ubar{min-width:0}
 body:not(.m) .ubar .us{flex:1 0 auto;min-width:150px}
 .ubar .t{min-width:0}
 body.m #trayTabs{gap:4px}body.m #trayTabs button{padding:4px 9px;font-size:12.5px;gap:4px}body.m #trayTabs button img{width:16px;height:16px}
+/* v2.12: tray tabs hide under dialogs; tappable level / coins; coin history list */
+body.ov-open #trayTabs,body.ov-open #tidySub{visibility:hidden!important;pointer-events:none}
+.tapinfo{cursor:pointer}
+.clog{display:flex;flex-direction:column;font-size:12.5px}
+.clog .cday{display:flex;justify-content:space-between;gap:8px;padding:8px 2px 4px;border-bottom:1px solid var(--line);margin-top:4px}
+.clog .cday span{font-size:11.5px;opacity:.85}.clog i{font-style:normal}
+.clog .crow{display:grid;grid-template-columns:3.2em 1fr auto 5.5em;gap:8px;padding:3px 2px;align-items:baseline}
+.clog .ct,.clog .cb{opacity:.7;font-variant-numeric:tabular-nums}.clog .cb{text-align:right}
+.clog .cw{min-width:0;overflow-wrap:anywhere}
+.clog .cin{color:#2f8a3a;font-weight:700}.clog .cout{color:#c0392b;font-weight:700}
 </style>
 </head>
 <body>
@@ -8774,6 +8784,143 @@ try { document.fonts && document.fonts.ready.then(() => fitTrayText()); } catch 
   if (r && r.sel){ if (!r.sel.seedFac) r.sel.seedFac = SEED_FAC[0]; } return r; }; }
 
 window.__farm211 = { truckStop: mi => truckStop(mi), pads, padCells, padValid, rimSpots, nearestRim, fixPad, placePad, padAt, padMid, applyBuildTabs, borrowBuildItems };
+
+/* ===== 35. v2.12: tray tabs hide while a dialog / panel / tool sheet is open; truck pad can be long-pressed and
+   dragged along the island rim; tap the level badge for a level panel (+ full table in the book); tap coins for a
+   7-day coin history; hive panel shows bee count and lifetime honey (per flavour) ===== */
+const CLOG = CFG.coinLog || { keepDays: 7, maxEntries: 3000, pageSize: 100 };
+const BPF = BEE.beesPerFrame || 100, BPF_B = (BUM && BUM.beesPerFrame) || BPF;
+
+/* ---------- tray tabs never sit on top of a dialog ---------- */
+const COVER35 = ['modal', 'toolSheet', 'utilPanel', 'morePanel'];
+function syncCover(){ const on = COVER35.some(id => { const el = $(id); return el && !el.hidden; }); document.body.classList.toggle('ov-open', on); }
+new MutationObserver(syncCover).observe(APP, { attributes: true, attributeFilter: ['hidden'], subtree: true });
+syncCover();
+
+/* ---------- long-press the truck pad and drag it along the rim ---------- */
+cv.addEventListener('pointerdown', e => {
+  if (RT.padDrag){ cancelPadDrag(); return; }   // a second finger (pinch) cancels
+  if (pointers.size !== 1 || !S || RT.mv || UI.expand || !$('modal').hidden) return;
+  const tl = toTileAny(e.clientX, e.clientY); if (!padAt(S.cur, tl.x, tl.y)) return;
+  const d0 = drag; if (!d0) return;
+  setTimeout(() => { if (drag !== d0 || d0.moved || RT.mv) return;
+    drag = null;   // g3 stops panning the camera / acting on release
+    RT.padDrag = { tile: tl, ghost: nearestRim(curMap(), tl.x, tl.y) }; RT.padMove = true; hover = tl; cv.style.cursor = 'grabbing';
+    try { navigator.vibrate && navigator.vibrate(20); } catch(err){} }, MOVE.longPressMs || 400);
+});
+cv.addEventListener('pointermove', e => { const D = RT.padDrag; if (!D) return;
+  const tl = toTileAny(e.clientX, e.clientY); D.tile = tl; hover = tl; D.ghost = nearestRim(curMap(), tl.x, tl.y); });
+function cancelPadDrag(){ RT.padDrag = null; RT.padMove = false; cv.style.cursor = 'pointer'; }
+cv.addEventListener('pointerup', () => { const D = RT.padDrag; if (!D) return; cancelPadDrag();
+  if (D.ghost) placePad(D.tile.x, D.tile.y); else toast(`這裡放不下，${TPAD.name}放回原位`); });
+cv.addEventListener('pointercancel', () => { if (RT.padDrag) cancelPadDrag(); });
+{ const _pg35 = padGhost; padGhost = function(){ const D = RT.padDrag; if (D) return D.ghost ? { mi: S.cur, ...D.ghost } : null; return _pg35(); }; }
+
+/* ---------- level panel ---------- */
+const unlockName35 = u => u.startsWith('block:') ? `第 ${u.split(':')[1]} 塊地` : nameOf(u);
+function openLevel(){
+  openModal('等級', null, (kk, el) => {
+    const P = S.player, L = lvInfo(P.level), N = LV[P.level];
+    let h = `<div class="kv"><span>目前等級</span><span><b>第 ${P.level} 級</b>${N ? '' : '（滿級）'}</span>`;
+    if (N){ const got = Math.max(0, P.xp - L.xpToReach), span = N.xpToReach - L.xpToReach;
+      h += `<span>經驗</span><span>${fmtN(got)} / ${fmtN(span)}（累計 ${fmtN(P.xp)}）</span><span>到下一級</span><span>還差 ${fmtN(N.xpToReach - P.xp)} 經驗</span></div>`;
+      const ch = (a, b) => a === b ? fmtN(b) : `${fmtN(a)} → <b>${fmtN(b)}</b>`;
+      h += `<h3>第 ${N.level} 級會得到</h3><div class="kv">
+        <span>解鎖</span><span>${N.unlocks.map(unlockName35).join('、') || '—'}</span>
+        <span>金幣獎勵</span><span>${fmtN(N.coinReward)}</span>
+        <span>特殊裝飾</span><span>${N.specialDeco ? CFG.decos[N.specialDeco].name : '—'}</span>
+        <span>雨水儲量</span><span>${ch(L.rainStorage, N.rainStorage)}</span>
+        <span>倉庫容量</span><span>${ch(L.produceCapacity, N.produceCapacity)}</span>
+        <span>動物上限</span><span>${ch(L.animalCap, N.animalCap)}</span>
+        <span>魚池格數</span><span>${ch(L.fishPoolTileCap, N.fishPoolTileCap)}</span></div>`;
+    } else h += `<span>經驗</span><span>累計 ${fmtN(P.xp)}</span></div>`;
+    el.innerHTML = h + `<div class="row"><button class="btn" id="lvAll">完整等級表</button></div>`;
+    $('lvAll').onclick = () => openBook('levels');
+  });
+}
+['lvl', 'xptext'].forEach(id => { const el = $(id); if (el){ el.classList.add('tapinfo'); el.addEventListener('click', e => { e.stopPropagation(); if (S) openLevel(); }); } });
+{ const b = $('xpbar') && $('xpbar').parentElement; if (b){ b.classList.add('tapinfo'); b.addEventListener('click', e => { e.stopPropagation(); if (S) openLevel(); }); } }
+
+/* ---------- coin history: every change, 7 days / 3,000 entries; entry = [time, delta, balance, why] ---------- */
+RT.coinWhy = [];
+function coinWhy(){ const w = RT.coinWhy; if (w.length) return w[w.length - 1]; if (RT.coinClick) return RT.coinClick; if (RT.coinAct) return RT.coinAct; return '其他'; }
+function logCoin(st, d, b){ if (!d) return; const L = st.coinLog || (st.coinLog = []), now = Date.now(), old = now - CLOG.keepDays * 86400e3;
+  L.push([now, Math.round(d * 100) / 100, Math.round(b * 100) / 100, coinWhy()]);
+  let cut = Math.max(0, L.length - CLOG.maxEntries); while (cut < L.length && L[cut][0] < old) cut++; if (cut) L.splice(0, cut); }
+function watchCoins(st){ const P = st && st.player; if (!P) return;
+  const ds = Object.getOwnPropertyDescriptor(P, 'coins'); if (!ds || ds.get) return;
+  let v = ds.value; Object.defineProperty(P, 'coins', { enumerable: true, configurable: true, get: () => v, set: n => { const d = n - v; v = n; logCoin(st, d, n); } }); }
+// label every coin change by the code path it came from (innermost wins), else the button clicked, else the map tool
+const WHY35 = { addXP: '升級獎勵', payBill: '繳帳單', closeBill: '自動繳帳單', payLoad: '垃圾車', collectWeeds: '雜草換金幣', pullWeed: '雜草換金幣',
+  meteorTap: '流星獎勵', tutFinish: '教學獎勵', sellDoll: '賣天氣娃娃', sellGlass: '拆溫室', sellBase: '拆基座', shrinkBase: '拆基座',
+  payFeed: '買飼料', stockPool: '魚苗', deliver: '倉庫滿了直接賣', gain: '收成' };
+function withWhy(w, fn, a){ RT.coinWhy.push(w); try { return fn(...a); } finally { RT.coinWhy.pop(); } }
+{ const _ax = addXP; addXP = function(...a){ return withWhy(WHY35.addXP, _ax, a); }; }
+{ const _pb = payBill; payBill = function(...a){ return withWhy(WHY35.payBill, _pb, a); }; }
+{ const _cb = closeBill; closeBill = function(...a){ return withWhy(WHY35.closeBill, _cb, a); }; }
+{ const _pl = payLoad; payLoad = function(...a){ return withWhy(WHY35.payLoad, _pl, a); }; }
+{ const _cw = collectWeeds; collectWeeds = function(...a){ return withWhy(WHY35.collectWeeds, _cw, a); }; }
+{ const _pw = pullWeed; pullWeed = function(...a){ return withWhy(WHY35.pullWeed, _pw, a); }; }
+{ const _mt = meteorTap; meteorTap = function(...a){ return withWhy(WHY35.meteorTap, _mt, a); }; }
+{ const _tf = tutFinish; tutFinish = function(...a){ return withWhy(WHY35.tutFinish, _tf, a); }; }
+{ const _sd = sellDoll; sellDoll = function(...a){ return withWhy(WHY35.sellDoll, _sd, a); }; }
+{ const _sg = sellGlass; sellGlass = function(...a){ return withWhy(WHY35.sellGlass, _sg, a); }; }
+{ const _sb = sellBase; sellBase = function(...a){ return withWhy(WHY35.sellBase, _sb, a); }; }
+{ const _sk = shrinkBase; shrinkBase = function(...a){ return withWhy(WHY35.shrinkBase, _sk, a); }; }
+{ const _pf = payFeed; payFeed = function(...a){ return withWhy(WHY35.payFeed, _pf, a); }; }
+{ const _sp = stockPool; stockPool = function(...a){ return withWhy(WHY35.stockPool, _sp, a); }; }
+{ const _dl = deliver; deliver = function(...a){ return withWhy(WHY35.deliver, _dl, a); }; }
+{ const _gn = gain; gain = function(...a){ return withWhy(WHY35.gain, _gn, a); }; }
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('button'); if (!b) return;
+  const t = (b.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 20), m = !$('modal').hidden ? $('modalTitle').textContent : '';
+  RT.coinClick = m && t ? `${m}：${t}` : (t || m || null); setTimeout(() => { RT.coinClick = null; }, 0); }, true);
+{ const _act35 = act; act = function(x, y){ if (!S) return _act35(x, y);
+  const tool = S.sel.tool, T = TOOLS.find(q => q.id === tool), id = S.sel[tool], nm = typeof id === 'string' ? nameOf(id) : '';
+  const prev = RT.coinAct; RT.coinAct = (T ? T.label : '地圖') + (nm && nm !== id ? `：${nm}` : '');
+  try { return _act35(x, y); } finally { RT.coinAct = prev; } }; }
+{ const _rh35 = renderHUD; renderHUD = function(){ if (S) watchCoins(S); return _rh35(); }; }
+
+function dayLabel(ms){ const d = new Date(ms), a = new Date(); a.setHours(0, 0, 0, 0); const diff = Math.round((a - new Date(d).setHours(0, 0, 0, 0)) / 86400e3);
+  return diff === 0 ? '今天' : diff === 1 ? '昨天' : `${d.getMonth() + 1}月${d.getDate()}日`; }
+function openCoinLog(){ let shown = CLOG.pageSize || 100;
+  const draw = el => { const L = (S.coinLog || []).slice().reverse(), sums = {};
+    for (const [t, d] of L){ const k = dayLabel(t), s = sums[k] || (sums[k] = { in: 0, out: 0 }); if (d > 0) s.in += d; else s.out -= d; }
+    let h = `<p class="small">金幣的每一筆變動，保留最近 ${CLOG.keepDays} 天、最多 ${fmtN(CLOG.maxEntries)} 筆。目前 ${fmtN(Math.floor(S.player.coins))} 金幣。</p>`;
+    if (!L.length) h += '<p>還沒有紀錄。從這一版開始，每次金幣變動都會記在這裡。</p>';
+    let day = null; h += '<div class="clog">';
+    for (const [t, d, b, w] of L.slice(0, shown)){ const k = dayLabel(t);
+      if (k !== day){ day = k; const s = sums[k]; h += `<div class="cday"><b>${k}</b><span>收入 <i class="cin">+${fmtN(Math.round(s.in))}</i>　支出 <i class="cout">−${fmtN(Math.round(s.out))}</i></span></div>`; }
+      h += `<div class="crow"><span class="ct">${fmtHM(t)}</span><span class="cw">${escapeHTML(w)}</span><span class="${d > 0 ? 'cin' : 'cout'}">${d > 0 ? '+' : '−'}${fmtN(Math.abs(Math.round(d)))}</span><span class="cb">${fmtN(Math.floor(b))}</span></div>`; }
+    h += '</div>'; if (L.length > shown) h += `<div class="row"><button class="btn" id="clMore">載入更多（還有 ${fmtN(L.length - shown)} 筆）</button></div>`;
+    el.innerHTML = h; const m = $('clMore'); if (m) m.onclick = () => { shown += CLOG.pageSize || 100; const top = el.scrollTop; draw(el); el.scrollTop = top; }; };
+  openModal('金幣歷程', null, (kk, el) => draw(el)); }
+{ const c = $('coinChip'); if (c){ c.classList.add('tapinfo'); c.addEventListener('click', e => { e.stopPropagation(); if (S) openCoinLog(); }); } }
+
+/* ---------- hive: bee count + lifetime honey (kept on the hive, never reset) ---------- */
+{ const _tn = takeNectar; takeNectar = function(U){ const h = _tn(U), T = RT.hiveT; if (T && h){ T.made = T.made || {}; T.made[h] = (T.made[h] || 0) + 1; RT.hiveFl++; } return h; }; }
+{ const _sh35 = stepHive; stepHive = function(M, mi, k, T, dt, t, live){ const t0 = T.total || 0, pv = RT.hiveT, pf = RT.hiveFl; RT.hiveT = T; RT.hiveFl = 0;
+  try { return _sh35(M, mi, k, T, dt, t, live); } finally {
+    const wild = (T.total || 0) - t0 - RT.hiveFl; if (wild > 0){ T.made = T.made || {}; T.made[BEE.wildHoney] = (T.made[BEE.wildHoney] || 0) + wild; }
+    RT.hiveT = pv; RT.hiveFl = pf; } }; }
+{ const _oh35 = openHive; openHive = function(M, k, T){ const r = _oh35(M, k, T); const el = $('modalBody'), kv = el && el.querySelector('.kv');
+  const bum = isBumbleHive(T), who = bum ? '熊蜂' : '蜜蜂', bees = T.queen ? (T.frames || 0) * (bum ? BPF_B : BPF) : 0, tot = T.total || 0;
+  const made = T.made || {}, split = Object.values(made).reduce((a, n) => a + n, 0);
+  const avg = bees ? `，平均每隻 ${(tot / bees).toFixed(tot / bees < 1 ? 2 : 1)} 罐` : '';
+  const totRow = `<span>累計產蜜</span><span>${fmtN(tot)} 罐${avg}</span>`;
+  if (kv){ if (kv.children[1]) kv.children[1].insertAdjacentHTML('afterend', `<span>${who}</span><span>約 ${fmtN(bees)} 隻（每框 ${bum ? BPF_B : BPF} 隻）</span>`); kv.insertAdjacentHTML('beforeend', totRow); }
+  else if (el && tot) el.insertAdjacentHTML('afterbegin', `<div class="kv">${totRow}</div>`);
+  if (el && tot){ const fl = HONEY_ORDER.filter(h => made[h] > 0).map(h => `${itemName(h)} ${fmtN(made[h])}`);
+    if (tot > split) fl.push(`未分口味（v2.12 之前）${fmtN(tot - split)}`);
+    const anchor = el.querySelector('.kv'); if (anchor) anchor.insertAdjacentHTML('afterend', `<p class="small">累計各口味（罐）：${fl.join('、')}</p>`); }
+  return r; }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns35 = normalizeState; normalizeState = function(d){ const r = _ns35(d);
+  if (r && !r.v212){ r.v212 = 1; if (!Array.isArray(r.coinLog)) r.coinLog = []; }
+  if (r) watchCoins(r); return r; }; }
+
+window.__farm212 = { openLevel, openCoinLog, logCoin, watchCoins, coinWhy, syncCover, cancelPadDrag,
+  tileScreen: (x, y) => { const c = center(x, y); return worldToScreen(c.cx, c.cy); } };
 
   })(CFG, ATLAS_JSON);
 })();

@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.11.0",
+  "configVersion": "2.12.0",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -3570,8 +3570,10 @@ window.GAME_CONFIG = {
    },
    "honeyMult": 1.5,
    "sameRulesAsBees": true,
-   "pollinates": true
-  }
+   "pollinates": true,
+   "beesPerFrame": 100
+  },
+  "beesPerFrame": 100
  },
  "migrations": {
   "2.0.0": {
@@ -4322,5 +4324,10 @@ window.GAME_CONFIG = {
    "egg",
    "larva"
   ]
+ },
+ "coinLog": {
+  "keepDays": 7,
+  "maxEntries": 3000,
+  "pageSize": 100
  }
 };
