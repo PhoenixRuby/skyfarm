@@ -573,6 +573,12 @@ body:not(.night) .fcday{background:rgba(255,255,255,.6)}
 .fcbot{display:flex;align-items:center;gap:16px;margin:4px 0 6px}.fcbot .fc-tip{flex:1;margin:0;display:flex;align-items:center;gap:10px;font-size:15px;padding:10px 14px;border-radius:14px;border:1px solid rgba(217,180,74,.45)}
 .fcbot .drop{font-size:20px}.fcauto{display:flex;align-items:center;gap:8px;white-space:nowrap;padding-left:16px;border-left:1px solid var(--gline);font-size:14px}
 @media (max-width:640px){.fcbot{flex-direction:column;align-items:stretch}.fcauto{border:0;padding:0}.fctop .rk{margin-left:0}.fcday .fc-row{gap:4px}}
+/* v2.8: dock tank = 2/3 clean (blue) + 1/3 dirty (grey-brown) */
+.tank2{display:grid;gap:3px;margin:4px 0 8px}
+.tank2 .tbar{display:flex;height:12px;border-radius:7px;overflow:hidden;background:rgba(140,160,175,.25);border:1px solid var(--gline,rgba(0,0,0,.12))}
+.tank2 .tbar i{display:block;height:100%}
+.tank2 .tbar .cl{background:linear-gradient(90deg,#6cc4f2,#3a95d0)}
+.tank2 .tbar .dt{background:linear-gradient(90deg,#b9a77e,#8a7656);margin-left:auto}
 </style>
 </head>
 <body>
@@ -7570,6 +7576,292 @@ function layoutForecast(el){
 { const _om12 = openModal; openModal = function(title, tabs, render, initial){
   if (title === '天氣預報' || title === '今日天氣預報'){ const r0 = render; render = (k, el) => { r0(k, el); layoutForecast(el); }; }
   return _om12(title, tabs, render, initial); }; }
+
+/* ===== 31. v2.8: sweeper docks with see-through tanks (2/3 clean, 1/3 dirty, one tank per slot), page icons per base,
+   auto sprinklers, 10 fruit trees + 8 decoration trees (seasons), rooster 06:00–09:00 without chickens, corn cakes on a plate,
+   eggs in a straw nest on the ground, storage lights that need power (no flicker), raised ridged soil ===== */
+
+/* ---------- sweeper dock: one water tank per slot ---------- */
+SLOT_POS.sweeper_dock = { 1: [[-8, 4]], 2: [[-17, 6], [17, 6]] };
+const TANKF = ['water', 'water2'];
+// slot 0 keeps the old T.water; slot 1 uses T.water2 through a view that looks like the base itself
+function dockTank(T, i){
+  if (!i) return T;
+  return new Proxy(T, { get: (o, p) => p === 'water' ? o.water2 : o[p], set: (o, p, v) => { if (p === 'water') o.water2 = v; else o[p] = v; return true; } });
+}
+const dockTanks = T => { const n = slotsOfT(T), out = []; for (let i = 0; i < n; i++) out.push(dockInit(dockTank(T, i))); return out; };
+const tankLevel = (T, i) => clamp01(((i ? T.water2 : T.water) ?? DWT.tankDrops) / DWT.tankDrops);
+function dockTankOf(u){ const s = u && slotByKey(u.home); return s && s.T.id === 'sweeper_dock' ? dockTank(s.T, s.i) : null; }
+function stepDocks(dt, t){
+  const ph = dayPhase(t), sun = ph.light * (farmRain(t) || farmSnow(t) ? 0 : farmCloudy(t) ? (DOCK_BAT.cloudyMult ?? .5) : 1);
+  for (const b of basesOf('sweeper_dock')){ const T = dockInit(b.T);
+    if (slotsOfT(T) < 2) delete T.water2;
+    if (sun > 0 && !snowyAt(b.mi, b.k)) T.dbat = Math.min(DOCK_BAT.kwh, T.dbat + (DOCK_BAT.solarKwhPerHourSunny || .01) * sun * dt / 3600);
+    dockTanks(T).forEach((V, i) => { if (V.water < 1){ const f = 'refillTry' + i; T[f] = (T[f] || 0) + dt; if (T[f] >= 5){ T[f] = 0; T.lastRefill = dockRefill(V, t, false); } } }); }
+}
+function manualDockRefill(T){
+  let ok = 0, full = 0; for (const V of dockTanks(T)){ const r = dockRefill(V, Date.now(), true); if (r === 'ok') ok++; else if (r === 'full') full++; }
+  const n = slotsOfT(T); sfx(ok ? 'water' : 'click');
+  toast(ok ? `基座水箱補滿了：清水滿、污水排掉（${n === 2 ? '兩個水箱' : `${Math.floor(T.water)} / ${DWT.tankDrops} 滴`}）` : full === n ? '基座水箱是滿的' : '水塔沒有水，先讓水塔有水再補', !!ok); afterAction(); return ok > 0; }
+// the hand tool on a dock with an empty tank = manual refill
+{ const _act31 = act; act = function(x, y){ const M = curMap(), T = inMap(M, x, y) && M.tiles[tkey(x, y)];
+  if (T && T.t === 'building' && T.id === 'sweeper_dock' && S.sel.tool === 'hand' && dockTanks(T).some(V => V.water < 1)){ manualDockRefill(T); return; }
+  return _act31(x, y); }; }
+// sweeper worker (v2.7) with the clean taken from its own slot's tank
+function sweepWorker(key, u, dt, t){
+  const home = workerHome('sweep', u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = 1 / (SWK.tilesPerSecond || 1), cleanT = SWK.cleanSeconds || 2;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      const p = sweepPickPath(W, M, key);
+      if (p && u){ const [tx, ty] = pkey(p[p.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length; if (u.batt < (p.length + back) * stepT + cleanT + 2){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; } }
+      if (!p){ if (W.phase === 'pick') walkGoHome(W, M, home); else return; continue; }
+      W.path = p; W.i = 0; W.el = 0; W.goal = 'trash'; W.target = p[p.length - 1]; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.goal === 'trash' && !isTrash(M.tiles[W.target])){ W.phase = 'pick'; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.path = null; W.target = null;
+          if (u){ const D = dockTankOf(u); if (D && dockInit(D).water >= DWT.dropsPerClean){ D.water -= DWT.dropsPerClean; W.phase = 'dockclean'; W.el = 0; D.dry = false; continue; } if (D) D.dry = true; }
+          W.phase = 'home'; return; }
+        W.phase = 'clean'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ if (W.goal === 'home') walkGoHome(W, M, home); else W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); swHeat(W.mi, nk, t); continue;
+    }
+    if (W.phase === 'dockclean'){ const left = (SWK.dockCleanSeconds || 30) - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; W.phase = 'home'; continue; }
+    if (W.phase === 'clean'){ const left = cleanT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; swClean(M, W.mi, tkey(W.x, W.y), t); W.target = null; W.phase = 'pick'; W.el = 0; continue; }
+  }
+}
+// base drawing: the dock's tanks show the water level (no floating gauge bar any more)
+function baseSprite(T){
+  const two = slotsOfT(T) === 2;
+  if (T.id !== 'sweeper_dock') return [two ? `building_${T.id}_x2` : `building_${T.id}_idle`, 0];
+  dockInit(T); if (!two) return ['building_sweeper_dock_tank', Math.round(tankLevel(T, 0) * 10)];
+  if (T.water2 == null) T.water2 = DWT.tankDrops;
+  return [`building_sweeper_dock_x2_l${Math.round(tankLevel(T, 0) * 5)}`, Math.round(tankLevel(T, 1) * 5)];
+}
+drawBase = function(T, x, y, t){
+  const { cx, cy } = center(x, y), [n, f] = baseSprite(T);
+  spr(n, f, cx, cy);
+  const k = tkey(x, y), mi = S.cur;
+  for (let i = 0; i < slotsOfT(T); i++){ const sk = `${mi}|${k}|${i}`, s = slotByKey(sk), p = slotScreen(s);
+    if (T.id === 'sweeper_dock'){ const owner = fleet('sweep').find(u => u.home === sk); const W = owner && WS[wKey('sweep', owner)];
+      if (W && W.phase === 'dockclean'){ spr('robot_sweeper_rest', 0, p.x, p.y);
+        for (let j = 0; j < 5; j++){ const kk = ((t * 1.2) + j / 5) % 1; ctx.fillStyle = j % 2 ? `rgba(110,170,70,${.9 - kk * .7})` : `rgba(150,130,100,${.85 - kk * .7})`; ctx.beginPath(); ctx.arc(p.x - 4 + kk * 10, p.y - 4 - kk * 12, 1.4, 0, 7); ctx.fill(); }
+        const left = Math.max(0, Math.ceil((SWK.dockCleanSeconds || 30) - W.el - Math.max(0, Math.min(1.2, (Date.now() - (W.simAt || Date.now())) / 1000))));
+        bubble(p.x, p.y - 24 - i * 16, `清潔 0:${String(left).padStart(2, '0')}`); continue; } }
+    const e = RT.park[sk]; if (e && !RT.awayKeys.has(wKey(e.kind, e.u))) drawParked(e, p.x, p.y, t); }
+  (RT.beside[mi + '|' + k] || []).forEach((e, j) => { if (!RT.awayKeys.has(wKey(e.kind, e.u))) drawParked(e, cx - 26 + j * 12, cy + 12 + (j % 2) * 4, t); });
+};
+{ const _is31 = itemSprite; itemSprite = function(kind, id){
+  if (kind === 'building' && id === 'sweeper_dock') return ['building_sweeper_dock_tank', 10];
+  if (kind === 'device' && DEV[id] && DEV[id].kind === 'sprinkler') return [`device_${id}_idle`, 0];
+  return _is31(kind, id); }; }
+// shrinking a base drops the second tank
+{ const _sb31 = shrinkBase; shrinkBase = function(T){ const r = _sb31(T); if (r) delete T.water2; return r; }; }
+
+/* ---------- page icons: each base uses its own building ---------- */
+const BASE_PIC = { sweeper_dock: 'dock', robot_charger: 'charger', drone_pad: 'pad' };
+PAGE['掃地基座'].ic = PIMG('dock'); PAGE['機器人充電站'].ic = PIMG('charger'); PAGE['無人機停機坪'].ic = PIMG('pad');
+{ const _oup31 = openUnitPanel; openUnitPanel = function(kind){ _oup31(kind);
+  const el = $('modalBody'), baseId = BASE_OF[kind] || RK(kind).base; if (!el) return;
+  const bp = el.querySelector('.bpic'); if (bp && BASE_PIC[baseId]) bp.src = PIMG(BASE_PIC[baseId]);
+  if (baseId !== 'sweeper_dock') return;
+  const tb = RT.tapBase && S.maps[RT.tapBase.mi] && S.maps[RT.tapBase.mi].tiles[RT.tapBase.k], T = tb && tb.id === baseId ? tb : (basesOf(baseId)[0] || {}).T;
+  const old = el.querySelector('.wbar'); const card = old && old.closest('.pcard'); if (!T || !card) return;
+  const tanks = dockTanks(T), src = farmPowerSource(Date.now()), ph = dayPhase(Date.now());
+  const tankRow = (V, i) => { const c = Math.floor(V.water), d = DWT.tankDrops - c;
+    return `<div class="tank2"><span class="small">${tanks.length > 1 ? (i ? '右邊位子' : '左邊位子') : '水箱'}</span>
+      <div class="tbar"><i class="cl" style="width:${c / DWT.tankDrops * 66.7}%"></i><i class="dt" style="width:${d / DWT.tankDrops * 33.3}%"></i></div>
+      <b>清水 ${c} 滴 · 污水 ${d} 滴（可清潔 ${Math.floor(c / DWT.dropsPerClean)} 次）</b></div>`; };
+  card.innerHTML = `<h4><span class="hic">💧</span>水箱（2/3 清水、1/3 污水）</h4>${tanks.map(tankRow).join('')}
+    <div class="kv"><span>基座小電池</span><b>${T.dbat.toFixed(3)} / ${DOCK_BAT.kwh} 度 ${ph.light > 0 ? '☀ 充電中' : '🌙 晚上不充'}</b>
+    <span>下次補水用</span><b>${src ? `農場電力（${src}）` : '基座小電池（農場沒有供電）'}</b></div>
+    <p class="small">每次回來清潔用 ${DWT.dropsPerClean} 滴清水，用過的變成污水。清水用完才從水塔補滿，同時把污水排掉；沒水時機器人不清潔、直接充電。電都不夠時，用「收成」工具點基座或按下面的按鈕人工補水（不耗電）。</p>
+    <div class="row"><button class="btn" id="dockFill" ${tanks.every(V => V.water >= DWT.tankDrops) ? 'disabled' : ''}>手動補水（從水塔）</button></div>`;
+  $('dockFill').onclick = e => { e.stopPropagation(); manualDockRefill(T); openUnitPanel(kind); }; }; }
+
+/* ---------- auto sprinklers ---------- */
+const isSprinkler = T => T && T.t === 'device' && DEV[T.id] && DEV[T.id].kind === 'sprinkler';
+RT.spray = {};
+const sprinklerFullCost = () => R.waterPerTap * R.moistMaxLevel;
+function sprinklerTargets(M, k, T){ const r = DEV[T.id].range, [x0, y0] = pkey(k), out = [];
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const kk = tkey(x0 + dx, y0 + dy), U = M.tiles[kk]; if (U && (U.t === 'soil' || U.t === 'tree')) out.push([kk, U]); }
+  return out; }
+function stepSprinklers(t){
+  const live = Math.abs(Date.now() - t) < 5000;
+  S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!isSprinkler(T)) continue;
+    T.need = null; if (T.act === 'off') continue;
+    let n = 0;
+    for (const [kk, U] of sprinklerTargets(M, k, T)){
+      if (!(U.m <= 1e-6 || (U.crop && U.crop.wither))) continue;
+      if (glassAt(mi, kk)) continue;
+      const cost = sprinklerFullCost();
+      if (!useWater(cost, true, t)){ T.need = 'water'; break; }
+      if (!farmPump(DEV[T.id].kwhPerTile || .005, t)){ T.need = 'power'; break; }
+      useWater(cost, false, t); U.m = R.moistMaxLevel; U.dry = 0; if (U.crop && U.crop.wither) U.crop.wither = false; n++;
+    }
+    if (n){ T.sprayed = (T.sprayed || 0) + n; if (live) RT.spray[mi + '|' + k] = performance.now() + 3500; }
+  } });
+}
+{ const _sa31 = stepAll; stepAll = function(dt, t){ _sa31(dt, t); stepSprinklers(t); stepStoreLight(dt, t); }; }
+{ const _dd31 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  if (!isSprinkler(T)) return _dd31(T, k, cx, cy, t);
+  const on = (RT.spray[S.cur + '|' + k] || 0) > performance.now(), n = `device_${T.id}_${on ? 'spray' : 'idle'}`;
+  spr(n, on && motion ? frameOf(n, t) : 0, cx, cy);
+  if (T.act === 'off') bubble(cx, cy - 30, '關閉');
+  else if (T.need === 'power') bubble(cx, cy - 30, '沒電', 'ui_electric');
+  else if (T.need === 'water') bubble(cx, cy - 30, '沒水', 'ui_water_drop'); }; }
+{ const _od31 = openDevice; openDevice = function(M, k, T){
+  if (!isSprinkler(T)) return _od31(M, k, T);
+  const D = DEV[T.id], r = D.range * 2 + 1;
+  openModal(D.name, null, (kk, el) => { const tg = sprinklerTargets(M, k, T), dry = tg.filter(([, U]) => U.m <= 1e-6).length;
+    el.innerHTML = `<div class="card"><div class="kv"><span>範圍</span><span>${r}×${r}（田 ${tg.filter(([, U]) => U.t === 'soil').length} 格、果樹 ${tg.filter(([, U]) => U.t === 'tree').length} 棵）</span>
+      <span>動作</span><span>${T.act === 'off' ? '關閉' : '乾了就灑'}</span>
+      <span>現在</span><span>${T.act === 'off' ? '關著' : T.need === 'power' ? '<b style="color:var(--warn)">沒有電，不會灑</b>' : T.need === 'water' ? '<b style="color:var(--warn)">水塔沒水，不會灑</b>' : dry ? `有 ${dry} 格乾了，馬上灑` : '範圍內都還濕，待機'}</span>
+      <span>用水</span><span>每格灑到全濕 ${sprinklerFullCost()} 滴（從水塔拿，跟手動澆滿一樣）</span>
+      <span>用電</span><span>每灑一格 ${D.kwhPerTile} 度（農場電力：市電、電池、手搖或正在發電的太陽能板）</span>
+      <span>累計灑過</span><span>${fmtN(T.sprayed || 0)} 格</span></div>
+      <h3>動作</h3><div class="row"><button class="btn${T.act !== 'off' ? '' : ' ghost'}" data-sp="auto">乾了就灑</button><button class="btn${T.act === 'off' ? '' : ' ghost'}" data-sp="off">關閉</button></div>
+      <p class="small">範圍內的田或果樹乾了（0 級）就自動灑到全濕。可以搬；用「剷除」拆掉退一半。</p></div>`;
+    el.onclick = e => { const b = e.target.closest('button[data-sp]'); if (!b) return; T.act = b.dataset.sp === 'off' ? 'off' : undefined; save(); toast(T.act === 'off' ? '灑水器關閉了' : '灑水器打開了：乾了就灑', true); openDevice(M, k, T); }; }); }; }
+{ const _ti31 = trayItem; trayItem = function(kind, id, name, lines, ...rest){
+  if (kind === 'device' && DEV[id] && DEV[id].kind === 'sprinkler'){ const r = DEV[id].range * 2 + 1; lines = [lines[0], `乾了自動灑 · ${r}×${r}`]; }
+  return _ti31(kind, id, name, lines, ...rest); }; }
+// book: the device table falls back to the generator text for unknown kinds — replace it for sprinklers
+{ const _om31 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { r0(k, el);
+    if (k !== 'devices') return; const spr8 = Object.entries(DEV).filter(([, D]) => D.kind === 'sprinkler'); let i = 0;
+    el.querySelectorAll('td').forEach(td => { if (/undefined 度/.test(td.textContent) && spr8[i]){ const D = spr8[i++][1], r = D.range * 2 + 1;
+      td.textContent = `${r}×${r} 範圍，田或果樹乾了就自動灑到全濕；水從水塔拿，每灑一格 ${D.kwhPerTile} 度電，沒電不灑；可開關、可搬`; } }); }; }
+  return _om31(title, tabs, render, initial); }; }
+
+/* ---------- trees: blossom in spring, persimmon leaves in autumn; decoration trees follow the season ---------- */
+const farmSeason = (ms = Date.now()) => { try { return climSeason(ms, getLatLon().lat); } catch(e){ return 'summer'; } };
+{ const _ts31 = treeSprite; treeSprite = function(T){ const n = _ts31(T), s = farmSeason();
+  if (s === 'spring' && n === `tree_${T.id}_grown_sway` && ATLAS[`tree_${T.id}_bloom_sway`]) return `tree_${T.id}_bloom_sway`;
+  if (s === 'autumn' && ATLAS[n.replace('_sway', '_autumn_sway')] && /_(grown|fruiting)_sway$/.test(n)) return n.replace('_sway', '_autumn_sway');
+  return n; }; }
+const NEW_DECO = ['sakura', 'bamboo', 'palm', 'ginkgo', 'willow', 'oak', 'birch', 'banyan'];
+NEW_DECO.forEach(id => { DECO_SPR[id] = `deco_${id}_idle`; });
+let decoSeasonAt = 0;
+function applyDecoSeasons(){ const s = farmSeason(), use = s === 'spring' ? ['spring', 'summer'] : [s];
+  for (const id of [...NEW_DECO, 'maple']){ const hit = use.map(x => `deco_${id}_${x}`).find(n => ATLAS[n]); DECO_SPR[id] = hit || (ATLAS[`deco_${id}_summer`] ? `deco_${id}_summer` : DECO_SPR[id]); } }
+
+/* ---------- rooster: local 06:00–09:00, once a day, no chickens needed ---------- */
+function checkRooster(now){
+  if (!EGG || !EGG.enabled || RT.rooster || !motion || !S) return;
+  const m = minuteOfDay(now), a = hhmmToMin(EGG.localStart || '06:00'), b = hhmmToMin(EGG.localEnd || '09:00');
+  if (m < a || m >= b || S.roosterDay === dayKeyLocal(now)) return;
+  startRooster(false);
+}
+
+/* ---------- corn cakes: stacks on a little plate beside the machine ---------- */
+{ const _dte31 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte31(M, k, T, x, y, t, now);
+  if (T && T.t === 'machine' && T.id === 'corn_cake_machine' && T.state === 'done'){ const { cx, cy } = center(x, y), lift = 0;
+    spr('fx_cake_plate', Math.min(3, Math.max(1, T.batches || 1)) - 1, cx + 20, cy + 6 + lift); } }; }
+
+/* ---------- eggs: in a straw nest on the ground where the hen laid them ---------- */
+RT.nests = new Map();
+function buildNests(M){
+  RT.nests.clear();
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'animal' || T.id !== 'egg_hen') continue;
+    if (!(T.stack > 0)){ delete T.nest; continue; }
+    if (!T.nest){ const ag = RT.agents[`${S.cur}:${k}`], [hx, hy] = pkey(k); T.nest = ag ? [ag.cx, ag.cy] : [hx, hy]; }
+    const nk = tkey(Math.round(T.nest[0]), Math.round(T.nest[1])), list = RT.nests.get(nk) || []; list.push({ k, T }); RT.nests.set(nk, list); }
+}
+{ const _da31 = drawAnimalsAt; drawAnimalsAt = function(k, t){
+  const list = RT.nests.get(k);
+  if (list) for (const { k: hk, T } of list){ const c = center(T.nest[0] + .12, T.nest[1] + .12);
+    spr('fx_egg_nest', Math.min(3, T.stack) - 1, c.cx, c.cy); if (T.stack > 3) bubble(c.cx + 10, c.cy - 10, '×' + T.stack);
+    RT.animHit.push({ k: hk, x: c.cx, y: c.cy + 8 }); }
+  _da31(k, t); }; }
+{ const _dan31 = drawAnimal; drawAnimal = function(T, cx, cy, t, ag){
+  if (T.id === 'egg_hen' && T.stack > 0){ const s = T.stack; T.stack = 0; try { _dan31(T, cx, cy, t, ag); } finally { T.stack = s; } return; }
+  return _dan31(T, cx, cy, t, ag); }; }
+
+/* ---------- storage lights (decoration shed, produce barn): dark + farm power, steady ---------- */
+const SLT = CFG.storageLight || { kwhPerHourEach: .02 };
+const storeBuildings = () => { const out = []; S.maps.forEach(M => { const seen = new Set(); for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && (T.id === 'shed' || T.id === 'barn') && !seen.has(T)){ seen.add(T); out.push(T); } } }); return out; };
+function stepStoreLight(dt, t){
+  const n = storeBuildings().length;
+  if (!n || dayPhase(t).light >= .5){ S.storeLit = false; return; }
+  S.storeLit = drawFarmPower((SLT.kwhPerHourEach || .02) * n * dt / 3600, t);
+}
+const storeLitNow = now => dayPhase(now).light < .5 && !!S.storeLit;
+
+/* ---------- sprite hooks: raised ridged soil (+ crops sit on it), steady shed light, barn light ---------- */
+RT.soilMask = new Map(); RT.inWorld = false;
+{ const _spr31 = spr; spr = function(name, frame, x, y, flip, alpha){
+  if (RT.inWorld){
+    if (name.startsWith('ground_soil_m')){ const f = RT.soilMask.get(Math.round(x) + ',' + Math.round(y)), n = 'ground_soil22_m' + name[13], a = ATLAS[n], im = IMG[n];
+      if (f != null && a && im){ const s = .5 * 1.025, fw = a.frameWidth, fh = a.frameHeight;   // a hair larger so neighbouring fields close the seams
+        ctx.drawImage(im, (a.sx || 0) + f * fw, a.sy || 0, fw, fh, x - a.anchor[0] * s, y - a.anchor[1] * s + .5, fw * s, fh * s); return; } }
+    else if (name.startsWith('crop_')) y -= 4;
+    else if (name === 'building_shed_idle'){ name = storeLitNow(Date.now()) ? 'building_shed_lit' : 'building_shed_off'; frame = 0; }
+    else if (name.startsWith('building_barn_') && name !== 'building_barn_light'){ _spr31(name, frame, x, y, flip, alpha); if (storeLitNow(Date.now())) _spr31('building_barn_light', 0, x, y); return; }
+  }
+  return _spr31(name, frame, x, y, flip, alpha); }; }
+function buildSoilMask(M){
+  RT.soilMask.clear(); const isS = (x, y) => { const U = M.tiles[tkey(x, y)]; return !!(U && U.t === 'soil'); };
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'soil') continue; const [x, y] = pkey(k), c = center(x, y);
+    RT.soilMask.set(Math.round(c.cx) + ',' + Math.round(c.cy), (isS(x + 1, y) ? 0 : 2) + (isS(x, y + 1) ? 0 : 1)); }
+}
+{ const _dw31 = drawWorld; drawWorld = function(t, now){
+  const M = curMap(); buildSoilMask(M); buildNests(M);
+  if (performance.now() - decoSeasonAt > 60000){ decoSeasonAt = performance.now(); applyDecoSeasons(); }
+  RT.inWorld = true; try { _dw31(t, now); } finally { RT.inWorld = false; }
+  // range preview while placing a sprinkler
+  const id = S.sel.tool === 'build' && S.sel.build, D = id && DEV[id];
+  if (D && D.kind === 'sprinkler' && hover && inMap(M, hover.x, hover.y)){ const r = D.range;
+    ctx.save(); ctx.fillStyle = 'rgba(120,200,255,.18)'; ctx.strokeStyle = 'rgba(90,170,240,.8)'; ctx.lineWidth = 1.2;
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const c = center(hover.x + dx, hover.y + dy); diamondPath(c.cx, c.cy, .94); ctx.fill(); }
+    const P = (x, y) => { const c = center(x, y); return [c.cx, c.cy - HH]; }, a = P(hover.x - r, hover.y - r), b = P(hover.x + r + 1, hover.y - r), cc = P(hover.x + r + 1, hover.y + r + 1), d = P(hover.x - r, hover.y + r + 1);
+    ctx.beginPath(); ctx.moveTo(...a); ctx.lineTo(...b); ctx.lineTo(...cc); ctx.lineTo(...d); ctx.closePath(); ctx.stroke(); ctx.restore(); }
+}; }
+
+/* ---------- night: lit storage buildings punch light holes like the house ---------- */
+function storeLightHoles(M, now){
+  if (!storeLitNow(now)) return [];
+  const out = [], seen = new Set();
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'building' || (T.id !== 'shed' && T.id !== 'barn') || seen.has(T)) continue; seen.add(T);
+    const [w] = bldSize(T.id), c = center(T.rx, T.ry), oy = (w - 1) * HH; out.push(T.id === 'barn' ? { x: c.cx + 6, y: c.cy + oy - 4, r: 34, col: 'rgba(255,210,120,' } : { x: c.cx - 6, y: c.cy + oy - 6, r: 24, col: 'rgba(255,210,120,' }); }
+  return out;
+}
+function drawSky(t, now, atop){
+  const ph = dayPhase(now), cloudy = farmCloudy(now) && !farmRain(now), dark = nightDark(now);
+  let holes = [];
+  if (dark >= 0.01){
+    if (!nightCv) nightCv = document.createElement('canvas');
+    if (nightCv.width !== cv.width || nightCv.height !== cv.height){ nightCv.width = cv.width; nightCv.height = cv.height; }
+    const n = nightCv.getContext('2d'); n.setTransform(1,0,0,1,0,0); n.clearRect(0, 0, nightCv.width, nightCv.height);
+    n.fillStyle = `rgba(12,22,58,${dark})`; n.fillRect(0, 0, nightCv.width, nightCv.height);
+    n.globalCompositeOperation = 'destination-out';
+    const M = curMap();
+    for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && T.lit){ const [x,y] = pkey(k), c = center(x,y), r = (DEV[T.id].range + 0.7) * HW * 1.6; holes.push({ x: c.cx, y: c.cy - 6, r, col: 'rgba(255,150,230,' }); } }
+    if (houseLitNow(now)){ const hp = housePos(M); if (hp) holes.push({ x: hp.x - 20, y: hp.y - 10, r: 46, col: 'rgba(255,210,120,' }); }
+    holes.push(...storeLightHoles(M, now));
+    for (const h of holes){ const sx = (cam.x + h.x*cam.z) * dpr, sy = (cam.y + h.y*cam.z) * dpr, r = h.r * cam.z * dpr;
+      const g = n.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, 'rgba(0,0,0,.95)'); g.addColorStop(1, 'rgba(0,0,0,0)'); n.fillStyle = g; n.beginPath(); n.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); n.fill(); }
+    n.globalCompositeOperation = 'source-over';
+    ctx.setTransform(1,0,0,1,0,0);
+    if (atop && bgCv){
+      ctx.globalCompositeOperation = 'source-atop'; ctx.drawImage(nightCv, 0, 0);
+      ctx.globalCompositeOperation = 'destination-over'; ctx.drawImage(bgCv, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+    } else { n.globalCompositeOperation = 'destination-in'; n.drawImage(islandMask(), 0, 0); n.globalCompositeOperation = 'source-over'; ctx.drawImage(nightCv, 0, 0); }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  if (cloudy && ph.light > 0){ ctx.fillStyle = `rgba(95,105,115,${0.16 * ph.light})`; ctx.fillRect(0, 0, VW, VH); }
+  if ((ph.phase === 'dawn' || ph.phase === 'dusk')){ const a = 0.16 * (1 - Math.abs(ph.light - 0.5) * 2); ctx.fillStyle = ph.phase === 'dawn' ? `rgba(255,170,90,${a})` : `rgba(255,120,70,${a})`; ctx.fillRect(0, 0, VW, VH); }
+  if (!holes.length) return;
+  ctx.globalCompositeOperation = 'lighter';
+  for (const h of holes){ const sx = cam.x + h.x*cam.z, sy = cam.y + h.y*cam.z, r = h.r * cam.z * 0.7;
+    const g = ctx.createRadialGradient(sx, sy, 0, sx, sy, r); g.addColorStop(0, h.col + (0.18*dark/0.55) + ')'); g.addColorStop(1, h.col + '0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(sx, sy, r, r*0.6, 0, 0, Math.PI*2); ctx.fill(); }
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+window.__farm28 = { dockTank, dockTanks, stepSprinklers, stepStoreLight, storeLitNow, applyDecoSeasons, farmSeason, baseSprite, buildNests, checkRooster };
 
   })(CFG, ATLAS_JSON);
 })();

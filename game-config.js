@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
   "meta": {
     "name": "浮島農場",
-    "configVersion": "2.7.0",
+    "configVersion": "2.8.0",
     "saveFormatVersion": 1,
     "units": {
       "time": "seconds",
@@ -245,6 +245,100 @@ window.GAME_CONFIG = {
       "harvestPrice": 640,
       "xp": 64,
       "waterUse": 1.0
+    },
+    "orange": {
+      "name": "柳丁",
+      "saplingCost": 450,
+      "firstFruitSeconds": 36000,
+      "fruitIntervalSeconds": 10800,
+      "harvestPrice": 85,
+      "xp": 8,
+      "waterUse": 1.0
+    },
+    "peach": {
+      "name": "桃子",
+      "saplingCost": 700,
+      "firstFruitSeconds": 50400,
+      "fruitIntervalSeconds": 18000,
+      "harvestPrice": 150,
+      "xp": 15,
+      "waterUse": 1.0,
+      "bloomSeason": "spring"
+    },
+    "persimmon": {
+      "name": "柿子",
+      "saplingCost": 1000,
+      "firstFruitSeconds": 64800,
+      "fruitIntervalSeconds": 21600,
+      "harvestPrice": 220,
+      "xp": 22,
+      "waterUse": 0.8,
+      "autumnLeaves": true
+    },
+    "lychee": {
+      "name": "荔枝",
+      "saplingCost": 1100,
+      "firstFruitSeconds": 72000,
+      "fruitIntervalSeconds": 25200,
+      "harvestPrice": 260,
+      "xp": 26,
+      "waterUse": 1.2
+    },
+    "longan": {
+      "name": "龍眼",
+      "saplingCost": 1300,
+      "firstFruitSeconds": 86400,
+      "fruitIntervalSeconds": 28800,
+      "harvestPrice": 320,
+      "xp": 32,
+      "waterUse": 1.0
+    },
+    "pear": {
+      "name": "梨子",
+      "saplingCost": 1400,
+      "firstFruitSeconds": 86400,
+      "fruitIntervalSeconds": 28800,
+      "harvestPrice": 340,
+      "xp": 34,
+      "waterUse": 1.0
+    },
+    "coconut": {
+      "name": "椰子",
+      "saplingCost": 1800,
+      "firstFruitSeconds": 108000,
+      "fruitIntervalSeconds": 36000,
+      "harvestPrice": 450,
+      "xp": 45,
+      "waterUse": 0.6
+    },
+    "cherry": {
+      "name": "櫻桃",
+      "saplingCost": 2200,
+      "firstFruitSeconds": 108000,
+      "fruitIntervalSeconds": 36000,
+      "harvestPrice": 560,
+      "xp": 56,
+      "waterUse": 1.0,
+      "bloomSeason": "spring"
+    },
+    "avocado": {
+      "name": "酪梨",
+      "saplingCost": 2800,
+      "firstFruitSeconds": 129600,
+      "fruitIntervalSeconds": 43200,
+      "harvestPrice": 720,
+      "xp": 72,
+      "waterUse": 1.5
+    },
+    "grape": {
+      "name": "葡萄",
+      "saplingCost": 3200,
+      "firstFruitSeconds": 129600,
+      "fruitIntervalSeconds": 43200,
+      "harvestPrice": 820,
+      "xp": 82,
+      "waterUse": 1.2,
+      "look": "trellis"
     }
   },
   "animals": {
@@ -636,6 +730,54 @@ window.GAME_CONFIG = {
         "range": 2
       },
       "sellable": true
+    },
+    "bamboo": {
+      "name": "竹叢",
+      "source": "shop",
+      "cost": 40,
+      "sellable": true
+    },
+    "birch": {
+      "name": "白樺",
+      "source": "shop",
+      "cost": 40,
+      "sellable": true
+    },
+    "sakura": {
+      "name": "櫻花樹",
+      "source": "shop",
+      "cost": 60,
+      "sellable": true
+    },
+    "palm": {
+      "name": "棕櫚樹",
+      "source": "shop",
+      "cost": 50,
+      "sellable": true
+    },
+    "willow": {
+      "name": "垂柳",
+      "source": "shop",
+      "cost": 50,
+      "sellable": true
+    },
+    "ginkgo": {
+      "name": "銀杏",
+      "source": "shop",
+      "cost": 60,
+      "sellable": true
+    },
+    "oak": {
+      "name": "橡樹",
+      "source": "shop",
+      "cost": 70,
+      "sellable": true
+    },
+    "banyan": {
+      "name": "榕樹",
+      "source": "shop",
+      "cost": 80,
+      "sellable": true
     }
   },
   "expansion": {
@@ -731,7 +873,8 @@ window.GAME_CONFIG = {
         "fence",
         "hand_crank",
         "road_gravel",
-        "road_dirt"
+        "road_dirt",
+        "bamboo"
       ],
       "animalCap": 3,
       "fishPoolTileCap": 0,
@@ -750,7 +893,9 @@ window.GAME_CONFIG = {
         "flowers",
         "corn_cake_machine",
         "doll_sun",
-        "fert_chem"
+        "fert_chem",
+        "birch",
+        "sakura"
       ],
       "animalCap": 4,
       "fishPoolTileCap": 0,
@@ -778,7 +923,10 @@ window.GAME_CONFIG = {
         "care",
         "pesticide",
         "compost_bin",
-        "organic_fert"
+        "organic_fert",
+        "orange",
+        "palm",
+        "willow"
       ],
       "animalCap": 5,
       "fishPoolTileCap": 0,
@@ -807,7 +955,10 @@ window.GAME_CONFIG = {
         "rapeseed",
         "milk_vetch",
         "well",
-        "solar_panel"
+        "solar_panel",
+        "peach",
+        "ginkgo",
+        "sprinkler_s"
       ],
       "animalCap": 6,
       "fishPoolTileCap": 4,
@@ -835,7 +986,10 @@ window.GAME_CONFIG = {
         "wildflower",
         "buckwheat",
         "wellbot",
-        "doll_snow"
+        "doll_snow",
+        "persimmon",
+        "lychee",
+        "oak"
       ],
       "animalCap": 8,
       "fishPoolTileCap": 4,
@@ -862,7 +1016,10 @@ window.GAME_CONFIG = {
         "road_boardwalk",
         "greenhouse",
         "lavender",
-        "honeybot"
+        "honeybot",
+        "longan",
+        "pear",
+        "banyan"
       ],
       "animalCap": 9,
       "fishPoolTileCap": 8,
@@ -881,7 +1038,9 @@ window.GAME_CONFIG = {
         "feeder_2",
         "block:4",
         "battery_l",
-        "rose"
+        "rose",
+        "coconut",
+        "sprinkler_l"
       ],
       "animalCap": 10,
       "fishPoolTileCap": 8,
@@ -898,7 +1057,8 @@ window.GAME_CONFIG = {
         "seabass",
         "water_tower",
         "block:5",
-        "block:6"
+        "block:6",
+        "cherry"
       ],
       "animalCap": 12,
       "fishPoolTileCap": 12,
@@ -914,7 +1074,8 @@ window.GAME_CONFIG = {
         "windmill",
         "drone_3",
         "block:7",
-        "block:8"
+        "block:8",
+        "avocado"
       ],
       "animalCap": 14,
       "fishPoolTileCap": 12,
@@ -931,7 +1092,8 @@ window.GAME_CONFIG = {
         "block:9",
         "block:10",
         "block:11",
-        "block:12"
+        "block:12",
+        "grape"
       ],
       "animalCap": 16,
       "fishPoolTileCap": 16,
@@ -1235,6 +1397,116 @@ window.GAME_CONFIG = {
       "name": "玫瑰花蜜",
       "category": "honey",
       "sellPrice": 120
+    },
+    "orange": {
+      "name": "柳丁",
+      "category": "fruit",
+      "sellPrice": 85
+    },
+    "org_orange": {
+      "name": "有機柳丁",
+      "category": "fruit",
+      "sellPrice": 119,
+      "organicOf": "orange"
+    },
+    "peach": {
+      "name": "桃子",
+      "category": "fruit",
+      "sellPrice": 150
+    },
+    "org_peach": {
+      "name": "有機桃子",
+      "category": "fruit",
+      "sellPrice": 210,
+      "organicOf": "peach"
+    },
+    "persimmon": {
+      "name": "柿子",
+      "category": "fruit",
+      "sellPrice": 220
+    },
+    "org_persimmon": {
+      "name": "有機柿子",
+      "category": "fruit",
+      "sellPrice": 308,
+      "organicOf": "persimmon"
+    },
+    "lychee": {
+      "name": "荔枝",
+      "category": "fruit",
+      "sellPrice": 260
+    },
+    "org_lychee": {
+      "name": "有機荔枝",
+      "category": "fruit",
+      "sellPrice": 364,
+      "organicOf": "lychee"
+    },
+    "longan": {
+      "name": "龍眼",
+      "category": "fruit",
+      "sellPrice": 320
+    },
+    "org_longan": {
+      "name": "有機龍眼",
+      "category": "fruit",
+      "sellPrice": 448,
+      "organicOf": "longan"
+    },
+    "pear": {
+      "name": "梨子",
+      "category": "fruit",
+      "sellPrice": 340
+    },
+    "org_pear": {
+      "name": "有機梨子",
+      "category": "fruit",
+      "sellPrice": 476,
+      "organicOf": "pear"
+    },
+    "coconut": {
+      "name": "椰子",
+      "category": "fruit",
+      "sellPrice": 450
+    },
+    "org_coconut": {
+      "name": "有機椰子",
+      "category": "fruit",
+      "sellPrice": 630,
+      "organicOf": "coconut"
+    },
+    "cherry": {
+      "name": "櫻桃",
+      "category": "fruit",
+      "sellPrice": 560
+    },
+    "org_cherry": {
+      "name": "有機櫻桃",
+      "category": "fruit",
+      "sellPrice": 784,
+      "organicOf": "cherry"
+    },
+    "avocado": {
+      "name": "酪梨",
+      "category": "fruit",
+      "sellPrice": 720
+    },
+    "org_avocado": {
+      "name": "有機酪梨",
+      "category": "fruit",
+      "sellPrice": 1008,
+      "organicOf": "avocado"
+    },
+    "grape": {
+      "name": "葡萄",
+      "category": "fruit",
+      "sellPrice": 820
+    },
+    "org_grape": {
+      "name": "有機葡萄",
+      "category": "fruit",
+      "sellPrice": 1148,
+      "organicOf": "grape"
     }
   },
   "feedShop": {
@@ -1254,7 +1526,12 @@ window.GAME_CONFIG = {
       },
       "seconds": 600,
       "batchesAtOnce": 1,
-      "collect": "manual"
+      "collect": "manual",
+      "outputShow": {
+        "plate": true,
+        "maxStacks": 3,
+        "oneStackPerBatch": true
+      }
     },
     "fish_feed_machine": {
       "name": "魚飼料機",
@@ -1754,6 +2031,30 @@ window.GAME_CONFIG = {
       "rainSnowMult": 0.1,
       "nightMult": 0,
       "snowCoveredStops": true
+    },
+    "sprinkler_s": {
+      "name": "小型自動灑水器",
+      "kind": "sprinkler",
+      "buildCost": 800,
+      "range": 1,
+      "kwhPerTile": 0.005,
+      "waterLikeManualFull": true,
+      "actions": [
+        "auto",
+        "off"
+      ]
+    },
+    "sprinkler_l": {
+      "name": "大型自動灑水器",
+      "kind": "sprinkler",
+      "buildCost": 2000,
+      "range": 2,
+      "kwhPerTile": 0.005,
+      "waterLikeManualFull": true,
+      "actions": [
+        "auto",
+        "off"
+      ]
     }
   },
   "power": {
@@ -2244,11 +2545,8 @@ window.GAME_CONFIG = {
   "easterEggs": {
     "rooster": {
       "enabled": true,
-      "needsChicken": [
-        "egg_hen",
-        "broiler"
-      ],
-      "window": "sunrise..sunrise+60m",
+      "needsChicken": false,
+      "window": "06:00..09:00 local",
       "oncePerDay": true,
       "needsHouseOnMap": true,
       "flyInSeconds": 3,
@@ -2257,7 +2555,10 @@ window.GAME_CONFIG = {
       "bubble": "喔喔喔～",
       "sfx": "rooster",
       "clickable": false,
-      "saved": false
+      "saved": false,
+      "localStart": "06:00",
+      "localEnd": "09:00",
+      "trigger": "enter farm or open game inside the window"
     }
   },
   "audio": {
@@ -3293,7 +3594,15 @@ window.GAME_CONFIG = {
       },
       "manualRefill": "hand tool tap when empty, or panel button; free",
       "emptySkipsCleaning": true,
-      "lowWarn": 0.2
+      "lowWarn": 0.2,
+      "dirtyTank": {
+        "cleanShare": 0.6666666666666666,
+        "dirtyShare": 0.3333333333333333,
+        "dirtyFromClean": true,
+        "refillDrainsDirty": true,
+        "perSlotTank": true
+      },
+      "gaugeBar": false
     },
     "drawDepthSorted": true,
     "noTeleport": true
@@ -3358,5 +3667,55 @@ window.GAME_CONFIG = {
       "droneOwnBatteryWhenNoFarmPower": true,
       "farmPowerFirst": true
     }
+  },
+  "decoSeasons": {
+    "note": "decoration trees follow the farm's local season (spring/summer/autumn/winter); missing seasons use the summer look",
+    "sakura": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "ginkgo": [
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "oak": [
+      "summer",
+      "autumn"
+    ],
+    "birch": [
+      "summer",
+      "autumn"
+    ],
+    "maple": [
+      "summer",
+      "autumn",
+      "winter"
+    ]
+  },
+  "storageLight": {
+    "buildings": [
+      "shed",
+      "barn"
+    ],
+    "kwhPerHourEach": 0.02,
+    "onlyWhenDark": true,
+    "needsFarmPower": true,
+    "flicker": false
+  },
+  "eggNest": {
+    "animals": [
+      "egg_hen"
+    ],
+    "onGroundWhereLaid": true,
+    "tapEggOrHen": true
+  },
+  "soilLook": {
+    "raisedPx": 5,
+    "ridges": 3,
+    "ridgeDir": "+x",
+    "joinNeighbours": true
   }
 };
