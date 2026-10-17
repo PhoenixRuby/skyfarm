@@ -2,7 +2,14 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#7fd0f5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="浮島農場">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+
 <title>浮島農場 SkyFarm</title>
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
@@ -638,6 +645,24 @@ body.ov-open #trayTabs,body.ov-open #tidySub{visibility:hidden!important;pointer
 .clog .ct,.clog .cb{opacity:.7;font-variant-numeric:tabular-nums}.clog .cb{text-align:right}
 .clog .cw{min-width:0;overflow-wrap:anywhere}
 .clog .cin{color:#2f8a3a;font-weight:700}.clog .cout{color:#c0392b;font-weight:700}
+/* v2.14: 選擇農場 — banner image is the header; toggle beside the list heading; empty state centred */
+.sheet.pg.pickpg header{min-height:150px;background:linear-gradient(90deg,rgba(236,246,255,.97) 0%,rgba(236,246,255,.88) 34%,rgba(236,246,255,0) 62%),var(--pickbg,none) right center/cover no-repeat}
+body.night .sheet.pg.pickpg header{background:linear-gradient(90deg,rgba(16,28,24,.94) 0%,rgba(16,28,24,.8) 36%,rgba(16,28,24,0) 64%),var(--pickbg,none) right center/cover no-repeat}
+body.night .sheet.pg.pickpg header h2,body.night .sheet.pg.pickpg header .pgsub{color:#fff}
+.sheet.pg.pickpg header{align-content:center;row-gap:6px}.sheet.pg.pickpg header .pgic{display:none}.sheet.pg.pickpg header .close{align-self:start}
+.sheet.pg.pickpg header .pgsub{max-width:46%}
+body.m .sheet.pg.pickpg header{min-height:110px;background:linear-gradient(90deg,rgba(236,246,255,.96) 0%,rgba(236,246,255,.86) 52%,rgba(236,246,255,0) 86%),var(--pickbg,none) 70% center/cover no-repeat}
+body.m.night .sheet.pg.pickpg header{background:linear-gradient(90deg,rgba(16,28,24,.94) 0%,rgba(16,28,24,.8) 52%,rgba(16,28,24,0) 86%),var(--pickbg,none) 70% center/cover no-repeat}
+body.m .sheet.pg.pickpg header .pgsub{max-width:62%}
+.pickhd{display:flex;align-items:center;gap:8px}.pickhd .viewtog{position:static;margin-left:auto;font-size:13px}
+.emptypick .pickempty{text-align:center;width:100%;max-width:none;margin-left:0;margin-right:0}
+.emptypick .slots{display:flex;justify-content:center}
+.emptypick .slot.newcard{width:min(620px,100%);display:grid;grid-template-columns:auto 1fr;column-gap:20px;align-items:center;text-align:left;padding:16px 20px}
+.emptypick .slot.newcard .nfpic{grid-row:1/4;width:200px}.emptypick .slot.newcard h4,.emptypick .slot.newcard .small{margin:0}
+body.m .emptypick .slot.newcard{display:flex;flex-direction:column;text-align:center}body.m .emptypick .slot.newcard .nfpic{width:150px}
+/* v2.14.1: Google button follows Google's own light / dark styles so its text is readable day and night */
+.gbtn,body .sheet .gbtn{background:#fff;color:#1f1f1f;border:1px solid #747775}
+body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border-color:#8e918f}
 </style>
 </head>
 <body>
@@ -8921,6 +8946,869 @@ function openCoinLog(){ let shown = CLOG.pageSize || 100;
 
 window.__farm212 = { openLevel, openCoinLog, logCoin, watchCoins, coinWhy, syncCover, cancelPadDrag,
   tileScreen: (x, y) => { const c = center(x, y); return worldToScreen(c.cx, c.cy); } };
+
+/* ===== 36. v2.13: hive shows honey progress (next jar %, time left, expected jars) + a progress bar under its
+   bubble; an animal's home steps aside when you build / plow / plant / place / move something onto it ===== */
+
+/* ---------- hive progress ---------- */
+// progress of the jar being made (0..1) and jars per hour right now (flowers present, or wild honey only)
+function hiveRate(M, k, T){
+  const fl = hiveFlowers(M, k), mult = isBumbleHive(T) ? (BUM.honeyMult || 1.5) : 1, accPerH = (T.frames || 0) * BEE.jarsPerFramePerHour * mult;
+  const wild = !fl.length, nf = BEE.noFlowerMult || .1;
+  return { fl, wild, accPerH, jph: wild ? accPerH * nf : accPerH, prog: Math.min(1, wild ? (T.wildAcc || 0) + (T.acc || 0) * nf : (T.acc || 0)) }; }
+function hivePause(now){ return isNightAt(now) ? '晚上' : farmRain(now) ? '下雨' : farmSnow(now) ? '下雪' : ''; }
+{ const _dd36 = drawDevice; drawDevice = function(T, k, cx, cy, t){ const r = _dd36(T, k, cx, cy, t);
+  if (!isHive(T) || !T.queen || !S) return r;
+  const st = honeyStored(T), p = st >= BEE.storeMax ? 1 : hiveRate(curMap(), k, T).prog;
+  // same box as bubble(): beehive always has one; bumble hive only when it holds honey (else draw the bar alone)
+  const txt = isBumbleHive(T) ? (st ? `${st} 罐` : '') : `${T.frames}框 · 蜜 ${st}`;
+  ctx.save(); ctx.font = '700 9px ' + getComputedStyle(document.documentElement).getPropertyValue('--font-body');
+  const w = txt ? 13 + ctx.measureText(txt).width + 8 : 30, x0 = cx - w / 2 + 3, y = cy - 50 - (txt ? 3 : 1), bw = w - 6;
+  ctx.fillStyle = 'rgba(30,58,42,.18)'; ctx.beginPath(); ctx.roundRect(x0, y, bw, 2, 1); ctx.fill();
+  if (p > 0){ ctx.fillStyle = '#e0a21b'; ctx.beginPath(); ctx.roundRect(x0, y, Math.max(2, bw * p), 2, 1); ctx.fill(); }
+  ctx.restore(); return r; }; }
+
+{ const _oh36 = openHive; openHive = function(M, k, T){ const r = _oh36(M, k, T); const el = $('modalBody'), kv = el && el.querySelector('.kv'); if (!kv || !T.queen) return r;
+  // v2.13: no per-bee average
+  kv.querySelectorAll('span').forEach(s => { if (/，平均每隻/.test(s.textContent)) s.textContent = s.textContent.replace(/，平均每隻.*$/, ''); });
+  const now = Date.now(), st = honeyStored(T), R = hiveRate(M, k, T), pct = Math.floor(R.prog * 100), pause = hivePause(now);
+  const left = R.jph > 0 ? fmtDur((1 - R.prog) / R.jph * 3600) : '';
+  let next;
+  if (st >= BEE.storeMax) next = `存蜜滿了，取出後繼續`;
+  else if (T.starving) next = `${pct}%，超過 3 天沒花可採，不產蜜`;
+  else if (pause) next = `${pct}%，現在不飛（${pause}），恢復採蜜後約還要 ${left}`;
+  else next = `${pct}%，約還要 ${left}${R.wild ? '（野蜂蜜）' : ''}`;
+  let plan;
+  if (R.wild) plan = '沒有花，只產少量野蜂蜜';
+  else { const nectar = R.fl.reduce((a, f) => a + f[2].flower.nectar, 0), jars = Math.min(nectar, BEE.storeMax - st);
+    plan = jars > 0 ? `照現在的花還能採約 ${fmtN(jars)} 罐，約 ${fmtDur(Math.max(0, jars - R.prog) / R.jph * 3600)}採完（不算晚上和雨天）` : '存蜜滿了'; }
+  const spans = [...kv.children], i = spans.findIndex(s => s.textContent === '產蜜');
+  const html = `<span>下一罐</span><span>${next}</span><span>預計</span><span>${plan}</span>`;
+  if (i >= 0 && spans[i + 1]) spans[i + 1].insertAdjacentHTML('afterend', html); else kv.insertAdjacentHTML('beforeend', html);
+  return r; }; }
+
+/* ---------- an animal's home steps aside ---------- */
+// cells the action at (x, y) would take; null = this tool never needs the animal's tile
+function placeCells(tool, x, y){
+  let id = null;
+  if (tool === 'build') id = S.sel.build; else if (tool === 'deco'){ const sd = String(S.sel.deco); if (sd.startsWith('bld:')) id = sd.slice(4); }
+  else if (!['plow', 'seed', 'fish', 'insect'].includes(tool)) return null;
+  const [w, h] = id && BLD[id] ? bldSize(id) : [1, 1], out = [];
+  for (let dy = 0; dy < h; dy++) for (let dx = 0; dx < w; dx++) out.push(tkey(x + dx, y + dy)); return out; }
+// move every animal living in `cells` to the nearest free grass it can walk to; returns the moves, or false when one can't
+function stepAside(M, mi, cells, keep){
+  const busy = new Set(cells), moves = [], reg = regionsFor(mi);
+  for (const k of cells){ const T = M.tiles[k]; if (!T || T.t !== 'animal' || T === keep) continue;
+    const home = reg.get(k), [hx, hy] = pkey(k); let best = null, bd = Infinity;
+    for (const [x, y] of mapTiles(M)){ const n = tkey(x, y); if (busy.has(n) || M.tiles[n] || (M.glass && M.glass[n]) || reg.get(n) !== home) continue;
+      const d = Math.hypot(x - hx, y - hy); if (d < bd){ bd = d; best = n; } }
+    if (!best){ toast(`這格是${nameOf(T.id)}的家，牠的活動範圍裡沒有空草地可以搬`); moves.forEach(m => homeBack(M, mi, m)); return false; }
+    M.tiles[best] = T; delete M.tiles[k]; busy.add(best); agentMove(mi, k, best); moves.push({ from: k, to: best, T }); }
+  if (moves.length) RT.regionsAt = 0;
+  return moves; }
+function agentMove(mi, a, b){ const A = RT.agents[`${mi}:${a}`]; if (A){ RT.agents[`${mi}:${b}`] = A; delete RT.agents[`${mi}:${a}`]; } }
+function homeBack(M, mi, m){ if (M.tiles[m.from] || M.tiles[m.to] !== m.T) return; M.tiles[m.from] = m.T; delete M.tiles[m.to]; agentMove(mi, m.to, m.from); RT.regionsAt = 0; }
+// nothing got built on the old home (no coins, wrong ground…): the animal goes back home
+function homeSettle(M, mi, moves){ let moved = false; for (const m of moves){ if (M.tiles[m.from]) moved = true; else homeBack(M, mi, m); }
+  if (moved){ const T = moves[0].T, n = moves.length; toast(n > 1 ? `${n} 隻動物的家搬到旁邊的草地了` : `${nameOf(T.id)}的家搬到旁邊的草地了`, false, 2200); afterAction(); } }
+
+{ const _act37 = act; act = function(x, y){
+  if (!S || UI.expand || RT.mv) return _act37(x, y);
+  const M = curMap(), mi = S.cur, cells = placeCells(S.sel.tool, x, y); if (!cells || !inMap(M, x, y)) return _act37(x, y);
+  if (!cells.some(k => M.tiles[k] && M.tiles[k].t === 'animal')) return _act37(x, y);
+  const moves = stepAside(M, mi, cells, null); if (!moves) return;
+  try { return _act37(x, y); } finally { homeSettle(M, mi, moves); } }; }
+{ const _dm36 = dropMove; dropMove = function(){ const m = RT.mv; if (!m) return _dm36();
+  const M = S.maps[m.mi], own = new Set(m.o.cells), cells = moveTargets().map(p => p[1]).filter(k => !own.has(k));
+  if (!cells.some(k => M.tiles[k] && M.tiles[k].t === 'animal')) return _dm36();
+  const keep = m.o.kind === 'animal' ? M.tiles[m.o.cells[0]] : null, moves = stepAside(M, m.mi, cells, keep);
+  if (!moves){ RT.mv = null; updateHint(); return; }
+  try { return _dm36(); } finally { homeSettle(M, m.mi, moves); } }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns36 = normalizeState; normalizeState = function(d){ const r = _ns36(d); if (r && !r.v213) r.v213 = 1; return r; }; }
+
+window.__farm213 = { hiveRate, placeCells, stepAside };
+
+/* ===== 37. v2.14: 選擇農場 layout: the banner image becomes the page header (title + subtitle over a fade on
+   the left), the card / list toggle sits beside the farm-list heading (2+ farms only), and with no farms yet the
+   "new farm" card is centred and wide ===== */
+{ const _om37 = openModal; openModal = function(title, ...a){ const sh = document.querySelector('#modal .sheet'), pick = title === '選擇農場';
+  if (sh){ sh.classList.toggle('pickpg', pick); if (pick) sh.style.setProperty('--pickbg', `url("${PIMG('banner_farm')}")`); }
+  return _om37(title, ...a); }; }
+{ const _lp37 = layoutPicker; layoutPicker = function(el){ const r = _lp37(el);
+  const ban = el.querySelector('.banner'), tg = ban && ban.querySelector('.viewtog'); if (ban) ban.remove();
+  const farms = el.querySelectorAll('.slot[data-id]').length, list = [...el.querySelectorAll('.slots')].find(g => g.querySelector('.slot[data-id]'));
+  const hd = list && list.previousElementSibling && list.previousElementSibling.nodeName === 'H3' ? list.previousElementSibling : null;
+  if (tg && hd && farms >= 2){ hd.classList.add('pickhd'); hd.appendChild(tg); }
+  else el.classList.remove('listview');   // one farm or none: always cards (nothing to switch)
+  el.classList.toggle('emptypick', !farms);
+  if (!farms){ const p = [...el.querySelectorAll('p')].find(n => n.querySelector('b') && !n.closest('.slot')); if (p) p.classList.add('pickempty'); }
+  return r; }; }
+
+/* ===== 38. v2.16 (a): 「收成」 only looks (never plants / places), flower cards get an info page + honey lines,
+   「設施」 tab first, levels to 50 with a level-up cutscene (old saves catch up), coin-bought expansions (等級 · 擴充),
+   special decorations every 5 levels (gold farmhouse = skin) ===== */
+const PETC = CFG.pets || { dogs: {}, cats: {}, dens: {}, food: {} }, PREDC = CFG.predators || {}, RATC = CFG.rats || {}, BOOSTC = CFG.boost || { kinds: {} }, ACHC = CFG.achievements || { list: [], tierRewards: {} };
+const BK38 = BOOSTC.kinds || {};
+const css38 = document.createElement('style');
+css38.textContent = `
+#lvup{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;background:rgba(10,20,30,.58);animation:lvIn .25s ease-out}
+#lvup canvas.lvconf{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#lvup .lvbox{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:min(92vw,520px);padding:0 12px}
+#lvup .lvmedal{position:relative;width:180px;height:180px;animation:lvPop .55s cubic-bezier(.2,1.6,.4,1)}
+#lvup .lvmedal::before{content:'';position:absolute;inset:-60px;background:repeating-conic-gradient(rgba(255,236,140,.55) 0 10deg,transparent 10deg 24deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:lvSpin 9s linear infinite}
+#lvup.still .lvmedal::before{animation:none}
+#lvup .lvmedal img{position:relative;width:100%;height:100%}
+#lvup .lvmedal b{position:absolute;left:0;right:0;top:47%;transform:translateY(-25%);text-align:center;font-size:42px;font-weight:900;color:#7a4b00;text-shadow:0 2px 0 #fff3b0}
+#lvup h2{margin:0;color:#fff;font-size:28px;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+#lvup .lvcard{background:rgba(255,255,255,.96);border-radius:18px;padding:12px 16px;width:100%;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+#lvup .lvcard h4{margin:0 0 6px;color:#1e3a2a}
+#lvup .lvitems{display:flex;flex-wrap:wrap;gap:6px 10px}
+#lvup .lvitems span{display:flex;flex-direction:column;align-items:center;width:64px;font-size:12px;color:#33402f;text-align:center}
+#lvup .lvitems canvas{width:44px;height:44px}
+#lvup .lvfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;flex-wrap:wrap}
+#lvup .lvcoin{font-weight:800;color:#b8860b;font-size:18px}
+#lvup .lvdeco{font-size:13px;color:#5a4a2a;width:100%}
+#lvup .lvskip{position:absolute;bottom:-28px;left:0;right:0;text-align:center;color:#fff;font-size:12px;opacity:.8}
+@keyframes lvIn{from{opacity:0}to{opacity:1}} @keyframes lvPop{from{transform:scale(.2)}to{transform:scale(1)}} @keyframes lvSpin{to{transform:rotate(360deg)}}
+.bst td .btn{white-space:nowrap}
+.flnote{font-size:13px;color:#5a5a4a}
+`;
+document.head.appendChild(css38);
+
+/* ---------- coin-bought expansions: S.boost = { produce, water, animal, pool, greenhouse, pet, trash } ---------- */
+const boostN = k => (S && S.boost && S.boost[k]) || 0;
+function boostPrice(k, n = boostN(k)){ const B = BK38[k], r = BOOSTC.roundTo || 10; return Math.round(B.price * Math.pow(B.mult, n) / r) * r; }
+function boostOpen(k){ const B = BK38[k]; return !B.needs || isUnlocked(B.needs); }
+const BOOST_FIELD38 = { produceCapacity: 'produce', rainStorage: 'water', animalCap: 'animal', fishPoolTileCap: 'pool' };
+RT.noBoost = false;
+for (const L of LV) for (const [f, bk] of Object.entries(BOOST_FIELD38)){ const v = L[f]; if (v == null || !BK38[bk]) continue;
+  Object.defineProperty(L, f, { get(){ return v + (RT.noBoost || !S ? 0 : boostN(bk) * BK38[bk].add); }, set(){}, enumerable: true, configurable: true }); }
+{ const _gc38 = glassCap; glassCap = function(){ const c = _gc38(); return c ? c + boostN('greenhouse') * ((BK38.greenhouse || {}).add || 0) : c; }; }
+if (TRB && TRB.capacity && BK38.trash){ const base = Object.assign({}, TRB.capacity), add = BK38.trash.add;
+  for (const f of Object.keys(base)) Object.defineProperty(TRB.capacity, f, { get(){ return base[f] + boostN('trash') * (add[f] || 0); }, set(){}, enumerable: true, configurable: true }); }
+const petCap = () => (PETC.capBase || 10) + boostN('pet') * ((BK38.pet || {}).add || 1);
+function buyBoost(k){
+  const B = BK38[k]; if (!B) return false; const n = boostN(k);
+  if (!boostOpen(k)){ toast(`${B.name}要先解鎖${nameOf(B.needs) || ''}`); return false; }
+  if (n >= B.max){ toast(`${B.name}已經擴充到最多 ${B.max} 次`); return false; }
+  const p = boostPrice(k); if (!spend(p)) return false;
+  S.boost = S.boost || {}; S.boost[k] = n + 1; RT.decoVer++;
+  sfx('coin'); toast(`${B.name}擴充了（第 ${n + 1} 次）`, true); afterAction(); return true; }
+function boostAddText(k){ const B = BK38[k]; if (typeof B.add === 'object') return `每座一般、回收 +${B.add.general} 袋、污水 +${B.add.sewageDrops} 滴`; return `+${fmtN(B.add)} ${B.unit}`; }
+function boostNow(k){ const lv = lvInfo(S.player.level);
+  return { produce: invCap(), water: lv.rainStorage, animal: lv.animalCap, pool: lv.fishPoolTileCap, greenhouse: glassCap(), pet: petCap(),
+    trash: `${TRB.capacity.general}／${TRB.capacity.recycle} 袋、${fmtN(TRB.capacity.sewageDrops)} 滴` }[k]; }
+function renderBoost(el){
+  el.innerHTML = `<p class="small">等級給的額度可以先用金幣加買，每買一次下一次更貴。加買的額度永久有效，和等級額度相加。</p>` +
+    tbl([H('額度'), H('每次加'), H('目前'), H('已買'), H('下一次', 1), H('')], Object.keys(BK38).map(k => { const B = BK38[k], n = boostN(k), full = n >= B.max, open = boostOpen(k);
+      return { cls: open ? '' : 'locked', cells: [B.name, boostAddText(k), typeof boostNow(k) === 'number' ? fmtN(boostNow(k)) : boostNow(k), `${n} / ${B.max}`, full ? '—' : fmtN(boostPrice(k)),
+        full ? '<span class="pill ok">已滿</span>' : open ? `<button class="btn sm" data-boost="${k}">擴充</button>` : `<span class="pill lock">Lv ${UNLOCK[B.needs] || '?'}</span>`] }; }));
+  el.querySelector('.tw').classList.add('bst');
+  el.onclick = e => { const b = e.target.closest('button[data-boost]'); if (!b) return; if (buyBoost(b.dataset.boost)) renderBoost(el); }; }
+function openBoost(){ RT.lvTab = 'boost'; openLevel(); }
+
+/* ---------- 等級 panel gets an 擴充 tab; 圖鑑 gets 花苗 / 寵物 tabs ---------- */
+BOOK_LIST.push('flowers', 'pets');
+{ const _om38 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '等級' && !tabs && typeof render === 'function'){ const r0 = render; tabs = [['info', '等級'], ['boost', '擴充']];
+    render = (k, el) => { if (k === 'boost') renderBoost(el); else r0(null, el); }; initial = RT.lvTab || initial; RT.lvTab = null; }
+  if (title === '圖鑑' && Array.isArray(tabs) && typeof render === 'function'){ const r0 = render; tabs = tabs.slice();
+    if (!tabs.some(t => t[0] === 'flowers')){ const i = tabs.findIndex(t => t[0] === 'trees'); tabs.splice(i + 1, 0, ['flowers', '花苗']); }
+    if (!tabs.some(t => t[0] === 'pets')){ const i = tabs.findIndex(t => t[0] === 'animals'); tabs.splice(i + 1, 0, ['pets', '寵物']); }
+    render = (k, el) => { if (k === 'flowers') bookFlowers(el); else if (k === 'pets'){ if (typeof bookPets === 'function') bookPets(el); }
+      else if (k === 'levels'){ RT.noBoost = true; try { r0(k, el); } finally { RT.noBoost = false; } }
+      else r0(k, el); }; }
+  return _om38(title, tabs, render, initial); }; }
+{ const _ob38 = openBook; openBook = function(tab, focusId){ RT.bookFocus = focusId || null; return _ob38(tab, focusId); }; }
+const flLife = D => D.nectar * D.blooms, flPrice = D => (CFG.items[D.honey] || {}).sellPrice || 0;
+const flAfter = D => D.blooms > 1 ? `等再開，第 ${D.blooms} 次採完花謝` : '花謝，空田重種';
+function bookFlowers(el){
+  const icon = id => { const [n, f] = itemSprite('flower', id); return n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : ''; };
+  el.innerHTML = `<p>花種在開墾過的田，要澆水；花不能收成、不能賣，專門給蜂箱 9×9 範圍內的蜜蜂採。蜜蜂採一份花蜜＝蜂箱多 1 罐這種花的蜂蜜，用「收成」點蜂箱或採蜜機器人收進倉庫。一次性的花採完就謝，田變回空田（仍是開墾過的），只能重種花苗；多次的花採完一輪進「等再開」，次數用完才謝。乾的時候長得慢；開花後乾超過 1 小時，花蜜只剩一半。花不長蟲、不分有機。不想要的花用「剷除」，田變空田，不退費。</p>` +
+    tbl([H(''), H('花苗'), H('解鎖'), H('花苗價', 1), H('開花'), H('每次花蜜', 1), H('可採次數', 1), H('再開花'), H('一生產蜜', 1), H('蜂蜜'), H('蜜價', 1), H('一生蜜值', 1), H('採完後')],
+      Object.entries(FL).map(([id, D]) => ({ cls: (isUnlocked(id) ? '' : 'locked') + (id === RT.bookFocus ? ' cur' : ''),
+        cells: [icon(id), D.name, lockCell(id), D.seedCost, fmtDur(D.growSeconds), D.nectar, D.blooms, D.regrowSeconds ? fmtDur(D.regrowSeconds) : '—', flLife(D), itemName(D.honey), flPrice(D), fmtN(flLife(D) * flPrice(D)), flAfter(D)] }))); paintIcons(el); }
+// flower cards: honey lines + 「i」
+{ const _ut38 = UIbuildTray; UIbuildTray = function(){ _ut38(); if (!S || S.sel.tool !== 'seed') return;
+  $('tray').querySelectorAll('.item').forEach(el => { const D = FL[el.dataset.id]; if (!D) return; const sm = el.querySelectorAll('small');
+    if (sm[1]) sm[1].textContent = D.blooms > 1 ? `${D.nectar} 罐 × ${D.blooms} 次` : `${D.nectar} 罐蜜 · 採 1 次`;
+    if (!el.querySelector('.info')){ const i = document.createElement('span'); i.className = 'info'; i.textContent = 'i'; i.setAttribute('role', 'button'); i.title = '詳細';
+      i.addEventListener('click', ev => { ev.stopPropagation(); openBook('flowers', el.dataset.id); }); el.appendChild(i); } }); }; }
+{ const ts = TOOLS.find(t => t.id === 'seed'), _hs38 = ts.hint; ts.hint = () => { const D = FL[S.sel.seed];
+  if (D && !(S.sel.seedTab === 'facility')) return `點空田種${D.name} · ${D.seedCost} 金幣 · ${fmtDur(D.growSeconds)}開花 · 可被採 ${flLife(D)} 罐${itemName(D.honey)} · ${D.blooms > 1 ? `採完一輪等再開，共 ${D.blooms} 次` : '採完花謝、田變空田，要再種花苗'}`;
+  return _hs38(); }; }
+
+/* ---------- 「收成」 = look only ---------- */
+{ const _act38 = act; act = function(x, y){
+  if (!S || UI.expand) return _act38(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act38(x, y);
+  const k = tkey(x, y), T = M.tiles[k];
+  if (S.sel.tool === 'hand' && !RT.mv){
+    if (!T){ if (!(M.glass && M.glass[k])){ toast('草地 · 可以開墾、種果樹、放動物或設施'); return; } toast('溫室裡的空地 · 可以開墾後種東西'); return; }
+    if (T.t === 'soil' && !T.crop && !T.flower){ toast(`空田 · 濕度 ${Math.max(0, Math.ceil((T.m || 0) - 1e-6))}/${R.moistMaxLevel} · 要種東西請先到「播種」選種子`); return; }
+    if (T.t === 'soil' && T.crop && !T.crop.wither && !T.crop.pest && T.crop.prog < CFG.crops[T.crop.id].growSeconds){
+      toast(`${CFG.crops[T.crop.id].name} · 濕度 ${Math.max(0, Math.ceil((T.m || 0) - 1e-6))}/${R.moistMaxLevel} · 還要約 ${fmtDur(cropLeft(T))}`); return; }
+  }
+  return _act38(x, y); }; }
+
+/* ---------- special decorations ---------- */
+Object.assign(DECO_SPR, { fountain: 'deco_fountain_idle', weather_rooster: 'deco_weather_rooster_idle', hot_air_balloon: 'deco_balloon_idle', lighthouse: 'deco_lighthouse_idle', observatory: 'deco_observatory_idle',
+  dog_house: '__den', cat_tree: '__den', dog_house_gold: '__den', cat_tree_gold: '__den', golden_farmhouse: 'ui_farmhouse_gold' });
+{ const _is38 = itemSprite; itemSprite = function(kind, id){
+  if (kind === 'deco' && (id === 'dog_house' || id === 'cat_tree' || id === 'dog_house_gold' || id === 'cat_tree_gold')) return [`building_${id === 'dog_house_gold' ? 'dog_house_gold' : id === 'cat_tree_gold' ? 'cat_tree_gold' : id + '_1'}`, 0];
+  if (kind === 'deco' && id === 'golden_farmhouse') return ['building_farmhouse_idle_gold', 0];
+  if (kind === 'item' && (id === 'dog_food' || id === 'cat_food')) return ['ui_item_' + id, 0];
+  if (kind === 'pet'){ const b = String(id).replace(/^(dog|cat)_/, ''); return [ATLAS['ui_pet_' + b] ? 'ui_pet_' + b : `pet_${b}_adult_idle`, 0]; }
+  return _is38(kind, id); }; }
+// gold farmhouse: a skin, not a tile
+{ const _spr38 = spr; spr = function(name, ...a){
+  if (S && S.goldHouse && S.goldHouseOn !== false && (name === 'building_farmhouse_idle' || name === 'building_farmhouse_night') && ATLAS[name + '_gold']) name += '_gold';
+  return _spr38(name, ...a); }; }
+function takeGoldHouse(d){ if (d.storage && d.storage.golden_farmhouse){ delete d.storage.golden_farmhouse; d.goldHouse = true; d.goldHouseOn = true; return true; } return false; }
+{ const _rs38 = renderSettings; renderSettings = function(el, ...a){ const r = _rs38(el, ...a);
+  if (S && S.goldHouse){ const box = document.createElement('div'); box.className = 'pcard';
+    box.innerHTML = `<h4><img src="${IMGSRC.ui_farmhouse_gold}" alt="">金色農舍</h4><label class="chk"><input type="checkbox" id="goldHouseOn" ${S.goldHouseOn !== false ? 'checked' : ''}> 農舍用金色外觀（Lv 50 獎勵）</label>`;
+    el.appendChild(box); box.querySelector('#goldHouseOn').onchange = e => { S.goldHouseOn = e.target.checked; save(); }; }
+  return r; }; }
+
+/* ---------- level-up cutscene (merged when several levels come at once) ---------- */
+const PRED_START38 = () => { const out = {}; const add = (lv, t) => (out[lv] = out[lv] || []).push(t);
+  if (RATC.startLevel) add(RATC.startLevel, '老鼠開始出現');
+  for (const [id, P] of Object.entries(PREDC)) if (P && P.level && P.name) add(P.level, `天敵：${P.name}`); return out; };
+function unlockIcon38(u){ try {
+  if (CFG.crops[u]) return itemSprite('crop', u); if (CFG.trees[u]) return itemSprite('tree', u); if (FL && FL[u]) return itemSprite('flower', u);
+  if (CFG.animals[u]) return itemSprite('animal', u); if (CFG.fish[u]) return itemSprite('fish', u); if (/^(dog|cat)_/.test(u) && !CFG.decos[u] && !CFG.items[u]) return itemSprite('pet', u);
+  if (CFG.decos[u]) return itemSprite('deco', u); if (CFG.machines[u]) return itemSprite('machine', u); if (DEV[u]) return itemSprite('device', u);
+  if (CFG.items[u]) return itemSprite('item', u); if (BLD[u]) return itemSprite('building', u); } catch(e){} return [null, 0]; }
+RT.lvQ = null;
+function queueLevelUps(from, ups){ if (!ups.length) return;
+  const Q = RT.lvQ || (RT.lvQ = { from, to: from, coins: 0, unlocks: [], decos: [], notes: [] }), PS = PRED_START38();
+  for (const L of ups){ Q.to = Math.max(Q.to, L.level); Q.coins += L.coinReward || 0;
+    for (const u of L.unlocks || []) if (!u.startsWith('block:')) Q.unlocks.push(u); else Q.notes.push(`第 ${u.split(':')[1]} 塊地`);
+    if (L.specialDeco) Q.decos.push(L.specialDeco); for (const n of PS[L.level] || []) Q.notes.push(n); }
+  clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 350); }
+function showLevelUp(){
+  if (!RT.lvQ) return; if ((typeof drag !== 'undefined' && drag) || !$('modal').hidden && $('modalTitle').textContent === '選擇農場'){ RT.lvT = setTimeout(showLevelUp, 600); return; }
+  const Q = RT.lvQ; RT.lvQ = null; const old = $('lvup'); if (old) old.remove();
+  const ov = document.createElement('div'); ov.id = 'lvup'; if (!motion) ov.classList.add('still');
+  const items = Q.unlocks.map(u => ({ u, n: nameOf(u) })).filter(x => x.n), more = Math.max(0, items.length - 8);
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvmedal"><img src="${IMGSRC.ui_levelup_medal}" alt=""><b>${Q.to}</b></div>
+    <h2>升級了！${Q.from + 1 < Q.to ? `Lv ${Q.from} → Lv ${Q.to}` : `Lv ${Q.to}`}</h2>
+    <div class="lvcard">${items.length || Q.notes.length ? `<h4>新解鎖</h4><div class="lvitems"></div>${Q.notes.length ? `<p class="small">${Q.notes.join('、')}</p>` : ''}` : ''}
+      ${Q.decos.length ? `<p class="lvdeco">特殊裝飾：${Q.decos.map(d => d === 'golden_farmhouse' ? '金色農舍（農舍已換成金色，設定裡可以切換）' : `${nameOf(d)}（已放進飾品倉庫）`).join('、')}</p>` : ''}
+      <div class="lvfoot"><span class="lvcoin">金幣 +${fmtN(Q.coins)}${Q.to - Q.from > 1 ? `（${Q.to - Q.from} 級合計）` : ''}</span><button class="btn" id="lvOk">太好了</button></div></div>
+    <div class="lvskip">點一下可以跳過</div></div>`;
+  document.body.appendChild(ov);
+  const box = ov.querySelector('.lvitems');
+  if (box){ items.slice(0, 8).forEach(x => { const s = document.createElement('span'); const [n, f] = unlockIcon38(x.u); if (n) s.appendChild(iconCanvas(n, f)); s.appendChild(document.createTextNode(x.n.replace('（花苗）', ''))); box.appendChild(s); });
+    if (more){ const s = document.createElement('span'); s.textContent = `…還有 ${more} 個`; box.appendChild(s); }
+    for (const d of Q.decos){ const s = document.createElement('span'); const [n, f] = unlockIcon38(d); if (n) s.appendChild(iconCanvas(n, f)); s.appendChild(document.createTextNode(nameOf(d))); box.appendChild(s); } }
+  sfx('levelup');
+  let done = false; const close = () => { if (done) return; done = true; clearTimeout(tm); ov.remove(); UIbuildTray(); updateHint(); renderHUD(); };
+  setTimeout(() => { try { flyCoins(ov.querySelector('.lvcoin'), Q.coins); } catch(e){} }, 900);
+  const tm = setTimeout(close, 6000); ov.addEventListener('click', close); ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); });
+  if (motion){ const c = ov.querySelector('canvas'), g = c.getContext('2d'), W = c.width = innerWidth, Hh = c.height = innerHeight, t0 = performance.now();
+    const cols = ['#ffd84a', '#ff7a8a', '#6fd3ff', '#8ee08a', '#c79bff', '#fff'], P = Array.from({ length: 90 }, () => ({ x: Math.random() * W, y: -Math.random() * Hh * .6, v: 1.5 + Math.random() * 3, r: Math.random() * 6, s: 4 + Math.random() * 6, c: cols[Math.floor(Math.random() * cols.length)], w: Math.random() * 6 }));
+    const step = () => { if (done) return; const el = (performance.now() - t0) / 1000; g.clearRect(0, 0, W, Hh);
+      for (const p of P){ p.y += p.v; p.x += Math.sin(el * 2 + p.w) * .8; p.r += .08; g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.fillStyle = p.c; g.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); g.restore(); }
+      if (el < 3.2) requestAnimationFrame(step); else g.clearRect(0, 0, W, Hh); };
+    requestAnimationFrame(step); } }
+{ const _ax38 = addXP; addXP = function(n){ const from = S.player.level, ups = _ax38(n);
+  if (ups.length){ if (takeGoldHouse(S)) toast('農舍變成金色了！', true); queueLevelUps(from, ups); }
+  return []; }; }   // the cutscene replaces the old per-level toast in gain()
+// old saves: XP above the new thresholds becomes levels right away (one merged card)
+function catchUpLevels(d){ const P = d.player, from = P.level, ups = [];
+  while (P.level < R.maxLevel && P.level < LV.length && P.xp >= LV[P.level].xpToReach){ P.level++; const L = lvInfo(P.level); P.coins += L.coinReward;
+    if (L.specialDeco){ d.storage = d.storage || {}; d.storage[L.specialDeco] = (d.storage[L.specialDeco] || 0) + 1; } ups.push(L); }
+  takeGoldHouse(d); return { from, ups }; }
+{ const _ns38 = normalizeState; normalizeState = function(d){ const r = _ns38(d); if (!r) return r;
+  r.boost = r.boost || {};
+  if (!r.v216){ r.v216 = 1; const c = catchUpLevels(r); if (c.ups.length) RT.pendingLv = c;
+    if (r.player.level >= (RATC.startLevel || 9)){ r.v216Grace = Date.now() + (RATC.oldSaveGraceHours || 24) * 3600e3; RT.notices.push({ kind: 'v216intro' }); } }
+  return r; }; }
+{ const _es38 = enterSlot; enterSlot = function(...a){ const r = _es38(...a); const go = () => { const c = RT.pendingLv; if (c && S){ RT.pendingLv = null; queueLevelUps(c.from, c.ups); } };
+  if (r && r.then) r.then(go); else setTimeout(go, 400); return r; }; }
+{ const _ng38 = newGame; newGame = function(...a){ const r = _ng38(...a); if (S){ S.v216 = 1; S.boost = S.boost || {}; } return r; }; }
+
+/* ===== 39. v2.16 (b): pet dogs / cats (bought young, grow up in 2 days, dens with 1–3 slots, food, names),
+   rats in the barn and trash stations, night predators (weasel / fox / wolf), injured / scared animals and rescue,
+   achievements wall ===== */
+const DOGS39 = PETC.dogs || {}, CATS39 = PETC.cats || {}, DENS39 = PETC.dens || {}, PSK = PETC.skills || {};
+const uid39 = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const isPetSel = id => typeof id === 'string' && /^(dog|cat)_/.test(id) && !!(id.startsWith('dog_') ? DOGS39[id.slice(4)] : CATS39[id.slice(4)]);
+const isDenId = id => !!DENS39[id] && !!CFG.decos[id];
+const isDen = T => !!T && T.t === 'deco' && isDenId(T.id);
+const denSlots = T => DENS39[T.id].maxSlots === 1 ? 1 : Math.max(1, Math.min(DENS39[T.id].maxSlots || 3, T.n || 1));
+const petList = () => (S.pets = S.pets || []);
+const breedOf = P => (P.kind === 'dog' ? DOGS39 : CATS39)[P.breed] || {};
+const petAdult = P => (P.grow || 0) >= (PETC.youngDays || 2) * 86400e3;
+const petWord = P => P.kind === 'dog' ? (petAdult(P) ? '狗' : '幼犬') : (petAdult(P) ? '貓' : '幼貓');
+function denList(kind){ const out = [];
+  S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!isDen(T) || (kind && DENS39[T.id].for !== kind)) continue; if (!T.uid) T.uid = uid39(); const [x, y] = pkey(k); out.push({ mi, k, x, y, T, M }); } });
+  return out; }
+const denByUid = u => denList(null).find(d => d.T.uid === u) || null;
+const residents = T => petList().filter(P => P.den === T.uid);
+function freeDen(kind){ return denList(kind).find(d => residents(d.T).length < denSlots(d.T)) || null; }
+const denSlotsTotal = kind => denList(kind).reduce((a, d) => a + denSlots(d.T), 0);
+const petsOfKind = kind => petList().filter(P => P.kind === kind).length;
+function petRange(P){ const d = denByUid(P.den); if (!d) return null; const B = breedOf(P), r = Math.floor(((B.range || 7) + (DENS39[d.T.id].rangeBonus || 0)) / 2);
+  return { mi: d.mi, x0: d.x - r, y0: d.y - r, x1: d.x + r, y1: d.y + r, cx: d.x, cy: d.y, den: d }; }
+const inRange = (rg, mi, x, y) => !!rg && rg.mi === mi && x >= rg.x0 && x <= rg.x1 && y >= rg.y0 && y <= rg.y1;
+const working = P => petAdult(P) && !P.hungry;
+const feederOn = () => { try { return fleet('feed').some(u => u.state === 'work'); } catch(e){ return false; } };
+const liveT = t => Math.abs(Date.now() - t) < 120e3;
+const winterAt = t => { try { return seasonAt(t) === 'winter'; } catch(e){ return false; } };
+function ach39(){ const A = S.ach = S.ach || {}; A.s = A.s || {}; A.got = A.got || {}; A.seen = A.seen || {}; for (const k of ['crops', 'fruits', 'honeys', 'animals', 'dogs', 'cats', 'robots']) A.seen[k] = A.seen[k] || {}; return A; }
+const stat = (k, n = 1) => { const A = ach39(); A.s[k] = (A.s[k] || 0) + n; };
+const statMax = (k, v) => { const A = ach39(); A.s[k] = Math.max(A.s[k] || 0, v); };
+const seen = (k, id) => { ach39().seen[k][id] = 1; };
+
+/* ---------- names ---------- */
+{ const _no39 = nameOf; nameOf = function(id){
+  if (isPetSel(id)) return (id.startsWith('dog_') ? DOGS39 : CATS39)[id.slice(4)].name;
+  if (id === 'dog_food' || id === 'cat_food') return CFG.items[id].name;
+  return _no39(id); }; }
+
+/* ---------- pets: time ---------- */
+function petInterval(P){ const F = PETC.food || {}, f = P.kind === 'dog' ? F.dog || { everyHours: 6 } : F.cat || { everyHours: 8 };
+  let h = f.everyHours; if (P.kind === 'cat' && breedOf(P).skill === 'glutton') h = f.gluttonEveryHours || h;
+  return h * 3600 / (petAdult(P) ? 1 : (PETC.youngFoodMult || .5)); }
+function petEat(P){ const item = P.kind === 'dog' ? 'dog_food' : 'cat_food';
+  if (invTake(item, 1)) return true;
+  if (feederOn()){ const cost = CFG.feedShop[item] || 0; if (S.player.coins >= cost){ S.player.coins -= cost; return true; } }
+  return false; }
+function stepPets(dt, t){
+  for (const P of petList()){
+    P.food = (P.food || 0) - dt;
+    if (P.food <= 0){ if (petEat(P)){ P.food += petInterval(P); if (P.food <= 0) P.food = petInterval(P); P.hungry = false; } else { P.food = 0; P.hungry = true; } }
+    if (!petAdult(P) && !P.hungry){ P.grow = (P.grow || 0) + dt * 1000;
+      if (petAdult(P)){ RT.notices.push({ kind: 'petGrown', name: P.name, pk: P.kind, t }); if (liveT(t)) RT.grownFx = { id: P.id, t0: performance.now() }; } }
+    if (P.kind === 'cat' && breedOf(P).skill === 'lucky' && working(P)){ const d = dayKey(t);
+      if (P.giftDay !== d){ P.giftDay = d; if (Math.random() < (PSK.luckyChancePerDay || .1)){ const [a, b] = PSK.luckyCoins || [20, 200], c = a + Math.floor(Math.random() * (b - a + 1)); S.player.coins += c; RT.notices.push({ kind: 'petGift', name: P.name, coins: c, t }); } } }
+  } }
+
+/* ---------- rats ---------- */
+function barnCells(){ for (let mi = 0; mi < S.maps.length; mi++){ const M = S.maps[mi], cells = Object.keys(M.tiles).filter(k => M.tiles[k].t === 'building' && M.tiles[k].id === 'barn'); if (cells.length) return { mi, cells, T: M.tiles[cells[0]] }; } return null; }
+function ratSpots(){ const out = [], b = barnCells(); S.rats = S.rats || { barn: 0 };
+  if (b){ const ps = b.cells.map(pkey); out.push({ key: 'barn', mi: b.mi, x: Math.min(...ps.map(p => p[0])), y: Math.min(...ps.map(p => p[1])), w: 2, get n(){ return S.rats.barn || 0; }, set n(v){ S.rats.barn = v; }, max: (RATC.barn || {}).max || 5 }); }
+  for (const s of stations()) out.push({ key: s.mi + ':' + s.k, mi: s.mi, x: s.x, y: s.y, w: 1, st: s.T, get n(){ return s.T.rats || 0; }, set n(v){ s.T.rats = v; }, max: (RATC.trash || {}).max || 3 });
+  return out; }
+const spotCovered = (sp, P) => { const rg = petRange(P); if (!rg) return false; for (let dx = 0; dx < sp.w; dx++) for (let dy = 0; dy < sp.w; dy++) if (inRange(rg, sp.mi, sp.x + dx, sp.y + dy)) return true; return false; };
+const ratsOn = () => S.player.level >= (RATC.startLevel || 9) && !(S.v216Grace > Date.now());
+function eatFromBarn(cat){ const ids = Object.keys(S.inv).filter(id => (S.inv[id] || 0) > 0 && CFG.items[id] && CFG.items[id].category === cat).sort((a, b) => S.inv[b] - S.inv[a]);
+  if (!ids.length) return null; invTake(ids[0], 1); return ids[0]; }
+function stepRats(dt, t){
+  if (S.player.level < (RATC.startLevel || 9) || S.v216Grace > t) return;
+  const wm = winterAt(t) ? (RATC.winterMult || 1.5) : 1, cats = petList().filter(P => P.kind === 'cat' && working(P));
+  for (const sp of ratSpots()){
+    const deter = cats.some(P => breedOf(P).skill === 'deter' && spotCovered(sp, P)) ? (PSK.catDeterRatMult || .4) : 1;
+    if (sp.key === 'barn'){ const B = RATC.barn || {}, full = invUsed() / Math.max(1, invCap());
+      if (sp.n < sp.max && Math.random() < (B.chancePerHour || .1) * ((B.fullnessBase ?? .5) + full) * wm * deter * dt / 3600){ sp.n++; RT.notices.push({ kind: 'ratIn', where: 'barn', t }); }
+      if (sp.n > 0){ S.rats.eat = (S.rats.eat || 0) + dt * sp.n;
+        while (S.rats.eat >= 3600){ S.rats.eat -= 3600; const a = eatFromBarn('crop'), b = eatFromBarn('feed'); for (const id of [a, b]) if (id) RT.notices.push({ kind: 'ratAte', id, t }); } }
+      else S.rats.eat = 0;
+    } else { const Tr = RATC.trash || {}, T = sp.st, bags = (T.g || 0) + (T.r || 0);
+      if (bags > 0 && sp.n < sp.max && Math.random() < (Tr.chancePerHour || .15) * (daysSinceDump(t) > (Tr.overdueDays || 3) ? (Tr.overdueMult || 2) : 1) * wm * deter * dt / 3600){ sp.n++; RT.notices.push({ kind: 'ratIn', where: 'trash', t }); }
+      if (sp.n > 0){ T.chew = (T.chew || 0) + dt * sp.n; const per = (Tr.chewHoursPerBag || 2) * 3600;
+        while (T.chew >= per){ T.chew -= per; const kk = (T.g || 0) >= 1 ? 'g' : (T.r || 0) >= 1 ? 'r' : null; if (!kk){ T.chew = 0; break; }
+          T[kk] -= 1; const Pl = trashState().pile; Pl[kk] = (Pl[kk] || 0) + 1; if (!S.trash.fullSince) S.trash.fullSince = t; RT.notices.push({ kind: 'ratChew', t }); } }
+      else T.chew = 0; } }
+  // cats (and dachshunds) catch
+  for (const P of petList()){ if (!working(P)) continue; const B = breedOf(P), dog = P.kind === 'dog'; if (dog && B.skill !== 'ratter') continue;
+    const spots = ratSpots().filter(sp => sp.n > 0 && spotCovered(sp, P)); if (!spots.length){ P.catchAcc = 0; continue; }
+    let min = dog ? (CATS39.orange ? CATS39.orange.catchMinutes : 20) / (PSK.ratterSpeedMult || .5) : (isNightAt(t) ? B.catchMinutesNight || B.catchMinutes : B.catchMinutes);
+    P.catchAcc = (P.catchAcc || 0) + dt;
+    if (P.catchAcc >= min * 60){ P.catchAcc = 0; const sp = spots.sort((a, b) => b.n - a.n)[0]; sp.n--; if (!dog) stat('mouser'); P.rats = (P.rats || 0) + 1;
+      RT.notices.push({ kind: 'ratCaught', by: P.name, t }); if (liveT(t)) RT.catchFx = { id: P.id, key: sp.key, t0: performance.now() }; } } }
+function catchRat(key, x, y){ const sp = ratSpots().find(s => s.key === key); if (!sp || !(sp.n > 0)) return false;
+  sp.n--; if (x != null) floatText(x, y - 20, '抓到 1 隻老鼠', '#2f7fa8', 11); sfx('click'); afterAction(); return true; }
+
+/* ---------- predators ---------- */
+const POUL = PREDC.poultry || ['egg_hen', 'broiler'], LIVE = PREDC.livestock || [], SHEEP = PREDC.sheep || [], CATTLE = PREDC.cattle || [];
+const predList = () => (S.preds = S.preds || []);
+const predOn = () => !(S.v216Grace > Date.now());
+function blockOf(x, y){ return Math.floor(x / BS) + ',' + Math.floor(y / BS); }
+function dogsCovering(mi, x, y){ return petList().filter(P => P.kind === 'dog' && working(P) && inRange(petRange(P), mi, x, y)); }
+function spawnPred(kind, mi, M, k, t){
+  const [x, y] = pkey(k), dogs = dogsCovering(mi, x, y), alarm = dogs.some(P => breedOf(P).skill === 'alarm');
+  const bx = Math.floor(x / BS) * BS, by = Math.floor(y / BS) * BS, side = Math.floor(Math.random() * 4), r = Math.random() * BS;
+  const from = side === 0 ? [bx + r, by - 1] : side === 1 ? [bx + BS, by + r] : side === 2 ? [bx + r, by + BS] : [bx - 1, by + r];
+  const Pd = { id: uid39(), kind, mi, k, t0: t, until: t + (alarm ? (PSK.alarmSeconds || 180) : (PREDC.approachSeconds || 60)) * 1000, taps: 0, fx: from[0], fy: from[1] };
+  const winterSnow = winterAt(t) || (typeof farmSnow === 'function' && farmSnow(t));
+  for (const D of dogs){ const B = breedOf(D), busy = predList().filter(q => q.by === D.id && !q.done).length; if (busy >= (B.skill === 'double' ? (PSK.doubleTargets || 2) : 1)) continue;
+    const den = denByUid(D.den); let rate = (B.drive || {})[kind] || 0; if (den) rate += (DENS39[den.T.id].driveBonus || 0); if (B.skill === 'cold' && winterSnow) rate += PSK.coldBonus || .15;
+    if (Math.random() < rate){ Pd.by = D.id; Pd.byName = D.name; Pd.fleeAt = t + (3 + Math.random() * 5) * 1000; break; } }
+  predList().push(Pd);
+  if (liveT(t)){ sfx('click'); toast(alarm ? `${PREDC[kind].name}靠近了！${dogs.find(P => breedOf(P).skill === 'alarm').name}發出警報，3 分鐘內點牠 3 下就能趕走` : `${PREDC[kind].name}出現了！點牠 3 下趕走`, true, 3600); }
+  return Pd; }
+function stepPreds(dt, t){
+  const lv = S.player.level, night = isNightAt(t), rain = farmRain(t);
+  const list = predList();
+  if (predOn() && !(S.v216Grace > t)) S.maps.forEach((M, mi) => {
+    const blocks = {};
+    for (const k in M.tiles){ const T = M.tiles[k]; if (T.t !== 'animal') continue; if (M.glass && M.glass[k]) continue; const [x, y] = pkey(k), b = blockOf(x, y); (blocks[b] = blocks[b] || []).push([k, T, x, y]); }
+    for (const b in blocks){ const A = blocks[b], targeted = new Set(list.filter(q => q.mi === mi).map(q => q.k));
+      const roll = (kind, p, pool) => { const c = pool.filter(([k]) => !targeted.has(k)); if (!c.length) return;
+        const [k, , x, y] = c[Math.floor(Math.random() * c.length)];
+        const deter = dogsCovering(mi, x, y).some(P => breedOf(P).skill === 'deter') ? (PSK.deterSpawnMult || .5) : 1;
+        if (Math.random() < p * deter * dt / 3600){ spawnPred(kind, mi, M, k, t); targeted.add(k); } };
+      const W = PREDC.weasel, F = PREDC.fox, Wo = PREDC.wolf, NH = PREDC.nightHours || 10;
+      if (W && night && lv >= W.level) roll('weasel', W.chancePerBlockPerHour || .05, A.filter(([, T]) => T.id === 'egg_hen' && T.stack > 0));
+      if (F && night && lv >= F.level) roll('fox', (F.chancePerBlockPerNight || .2) / NH, A.filter(([, T]) => POUL.includes(T.id) && !(T.hurt > t)));
+      if (Wo && (night || rain) && lv >= Wo.level) roll('wolf', (Wo.chancePerBlockPerNight || .15) / NH, A.filter(([, T]) => LIVE.includes(T.id) && !(T.scared > t))); }
+  });
+  for (const Pd of list){ if (Pd.done) continue; const M = S.maps[Pd.mi], T = M && M.tiles[Pd.k];
+    if (!T || T.t !== 'animal'){ Pd.done = t; continue; }
+    if (Pd.fleeAt && t >= Pd.fleeAt){ Pd.done = t; Pd.ok = false; if (Pd.by && Pd.by !== 'player'){ stat('guard'); const D = petList().find(q => q.id === Pd.by); if (D) D.guard = (D.guard || 0) + 1; }
+      RT.notices.push({ kind: 'pred', pk: Pd.kind, ok: false, by: Pd.by === 'player' ? '你' : Pd.byName, t }); continue; }
+    if (!Pd.fleeAt && t >= Pd.until){ Pd.done = t; Pd.ok = true; predHit(Pd, M, T, t); } }
+  S.preds = list.filter(q => !q.done || t - q.done < 6000); }
+function predHit(Pd, M, T, t){
+  const P = PREDC[Pd.kind] || {}, [x, y] = pkey(Pd.k); let loss = '';
+  if (Pd.kind === 'weasel'){ const n = T.stack || 0; T.stack = 0; loss = `偷走 ${n} 顆蛋`; }
+  else if (Pd.kind === 'fox'){ T.hurt = t + (P.injureSeconds || 3600) * 1000; loss = `咬傷了 1 隻${CFG.animals[T.id].name}`;
+    const medic = dogsCovering(Pd.mi, x, y).find(D => breedOf(D).skill === 'medic'); if (medic){ T.hurt = 0; stat('nurse'); loss += `，${medic.name}馬上救護好了`; } }
+  else if (Pd.kind === 'wolf'){ const r = P.scareRange ?? 2; let n = 0;
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const A = M.tiles[tkey(x + dx, y + dy)]; if (!A || A.t !== 'animal' || !LIVE.includes(A.id)) continue;
+      const dogs = dogsCovering(Pd.mi, x + dx, y + dy); if (SHEEP.includes(A.id) && dogs.some(D => breedOf(D).skill === 'sheep')) continue;
+      const mult = CATTLE.includes(A.id) && dogs.some(D => breedOf(D).skill === 'cattle') ? (PSK.cattleRecoverMult || .5) : 1;
+      A.scared = t + (P.scareSeconds || 14400) * 1000 * mult; n++; }
+    loss = n ? `嚇到 ${n} 隻家畜` : '沒嚇到家畜'; }
+  RT.notices.push({ kind: 'pred', pk: Pd.kind, ok: true, loss, t }); }
+// hurt / scared animals stop producing and growing
+{ const _sa39 = stepAnimal; stepAnimal = function(M, k, T, dt, t, feedOn){ if (T.hurt > t || T.scared > t) return; if (T.hurt) T.hurt = 0; if (T.scared) T.scared = 0; return _sa39(M, k, T, dt, t, feedOn); }; }
+
+/* ---------- stepAll ---------- */
+{ const _st39 = stepAll; stepAll = function(dt, t){ _st39(dt, t); if (!S) return;
+  try { stepPets(dt, t); stepRats(dt, t); stepPreds(dt, t);
+    if (S.fleet) for (const kind in S.fleet) for (const u of S.fleet[kind] || []) if (u && u.state === 'work') stat('hours', dt / 3600);
+  } catch(e){ if (!RT.err39){ RT.err39 = 1; console.error(e); } } }; }
+
+/* ---------- buying pets, dens ---------- */
+function buyPet(id, x, y){
+  const kind = id.startsWith('dog_') ? 'dog' : 'cat', breed = id.slice(4), B = (kind === 'dog' ? DOGS39 : CATS39)[breed], { cx, cy } = center(x, y);
+  if (!isUnlocked(id)){ toast(lockedMsg(id)); return; }
+  if (petList().length >= petCap()){ toast(`寵物已達上限 ${petCap()} 隻，可以在「動物 · ${kind === 'dog' ? '寵物犬' : '寵物貓'}」用金幣擴充`); return; }
+  const den = freeDen(kind); if (!den){ toast(kind === 'dog' ? '狗屋沒有空位：先在「動物 · 設施」蓋狗屋，或點狗屋擴充一間' : '貓跳台沒有空位：先在「動物 · 設施」蓋貓跳台，或點貓跳台擴充'); return; }
+  if (!spend(B.price)) return;
+  const P = { id: uid39(), kind, breed, name: B.name.slice(0, PETC.nameMaxChars || 8), born: Date.now(), grow: 0, food: 0, hungry: false, den: den.T.uid };
+  petEat(P) ? (P.food = petInterval(P)) : (P.hungry = true);
+  petList().push(P); seen(kind === 'dog' ? 'dogs' : 'cats', breed);
+  if (den.mi === S.cur) RT.petAg[P.id] = { x, y, tx: null, ty: null, wait: .5, flip: false };
+  floatText(cx, cy - 26, `-${fmtN(B.price)}`, '#8a5d36', 11); sfx('place');
+  toast(`${kind === 'dog' ? '幼犬' : '幼貓'}「${P.name}」來了！住進${CFG.decos[den.T.id].name}，${PETC.youngDays || 2} 天後長大開始工作${P.hungry ? `。倉庫沒有${itemName(kind === 'dog' ? 'dog_food' : 'cat_food')}，記得去「倉庫 · 飼料商店」買` : ''}`, true, 4200);
+  afterAction(); UIbuildTray(); }
+function denExpandCost(T){ const D = DENS39[T.id], n = denSlots(T); return (D.expandCost || [])[n - 1]; }
+function openDen(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isDen(T)) return; if (!T.uid) T.uid = uid39();
+  const D = DENS39[T.id], name = CFG.decos[T.id].name, res = residents(T), n = denSlots(T), unit = D.for === 'dog' ? '間' : '個';
+  openModal(name, null, (kk, el) => {
+    const cost = denExpandCost(T), back = n > 1 ? Math.round(((D.expandCost || [])[n - 2] || 0) * (PETC.shrinkRefundRate ?? .5)) : 0;
+    el.innerHTML = `<div class="kv"><span>位子</span><span><b>${n}</b> ${unit}（最多 ${D.maxSlots || 3} ${unit}）</span><span>住著</span><span>${res.length ? res.map(P => `${escapeHTML(P.name)}（${breedOf(P).name}${petAdult(P) ? '' : '・幼'}）`).join('、') : '還沒有'}</span>
+      ${D.driveBonus ? `<span>效果</span><span>住在裡面的狗驅趕率 +${Math.round(D.driveBonus * 100)}%</span>` : ''}${D.rangeBonus ? `<span>效果</span><span>住在裡面的貓巡邏範圍 +${D.rangeBonus}</span>` : ''}</div>
+      <div class="row">${cost && n < (D.maxSlots || 3) ? `<button class="btn" id="denUp">擴充到 ${n + 1} ${unit} · ${fmtN(cost)}</button>` : ''}
+      ${n > 1 ? `<button class="btn ghost" id="denDown" ${res.length >= n ? 'disabled' : ''}>拆回 ${n - 1} ${unit} · 退 ${fmtN(back)}</button>` : ''}</div>
+      <p class="small">一格可以並排到 ${D.maxSlots || 3} ${unit}，仍然只佔 1 格。寵物白天在附近巡邏，晚上回來睡覺；有寵物住時不能拆。</p>`;
+    const up = el.querySelector('#denUp'); if (up) up.onclick = () => { if (!spend(cost)) return; T.n = n + 1; sfx('place'); afterAction(); openDen(mi, k); };
+    const dn = el.querySelector('#denDown'); if (dn) dn.onclick = () => { T.n = n - 1; S.player.coins += back; sfx('coin'); afterAction(); openDen(mi, k); }; }); }
+function removeDen(M, k, T, cx, cy, store){
+  const res = residents(T); if (res.length){ toast(`${CFG.decos[T.id].name}裡住著${res.map(P => P.name).join('、')}，先送養或讓牠搬到別的窩才能拆`); return; }
+  const D = DENS39[T.id], C = CFG.decos[T.id];
+  if (store || !C.sellable){ if (denSlots(T) > 1 && D.maxSlots !== 1){ toast('先把擴充的位子拆回 1 個，才能收回倉庫'); return; }
+    S.storage[T.id] = (S.storage[T.id] || 0) + 1; delete M.tiles[k]; RT.decoVer++; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); afterAction(); UIbuildTray(); return; }
+  let spent = C.cost || 0; for (let i = 0; i < denSlots(T) - 1; i++) spent += (D.expandCost || [])[i] || 0;
+  const back = Math.floor(spent * (R.decoSellRate ?? .5)); S.player.coins += back; flyCoins(worldToScreen(cx, cy - 20), back); delete M.tiles[k]; RT.decoVer++;
+  floatText(cx, cy - 24, `拆掉 +${fmtN(back)}`, '#c98a0c', 12); afterAction(); UIbuildTray(); }
+function rehome(P){ const d = denList(P.kind).find(x => x.T.uid !== P.den && residents(x.T).length < denSlots(x.T)); if (!d){ toast('沒有別的空位，先蓋或擴充一個窩'); return false; } P.den = d.T.uid; delete RT.petAg[P.id]; return true; }
+
+/* ---------- pet panel ---------- */
+function openPet(P){
+  RT.showRange = P.id; const B = breedOf(P), adult = petAdult(P), left = (PETC.youngDays || 2) * 86400e3 - (P.grow || 0);
+  const fi = P.kind === 'dog' ? 'dog_food' : 'cat_food', price = Math.floor(B.price * (PETC.sellRate ?? .5));
+  openModal(P.name, null, (kk, el) => {
+    const rg = petRange(P);
+    el.innerHTML = `<div class="kv"><span>品種</span><span>${B.name}${P.kind === 'dog' ? `（${{ S: '小型', M: '中型', L: '大型' }[B.size] || ''}）` : ''}</span>
+      <span>年紀</span><span>${adult ? `成${P.kind === 'dog' ? '犬' : '貓'}` : `${petWord(P)} · 還有 ${fmtDur(Math.max(0, left / 1000))}長大${P.hungry ? '（餓著時不會長）' : ''}`}</span>
+      <span>專長</span><span>${B.skillText || '—'}${adult ? '' : '（長大才有）'}</span>
+      <span>${P.kind === 'dog' ? '守護範圍' : '巡邏範圍'}</span><span>${rg ? `${rg.x1 - rg.x0 + 1}×${rg.y1 - rg.y0 + 1}，以窩為中心（地上淡色範圍）` : '沒有窩'}</span>
+      ${P.kind === 'dog' ? `<span>驅趕率</span><span>黃鼠狼 ${Math.round((B.drive || {}).weasel * 100)}%／狐狸 ${Math.round((B.drive || {}).fox * 100)}%／野狼 ${Math.round((B.drive || {}).wolf * 100)}%</span>` : `<span>抓鼠</span><span>${B.catchMinutesNight && B.catchMinutesNight !== B.catchMinutes ? `白天每 ${B.catchMinutes} 分、晚上每 ${B.catchMinutesNight} 分 1 隻` : `每 ${B.catchMinutes} 分 1 隻`}</span>`}
+      <span>飼料</span><span>${P.hungry ? `<b class="warn">餓了</b>，倉庫沒有${itemName(fi)}` : `吃飽了，約 ${fmtDur(P.food)}後再吃`}（倉庫 ${S.inv[fi] || 0} 份）</span>
+      <span>戰績</span><span>${P.kind === 'dog' ? `趕走天敵 ${P.guard || 0} 次` : ''}${P.rats ? ` 抓老鼠 ${P.rats} 隻` : P.kind === 'cat' ? '抓老鼠 0 隻' : ''}</span></div>
+      <h3>名字</h3><div class="row"><input type="text" id="petName" maxlength="${PETC.nameMaxChars || 8}" value="${escapeHTML(P.name)}" style="font-size:16px"><button class="btn" id="petRen">改名</button></div>
+      <div class="row"><button class="btn ghost" id="petFood">買${itemName(fi)}</button><button class="btn ghost" id="petMove">換一個窩</button><button class="btn warn" id="petGive">送養（退 ${fmtN(price)}）</button></div>`;
+    el.querySelector('#petRen').onclick = () => { const v = el.querySelector('#petName').value.trim().slice(0, PETC.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } P.name = v; save(); toast(`改好了：${v}`); openPet(P); };
+    el.querySelector('#petFood').onclick = () => openStorage('shop');
+    el.querySelector('#petMove').onclick = () => { if (rehome(P)){ save(); toast(`${P.name}搬家了`); openPet(P); } };
+    const gv = el.querySelector('#petGive'); gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+      S.pets = petList().filter(q => q !== P); S.player.coins += price; delete RT.petAg[P.id]; RT.showRange = null; toast(`${P.name}找到新家了，退回 ${fmtN(price)} 金幣`); closeModal(); afterAction(); UIbuildTray(); }; }); }
+{ const _cm39 = closeModal; closeModal = function(...a){ RT.showRange = null; return _cm39(...a); }; }
+
+/* ---------- tray: dens / pets / expansions in 動物 ---------- */
+{ const _is39 = itemSprite; itemSprite = function(kind, id){ if (kind === 'boost') return [id === 'pet' ? 'ui_tab_pet_dog' : 'ui_tool_animal', 0]; return _is39(kind, id); }; }
+{ const _ut39 = UIbuildTray; UIbuildTray = function(){ _ut39(); if (!S || S.sel.tool !== 'animal' || RT.borrow34) return;
+  const tray = $('tray'), sel = S.sel.animal, add = el => tray.appendChild(el);
+  const pick = (id, tab) => () => { S.sel.animal = id; S.sel.animalTab = tab; UIbuildTray(); updateHint(); };
+  for (const id of ['dog_house', 'cat_tree']){ const D = CFG.decos[id], P = DENS39[id], lk = !isUnlocked(id), st = S.storage[id] || 0;
+    const el = trayItem('deco', id, D.name, [st ? `倉庫 ×${st}` : `${coinImg()}${fmtN(D.cost)}`, `${P.for === 'dog' ? '一間住一隻狗' : '一個跳台住一隻貓'} · 可擴充到 ${P.maxSlots} ${P.for === 'dog' ? '間' : '個'}`], sel === id, lk, { book: 'pets' });
+    el.onclick = lk ? () => toast(lockedMsg(id)) : pick(id, 'facility'); add(el); }
+  { const B = BK38.animal; if (B){ const n = boostN('animal'), el = trayItem('boost', 'boost_animal', '動物上限 +1', [n >= B.max ? '已擴充到最多' : `${coinImg()}${fmtN(boostPrice('animal'))}`, `目前 ${lvInfo(S.player.level).animalCap} 隻 · 已買 ${n}/${B.max}`], false, false);
+    el.onclick = () => { if (buyBoost('animal')) UIbuildTray(); }; add(el); } }
+  const dogsOk = isUnlocked('dog_house');
+  for (const [kind, tab, LIST] of [['dog', 'pet_dog', DOGS39], ['cat', 'pet_cat', CATS39]]){
+    for (const [b, B] of Object.entries(LIST)){ const id = `${kind}_${b}`, lk = !isUnlocked(id);
+      const l2 = kind === 'dog' ? `${{ S: '小型', M: '中型', L: '大型' }[B.size]} · ${B.range}×${B.range}` : `${B.range}×${B.range} · 每 ${B.catchMinutes} 分抓 1 隻`;
+      const el = trayItem('pet', id, B.name, [`${coinImg()}${fmtN(B.price)}`, l2], sel === id, lk, { book: 'pets' }); el.onclick = lk ? () => toast(lockedMsg(id)) : pick(id, tab); add(el); }
+    const Bp = BK38.pet; if (Bp){ const n = boostN('pet'), el = trayItem('boost', 'boost_pet_' + kind, '寵物上限 +1', [n >= Bp.max ? '已擴充到最多' : `${coinImg()}${fmtN(boostPrice('pet'))}`, `寵物 ${petList().length}/${petCap()} 隻`], false, !dogsOk, { lockLv: UNLOCK.dog_house });
+      el.onclick = () => { if (!dogsOk){ toast(lockedMsg('dog_house')); return; } if (buyBoost('pet')) UIbuildTray(); }; add(el); } }
+  tray.querySelectorAll('.item[data-id^="boost_"]').forEach(el => { el.dataset.tabid = el.dataset.id === 'boost_animal' ? 'facility' : el.dataset.id === 'boost_pet_dog' ? 'pet_dog' : 'pet_cat'; });
+  applyTabs33(); }; }
+// boost items are not in the config tab lists: map them by data-tabid
+{ const _a33 = applyTabs33; applyTabs33 = function(){ _a33(); const tray = $('tray'); if (!tray || !S || S.sel.tool !== 'animal') return; const tab = S.sel.animalTab;
+  tray.querySelectorAll('.item[data-tabid]').forEach(el => { el.hidden = el.dataset.tabid !== tab; });
+  const vis = [...tray.querySelectorAll('.item')].some(x => !x.hidden); tray.querySelectorAll('.trayempty').forEach(e => { if (vis) e.remove(); }); }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha39 = ta.hint; ta.hint = () => { const id = S.sel.animal;
+  if (isPetSel(id)){ const kind = id.slice(0, 3), B = (kind === 'dog' ? DOGS39 : CATS39)[id.slice(4)];
+    return `點農場任一處買幼${kind === 'dog' ? '犬' : '貓'}「${B.name}」· ${fmtN(B.price)} 金幣 · 寵物 ${petList().length}/${petCap()} · ${kind === 'dog' ? '狗屋' : '貓跳台'}位子 ${petsOfKind(kind)}/${denSlotsTotal(kind)}`; }
+  if (isDenId(id)){ const D = CFG.decos[id], P = DENS39[id]; return `點草地蓋${D.name} · ${(S.storage[id] || 0) ? '從倉庫拿出' : fmtN(D.cost) + ' 金幣'} · 點它可以擴充到 ${P.maxSlots} ${P.for === 'dog' ? '間' : '個'}（同一格）`; }
+  return _ha39(); }; }
+
+/* ---------- act: pets / dens / rescue ---------- */
+{ const _act39 = act; act = function(x, y){
+  if (!S || UI.expand) return _act39(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act39(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (tool === 'animal' && isPetSel(S.sel.animal)){ buyPet(S.sel.animal, x, y); return; }
+  if (tool === 'animal' && isDenId(S.sel.animal)){ if (T && isDen(T)){ openDen(S.cur, k); return; } return withTool('deco', { deco: S.sel.animal }, () => act(x, y)); }
+  if (isDen(T)){ if (tool === 'remove' || tool === 'store'){ removeDen(M, k, T, cx, cy, tool === 'store'); return; } if (tool !== 'move'){ openDen(S.cur, k); return; } }
+  if (T && T.t === 'animal' && T.hurt > Date.now() && ((PREDC.rescueTools || ['hand', 'care']).includes(tool))){
+    T.hurt = 0; stat('nurse'); spriteFx('fx_rescue', cx, cy - 10); floatText(cx, cy - 30, '救護好了！', '#2f8a3a', 12); sfx('harvest'); afterAction(); return; }
+  return _act39(x, y); }; }
+
+/* ---------- drawing ---------- */
+RT.petAg = RT.petAg || {}; RT.critHit = [];
+{ const _dte39 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
+  if (RT.showRange){ const P = petList().find(q => q.id === RT.showRange), rg = P && petRange(P);
+    if (rg && inRange(rg, S.cur, x, y)){ const c = center(x, y); ctx.fillStyle = P.kind === 'dog' ? 'rgba(255,200,80,.22)' : 'rgba(200,150,255,.22)'; diamondPath(c.cx, c.cy, .96); ctx.fill(); } }
+  _dte39(M, k, T, x, y, t, now);
+  if (isDen(T)){ const c = center(x, y), gold = DENS39[T.id].maxSlots === 1, base = T.id.startsWith('dog') ? 'building_dog_house_' : 'building_cat_tree_';
+    spr(base + (gold ? 'gold' : denSlots(T)), 0, c.cx, c.cy); } }; }
+function petPose(P, ag, now){ const adult = petAdult(P), night = isNightAt(now);
+  if (ag.sleep) return 'sleep'; if (ag.chase) return adult ? 'run' : 'walk'; if (ag.tx !== null) return 'walk';
+  if (!adult && motion && Math.floor(now / 3000 + (P.born % 7)) % 3 === 0) return 'play'; return 'idle'; }
+function petSprite(P, pose){ const n = `pet_${P.breed}_${petAdult(P) ? 'adult' : 'young'}_${pose}`; return ATLAS[n] ? n : `pet_${P.breed}_${petAdult(P) ? 'adult' : 'young'}_idle`; }
+function updatePets(M, t){
+  const mi = S.cur, now = Date.now(), dt = Math.min(.1, RT.frameDt || .016), night = isNightAt(now);
+  RT.petAt = new Map(); RT.critHit = [];
+  const put = (x, y, fn) => { const dk = tkey(Math.round(x), Math.round(y)); if (!RT.petAt.has(dk)) RT.petAt.set(dk, []); RT.petAt.get(dk).push(fn); };
+  for (const P of petList()){ const d = denByUid(P.den); if (!d || d.mi !== mi) continue; const rg = petRange(P);
+    let ag = RT.petAg[P.id]; if (!ag) ag = RT.petAg[P.id] = { x: d.x + .4, y: d.y + .4, tx: null, ty: null, wait: Math.random() * 2, flip: false };
+    const chasing = predList().find(q => q.by === P.id && !q.done && q.mi === mi);
+    ag.sleep = false; ag.chase = !!chasing;
+    if (chasing){ const [px, py] = predPos(chasing, now); ag.tx = px; ag.ty = py; }
+    else if (night || !motion){ ag.tx = d.x + .45; ag.ty = d.y + .45; if (Math.hypot(ag.x - ag.tx, ag.y - ag.ty) < .1){ ag.tx = null; ag.sleep = true; } }
+    else if (ag.tx === null){ if ((ag.wait -= dt) <= 0){ for (let i = 0; i < 6; i++){ const nx = rg.x0 + Math.floor(Math.random() * (rg.x1 - rg.x0 + 1)), ny = rg.y0 + Math.floor(Math.random() * (rg.y1 - rg.y0 + 1)), nk = tkey(nx, ny);
+        if (inMap(M, nx, ny) && (P.kind === 'cat' || walkable(M.tiles[nk])) && !(M.glass && M.glass[nk]) && Math.hypot(nx - ag.x, ny - ag.y) < 4){ ag.tx = nx; ag.ty = ny; break; } } if (ag.tx === null) ag.wait = 1.5; } }
+    if (ag.tx !== null){ const dx = ag.tx - ag.x, dy = ag.ty - ag.y, dd = Math.hypot(dx, dy), sp = (chasing ? 2.2 : P.kind === 'dog' ? .7 : .55) * (petAdult(P) ? 1 : .7) * dt;
+      if (dd <= sp){ ag.x = ag.tx; ag.y = ag.ty; if (!chasing){ ag.tx = null; ag.wait = 1 + Math.random() * 4; } } else { ag.x += dx / dd * sp; ag.y += dy / dd * sp; }
+      if (Math.abs(dx - dy) > .01) ag.flip = (dx - dy) < 0; }
+    const c = center(ag.x, ag.y);
+    put(ag.x, ag.y, () => { const pose = petPose(P, ag, now), n = petSprite(P, pose); { const z = PETC.drawScale || 1.5; ctx.save(); ctx.translate(c.cx, c.cy + 2); ctx.scale(z, z); spr(n, motion ? frameOf(n, t, P.born % 9) : 0, 0, 0, ag.flip); ctx.restore(); }
+      if (P.hungry && !ag.sleep) bubble(c.cx, c.cy - 40, '餓了', P.kind === 'dog' ? 'ui_item_dog_food' : 'ui_item_cat_food');
+      else { ctx.save(); ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = '#4a3a20'; ctx.strokeText(P.name, c.cx, c.cy - 40); ctx.fillText(P.name, c.cx, c.cy - 40); ctx.restore(); }
+      const g = RT.grownFx; if (g && g.id === P.id){ const el = (performance.now() - g.t0) / 1000; if (el < 2) spr('fx_grow_star', Math.min(5, Math.floor(el * 3)), c.cx, c.cy); else RT.grownFx = null; }
+      const h = RT.heartFx; if (h && h.id === P.id){ const el = (performance.now() - h.t0) / 1000; if (el < 1.5) spr('fx_pet_heart', Math.min(5, Math.floor(el * 4)), c.cx, c.cy - 26); else RT.heartFx = null; } });
+    RT.critHit.push({ x: c.cx, y: c.cy - 10, r: 14, kind: 'pet', P }); }
+  // predators
+  for (const Pd of predList()){ if (Pd.mi !== mi || (Pd.done && !Pd.fleeAt)) continue; const [px, py] = predPos(Pd, now), c = center(px, py), fleeing = Pd.fleeAt && now >= Pd.fleeAt;
+    if (Pd.done && now - Pd.done > 5000) continue;
+    const [tx, ty] = pkey(Pd.k), pose = fleeing ? 'flee' : (Pd.until - now < 4000 ? 'attack' : 'sneak'), n = `pred_${Pd.kind}_${pose}`, flip = fleeing ? (tx - ty) > (px - py) : (tx - ty) < (px - py);
+    put(px, py, () => { const z = PREDC.drawScale || 1.5; ctx.save(); ctx.translate(c.cx, c.cy + 2); ctx.scale(z, z); spr(n, motion ? frameOf(n, t) : 0, 0, 0, flip); ctx.restore(); });
+    if (!fleeing) RT.critHit.push({ x: c.cx, y: c.cy - 10, r: 16, kind: 'pred', Pd }); }
+  // rats
+  for (const sp of ratSpots()){ if (sp.mi !== mi || !(sp.n > 0)) continue; const base = center(sp.x + (sp.w - 1) / 2, sp.y + (sp.w - 1) / 2);
+    for (let i = 0; i < sp.n; i++){ const a = t * (.8 + i * .17) + i * 2.1, rx = base.cx + Math.cos(a) * (18 + sp.w * 8), ry = base.cy + 8 + Math.sin(a) * (8 + sp.w * 4), fl = Math.sin(a) > 0;
+      const tile = toTileAnyW(rx, ry);
+      put(tile.x, tile.y, () => spr('rat_run', motion ? frameOf('rat_run', t, i) : 0, rx, ry, fl));
+      RT.critHit.push({ x: rx, y: ry - 4, r: 10, kind: 'rat', key: sp.key, i }); }
+    put(sp.x + sp.w - 1, sp.y + sp.w - 1, () => bubble(base.cx, base.cy - (sp.w > 1 ? 62 : 40), `老鼠 ×${sp.n}`, 'ui_rat', '#fff1e6')); } }
+function toTileAnyW(wx, wy){ const a = wx / HW, b = (wy - HH) / HH; return { x: Math.round((a + b) / 2), y: Math.round((b - a) / 2) }; }
+function predPos(Pd, now){ const [tx, ty] = pkey(Pd.k);
+  if (Pd.fleeAt && now >= Pd.fleeAt){ const el = Math.min(1, (now - Pd.fleeAt) / 4000), sx = Pd.sx ?? Pd.fx, sy = Pd.sy ?? Pd.fy; return [sx + (Pd.fx - sx) * el, sy + (Pd.fy - sy) * el]; }
+  const p = Math.min(1, (now - Pd.t0) / Math.max(1, (Pd.fleeAt || Pd.until) - Pd.t0)) * .92, x = Pd.fx + (tx - Pd.fx) * p, y = Pd.fy + (ty - Pd.fy) * p; Pd.sx = x; Pd.sy = y; return [x, y]; }
+{ const _ua39 = updateAnimals; updateAnimals = function(M, t){ _ua39(M, t); try { updatePets(M, t); } catch(e){ if (!RT.err39b){ RT.err39b = 1; console.error(e); } } }; }
+{ const _da39 = drawAnimalsAt; drawAnimalsAt = function(k, t){ _da39(k, t); const l = RT.petAt && RT.petAt.get(k); if (l){ RT.petAt.delete(k); l.forEach(f => f()); } }; }
+{ const _dw39 = drawWorld; drawWorld = function(t, now){ _dw39(t, now); if (RT.petAt && RT.petAt.size){ for (const l of RT.petAt.values()) l.forEach(f => f()); RT.petAt.clear(); } }; }
+// hurt / scared / targeted marks over farm animals
+{ const _dan39 = drawAnimal; drawAnimal = function(T, cx, cy, t, ag){ _dan39(T, cx, cy, t, ag); const now = Date.now();
+  if (T.hurt > now){ spr('fx_bandage', 0, cx + 4, cy - 6); spr('fx_cross_bubble', motion ? frameOf('fx_cross_bubble', t) : 0, cx, cy - 26); }
+  else if (T.scared > now) spr('fx_scared', motion ? frameOf('fx_scared', t) : 0, cx, cy - 26);
+  if (predList().some(q => !q.done && !q.fleeAt && q.mi === S.cur && S.maps[q.mi].tiles[q.k] === T)) spr('fx_alert', motion ? frameOf('fx_alert', t) : 0, cx, cy - 34); }; }
+
+/* ---------- taps on pets / predators / rats (any tool) ---------- */
+{ const _mt39 = meteorTap; meteorTap = function(sx, sy, ...a){
+  if (S && !UI.expand && !RT.mv && RT.critHit && RT.critHit.length){ const { wx, wy } = toWorld(sx, sy); let best = null, bd = 1e9;
+    for (const h of RT.critHit){ const d = Math.hypot(wx - h.x, wy - h.y); if (d < h.r && d < bd){ bd = d; best = h; } }
+    if (best){ const tool = S.sel.tool;
+      if (best.kind === 'pred'){ const Pd = best.Pd; Pd.taps = (Pd.taps || 0) + 1; floatText(best.x, best.y - 16, `${Pd.taps}/${PREDC.chaseTaps || 3}`, '#c0392b', 12); sfx('click');
+        if (Pd.taps >= (PREDC.chaseTaps || 3)){ Pd.fleeAt = Date.now(); Pd.by = 'player'; toast(`${PREDC[Pd.kind].name}被趕走了！`); }
+        return true; }
+      if (best.kind === 'rat'){ const key = 'rat:' + best.key; RT.ratTap = RT.ratTap && RT.ratTap.key === key && performance.now() - RT.ratTap.at < 3000 ? RT.ratTap : { key, n: 0 }; RT.ratTap.n++; RT.ratTap.at = performance.now();
+        floatText(best.x, best.y - 12, `${RT.ratTap.n}/${RATC.catchTaps || 3}`, '#2f7fa8', 11); sfx('click');
+        if (RT.ratTap.n >= (RATC.catchTaps || 3)){ RT.ratTap = null; catchRat(best.key, best.x, best.y); }
+        return true; }
+      if (best.kind === 'pet' && !['remove', 'store', 'move'].includes(tool) && !(tool === 'animal' && isPetSel(S.sel.animal))){
+        RT.heartFx = { id: best.P.id, t0: performance.now() }; sfx('click'); openPet(best.P); return true; } } }
+  return _mt39(sx, sy, ...a); }; }
+
+/* ---------- 抓老鼠 button in the barn / trash panels ---------- */
+{ const _om39 = openModal; openModal = function(title, tabs, render, initial){
+  if ((title === '倉庫' || title === (TRB.name || '垃圾站') || /垃圾站/.test(title)) && typeof render === 'function'){ const r0 = render;
+    render = (k, el) => { r0(k, el); if (title === '倉庫' && k !== 'produce') return; const key = title === '倉庫' ? 'barn' : null;
+      const sp = ratSpots().filter(s => key ? s.key === 'barn' : s.key !== 'barn').find(s => s.n > 0); if (!sp) return;
+      const box = document.createElement('div'); box.className = 'pcard'; box.innerHTML = `<h4><img src="${IMGSRC.ui_rat}" alt="">${sp.key === 'barn' ? '倉庫' : '垃圾站'}有 ${sp.n} 隻老鼠</h4><p class="small">${sp.key === 'barn' ? '每隻每小時偷吃作物和飼料各 1 個' : '每隻每 2 小時咬破 1 袋垃圾'}。養貓可以自動抓。</p><div class="row"><button class="btn" id="ratCatch">抓老鼠</button></div>`;
+      el.insertBefore(box, el.firstChild); box.querySelector('#ratCatch').onclick = e => { e.stopPropagation(); if (catchRat(sp.key)) toast('抓到 1 隻老鼠'); const left = sp.n; box.querySelector('h4').lastChild.textContent = `還有 ${left} 隻老鼠`; if (!left) box.remove(); }; }; }
+  return _om39(title, tabs, render, initial); }; }
+
+/* ---------- news ---------- */
+{ const _ni39 = newsItems; newsItems = function(list){ const out = _ni39(list), by = k => list.filter(n => n.kind === k);
+  const pr = by('pred'); if (pr.length){ const ok = pr.filter(n => n.ok), no = pr.filter(n => !n.ok), nm = k => (PREDC[k] || {}).name || k;
+    out.unshift({ icon: 'ui_pred_fox', text: `天敵來了 ${pr.length} 次${no.length ? `，被趕走 ${no.length} 次（${[...new Set(no.map(n => n.by).filter(Boolean))].join('、')}）` : ''}${ok.length ? `；得手 ${ok.length} 次：${ok.map(n => `${nm(n.pk)}${n.loss}`).join('、')}` : ''}` }); }
+  const ri = by('ratIn').length, ate = by('ratAte'), chew = by('ratChew').length, cau = by('ratCaught').length;
+  if (ri || ate.length || chew || cau){ const cnt = {}; ate.forEach(n => cnt[n.id] = (cnt[n.id] || 0) + 1);
+    out.unshift({ icon: 'ui_rat', text: `${ri ? `來了 ${ri} 隻老鼠` : '老鼠'}${ate.length ? `，偷吃 ${Object.entries(cnt).map(([id, n]) => `${itemName(id)} ${n} 個`).join('、')}` : ''}${chew ? `，咬破 ${chew} 袋垃圾` : ''}${cau ? `；貓抓到 ${cau} 隻` : ''}` }); }
+  for (const n of by('petGrown')) out.unshift({ icon: n.pk === 'dog' ? 'ui_tab_pet_dog' : 'ui_tab_pet_cat', text: `${n.name}長大了！開始幫忙${n.pk === 'dog' ? '守護動物' : '抓老鼠'}` });
+  for (const n of by('petGift')) out.push({ icon: 'ui_coin', text: `${n.name}叼回小禮物：${fmtN(n.coins)} 金幣` });
+  if (by('v216intro').length) out.unshift({ icon: 'ui_rat', text: '新的危害：倉庫和垃圾站會有老鼠，晚上會有黃鼠狼、狐狸、野狼。24 小時內先不會出現，可以先在「動物」買貓和狗、蓋狗屋和貓跳台' });
+  return out.slice(0, (NEWS.maxItems || 12) + 4); }; }
+{ const _fn39 = flushNotices; flushNotices = function(summary){
+  if (!summary) for (const n of RT.notices){
+    if (n.kind === 'pred') toast(n.ok ? `${(PREDC[n.pk] || {}).name}得手了：${n.loss}` : `${n.by}趕走了${(PREDC[n.pk] || {}).name}！`, true, 3200);
+    else if (n.kind === 'petGrown') toast(`${n.name}長大了！開始幫忙${n.pk === 'dog' ? '守雞' : '抓老鼠'}`, true, 3600);
+    else if (n.kind === 'petGift') toast(`${n.name}叼回小禮物：+${fmtN(n.coins)} 金幣`, true);
+    else if (n.kind === 'ratIn' && !RT.ratToast){ RT.ratToast = 1; toast(n.where === 'barn' ? '倉庫跑進老鼠了！點牠 3 下抓 1 隻，或養貓' : '垃圾站跑進老鼠了！點牠 3 下抓 1 隻，或養貓', false, 3200); setTimeout(() => RT.ratToast = 0, 60e3); }
+    else if (n.kind === 'v216intro') toast('新的危害：老鼠和夜間天敵（24 小時後才會出現），可以先買貓狗', true, 4200); }
+  return _fn39(summary); }; }
+
+/* ---------- 圖鑑 · 寵物 ---------- */
+function bookPets(el){
+  const ic = id => { const [n, f] = itemSprite('pet', id); return n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : ''; }, pc = d => `${Math.round(d * 100)}%`;
+  el.innerHTML = `<p>寵物不算動物上限，另有寵物上限（狗貓合計 ${petCap()} 隻，最多擴充到 ${PETC.capMax || 30}）。買來是幼犬／幼貓，${PETC.youngDays || 2} 天後長大才工作（餓著不長）。狗吃狗飼料、每 ${(PETC.food || {}).dog ? PETC.food.dog.everyHours : 6} 小時 1 份；貓吃貓飼料、每 ${(PETC.food || {}).cat ? PETC.food.cat.everyHours : 8} 小時 1 份；幼年吃一半。飼料只能在「倉庫 · 飼料商店」買，倉庫有就自己吃，沒有就餓了不工作（餵食機器人也會餵）。寵物不老死、不能出貨，送養退買入價一半。</p>
+    <h3>狗</h3>` + tbl([H(''), H('品種'), H('解鎖'), H('價格', 1), H('體型'), H('守護範圍'), H('黃鼠狼', 1), H('狐狸', 1), H('野狼', 1), H('專長')],
+      Object.entries(DOGS39).map(([b, B]) => ({ cls: (isUnlocked('dog_' + b) ? '' : 'locked') + (RT.bookFocus === 'dog_' + b ? ' cur' : ''), cells: [ic('dog_' + b), B.name, lockCell('dog_' + b), fmtN(B.price), { S: '小', M: '中', L: '大' }[B.size], `${B.range}×${B.range}`, pc(B.drive.weasel), pc(B.drive.fox), pc(B.drive.wolf), B.skillText] }))) +
+    `<h3>貓</h3>` + tbl([H(''), H('品種'), H('解鎖'), H('價格', 1), H('巡邏範圍'), H('抓鼠速度'), H('專長')],
+      Object.entries(CATS39).map(([b, B]) => ({ cls: (isUnlocked('cat_' + b) ? '' : 'locked') + (RT.bookFocus === 'cat_' + b ? ' cur' : ''), cells: [ic('cat_' + b), B.name, lockCell('cat_' + b), fmtN(B.price), `${B.range}×${B.range}`, B.catchMinutesNight !== B.catchMinutes ? `白天每 ${B.catchMinutes} 分、晚上每 ${B.catchMinutesNight} 分` : `每 ${B.catchMinutes} 分 1 隻`, B.skillText] }))) +
+    `<h3>寵物的窩</h3>` + tbl([H(''), H('窩'), H('解鎖'), H('蓋一格', 1), H('擴充'), H('說明')], Object.entries(DENS39).filter(([id]) => CFG.decos[id]).map(([id, D]) => { const [n, f] = itemSprite('deco', id);
+      return { cells: [n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : '', CFG.decos[id].name, D.reward ? `Lv ${D.reward} 獎勵` : lockCell(id), D.reward ? '—' : fmtN(CFG.decos[id].cost), D.expandCost ? D.expandCost.map(c => '+' + fmtN(c)).join('、') : '—',
+        D.driveBonus ? `住 1 隻狗，驅趕率 +${Math.round(D.driveBonus * 100)}%` : D.rangeBonus ? `住 1 隻貓，範圍 +${D.rangeBonus}` : `一格可並排到 ${D.maxSlots} ${D.for === 'dog' ? '間' : '個'}`] }; })) +
+    `<h3>天敵與老鼠</h3>` + tbl([H(''), H('名稱'), H('開始'), H('時間'), H('目標'), H('得手後')], [
+      ...['weasel', 'fox', 'wolf'].filter(k => PREDC[k]).map(k => { const P = PREDC[k]; return { cells: [`<canvas data-spr="ui_pred_${k}" data-f="0" class="ico"></canvas>`, P.name, `Lv ${P.level}`, P.when === 'night' ? '晚上' : '晚上、陰雨天',
+        k === 'weasel' ? '蛋雞堆著的蛋' : k === 'fox' ? '家禽' : '羊、牛、豬', k === 'weasel' ? '偷光那隻雞堆著的蛋' : k === 'fox' ? '咬傷 1 隻，停產 1 小時；用「收成」點牠救護' : '嚇到 5×5 的家畜，停產 4 小時'] }; }),
+      { cells: ['<canvas data-spr="ui_rat" data-f="0" class="ico"></canvas>', '老鼠', `Lv ${RATC.startLevel || 9}`, '全天', '農產倉庫、垃圾站', '偷吃作物和飼料、咬破垃圾袋；點 3 下抓 1 隻'] }]); paintIcons(el); }
+
+/* ---------- achievements ---------- */
+const TIERS39 = ['bronze', 'silver', 'gold', 'platinum'];
+function achValue(a){ const A = ach39(), s = A.s, st = a.stat;
+  if (st === 'level') return S.player.level;
+  if (st.startsWith('crop:')) return s[st] || 0;
+  if (st === 'veggies') return Object.keys(A.seen.crops).length >= Object.keys(CFG.crops).length ? 1 : 0;
+  if (st === 'orchard') return Object.keys(A.seen.fruits).length >= Object.keys(CFG.trees).length ? 1 : 0;
+  if (st === 'allAnimals') return Object.keys(A.seen.animals).length >= Object.keys(CFG.animals).length ? 1 : 0;
+  if (st === 'honeyAll') return Object.keys(A.seen.honeys).length >= HONEY_ORDER.length ? 1 : 0;
+  if (st === 'allDogs') return Object.keys(A.seen.dogs).length >= Object.keys(DOGS39).length ? 1 : 0;
+  if (st === 'allCats') return Object.keys(A.seen.cats).length >= Object.keys(CATS39).length ? 1 : 0;
+  if (st === 'robots') return Object.keys(A.seen.robots).length;
+  if (st === 'fullFleet') return S.fleet && Object.values(S.fleet).some(f => (f || []).length >= 5) ? 1 : 0;
+  if (st === 'honey'){ let tot = 0; for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (T.t === 'device' && T.total) tot += T.total; } return Math.max(s.honey || 0, Math.floor(tot + (s.honeyCollected0 || 0))); }
+  return Math.floor(s[st] || 0); }
+const achTiers = a => a.tiers ? a.tiers.map((v, i) => [TIERS39[i], v]) : [['single', 1]];
+function achSeedVisible(){ const A = ach39();
+  for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (T.t === 'animal') A.seen.animals[T.id] = 1; if (T.t === 'device' && T.made) for (const h in T.made) if (T.made[h] > 0) A.seen.honeys[h] = 1;
+    if (T.bf) for (const b of T.bf) if (b.st === 'adult'){ const key = String(b.t0); A.bfSeen = A.bfSeen || []; if (!A.bfSeen.includes(key)){ A.bfSeen.push(key); if (A.bfSeen.length > 400) A.bfSeen.shift(); stat('butterfly'); } } }
+  for (const id in S.inv) if (CFG.items[id] && CFG.items[id].category === 'honey') A.seen.honeys[id] = 1;
+  if (S.fleet) for (const kind in S.fleet) for (const u of S.fleet[kind] || []) if (u && u.tier != null) A.seen.robots[kind + ':' + u.tier] = 1;
+  for (const P of petList()) seen(P.kind === 'dog' ? 'dogs' : 'cats', P.breed); }
+function achCheck(quiet){ if (!S) return; const A = ach39(); achSeedVisible(); let got = [];
+  for (const a of ACHC.list || []){ const v = achValue(a), G = A.got[a.id] = A.got[a.id] || {};
+    for (const [tier, need] of achTiers(a)) if (v >= need && !G[tier]){ G[tier] = Date.now(); const rw = (ACHC.tierRewards || {})[tier] || 0; if (!quiet){ S.player.coins += rw; got.push({ a, tier, rw }); } else G[tier + 'Old'] = 1; } }
+  if (got.length){ const g = got[got.length - 1]; sfx('levelup');
+    toast(`獲得徽章：${g.a.name}${g.tier === 'single' ? '' : `（${(ACHC.tierNames || {})[g.tier]}）`}　+${fmtN(got.reduce((s, x) => s + x.rw, 0))} 金幣${got.length > 1 ? `（共 ${got.length} 個）` : ''}`, true, 3800); renderHUD(); save(); } }
+setInterval(() => { try { if (S && SLOT) achCheck(false); } catch(e){} }, 4000);
+// counters from deliveries
+{ const _dl39 = deliver; deliver = function(goods, x, y, finalize, ...a){ const g = (goods || []).filter(q => q.qty > 0).map(q => ({ ...q })), pool = RT.poolN || 0; RT.poolN = 0;
+  const fin = () => { try { for (const q of g){ const I = CFG.items[q.id] || {}, cat = I.category, base = String(q.id).replace(/^org_/, '');
+      if (CFG.crops[base] && !FL[base]){ stat('harvest'); stat('crop:' + base, q.qty); seen('crops', base); if (q.id.startsWith('org_')) stat('organic'); }
+      else if (CFG.trees[base]){ seen('fruits', base); if (q.id.startsWith('org_')) stat('organic'); }
+      else if (cat === 'product') stat('ranch');
+      else if (cat === 'meat') stat('ship', q.qty);
+      else if (cat === 'fish'){ stat('fisher', pool || q.qty); statMax('bigPond', pool || q.qty); }
+      else if (cat === 'honey'){ seen('honeys', q.id); } } } catch(e){}
+    return finalize && finalize(); };
+  return _dl39(goods, x, y, fin, ...a); }; }
+{ const _tp39 = tapPool; tapPool = function(M, pk, ...a){ const P = M.pools[pk]; RT.poolN = P ? P.n : 0; const r = _tp39(M, pk, ...a); return r; }; }
+{ const _hc39 = harvestCrop; harvestCrop = function(T, cx, cy){ const id = T.crop && T.crop.id, w = T.crop && T.crop.wither; const r = _hc39(T, cx, cy);
+  if (w && id && !T.crop){ stat('harvest'); stat('crop:' + id, CFG.crops[id].yield || 1); seen('crops', id); } return r; }; }
+function openAch(){
+  achCheck(false); const A = ach39(), groups = []; for (const a of ACHC.list || []){ let g = groups.find(x => x.n === a.group); if (!g) groups.push(g = { n: a.group, l: [] }); g.l.push(a); }
+  const total = (ACHC.list || []).reduce((s, a) => s + achTiers(a).length, 0), have = (ACHC.list || []).reduce((s, a) => s + achTiers(a).filter(([t]) => (A.got[a.id] || {})[t]).length, 0);
+  openModal('成就', null, (kk, el) => {
+    el.innerHTML = `<p class="small">亮的是已經拿到的徽章，灰的還沒拿到。已拿到 ${have} / ${total} 階。每階獎勵：銅 200、銀 1,000、金 5,000、白金 20,000 金幣（一階的 5,000）。點徽章看條件。</p>` +
+      groups.map(g => `<h3>${g.n}</h3><div class="achw">${g.l.map(a => { const G = A.got[a.id] || {}, T = achTiers(a), top = [...T].reverse().find(([t]) => G[t]), nx = T.find(([t]) => !G[t]), v = achValue(a);
+        const show = (top || T[0])[0], pct = nx ? Math.min(100, Math.floor(v / nx[1] * 100)) : 100;
+        return `<button class="achb${top ? '' : ' off'}" data-a="${a.id}"><canvas data-spr="badge_${a.id}_${show}" data-f="0" class="ico"></canvas><b>${a.name}</b><small>${nx ? `${fmtN(Math.min(v, nx[1]))} / ${fmtN(nx[1])}` : '全部完成'}</small><i><u style="width:${pct}%"></u></i></button>`; }).join('')}</div>`).join('') + '<div id="achDet" class="pcard" hidden></div>';
+    el.querySelectorAll('.achb canvas[data-spr]').forEach(c => { const n = iconCanvas(c.dataset.spr, 0, 56); c.width = n.width; c.height = n.height; c.getContext('2d').drawImage(n, 0, 0); });
+    el.onclick = e => { const b = e.target.closest('[data-a]'); if (!b) return; const a = (ACHC.list || []).find(x => x.id === b.dataset.a), G = A.got[a.id] || {}, det = el.querySelector('#achDet');
+      det.hidden = false; det.innerHTML = `<h4>${a.name}</h4><p class="small">${a.desc}（目前 ${fmtN(achValue(a))}）</p><div class="kv">${achTiers(a).map(([t, need]) => `<span>${(ACHC.tierNames || {})[t]}</span><span>${a.tiers ? fmtN(need) : '達成'} · 獎勵 ${fmtN((ACHC.tierRewards || {})[t] || 0)}${G[t] ? ` · <b>${G[t + 'Old'] ? '已拿到' : new Date(G[t]).toLocaleDateString('zh-TW') + ' 拿到'}</b>` : ''}</span>`).join('')}</div>`;
+      det.scrollIntoView({ block: 'nearest' }); }; }); }
+css38.textContent += `.achw{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.achb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:var(--card,#fff);cursor:pointer;font:inherit;color:inherit}
+.achb canvas{width:56px;height:56px}.achb b{font-size:13px}.achb small{font-size:11px;opacity:.75}
+.achb i{display:block;width:80%;height:5px;border-radius:3px;background:rgba(0,0,0,.1);overflow:hidden}.achb i u{display:block;height:100%;background:#e0a72a}
+.achb.off canvas{filter:grayscale(1);opacity:.45}`;
+// menu entry: 更多 panel + 選單 tab
+{ const _mh39 = moreHTML; moreHTML = function(){ return _mh39().replace(/(<button class="mi" data-m="news")/, `<button class="mi" data-m="ach"><img src="${IMGSRC.ui_trophy}" alt=""><span>成就</span></button>$1`); }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="ach"]'); if (!b) return; e.stopPropagation(); closeMore(); openAch(); }, true);
+{ const _om39b = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '選單' && Array.isArray(tabs) && !tabs.some(t => t[0] === 'ach')){ tabs = tabs.slice(); const i = tabs.findIndex(t => t[0] === 'settings'); tabs.splice(Math.max(0, i), 0, ['ach', '成就']);
+    const r0 = render; render = (k, el) => { if (k === 'ach'){ setTimeout(openAch, 0); return; } r0(k, el); }; }
+  return _om39b(title, tabs, render, initial); }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns39 = normalizeState; normalizeState = function(d){ const r = _ns39(d); if (!r) return r;
+  r.pets = r.pets || []; r.preds = (r.preds || []).filter(q => !q.done); r.rats = r.rats || { barn: 0 };
+  if (!r.ach){ r.ach = { s: {}, got: {}, seen: {} }; r.achSeed = 1; }
+  return r; }; }
+{ const _es39 = enterSlot; enterSlot = function(...a){ const r = _es39(...a); setTimeout(() => { try { if (S && S.achSeed){ delete S.achSeed; achCheck(false); save(); } } catch(e){} }, 0); return r; }; }
+window.__farm216 = { placeAny: (...a) => placeAny(...a), center, buyPet, openPet, openDen, petList, ratSpots, catchRat, spawnPred: (kind, k) => spawnPred(kind, S.cur, curMap(), k, Date.now()), predList, achCheck, openAch, achValue, buyBoost, boostPrice, petCap, stepPets, stepRats, stepPreds, queueLevelUps, showLevelUp, openBoost };
+
+/* ===== 40. v2.17: phone taps never zoom the page; installable app (service worker sw.js, offline cache,
+   "有新版本" prompt, 安裝到主畫面 button in 設定), status-bar colour follows day / night ===== */
+const PWA40 = CFG.pwa || {}, NZ40 = (CFG.ui && CFG.ui.noZoom) || {};
+{ const st = document.createElement('style');
+  st.textContent = `html,body,button,a,label,select,.item,.btn,#tray,#modal,.sheet,#hud,#dock,#toolSheet,#morePanel,#utilPanel,#trayTabs{touch-action:${NZ40.touchAction || 'manipulation'}}
+input,select,textarea{font-size:max(16px,1em)}
+#swBar{position:fixed;left:50%;top:max(8px,env(safe-area-inset-top));transform:translateX(-50%);z-index:95;background:#1e3a2a;color:#fff;border-radius:999px;padding:8px 10px 8px 16px;display:flex;gap:10px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.3);font-size:14px}
+#swBar button{border:0;border-radius:999px;padding:6px 12px;background:#ffd84a;color:#3a2a00;font-weight:700;font:inherit;font-weight:700}
+.instcard ol{margin:6px 0 0 18px;padding:0}`;
+  document.head.appendChild(st); }
+// iPhone: block pinch / double-tap page zoom (the map has its own zoom)
+if (NZ40.iosGestureBlock !== false){
+  for (const ev of ['gesturestart', 'gesturechange']) document.addEventListener(ev, e => e.preventDefault(), { passive: false });
+  document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+  document.addEventListener('touchmove', e => { if (e.touches && e.touches.length > 1 && !e.target.closest('canvas')) e.preventDefault(); }, { passive: false }); }
+// make sure the viewport forbids page zoom even if an old shell is used
+{ const m = document.querySelector('meta[name="viewport"]'); if (m && !/user-scalable/.test(m.content)) m.content += ', ' + (NZ40.viewport || 'maximum-scale=1, user-scalable=no'); }
+
+/* ---------- status bar colour ---------- */
+const themeMeta40 = (() => { let m = document.querySelector('meta[name="theme-color"]'); if (!m){ m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); } return m; })();
+function themeColor40(){ let night = false; try { night = S ? isNightAt(Date.now()) : false; } catch(e){} themeMeta40.content = night ? (PWA40.themeColorNight || '#1d2a44') : (PWA40.themeColorDay || '#7fd0f5'); }
+themeColor40(); setInterval(themeColor40, 30000);
+
+/* ---------- service worker (not on file://) ---------- */
+const isStandalone40 = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isIOS40 = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+RT.swReg = null;
+function swUpdateBar(reg){ if (document.getElementById('swBar')) return;
+  const b = document.createElement('div'); b.id = 'swBar'; b.innerHTML = `<span>${PWA40.updatePrompt || '有新版本，重新整理'}</span><button>重新整理</button>`;
+  b.querySelector('button').onclick = () => { try { if (S) save(); } catch(e){} if (reg.waiting) reg.waiting.postMessage('skipWaiting'); else location.reload(); };
+  document.body.appendChild(b); }
+if (PWA40.serviceWorker && 'serviceWorker' in navigator && location.protocol !== 'file:' && !/^(null|about:)/.test(location.origin)){
+  let reloading = false; const hadCtl40 = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (reloading || !hadCtl40) return; reloading = true; location.reload(); });
+  const reg40 = () => {
+    navigator.serviceWorker.register(PWA40.serviceWorker).then(reg => { RT.swReg = reg;
+      if (reg.waiting && navigator.serviceWorker.controller) swUpdateBar(reg);
+      reg.addEventListener('updatefound', () => { const w = reg.installing; if (!w) return; w.addEventListener('statechange', () => { if (w.state === 'installed' && navigator.serviceWorker.controller) swUpdateBar(reg); }); });
+      setInterval(() => reg.update().catch(() => {}), 30 * 60e3);
+    }).catch(() => {}); };
+  if (document.readyState === 'complete') reg40(); else window.addEventListener('load', reg40); }
+
+/* ---------- 安裝到主畫面 ---------- */
+RT.installEvt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); RT.installEvt = e; });
+window.addEventListener('appinstalled', () => { RT.installEvt = null; toast('已經安裝到主畫面了', true); });
+function installCardHTML(){
+  if (isStandalone40() || PWA40.installButton === false) return '';
+  const ios = isIOS40(), file = location.protocol === 'file:';
+  return `<div class="pcard instcard"><h4><img src="${IMGSRC.ui_install}" alt="">安裝到主畫面</h4>
+    <p class="small">安裝後從主畫面圖示開啟，沒有網址列、全螢幕，沒網路也能玩。</p>
+    ${file ? '<p class="small">直接雙擊打開的檔案不能安裝；請放到網站（https）上再開。</p>'
+      : ios ? `<ol class="small"><li>用 Safari 打開這個網頁</li><li>點下方的「分享」</li><li>選「加入主畫面」</li></ol><p class="small warn">iPhone 的主畫面 App 和 Safari 的存檔是分開的：安裝後用 Google 雲端存檔，或「存檔與換電腦」的匯出／匯入把農場搬過去。</p>`
+      : `<div class="row"><button class="btn" id="instBtn">安裝到主畫面</button></div><p class="small" id="instNote"></p>`}</div>`; }
+{ const _rs40 = renderSettings; renderSettings = function(el, ...a){ const r = _rs40(el, ...a); const h = installCardHTML(); if (!h) return r;
+  el.insertAdjacentHTML('afterbegin', h); const b = el.querySelector('#instBtn');
+  if (b) b.onclick = async () => { const ev = RT.installEvt;
+    if (!ev){ const n = el.querySelector('#instNote'); if (n) n.textContent = '瀏覽器還沒準備好安裝（要用 https 開啟，並在 Chrome／Edge）。也可以從瀏覽器選單選「安裝應用程式」或「加到主畫面」。'; return; }
+    ev.prompt(); try { const c = await ev.userChoice; if (c && c.outcome === 'accepted') RT.installEvt = null; } catch(e){} };
+  return r; }; }
+window.__farm217 = { isStandalone: isStandalone40, isIOS: isIOS40, installCardHTML, swUpdateBar };
+
+/* ===== 41. v2.17.1: player art — 倉庫 header picture, honey picture in 農產倉庫, new truck pictures (art only, see art/src_ui) ===== */
+if (IMGSRC.ui_pg_storage_icon) PAGE['倉庫'] = Object.assign({}, PAGE['倉庫'], { ic: 'ui_pg_storage_icon' });
+{ const h = ST_CAT.find(c => c[0] === 'honey'); if (h && IMGSRC.ui_pg_st_honey) h[2] = 'st_honey'; }
+window.__farm2171 = { dwNeeds: T => dwNeeds(T), needsWater: () => needsWater() };
+
+/* ===== 42. v2.17.2: coin expansions are also bought where they belong (v2.16 table「哪裡買」):
+   垃圾站 panel · 垃圾站容量, 倉庫 · 農產倉庫容量, 水塔 panel · 雨水儲量, 魚 · 設施 · 魚池格數, 播種 · 設施 · 溫室格數
+   (動物 · 設施 · 動物上限 and 寵物犬／寵物貓 · 寵物上限 were already in the tray; 等級 · 擴充 lists all of them) ===== */
+function boostCardHTML(k){ const B = BK38[k]; if (!B) return ''; const n = boostN(k), full = n >= B.max, open = boostOpen(k);
+  return `<div class="pcard boostcard"><h4><span class="hic">＋</span>用金幣擴充${B.name}<span class="pill">已加 ${n} / ${B.max} 次</span></h4>
+    <p class="small">每次 ${boostAddText(k)}${k === 'trash' ? '（所有垃圾站一起加）' : ''}，目前 ${typeof boostNow(k) === 'number' ? fmtN(boostNow(k)) : boostNow(k)}。加買的額度永久有效。</p>
+    <div class="row">${full ? '<span class="pill ok">已擴充到最多</span>' : open ? `<button class="btn" data-boost42="${k}">擴充 · ${coinI()}${fmtN(boostPrice(k))}</button>` : `<span class="pill lock">要先解鎖</span>`}
+    <button class="btn ghost" data-boostall="1">看全部擴充</button></div></div>`; }
+function wireBoostCard(box, reopen){
+  box.addEventListener('click', e => { const b = e.target.closest('[data-boost42]'); if (b){ e.stopPropagation(); if (buyBoost(b.dataset.boost42)) reopen(); return; }
+    if (e.target.closest('[data-boostall]')){ e.stopPropagation(); openBoost(); } }); }
+{ const _om42 = openModal; openModal = function(title, tabs, render, initial){
+  if (typeof render === 'function'){
+    const kind = title === (TRB.name || '垃圾站') ? 'trash' : String(title).startsWith('農場水塔') ? 'water' : title === '倉庫' ? 'produce' : null;
+    if (kind){ const r0 = render, a = [title, tabs, initial];
+      render = (k, el) => { r0(k, el); if (kind === 'produce' && k !== 'produce') return; queueMicrotask(() => addCard(k, el)); };   // inner wrappers re-render after us
+      const addCard = (k, el) => { if (!el.isConnected || el.querySelector('.boostcard')) return;
+        const box = document.createElement('div'); box.innerHTML = boostCardHTML(kind); const card = box.firstElementChild; if (!card) return;
+        const anchor = kind === 'trash' ? el.querySelectorAll(':scope > .pcard')[0] : kind === 'produce' ? el.querySelector('.stcap') : null;
+        if (anchor) anchor.insertAdjacentElement('afterend', card); else el.appendChild(card);
+        wireBoostCard(card, () => { if (kind === 'trash' && RT.trash42) openTrash(...RT.trash42); else if (kind === 'produce') openStorage('produce'); else openTower(); }); }; } }
+  return _om42(title, tabs, render, initial); }; }
+// trays: 魚 · 設施 and 播種 · 設施
+{ const _ut42 = UIbuildTray; UIbuildTray = function(){ _ut42(); if (!S || RT.borrow34) return;
+  const tool = S.sel.tool, tray = $('tray'); if (!tray) return;
+  const k = tool === 'fish' ? 'pool' : (tool === 'seed' && S.sel.seedTab === 'facility') ? 'greenhouse' : null; if (!k) return;
+  const B = BK38[k]; if (!B || tray.querySelector(`.item[data-id="boost_${k}"]`)) return;
+  const n = boostN(k), open = boostOpen(k), lv = UNLOCK[B.needs];
+  const el = trayItem('boost', 'boost_' + k, `${B.name} +${B.add}`, [n >= B.max ? '已擴充到最多' : `${coinImg()}${fmtN(boostPrice(k))}`, `目前 ${fmtN(boostNow(k))} 格 · 已買 ${n}/${B.max}`], false, !open, { lockLv: lv });
+  el.dataset.tabid = 'facility';
+  el.onclick = () => { if (!open){ toast(`${B.name}要等${nameOf(B.needs) || '解鎖'}（Lv ${lv}）才能擴充`); return; } if (buyBoost(k)) UIbuildTray(); };
+  tray.appendChild(el);
+  if (tool === 'fish') applyTabs33(); }; }
+{ const _is42 = itemSprite; itemSprite = function(kind, id){ if (kind === 'boost' && id === 'boost_pool') return ['ui_tool_fishpool', 0]; if (kind === 'boost' && id === 'boost_greenhouse') return ['ui_lamp', 0]; return _is42(kind, id); }; }
+css38.textContent += `.boostcard h4 .hic{font-weight:900;color:var(--accent,#3f8a5a)}`;
+window.__farm2172 = { boostCardHTML, openTower: () => openTower() };
+{ const _a42 = applyTabs33; applyTabs33 = function(){ _a42(); const tray = $('tray'); if (!tray || !S || S.sel.tool !== 'fish') return; const tab = S.sel.fishTab;
+  tray.querySelectorAll('.item[data-tabid]').forEach(el => { el.hidden = el.dataset.tabid !== tab; }); if ([...tray.querySelectorAll('.item')].some(x => !x.hidden)) tray.querySelectorAll('.trayempty').forEach(e => e.remove()); }; }
+{ const _ot42 = openTrash; openTrash = function(...a){ RT.trash42 = a; return _ot42(...a); }; }
+
+/* ===== 43. v2.17.3: sprites can be stored at more than 2× (atlas "scale": 4 for the big player-supplied pad / truck art);
+   those are drawn with high-quality smoothing so they stay sharp on phones and when zoomed in ===== */
+function spr(name, frame, x, y, flip = false, alpha = 1){
+  const a = ATLAS[name], im = IMG[name]; if (!a || !im) return;
+  const fw = a.frameWidth, fh = a.frameHeight, s = 1 / (a.scale || 2), sx = (a.sx || 0) + frame * fw, sy = a.sy || 0, hq = (a.scale || 2) > 2;
+  if (hq){ ctx.save(); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; }
+  if (alpha !== 1) ctx.globalAlpha = alpha;
+  if (flip){ ctx.save(); ctx.translate(x, y); ctx.scale(-1, 1); ctx.drawImage(im, sx, sy, fw, fh, -a.anchor[0] * s, -a.anchor[1] * s, fw * s, fh * s); ctx.restore(); }
+  else ctx.drawImage(im, sx, sy, fw, fh, x - a.anchor[0] * s, y - a.anchor[1] * s, fw * s, fh * s);
+  if (alpha !== 1) ctx.globalAlpha = 1;
+  if (hq) ctx.restore();
+}
+
+/* ===== 44. v2.17.5: a pad on the back sides (ne / nw) is drawn a little further out and higher, so it doesn't look
+   sunk behind the island's far edge (numbers in CFG.ui.truckPadBack) ===== */
+const PADBACK44 = (CFG.ui && CFG.ui.truckPadBack) || { outTiles: .35, upPx: 8 };
+{ const _dp44 = drawPad; drawPad = function(P, t, now, ghost){
+  if (!P || (P.side !== 'ne' && P.side !== 'nw')) return _dp44(P, t, now, ghost);
+  const o = P.side === 'ne' ? [0, -1] : [-1, 0], k = PADBACK44.outTiles || 0, dx = (o[0] - o[1]) * HW * k, dy = (o[0] + o[1]) * HH * k - (PADBACK44.upPx || 0);
+  ctx.save(); ctx.translate(dx, dy); try { return _dp44(P, t, now, ghost); } finally { ctx.restore(); } }; }
 
   })(CFG, ATLAS_JSON);
 })();

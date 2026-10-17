@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.12.0",
+  "configVersion": "2.17.5",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -61,7 +61,7 @@ window.GAME_CONFIG = {
   "blockSize": 10,
   "maxBlocksPerMap": 4,
   "maxMaps": 3,
-  "maxLevel": 10,
+  "maxLevel": 50,
   "autosaveSeconds": 30,
   "produceStorage": true,
   "produceFullAction": "ask",
@@ -778,6 +778,74 @@ window.GAME_CONFIG = {
    "source": "shop",
    "cost": 80,
    "sellable": true
+  },
+  "dog_house": {
+   "name": "狗屋",
+   "source": "shop",
+   "cost": 800,
+   "sellable": true,
+   "den": "dog",
+   "via": "animal"
+  },
+  "cat_tree": {
+   "name": "貓跳台",
+   "source": "shop",
+   "cost": 600,
+   "sellable": true,
+   "den": "cat",
+   "via": "animal"
+  },
+  "dog_house_gold": {
+   "name": "金色狗屋",
+   "source": "levelReward",
+   "sellable": false,
+   "den": "dog",
+   "effect": {
+    "type": "den",
+    "driveBonus": 0.05
+   }
+  },
+  "cat_tree_gold": {
+   "name": "豪華貓跳台",
+   "source": "levelReward",
+   "sellable": false,
+   "den": "cat",
+   "effect": {
+    "type": "den",
+    "rangeBonus": 2
+   }
+  },
+  "fountain": {
+   "name": "噴水池",
+   "source": "levelReward",
+   "sellable": false
+  },
+  "weather_rooster": {
+   "name": "風向雞",
+   "source": "levelReward",
+   "sellable": false
+  },
+  "hot_air_balloon": {
+   "name": "熱氣球",
+   "source": "levelReward",
+   "sellable": false
+  },
+  "lighthouse": {
+   "name": "燈塔",
+   "source": "levelReward",
+   "sellable": false
+  },
+  "observatory": {
+   "name": "天文台",
+   "source": "levelReward",
+   "sellable": false
+  },
+  "golden_farmhouse": {
+   "name": "金色農舍",
+   "source": "levelReward",
+   "sellable": false,
+   "skinOf": "farmhouse",
+   "note": "農舍換成金色外觀（設定可切換），不另外佔格子"
   }
  },
  "expansion": {
@@ -1064,7 +1132,13 @@ window.GAME_CONFIG = {
     "water_tower",
     "block:5",
     "block:6",
-    "cherry"
+    "cherry",
+    "dog_shiba",
+    "cat_orange",
+    "dog_house",
+    "cat_tree",
+    "dog_food",
+    "cat_food"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1105,6 +1179,474 @@ window.GAME_CONFIG = {
    "fishPoolTileCap": 16,
    "produceCapacity": 2200,
    "rainStorage": 2500
+  },
+  {
+   "level": 11,
+   "xpToReach": 240600,
+   "coinReward": 6000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_maltese"
+   ],
+   "animalCap": 17,
+   "fishPoolTileCap": 17,
+   "produceCapacity": 2450,
+   "rainStorage": 2750
+  },
+  {
+   "level": 12,
+   "xpToReach": 301800,
+   "coinReward": 7000,
+   "specialDeco": null,
+   "unlocks": [
+    "cat_calico"
+   ],
+   "animalCap": 18,
+   "fishPoolTileCap": 18,
+   "produceCapacity": 2700,
+   "rainStorage": 3000
+  },
+  {
+   "level": 13,
+   "xpToReach": 363600,
+   "coinReward": 8000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_pomeranian"
+   ],
+   "animalCap": 19,
+   "fishPoolTileCap": 19,
+   "produceCapacity": 2950,
+   "rainStorage": 3250
+  },
+  {
+   "level": 14,
+   "xpToReach": 426000,
+   "coinReward": 9000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 20,
+   "fishPoolTileCap": 20,
+   "produceCapacity": 3200,
+   "rainStorage": 3500
+  },
+  {
+   "level": 15,
+   "xpToReach": 489000,
+   "coinReward": 20000,
+   "specialDeco": "dog_house_gold",
+   "unlocks": [
+    "dog_corgi"
+   ],
+   "animalCap": 21,
+   "fishPoolTileCap": 21,
+   "produceCapacity": 3450,
+   "rainStorage": 3750
+  },
+  {
+   "level": 16,
+   "xpToReach": 552600,
+   "coinReward": 11000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 22,
+   "fishPoolTileCap": 22,
+   "produceCapacity": 3700,
+   "rainStorage": 4000
+  },
+  {
+   "level": 17,
+   "xpToReach": 616800,
+   "coinReward": 12000,
+   "specialDeco": null,
+   "unlocks": [
+    "cat_black"
+   ],
+   "animalCap": 23,
+   "fishPoolTileCap": 23,
+   "produceCapacity": 3950,
+   "rainStorage": 4250
+  },
+  {
+   "level": 18,
+   "xpToReach": 681600,
+   "coinReward": 13000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_border"
+   ],
+   "animalCap": 24,
+   "fishPoolTileCap": 24,
+   "produceCapacity": 4200,
+   "rainStorage": 4500
+  },
+  {
+   "level": 19,
+   "xpToReach": 747000,
+   "coinReward": 14000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 25,
+   "fishPoolTileCap": 25,
+   "produceCapacity": 4450,
+   "rainStorage": 4750
+  },
+  {
+   "level": 20,
+   "xpToReach": 813000,
+   "coinReward": 30000,
+   "specialDeco": "cat_tree_gold",
+   "unlocks": [],
+   "animalCap": 26,
+   "fishPoolTileCap": 26,
+   "produceCapacity": 4700,
+   "rainStorage": 5000
+  },
+  {
+   "level": 21,
+   "xpToReach": 879600,
+   "coinReward": 16000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_dachshund"
+   ],
+   "animalCap": 27,
+   "fishPoolTileCap": 27,
+   "produceCapacity": 4950,
+   "rainStorage": 5250
+  },
+  {
+   "level": 22,
+   "xpToReach": 946800,
+   "coinReward": 17000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 28,
+   "fishPoolTileCap": 28,
+   "produceCapacity": 5200,
+   "rainStorage": 5500
+  },
+  {
+   "level": 23,
+   "xpToReach": 1014600,
+   "coinReward": 18000,
+   "specialDeco": null,
+   "unlocks": [
+    "cat_ragdoll"
+   ],
+   "animalCap": 29,
+   "fishPoolTileCap": 29,
+   "produceCapacity": 5450,
+   "rainStorage": 5750
+  },
+  {
+   "level": 24,
+   "xpToReach": 1083000,
+   "coinReward": 19000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_poodle"
+   ],
+   "animalCap": 30,
+   "fishPoolTileCap": 30,
+   "produceCapacity": 5700,
+   "rainStorage": 6000
+  },
+  {
+   "level": 25,
+   "xpToReach": 1152000,
+   "coinReward": 40000,
+   "specialDeco": "fountain",
+   "unlocks": [],
+   "animalCap": 31,
+   "fishPoolTileCap": 31,
+   "produceCapacity": 5950,
+   "rainStorage": 6250
+  },
+  {
+   "level": 26,
+   "xpToReach": 1221600,
+   "coinReward": 21000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 32,
+   "fishPoolTileCap": 32,
+   "produceCapacity": 6200,
+   "rainStorage": 6500
+  },
+  {
+   "level": 27,
+   "xpToReach": 1291800,
+   "coinReward": 22000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_labrador"
+   ],
+   "animalCap": 33,
+   "fishPoolTileCap": 33,
+   "produceCapacity": 6450,
+   "rainStorage": 6750
+  },
+  {
+   "level": 28,
+   "xpToReach": 1362600,
+   "coinReward": 23000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 34,
+   "fishPoolTileCap": 34,
+   "produceCapacity": 6700,
+   "rainStorage": 7000
+  },
+  {
+   "level": 29,
+   "xpToReach": 1434000,
+   "coinReward": 24000,
+   "specialDeco": null,
+   "unlocks": [
+    "cat_persian"
+   ],
+   "animalCap": 35,
+   "fishPoolTileCap": 35,
+   "produceCapacity": 6950,
+   "rainStorage": 7250
+  },
+  {
+   "level": 30,
+   "xpToReach": 1506000,
+   "coinReward": 50000,
+   "specialDeco": "weather_rooster",
+   "unlocks": [
+    "dog_bulldog"
+   ],
+   "animalCap": 36,
+   "fishPoolTileCap": 36,
+   "produceCapacity": 7200,
+   "rainStorage": 7500
+  },
+  {
+   "level": 31,
+   "xpToReach": 1578600,
+   "coinReward": 26000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 37,
+   "fishPoolTileCap": 37,
+   "produceCapacity": 7450,
+   "rainStorage": 7750
+  },
+  {
+   "level": 32,
+   "xpToReach": 1651800,
+   "coinReward": 27000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_husky"
+   ],
+   "animalCap": 38,
+   "fishPoolTileCap": 38,
+   "produceCapacity": 7700,
+   "rainStorage": 8000
+  },
+  {
+   "level": 33,
+   "xpToReach": 1725600,
+   "coinReward": 28000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 39,
+   "fishPoolTileCap": 39,
+   "produceCapacity": 7950,
+   "rainStorage": 8250
+  },
+  {
+   "level": 34,
+   "xpToReach": 1800000,
+   "coinReward": 29000,
+   "specialDeco": null,
+   "unlocks": [
+    "dog_golden"
+   ],
+   "animalCap": 40,
+   "fishPoolTileCap": 40,
+   "produceCapacity": 8200,
+   "rainStorage": 8500
+  },
+  {
+   "level": 35,
+   "xpToReach": 1875000,
+   "coinReward": 60000,
+   "specialDeco": "hot_air_balloon",
+   "unlocks": [],
+   "animalCap": 41,
+   "fishPoolTileCap": 41,
+   "produceCapacity": 8450,
+   "rainStorage": 8750
+  },
+  {
+   "level": 36,
+   "xpToReach": 1950600,
+   "coinReward": 31000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 42,
+   "fishPoolTileCap": 42,
+   "produceCapacity": 8700,
+   "rainStorage": 9000
+  },
+  {
+   "level": 37,
+   "xpToReach": 2026800,
+   "coinReward": 32000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 43,
+   "fishPoolTileCap": 43,
+   "produceCapacity": 8950,
+   "rainStorage": 9250
+  },
+  {
+   "level": 38,
+   "xpToReach": 2103600,
+   "coinReward": 33000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 44,
+   "fishPoolTileCap": 44,
+   "produceCapacity": 9200,
+   "rainStorage": 9500
+  },
+  {
+   "level": 39,
+   "xpToReach": 2181000,
+   "coinReward": 34000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 45,
+   "fishPoolTileCap": 45,
+   "produceCapacity": 9450,
+   "rainStorage": 9750
+  },
+  {
+   "level": 40,
+   "xpToReach": 2259000,
+   "coinReward": 70000,
+   "specialDeco": "lighthouse",
+   "unlocks": [],
+   "animalCap": 46,
+   "fishPoolTileCap": 46,
+   "produceCapacity": 9700,
+   "rainStorage": 10000
+  },
+  {
+   "level": 41,
+   "xpToReach": 2337600,
+   "coinReward": 36000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 47,
+   "fishPoolTileCap": 47,
+   "produceCapacity": 9950,
+   "rainStorage": 10250
+  },
+  {
+   "level": 42,
+   "xpToReach": 2416800,
+   "coinReward": 37000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 48,
+   "fishPoolTileCap": 48,
+   "produceCapacity": 10200,
+   "rainStorage": 10500
+  },
+  {
+   "level": 43,
+   "xpToReach": 2496600,
+   "coinReward": 38000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 49,
+   "fishPoolTileCap": 49,
+   "produceCapacity": 10450,
+   "rainStorage": 10750
+  },
+  {
+   "level": 44,
+   "xpToReach": 2577000,
+   "coinReward": 39000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 50,
+   "fishPoolTileCap": 50,
+   "produceCapacity": 10700,
+   "rainStorage": 11000
+  },
+  {
+   "level": 45,
+   "xpToReach": 2658000,
+   "coinReward": 80000,
+   "specialDeco": "observatory",
+   "unlocks": [],
+   "animalCap": 51,
+   "fishPoolTileCap": 51,
+   "produceCapacity": 10950,
+   "rainStorage": 11250
+  },
+  {
+   "level": 46,
+   "xpToReach": 2739600,
+   "coinReward": 41000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 52,
+   "fishPoolTileCap": 52,
+   "produceCapacity": 11200,
+   "rainStorage": 11500
+  },
+  {
+   "level": 47,
+   "xpToReach": 2821800,
+   "coinReward": 42000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 53,
+   "fishPoolTileCap": 53,
+   "produceCapacity": 11450,
+   "rainStorage": 11750
+  },
+  {
+   "level": 48,
+   "xpToReach": 2904600,
+   "coinReward": 43000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 54,
+   "fishPoolTileCap": 54,
+   "produceCapacity": 11700,
+   "rainStorage": 12000
+  },
+  {
+   "level": 49,
+   "xpToReach": 2988000,
+   "coinReward": 44000,
+   "specialDeco": null,
+   "unlocks": [],
+   "animalCap": 55,
+   "fishPoolTileCap": 55,
+   "produceCapacity": 11950,
+   "rainStorage": 12250
+  },
+  {
+   "level": 50,
+   "xpToReach": 3072000,
+   "coinReward": 90000,
+   "specialDeco": "golden_farmhouse",
+   "unlocks": [],
+   "animalCap": 56,
+   "fishPoolTileCap": 56,
+   "produceCapacity": 12200,
+   "rainStorage": 12500
   }
  ],
  "items": {
@@ -1543,12 +2085,26 @@ window.GAME_CONFIG = {
    "category": "material",
    "sellPrice": 0,
    "part": true
+  },
+  "dog_food": {
+   "name": "狗飼料",
+   "category": "feed",
+   "sellPrice": 4,
+   "shopOnly": true
+  },
+  "cat_food": {
+   "name": "貓飼料",
+   "category": "feed",
+   "sellPrice": 3,
+   "shopOnly": true
   }
  },
  "feedShop": {
   "pasture": 4,
   "corn_cake": 6,
-  "fish_feed": 5
+  "fish_feed": 5,
+  "dog_food": 8,
+  "cat_food": 6
  },
  "machines": {
   "corn_cake_machine": {
@@ -3092,7 +3648,11 @@ window.GAME_CONFIG = {
    "quake",
    "death",
    "bill",
-   "meteor"
+   "meteor",
+   "ratAttack",
+   "predator",
+   "petGrown",
+   "petGift"
   ],
   "maxItems": 12
  },
@@ -3439,7 +3999,47 @@ window.GAME_CONFIG = {
    "6": 9,
    "7": 18,
    "8": 27,
-   "9": 36
+   "9": 36,
+   "11": 39,
+   "12": 42,
+   "13": 45,
+   "14": 48,
+   "15": 51,
+   "16": 54,
+   "17": 57,
+   "18": 60,
+   "19": 63,
+   "20": 66,
+   "21": 69,
+   "22": 72,
+   "23": 75,
+   "24": 78,
+   "25": 81,
+   "26": 84,
+   "27": 87,
+   "28": 90,
+   "29": 93,
+   "30": 96,
+   "31": 99,
+   "32": 102,
+   "33": 105,
+   "34": 108,
+   "35": 111,
+   "36": 114,
+   "37": 117,
+   "38": 120,
+   "39": 123,
+   "40": 126,
+   "41": 129,
+   "42": 132,
+   "43": 135,
+   "44": 138,
+   "45": 141,
+   "46": 144,
+   "47": 147,
+   "48": 150,
+   "49": 153,
+   "50": 156
   },
   "sellRate": 0.5,
   "placeOn": [
@@ -3683,6 +4283,17 @@ window.GAME_CONFIG = {
   "trayTabs": {
    "seed": [
     {
+     "id": "facility",
+     "label": "設施",
+     "icon": "ui_lamp",
+     "ids": [
+      "grow_lamp",
+      "grow_lamp_large",
+      "greenhouse"
+     ],
+     "via": "build"
+    },
+    {
      "id": "crops",
      "label": "作物",
      "icon": "ui_tab_crops"
@@ -3696,17 +4307,6 @@ window.GAME_CONFIG = {
      "id": "flowers",
      "label": "花苗",
      "icon": "ui_tab_flowers"
-    },
-    {
-     "id": "facility",
-     "label": "設施",
-     "icon": "ui_lamp",
-     "ids": [
-      "grow_lamp",
-      "grow_lamp_large",
-      "greenhouse"
-     ],
-     "via": "build"
     }
    ],
    "deco": [
@@ -3734,7 +4334,12 @@ window.GAME_CONFIG = {
      "ids": [
       "flowers",
       "hay",
-      "pond"
+      "pond",
+      "fountain",
+      "weather_rooster",
+      "hot_air_balloon",
+      "lighthouse",
+      "observatory"
      ]
     },
     {
@@ -3784,7 +4389,9 @@ window.GAME_CONFIG = {
      "icon": "ui_tab_fac_animal",
      "ids": [
       "fence",
-      "compost_bin"
+      "compost_bin",
+      "dog_house",
+      "cat_tree"
      ],
      "via": {
       "compost_bin": "build"
@@ -3810,6 +4417,36 @@ window.GAME_CONFIG = {
       "dairy_cow",
       "beef_cattle",
       "pig"
+     ]
+    },
+    {
+     "id": "pet_dog",
+     "label": "寵物犬",
+     "icon": "ui_tab_pet_dog",
+     "ids": [
+      "dog_shiba",
+      "dog_maltese",
+      "dog_pomeranian",
+      "dog_corgi",
+      "dog_border",
+      "dog_dachshund",
+      "dog_poodle",
+      "dog_labrador",
+      "dog_bulldog",
+      "dog_husky",
+      "dog_golden"
+     ]
+    },
+    {
+     "id": "pet_cat",
+     "label": "寵物貓",
+     "icon": "ui_tab_pet_cat",
+     "ids": [
+      "cat_orange",
+      "cat_calico",
+      "cat_black",
+      "cat_ragdoll",
+      "cat_persian"
      ]
     }
    ],
@@ -3923,7 +4560,9 @@ window.GAME_CONFIG = {
       "snow_melter"
      ]
     }
-   ]
+   ],
+   "seedDefault": "crops",
+   "animalDefault": "poultry"
   },
   "book": {
    "sidebarIsTabs": true,
@@ -3939,7 +4578,9 @@ window.GAME_CONFIG = {
     "devices": "bookbg_devices",
     "bills": "bookbg_devices",
     "auto": "bookbg_devices",
-    "default": "bookbg_crops"
+    "default": "bookbg_crops",
+    "flowers": "bookbg_crops",
+    "pets": "bookbg_animals"
    }
   },
   "tools": {
@@ -3955,10 +4596,21 @@ window.GAME_CONFIG = {
   },
   "hud": {
    "desktop": "name card spans 2 rows; coins + water/power bar on row 1 top-aligned; weather/storage/auto on row 2; rent tag under the name card"
+  },
+  "noZoom": {
+   "touchAction": "manipulation",
+   "viewport": "maximum-scale=1, user-scalable=no",
+   "iosGestureBlock": true,
+   "inputMinFontPx": 16
+  },
+  "truckPadBack": {
+   "outTiles": 0.35,
+   "upPx": 8,
+   "note": "平台貼在島的左上、右上時，往外推幾格、往上抬幾像素"
   }
  },
  "droneWatering": {
-  "dryThreshold": 0,
+  "dryThreshold": 2,
   "targets": [
    "planted soil",
    "tree"
@@ -3975,7 +4627,8 @@ window.GAME_CONFIG = {
   "idleAt": {
    "owned": "drone_pad",
    "rented": "house"
-  }
+  },
+  "note": "濕度掉到 dryThreshold（0～4 級）以下就去澆，一次補到全濕"
  },
  "houseLight": {
   "needsPower": true,
@@ -4068,7 +4721,8 @@ window.GAME_CONFIG = {
   "scope": "https://www.googleapis.com/auth/drive.appdata",
   "allowedOrigins": [
    "https://phoenixruby.github.io",
-   "http://localhost:8765"
+   "http://localhost:8765",
+   "http://localhost:8766"
   ],
   "siteUrl": "https://phoenixruby.github.io/skyfarm/",
   "intervalMinutes": 5,
@@ -4329,5 +4983,872 @@ window.GAME_CONFIG = {
   "keepDays": 7,
   "maxEntries": 3000,
   "pageSize": 100
+ },
+ "pets": {
+  "unlockLevel": 8,
+  "capBase": 10,
+  "capMax": 30,
+  "sellRate": 0.5,
+  "nameMaxChars": 8,
+  "youngDays": 2,
+  "youngFoodMult": 0.5,
+  "storable": false,
+  "movable": true,
+  "dogs": {
+   "shiba": {
+    "name": "柴犬",
+    "size": "M",
+    "level": 8,
+    "price": 2000,
+    "range": 7,
+    "drive": {
+     "weasel": 0.85,
+     "fox": 0.85,
+     "wolf": 0.6
+    },
+    "skill": "chicken",
+    "skillText": "守雞：對黃鼠狼、狐狸特別兇"
+   },
+   "maltese": {
+    "name": "馬爾濟斯",
+    "size": "S",
+    "level": 11,
+    "price": 2500,
+    "range": 5,
+    "drive": {
+     "weasel": 0.6,
+     "fox": 0.6,
+     "wolf": 0.4
+    },
+    "skill": "alarm",
+    "skillText": "警報：範圍內天敵得手時間從 60 秒延到 3 分鐘，並發通知"
+   },
+   "pomeranian": {
+    "name": "博美",
+    "size": "S",
+    "level": 13,
+    "price": 3000,
+    "range": 5,
+    "drive": {
+     "weasel": 0.95,
+     "fox": 0.7,
+     "wolf": 0.4
+    },
+    "skill": "weasel",
+    "skillText": "抓黃鼠狼高手"
+   },
+   "corgi": {
+    "name": "柯基",
+    "size": "M",
+    "level": 15,
+    "price": 4000,
+    "range": 7,
+    "drive": {
+     "weasel": 0.6,
+     "fox": 0.6,
+     "wolf": 0.8
+    },
+    "skill": "cattle",
+    "skillText": "牧牛：範圍內受驚的牛恢復時間減半"
+   },
+   "border": {
+    "name": "邊境牧羊犬",
+    "size": "L",
+    "level": 18,
+    "price": 5000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.6,
+     "fox": 0.7,
+     "wolf": 0.9
+    },
+    "skill": "sheep",
+    "skillText": "牧羊：範圍內的羊不會受驚"
+   },
+   "dachshund": {
+    "name": "臘腸犬",
+    "size": "S",
+    "level": 21,
+    "price": 5500,
+    "range": 5,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.6,
+     "wolf": 0.4
+    },
+    "skill": "ratter",
+    "skillText": "獵鼠：範圍內的倉庫、垃圾站老鼠也會抓（速度是貓的一半）"
+   },
+   "poodle": {
+    "name": "貴賓犬",
+    "size": "M",
+    "level": 24,
+    "price": 6500,
+    "range": 7,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.75,
+     "wolf": 0.7
+    },
+    "skill": "double",
+    "skillText": "機警：同時應付 2 隻天敵（其他狗一次 1 隻）"
+   },
+   "labrador": {
+    "name": "拉布拉多",
+    "size": "L",
+    "level": 27,
+    "price": 8000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.8,
+     "fox": 0.8,
+     "wolf": 0.8
+    },
+    "skill": "balanced",
+    "skillText": "均衡、範圍大"
+   },
+   "bulldog": {
+    "name": "鬥牛犬",
+    "size": "M",
+    "level": 30,
+    "price": 9000,
+    "range": 7,
+    "drive": {
+     "weasel": 0.6,
+     "fox": 0.7,
+     "wolf": 0.85
+    },
+    "skill": "deter",
+    "skillText": "嚇阻：範圍內天敵出現機率 −50%，守豬"
+   },
+   "husky": {
+    "name": "哈士奇",
+    "size": "L",
+    "level": 32,
+    "price": 10500,
+    "range": 9,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.75,
+     "wolf": 0.9
+    },
+    "skill": "cold",
+    "skillText": "耐寒：冬天和下雪時驅趕率再 +15%"
+   },
+   "golden": {
+    "name": "黃金獵犬",
+    "size": "L",
+    "level": 34,
+    "price": 12000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.75,
+     "wolf": 0.75
+    },
+    "skill": "medic",
+    "skillText": "救護：範圍內被咬傷的家禽會自動救護好"
+   }
+  },
+  "cats": {
+   "orange": {
+    "name": "橘貓",
+    "level": 8,
+    "price": 1500,
+    "range": 7,
+    "catchMinutes": 20,
+    "catchMinutesNight": 20,
+    "skill": "glutton",
+    "skillText": "貪吃：每 6 小時就吃 1 份貓飼料"
+   },
+   "calico": {
+    "name": "三花貓",
+    "level": 12,
+    "price": 2500,
+    "range": 7,
+    "catchMinutes": 30,
+    "catchMinutesNight": 30,
+    "skill": "lucky",
+    "skillText": "招財：每天 10% 機率叼回小禮物（20～200 金幣）"
+   },
+   "black": {
+    "name": "黑貓",
+    "level": 17,
+    "price": 3500,
+    "range": 7,
+    "catchMinutes": 30,
+    "catchMinutesNight": 15,
+    "skill": "night",
+    "skillText": "夜貓：晚上抓鼠快一倍"
+   },
+   "ragdoll": {
+    "name": "布偶貓",
+    "level": 23,
+    "price": 5000,
+    "range": 11,
+    "catchMinutes": 30,
+    "catchMinutesNight": 30,
+    "skill": "wide",
+    "skillText": "黏人：範圍最大，一隻顧得到倉庫和好幾座垃圾站"
+   },
+   "persian": {
+    "name": "波斯貓",
+    "level": 29,
+    "price": 7000,
+    "range": 7,
+    "catchMinutes": 60,
+    "catchMinutesNight": 60,
+    "skill": "deter",
+    "skillText": "嚇阻：範圍內老鼠出現機率 −60%"
+   }
+  },
+  "food": {
+   "dog": {
+    "item": "dog_food",
+    "everyHours": 6
+   },
+   "cat": {
+    "item": "cat_food",
+    "everyHours": 8,
+    "gluttonEveryHours": 6
+   }
+  },
+  "dens": {
+   "dog_house": {
+    "name": "狗屋",
+    "for": "dog",
+    "level": 8,
+    "cost": 800,
+    "expandCost": [
+     400,
+     400
+    ],
+    "maxSlots": 3
+   },
+   "cat_tree": {
+    "name": "貓跳台",
+    "for": "cat",
+    "level": 8,
+    "cost": 600,
+    "expandCost": [
+     300,
+     300
+    ],
+    "maxSlots": 3
+   },
+   "dog_house_gold": {
+    "name": "金色狗屋",
+    "for": "dog",
+    "reward": 15,
+    "maxSlots": 1,
+    "driveBonus": 0.05
+   },
+   "cat_tree_gold": {
+    "name": "豪華貓跳台",
+    "for": "cat",
+    "reward": 20,
+    "maxSlots": 1,
+    "rangeBonus": 2
+   }
+  },
+  "shrinkRefundRate": 0.5,
+  "skills": {
+   "alarmSeconds": 180,
+   "cattleRecoverMult": 0.5,
+   "ratterSpeedMult": 0.5,
+   "deterSpawnMult": 0.5,
+   "coldBonus": 0.15,
+   "catDeterRatMult": 0.4,
+   "luckyChancePerDay": 0.1,
+   "luckyCoins": [
+    20,
+    200
+   ],
+   "doubleTargets": 2
+  },
+  "tapToPet": true,
+  "nightSleepsInDen": true,
+  "drawScale": 1.5
+ },
+ "predators": {
+  "weasel": {
+   "name": "黃鼠狼",
+   "level": 9,
+   "when": "night",
+   "target": "eggs",
+   "chancePerBlockPerHour": 0.05,
+   "needsEggs": true
+  },
+  "fox": {
+   "name": "狐狸",
+   "level": 10,
+   "when": "night",
+   "target": "poultry",
+   "chancePerBlockPerNight": 0.2,
+   "injureSeconds": 3600
+  },
+  "wolf": {
+   "name": "野狼",
+   "level": 12,
+   "when": "nightOrRain",
+   "target": "livestock",
+   "chancePerBlockPerNight": 0.15,
+   "scareSeconds": 14400,
+   "scareRange": 2
+  },
+  "approachSeconds": 60,
+  "chaseTaps": 3,
+  "fencesStop": false,
+  "greenhouseSafe": true,
+  "poultry": [
+   "egg_hen",
+   "broiler"
+  ],
+  "livestock": [
+   "wool_sheep",
+   "meat_sheep",
+   "dairy_goat",
+   "dairy_cow",
+   "beef_cattle",
+   "pig"
+  ],
+  "sheep": [
+   "wool_sheep",
+   "meat_sheep",
+   "dairy_goat"
+  ],
+  "cattle": [
+   "dairy_cow",
+   "beef_cattle"
+  ],
+  "nightHours": 10,
+  "rescueTools": [
+   "hand",
+   "care"
+  ],
+  "newsReport": true,
+  "drawScale": 1.5
+ },
+ "rats": {
+  "startLevel": 9,
+  "catchTaps": 3,
+  "winterMult": 1.5,
+  "barn": {
+   "chancePerHour": 0.1,
+   "fullnessBase": 0.5,
+   "max": 5,
+   "eatsPerHour": {
+    "crop": 1,
+    "feed": 1
+   },
+   "eats": [
+    "crop",
+    "feed"
+   ]
+  },
+  "trash": {
+   "chancePerHour": 0.15,
+   "needsBags": true,
+   "overdueDays": 3,
+   "overdueMult": 2,
+   "max": 3,
+   "chewHoursPerBag": 2
+  },
+  "oldSaveGraceHours": 24,
+  "newsReport": true
+ },
+ "boost": {
+  "roundTo": 10,
+  "kinds": {
+   "produce": {
+    "name": "農產倉庫容量",
+    "add": 100,
+    "unit": "格",
+    "price": 2000,
+    "mult": 1.5,
+    "max": 20
+   },
+   "water": {
+    "name": "雨水儲量",
+    "add": 200,
+    "unit": "滴",
+    "price": 1000,
+    "mult": 1.4,
+    "max": 10
+   },
+   "animal": {
+    "name": "動物上限",
+    "add": 1,
+    "unit": "隻",
+    "price": 3000,
+    "mult": 1.6,
+    "max": 10
+   },
+   "pool": {
+    "name": "魚池格數",
+    "add": 2,
+    "unit": "格",
+    "price": 2000,
+    "mult": 1.5,
+    "max": 10,
+    "needs": "fish_pool"
+   },
+   "greenhouse": {
+    "name": "溫室格數",
+    "add": 3,
+    "unit": "格",
+    "price": 3000,
+    "mult": 1.5,
+    "max": 10,
+    "needs": "greenhouse"
+   },
+   "pet": {
+    "name": "寵物上限",
+    "add": 1,
+    "unit": "隻",
+    "price": 3000,
+    "mult": 1.15,
+    "max": 20,
+    "needs": "dog_house"
+   },
+   "trash": {
+    "name": "垃圾站容量",
+    "add": {
+     "general": 2,
+     "recycle": 2,
+     "sewageDrops": 100
+    },
+    "unit": "",
+    "price": 500,
+    "mult": 1.5,
+    "max": 5
+   }
+  }
+ },
+ "achievements": {
+  "tierRewards": {
+   "bronze": 200,
+   "silver": 1000,
+   "gold": 5000,
+   "platinum": 20000,
+   "single": 5000
+  },
+  "tierNames": {
+   "bronze": "銅",
+   "silver": "銀",
+   "gold": "金",
+   "platinum": "白金",
+   "single": "一階"
+  },
+  "list": [
+   {
+    "id": "level",
+    "name": "升級之路",
+    "group": "升級",
+    "stat": "level",
+    "tiers": [
+     10,
+     20,
+     35,
+     50
+    ],
+    "desc": "到達等級"
+   },
+   {
+    "id": "harvest",
+    "name": "勤勞農夫",
+    "group": "種菜",
+    "stat": "harvest",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     100000
+    ],
+    "desc": "收成田作物次數"
+   },
+   {
+    "id": "veggies",
+    "name": "百菜園",
+    "group": "種菜",
+    "stat": "veggies",
+    "tiers": null,
+    "desc": "收過全部 12 種田作物"
+   },
+   {
+    "id": "orchard",
+    "name": "果園主人",
+    "group": "種菜",
+    "stat": "orchard",
+    "tiers": null,
+    "desc": "收過全部 15 種水果"
+   },
+   {
+    "id": "organic",
+    "name": "有機農夫",
+    "group": "種菜",
+    "stat": "organic",
+    "tiers": [
+     50,
+     500,
+     5000,
+     50000
+    ],
+    "desc": "收成有機作物次數"
+   },
+   {
+    "id": "crop_pasture",
+    "name": "牧草專家",
+    "group": "作物專家",
+    "stat": "crop:pasture",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成牧草個數"
+   },
+   {
+    "id": "crop_wheat",
+    "name": "小麥專家",
+    "group": "作物專家",
+    "stat": "crop:wheat",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成小麥個數"
+   },
+   {
+    "id": "crop_tomato",
+    "name": "番茄專家",
+    "group": "作物專家",
+    "stat": "crop:tomato",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成番茄個數"
+   },
+   {
+    "id": "crop_potato",
+    "name": "馬鈴薯專家",
+    "group": "作物專家",
+    "stat": "crop:potato",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成馬鈴薯個數"
+   },
+   {
+    "id": "crop_corn",
+    "name": "玉米專家",
+    "group": "作物專家",
+    "stat": "crop:corn",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成玉米個數"
+   },
+   {
+    "id": "crop_peanut",
+    "name": "花生專家",
+    "group": "作物專家",
+    "stat": "crop:peanut",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成花生個數"
+   },
+   {
+    "id": "crop_strawberry",
+    "name": "草莓專家",
+    "group": "作物專家",
+    "stat": "crop:strawberry",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成草莓個數"
+   },
+   {
+    "id": "crop_cabbage",
+    "name": "高麗菜專家",
+    "group": "作物專家",
+    "stat": "crop:cabbage",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成高麗菜個數"
+   },
+   {
+    "id": "crop_rice",
+    "name": "水稻專家",
+    "group": "作物專家",
+    "stat": "crop:rice",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成水稻個數"
+   },
+   {
+    "id": "crop_pumpkin",
+    "name": "南瓜專家",
+    "group": "作物專家",
+    "stat": "crop:pumpkin",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成南瓜個數"
+   },
+   {
+    "id": "crop_watermelon",
+    "name": "西瓜專家",
+    "group": "作物專家",
+    "stat": "crop:watermelon",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成西瓜個數"
+   },
+   {
+    "id": "crop_sunflower",
+    "name": "向日葵專家",
+    "group": "作物專家",
+    "stat": "crop:sunflower",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成向日葵個數"
+   },
+   {
+    "id": "ranch",
+    "name": "牧場主人",
+    "group": "動物",
+    "stat": "ranch",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     50000
+    ],
+    "desc": "收動物產物次數"
+   },
+   {
+    "id": "ship",
+    "name": "出貨高手",
+    "group": "動物",
+    "stat": "ship",
+    "tiers": [
+     10,
+     100,
+     1000,
+     5000
+    ],
+    "desc": "肉用型出貨隻數"
+   },
+   {
+    "id": "allAnimals",
+    "name": "全員到齊",
+    "group": "動物",
+    "stat": "allAnimals",
+    "tiers": null,
+    "desc": "養過全部 8 種動物"
+   },
+   {
+    "id": "fisher",
+    "name": "漁夫",
+    "group": "魚",
+    "stat": "fisher",
+    "tiers": [
+     50,
+     500,
+     5000,
+     50000
+    ],
+    "desc": "收成魚的格數"
+   },
+   {
+    "id": "bigPond",
+    "name": "大池塘",
+    "group": "魚",
+    "stat": "bigPond",
+    "tiers": [
+     4,
+     9,
+     16,
+     25
+    ],
+    "desc": "一次收成的整池格數"
+   },
+   {
+    "id": "honey",
+    "name": "蜜蜂大王",
+    "group": "昆蟲",
+    "stat": "honey",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     100000
+    ],
+    "desc": "累計產蜜罐數"
+   },
+   {
+    "id": "honeyAll",
+    "name": "百蜜品嘗",
+    "group": "昆蟲",
+    "stat": "honeyAll",
+    "tiers": null,
+    "desc": "收過全部 7 種蜂蜜"
+   },
+   {
+    "id": "butterfly",
+    "name": "蝴蝶園",
+    "group": "昆蟲",
+    "stat": "butterfly",
+    "tiers": [
+     10,
+     50,
+     200,
+     1000
+    ],
+    "desc": "羽化的蝴蝶隻數"
+   },
+   {
+    "id": "guard",
+    "name": "忠實守護",
+    "group": "狗",
+    "stat": "guard",
+    "tiers": [
+     10,
+     100,
+     1000,
+     5000
+    ],
+    "desc": "狗趕走天敵次數"
+   },
+   {
+    "id": "allDogs",
+    "name": "狗狗大全",
+    "group": "狗",
+    "stat": "allDogs",
+    "tiers": null,
+    "desc": "養過全部 11 種狗"
+   },
+   {
+    "id": "nurse",
+    "name": "小護士",
+    "group": "狗",
+    "stat": "nurse",
+    "tiers": [
+     10,
+     100,
+     500
+    ],
+    "desc": "救護受傷動物次數"
+   },
+   {
+    "id": "mouser",
+    "name": "捕鼠高手",
+    "group": "貓",
+    "stat": "mouser",
+    "tiers": [
+     10,
+     100,
+     1000,
+     5000
+    ],
+    "desc": "貓抓老鼠隻數"
+   },
+   {
+    "id": "allCats",
+    "name": "貓咪大全",
+    "group": "貓",
+    "stat": "allCats",
+    "tiers": null,
+    "desc": "養過全部 5 種貓"
+   },
+   {
+    "id": "robots",
+    "name": "機器人大軍",
+    "group": "機器人",
+    "stat": "robots",
+    "tiers": [
+     3,
+     7,
+     10,
+     13
+    ],
+    "desc": "買過的機器人型號數"
+   },
+   {
+    "id": "hours",
+    "name": "勤快助手",
+    "group": "機器人",
+    "stat": "hours",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     50000
+    ],
+    "desc": "機器人累計工作時數"
+   },
+   {
+    "id": "fullFleet",
+    "name": "滿編",
+    "group": "機器人",
+    "stat": "fullFleet",
+    "tiers": null,
+    "desc": "同一種機器人買滿 5 台"
+   }
+  ]
+ },
+ "pwa": {
+  "serviceWorker": "sw.js",
+  "skipOnFile": true,
+  "updatePrompt": "有新版本，重新整理",
+  "noCache": [
+   "accounts.google.com",
+   "googleapis.com",
+   "gstatic.com"
+  ],
+  "installButton": true,
+  "iosHint": "Safari「分享」→「加入主畫面」",
+  "themeColorDay": "#7fd0f5",
+  "themeColorNight": "#1d2a44",
+  "maskableIcon": "icons/icon-maskable-512.png"
  }
 };
