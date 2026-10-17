@@ -8169,7 +8169,7 @@ window.GAME_ATLAS = {
       "file": "ui_pg_st_material.png",
       "frames": 1,
       "frameWidth": 260,
-      "frameHeight": 189,
+      "frameHeight": 138,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -14844,6 +14844,366 @@ window.GAME_ATLAS = {
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 118,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_feedshop": {
+      "file": "ui_pg_st_feedshop.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 162,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_dolls": {
+      "file": "ui_pg_st_dolls.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_buildings": {
+      "file": "ui_pg_st_buildings.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 169,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_decos": {
+      "file": "ui_pg_st_decos.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 183,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_frames": {
+      "file": "ui_hv_frames.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 109,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_bees": {
+      "file": "ui_hv_bees.png",
+      "frames": 1,
+      "frameWidth": 120,
+      "frameHeight": 124,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_rate": {
+      "file": "ui_hv_rate.png",
+      "frames": 1,
+      "frameWidth": 112,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_next": {
+      "file": "ui_hv_next.png",
+      "frames": 1,
+      "frameWidth": 105,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_eta": {
+      "file": "ui_hv_eta.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 125,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_flowers": {
+      "file": "ui_hv_flowers.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 114,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_store": {
+      "file": "ui_hv_store.png",
+      "frames": 1,
+      "frameWidth": 124,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_state": {
+      "file": "ui_hv_state.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 104,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_total": {
+      "file": "ui_hv_total.png",
+      "frames": 1,
+      "frameWidth": 113,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_flavors": {
+      "file": "ui_hv_flavors.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 90,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_step1": {
+      "file": "ui_hv_step1.png",
+      "frames": 1,
+      "frameWidth": 251,
+      "frameHeight": 129,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_step2": {
+      "file": "ui_hv_step2.png",
+      "frames": 1,
+      "frameWidth": 214,
+      "frameHeight": 231,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_step3": {
+      "file": "ui_hv_step3.png",
+      "frames": 1,
+      "frameWidth": 250,
+      "frameHeight": 152,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hv_step4": {
+      "file": "ui_hv_step4.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_gift": {
+      "file": "ui_lv_gift.png",
+      "frames": 1,
+      "frameWidth": 125,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_coin": {
+      "file": "ui_lv_coin.png",
+      "frames": 1,
+      "frameWidth": 127,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_drop": {
+      "file": "ui_lv_drop.png",
+      "frames": 1,
+      "frameWidth": 112,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_house": {
+      "file": "ui_lv_house.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 121,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_star": {
+      "file": "ui_lv_star.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 124,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_star_grey": {
+      "file": "ui_lv_star_grey.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_gear": {
+      "file": "ui_lv_gear.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 123,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_paw": {
+      "file": "ui_lv_paw.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 113,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_fish": {
+      "file": "ui_lv_fish.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 102,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_lv_lock": {
+      "file": "ui_lv_lock.png",
+      "frames": 1,
+      "frameWidth": 124,
+      "frameHeight": 124,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_hive_big": {
+      "file": "ui_pg_hive_big.png",
+      "frames": 1,
+      "frameWidth": 520,
+      "frameHeight": 508,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_level_big": {
+      "file": "ui_pg_level_big.png",
+      "frames": 1,
+      "frameWidth": 520,
+      "frameHeight": 490,
       "fps": 0,
       "loop": false,
       "anchor": [

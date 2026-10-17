@@ -9810,6 +9810,127 @@ const PADBACK44 = (CFG.ui && CFG.ui.truckPadBack) || { outTiles: .35, upPx: 8 };
   const o = P.side === 'ne' ? [0, -1] : [-1, 0], k = PADBACK44.outTiles || 0, dx = (o[0] - o[1]) * HW * k, dy = (o[0] + o[1]) * HH * k - (PADBACK44.upPx || 0);
   ctx.save(); ctx.translate(dx, dy); try { return _dp44(P, t, now, ghost); } finally { ctx.restore(); } }; }
 
+/* ===== 45. v2.17.6: 倉庫 · 飼料商店 and 裝飾倉庫 use the same block layout as 農產倉庫 (picture on the left, table on the
+   right); new player pictures for 材料 / 飼料 / 倉庫建築 / 天氣娃娃 / 裝飾 (art/src_ui, batch29) ===== */
+function stBlock45(label, pic, col, inner){
+  return `<section class="stsec c-${col}"><div class="stside"><b>${label}</b>${pic ? `<img class="stpic" src="${PIMG(pic)}" alt="">` : ''}</div><div class="stmain">${inner}</div></section>`; }
+const stTable45 = (heads, rows) => `<table><thead><tr>${heads.map(h => `<th class="${h[1] ? 'num' : ''}">${h[0]}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`;
+function storageShopHTML(){
+  const rows = Object.entries(CFG.feedShop).map(([id, price]) => `<tr><td>${itemIconHTML(id)}</td><td>${itemName(id)}</td><td class="num">${coinI()}${price}</td><td class="num">${fmtN(S.inv[id] || 0)}</td>
+    <td class="acts">${[10, 50].map(q => `<button class="btn${q === 50 ? '' : ' ghost'}" data-buy="${id}" data-q="${q}">買 ${q} 個 · ${fmtN(q * price)}</button>`).join('')}</td></tr>`);
+  return `<div class="stcap stnote"><span>直接用金幣買飼料，放進農產倉庫（還有 <b>${fmtN(invFree())}</b> 格空位）。自己種牧草、用機器做玉米餅和魚飼料會便宜很多；狗飼料、貓飼料只能在這裡買。</span></div>`
+    + stBlock45('飼料', 'st_feedshop', 'g', stTable45([[''], ['飼料'], ['單價', 1], ['倉庫裡', 1], ['']], rows)); }
+function storageDecoHTML(){
+  const ids = Object.keys(S.storage).filter(id => S.storage[id] > 0), bl = Object.keys(BLD).filter(id => S.buildStore[id] > 0);
+  const dolls = S.dolls.filter(d => !dollPlaced(d.id)).sort((a, b) => a.type.localeCompare(b.type) || b.left - a.left);
+  const ic = (n, f = 0) => n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : '';
+  let h = `<div class="stcap stnote"><span><b>裝飾</b>　收回的裝飾、升級獎勵的特殊裝飾都放在這裡，用「裝飾」工具可以拿出來放。<br><b>倉庫建築</b>　用「裝飾」工具拿出來擺在農場上，點它就能開倉庫。沒有容量限制。</span></div>`;
+  h += stBlock45('倉庫建築', 'st_buildings', 'o', bl.length ? stTable45([[''], ['建築'], ['大小']], bl.map(id => `<tr><td>${ic(itemSprite('building', id)[0])}</td><td>${BLD[id].name}${S.buildStore[id] > 1 ? ` ×${S.buildStore[id]}` : ''}</td><td>${BLD[id].size[0]}×${BLD[id].size[1]}</td></tr>`))
+    : '<div class="empty">倉庫裡沒有建築。</div>');
+  const dollRows = dolls.length ? stTable45([[''], ['娃娃'], ['剩下時間'], ['']], dolls.map(d => `<tr><td>${ic(itemSprite('doll', d.type + ':' + (d.left > 0 ? d.size : 'spent'))[0])}</td><td>${dollName(d)}</td><td>${d.left > 0 ? fmtDur(d.left) : '用完了'}</td>
+      <td class="acts"><button class="btn ghost" data-dollsell="${d.id}">賣掉 +${DOLL.rules.sellPrice || 1}</button></td></tr>`)) : '<div class="empty">倉庫裡沒有娃娃。</div>';
+  const buy = `<p class="small stbuyh">買娃娃（先放進倉庫）：</p><div class="stbuy">` + Object.keys(DOLL.types).map(t => Object.keys(DOLL.sizes).map(s => `<button class="btn ghost" data-dollbuy="${t}:${s}" ${isUnlocked('doll_' + t) ? '' : 'disabled'}>${DOLL.types[t].name}${SIZE_NAME[s]} · ${DOLL.prices[t][s]}</button>`).join('')).join('') + `</div>`;
+  h += stBlock45('天氣娃娃', 'st_dolls', 'b', dollRows + buy);
+  h += stBlock45('裝飾', 'st_decos', 'o', ids.length ? stTable45([[''], ['裝飾'], ['數量', 1], ['']], ids.map(id => { const D = CFG.decos[id], [n, f] = itemSprite('deco', id);
+      return `<tr><td>${ic(n, f)}</td><td>${D.name}</td><td class="num">${S.storage[id]}</td><td class="acts">${D.sellable ? `<button class="btn ghost" data-dsell="${id}">賣 1 個 +${fmtN(Math.floor(D.cost * R.decoSellRate))}</button>` : '<span class="pill">不能賣</span>'}</td></tr>`; }))
+    : '<div class="empty">目前是空的。</div>');
+  return h; }
+{ const _om45 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '倉庫' && typeof render === 'function'){ const r0 = render;
+    render = (k, el) => { r0(k, el); if (k === 'shop' || k === 'deco'){ el.innerHTML = k === 'shop' ? storageShopHTML() : storageDecoHTML(); paintIcons(el); } }; }   // g5 keeps el.onclick: the data-* buttons still work
+  return _om45(title, tabs, render, initial); }; }
+css38.textContent += `.stnote{display:block;font-size:13px;line-height:1.7;margin-bottom:12px;border:1px solid var(--gline);border-radius:16px;padding:10px 14px}.stnote b{font-weight:700}
+.stbuyh{margin:10px 10px 4px}.stbuy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:0 10px 10px}.stbuy .btn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stmain .empty{padding:14px}
+@media (max-width:700px){.stbuy{grid-template-columns:repeat(2,minmax(0,1fr))}}`;
+
+/* ===== 46. v2.17.7: new 蜂箱 and 等級 panel layouts (big picture on the left, icon rows, 蜂蜜採集說明 steps,
+   full level strip) with the player's art (art/src_ui: hive_*, level_*; cropped icons ui_hv_* / ui_lv_* in batch29) ===== */
+const IC46 = n => IMGSRC[n] ? `<img class="ic46" src="${IMGSRC[n]}" alt="">` : '';
+PAGE['蜂箱'] = { ic: '', sub: '放在花叢附近，吸引蜜蜂來採蜜。蜂蜜會慢慢存在蜂箱裡，收進倉庫後可以賣掉換金幣。', wide: 1 };
+PAGE['等級'] = { ic: '', sub: '提升等級，解鎖更多作物、動物、建築與裝飾，讓你的浮島更豐富！', wide: 1 };
+const split46 = v => { const m = String(v).match(/^(.*?)\s*([（(].*[）)])\s*$/s); return m ? [m[1], m[2]] : [v, '']; };
+function statRow46(icon, label, val){ const [a, b] = split46(val);
+  return `<div class="st46">${IC46(icon)}<b>${label}</b><span>${a}${b ? `<small>${b}</small>` : ''}</span></div>`; }
+
+/* ---------- 蜂箱 ---------- */
+const HV46_L = [['蜂群', 'ui_hv_frames'], ['蜜蜂', 'ui_hv_bees'], ['熊蜂', 'ui_hv_bees'], ['產蜜', 'ui_hv_rate'], ['下一罐', 'ui_hv_next'], ['預計', 'ui_hv_eta']];
+const HV46_R = [['範圍內開花', 'ui_hv_flowers'], ['存蜜', 'ui_hv_store'], ['狀態', 'ui_hv_state'], ['累計產蜜', 'ui_hv_total'], ['累計各口味', 'ui_hv_flavors']];
+function hiveSteps46(text){
+  const seg = String(text || '').replace(/^蜜蜂採/, '').split(/[；。]/).map(s => s.trim()).filter(Boolean);
+  let s = ['周圍的花，口味跟花走', '沒有花只產少量野蜂蜜', '連續幾天沒花可採會開始吃存蜜', '吃光整窩就會死光'];
+  if (seg.length >= 3){ const [c, d] = seg[2].split('，'); s = [seg[0], seg[1], c, [d, ...seg.slice(3)].filter(Boolean).join('<br>')]; }
+  return `<section class="steps46"><h4>蜂蜜採集說明</h4><div class="srow46">${s.map((t, i) => `${i ? '<i class="arr46">➜</i>' : ''}<div class="sc46"><div class="sp46">${IC46('ui_hv_step' + (i + 1))}</div><p>${t}</p></div>`).join('')}</div></section>`; }
+{ const _oh46 = openHive; openHive = function(M, k, T){ const r = _oh46(M, k, T); try {
+  const el = $('modalBody'); if (!el || el.querySelector('.lay46')) return r;
+  const kv = el.querySelector(':scope > .kv'), map = {};
+  if (kv){ const sp = [...kv.children]; for (let i = 0; i + 1 < sp.length; i += 2) map[sp[i].textContent.trim()] = sp[i + 1].innerHTML; kv.remove(); }
+  const ps = [...el.querySelectorAll(':scope > p.small')], fl = ps.find(p => /^累計各口味/.test(p.textContent)), ex = ps.find(p => /蜜蜂採蜂箱周圍/.test(p.textContent));
+  if (fl){ map['累計各口味'] = fl.innerHTML.replace(/^累計各口味（罐）：/, ''); fl.remove(); }
+  const steps = hiveSteps46(ex && ex.textContent); if (ex) ex.remove();
+  const rest = [...el.childNodes];
+  const col = list => list.filter(([lb]) => map[lb] != null).map(([lb, ic]) => statRow46(ic, lb, map[lb])).join('');
+  const lay = document.createElement('div'); lay.className = 'lay46';
+  lay.innerHTML = `<div class="pic46"><img src="${PIMG('hive_big')}" alt=""></div><div class="main46">${kv ? `<div class="grid46"><div class="card46">${col(HV46_L)}</div><div class="card46">${col(HV46_R)}</div></div>` : ''}<div class="rest46"></div></div>`;
+  const host = lay.querySelector('.rest46'); rest.forEach(n => { if (n.nodeType !== 3 || n.textContent.trim()) host.appendChild(n); });
+  el.innerHTML = ''; el.appendChild(lay); el.insertAdjacentHTML('beforeend', steps);
+  } catch(e){ console.error(e); } return r; }; }
+
+/* ---------- 等級 ---------- */
+function levelInfo46(el){
+  const P = S.player, L = lvInfo(P.level), N = LV[P.level], unlockNm = u => u.startsWith('block:') ? `第 ${u.split(':')[1]} 塊地` : (nameOf(u) || u);
+  const ch = (a, b) => a === b ? fmtN(b) : `${fmtN(a)} → <em>${fmtN(b)}</em>`;
+  const star = (n, grey) => `<span class="star46">${IC46(grey ? 'ui_lv_star_grey' : 'ui_lv_star')}<b>${n}</b></span>`;
+  let h = `<div class="lay46"><div class="pic46"><img src="${PIMG('level_big')}" alt=""></div><div class="main46">`;
+  if (N){ const got = Math.max(0, P.xp - L.xpToReach), span = N.xpToReach - L.xpToReach, pct = Math.min(100, got / span * 100);
+    h += `<div class="card46 now46"><div class="half46">${star(P.level)}<div><small>目前等級</small><h3>第 ${P.level} 級</h3><div class="bar46"><i style="width:${pct}%"></i></div><small>${fmtN(got)} / ${fmtN(span)}　（累計 ${fmtN(P.xp)}）</small></div></div>
+      <div class="half46">${star(N.level, 1)}<div><small>下一級</small><h3>第 ${N.level} 級</h3><p>還差 ${fmtN(Math.max(0, N.xpToReach - P.xp))} 經驗</p></div></div></div>
+      <div class="card46"><h4 class="ch46">第 ${N.level} 級會得到</h4>${statRow46('ui_lv_gift', '解鎖', N.unlocks.map(unlockNm).join('、') || '—')}
+      <div class="g2c46">${statRow46('ui_lv_coin', '金幣獎勵', fmtN(N.coinReward))}${statRow46('ui_lv_gear', '特殊裝飾', N.specialDeco ? nameOf(N.specialDeco) : '—')}
+      ${statRow46('ui_lv_drop', '雨水儲量', ch(L.rainStorage, N.rainStorage))}${statRow46('ui_lv_paw', '動物上限', ch(L.animalCap, N.animalCap))}
+      ${statRow46('ui_lv_house', '倉庫容量', ch(L.produceCapacity, N.produceCapacity))}${statRow46('ui_lv_fish', '魚池格數', ch(L.fishPoolTileCap, N.fishPoolTileCap))}</div></div>`; }
+  else h += `<div class="card46 now46"><div class="half46">${star(P.level)}<div><small>目前等級</small><h3>第 ${P.level} 級（滿級）</h3><small>累計 ${fmtN(P.xp)} 經驗</small></div></div></div>`;
+  h += `</div></div><section class="steps46 strip46"><h4>完整等級表 <button class="btn ghost sm" id="lvAll">看詳細表</button></h4><div class="lrow46">` +
+    LV.map(x => { const st = x.level < P.level ? 'past' : x.level === P.level ? 'cur' : x.level === P.level + 1 ? 'next' : 'lock';
+      return `${x.level > 1 ? '<i class="arr46">➜</i>' : ''}<div class="lc46 ${st}">${st === 'lock' ? `<span class="star46">${IC46('ui_lv_lock')}</span>` : star(x.level, st === 'next')}<b>第 ${x.level} 級</b><small>${fmtN(x.xpToReach)} 經驗</small></div>`; }).join('') + `</div></section>`;
+  el.innerHTML = h;
+  const b = el.querySelector('#lvAll'); if (b) b.onclick = () => openBook('levels');
+  requestAnimationFrame(() => { const row = el.querySelector('.lrow46'), cur = row && row.querySelector('.lc46.cur'); if (cur) row.scrollLeft = cur.offsetLeft - row.clientWidth / 2 + cur.clientWidth / 2; }); }
+{ const _om46 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '等級' && !tabs && typeof render === 'function') render = (k, el) => levelInfo46(el);   // g38 turns this into the 等級 tab (擴充 stays)
+  return _om46(title, tabs, render, initial); }; }
+
+css38.textContent += `
+.lay46{display:grid;grid-template-columns:minmax(180px,32%) 1fr;gap:16px;align-items:start}
+.pic46 img{width:100%;height:auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.3))}
+.main46{display:flex;flex-direction:column;gap:12px;min-width:0}
+.grid46{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card46{border:1px solid var(--gline);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.04)}
+.st46{display:grid;grid-template-columns:44px 96px 1fr;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--gline)}
+.card46 .st46:last-child,.g2c46 .st46:nth-last-child(-n+2){border-bottom:0}
+.st46 .ic46{width:40px;height:40px;object-fit:contain}.st46 b{font-weight:700}.st46 span{line-height:1.35}.st46 small{display:block;font-size:12px;opacity:.75}
+.st46 em{font-style:normal;font-weight:800;color:#5fd36b}
+.g2c46{display:grid;grid-template-columns:1fr 1fr}.g2c46 .st46:nth-child(odd){border-right:1px solid var(--gline)}
+.ch46{margin:0;padding:10px 14px;border-bottom:1px solid var(--gline);font-size:18px;background:rgba(255,255,255,.05)}
+.now46{display:grid;grid-template-columns:1fr 1fr}.half46{display:flex;gap:12px;align-items:center;padding:14px}.half46+.half46{border-left:1px solid var(--gline)}
+.half46 h3{margin:2px 0 6px;font-size:22px}.half46 small{font-size:12px;opacity:.8}.half46 p{margin:4px 0 0}.half46>div{flex:1;min-width:0}
+.bar46{height:12px;border-radius:6px;background:rgba(0,0,0,.25);overflow:hidden;margin:4px 0}.bar46 i{display:block;height:100%;background:linear-gradient(90deg,#4fc15a,#8be06a)}
+.star46{position:relative;display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;flex:none}.star46 .ic46{width:100%;height:100%;object-fit:contain}
+.star46 b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:6px;font-weight:900;font-size:20px;color:#5a3a00;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.steps46{margin-top:14px;border:1px solid var(--gline);border-radius:16px;padding:10px 12px 12px;background:rgba(255,255,255,.03)}
+.steps46 h4{margin:0 0 8px;font-size:18px;display:flex;align-items:center;gap:10px}.steps46 h4 .btn{margin-left:auto}
+.srow46{display:flex;align-items:flex-start;gap:8px}.srow46>.arr46{margin-top:36px}.sc46{flex:1;min-width:0;text-align:center}.sc46 p{margin:6px 0 0;font-size:13px;line-height:1.45}
+.sp46{border:1px solid var(--gline);border-radius:14px;height:96px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04)}.sp46 .ic46{max-width:90%;max-height:84px;object-fit:contain}
+.arr46{font-style:normal;color:#6aa7ff;font-size:20px;flex:none}
+.lrow46{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:thin}
+.lc46{flex:none;width:96px;text-align:center;border-radius:14px;padding:8px 4px;border:1px solid transparent}.lc46 b{display:block;font-size:13px}.lc46 small{font-size:11px;opacity:.75}
+.lc46.cur{border-color:#5aa9ff;background:rgba(90,169,255,.15)}.lc46.lock{opacity:.55}.lc46 .star46{width:52px;height:52px}.lc46 .star46 b{font-size:16px}
+.rest46 .row{margin-top:0}
+@media (max-width:760px){.lay46{grid-template-columns:1fr}.pic46{max-width:240px;margin:0 auto}.grid46,.now46,.g2c46{grid-template-columns:1fr}.half46+.half46{border-left:0;border-top:1px solid var(--gline)}
+  .g2c46 .st46:nth-child(odd){border-right:0}.g2c46 .st46:nth-last-child(2){border-bottom:1px solid var(--gline)}.st46{grid-template-columns:36px 84px 1fr}.st46 .ic46{width:32px;height:32px}
+  .srow46{flex-direction:column}.srow46 .arr46{transform:rotate(90deg)}.sc46{width:100%}}`;
+window.__farm2177 = { levelInfo46, openHive: (...a) => openHive(...a) };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>
