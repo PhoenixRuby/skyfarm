@@ -579,6 +579,55 @@ body:not(.night) .fcday{background:rgba(255,255,255,.6)}
 .tank2 .tbar i{display:block;height:100%}
 .tank2 .tbar .cl{background:linear-gradient(90deg,#6cc4f2,#3a95d0)}
 .tank2 .tbar .dt{background:linear-gradient(90deg,#b9a77e,#8a7656);margin-left:auto}
+/* v2.9: 整理 group, tray tabs, trash station panel, parts card, book sidebar + header art */
+.tool.tidy{position:relative}.tool.tidy .caret{position:absolute;top:2px;right:5px;font-style:normal;font-size:9px;opacity:.6}
+#tidySub{position:fixed;z-index:30;display:flex;gap:6px;padding:7px;border-radius:16px;background:var(--gsheet,rgba(255,255,255,.85));border:1px solid var(--glb,rgba(255,255,255,.8));-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+#tidySub .tool{width:66px}#tidySub .tool.on{background:var(--gsel,#2f6f8f);color:#fff}
+#toolSheet .stool.sub{outline:1px dashed var(--gline,rgba(0,0,0,.2))}
+#trayTabs{position:fixed;z-index:21;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px}
+#trayTabs::-webkit-scrollbar{display:none}
+#trayTabs button{flex:none;display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:13px;border:1px solid var(--glb,rgba(255,255,255,.8));background:var(--gsheet,rgba(255,255,255,.85));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--gtx);font-weight:700;font-size:14px;box-shadow:0 3px 10px rgba(0,0,0,.14)}
+#trayTabs button img{width:22px;height:22px}#trayTabs button.on{background:var(--gsel,#2f6f8f);color:#fff;border-color:transparent}
+body.m-port #trayTabs button{padding:5px 10px;font-size:13px}body.m-port #trayTabs button img{width:18px;height:18px}
+.trayempty{align-self:center;padding:0 14px;color:var(--gsub);font-size:13px}
+.trrow{display:grid;grid-template-columns:26px 70px 1fr auto;gap:8px;align-items:center;margin:6px 0}.trrow img{width:24px;height:24px}
+.tbar.tr{height:10px;border-radius:6px;background:rgba(140,160,175,.25);overflow:hidden}.tbar.tr i{display:block;height:100%}
+.tbar.tr .g{background:#5c646a}.tbar.tr .r{background:#3f86cc}.tbar.tr .s{background:#8a7656}
+.small.warn{color:var(--gwarn,#b5542a)}
+.partcard .prow{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--gline,rgba(0,0,0,.08))}
+.partcard .prow img{width:32px;height:32px}.partcard .pbuy{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.sheet.pg.bookpg{display:grid;grid-template-columns:170px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);position:relative;overflow:hidden}
+.sheet.pg.bookpg header{grid-column:1/3;min-height:150px;color:#fff;border-radius:17px 17px 0 0;
+  background:linear-gradient(90deg,rgba(16,28,24,.96) 0%,rgba(16,28,24,.85) 40%,rgba(16,28,24,0) 62%),var(--bkbg,none) right center/52% auto no-repeat,#1c2a25}
+.sheet.pg.bookpg header h2,.sheet.pg.bookpg header .pgsub{color:#fff}.sheet.pg.bookpg header .pgic{width:96px;height:84px}
+.sheet.pg.bookpg #modalTabs{grid-column:1;grid-row:2;display:flex;flex-direction:column;gap:4px;padding:12px 6px 14px 14px;overflow-y:auto;flex-wrap:nowrap}
+.sheet.pg.bookpg #modalTabs button{text-align:left;width:100%}
+.sheet.pg.bookpg .body{grid-column:2;grid-row:2;overflow:auto;min-height:0}
+.bookpg .bk{grid-template-columns:minmax(0,1fr) 280px}.bookpg .bkcat{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;position:static}
+.bkdrawer{display:none}
+@media (max-width:900px){
+  .sheet.pg.bookpg{grid-template-columns:minmax(0,1fr)}
+  .sheet.pg.bookpg header{min-height:120px;background:linear-gradient(90deg,rgba(16,28,24,.96) 0%,rgba(16,28,24,.8) 55%,rgba(16,28,24,.15) 85%),var(--bkbg,none) right center/80% auto no-repeat,#1c2a25}.sheet.pg.bookpg header .pgic{width:64px;height:56px}
+  .sheet.pg.bookpg #modalTabs{position:absolute;left:0;top:0;bottom:0;width:62%;z-index:6;grid-row:auto;padding:16px 10px;background:var(--gsheet,#fff);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:4px 0 20px rgba(0,0,0,.25);transform:translateX(-105%);transition:transform .22s;border-radius:0 18px 18px 0}
+  .sheet.pg.bookpg.drawer #modalTabs{transform:none}
+  .sheet.pg.bookpg .body{grid-column:1}
+  .bkdrawer{display:inline-flex;align-items:center;gap:6px;margin:4px 0 10px;padding:7px 14px;border-radius:12px;border:0;background:var(--gsel,#2f6f8f);color:#fff;font-weight:700;font-size:15px}
+  .bookpg .bk{grid-template-columns:minmax(0,1fr)}}
+img.imgbad{display:none!important}
+.sheet header .close.back{margin-right:6px;background:var(--gcard,#fff);color:var(--gtx)}
+.sheet.pg header #backBtn{grid-column:3;grid-row:2;justify-self:end}
+.trucks2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.trucks2 img{width:100%;height:auto;filter:drop-shadow(0 4px 6px rgba(0,0,0,.2))}
+/* v2.11 HUD: name card spans two rows; row 1 = coins + 水電 (top-aligned), row 2 = weather / storage / auto */
+.hud .r1,.hud .r2{display:contents}
+body:not(.m) .hud{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:6px;row-gap:6px;align-items:start}
+body:not(.m) .hud .grp{display:contents}
+body:not(.m) .hud .player{grid-column:1;grid-row:1/span 2;align-self:start}
+body:not(.m) .hud .r1{grid-column:2;grid-row:1;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+body:not(.m) .hud .r2{grid-column:2;grid-row:2;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+body:not(.m) .ubar{min-width:0}
+body:not(.m) .ubar .us{flex:1 0 auto;min-width:150px}
+.ubar .t{min-width:0}
+body.m #trayTabs{gap:4px}body.m #trayTabs button{padding:4px 9px;font-size:12.5px;gap:4px}body.m #trayTabs button img{width:16px;height:16px}
 </style>
 </head>
 <body>
@@ -7782,7 +7831,7 @@ function buildNests(M){
 
 /* ---------- storage lights (decoration shed, produce barn): dark + farm power, steady ---------- */
 const SLT = CFG.storageLight || { kwhPerHourEach: .02 };
-const storeBuildings = () => { const out = []; S.maps.forEach(M => { const seen = new Set(); for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && (T.id === 'shed' || T.id === 'barn') && !seen.has(T)){ seen.add(T); out.push(T); } } }); return out; };
+const storeBuildings = () => { const out = []; S.maps.forEach(M => { const seen = new Set(); for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && (T.id === 'shed' || T.id === 'barn') && !seen.has(T.rx + ',' + T.ry)){ seen.add(T.rx + ',' + T.ry); out.push(T); } } }); return out; };
 function stepStoreLight(dt, t){
   const n = storeBuildings().length;
   if (!n || dayPhase(t).light >= .5){ S.storeLit = false; return; }
@@ -7824,7 +7873,7 @@ function buildSoilMask(M){
 function storeLightHoles(M, now){
   if (!storeLitNow(now)) return [];
   const out = [], seen = new Set();
-  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'building' || (T.id !== 'shed' && T.id !== 'barn') || seen.has(T)) continue; seen.add(T);
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'building' || (T.id !== 'shed' && T.id !== 'barn') || seen.has(T.rx + ',' + T.ry)) continue; seen.add(T.rx + ',' + T.ry);
     const [w] = bldSize(T.id), c = center(T.rx, T.ry), oy = (w - 1) * HH; out.push(T.id === 'barn' ? { x: c.cx + 6, y: c.cy + oy - 4, r: 34, col: 'rgba(255,210,120,' } : { x: c.cx - 6, y: c.cy + oy - 6, r: 24, col: 'rgba(255,210,120,' }); }
   return out;
 }
@@ -7862,6 +7911,869 @@ function drawSky(t, now, atop){
 }
 
 window.__farm28 = { dockTank, dockTanks, stepSprinklers, stepStoreLight, storeLitNow, applyDecoSeasons, farmSeason, baseSprite, buildNests, checkRooster };
+
+/* ===== 32. v2.9: 「整理」 tool group + tap-again closes a tool, tray tabs (seed / deco), book sidebar + header art,
+   sweeper avoids poop and walking animals, trash stations + flying garbage / recycling trucks + trash / recycling robots,
+   robot consumables, solar panel dust ===== */
+const TR = CFG.trash || {}, TRB = BLD.trash_station || { capacity: { general: 5, recycle: 5, sewageDrops: 200 }, limit: 3, cost: 300 }, CONS = CFG.consumables || { parts: {}, bulkDiscount: [] }, SDUST = CFG.solarDust || {};
+const TRK = { g: 'general', r: 'recycle', s: 'sewage' };
+const MYK = ['trashbot', 'recyclebot'].filter(k => RB.kinds[k]);
+const LOADS = { trashbot: ['g', 's'], recyclebot: ['r'] };
+
+/* ---------- save state (old saves keep working: everything is added lazily) ---------- */
+function trashState(){ S.trash = S.trash || {}; const T = S.trash;
+  T.pile = T.pile || { g: 0, r: 0, s: 0 }; if (T.lastDump == null) T.lastDump = Date.now(); return T; }
+function ensureV29(){
+  if (!S || S.v29) return; S.v29 = 1; trashState();
+  const placed = stations().length; S.buildStore.trash_station = Math.max(0, 1 - placed);   // one free station per farm
+}
+
+/* ---------- stations ---------- */
+const isTrashSt = T => !!T && T.t === 'building' && T.id === 'trash_station';
+function stations(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (isTrashSt(T)){ const [x, y] = pkey(k); out.push({ mi, k, T, x, y, M }); } } }); return out; }
+const capOf = kind => kind === 's' ? TRB.capacity.sewageDrops : kind === 'g' ? TRB.capacity.general : TRB.capacity.recycle;
+function addTrash(kind, amt){
+  if (!(amt > 0)) return; let left = amt;
+  for (const s of stations()){ const T = s.T, room = capOf(kind) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
+  if (left > 1e-9){ const P = trashState().pile; P[kind] = (P[kind] || 0) + left; if (!S.trash.fullSince) S.trash.fullSince = Date.now(); }
+}
+const pileTotal = () => { const P = trashState().pile; return (P.g || 0) + (P.r || 0) + (P.s || 0) / 100; };
+function stationFill(T){ let f = 0; for (const k of ['g', 'r', 's']) f = Math.max(f, (T[k] || 0) / capOf(k)); return f; }
+function loadOf(T, kinds, withPile){ let n = 0; for (const k of kinds) n += (T[k] || 0) / (k === 's' ? 100 : 1); if (withPile){ const P = trashState().pile; for (const k of kinds) n += (P[k] || 0) / (k === 's' ? 100 : 1); } return n; }
+const firstStation = () => stations()[0] || null;
+
+/* ---------- trucks: every day 16:00–16:30 local ---------- */
+const TRUCK_AT = hhmmToMin((TR.trucks || {}).arrive || '16:00'), TRUCK_STAY = (TR.trucks || {}).stayMinutes || 30;
+const truckWindow = ms => { const m = minuteOfDay(ms); return m >= TRUCK_AT && m < TRUCK_AT + TRUCK_STAY; };
+function truckWindowStart(ms){ const d = new Date(ms); d.setHours(0, 0, 0, 0); return d.getTime() + TRUCK_AT * 60e3; }
+function nextTruck(ms){ let s = truckWindowStart(ms); if (ms >= s + TRUCK_STAY * 60e3) s += DAY; return s; }
+const daysSinceDump = ms => (ms - trashState().lastDump) / DAY;
+function overdueNow(ms){ const O = TR.overdue || {}; const T = trashState();
+  return daysSinceDump(ms) >= (O.daysWithoutDumping || 3) || (pileTotal() > .01 && T.fullSince && (ms - T.fullSince) / DAY >= (O.orFullForDays || 1)); }
+// money for one load {g,r,s}
+function dumpMoney(L, overdue){ const F = TR.fees || {}, O = TR.overdue || {}, m = overdue ? (O.multiplier || 3) : 1;
+  const fee = (L.g || 0) * (F.generalPerBag || 5) * m + (L.s || 0) / 100 * (F.sewagePer100Drops || 1) * m;
+  const rec = overdue ? -(L.r || 0) * (O.recycleFeePerBag || 10) : (L.r || 0) * (F.recycleRewardPerBag || 5);
+  return Math.round(rec - fee); }
+function takeLoad(T, kinds, withPile){ const L = { g: 0, r: 0, s: 0 };
+  for (const k of kinds){ L[k] += T[k] || 0; T[k] = 0; if (withPile){ const P = trashState().pile; L[k] += P[k] || 0; P[k] = 0; } }
+  if (pileTotal() <= .01) S.trash.fullSince = null; return L; }
+function payLoad(L, overdue, x, y, live){
+  const money = dumpMoney(L, overdue); S.player.coins += money; trashState().lastDump = Date.now();
+  const st = S.trash.stats = S.trash.stats || { g: 0, r: 0, s: 0, paid: 0, earned: 0 }; st.g += L.g; st.r += L.r; st.s += L.s; if (money < 0) st.paid -= money; else st.earned += money;
+  if (live && x != null){ const parts = []; if (L.g > .01) parts.push(`垃圾 ${L.g.toFixed(1)} 袋`); if (L.s > .5) parts.push(`污水 ${Math.round(L.s)} 滴`); if (L.r > .01) parts.push(`回收 ${L.r.toFixed(1)} 袋`);
+    floatText(x, y - 40, `${parts.join('、')} ${money >= 0 ? '+' : ''}${money} 金幣`, money >= 0 ? '#2f8a3a' : '#a0522d', 10); }
+  return money; }
+function handDump(st){
+  const fst = firstStation(), L = takeLoad(st.T, ['g', 'r', 's'], fst && fst.T === st.T), c = center(st.x, st.y);
+  if (L.g + L.r + L.s / 100 < .01){ toast('垃圾站是空的'); return; }
+  const m = payLoad(L, false, c.cx, c.cy, true); sfx('coin');
+  toast(`倒好了：${m >= 0 ? `回收獎勵多過垃圾費，+${m}` : `垃圾費 ${-m}`} 金幣`, true); afterAction(); }
+// trucks hover beside the island's right edge: the walkable edge tile robots carry bags to
+RT.truckStop = {};
+function truckStop(mi){ const M = S.maps[mi], c = RT.truckStop[mi]; if (c && c.at > performance.now() - 5000 && swPass(M, c.k)) return c;
+  let best = null, bs = -Infinity; for (const [x, y] of mapTiles(M)){ const k = tkey(x, y); if (!swPass(M, k)) continue; const s = (x - y) * 10 + (x + y); if (s > bs){ bs = s; best = { x, y, k }; } }
+  if (best) best.at = performance.now(); RT.truckStop[mi] = best; return best; }
+
+/* ---------- daily / event trash sources ---------- */
+function stepTrash(dt, t){
+  ensureV29(); const T = trashState(), TS = TR.sources || {};
+  const dk = dayKeyLocal(t), mid = localMidnight(t);
+  if (T.day !== dk){ if (T.day && T.dayMs){ const days = Math.max(1, Math.round((mid - T.dayMs) / DAY)); if (housePos(S.maps[houseMapIndex()])){ addTrash('g', days * (TS.houseDailyGeneralBags ?? 1)); addTrash('r', days * (TS.houseDailyRecycleBags ?? .5)); } }
+    T.day = dk; T.dayMs = mid; }
+  if (truckWindow(t)){
+    const live = Math.abs(Date.now() - t) < 5000;
+    if (live && T.arriveNote !== dk){ T.arriveNote = dk; toast(`飛天垃圾車和資源回收車來了，停到 ${fmtHM(truckWindowStart(t) + TRUCK_STAY * 60e3)}。用「收成」點垃圾站倒垃圾`, true, 4200); }
+    // overdue: 10 minutes after they arrive, their own robots collect everything at the higher price
+    if (minuteOfDay(t) >= TRUCK_AT + 10 && T.overdueDay !== dk && overdueNow(t)){
+      T.overdueDay = dk; let total = 0, L = { g: 0, r: 0, s: 0 }; const fst = firstStation();
+      for (const s of stations()){ const l = takeLoad(s.T, ['g', 'r', 's'], fst && fst.T === s.T); for (const k in L) L[k] += l[k]; }
+      if (!fst){ const P = T.pile; for (const k in L){ L[k] += P[k] || 0; P[k] = 0; } T.fullSince = null; }
+      if (L.g + L.r + L.s / 100 > .01){ total = payLoad(L, true); T.collectUntil = truckWindowStart(t) + TRUCK_STAY * 60e3; T.lastOverdue = { t, money: total, L };
+        if (live) toast(`太久沒倒垃圾，垃圾車派機器人來代收：付 ${-total} 金幣（比自己倒貴，回收也要收費）`, false, 5200); else RT.notices.push({ kind: 'trashOverdue', t, money: total }); }
+      else T.lastDump = Date.now();
+    }
+  }
+}
+{ const _sa32 = stepAll; stepAll = function(dt, t){ _sa32(dt, t); stepTrash(dt, t); stepSolarDust(dt, t); stepPartsAutoFit(); }; }
+// feed bags, machine packaging, swept litter, dock dirty water
+{ const _pf32 = payFeed; payFeed = function(item, qty, dry){ const r = _pf32(item, qty, dry); if (!dry && r && r.ok){ addTrash('r', qty / ((TR.sources || {}).feedItemsPerRecycleBag || 20)); } return r; }; }
+{ const _tm32 = tapMachine; tapMachine = function(M, k, T, cx, cy){ const was = T.state; const r = _tm32(M, k, T, cx, cy); if (was === 'done' && T.state !== 'done') addTrash('r', (TR.sources || {}).machineBatchRecycleBags ?? .2); return r; }; }
+{ const _sc32 = swClean; swClean = function(M, mi, k, t){ const was = isTrash(M.tiles[k]); const r = _sc32(M, mi, k, t); if (was && !isTrash(M.tiles[k])) addTrash('g', 1 / ((TR.sources || {}).sweptTilesPerGeneralBag || 10)); return r; }; }
+{ const _dr32 = dockRefill; dockRefill = function(V, t, manual){ const dirty = DWT.tankDrops - (dockInit(V).water || 0); const r = _dr32(V, t, manual); if (r === 'ok' && dirty > 0) addTrash('s', dirty); return r; }; }
+
+/* ---------- building: tray item, placing, drawing, tapping ---------- */
+{ const _is32 = itemSprite; itemSprite = function(kind, id){ if (kind === 'building' && id === 'trash_station') return ['building_trash_station', 1]; return _is32(kind, id); }; }
+const stationCount = () => stations().length + (S.buildStore.trash_station || 0);
+{ const _act32 = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _act32(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (tool === 'build' && S.sel.build === 'trash_station'){
+    if (T && T.t !== 'weed'){ if (isTrashSt(T)) openTrash(S.cur, k); else toast('垃圾站要蓋在空的草地上'); return; }
+    if (stationCount() >= (TRB.limit || 3)){ toast(`垃圾站整個農場最多 ${TRB.limit || 3} 座（含飾品倉庫裡的）`); return; }
+    if (!spend(TRB.cost || 300)) return;
+    if (!placeAny(M, x, y, 'trash_station', cx, cy, false)){ S.player.coins += TRB.cost || 300; return; }
+    afterAction(); return; }
+  if (isTrashSt(T) && (tool === 'hand' || tool === 'seed')){ if (truckWindow(Date.now())) handDump({ mi: S.cur, k, x, y, T }); else openTrash(S.cur, k); return; }
+  if (isSolar(T) && tool === 'hand' && (T.dust || 0) > .02){ washPanel(M, S.cur, k, T, false); afterAction(); return; }
+  return _act32(x, y); }; }
+{ const _ut32 = UIbuildTray; UIbuildTray = function(){ _ut32(); if (!S) return;
+  const tray = $('tray'), tool = S.sel.tool;
+  if (tool === 'build'){ const n = stationCount(), mx = TRB.limit || 3;
+    const sep = document.createElement('div'); sep.className = 'sep'; tray.appendChild(sep);
+    const el = trayItem('building', 'trash_station', TRB.name || '垃圾站', [`${coinImg()}${fmtN(TRB.cost || 300)}`, `${n} / ${mx} 座 · 分類回收`], S.sel.build === 'trash_station', false, {});
+    if (n >= mx) el.classList.add('locked'); el.onclick = () => { if (n >= mx){ toast(`垃圾站最多 ${mx} 座`); return; } S.sel.build = 'trash_station'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
+  applyTrayTabs(); }; }
+{ const _db32 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (T.id !== 'trash_station') return _db32(T, x, y, t);
+  const { cx, cy } = center(x, y), f = stationFill(T), fr = f <= .01 ? 0 : f < .5 ? 1 : f < .999 ? 2 : 3;
+  spr('building_trash_station', fr, cx, cy);
+  const fst = firstStation(); if (fst && fst.T === T && pileTotal() > .01) spr('fx_trash_pile', Math.min(6, Math.ceil(pileTotal())) - 1, cx + 22, cy + 8);
+  const now = Date.now();
+  if (truckWindow(now) && (loadOf(T, ['g', 'r', 's'], fst && fst.T === T) > .01)) bubble(cx, cy - 46, '倒垃圾', 'ui_trash_general', '#fffbe9');
+  else if (daysSinceDump(now) >= 2 || fr === 3) bubble(cx, cy - 46, fr === 3 ? '滿了' : '該倒了', 'ui_trash_general');
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_garbage', motion ? frameOf('robot_collector_garbage', t) : 0, cx - 18, cy + 10); }; }
+// no station anywhere yet: the bags pile up next to the house
+function drawHousePile(M){ if (stations().length || pileTotal() <= .01) return; const hp = housePos(M); if (!hp) return; spr('fx_trash_pile', Math.min(6, Math.ceil(pileTotal())) - 1, hp.x + 34, hp.y + 18); }
+function drawTrucks(M, now, t){
+  if (!truckWindow(now)) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), el = (now - truckWindowStart(now)) / 1000, left = TRUCK_STAY * 60 - el, k = Math.min(1, el / 20, left / 20), off = (1 - Math.max(0, k)) * 420;
+  spr('truck_recycle_fly', motion ? frameOf('truck_recycle_fly', t) : 0, c.cx + 70 + off, c.cy + 46 - off * .3);
+  spr('truck_garbage_fly', motion ? frameOf('truck_garbage_fly', t, 1) : 0, c.cx + 92 + off, c.cy - 18 - off * .3);
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6);
+}
+function openTrash(mi, k){
+  const T = S.maps[mi].tiles[k]; if (!isTrashSt(T)) return; const now = Date.now(), win = truckWindow(now), F = TR.fees || {}, O = TR.overdue || {}, P = trashState().pile, fst = firstStation();
+  openModal(TRB.name || '垃圾站', null, (kk, el) => {
+    const bar = (v, cap, cls) => `<div class="tbar tr"><i class="${cls}" style="width:${Math.min(100, v / cap * 100)}%"></i></div>`;
+    el.innerHTML = `<div class="pcard"><h4><img src="${IMGSRC.ui_trash_station}" class="ico" alt="">這座垃圾站</h4>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_general}" alt=""><span>一般垃圾</span>${bar(T.g || 0, capOf('g'), 'g')}<b>${(T.g || 0).toFixed(1)} / ${capOf('g')} 袋</b></div>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_recycle}" alt=""><span>資源回收</span>${bar(T.r || 0, capOf('r'), 'r')}<b>${(T.r || 0).toFixed(1)} / ${capOf('r')} 袋</b></div>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_sewage}" alt=""><span>污水桶</span>${bar(T.s || 0, capOf('s'), 's')}<b>${Math.round(T.s || 0)} / ${capOf('s')} 滴</b></div>
+      ${pileTotal() > .01 ? `<p class="small warn">裝不下、堆在旁邊：垃圾 ${(P.g || 0).toFixed(1)} 袋、回收 ${(P.r || 0).toFixed(1)} 袋、污水 ${Math.round(P.s || 0)} 滴</p>` : ''}
+      <div class="row"><button class="btn" id="trDump" ${win ? '' : 'disabled'}>${win ? '現在倒垃圾' : `垃圾車 ${fmtHM(nextTruck(now))} 才來`}</button></div></div>
+      <div class="pcard"><h4><img src="${IMGSRC.ui_truck_garbage}" class="ico" alt="">收垃圾</h4><div class="kv">
+      <span>垃圾車、回收車</span><b>每天 ${fmtHM(truckWindowStart(now))} 來，停 ${TRUCK_STAY} 分鐘</b>
+      <span>上次倒垃圾</span><b>${daysSinceDump(now) < 1 ? '今天' : `${Math.floor(daysSinceDump(now))} 天前`}</b>
+      <span>一般垃圾</span><b>每袋 ${F.generalPerBag} 金幣（隨袋徵收）</b><span>污水</span><b>每 100 滴 ${F.sewagePer100Drops} 金幣</b><span>資源回收</span><b>每袋獎勵 +${F.recycleRewardPerBag} 金幣</b>
+      <span>太久沒倒</span><b>${O.daysWithoutDumping} 天沒倒（或滿了堆在外面超過 ${O.orFullForDays} 天）：車子派機器人代收，垃圾和污水 ×${O.multiplier}，回收改成每袋收 ${O.recycleFeePerBag}</b></div>
+      <p class="small">垃圾從哪來：農舍每天的生活垃圾、飼料袋和加工包裝、掃地機器人掃起來的東西、掃地基座的污水、換下來的耗材、洗太陽能板的水。有「倒垃圾機器人」「資源回收機器人」的話，車子來時它們會自己搬（要有電）。</p></div>`;
+    const b = $('trDump'); if (b) b.onclick = () => { handDump({ mi, k, x: pkey(k)[0], y: pkey(k)[1], T }); openTrash(mi, k); }; });
+}
+
+/* ---------- trash robot + recycling robot (walk station → truck stop, need power) ---------- */
+for (const kind of MYK){ KINDS.push(kind); R_ICON[kind] = 'ui_' + kind; BASE_OF[kind] = RB.kinds[kind].base; UNIT_NAME[kind] = RB.kinds[kind].name; REST_SPR[kind] = `robot_${kind}_rest`;
+  UNIT_SPR[kind] = { move: `robot_${kind}_move`, work: `robot_${kind}_work`, rest: `robot_${kind}_rest` };
+  robotJob[kind] = t => truckWindow(t) && (stations().some(s => loadOf(s.T, LOADS[kind], false) > .01) || pileTotal() > .01 || fleet(kind).some(u => carrySum(u.tcarry) > .01)); }
+const carrySum = c => c ? (c.g || 0) + (c.r || 0) + (c.s || 0) / 100 : 0;
+function trashPlan(kind, W, M, key, getC){
+  const now = Date.now(); if (!truckWindow(now)) return null;
+  if (carrySum(getC()) > .01){ const ts = truckStop(W.mi); if (!ts) return null; const prev = swBFS(M, W.x, W.y), p = prev.has(ts.k) ? swPathTo(prev, ts.k) : null; return p ? { path: p, goal: 'truck', target: ts.k } : null; }
+  const fst = firstStation(), cl = walkerClaims(kind, key);
+  const p = wbPathToAny(M, W.x, W.y, wbStandTiles(M, (T, k) => isTrashSt(T) && !cl.has(k) && loadOf(T, LOADS[kind], fst && fst.T === T) > .01));
+  if (p) p.goal = 'station'; return p;
+}
+function trashWants(kind){ return (key, u) => { const home = workerHome(kind, u); if (!home) return false; const W = WS[key]; if (walkAway(W, home)) return true; if (lowAtHome(kind, u)) return false;
+  return !!trashPlan(kind, W || { mi: home.mi, x: home.x, y: home.y }, S.maps[home.mi], key, () => u ? u.tcarry : (W && W.tcarry)); }; }
+for (const kind of MYK) workerWants[kind] = trashWants(kind);
+function trashWorker(kind, key, u, dt, t){
+  const home = workerHome(kind, u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = 1 / (RK(kind).tilesPerSecond || 1);
+  const getC = () => (u ? u.tcarry : W.tcarry) || { g: 0, r: 0, s: 0 }, setC = v => { if (u) u.tcarry = v; else W.tcarry = v; };
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      let plan = trashPlan(kind, W, M, key, getC);
+      if (plan && u){ const last = pkey(plan.path[plan.path.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, last[0], last[1], hk), hk) || []).length; if (u.batt < (plan.path.length + back) * stepT + 8) plan = null; }
+      if (!plan){ if (W.phase === 'pick' && walkAway(W, home)) walkGoHome(W, M, home); else { W.phase = 'home'; W.target = null; } if (W.phase === 'home') return; continue; }
+      W.path = plan.path; W.i = 0; W.el = 0; W.goal = plan.goal; W.target = plan.target; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; W.target = null; return; } W.phase = W.goal === 'station' ? 'fill' : 'pour'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue;
+    }
+    if (W.phase === 'fill' || W.phase === 'pour'){
+      const left = 2 - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0;
+      if (W.phase === 'fill'){ const T = M.tiles[W.target], fst = firstStation(); if (isTrashSt(T)){ const L = takeLoad(T, LOADS[kind], fst && fst.T === T), C = getC(); setC({ g: (C.g || 0) + L.g, r: (C.r || 0) + L.r, s: (C.s || 0) + L.s }); } }
+      else { const C = getC(), live = Math.abs(Date.now() - t) < 5000 && W.mi === S.cur, c = center(W.x, W.y); payLoad(C, false, c.cx, c.cy, live); setC({ g: 0, r: 0, s: 0 }); }
+      W.target = null; W.phase = 'pick'; continue;
+    }
+  }
+}
+{ const _sr32 = stepRobots; stepRobots = function(dt, t, rainNow){ const res = _sr32(dt, t, rainNow);
+  for (const kind of MYK){ if (!res[kind]) continue;
+    for (const u of fleet(kind)) if (u.state === 'work') trashWorker(kind, wKey(kind, u), u, dt, t);
+    if (RT.rw[kind]) trashWorker(kind, wKey(kind, null), null, dt, t); }
+  return res; }; }
+// walkers that are out walk home on their wheels (never jump home), like sweepers / well robots
+{ const _su32 = stepUnit; stepUnit = function(kind, u, dt, t, want, occ){
+  if (MYK.includes(kind) && u && unitTier(kind, u) && walkAway(WS[wKey(kind, u)], workerHome(kind, u))){ u.state = 'work'; u.batt = Math.max(0, u.batt - dt); return true; }
+  if (u && u.needPart){ fitPart(kind, u); if (u.needPart) want = false; }
+  const r = _su32(kind, u, dt, t, want, occ);
+  if (r && u) wearUnit(kind, u, dt);
+  return r; }; }
+
+/* ---------- drawing the walkers (depth-sorted with the farm) + the fleet ---------- */
+RT.walkAt2 = new Map();
+const WALKERS = new Set(['sweep', 'wellbot', ...MYK]);
+function myWalkers(now){ const out = [];
+  for (const kind of MYK){
+    if (rentActive(kind, now)){ const key = wKey(kind, null), W = WS[key]; if (W && walkAway(W, workerHome(kind, null))) out.push({ kind, key, W, carry: carrySum(W.tcarry) > .01, rent: true }); }
+    for (const u of fleet(kind)){ if (!unitTier(kind, u) || u.on === false || u.state !== 'work') continue; const key = wKey(kind, u), W = WS[key]; if (W && walkAway(W, workerHome(kind, u))) out.push({ kind, key, W, carry: carrySum(u.tcarry) > .01 }); } }
+  return out; }
+{ const _da32 = drawAnimalsAt; drawAnimalsAt = function(k, t){ _da32(k, t); const l = RT.walkAt2.get(k); if (l){ RT.walkAt2.delete(k); l.forEach(f => f()); } }; }
+drawUnits = function(M, t, now){
+  const b = mapBounds(M), mx = (b.minX + b.maxX) / 2, my = (b.minY + b.maxY) / 2, hp = housePos(M), f = M.blocks[0], corner = center(f[0] * BS, f[1] * BS);
+  const live = new Set(), away = new Set();
+  KINDS.forEach((kind, i) => {
+    const rent = rentActive(kind, now), mine = MYK.includes(kind);
+    const restAt = hp ? { x: hp.x - 14 + (i % 6) * 9, y: hp.y - 46 + (i % 2) * 4 } : { x: corner.cx - 12 + i * 8, y: corner.cy + 18 };
+    const air = kind === 'water' || kind === 'feed' || kind === 'honey';
+    if (rent){ const key = wKey(kind, null), on = RT.rw[kind];
+      if (kind === 'water' && on){ const s = droneScreenOf(WS[key]); if (s){ live.add(key); const { p } = drawDroneAt(key, s, t, s.spray); rentTag(p.x + 17, p.y - 27); if (WS[key].wait) bubble(p.x, p.y - 40, '等水', 'ui_water_drop'); } }
+      else if (WALKERS.has(kind) && walkAway(WS[key], workerHome(kind, null))){ if (mine){ live.add(key); } else { const p = drawWalkerKey(kind, key, WS[key], t, (WS[key].carry || 0) > 0); if (p){ live.add(key); rentTag(p.x + 13, p.y - 4); } } }
+      else if (on && kind !== 'water' && !WALKERS.has(kind)){ const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); const p = drawOneUnit(key, kind, 'work', tgt, t); rentTag(p.x + (air ? 17 : 13), p.y - (air ? 27 : 4)); } }
+      else { live.add(key); if (WALKERS.has(kind)) RT.unitPos[key] = { x: restAt.x, y: restAt.y, fx: false };
+        const p = drawOneUnit(key, kind, 'rest', restAt, t); rentTag(p.x, p.y + 8); if (Math.hypot(restAt.x - p.x, restAt.y - p.y) < 3) zzzFx(p.x + 6, p.y - 16, t, i * .17); } }
+    fleet(kind).forEach((u, j) => { if (!unitTier(kind, u) || u.on === false) return; const key = wKey(kind, u);
+      if (u.state === 'work'){
+        if (kind === 'water'){ const s = droneScreenOf(WS[key]); if (s){ live.add(key); drawDroneAt(key, s, t, s.spray); away.add(key); } }
+        else if (WALKERS.has(kind)){ if (mine){ if (walkAway(WS[key], workerHome(kind, u))){ live.add(key); away.add(key); } } else { const p = drawWalkerKey(kind, key, WS[key], t, (u.carry || 0) > 0); if (p){ live.add(key); away.add(key); } } }
+        else { const tgt = unitTarget(kind, M, t, now, b, mx, my); if (tgt){ live.add(key); away.add(key); drawOneUnit(key, kind, 'work', { x: tgt.x + j * 16, y: tgt.y + (j % 2) * 10, walk: tgt.walk }, t); } }
+      } else if (AIR.has(kind) && RT.unitPos[key]){ const s = slotByKey(u.park) || slotByKey(u.home); if (s && s.mi === S.cur){ const p = slotScreen(s), r = drawDroneLike(kind, key, p, t); if (r){ live.add(key); away.add(key); } } }
+    });
+  });
+  RT.awayKeys = away;
+  for (const k in RT.unitPos) if (!live.has(k)) delete RT.unitPos[k];
+};
+{ const _dp32 = drawParked; drawParked = function(e, x, y, t){ _dp32(e, x, y, t); if (e.u && e.u.needPart) bubble(x, y - 40, '換耗材', 'ui_need_parts', '#ffe6dc'); }; }
+
+/* ---------- consumables ---------- */
+const PARTS = CONS.parts || {};
+const partsForKind = kind => Object.keys(PARTS).filter(id => PARTS[id].for.includes(kind) && PARTS[id].lifeWorkHours);
+const partItem = id => 'part_' + id;
+for (const id in PARTS){ ITEM_ICON[partItem(id)] = 'ui_part_' + id; }
+function partWaste(id){ const P = PARTS[id]; if (P && P.waste) addTrash(P.waste === 'recycle' ? 'r' : 'g', P.wasteBags || 0); }
+function wearUnit(kind, u, dt){
+  u.wear = u.wear || {};
+  for (const id of partsForKind(kind)){ u.wear[id] = (u.wear[id] || 0) + dt / 3600;
+    if (u.wear[id] >= PARTS[id].lifeWorkHours){ if (invTake(partItem(id), 1)){ u.wear[id] = 0; partWaste(id); } else { u.wear[id] = PARTS[id].lifeWorkHours; u.needPart = id; } } }
+}
+function fitPart(kind, u){ const id = u.needPart; if (!id) return; if (invTake(partItem(id), 1)){ u.wear = u.wear || {}; u.wear[id] = 0; partWaste(id); u.needPart = null; } }
+function stepPartsAutoFit(){ for (const kind of KINDS) for (const u of fleet(kind)) if (u.needPart) fitPart(kind, u);
+  for (const b of basesOf('sweeper_dock')) if (b.T.needBag && invTake(partItem('dustbag'), 1)){ b.T.needBag = false; b.T.bagUse = 0; partWaste('dustbag'); } }
+// sweeper dock dust bag: counts cleans; a full bag with no spare = no cleaning
+{ const _dto32 = dockTankOf; dockTankOf = function(u){ const V = _dto32(u); if (!V) return V; const s = slotByKey(u.home), T = s && s.T; if (!T) return V; if (T.needBag) return null;
+  const life = (PARTS.dustbag || {}).lifeCleans || 40;
+  return new Proxy(V, { get: (o, p) => o[p], set: (o, p, v) => { if (p === 'water' && v < o.water){ T.bagUse = (T.bagUse || 0) + 1;
+      if (T.bagUse >= life){ if (invTake(partItem('dustbag'), 1)){ T.bagUse = 0; partWaste('dustbag'); } else T.needBag = true; } } o[p] = v; return true; } }); }; }
+{ const _db32b = drawBase; drawBase = function(T, x, y, t){ _db32b(T, x, y, t); if (T.id === 'sweeper_dock' && T.needBag){ const { cx, cy } = center(x, y); bubble(cx, cy - 60, '換集塵袋', 'ui_part_dustbag', '#ffe6dc'); } }; }
+function partPrice(id, q){ const P = PARTS[id], d = (CONS.bulkDiscount || []).filter(x => q >= x.qty).reduce((a, x) => Math.min(a, x.rate), 1); return Math.round(P.price * q * d); }
+function buyParts(id, q){ const cost = partPrice(id, q); if (!spend(cost)) return false; invAdd(partItem(id), q); sfx('coin'); toast(`買了 ${PARTS[id].name} ×${q}，${fmtN(cost)} 金幣`, true); stepPartsAutoFit(); afterAction(); return true; }
+function partsCardHTML(baseId){
+  const kinds = KINDS.filter(k => RK(k).base === baseId), ids = new Set(); kinds.forEach(k => partsForKind(k).forEach(id => ids.add(id))); if (baseId === 'sweeper_dock') ids.add('dustbag');
+  if (!ids.size) return '';
+  const units = kinds.flatMap(k => fleet(k).filter(u => unitTier(k, u)).map(u => ({ k, u })));
+  const rows = [...ids].map(id => { const P = PARTS[id], have = S.inv[partItem(id)] || 0;
+    const worst = P.lifeWorkHours ? units.filter(e => partsForKind(e.k).includes(id)).reduce((a, e) => Math.max(a, ((e.u.wear || {})[id] || 0) / P.lifeWorkHours), 0)
+      : basesOf('sweeper_dock').reduce((a, b) => Math.max(a, (b.T.bagUse || 0) / (P.lifeCleans || 40)), 0);
+    const need = P.lifeWorkHours ? units.some(e => e.u.needPart === id) : basesOf('sweeper_dock').some(b => b.T.needBag);
+    return `<div class="prow"><img src="${IMGSRC['ui_part_' + id]}" alt=""><div><b>${P.name}</b> <span class="small">${P.lifeWorkHours ? `可用 ${P.lifeWorkHours} 小時` : `可清潔 ${P.lifeCleans} 次`} · 單價 ${P.price}</span>
+      <div class="small">倉庫 ${have} 個 · 最舊的用了 ${Math.round(worst * 100)}%${need ? ' · <b style="color:var(--warn)">有機器在等換</b>' : ''}</div></div>
+      <div class="pbuy">${[1, 5, 10].map(q => `<button class="btn ghost sm" data-part="${id}" data-q="${q}">買 ${q}${q > 1 ? `（${partPrice(id, q)}）` : ''}</button>`).join('')}</div></div>`; }).join('');
+  return `<div class="pcard span2 partcard"><h4><img src="${IMGSRC.ui_need_parts}" class="ico" alt="">耗材</h4>${rows}
+    <p class="small">耗材用完時倉庫有備品就自動換上；沒有就回去停工，頭上顯示「換耗材」，買了就自動換上。一次買 5 個 9 折、10 個 8 折。換下來的舊耗材會變成垃圾或資源回收。</p></div>`;
+}
+{ const _oup32 = openUnitPanel; openUnitPanel = function(kind){ _oup32(kind);
+  const el = $('modalBody'), baseId = BASE_OF[kind] || RK(kind).base; if (!el) return; const grid = el.querySelector('.pgrid') || el;
+  const html = partsCardHTML(baseId); if (!html) return; grid.insertAdjacentHTML('beforeend', html);
+  grid.querySelectorAll('button[data-part]').forEach(b => b.onclick = e => { e.stopPropagation(); if (buyParts(b.dataset.part, +b.dataset.q)) openUnitPanel(kind); }); }; }
+
+/* ---------- solar panel dust ---------- */
+{ const _so32 = solarOutput; solarOutput = function(d, t, h){ return _so32(d, t, h) * (1 - Math.min(.9, d.T.dust || 0)); }; }
+RT.wash = {};
+function washPanel(M, mi, k, T, byDrone){
+  const drops = SDUST.washDrops || 10;
+  if (!byDrone && !useWater(drops, false, Date.now())){ toast('水塔沒水，洗不了太陽能板'); return false; }
+  T.dust = 0; addTrash('s', SDUST.washSewageDrops || drops); RT.wash[mi + '|' + k] = { until: performance.now() + 3000, drone: byDrone };
+  if (!byDrone){ const [x, y] = pkey(k), c = center(x, y); floatText(c.cx, c.cy - 40, `洗乾淨了 · 水塔 -${drops} 滴`, '#2f7fa8', 10); sfx('water'); }
+  return true; }
+function stepSolarDust(dt, t){
+  const sunny = dayPhase(t).light > 0 && !farmRain(t) && !farmCloudy(t), rain = farmRain(t), r = rain && rainAt(t), rk = rain ? (r ? 'r' + r.start : 'd' + dayKeyLocal(t)) : null;
+  const per = SDUST.perSunnyDay ?? .05, mx = SDUST.max ?? .5;
+  for (const d of allDevices()){ if (!isSolar(d.T)) continue; const T = d.T;
+    if (sunny && !snowyAt(d.mi, d.k)) T.dust = Math.min(mx, (T.dust || 0) + per * dt / (12 * 3600));
+    if (rain && T.washKey !== rk){ T.washKey = rk; T.dust = (T.dust || 0) * .5; } }
+  // water drones that have nothing to do wash dusty panels (shared job)
+  RT.washClock = (RT.washClock || 0) + dt; if (RT.washClock < 10) return; RT.washClock = 0;
+  const need = (SDUST.droneWash || {}).when ? .2 : .2, drops = SDUST.washDrops || 10;
+  const dusty = allDevices().filter(d => isSolar(d.T) && (d.T.dust || 0) >= need); if (!dusty.length) return;
+  for (const u of fleet('water')){ if (!dusty.length) break; if (!unitTier('water', u) || u.on === false || u.needPart || (u.state !== 'idle' && u.state !== 'charge') || (u.tank || 0) < drops || u.batt < 60) continue;
+    const d = dusty.shift(); u.tank -= drops; u.batt -= 30; washPanel(d.M, d.mi, d.k, d.T, true); }
+}
+{ const _dd32 = drawDevice; drawDevice = function(T, k, cx, cy, t){ _dd32(T, k, cx, cy, t); if (!isSolar(T)) return;
+  const d = T.dust || 0; if (d > .06) spr('fx_solar_dust', d > .32 ? 1 : 0, cx, cy, false, Math.min(1, d / .2));
+  const w = RT.wash[S.cur + '|' + k]; if (w && w.until > performance.now()){ if (w.drone) spr('drone_water_fly', motion ? frameOf('drone_water_fly', t) : 0, cx - 2, cy - 30); spr('fx_wash_spray', motion ? frameOf('fx_wash_spray', t) : 0, cx, cy); } }; }
+{ const _od32 = openDevice; openDevice = function(M, k, T){ _od32(M, k, T); if (!isSolar(T)) return;
+  const el = $('modalBody'), card = el && (el.querySelector('.card') || el); if (!card) return; const d = Math.round((T.dust || 0) * 100);
+  card.insertAdjacentHTML('beforeend', `<div class="kv dustkv"><span>灰塵</span><span>${d}%（發電少 ${d}%）</span></div><p class="small">每個晴天積 ${Math.round((SDUST.perSunnyDay ?? .05) * 100)}%、最多 ${Math.round((SDUST.max ?? .5) * 100)}%；下雨沖掉一半。用「收成」點板子洗（水塔 ${SDUST.washDrops || 10} 滴），澆水無人機有空時也會順便洗。</p>
+    <div class="row"><button class="btn" id="washBtn" ${d < 2 ? 'disabled' : ''}>洗太陽能板</button></div>`);
+  const b = $('washBtn'); if (b) b.onclick = () => { if (washPanel(M, S.cur, k, T, false)){ afterAction(); openDevice(M, k, T); } }; }; }
+
+/* ---------- sweeper: never over poop, never through an animal that is walking ---------- */
+function movingAnimalTiles(M){ if (M !== curMap()) return null; const now = performance.now(); if (RT.movAn && RT.movAn.t === now) return RT.movAn.set;
+  const set = new Set(); for (const key in RT.agents){ const ag = RT.agents[key]; if (!ag || ag.tx == null || !key.startsWith(S.cur + ':')) continue; set.add(tkey(ag.cx, ag.cy)); set.add(tkey(ag.tx, ag.ty)); }
+  RT.movAn = { t: now, set }; return set; }
+{ const _sp32 = swPass; swPass = function(M, k){ const T = M.tiles[k];
+  if ((T && T.t === 'poop') || (CFG.sweeperWalk && CFG.sweeperWalk.avoidMovingAnimals !== false && (movingAnimalTiles(M) || new Set()).has(k))){
+    return Object.values(WS).some(W => W && W.forced && W.path && W.path.includes(k)); }
+  return _sp32(M, k); }; }
+
+/* ---------- tool bar: 「整理」 group (搬移 / 收回 / 鏟除); tapping an open tool again closes it and goes back to 收成 ---------- */
+const GRP = ((CFG.ui.toolGroups || {}).tidy || {}).tools || ['move', 'store', 'remove'];
+const TIDYB = document.createElement('button'); TIDYB.className = 'tool tidy'; TIDYB.id = 'tidyBtn'; TIDYB.title = '整理'; TIDYB.innerHTML = `<img src="${IMGSRC.ui_tool_tidy}" alt=""><span>整理</span><i class="caret">▲</i>`;
+const TIDYSUB = document.createElement('div'); TIDYSUB.id = 'tidySub'; TIDYSUB.hidden = true;
+TIDYSUB.innerHTML = GRP.map(id => { const t = TOOLS.find(x => x.id === id); return `<button class="tool" data-g="${id}"><img src="${IMGSRC[t.icon]}" alt=""><span>${t.label}</span></button>`; }).join('');
+function setupTidy(){
+  const dock = $('dock'); if (!dock || dock.querySelector('#tidyBtn')) return; const first = dock.querySelector(`.tool[data-tool="${GRP[0]}"]`); if (!first) return;
+  first.insertAdjacentElement('beforebegin', TIDYB); GRP.forEach(id => { const b = dock.querySelector(`.tool[data-tool="${id}"]`); if (b){ b.hidden = true; b.classList.add('grouped'); } });
+  APP.appendChild(TIDYSUB); syncTidy(); }
+function placeTidySub(){ const r = TIDYB.getBoundingClientRect(), w = TIDYSUB.offsetWidth || 260; TIDYSUB.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px'; TIDYSUB.style.bottom = (innerHeight - r.top + 8) + 'px'; }
+function syncTidy(){ if (!S) return; const inG = GRP.includes(S.sel.tool);
+  TIDYB.classList.toggle('on', inG); TIDYB.setAttribute('aria-pressed', inG);
+  const show = inG && !document.body.classList.contains('m-port') && !document.body.classList.contains('ui-hide') && !TIDYB.hidden && TIDYB.offsetParent !== null;
+  TIDYSUB.hidden = !show; if (show){ TIDYSUB.querySelectorAll('[data-g]').forEach(b => b.classList.toggle('on', b.dataset.g === S.sel.tool)); placeTidySub(); } }
+// capture: runs before the dock's own click handler
+$('dock').addEventListener('click', e => {
+  if (e.target.closest('#tidyBtn')){ e.stopPropagation(); if (UIS.col) return; if (GRP.includes(S.sel.tool)) setTool('hand'); else setTool(S.lastTidy && GRP.includes(S.lastTidy) ? S.lastTidy : GRP[0]); return; }
+  const b = e.target.closest('.tool'); if (!b || UIS.col || !S) return;
+  if (b.dataset.tool && b.dataset.tool === S.sel.tool && b.dataset.tool !== 'hand' && (CFG.ui.toolToggle || {}).tapAgainCloses !== false){ e.stopPropagation(); setTool('hand'); }
+}, true);
+TIDYSUB.addEventListener('click', e => { const b = e.target.closest('[data-g]'); if (!b) return; e.stopPropagation(); S.lastTidy = b.dataset.g; setTool(b.dataset.g); });
+{ const _st32 = setTool; setTool = function(id){ const r = _st32(id); setupTidy(); syncTidy(); return r; }; }
+addEventListener('resize', () => { if (!TIDYSUB.hidden) placeTidySub(); });
+// phone tool sheet: one 「整理」 entry that unfolds the three
+RT.tidySheet = false;
+{ const _rtb32 = renderToolBtn; renderToolBtn = function(){ _rtb32(); if (!S) return; const g = TSHEET.querySelector('.tsg'); if (!g) return;
+  let tb = g.querySelector('.stidy'); if (!tb){ tb = document.createElement('button'); tb.className = 'stool stidy'; tb.innerHTML = `<img src="${IMGSRC.ui_tool_tidy}" alt=""><span>整理 ▾</span>`; const f = g.querySelector(`.stool[data-tool="${GRP[0]}"]`); g.insertBefore(tb, f || null); }
+  const open = RT.tidySheet || GRP.includes(S.sel.tool); tb.classList.toggle('on', GRP.includes(S.sel.tool));
+  GRP.forEach(id => { const b = g.querySelector(`.stool[data-tool="${id}"]`); if (b){ b.hidden = !open; b.classList.add('sub'); } }); }; }
+TSHEET.addEventListener('click', e => { const tb = e.target.closest('.stidy'); if (!tb) return; e.stopPropagation(); RT.tidySheet = !RT.tidySheet; renderToolBtn(); }, true);
+
+/* ---------- tray tabs: 播種 = 作物 | 果樹 | 花苗; 裝飾 = 樹木 | 造景 | 加成 | 道路柵欄 | 建築 | 娃娃 ---------- */
+const TTABS = (CFG.ui.trayTabs || {});
+function decoCatOf(el){ const id = el.dataset.id || ''; if (CFG.decos[id]){ const c = (TTABS.deco || []).find(c => (c.ids || []).includes(id)); return c ? c.id : 'scenery'; } if (BLD[id]) return 'buildings'; return 'dolls'; }
+// the tabs sit in a row just above the tray (like the preview), not inside it
+const TTAB = document.createElement('div'); TTAB.id = 'trayTabs'; TTAB.hidden = true; APP.appendChild(TTAB);
+function tabsBar(list, cur, onPick){ TTAB.innerHTML = list.map(c => `<button data-tab="${c.id}" class="${c.id === cur ? 'on' : ''}"><img src="${IMGSRC[c.icon] || ''}" alt="">${c.label}</button>`).join('');
+  TTAB.onclick = e => { const b = e.target.closest('button[data-tab]'); if (!b) return; e.stopPropagation(); onPick(b.dataset.tab); }; TTAB.dataset.tool = S.sel.tool; TTAB.hidden = false; placeTrayTabs(); return null; }
+function placeTrayTabs(){
+  const tray = $('tray'), show = S && !TTAB.hidden && tray && !tray.hidden && (S.sel.tool === TTAB.dataset.tool) && !document.body.classList.contains('ui-col') && !document.body.classList.contains('ui-hide');
+  if (!show){ TTAB.style.visibility = 'hidden'; return; }
+  const r = tray.getBoundingClientRect(); if (!r.width){ TTAB.style.visibility = 'hidden'; return; }
+  TTAB.style.visibility = ''; TTAB.style.left = Math.max(8, r.left + 10) + 'px'; TTAB.style.maxWidth = Math.max(160, Math.min(innerWidth - 16, r.width - 20)) + 'px'; let top = r.top; const tg = $('trayTog'); if (tg && tg.offsetParent !== null){ const q = tg.getBoundingClientRect(); if (q.height && q.bottom > r.top - 40 && q.top < r.top) top = Math.min(top, q.top); }
+  TTAB.style.bottom = (innerHeight - top + 6) + 'px';
+  const z = $('zoomCtl'); if (z && z.offsetParent !== null){ const q = z.getBoundingClientRect(), tb = innerHeight - (innerHeight - top + 6) - 44; if (q.height && q.bottom > tb && q.left > r.left) TTAB.style.maxWidth = Math.max(160, q.left - Math.max(8, r.left + 10) - 8) + 'px'; } }
+(function tabLoop(){ placeTrayTabs(); requestAnimationFrame(tabLoop); })();
+function pickFirstVisible(tray){ const el = [...tray.querySelectorAll('.item')].find(x => !x.hidden && !x.classList.contains('locked')); if (el && !RT.trayPicking){ RT.trayPicking = true; try { el.click(); } finally { RT.trayPicking = false; } } }
+function applyTrayTabs(){
+  const tray = $('tray'), tool = S.sel.tool; if (!(tool === 'seed' || tool === 'deco')) TTAB.hidden = true; if (!tray || tray.hidden) return;
+  if (tool === 'seed' && TTABS.seed){
+    const flowers = !!(FL && FL[S.sel.seed]), tab = flowers ? 'flowers' : CFG.trees[S.sel.seed] ? 'trees' : (S.sel.seedTab === 'trees' ? 'trees' : 'crops');
+    if (!flowers) tray.querySelectorAll('.item').forEach(el => { const isT = !!CFG.trees[el.dataset.id]; el.hidden = tab === 'trees' ? !isT : isT; });
+    tray.querySelectorAll(':scope > .sep').forEach(s => s.hidden = true);
+    tray.querySelectorAll('.seedtabs').forEach(n => n.remove());
+    tabsBar(TTABS.seed, tab, k => { S.sel.seedTab = k;
+      if (k === 'flowers'){ if (!FL[S.sel.seed]) S.sel.seed = Object.keys(FL).find(isUnlocked) || Object.keys(FL)[0]; }
+      else if (k === 'trees'){ if (!CFG.trees[S.sel.seed]){ if (!FL[S.sel.seed]) S.lastCrop = S.sel.seed; S.sel.seed = S.lastTree && CFG.trees[S.lastTree] ? S.lastTree : (Object.keys(CFG.trees).find(isUnlocked) || Object.keys(CFG.trees)[0]); } }
+      else { if (!CFG.crops[S.sel.seed]) S.sel.seed = S.lastCrop && CFG.crops[S.lastCrop] ? S.lastCrop : 'wheat'; }
+      UIbuildTray(); updateHint(); });
+    if (tab === 'trees') S.lastTree = S.sel.seed; else if (tab === 'crops') S.lastCrop = S.sel.seed;
+  }
+  if (tool === 'deco' && TTABS.deco){
+    const items = [...tray.querySelectorAll('.item')], sel = items.find(x => x.classList.contains('sel'));
+    let tab = S.sel.decoTab || (sel ? decoCatOf(sel) : 'trees'); if (sel && decoCatOf(sel) !== tab && !RT.decoTabPick) tab = decoCatOf(sel);
+    S.sel.decoTab = tab;
+    items.forEach(el => el.hidden = decoCatOf(el) !== tab); tray.querySelectorAll(':scope > .sep').forEach(s => s.hidden = true);
+    const vis = items.filter(x => !x.hidden);
+    tray.querySelectorAll('.seedtabs').forEach(n => n.remove());
+    tabsBar(TTABS.deco, tab, k => { S.sel.decoTab = k; RT.decoTabPick = true; try { UIbuildTray(); pickFirstVisible($('tray')); } finally { RT.decoTabPick = false; } updateHint(); });
+    if (!vis.length){ const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = tab === 'buildings' ? '飾品倉庫裡沒有建築' : '這一類還沒有東西'; tray.appendChild(e); }
+  }
+}
+
+/* ---------- book: categories on the left (phone: slide-out drawer), header art follows the category ---------- */
+PAGE['圖鑑'] = { ic: PIMG('book_icon'), raw: 1, sub: '查看所有作物、動物、機器與設備的資料', wide: 1 };
+const BOOK_BG = (CFG.ui.book || {}).headers || {};
+{ const _om32 = openModal; openModal = function(title, tabs, render, initial){
+  const sh = document.querySelector('#modal .sheet'), isBook = title === '圖鑑'; sh.classList.toggle('bookpg', isBook); sh.classList.remove('drawer');
+  if (isBook && typeof render === 'function'){ const r0 = render; render = (k, el) => { r0(k, el);
+    const hd = sh.querySelector('header'), bg = PIMG('bookbg_' + (BOOK_BG[k] || BOOK_BG.default || 'bookbg_crops').replace('bookbg_', ''));
+    hd.style.setProperty('--bkbg', bg ? `url("${bg}")` : 'none');
+    const lbl = (($('modalTabs').querySelector(`button[data-k="${k}"]`) || {}).textContent) || '';
+    const db = document.createElement('button'); db.className = 'bkdrawer'; db.innerHTML = `☰ ${lbl} ▾`; db.onclick = e => { e.stopPropagation(); sh.classList.toggle('drawer'); };
+    setTimeout(() => { el.querySelectorAll(':scope > .banner').forEach(n => n.remove()); el.insertBefore(db, el.firstChild); const cat = el.querySelector('.bkcat'); if (cat && cat.querySelectorAll('button').length <= 1) cat.hidden = true; }, 0); }; }
+  else { const hd = sh.querySelector('header'); if (hd) hd.style.removeProperty('--bkbg'); }
+  return _om32(title, tabs, render, initial); }; }
+$('modalTabs').addEventListener('click', () => { const sh = document.querySelector('#modal .sheet'); if (sh.classList.contains('bookpg')) sh.classList.remove('drawer'); });
+document.querySelector('#modal .sheet').addEventListener('click', e => { const sh = e.currentTarget; if (sh.classList.contains('drawer') && !e.target.closest('#modalTabs,.bkdrawer')) sh.classList.remove('drawer'); });
+
+/* ---------- per-frame: my walkers into the depth pass, trucks + house pile on top ---------- */
+{ const _dw32 = drawWorld; drawWorld = function(t, now){
+  RT.walkAt2.clear();
+  for (const e of myWalkers(now)){ if (e.W.mi !== S.cur) continue; const r = walkerScreenSmooth(e); if (!r) continue;
+    const list = RT.walkAt2.get(r.k) || []; list.push(() => { const ph = r.s.phase, n = ph === 'fill' || ph === 'pour' ? `robot_${e.kind}_work` : e.carry ? `robot_${e.kind}_carry` : `robot_${e.kind}_move`;
+      spr(n, motion ? frameOf(n, t) : 0, r.p.x, r.p.y, r.p.fx); if (e.rent) rentTag(r.p.x + 13, r.p.y - 4); }); RT.walkAt2.set(r.k, list); }
+  _dw32(t, now); const M = curMap(); drawHousePile(M); drawTrucks(M, now, t); }; }
+
+window.__farm29 = { stations, addTrash, trashState, truckWindow, handDump, overdueNow, stepTrash, buyParts, partPrice, wearUnit, washPanel, stepSolarDust, applyTrayTabs, syncTidy, truckStop, trashWorker, dumpMoney, ensureV29 };
+
+/* ---------- never show a broken-image icon: retry once, then hide the picture (page headers fall back to a small sprite icon) ---------- */
+document.addEventListener('error', e => { const im = e.target; if (!im || im.tagName !== 'IMG') return;
+  const src = im.getAttribute('src') || '';
+  if (src && !im.dataset.retry && !src.startsWith('data:')){ im.dataset.retry = '1'; setTimeout(() => { im.src = src + (src.includes('?') ? '&' : '?') + 'r=' + Date.now(); }, 400); return; }
+  if (im.classList.contains('pgic') && !im.dataset.fb){ im.dataset.fb = '1'; try { const c = iconCanvas('ui_shed', 0, 64); im.src = c.toDataURL(); return; } catch(err){} }
+  im.classList.add('imgbad'); }, true);
+
+/* ---------- farm picker opened from 選單: a 「返回選單」 button back to where you were ---------- */
+{ const _om33 = openModal; openModal = function(title, tabs, render, initial){
+  const from = RT.menuTab; if (title === '選單') RT.menuOpen = true;
+  const sh = document.querySelector('#modal .sheet'), old = sh.querySelector('#backBtn'); if (old) old.remove();
+  const r = _om33(title, tabs, render, initial);
+  if (title === '選擇農場' && S && RT.pickFromMenu){ const b = document.createElement('button'); b.id = 'backBtn'; b.className = 'close back'; b.textContent = '‹ 返回選單';
+    b.onclick = e => { e.stopPropagation(); RT.pickFromMenu = false; openMenu(from && from !== 'slots' ? from : 'settings'); };
+    $('modalClose').insertAdjacentElement('beforebegin', b); }
+  if (title !== '選擇農場') RT.pickFromMenu = false;
+  return r; }; }
+$('modalTabs').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b || $('modalTitle').textContent !== '選單') return;
+  if (b.dataset.k === 'slots') RT.pickFromMenu = true; else RT.menuTab = b.dataset.k; }, true);
+{ const _om34 = openMenu; openMenu = function(tab){ RT.menuTab = tab || RT.menuTab || 'save'; return _om34(tab); }; }
+// the 「切換農場」 entry in the ☰ panel also comes back to the menu's settings
+document.addEventListener('click', e => { const b = e.target.closest('[data-more="slots"],[data-m="slots"]'); if (b) RT.pickFromMenu = true; }, true);
+
+/* ===== 33. v2.10: hover garbage / recycling trucks (player art) + truck landing pad, tray tabs for 動物 / 魚 / 昆蟲,
+   new 昆蟲 tool (hives, bumblebees, butterflies), bumblebees gather 1.5× honey, swallowtail butterflies on citrus ===== */
+const BF = CFG.butterflies || null, BUM = (CFG.bees || {}).bumble || null, TPAD = BLD.truck_pad || null;
+const DAYMS = 86400e3;
+if (TPAD) TPAD.buyWith = 'build';   // bought with 建設, never handed out for free in the deco storage
+
+/* ---------- tools: 魚池 → 魚, new 昆蟲 tool after it ---------- */
+{ const tf = TOOLS.find(t => t.id === 'fish'); if (tf){ tf.label = '魚'; if (IMGSRC.ui_tool_fish) tf.icon = 'ui_tool_fish'; } }
+const INSECT_IDS = ['beehive', 'bumble_hive', 'queen_bee', 'bumble_colony', 'butterfly_egg'];
+TOOLS.splice(TOOLS.findIndex(t => t.id === 'fish') + 1, 0, { id: 'insect', label: '昆蟲', icon: 'ui_tool_insect', hint: () => {
+  const id = S.sel.insect || 'beehive';
+  if (id === 'beehive') return S.freeHive > 0 ? `點草地放免費蜂箱（還有 ${S.freeHive} 個）` : `點草地蓋蜂箱 · ${fmtN(DEV.beehive.buildCost)} 金幣 · 放蜂王後產蜂蜜`;
+  if (id === 'bumble_hive') return `點草地蓋熊蜂箱 · ${fmtN(DEV.bumble_hive.buildCost)} 金幣 · 放熊蜂群後產蜜（同樣的花，蜜是蜜蜂的 ${BUM.honeyMult} 倍）`;
+  if (id === 'queen_bee') return `點蜂箱放進蜂王 · ${BEE.queen.cost} 金幣`;
+  if (id === 'bumble_colony') return `點熊蜂箱放進熊蜂群 · ${BUM.colony.cost} 金幣`;
+  return `點檸檬或柳丁樹放蝴蝶卵 · ${BF.egg.cost} 金幣 · 一棵最多 ${BF.maxPerTree} 隻；蝴蝶會自己在柑橘樹上再產卵`; } });
+// the phone tool sheet was built before this file ran: rebuild its grid from TOOLS
+{ const g = TSHEET.querySelector('.tsg'); if (g) g.innerHTML = TOOLS.map(t => `<button class="stool" data-tool="${t.id}"><img src="${IMGSRC[t.icon]}" alt=""><span>${t.label}</span></button>`).join(''); }
+{ const _no33 = nameOf; nameOf = function(id){ if (BUM && id === BUM.colony.id) return BUM.colony.name; if (BF && id === BF.egg.id) return BF.egg.name; if (TPAD && id === 'truck_pad') return TPAD.name; return _no33(id); }; }
+{ const _is33 = itemSprite; itemSprite = function(kind, id){
+  if (kind === 'insect' && id === 'bumble_colony') return ['ui_bumble_colony', 0];
+  if (kind === 'insect' && id === 'butterfly_egg') return ['ui_butterfly_egg', 0];
+  if (kind === 'device' && id === 'bumble_hive') return ['device_bumble_hive_bees', 0];
+  if (kind === 'device' && id === 'beehive') return ['device_beehive_bees', 0];
+  if (kind === 'building' && id === 'truck_pad') return ['building_truck_pad', 0];
+  return _is33(kind, id); }; }
+
+/* ---------- tray: 昆蟲 list; 動物 / 魚 tabs; fence moves to 動物 · 設施; hives leave 建設 ---------- */
+const TT = CFG.ui.trayTabs || {};
+const tabOf = (tool, id) => { const t = (TT[tool] || []).find(c => (c.ids || []).includes(id)); return t ? t.id : null; };
+function buildInsectTray(tray){
+  tray.innerHTML = ''; tray.hidden = false; const wrap = $('trayWrap'); if (wrap) wrap.hidden = false;
+  const sel = S.sel.insect || 'beehive';
+  const add = (kind, id, name, lines, lk, extra) => { const el = trayItem(kind, id, name, lines, sel === id, lk, extra || {}); el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } S.sel.insect = id; UIbuildTray(); updateHint(); }; tray.appendChild(el); };
+  add('device', 'beehive', DEV.beehive.name, [S.freeHive > 0 ? `免費 ×${S.freeHive}` : `${coinImg()}${fmtN(DEV.beehive.buildCost)}`, '放蜂王產蜜'], !isUnlocked('beehive') && !(S.freeHive > 0), { book: 'devices' });
+  if (DEV.bumble_hive) add('device', 'bumble_hive', DEV.bumble_hive.name, [`${coinImg()}${fmtN(DEV.bumble_hive.buildCost)}`, `放熊蜂群 · 蜜 ×${BUM.honeyMult}`], !isUnlocked('bumble_hive'), { book: 'devices' });
+  add('insect', BEE.queen.id, BEE.queen.name, [`${coinImg()}${fmtN(BEE.queen.cost)}`, '點蜂箱放進去'], !isUnlocked(BEE.queen.id));
+  if (BUM) add('insect', BUM.colony.id, BUM.colony.name, [`${coinImg()}${fmtN(BUM.colony.cost)}`, '點熊蜂箱放進去'], !isUnlocked(BUM.colony.id));
+  if (BF) add('insect', BF.egg.id, BF.egg.name, [`${coinImg()}${fmtN(BF.egg.cost)}`, '放在柑橘樹上'], !isUnlocked(BF.egg.id));
+}
+{ const _ut33 = UIbuildTray; UIbuildTray = function(){
+  if (S && S.sel.tool === 'insect'){ _ut33(); buildInsectTray($('tray')); applyTabs33(); if (isM() && UI.trayCol) $('tray').hidden = true; return; }
+  _ut33(); if (!S) return; const tray = $('tray'), tool = S.sel.tool;
+  if (tool === 'build') tray.querySelectorAll('.item').forEach(el => { if (el.dataset.id === 'beehive' || el.dataset.id === 'bumble_hive') el.remove(); });
+  if (tool === 'build' && TPAD){ const n = countPads(), lk = !isUnlocked('truck_pad');
+    const el = trayItem('building', 'truck_pad', TPAD.name, [`${coinImg()}${fmtN(TPAD.cost)}`, `2×1 · ${n} / ${TPAD.limit} 座`], S.sel.build === 'truck_pad', lk, {});
+    if (n >= TPAD.limit) el.classList.add('locked'); el.onclick = () => { if (lk){ toast(lockedMsg('truck_pad')); return; } if (n >= TPAD.limit){ toast(`${TPAD.name}整個農場只能蓋 ${TPAD.limit} 座`); return; } S.sel.build = 'truck_pad'; UIbuildTray(); updateHint(); };
+    const ts = tray.querySelector('.item[data-id="trash_station"]'); if (ts) ts.insertAdjacentElement('afterend', el); else tray.appendChild(el); }
+  if (tool === 'deco') tray.querySelectorAll('.item[data-id="fence"]').forEach(el => el.remove());
+  if (tool === 'animal'){ tray.querySelectorAll('.item').forEach(el => { if (el.dataset.id === BEE.queen.id) el.remove(); }); tray.querySelectorAll(':scope > .sep').forEach(s => s.remove());
+    const D = CFG.decos.fence, el = trayItem('deco', 'fence', D.name, [`${coinImg()}${fmtN(D.cost)}／格`, '圍住動物'], S.sel.animal === 'fence', false, { book: 'decos', count: S.storage.fence || 0 });
+    el.onclick = () => { S.sel.animal = 'fence'; S.sel.animalTab = 'facility'; UIbuildTray(); updateHint(); }; tray.insertBefore(el, tray.firstChild); }
+  applyTabs33(); }; }
+function applyTabs33(){
+  const tray = $('tray'), tool = S.sel.tool, list = TT[tool]; if (!list || !tray || tray.hidden) return;
+  if (!['animal', 'fish', 'insect'].includes(tool)) return;
+  const selId = tool === 'animal' ? S.sel.animal : tool === 'fish' ? S.sel.fish : (S.sel.insect || 'beehive');
+  const key = tool + 'Tab'; let tab = S.sel[key] || tabOf(tool, selId) || list[1].id;
+  if (tabOf(tool, selId) && tabOf(tool, selId) !== tab && !RT.tab33Pick) tab = tabOf(tool, selId); S.sel[key] = tab;
+  tray.querySelectorAll('.item').forEach(el => { const t = tabOf(tool, el.dataset.id); el.hidden = t !== tab; });
+  tray.querySelectorAll(':scope > .sep, :scope > .seedtabs').forEach(s => s.remove());
+  tabsBar(list, tab, k => { S.sel[key] = k; RT.tab33Pick = true; try { UIbuildTray(); const first = [...$('tray').querySelectorAll('.item')].find(x => !x.hidden && !x.classList.contains('locked')) || [...$('tray').querySelectorAll('.item')].find(x => !x.hidden); if (first) first.click(); } finally { RT.tab33Pick = false; } updateHint(); });
+  if (![...tray.querySelectorAll('.item')].some(x => !x.hidden)){ const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = '這一類還沒有東西'; tray.appendChild(e); }
+}
+// tray-tab bar (v2.9) should also show for these tools
+{ const _at33 = applyTrayTabs; applyTrayTabs = function(){ const tool = S.sel.tool; if (['animal', 'fish', 'insect'].includes(tool)) return; return _at33(); }; }
+// fence placed from the 動物 tool
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha = ta.hint; ta.hint = () => S.sel.animal === 'fence' ? `點草地放木柵欄 · 每格 ${CFG.decos.fence.cost} 金幣，相鄰會自動接起來` : _ha(); }
+
+/* ---------- acting with the new tool / tabs ---------- */
+function withTool(tool, patch, fn){ const keep = { tool: S.sel.tool }; for (const k in patch) keep[k] = S.sel[k]; S.sel.tool = tool; Object.assign(S.sel, patch);
+  try { return fn(); } finally { S.sel.tool = keep.tool; for (const k in patch) S.sel[k] = keep[k]; } }
+const isBumbleHive = T => T && T.t === 'device' && T.id === 'bumble_hive';
+const isBeeHive = T => T && T.t === 'device' && T.id === 'beehive';
+const CITRUS = new Set((BF && BF.hostTrees) || ['lemon', 'orange']);
+{ const _act33 = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _act33(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (tool === 'animal' && S.sel.animal === 'fence') return withTool('deco', { deco: 'fence' }, () => _act33(x, y));
+  if (tool === 'build' && S.sel.build === 'truck_pad'){
+    if (T && T.t !== 'weed'){ toast(`${TPAD.name}要 2×1 格空草地（從點的格子往右下）`); return; }
+    if (!isUnlocked('truck_pad')){ toast(lockedMsg('truck_pad')); return; }
+    if (countPads() >= TPAD.limit){ toast(`${TPAD.name}整個農場只能蓋 ${TPAD.limit} 座`); return; }
+    if (!spend(TPAD.cost)) return;
+    if (!placeAny(M, x, y, 'truck_pad', cx, cy, false)){ S.player.coins += TPAD.cost; return; }
+    sfx('place'); afterAction(); UIbuildTray(); return; }
+  if (tool === 'remove' && T && T.t === 'building' && T.id === 'truck_pad'){
+    const o = objectAt(M, k); for (const c of o.cells) delete M.tiles[c]; const back = Math.floor(TPAD.cost * (TPAD.sellRate ?? .5)); S.player.coins += back;
+    floatText(cx, cy - 30, `拆掉${TPAD.name} +${back}`, '#2f8a3a', 11); RT.decoVer++; RT.regionsAt = 0; afterAction(); return; }
+  if (tool === 'insect'){
+    const id = S.sel.insect || 'beehive';
+    if (id === 'beehive' || id === 'bumble_hive'){ if (T && T.t === 'device' && (isBeeHive(T) || isBumbleHive(T))){ openDevice(M, k, T); return; }
+      if (id === 'beehive') return withTool('build', { build: 'beehive' }, () => _act33(x, y));
+      if (T && T.t !== 'weed'){ toast('熊蜂箱要放在空的草地上'); return; } if (!isUnlocked('bumble_hive')){ toast(lockedMsg('bumble_hive')); return; }
+      if (!spend(DEV.bumble_hive.buildCost)) return; if (T) pullWeed(M, k, cx, cy);
+      M.tiles[k] = { t: 'device', id: 'bumble_hive', frames: 0, queen: false, honey: {} }; floatText(cx, cy - 24, `-${fmtN(DEV.bumble_hive.buildCost)}`, '#8a5d36', 11); sfx('place'); afterAction(); return; }
+    if (id === BEE.queen.id){ if (isBumbleHive(T)){ toast('熊蜂箱要放「熊蜂群」，蜂王放進一般蜂箱'); return; } return withTool('animal', { animal: BEE.queen.id }, () => _act33(x, y)); }
+    if (BUM && id === BUM.colony.id){ if (isBeeHive(T)){ toast('熊蜂群要放進熊蜂箱'); return; } if (!isBumbleHive(T)){ toast('熊蜂群要放進熊蜂箱：先在「設施」蓋熊蜂箱'); return; } installColony(T, cx, cy); afterAction(); return; }
+    if (BF && id === BF.egg.id){ placeEgg(M, k, T, cx, cy); afterAction(); return; }
+  }
+  return _act33(x, y); }; }
+function installColony(T, cx, cy){
+  const C = BUM.colony; if (!isUnlocked(C.id)){ toast(lockedMsg(C.id)); return; }
+  if (T.queen){ toast('這個熊蜂箱已經有熊蜂了'); return; } if (!spend(C.cost)) return;
+  Object.assign(T, { queen: true, frames: BEE.startFrames || 1, frameT: 0, lastNectar: Date.now(), starving: false, acc: 0, wildAcc: 0, eatAcc: 0, honey: T.honey || {} });
+  RT.decoVer++; floatText(cx, cy - 40, `放進熊蜂群 -${C.cost}`, '#8a5d36', 11); toast(`熊蜂住進來了！同樣的花，熊蜂採到的蜜是蜜蜂的 ${BUM.honeyMult} 倍`, true, 3400); sfx('place'); }
+
+/* ---------- bumblebees: same hive rules, honey × 1.5 ---------- */
+{ const _sh33 = stepHive; stepHive = function(M, mi, k, T, dt, t, live){
+  if (!isBumbleHive(T)) return _sh33(M, mi, k, T, dt, t, live);
+  const j = BEE.jarsPerFramePerHour; BEE.jarsPerFramePerHour = j * (BUM.honeyMult || 1.5); try { return _sh33(M, mi, k, T, dt, t, live); } finally { BEE.jarsPerFramePerHour = j; } }; }
+{ const _dd33 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  if (!isBumbleHive(T)) return _dd33(T, k, cx, cy, t);
+  const st = honeyStored(T), n = !T.queen ? 'device_bumble_hive_empty' : st >= BEE.storeMax ? 'device_bumble_hive_full' : 'device_bumble_hive_bees';
+  spr(n, motion ? frameOf(n, t, cx * .01) : 0, cx, cy);
+  if (!T.queen) bubble(cx, cy - 50, '空箱', 'ui_bumble_colony', '#f3f1ea'); else if (st) bubble(cx, cy - 50, `${st} 罐`, 'ui_honey_wild', '#fffbe9'); }; }
+{ const _oh33 = openHive; openHive = function(M, k, T){ _oh33(M, k, T); if (!isBumbleHive(T)) return; $('modalTitle').textContent = DEV.bumble_hive.name;
+  const el = $('modalBody'); el.innerHTML = el.innerHTML.replace(/蜂王/g, '熊蜂群').replace(/蜂群/g, '熊蜂').replace(/每小時約 ([\d.]+) 罐/, (m, v) => `每小時約 ${(parseFloat(v) * BUM.honeyMult).toFixed(1)} 罐（熊蜂 ×${BUM.honeyMult}）`); }; }
+
+/* ---------- butterflies on citrus: egg → larva → pupa → butterfly (lives 7 days, lays again) ---------- */
+const BFS = (BF && BF.stagesDays) || { egg: 1, larva: 3, pupa: 3, adult: 7 }, BF_ORDER = ['egg', 'larva', 'pupa', 'adult'];
+const isCitrus = T => !!T && T.t === 'tree' && CITRUS.has(T.id);
+function placeEgg(M, k, T, cx, cy){
+  if (!isUnlocked(BF.egg.id)){ toast(lockedMsg(BF.egg.id)); return; }
+  if (!isCitrus(T)){ toast('蝴蝶卵要放在柑橘類果樹上（檸檬、柳丁）'); return; }
+  T.bf = T.bf || []; if (T.bf.length >= BF.maxPerTree){ toast(`這棵樹已經有 ${BF.maxPerTree} 隻了`); return; }
+  if (!spend(BF.egg.cost)) return; T.bf.push({ st: 'egg', t0: Date.now() });
+  floatText(cx, cy - 50, `放蝴蝶卵 -${BF.egg.cost}`, '#8a5d36', 11); toast('卵 1 天孵化，幼蟲 3 天、蛹 3 天後變成蝴蝶', true, 3200); sfx('place'); }
+function citrusWithRoom(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (isCitrus(T) && (T.bf || []).length < BF.maxPerTree) out.push({ M, mi, k, T }); } }); return out; }
+function stepButterflies(t){
+  if (!BF) return; const born = [];
+  S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T || !T.bf || !T.bf.length) continue;
+    if (!isCitrus(T)){ delete T.bf; continue; }
+    T.bf = T.bf.filter(b => { for (let g = 0; g < 4; g++){ const d = (BFS[b.st] || 1) * DAYMS; if (t - b.t0 < d) return true;
+        const i = BF_ORDER.indexOf(b.st); if (i >= 3){ born.push({ mi, k }); return false; } b.t0 += d; b.st = BF_ORDER[i + 1]; } return true; }); } });
+  // a butterfly lays one egg before it dies: its own tree first, then any citrus tree with room
+  for (const b of born){ const own = S.maps[b.mi].tiles[b.k]; let host = isCitrus(own) && (own.bf || []).length < BF.maxPerTree ? own : null;
+    if (!host){ const c = citrusWithRoom(); host = c.length ? c[Math.floor(h32(b.k.length + t / 1e7) * c.length) % c.length].T : null; }
+    if (host){ host.bf = host.bf || []; host.bf.push({ st: 'egg', t0: t }); } }
+  // who gets a boost: tiles within range of a tree that has a butterfly; larvae slow their own tree
+  RT.bfBoost = new WeakSet(); RT.bfSlow = new WeakMap(); const r = BF.adultRange ?? 2;
+  S.maps.forEach(M => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T || !T.bf) continue; const n = T.bf.filter(b => b.st === 'larva').length; if (n) RT.bfSlow.set(T, n);
+    if (T.bf.some(b => b.st === 'adult')){ const [x0, y0] = pkey(k); for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(x0 + dx, y0 + dy)]; if (U && (U.t === 'soil' || U.t === 'tree')) RT.bfBoost.add(U); } } } });
+}
+{ const _sa33 = stepAll; stepAll = function(dt, t){ stepButterflies(t); _sa33(dt, t); }; }
+{ const _sp33 = stepPlant; stepPlant = function(T, dt, b, wetAll, env = 1){
+  if (RT.bfBoost && RT.bfBoost.has(T)) env *= 1 + (BF.adultGrowthBoost || .1);
+  if (RT.bfSlow && RT.bfSlow.has(T)) env *= Math.max(.5, 1 - (BF.larvaTreeSlow || .1) * RT.bfSlow.get(T));
+  return _sp33(T, dt, b, wetAll, env); }; }
+// pesticide kills eggs and caterpillars nearby (butterflies and pupae survive)
+{ const _hb33 = hurtBeesNear; hurtBeesNear = function(M, k){ const r = _hb33(M, k); const [x0, y0] = pkey(k);
+  for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++){ const U = M.tiles[tkey(x0 + dx, y0 + dy)]; if (U && U.bf){ const n = U.bf.length; U.bf = U.bf.filter(b => b.st !== 'egg' && b.st !== 'larva'); if (U.bf.length < n) toast('農藥把附近柑橘樹上的蝴蝶卵和幼蟲殺死了', false, 3200); } }
+  return r; }; }
+{ const _dte33 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte33(M, k, T, x, y, t, now);
+  if (!T || !T.bf || !T.bf.length || T.t !== 'tree') return; const { cx, cy } = center(x, y);
+  T.bf.forEach((b, i) => { const ox = i ? -9 : 8;
+    if (b.st === 'egg') spr('fx_bf_egg', 0, cx + ox, cy - 40 + i * 6);
+    else if (b.st === 'larva') spr('fx_bf_larva', motion ? frameOf('fx_bf_larva', t, i) : 0, cx + ox, cy - 36 + i * 5);
+    else if (b.st === 'pupa') spr('fx_bf_pupa', motion ? frameOf('fx_bf_pupa', t, i) : 0, cx + ox * .6, cy - 26);
+    else { const ph = t * .6 + i * 2.4 + x, fx = cx + Math.sin(ph) * 22, fy = cy - 48 + Math.sin(ph * 1.7) * 9; spr('fx_butterfly', motion ? frameOf('fx_butterfly', t, i) : 0, fx, fy); } }); }; }
+// tapping a citrus tree with butterflies tells you where they are in their life
+{ const _act34 = act; act = function(x, y){ const M = curMap(), T = inMap(M, x, y) && M.tiles[tkey(x, y)];
+  if (T && T.bf && T.bf.length && S.sel.tool === 'hand' && !treeReady(T)){ const nm = { egg: '卵', larva: '幼蟲', pupa: '蛹', adult: '蝴蝶' };
+    toast(T.bf.map(b => `${nm[b.st]}（再 ${fmtDur(Math.max(0, (BFS[b.st] * DAYMS - (Date.now() - b.t0)) / 1000))}${b.st === 'adult' ? '，之後產卵' : '變下一階段'}）`).join('、'), false, 3800); return; }
+  return _act34(x, y); }; }
+
+/* ---------- truck landing pad (2×1) + the new truck art ---------- */
+function pads(){ const out = []; S.maps.forEach((M, mi) => { const seen = new Set(); for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && T.id === 'truck_pad' && !seen.has(T.rx + ',' + T.ry)){ seen.add(T.rx + ',' + T.ry); out.push({ mi, M, T }); } } }); return out; }
+const countPads = () => pads().length + (S.buildStore.truck_pad || 0);
+const padOn = mi => pads().find(p => p.mi === mi) || null;
+{ const _db33 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (T.id !== 'truck_pad') return _db33(T, x, y, t);
+  if (x !== T.rx + 1 || y !== T.ry) return; const c = center(T.rx, T.ry);
+  spr('building_truck_pad', 0, c.cx + 16, c.cy + 8);
+  const now = Date.now(); if (truckWindow(now)) drawTrucksOnPad(T, now); }; }
+function truckHover(now){ const el = (now - truckWindowStart(now)) / 1000, left = TRUCK_STAY * 60 - el; return Math.max(0, Math.min(1, 1 - Math.min(el, left) / 15)); }
+function drawTrucksOnPad(T, now){ const c = center(T.rx, T.ry), k = truckHover(now), up = k * 160, side = k * 260;
+  spr('truck_garbage_iso', 0, c.cx + 2 + side, c.cy - 3 - up);
+  spr('truck_recycle_iso', 0, c.cx + 34 + side, c.cy + 13 - up * 1.1); }
+drawTrucks = function(M, now, t){
+  if (!truckWindow(now) || padOn(S.cur)) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), k = truckHover(now), off = k * 420, bob = motion ? Math.sin(t * 2) * 1.5 : 0;
+  spr('truck_garbage_iso', 0, c.cx + 84 + off, c.cy - 26 - off * .3 + bob);
+  spr('truck_recycle_iso', 0, c.cx + 70 + off, c.cy + 30 - off * .3 - bob);
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6); };
+// robots carry the bags to a free tile next to the pad when there is one
+{ const _ts33 = truckStop; truckStop = function(mi){ const P = padOn(mi); if (!P) return _ts33(mi); const M = S.maps[mi], T = P.T;
+  for (const [x, y] of [[T.rx, T.ry + 1], [T.rx + 1, T.ry + 1], [T.rx - 1, T.ry], [T.rx + 2, T.ry], [T.rx, T.ry - 1], [T.rx + 1, T.ry - 1]]){ const k = tkey(x, y); if (inMap(M, x, y) && swPass(M, k)) return { x, y, k }; }
+  return _ts33(mi); }; }
+// trash panel: side views of the two trucks
+{ const _ot33 = openTrash; openTrash = function(mi, k){ _ot33(mi, k); const el = $('modalBody'); if (!el || !IMGSRC.ui_pg_truck_garbage) return;
+  const card = [...el.querySelectorAll('.pcard')][1]; if (card) card.insertAdjacentHTML('afterbegin', `<div class="trucks2"><img src="${IMGSRC.ui_pg_truck_garbage}" alt="飛天垃圾車"><img src="${IMGSRC.ui_pg_truck_recycle}" alt="飛天資源回收車"></div>`);
+  if (card && !padOn(mi)) card.insertAdjacentHTML('beforeend', `<p class="small">用「建設」蓋「${TPAD.name}」（2×1 格，${fmtN(TPAD.cost)} 金幣），車子會降落在平台上，機器人走的路也比較短。</p>`); }; }
+
+/* ---------- save upgrade: fence that was selected in 裝飾 stays usable; hive selection ---------- */
+{ const _ns33 = normalizeState; normalizeState = function(d){ const r = _ns33(d); if (r && !r.v210){ r.v210 = 1; if (r.buildStore && !r.maps.some(M => Object.values(M.tiles).some(T => T && T.id === 'truck_pad'))) r.buildStore.truck_pad = 0; }
+  if (r && r.sel){ if (!r.sel.insect) r.sel.insect = 'beehive'; if (r.sel.deco === 'fence') r.sel.deco = 'maple'; if (r.sel.tool === 'insect' && !BF) r.sel.tool = 'hand'; } return r; }; }
+
+window.__farm210 = { pads, placeEgg, stepButterflies, installColony, buildInsectTray, applyTabs33, truckHover };
+
+/* ---------- tapping an empty-looking tile: the animal that lives there has walked away, so it is not "there" ---------- */
+{ const _ah35 = animalHit; animalHit = function(sx, sy){ const r = _ah35(sx, sy); RT.lastAnimalTap = r ? tkey(r.x, r.y) : null; RT.lastAnimalTapAt = performance.now(); return r; }; }
+function animalAwayFrom(k){ const ag = RT.agents && RT.agents[`${S.cur}:${k}`]; if (!ag || !motion) return false; const [x, y] = pkey(k); return Math.hypot(ag.x - x, ag.y - y) > .55; }
+{ const _act35 = act; act = function(x, y){ const M = curMap(), k = tkey(x, y), T = inMap(M, x, y) && M.tiles[k];
+  if (T && T.t === 'animal' && animalAwayFrom(k) && !(RT.lastAnimalTap === k && performance.now() - (RT.lastAnimalTapAt || 0) < 400)){
+    const tool = S.sel.tool; if (['hand', 'animal', 'remove', 'store', 'move', 'care'].includes(tool)){ RT.lastAnimalTap = null; return; } }
+  RT.lastAnimalTap = null; return _act35(x, y); }; }
+
+/* ===== 34. v2.11: 建設 split into six tabs; facilities also reachable from the tool they belong to (播種／動物／魚 · 設施);
+   truck landing pad is 2×4 and docks on the invisible 2-cell rim around the island (never on island tiles), four
+   directional art sets (replaceable: art/src_truckpad + render25.js); HUD: coins + 水電 top-aligned, weather /
+   storage / auto on row 2 beside the name card, status chips under the name card; build hint "undefined" fix;
+   tray lines and the 水電 bar no longer cut text ===== */
+const TT34 = CFG.ui.trayTabs || {};
+const RIM_SIDES = ['sw', 'se', 'ne', 'nw'];
+const ALONG_X34 = s => s === 'sw' || s === 'ne';
+const VIA34 = { animal: { compost_bin: 1 }, fish: { fish_feed_machine: 1 } };
+const SEED_FAC = ((TT34.seed || []).find(t => t.id === 'facility') || {}).ids || [];
+
+/* ---------- truck pad on the island rim ---------- */
+// P = { mi, side, x0, y0 } ; sw/ne run along x (4 wide, 2 deep), se/nw run along y
+function padCells(P){ const out = []; for (let a = 0; a < 4; a++) for (let b = 0; b < 2; b++) out.push(ALONG_X34(P.side) ? [P.x0 + a, P.y0 + b] : [P.x0 + b, P.y0 + a]); return out; }
+function padInner(P){ const out = []; for (let a = 0; a < 4; a++){
+  if (P.side === 'sw') out.push([P.x0 + a, P.y0 - 1]); else if (P.side === 'ne') out.push([P.x0 + a, P.y0 + 2]);
+  else if (P.side === 'se') out.push([P.x0 - 1, P.y0 + a]); else out.push([P.x0 + 2, P.y0 + a]); } return out; }
+const padMid = P => ALONG_X34(P.side) ? { x: P.x0 + 1.5, y: P.y0 + .5 } : { x: P.x0 + .5, y: P.y0 + 1.5 };
+const padBays = P => ALONG_X34(P.side) ? [{ x: P.x0 + .5, y: P.y0 + .5 }, { x: P.x0 + 2.5, y: P.y0 + .5 }] : [{ x: P.x0 + .5, y: P.y0 + .5 }, { x: P.x0 + .5, y: P.y0 + 2.5 }];
+function padValid(M, P){ return padCells(P).every(([x, y]) => !inMap(M, x, y)) && padInner(P).every(([x, y]) => inMap(M, x, y)); }
+function rimSpots(M){
+  let x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity; for (const [bx, by] of M.blocks){ x1 = Math.min(x1, bx * BS); y1 = Math.min(y1, by * BS); x2 = Math.max(x2, bx * BS + BS - 1); y2 = Math.max(y2, by * BS + BS - 1); }
+  const out = []; for (const side of RIM_SIDES) for (let y0 = y1 - 4; y0 <= y2 + 2; y0++) for (let x0 = x1 - 4; x0 <= x2 + 2; x0++){ const P = { side, x0, y0 }; if (padValid(M, P)) out.push(P); }
+  return out; }
+function nearestRim(M, x, y, maxD = 3.6){ let best = null, bd = Infinity;
+  for (const P of rimSpots(M)){ const c = padMid(P), d = Math.hypot(c.x - x, c.y - y); if (d < bd){ bd = d; best = P; } }
+  return best && bd <= maxD ? { side: best.side, x0: best.x0, y0: best.y0 } : null; }
+function padAt(mi, x, y){ const P = S.truckPad; if (!P || P.mi !== mi) return null; return padCells(P).some(([a, b]) => a === x && b === y) ? P : null; }
+// new pads(): the rim pad (g33's tile pads are gone); g33's countPads / padOn read through this
+function pads(){ const P = S && S.truckPad; return P ? [{ mi: P.mi, M: S.maps[P.mi], P, T: null }] : []; }
+// old tile pads (v2.10) and pushed-out pads find their place on the rim again
+function fixPad(){
+  if (!S) return; const pend = S.truckPadPending;
+  if (pend){ const M = S.maps[pend.mi] || S.maps[0]; const c = M && nearestRim(M, pend.x, pend.y, Infinity); delete S.truckPadPending; if (c) S.truckPad = { mi: S.maps[pend.mi] ? pend.mi : 0, ...c }; }
+  const P = S.truckPad; if (!P) return; const M = S.maps[P.mi]; if (!M){ S.truckPad = null; return; }
+  if (!padValid(M, P)){ const m = padMid(P), c = nearestRim(M, m.x, m.y, Infinity); if (c){ Object.assign(P, c); if (P.mi === S.cur) toast(`${TPAD.name}被新的土地推到島邊了`, false, 2600); } }
+}
+{ const _te34 = tryExpandAt; tryExpandAt = function(x, y){ const r = _te34(x, y); fixPad(); return r; }; }
+
+// trucks land on the two bays; the robots carry bags to the island tile just inside the pad
+{ const _ts34 = truckStop; truckStop = function(mi){ const P = S.truckPad; if (!P || P.mi !== mi) return _ts34(mi); const M = S.maps[mi];
+  const inn = padInner(P), order = [inn[1], inn[2], inn[0], inn[3]];
+  for (const [x, y] of order){ const k = tkey(x, y); if (inMap(M, x, y) && swPass(M, k)) return { x, y, k }; }
+  const m = padMid(P); let best = null, bd = Infinity;   // inner row blocked: the nearest walkable tile to the pad
+  for (const [x, y] of mapTiles(M)){ const k = tkey(x, y); if (!swPass(M, k)) continue; const d = Math.hypot(x - m.x, y - m.y); if (d < bd){ bd = d; best = { x, y, k }; } }
+  return best || _ts34(mi); }; }
+const OUTV34 = { sw: [-1, 1], se: [1, 1], ne: [1, -1], nw: [-1, -1] };
+function drawPad(P, t, now, ghost){
+  const m = padMid(P), c = center(m.x, m.y);
+  if (ghost){ ctx.save(); ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = 'rgba(120,200,255,.18)';
+    for (const [x, y] of padCells(P)){ const q = center(x, y); diamondPath(q.cx, q.cy, .96); ctx.fill(); ctx.stroke(); } ctx.restore(); }
+  spr('truckpad_' + P.side, 0, c.cx, c.cy, false, ghost ? .6 : 1);
+  if (ghost || !truckWindow(now)) return;
+  const k = truckHover(now), [ox, oy] = OUTV34[P.side], bob = motion ? Math.sin(t * 2) * k * 1.5 : 0;
+  const bays = padBays(P).map((b, i) => ({ ...b, kind: i ? 'recycle' : 'garbage' })).sort((a, b) => (a.x + a.y) - (b.x + b.y));
+  for (const b of bays){ const q = center(b.x, b.y), fly = k * 300;
+    spr(`truck_${b.kind}_${P.side}`, 0, q.cx + ox * fly * .9, q.cy + oy * fly * .45 - k * 150 + bob); }
+  if ((trashState().collectUntil || 0) > now){ const ts = truckStop(P.mi); if (ts){ const q = center(ts.x, ts.y); spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, q.cx, q.cy - 4); } }
+}
+function padGhost(){
+  const M = curMap(), tool = S.sel.tool; if (!hover || UI.expand) return null;
+  const want = (tool === 'build' && S.sel.build === 'truck_pad') || (tool === 'move' && RT.padMove); if (!want) return null;
+  const c = nearestRim(M, hover.x, hover.y); return c ? { mi: S.cur, ...c } : null; }
+{ const _dw34 = drawWorld; drawWorld = function(t, now){
+  fixPad(); const P = S.truckPad, here = P && P.mi === S.cur, back = here && (P.side === 'ne' || P.side === 'nw');
+  const gh = padGhost(), moving = RT.padMove && here;
+  if (back && !moving) drawPad(P, t, now, false);      // behind the island: its edge hides part of the pad
+  _dw34(t, now);
+  if (here && !back && !moving) drawPad(P, t, now, false);
+  if (moving) drawPad(P, t, now, true);
+  if (gh) drawPad(gh, t, now, true); }; }
+// the island's own hover trucks only when this map has no pad
+drawTrucks = function(M, now, t){
+  if (!truckWindow(now)) return; const P = S.truckPad; if (P && P.mi === S.cur) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), k = truckHover(now), off = k * 420, bob = motion ? Math.sin(t * 2) * 1.5 : 0;
+  spr('truck_garbage_se', 0, c.cx + 84 + off, c.cy + 6 - off * .3 + bob);
+  spr('truck_recycle_se', 0, c.cx + 70 + off, c.cy + 50 - off * .3 - bob);
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6); };
+
+/* ---------- acting on the rim ---------- */
+function placePad(x, y){
+  const M = curMap(), mi = S.cur, P = S.truckPad;
+  if (!isUnlocked('truck_pad')){ toast(lockedMsg('truck_pad')); return; }
+  if (P && P.mi !== mi){ toast(`${TPAD.name}已經蓋在第 ${P.mi + 1} 張地圖了，整個農場只能蓋 ${TPAD.limit || 1} 座`); return; }
+  const c = nearestRim(M, x, y); if (!c){ toast(`點島的邊緣外側放${TPAD.name}（島外一圈看不到的格子，不佔島上的地）`); return; }
+  const m = padMid(c), at = center(m.x, m.y);
+  if (P){ Object.assign(P, c); RT.padMove = false; sfx('place'); floatText(at.cx, at.cy - 20, '平台搬好了', '#2f6f8f', 11); afterAction(); UIbuildTray(); return; }
+  if (!spend(TPAD.cost)) return;
+  S.truckPad = { mi, ...c }; sfx('place'); floatText(at.cx, at.cy - 20, `-${fmtN(TPAD.cost)}`, '#8a5d36', 11);
+  toast(`${TPAD.name}蓋好了！每天 16:00 垃圾車和資源回收車會降落在這裡`, true, 3000); afterAction(); UIbuildTray(); }
+{ const _act36 = act; act = function(x, y){
+  if (!S || UI.expand) return _act36(x, y);
+  const tool = S.sel.tool, mi = S.cur, onPad = padAt(mi, x, y);
+  // facilities picked from 播種／動物／魚 behave exactly like 建設
+  if (tool === 'seed' && S.sel.seedTab === 'facility' && S.sel.seedFac) return withTool('build', { build: S.sel.seedFac }, () => act(x, y));
+  if (tool === 'animal' && VIA34.animal[S.sel.animal]) return withTool('build', { build: S.sel.animal }, () => act(x, y));
+  if (tool === 'fish' && VIA34.fish[S.sel.fish]) return withTool('build', { build: S.sel.fish }, () => act(x, y));
+  if (tool === 'build' && S.sel.build === 'truck_pad'){ placePad(x, y); return; }
+  if (tool === 'move' && RT.padMove){ placePad(x, y); return; }
+  if (onPad){ const P = S.truckPad, m = padMid(P), at = center(m.x, m.y);
+    if (tool === 'remove'){ const back = Math.floor(TPAD.cost * (TPAD.sellRate ?? .5)); S.truckPad = null; S.player.coins += back; RT.padMove = false;
+      floatText(at.cx, at.cy - 24, `拆掉${TPAD.name} +${back}`, '#2f8a3a', 11); sfx('coin'); afterAction(); UIbuildTray(); return; }
+    if (tool === 'move'){ RT.padMove = true; toast('沿著島邊點新的位置（搬移免費）；點平台本身取消', false, 2600); updateHint(); return; }
+    if (tool === 'store'){ toast(`${TPAD.name}不能收回，用「剷除」拆掉會退一半（${fmtN(Math.floor(TPAD.cost * (TPAD.sellRate ?? .5)))}）`); return; }
+    const st = stations()[0], now = Date.now();
+    if (st && tool === 'hand'){ openTrash(st.mi, st.k); return; }
+    toast(truckWindow(now) ? '垃圾車和資源回收車正停在平台上' : '垃圾車每天 16:00 降落在這座平台，停 30 分鐘', false, 2600); return; }
+  if (tool !== 'move') RT.padMove = false;
+  return _act36(x, y); }; }
+{ const _st34 = setTool; setTool = function(id){ if (id !== 'move') RT.padMove = false; return _st34(id); }; }
+
+/* ---------- tray: 建設 tabs, 設施 tabs on 播種 / 動物 / 魚 ---------- */
+{ const _is34 = itemSprite; itemSprite = function(kind, id){ if (kind === 'building' && id === 'truck_pad') return ['truckpad_sw', 0]; return _is34(kind, id); }; }
+const buildTabOf = id => tabOf('build', id) || 'env';
+// the 建設 tray item for these ids, rebuilt by the real 建設 tray code so cost / lock / count lines stay identical
+function borrowBuildItems(ids, selId){
+  if (RT.borrow34) return []; const tray = $('tray'); let els = [];
+  RT.borrow34 = true;
+  try { withTool('build', { build: selId || '__none' }, () => { UIbuildTray(); els = [...tray.querySelectorAll('.item')].filter(e => ids.includes(e.dataset.id)); }); }
+  finally { RT.borrow34 = false; }
+  els.forEach(e => { e.remove(); e.hidden = false; }); return els; }
+function adoptItems(els, isSel, pick, before){ const tray = $('tray');
+  els.forEach(el => { el.classList.toggle('sel', isSel(el.dataset.id)); el.setAttribute('aria-pressed', isSel(el.dataset.id));
+    const locked = el.classList.contains('locked'); el.onclick = () => { if (locked && !isUnlocked(el.dataset.id)){ toast(lockedMsg(el.dataset.id)); return; } pick(el.dataset.id); UIbuildTray(); updateHint(); };
+    tray.insertBefore(el, before || null); }); }
+function applyBuildTabs(){
+  const tray = $('tray'), list = TT34.build; if (!list || !tray) return;
+  let tab = S.sel.buildTab || buildTabOf(S.sel.build); if (!RT.buildTabPick && buildTabOf(S.sel.build) !== tab) tab = buildTabOf(S.sel.build); S.sel.buildTab = tab;
+  tray.querySelectorAll(':scope > .sep, :scope > .trayempty').forEach(s => s.remove());
+  tray.querySelectorAll('.item').forEach(el => { el.hidden = buildTabOf(el.dataset.id) !== tab; });
+  const ord = el => { const id = el.dataset.id, ti = list.findIndex(c => (c.ids || []).includes(id)); return ti < 0 ? 999 : ti * 50 + list[ti].ids.indexOf(id); };
+  [...tray.querySelectorAll('.item')].sort((a, b) => ord(a) - ord(b)).forEach(el => tray.appendChild(el));
+  tabsBar(list, tab, k => { S.sel.buildTab = k; RT.buildTabPick = true; try { UIbuildTray(); const its = [...$('tray').querySelectorAll('.item')].filter(x => !x.hidden); const f = its.find(x => !x.classList.contains('locked')) || its[0]; if (f) f.click(); } finally { RT.buildTabPick = false; } updateHint(); });
+  if (![...tray.querySelectorAll('.item')].some(x => !x.hidden)){ const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = '這一類還沒有東西'; tray.appendChild(e); } }
+function seedFacilityTray(){ // RT.seedFacEls were borrowed before the seed tray was drawn
+  const tray = $('tray'), els = RT.seedFacEls || []; RT.seedFacEls = null;
+  tray.querySelectorAll('.item').forEach(el => el.hidden = true); tray.querySelectorAll(':scope > .sep, :scope > .trayempty').forEach(s => s.remove());
+  els.sort((a, b) => SEED_FAC.indexOf(a.dataset.id) - SEED_FAC.indexOf(b.dataset.id));
+  adoptItems(els, id => id === S.sel.seedFac, id => { S.sel.seedFac = id; });
+  tabsBar(TT34.seed, 'facility', k => { S.sel.seedTab = k;
+    if (k === 'flowers'){ if (!(FL && FL[S.sel.seed])) S.sel.seed = Object.keys(FL).find(isUnlocked) || Object.keys(FL)[0]; }
+    else if (k === 'trees'){ if (!CFG.trees[S.sel.seed]) S.sel.seed = S.lastTree && CFG.trees[S.lastTree] ? S.lastTree : (Object.keys(CFG.trees).find(isUnlocked) || Object.keys(CFG.trees)[0]); }
+    else if (k === 'crops'){ if (!CFG.crops[S.sel.seed]) S.sel.seed = S.lastCrop && CFG.crops[S.lastCrop] ? S.lastCrop : 'wheat'; }
+    UIbuildTray(); updateHint(); }); }
+{ const _ut34 = UIbuildTray; UIbuildTray = function(){
+  if (!S) return _ut34(); const tool = S.sel.tool;
+  if (RT.borrow34) return _ut34();
+  if (tool === 'seed' && S.sel.seedTab === 'facility'){ const fac = SEED_FAC.includes(S.sel.seedFac) ? S.sel.seedFac : SEED_FAC[0]; S.sel.seedFac = fac;
+    RT.seedFacEls = borrowBuildItems(SEED_FAC, fac); _ut34(); seedFacilityTray(); return; }
+  const via = VIA34[tool] ? Object.keys(VIA34[tool]) : null, cur = tool === 'animal' ? S.sel.animal : tool === 'fish' ? S.sel.fish : null;
+  const borrowed = via ? borrowBuildItems(via, via.includes(cur) ? cur : null) : null;
+  _ut34();
+  const tray = $('tray');
+  if (tool === 'build'){
+    const el = tray.querySelector('.item[data-id="truck_pad"]');
+    if (el && TPAD){ const P = S.truckPad, lk = !isUnlocked('truck_pad'), sm = el.querySelectorAll('small');
+      if (sm[1]) sm[1].textContent = P ? '已蓋好 · 可搬移' : '2×4 · 貼在島邊';
+      el.classList.toggle('locked', lk);
+      el.onclick = () => { if (lk){ toast(lockedMsg('truck_pad')); return; } S.sel.build = 'truck_pad'; UIbuildTray(); updateHint(); }; }
+    applyBuildTabs(); }
+  if (borrowed && borrowed.length){
+    const key = tool, anchor = [...tray.querySelectorAll('.item')].find(e => tabOf(tool, e.dataset.id) !== 'facility');
+    adoptItems(borrowed, id => S.sel[key] === id, id => { S.sel[key] = id; S.sel[key + 'Tab'] = 'facility'; }, anchor);
+    applyTabs33(); }
+}; }
+// hints for facilities chosen from another tool; 建設 hint no longer says "undefined"
+{ const tb = TOOLS.find(t => t.id === 'build'), _hb = tb.hint; tb.hint = () => {
+  const id = S.sel.build;
+  if (id === 'truck_pad') return S.truckPad ? `點島的邊緣外側，把${TPAD.name}搬過去（免費）· 用「剷除」拆掉退 ${fmtN(Math.floor(TPAD.cost * (TPAD.sellRate ?? .5)))}`
+    : `點島的邊緣外側蓋${TPAD.name} · ${fmtN(TPAD.cost)} 金幣 · 2×4，貼在島外，不佔島上的格子`;
+  if (id === 'trash_station') return `點草地蓋${(BLD.trash_station || {}).name || '垃圾站'} · 點它可以倒垃圾、看分類回收`;
+  return String(_hb()).replace(/ · 點它可以看undefined狀態和設定充電來源/, ' · 點它可以看狀態').replace(/undefined/g, ''); }; }
+const buildHintFor = id => withTool('build', { build: id }, () => TOOLS.find(t => t.id === 'build').hint());
+for (const [tid, test] of [['seed', () => S.sel.seedTab === 'facility' && S.sel.seedFac], ['animal', () => VIA34.animal[S.sel.animal] && S.sel.animal], ['fish', () => VIA34.fish[S.sel.fish] && S.sel.fish]]){
+  const T = TOOLS.find(t => t.id === tid); if (!T) continue; const _h = T.hint; T.hint = () => { const id = test(); return id ? buildHintFor(id) : _h(); }; }
+{ const tm = TOOLS.find(t => t.id === 'move'); if (tm){ const _hm = tm.hint; tm.hint = () => RT.padMove ? `沿著島邊點新的位置放${TPAD.name}（免費）` : (typeof _hm === 'function' ? _hm() : _hm); } }
+
+// phones: the tab row scrolls, keep the chosen tab in view
+{ const _tb34 = tabsBar; tabsBar = function(list, cur, onPick){ const r = _tb34(list, cur, onPick); const on = TTAB.querySelector('button.on'); if (on) requestAnimationFrame(() => { const a = TTAB.getBoundingClientRect(), b = on.getBoundingClientRect(); if (b.right > a.right) TTAB.scrollLeft += b.right - a.right + 6; else if (b.left < a.left) TTAB.scrollLeft -= a.left - b.left + 6; }); return r; }; }
+
+/* ---------- tray text: shrink the small lines too, wrap instead of cutting ---------- */
+// scrollWidth rounds to whole pixels and misses text that is cut by a fraction: measure the real text width
+const RNG34 = document.createRange();
+function over34(el){ RNG34.selectNodeContents(el); return RNG34.getBoundingClientRect().width > el.clientWidth - .5; }
+{ const _ft34 = fitTrayText; fitTrayText = function(){ _ft34(); const tray = $('tray'); if (!tray || tray.hidden) return;
+  for (const it of tray.querySelectorAll('.item')){ if (it.hidden) continue;
+    const nb = it.querySelector('b'); if (nb && over34(nb)){ let fs = parseFloat(getComputedStyle(nb).fontSize) || 12; while (over34(nb) && fs > 9.5){ fs -= .5; nb.style.fontSize = fs + 'px'; } if (over34(nb)) nb.style.whiteSpace = 'normal'; }
+    for (const s of it.querySelectorAll('small')){ s.style.fontSize = ''; s.style.whiteSpace = ''; let fs = parseFloat(getComputedStyle(s).fontSize) || 11;
+      while (over34(s) && fs > 9){ fs -= .5; s.style.fontSize = fs + 'px'; }
+      if (over34(s)) s.style.whiteSpace = 'normal'; } } }; }
+// web fonts can arrive after the first fit: fit again once they are in, and shortly after every tray rebuild
+try { document.fonts && document.fonts.ready.then(() => fitTrayText()); } catch (e){}
+{ const _ut35 = UIbuildTray; UIbuildTray = function(){ const r = _ut35(); clearTimeout(RT.fitT34); RT.fitT34 = setTimeout(() => fitTrayText(), 450); return r; }; }
+
+/* ---------- HUD: name card spans two rows; row 1 coins + 水電, row 2 weather / storage / auto ---------- */
+{ const hud = document.querySelector('.hud'), g1 = hud && hud.firstElementChild, g2 = hud && hud.lastElementChild;
+  if (g1 && g2 && !hud.querySelector('.r1')){
+    const r1 = document.createElement('div'); r1.className = 'r1'; [...g1.children].filter(c => !c.classList.contains('player')).forEach(c => r1.appendChild(c)); g1.appendChild(r1);
+    const r2 = document.createElement('div'); r2.className = 'r2'; [...g2.children].forEach(c => r2.appendChild(c)); g2.appendChild(r2); } }
+{ const _lh34 = layoutHUD; layoutHUD = function(){ _lh34(); if (isM()) return; const pl = document.querySelector('.hud .player'), st = $('status'); if (!pl || !st) return;
+  const r = pl.getBoundingClientRect(), top = Math.round(r.bottom + 6) + 'px', left = Math.round(r.left) + 'px'; if (st.style.top !== top) st.style.top = top; if (st.style.left !== left) st.style.left = left;
+  const hb = document.querySelector('.hud').getBoundingClientRect(), tt = Math.round(hb.bottom + 8) + 'px', te = $('toast'); if (te && te.style.top !== tt) te.style.top = tt; }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns34 = normalizeState; normalizeState = function(d){ const r = _ns34(d);
+  if (r && !r.v211){ r.v211 = 1; let pend = null;
+    (r.maps || []).forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && T.id === 'truck_pad'){ if (!pend){ const [x, y] = pkey(k); pend = { mi, x: (T.rx ?? x) + .5, y: T.ry ?? y }; } delete M.tiles[k]; } } });
+    if (!pend && r.buildStore && r.buildStore.truck_pad > 0) pend = { mi: 0, x: BS / 2, y: BS + 1 };
+    if (r.buildStore) r.buildStore.truck_pad = 0;
+    if (pend && !r.truckPad) r.truckPadPending = pend; }
+  if (r && r.truckPad === undefined) r.truckPad = null;
+  if (r && r.sel){ if (!r.sel.seedFac) r.sel.seedFac = SEED_FAC[0]; } return r; }; }
+
+window.__farm211 = { truckStop: mi => truckStop(mi), pads, padCells, padValid, rimSpots, nearestRim, fixPad, placePad, padAt, padMid, applyBuildTabs, borrowBuildItems };
 
   })(CFG, ATLAS_JSON);
 })();

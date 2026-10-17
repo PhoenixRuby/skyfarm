@@ -1,3721 +1,4326 @@
 // 離線（直接雙擊打開）時使用的定義檔，內容與 game-config.json 相同
 window.GAME_CONFIG = {
-  "meta": {
-    "name": "浮島農場",
-    "configVersion": "2.8.0",
-    "saveFormatVersion": 1,
-    "units": {
-      "time": "seconds",
-      "money": "coins",
-      "water": "drops"
-    },
-    "gameName": {
-      "zh": "浮島農場",
-      "en": "SkyFarm",
-      "formerly": "綠丘小農場"
-    },
-    "icon": {
-      "variant": "A",
-      "sizes": [
-        32,
-        180,
-        192,
-        512
-      ]
-    },
-    "nameEn": "SkyFarm"
+ "meta": {
+  "name": "浮島農場",
+  "configVersion": "2.11.0",
+  "saveFormatVersion": 1,
+  "units": {
+   "time": "seconds",
+   "money": "coins",
+   "water": "drops"
   },
-  "rules": {
-    "startCoins": 200,
-    "plowCost": 5,
-    "plowXp": 0,
-    "waterPerTap": 1,
-    "waterXp": 0,
-    "moistMaxLevel": 4,
-    "moistLevelSeconds": 3600,
-    "moistGrowthRate": 1.0,
-    "dryGrowthRate": 0.5,
-    "droughtWitherSeconds": 14400,
-    "reviveWaterSameAsNormal": true,
-    "witheredHarvestRate": 0.8,
-    "treeCanWither": false,
-    "cropClearRefund": 0,
-    "xpDivisor": 10,
-    "bigBucketFillsTo": 4,
-    "animalSellRate": 0.5,
-    "decoSellRate": 0.5,
-    "decoStorable": true,
-    "animalStorable": false,
-    "treeRemoveRefund": 0,
-    "waterMerge": true,
-    "bonusStacking": {
-      "growth": "max",
-      "moisture": "max",
-      "storage": "sum"
-    },
-    "animalStackMax": 3,
-    "animalOldWarningRatio": 0.2,
-    "meatAdultLifespanSeconds": 172800,
-    "autoScope": "allMaps",
-    "autoMaxHours": 48,
-    "blockSize": 10,
-    "maxBlocksPerMap": 4,
-    "maxMaps": 3,
-    "maxLevel": 10,
-    "autosaveSeconds": 30,
-    "produceStorage": true,
-    "produceFullAction": "ask",
-    "produceFullChoices": [
-      "sell",
-      "discard"
-    ],
-    "xpOnHarvest": true,
-    "autoBuyFeedDefault": true,
-    "machineSellRate": 0.5,
-    "machineStorable": false
+  "gameName": {
+   "zh": "浮島農場",
+   "en": "SkyFarm",
+   "formerly": "綠丘小農場"
   },
-  "weather": {
-    "slotSeconds": 3600,
-    "timezone": "Asia/Taipei",
-    "utcOffsetHours": 8,
-    "rainChancePerSlot": 0.05,
-    "rainStartMinuteMax": 45,
-    "rainMinutes": 15,
-    "rainFillsBucket": true,
-    "rainMoistLevel": 4,
-    "rainRevivesWithered": true,
-    "forecastHours": 24,
-    "version": 1,
-    "cloudyChancePerSlot": 0.25,
-    "rainImpliesCloudy": true
+  "icon": {
+   "variant": "A",
+   "sizes": [
+    32,
+    180,
+    192,
+    512
+   ]
   },
-  "crops": {
-    "pasture": {
-      "name": "牧草",
-      "growSeconds": 60,
-      "seedCost": 2,
-      "sellPrice": 1,
-      "yield": 5,
-      "xp": 0,
-      "waterUse": 1.0,
-      "isFeed": true
-    },
-    "wheat": {
-      "name": "小麥",
-      "growSeconds": 120,
-      "seedCost": 5,
-      "sellPrice": 15,
-      "xp": 1,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "tomato": {
-      "name": "番茄",
-      "growSeconds": 600,
-      "seedCost": 15,
-      "sellPrice": 45,
-      "xp": 3,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "potato": {
-      "name": "馬鈴薯",
-      "growSeconds": 1200,
-      "seedCost": 25,
-      "sellPrice": 80,
-      "xp": 6,
-      "waterUse": 0.75,
-      "yield": 1
-    },
-    "corn": {
-      "name": "玉米",
-      "growSeconds": 1800,
-      "seedCost": 30,
-      "sellPrice": 105,
-      "xp": 8,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "peanut": {
-      "name": "花生",
-      "growSeconds": 2700,
-      "seedCost": 45,
-      "sellPrice": 150,
-      "xp": 11,
-      "waterUse": 0.75,
-      "yield": 1
-    },
-    "strawberry": {
-      "name": "草莓",
-      "growSeconds": 3600,
-      "seedCost": 50,
-      "sellPrice": 180,
-      "xp": 13,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "cabbage": {
-      "name": "高麗菜",
-      "growSeconds": 7200,
-      "seedCost": 80,
-      "sellPrice": 310,
-      "xp": 23,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "rice": {
-      "name": "水稻",
-      "growSeconds": 10800,
-      "seedCost": 120,
-      "sellPrice": 510,
-      "xp": 39,
-      "waterUse": 2.0,
-      "yield": 1
-    },
-    "pumpkin": {
-      "name": "南瓜",
-      "growSeconds": 14400,
-      "seedCost": 140,
-      "sellPrice": 580,
-      "xp": 44,
-      "waterUse": 1.0,
-      "yield": 1
-    },
-    "watermelon": {
-      "name": "西瓜",
-      "growSeconds": 21600,
-      "seedCost": 200,
-      "sellPrice": 800,
-      "xp": 60,
-      "waterUse": 1.5,
-      "yield": 1
-    },
-    "sunflower": {
-      "name": "向日葵",
-      "growSeconds": 28800,
-      "seedCost": 220,
-      "sellPrice": 940,
-      "xp": 72,
-      "waterUse": 1.0,
-      "yield": 1
-    }
+  "nameEn": "SkyFarm"
+ },
+ "rules": {
+  "startCoins": 200,
+  "plowCost": 5,
+  "plowXp": 0,
+  "waterPerTap": 1,
+  "waterXp": 0,
+  "moistMaxLevel": 4,
+  "moistLevelSeconds": 3600,
+  "moistGrowthRate": 1.0,
+  "dryGrowthRate": 0.5,
+  "droughtWitherSeconds": 14400,
+  "reviveWaterSameAsNormal": true,
+  "witheredHarvestRate": 0.8,
+  "treeCanWither": false,
+  "cropClearRefund": 0,
+  "xpDivisor": 10,
+  "bigBucketFillsTo": 4,
+  "animalSellRate": 0.5,
+  "decoSellRate": 0.5,
+  "decoStorable": true,
+  "animalStorable": false,
+  "treeRemoveRefund": 0,
+  "waterMerge": true,
+  "bonusStacking": {
+   "growth": "max",
+   "moisture": "max",
+   "storage": "sum"
   },
-  "trees": {
-    "lemon": {
-      "name": "檸檬",
-      "saplingCost": 600,
-      "firstFruitSeconds": 43200,
-      "fruitIntervalSeconds": 14400,
-      "harvestPrice": 120,
-      "xp": 12,
-      "waterUse": 1.0
-    },
-    "papaya": {
-      "name": "木瓜",
-      "saplingCost": 900,
-      "firstFruitSeconds": 64800,
-      "fruitIntervalSeconds": 21600,
-      "harvestPrice": 210,
-      "xp": 21,
-      "waterUse": 1.0
-    },
-    "mango": {
-      "name": "芒果",
-      "saplingCost": 1200,
-      "firstFruitSeconds": 86400,
-      "fruitIntervalSeconds": 28800,
-      "harvestPrice": 300,
-      "xp": 30,
-      "waterUse": 1.0
-    },
-    "banana": {
-      "name": "香蕉",
-      "saplingCost": 1600,
-      "firstFruitSeconds": 86400,
-      "fruitIntervalSeconds": 28800,
-      "harvestPrice": 380,
-      "xp": 38,
-      "waterUse": 1.0
-    },
-    "apple": {
-      "name": "蘋果",
-      "saplingCost": 2400,
-      "firstFruitSeconds": 129600,
-      "fruitIntervalSeconds": 43200,
-      "harvestPrice": 640,
-      "xp": 64,
-      "waterUse": 1.0
-    },
-    "orange": {
-      "name": "柳丁",
-      "saplingCost": 450,
-      "firstFruitSeconds": 36000,
-      "fruitIntervalSeconds": 10800,
-      "harvestPrice": 85,
-      "xp": 8,
-      "waterUse": 1.0
-    },
-    "peach": {
-      "name": "桃子",
-      "saplingCost": 700,
-      "firstFruitSeconds": 50400,
-      "fruitIntervalSeconds": 18000,
-      "harvestPrice": 150,
-      "xp": 15,
-      "waterUse": 1.0,
-      "bloomSeason": "spring"
-    },
-    "persimmon": {
-      "name": "柿子",
-      "saplingCost": 1000,
-      "firstFruitSeconds": 64800,
-      "fruitIntervalSeconds": 21600,
-      "harvestPrice": 220,
-      "xp": 22,
-      "waterUse": 0.8,
-      "autumnLeaves": true
-    },
-    "lychee": {
-      "name": "荔枝",
-      "saplingCost": 1100,
-      "firstFruitSeconds": 72000,
-      "fruitIntervalSeconds": 25200,
-      "harvestPrice": 260,
-      "xp": 26,
-      "waterUse": 1.2
-    },
-    "longan": {
-      "name": "龍眼",
-      "saplingCost": 1300,
-      "firstFruitSeconds": 86400,
-      "fruitIntervalSeconds": 28800,
-      "harvestPrice": 320,
-      "xp": 32,
-      "waterUse": 1.0
-    },
-    "pear": {
-      "name": "梨子",
-      "saplingCost": 1400,
-      "firstFruitSeconds": 86400,
-      "fruitIntervalSeconds": 28800,
-      "harvestPrice": 340,
-      "xp": 34,
-      "waterUse": 1.0
-    },
-    "coconut": {
-      "name": "椰子",
-      "saplingCost": 1800,
-      "firstFruitSeconds": 108000,
-      "fruitIntervalSeconds": 36000,
-      "harvestPrice": 450,
-      "xp": 45,
-      "waterUse": 0.6
-    },
-    "cherry": {
-      "name": "櫻桃",
-      "saplingCost": 2200,
-      "firstFruitSeconds": 108000,
-      "fruitIntervalSeconds": 36000,
-      "harvestPrice": 560,
-      "xp": 56,
-      "waterUse": 1.0,
-      "bloomSeason": "spring"
-    },
-    "avocado": {
-      "name": "酪梨",
-      "saplingCost": 2800,
-      "firstFruitSeconds": 129600,
-      "fruitIntervalSeconds": 43200,
-      "harvestPrice": 720,
-      "xp": 72,
-      "waterUse": 1.5
-    },
-    "grape": {
-      "name": "葡萄",
-      "saplingCost": 3200,
-      "firstFruitSeconds": 129600,
-      "fruitIntervalSeconds": 43200,
-      "harvestPrice": 820,
-      "xp": 82,
-      "waterUse": 1.2,
-      "look": "trellis"
-    }
-  },
-  "animals": {
-    "egg_hen": {
-      "name": "蛋雞",
-      "type": "producer",
-      "youngCost": 80,
-      "growStages": 2,
-      "stageSeconds": 1800,
-      "product": "雞蛋",
-      "cycleSeconds": 1800,
-      "productPrice": 30,
-      "xpPerCycle": 3,
-      "lifespanCycles": 40,
-      "productItem": "egg",
-      "feedItem": "corn_cake",
-      "stageFeedQty": 1,
-      "cycleFeedQty": 1
-    },
-    "wool_sheep": {
-      "name": "毛羊",
-      "type": "producer",
-      "youngCost": 300,
-      "growStages": 2,
-      "stageSeconds": 7200,
-      "product": "羊毛",
-      "cycleSeconds": 7200,
-      "productPrice": 120,
-      "xpPerCycle": 10,
-      "lifespanCycles": 30,
-      "productItem": "wool",
-      "feedItem": "pasture",
-      "stageFeedQty": 5,
-      "cycleFeedQty": 5
-    },
-    "dairy_goat": {
-      "name": "乳羊",
-      "type": "producer",
-      "youngCost": 400,
-      "growStages": 3,
-      "stageSeconds": 7200,
-      "product": "羊奶",
-      "cycleSeconds": 10800,
-      "productPrice": 190,
-      "xpPerCycle": 16,
-      "lifespanCycles": 24,
-      "productItem": "goat_milk",
-      "feedItem": "pasture",
-      "stageFeedQty": 5,
-      "cycleFeedQty": 8
-    },
-    "dairy_cow": {
-      "name": "乳牛",
-      "type": "producer",
-      "youngCost": 800,
-      "growStages": 3,
-      "stageSeconds": 14400,
-      "product": "牛奶",
-      "cycleSeconds": 14400,
-      "productPrice": 280,
-      "xpPerCycle": 24,
-      "lifespanCycles": 24,
-      "productItem": "cow_milk",
-      "feedItem": "pasture",
-      "stageFeedQty": 8,
-      "cycleFeedQty": 10
-    },
-    "broiler": {
-      "name": "肉雞",
-      "type": "meat",
-      "youngCost": 60,
-      "growStages": 3,
-      "stageSeconds": 3600,
-      "product": "雞肉",
-      "salePrice": 220,
-      "xp": 13,
-      "productItem": "chicken_meat",
-      "feedItem": "corn_cake",
-      "stageFeedQty": 2
-    },
-    "meat_sheep": {
-      "name": "肉羊",
-      "type": "meat",
-      "youngCost": 300,
-      "growStages": 4,
-      "stageSeconds": 10800,
-      "product": "羊肉",
-      "salePrice": 1000,
-      "xp": 58,
-      "productItem": "mutton",
-      "feedItem": "pasture",
-      "stageFeedQty": 8
-    },
-    "pig": {
-      "name": "肉豬",
-      "type": "meat",
-      "youngCost": 500,
-      "growStages": 4,
-      "stageSeconds": 14400,
-      "product": "豬肉",
-      "salePrice": 1600,
-      "xp": 90,
-      "productItem": "pork",
-      "feedItem": "corn_cake",
-      "stageFeedQty": 8
-    },
-    "beef_cattle": {
-      "name": "肉牛",
-      "type": "meat",
-      "youngCost": 800,
-      "growStages": 4,
-      "stageSeconds": 21600,
-      "product": "牛肉",
-      "salePrice": 2600,
-      "xp": 156,
-      "productItem": "beef",
-      "feedItem": "pasture",
-      "stageFeedQty": 15
-    }
-  },
-  "fishPool": {
-    "buildCostPerTile": 400,
-    "sellRate": 0.5,
-    "sizeBonus": [
-      {
-        "minTiles": 1,
-        "bonus": 0
-      },
-      {
-        "minTiles": 4,
-        "bonus": 0.1
-      },
-      {
-        "minTiles": 9,
-        "bonus": 0.2
-      }
-    ]
-  },
-  "fish": {
-    "tilapia": {
-      "name": "吳郭魚",
-      "fryCostPerTile": 50,
-      "stages": 2,
-      "stageSeconds": 10800,
-      "harvestPerTile": 200,
-      "xpPerTile": 13,
-      "feedItem": "fish_feed",
-      "stageFeedQtyPerTile": 2
-    },
-    "milkfish": {
-      "name": "虱目魚",
-      "fryCostPerTile": 100,
-      "stages": 3,
-      "stageSeconds": 14400,
-      "harvestPerTile": 450,
-      "xpPerTile": 31,
-      "feedItem": "fish_feed",
-      "stageFeedQtyPerTile": 3
-    },
-    "seabass": {
-      "name": "鱸魚",
-      "fryCostPerTile": 200,
-      "stages": 4,
-      "stageSeconds": 21600,
-      "harvestPerTile": 1000,
-      "xpPerTile": 70,
-      "feedItem": "fish_feed",
-      "stageFeedQtyPerTile": 5
-    }
-  },
-  "automation": {
-    "drone_1": {
-      "name": "初級澆水無人機",
-      "kind": "water",
-      "hours": 4,
-      "cost": 150
-    },
-    "drone_2": {
-      "name": "中級澆水無人機",
-      "kind": "water",
-      "hours": 12,
-      "cost": 500
-    },
-    "drone_3": {
-      "name": "高級澆水無人機",
-      "kind": "water",
-      "hours": 24,
-      "cost": 1000
-    },
-    "feeder_1": {
-      "name": "初級餵食機器人",
-      "kind": "feed",
-      "hours": 4,
-      "cost": 150
-    },
-    "feeder_2": {
-      "name": "中級餵食機器人",
-      "kind": "feed",
-      "hours": 12,
-      "cost": 500
-    },
-    "feeder_3": {
-      "name": "高級餵食機器人",
-      "kind": "feed",
-      "hours": 24,
-      "cost": 1000
-    }
-  },
-  "decos": {
-    "maple": {
-      "name": "楓樹",
-      "source": "shop",
-      "cost": 30,
-      "sellable": true
-    },
-    "pine": {
-      "name": "松樹",
-      "source": "shop",
-      "cost": 30,
-      "sellable": true
-    },
-    "fence": {
-      "name": "木柵欄",
-      "source": "shop",
-      "cost": 5,
-      "autotile": true,
-      "sellable": true
-    },
-    "flowers": {
-      "name": "花圃",
-      "source": "shop",
-      "cost": 20,
-      "sellable": true
-    },
-    "hay": {
-      "name": "乾草堆",
-      "source": "shop",
-      "cost": 40,
-      "sellable": true
-    },
-    "scarecrow": {
-      "name": "稻草人",
-      "source": "shop",
-      "cost": 120,
-      "effect": {
-        "type": "growth",
-        "value": 0.1,
-        "range": 1
-      },
-      "sellable": true
-    },
-    "pond": {
-      "name": "小池塘",
-      "source": "shop",
-      "cost": 300,
-      "merge": true,
-      "autotile": true,
-      "effect": {
-        "type": "moisture",
-        "value": 0.5,
-        "range": 2
-      },
-      "sellable": true
-    },
-    "water_tower": {
-      "name": "大型儲水槽",
-      "source": "shop",
-      "cost": 1200,
-      "effect": {
-        "type": "storage",
-        "value": 1500,
-        "range": "global"
-      },
-      "sellable": true
-    },
-    "windmill": {
-      "name": "風車",
-      "source": "shop",
-      "cost": 800,
-      "effect": {
-        "type": "growth",
-        "value": 0.15,
-        "range": 3
-      },
-      "sellable": true
-    },
-    "rain_barrel": {
-      "name": "雨水桶",
-      "source": "levelReward",
-      "effect": {
-        "type": "storage",
-        "value": 300,
-        "range": "global"
-      },
-      "sellable": false
-    },
-    "gold_scarecrow": {
-      "name": "金色稻草人",
-      "source": "levelReward",
-      "effect": {
-        "type": "growth",
-        "value": 0.2,
-        "range": 1
-      },
-      "sellable": false
-    },
-    "stone_well": {
-      "name": "石砌水井",
-      "source": "levelReward",
-      "effect": {
-        "type": "storage",
-        "value": 500,
-        "range": "global",
-        "groundwaterPerHour": 30
-      },
-      "sellable": false
-    },
-    "rainbow_windmill": {
-      "name": "彩虹風車",
-      "source": "levelReward",
-      "effect": {
-        "type": "growth",
-        "value": 0.25,
-        "range": 3
-      },
-      "sellable": false
-    },
-    "road_gravel": {
-      "name": "碎石路",
-      "source": "shop",
-      "cost": 5,
-      "autotile": true,
-      "flat": true,
-      "walkable": true,
-      "noWeeds": true,
-      "sellable": true,
-      "kind": "road"
-    },
-    "road_dirt": {
-      "name": "泥土小徑",
-      "source": "shop",
-      "cost": 3,
-      "autotile": true,
-      "flat": true,
-      "walkable": true,
-      "noWeeds": true,
-      "sellable": true,
-      "kind": "road"
-    },
-    "road_stone": {
-      "name": "石板路",
-      "source": "shop",
-      "cost": 15,
-      "autotile": true,
-      "flat": true,
-      "walkable": true,
-      "noWeeds": true,
-      "sellable": true,
-      "kind": "road"
-    },
-    "road_asphalt": {
-      "name": "柏油路",
-      "source": "shop",
-      "cost": 25,
-      "autotile": true,
-      "flat": true,
-      "walkable": true,
-      "noWeeds": true,
-      "sellable": true,
-      "kind": "road"
-    },
-    "road_boardwalk": {
-      "name": "木棧道",
-      "source": "shop",
-      "cost": 20,
-      "autotile": true,
-      "flat": true,
-      "walkable": true,
-      "noWeeds": true,
-      "sellable": true,
-      "kind": "road"
-    },
-    "windbreak": {
-      "name": "防風網",
-      "source": "shop",
-      "cost": 80,
-      "effect": {
-        "type": "windbreak",
-        "range": 2
-      },
-      "sellable": true
-    },
-    "bamboo": {
-      "name": "竹叢",
-      "source": "shop",
-      "cost": 40,
-      "sellable": true
-    },
-    "birch": {
-      "name": "白樺",
-      "source": "shop",
-      "cost": 40,
-      "sellable": true
-    },
-    "sakura": {
-      "name": "櫻花樹",
-      "source": "shop",
-      "cost": 60,
-      "sellable": true
-    },
-    "palm": {
-      "name": "棕櫚樹",
-      "source": "shop",
-      "cost": 50,
-      "sellable": true
-    },
-    "willow": {
-      "name": "垂柳",
-      "source": "shop",
-      "cost": 50,
-      "sellable": true
-    },
-    "ginkgo": {
-      "name": "銀杏",
-      "source": "shop",
-      "cost": 60,
-      "sellable": true
-    },
-    "oak": {
-      "name": "橡樹",
-      "source": "shop",
-      "cost": 70,
-      "sellable": true
-    },
-    "banyan": {
-      "name": "榕樹",
-      "source": "shop",
-      "cost": 80,
-      "sellable": true
-    }
-  },
-  "expansion": {
-    "blocks": [
-      {
-        "index": 1,
-        "map": 1,
-        "level": 1,
-        "cost": 0
-      },
-      {
-        "index": 2,
-        "map": 1,
-        "level": 3,
-        "cost": 800
-      },
-      {
-        "index": 3,
-        "map": 1,
-        "level": 5,
-        "cost": 2000
-      },
-      {
-        "index": 4,
-        "map": 1,
-        "level": 7,
-        "cost": 4000
-      },
-      {
-        "index": 5,
-        "map": 2,
-        "level": 8,
-        "cost": 6000
-      },
-      {
-        "index": 6,
-        "map": 2,
-        "level": 8,
-        "cost": 8000
-      },
-      {
-        "index": 7,
-        "map": 2,
-        "level": 9,
-        "cost": 10000
-      },
-      {
-        "index": 8,
-        "map": 2,
-        "level": 9,
-        "cost": 12000
-      },
-      {
-        "index": 9,
-        "map": 3,
-        "level": 10,
-        "cost": 15000
-      },
-      {
-        "index": 10,
-        "map": 3,
-        "level": 10,
-        "cost": 18000
-      },
-      {
-        "index": 11,
-        "map": 3,
-        "level": 10,
-        "cost": 21000
-      },
-      {
-        "index": 12,
-        "map": 3,
-        "level": 10,
-        "cost": 25000
-      }
-    ],
-    "beyondCostStep": 4000
-  },
-  "levels": [
-    {
-      "level": 1,
-      "xpToReach": 0,
-      "coinReward": 0,
-      "specialDeco": null,
-      "unlocks": [
-        "pasture",
-        "wheat",
-        "tomato",
-        "egg_hen",
-        "maple",
-        "pine",
-        "fence",
-        "hand_crank",
-        "road_gravel",
-        "road_dirt",
-        "bamboo"
-      ],
-      "animalCap": 3,
-      "fishPoolTileCap": 0,
-      "produceCapacity": 300,
-      "rainStorage": 500
-    },
-    {
-      "level": 2,
-      "xpToReach": 30,
-      "coinReward": 50,
-      "specialDeco": "rain_barrel",
-      "unlocks": [
-        "potato",
-        "corn",
-        "broiler",
-        "flowers",
-        "corn_cake_machine",
-        "doll_sun",
-        "fert_chem",
-        "birch",
-        "sakura"
-      ],
-      "animalCap": 4,
-      "fishPoolTileCap": 0,
-      "produceCapacity": 400,
-      "rainStorage": 600
-    },
-    {
-      "level": 3,
-      "xpToReach": 100,
-      "coinReward": 100,
-      "specialDeco": "gold_scarecrow",
-      "unlocks": [
-        "peanut",
-        "strawberry",
-        "wool_sheep",
-        "hay",
-        "drone_1",
-        "block:2",
-        "grow_lamp",
-        "battery_s",
-        "doll_rain",
-        "drone_pad",
-        "road_stone",
-        "sweeper",
-        "care",
-        "pesticide",
-        "compost_bin",
-        "organic_fert",
-        "orange",
-        "palm",
-        "willow"
-      ],
-      "animalCap": 5,
-      "fishPoolTileCap": 0,
-      "produceCapacity": 500,
-      "rainStorage": 750
-    },
-    {
-      "level": 4,
-      "xpToReach": 300,
-      "coinReward": 200,
-      "specialDeco": null,
-      "unlocks": [
-        "cabbage",
-        "lemon",
-        "dairy_goat",
-        "scarecrow",
-        "fish_pool",
-        "tilapia",
-        "feeder_1",
-        "fish_feed_machine",
-        "biomass_gen",
-        "robot_charger",
-        "windbreak",
-        "beehive",
-        "queen_bee",
-        "rapeseed",
-        "milk_vetch",
-        "well",
-        "solar_panel",
-        "peach",
-        "ginkgo",
-        "sprinkler_s"
-      ],
-      "animalCap": 6,
-      "fishPoolTileCap": 4,
-      "produceCapacity": 650,
-      "rainStorage": 900
-    },
-    {
-      "level": 5,
-      "xpToReach": 1000,
-      "coinReward": 300,
-      "specialDeco": null,
-      "unlocks": [
-        "rice",
-        "pumpkin",
-        "papaya",
-        "meat_sheep",
-        "dairy_cow",
-        "block:3",
-        "battery_m",
-        "road_asphalt",
-        "snow_melter",
-        "water_tower_extra",
-        "snowbot",
-        "poopbot",
-        "wildflower",
-        "buckwheat",
-        "wellbot",
-        "doll_snow",
-        "persimmon",
-        "lychee",
-        "oak"
-      ],
-      "animalCap": 8,
-      "fishPoolTileCap": 4,
-      "produceCapacity": 800,
-      "rainStorage": 1100,
-      "rewardFree": {
-        "beehive": 1
-      }
-    },
-    {
-      "level": 6,
-      "xpToReach": 12000,
-      "coinReward": 1000,
-      "specialDeco": null,
-      "unlocks": [
-        "watermelon",
-        "mango",
-        "pig",
-        "milkfish",
-        "pond",
-        "drone_2",
-        "big_bucket",
-        "grow_lamp_large",
-        "road_boardwalk",
-        "greenhouse",
-        "lavender",
-        "honeybot",
-        "longan",
-        "pear",
-        "banyan"
-      ],
-      "animalCap": 9,
-      "fishPoolTileCap": 8,
-      "produceCapacity": 1000,
-      "rainStorage": 1300
-    },
-    {
-      "level": 7,
-      "xpToReach": 40000,
-      "coinReward": 2000,
-      "specialDeco": "stone_well",
-      "unlocks": [
-        "sunflower",
-        "banana",
-        "beef_cattle",
-        "feeder_2",
-        "block:4",
-        "battery_l",
-        "rose",
-        "coconut",
-        "sprinkler_l"
-      ],
-      "animalCap": 10,
-      "fishPoolTileCap": 8,
-      "produceCapacity": 1250,
-      "rainStorage": 1550
-    },
-    {
-      "level": 8,
-      "xpToReach": 75000,
-      "coinReward": 3000,
-      "specialDeco": null,
-      "unlocks": [
-        "apple",
-        "seabass",
-        "water_tower",
-        "block:5",
-        "block:6",
-        "cherry"
-      ],
-      "animalCap": 12,
-      "fishPoolTileCap": 12,
-      "produceCapacity": 1500,
-      "rainStorage": 1800
-    },
-    {
-      "level": 9,
-      "xpToReach": 120000,
-      "coinReward": 4000,
-      "specialDeco": null,
-      "unlocks": [
-        "windmill",
-        "drone_3",
-        "block:7",
-        "block:8",
-        "avocado"
-      ],
-      "animalCap": 14,
-      "fishPoolTileCap": 12,
-      "produceCapacity": 1800,
-      "rainStorage": 2100
-    },
-    {
-      "level": 10,
-      "xpToReach": 180000,
-      "coinReward": 5000,
-      "specialDeco": "rainbow_windmill",
-      "unlocks": [
-        "feeder_3",
-        "block:9",
-        "block:10",
-        "block:11",
-        "block:12",
-        "grape"
-      ],
-      "animalCap": 16,
-      "fishPoolTileCap": 16,
-      "produceCapacity": 2200,
-      "rainStorage": 2500
-    }
+  "animalStackMax": 3,
+  "animalOldWarningRatio": 0.2,
+  "meatAdultLifespanSeconds": 172800,
+  "autoScope": "allMaps",
+  "autoMaxHours": 48,
+  "blockSize": 10,
+  "maxBlocksPerMap": 4,
+  "maxMaps": 3,
+  "maxLevel": 10,
+  "autosaveSeconds": 30,
+  "produceStorage": true,
+  "produceFullAction": "ask",
+  "produceFullChoices": [
+   "sell",
+   "discard"
   ],
-  "items": {
-    "pasture": {
-      "name": "牧草",
-      "category": "feed",
-      "sellPrice": 1
-    },
-    "wheat": {
-      "name": "小麥",
-      "category": "crop",
-      "sellPrice": 15
-    },
-    "tomato": {
-      "name": "番茄",
-      "category": "crop",
-      "sellPrice": 45
-    },
-    "potato": {
-      "name": "馬鈴薯",
-      "category": "crop",
-      "sellPrice": 80
-    },
-    "corn": {
-      "name": "玉米",
-      "category": "crop",
-      "sellPrice": 105
-    },
-    "peanut": {
-      "name": "花生",
-      "category": "crop",
-      "sellPrice": 150
-    },
-    "strawberry": {
-      "name": "草莓",
-      "category": "crop",
-      "sellPrice": 180
-    },
-    "cabbage": {
-      "name": "高麗菜",
-      "category": "crop",
-      "sellPrice": 310
-    },
-    "rice": {
-      "name": "水稻",
-      "category": "crop",
-      "sellPrice": 510
-    },
-    "pumpkin": {
-      "name": "南瓜",
-      "category": "crop",
-      "sellPrice": 580
-    },
-    "watermelon": {
-      "name": "西瓜",
-      "category": "crop",
-      "sellPrice": 800
-    },
-    "sunflower": {
-      "name": "向日葵",
-      "category": "crop",
-      "sellPrice": 940
-    },
-    "lemon": {
-      "name": "檸檬",
-      "category": "fruit",
-      "sellPrice": 120
-    },
-    "papaya": {
-      "name": "木瓜",
-      "category": "fruit",
-      "sellPrice": 210
-    },
-    "mango": {
-      "name": "芒果",
-      "category": "fruit",
-      "sellPrice": 300
-    },
-    "banana": {
-      "name": "香蕉",
-      "category": "fruit",
-      "sellPrice": 380
-    },
-    "apple": {
-      "name": "蘋果",
-      "category": "fruit",
-      "sellPrice": 640
-    },
-    "egg": {
-      "name": "雞蛋",
-      "category": "product",
-      "sellPrice": 30
-    },
-    "wool": {
-      "name": "羊毛",
-      "category": "product",
-      "sellPrice": 120
-    },
-    "goat_milk": {
-      "name": "羊奶",
-      "category": "product",
-      "sellPrice": 190
-    },
-    "cow_milk": {
-      "name": "牛奶",
-      "category": "product",
-      "sellPrice": 280
-    },
-    "chicken_meat": {
-      "name": "雞肉",
-      "category": "meat",
-      "sellPrice": 220
-    },
-    "mutton": {
-      "name": "羊肉",
-      "category": "meat",
-      "sellPrice": 1000
-    },
-    "pork": {
-      "name": "豬肉",
-      "category": "meat",
-      "sellPrice": 1600
-    },
-    "beef": {
-      "name": "牛肉",
-      "category": "meat",
-      "sellPrice": 2600
-    },
-    "tilapia": {
-      "name": "吳郭魚",
-      "category": "fish",
-      "sellPrice": 200
-    },
-    "milkfish": {
-      "name": "虱目魚",
-      "category": "fish",
-      "sellPrice": 450
-    },
-    "seabass": {
-      "name": "鱸魚",
-      "category": "fish",
-      "sellPrice": 1000
-    },
-    "corn_cake": {
-      "name": "玉米餅",
-      "category": "feed",
-      "sellPrice": 2
-    },
-    "fish_feed": {
-      "name": "魚飼料",
-      "category": "feed",
-      "sellPrice": 2
-    },
-    "weed": {
-      "name": "雜草",
-      "category": "feed",
-      "sellPrice": 1
-    },
-    "poop": {
-      "name": "糞便",
-      "category": "material",
-      "sellPrice": 0
-    },
-    "organic_fert": {
-      "name": "有機肥",
-      "category": "material",
-      "sellPrice": 5
-    },
-    "org_wheat": {
-      "name": "有機小麥",
-      "category": "crop",
-      "sellPrice": 21,
-      "organicOf": "wheat"
-    },
-    "org_tomato": {
-      "name": "有機番茄",
-      "category": "crop",
-      "sellPrice": 63,
-      "organicOf": "tomato"
-    },
-    "org_potato": {
-      "name": "有機馬鈴薯",
-      "category": "crop",
-      "sellPrice": 112,
-      "organicOf": "potato"
-    },
-    "org_corn": {
-      "name": "有機玉米",
-      "category": "crop",
-      "sellPrice": 147,
-      "organicOf": "corn"
-    },
-    "org_peanut": {
-      "name": "有機花生",
-      "category": "crop",
-      "sellPrice": 210,
-      "organicOf": "peanut"
-    },
-    "org_strawberry": {
-      "name": "有機草莓",
-      "category": "crop",
-      "sellPrice": 252,
-      "organicOf": "strawberry"
-    },
-    "org_cabbage": {
-      "name": "有機高麗菜",
-      "category": "crop",
-      "sellPrice": 434,
-      "organicOf": "cabbage"
-    },
-    "org_rice": {
-      "name": "有機水稻",
-      "category": "crop",
-      "sellPrice": 714,
-      "organicOf": "rice"
-    },
-    "org_pumpkin": {
-      "name": "有機南瓜",
-      "category": "crop",
-      "sellPrice": 812,
-      "organicOf": "pumpkin"
-    },
-    "org_watermelon": {
-      "name": "有機西瓜",
-      "category": "crop",
-      "sellPrice": 1120,
-      "organicOf": "watermelon"
-    },
-    "org_sunflower": {
-      "name": "有機向日葵",
-      "category": "crop",
-      "sellPrice": 1316,
-      "organicOf": "sunflower"
-    },
-    "org_lemon": {
-      "name": "有機檸檬",
-      "category": "fruit",
-      "sellPrice": 168,
-      "organicOf": "lemon"
-    },
-    "org_papaya": {
-      "name": "有機木瓜",
-      "category": "fruit",
-      "sellPrice": 294,
-      "organicOf": "papaya"
-    },
-    "org_mango": {
-      "name": "有機芒果",
-      "category": "fruit",
-      "sellPrice": 420,
-      "organicOf": "mango"
-    },
-    "org_banana": {
-      "name": "有機香蕉",
-      "category": "fruit",
-      "sellPrice": 532,
-      "organicOf": "banana"
-    },
-    "org_apple": {
-      "name": "有機蘋果",
-      "category": "fruit",
-      "sellPrice": 896,
-      "organicOf": "apple"
-    },
-    "honey_wild": {
-      "name": "野蜂蜜",
-      "category": "honey",
-      "sellPrice": 20
-    },
-    "honey_rapeseed": {
-      "name": "油菜花蜜",
-      "category": "honey",
-      "sellPrice": 40
-    },
-    "honey_vetch": {
-      "name": "紫雲英蜜",
-      "category": "honey",
-      "sellPrice": 45
-    },
-    "honey_hundred": {
-      "name": "百花蜜",
-      "category": "honey",
-      "sellPrice": 50
-    },
-    "honey_buckwheat": {
-      "name": "蕎麥蜜",
-      "category": "honey",
-      "sellPrice": 60
-    },
-    "honey_lavender": {
-      "name": "薰衣草蜜",
-      "category": "honey",
-      "sellPrice": 90
-    },
-    "honey_rose": {
-      "name": "玫瑰花蜜",
-      "category": "honey",
-      "sellPrice": 120
-    },
-    "orange": {
-      "name": "柳丁",
-      "category": "fruit",
-      "sellPrice": 85
-    },
-    "org_orange": {
-      "name": "有機柳丁",
-      "category": "fruit",
-      "sellPrice": 119,
-      "organicOf": "orange"
-    },
-    "peach": {
-      "name": "桃子",
-      "category": "fruit",
-      "sellPrice": 150
-    },
-    "org_peach": {
-      "name": "有機桃子",
-      "category": "fruit",
-      "sellPrice": 210,
-      "organicOf": "peach"
-    },
-    "persimmon": {
-      "name": "柿子",
-      "category": "fruit",
-      "sellPrice": 220
-    },
-    "org_persimmon": {
-      "name": "有機柿子",
-      "category": "fruit",
-      "sellPrice": 308,
-      "organicOf": "persimmon"
-    },
-    "lychee": {
-      "name": "荔枝",
-      "category": "fruit",
-      "sellPrice": 260
-    },
-    "org_lychee": {
-      "name": "有機荔枝",
-      "category": "fruit",
-      "sellPrice": 364,
-      "organicOf": "lychee"
-    },
-    "longan": {
-      "name": "龍眼",
-      "category": "fruit",
-      "sellPrice": 320
-    },
-    "org_longan": {
-      "name": "有機龍眼",
-      "category": "fruit",
-      "sellPrice": 448,
-      "organicOf": "longan"
-    },
-    "pear": {
-      "name": "梨子",
-      "category": "fruit",
-      "sellPrice": 340
-    },
-    "org_pear": {
-      "name": "有機梨子",
-      "category": "fruit",
-      "sellPrice": 476,
-      "organicOf": "pear"
-    },
-    "coconut": {
-      "name": "椰子",
-      "category": "fruit",
-      "sellPrice": 450
-    },
-    "org_coconut": {
-      "name": "有機椰子",
-      "category": "fruit",
-      "sellPrice": 630,
-      "organicOf": "coconut"
-    },
-    "cherry": {
-      "name": "櫻桃",
-      "category": "fruit",
-      "sellPrice": 560
-    },
-    "org_cherry": {
-      "name": "有機櫻桃",
-      "category": "fruit",
-      "sellPrice": 784,
-      "organicOf": "cherry"
-    },
-    "avocado": {
-      "name": "酪梨",
-      "category": "fruit",
-      "sellPrice": 720
-    },
-    "org_avocado": {
-      "name": "有機酪梨",
-      "category": "fruit",
-      "sellPrice": 1008,
-      "organicOf": "avocado"
-    },
-    "grape": {
-      "name": "葡萄",
-      "category": "fruit",
-      "sellPrice": 820
-    },
-    "org_grape": {
-      "name": "有機葡萄",
-      "category": "fruit",
-      "sellPrice": 1148,
-      "organicOf": "grape"
-    }
+  "xpOnHarvest": true,
+  "autoBuyFeedDefault": true,
+  "machineSellRate": 0.5,
+  "machineStorable": false
+ },
+ "weather": {
+  "slotSeconds": 3600,
+  "timezone": "Asia/Taipei",
+  "utcOffsetHours": 8,
+  "rainChancePerSlot": 0.05,
+  "rainStartMinuteMax": 45,
+  "rainMinutes": 15,
+  "rainFillsBucket": true,
+  "rainMoistLevel": 4,
+  "rainRevivesWithered": true,
+  "forecastHours": 24,
+  "version": 1,
+  "cloudyChancePerSlot": 0.25,
+  "rainImpliesCloudy": true
+ },
+ "crops": {
+  "pasture": {
+   "name": "牧草",
+   "growSeconds": 60,
+   "seedCost": 2,
+   "sellPrice": 1,
+   "yield": 5,
+   "xp": 0,
+   "waterUse": 1.0,
+   "isFeed": true
   },
-  "feedShop": {
-    "pasture": 4,
-    "corn_cake": 6,
-    "fish_feed": 5
+  "wheat": {
+   "name": "小麥",
+   "growSeconds": 120,
+   "seedCost": 5,
+   "sellPrice": 15,
+   "xp": 1,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "machines": {
-    "corn_cake_machine": {
-      "name": "玉米餅機",
-      "buildCost": 500,
-      "input": {
-        "corn": 1
-      },
-      "output": {
-        "corn_cake": 20
-      },
-      "seconds": 600,
-      "batchesAtOnce": 1,
-      "collect": "manual",
-      "outputShow": {
-        "plate": true,
-        "maxStacks": 3,
-        "oneStackPerBatch": true
-      }
-    },
-    "fish_feed_machine": {
-      "name": "魚飼料機",
-      "buildCost": 800,
-      "input": {
-        "wheat": 1
-      },
-      "output": {
-        "fish_feed": 8
-      },
-      "seconds": 900,
-      "batchesAtOnce": 1,
-      "collect": "manual"
-    },
-    "compost_bin": {
-      "name": "堆肥桶",
-      "buildCost": 600,
-      "input": {
-        "poop": 4,
-        "weed": 2
-      },
-      "output": {
-        "organic_fert": 2
-      },
-      "seconds": 3600,
-      "batchesAtOnce": 1,
-      "collect": "manual"
-    }
+  "tomato": {
+   "name": "番茄",
+   "growSeconds": 600,
+   "seedCost": 15,
+   "sellPrice": 45,
+   "xp": 3,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "tutorial": {
-    "reward": {
-      "coins": 100
-    },
-    "gift": {
-      "corn_cake": 10
-    },
-    "steps": [
-      {
-        "id": "welcome",
-        "title": "歡迎來到浮島農場",
-        "text": "上面是你的等級、金幣和水桶。跟著幾個步驟，學會怎麼經營農場。",
-        "target": "hud"
-      },
-      {
-        "id": "harvest",
-        "title": "收成",
-        "text": "選「收成」，點一下已經成熟的小麥。收成會先放進農產倉庫，不會直接變金幣。",
-        "target": "tool:hand",
-        "done": "harvestCrop"
-      },
-      {
-        "id": "plow",
-        "title": "開墾",
-        "text": "選「開墾」，把框起來的草地翻成田。有雜草的話先拔掉，拔下的雜草可以賣錢或當燃料。",
-        "target": "tool:plow",
-        "done": "plow"
-      },
-      {
-        "id": "seed",
-        "title": "播種",
-        "text": "選「播種」和牧草，種在剛開墾的田。牧草是牛羊的飼料，長得最快也最便宜。",
-        "target": "tool:seed",
-        "done": "plantCrop:pasture"
-      },
-      {
-        "id": "water",
-        "title": "澆水",
-        "text": "選「澆水」，把這格澆到 4 級。現在用的是免費的雨水。濕的時候作物正常長，乾了只長一半速度，乾太久會枯萎；枯萎了澆水就能救回來。",
-        "target": "tool:water",
-        "done": "moistFull"
-      },
-      {
-        "id": "utilities",
-        "title": "接水接電",
-        "text": "農舍旁的水塔存著雨水，澆水都從這裡拿。接上自來水後會自動把水塔補到你設定的補水線，水錶轉動時才計費；晚上開生長燈要接電。按右上角的水電圖示就能設定。",
-        "target": "button:utilities"
-      },
-      {
-        "id": "storage",
-        "title": "農產倉庫",
-        "text": "打開農產倉庫，把小麥賣掉換金幣。倉庫滿了就不能收成，記得常常整理。",
-        "target": "button:storage",
-        "done": "sellItem"
-      },
-      {
-        "id": "feed",
-        "title": "餵動物",
-        "text": "雞頭上出現「餓了」，點牠餵食。飼料從倉庫扣，不夠會用金幣買。先送你 10 個玉米餅。動物不餵就不會生產，也不會長大。",
-        "target": "animal",
-        "done": "feedAnimal"
-      },
-      {
-        "id": "done",
-        "title": "完成",
-        "text": "圖鑑、天氣、帳單、自動化、擴地都在右上角。祝你農場豐收！",
-        "target": "hud"
-      }
-    ]
+  "potato": {
+   "name": "馬鈴薯",
+   "growSeconds": 1200,
+   "seedCost": 25,
+   "sellPrice": 80,
+   "xp": 6,
+   "waterUse": 0.75,
+   "yield": 1
   },
-  "settingsDefaults": {
-    "animation": "system",
-    "location": "auto",
-    "tapWater": false,
-    "grid": false,
-    "billingCycle": "d7",
-    "autoPay": true,
-    "powerPriority": "battery",
-    "batteryGridCharge": "night",
-    "tapFillLine": 0.5,
-    "sfx": true,
-    "sfxVolume": 0.7,
-    "music": true,
-    "musicVolume": 0.4,
-    "dailyForecast": true
+  "corn": {
+   "name": "玉米",
+   "growSeconds": 1800,
+   "seedCost": 30,
+   "sellPrice": 105,
+   "xp": 8,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "cities": [
-    {
-      "id": "taipei",
-      "name": "台北",
-      "lat": 25.033,
-      "lon": 121.565,
-      "tz": [
-        "Asia/Taipei"
-      ]
-    },
-    {
-      "id": "taichung",
-      "name": "台中",
-      "lat": 24.147,
-      "lon": 120.674
-    },
-    {
-      "id": "tainan",
-      "name": "台南",
-      "lat": 22.999,
-      "lon": 120.227
-    },
-    {
-      "id": "kaohsiung",
-      "name": "高雄",
-      "lat": 22.627,
-      "lon": 120.301
-    },
-    {
-      "id": "hualien",
-      "name": "花蓮",
-      "lat": 23.987,
-      "lon": 121.601
-    },
-    {
-      "id": "hongkong",
-      "name": "香港",
-      "lat": 22.319,
-      "lon": 114.169,
-      "tz": [
-        "Asia/Hong_Kong",
-        "Asia/Macau"
-      ]
-    },
-    {
-      "id": "tokyo",
-      "name": "東京",
-      "lat": 35.676,
-      "lon": 139.65,
-      "tz": [
-        "Asia/Tokyo"
-      ]
-    },
-    {
-      "id": "seoul",
-      "name": "首爾",
-      "lat": 37.566,
-      "lon": 126.978,
-      "tz": [
-        "Asia/Seoul"
-      ]
-    },
-    {
-      "id": "singapore",
-      "name": "新加坡",
-      "lat": 1.352,
-      "lon": 103.82,
-      "tz": [
-        "Asia/Singapore",
-        "Asia/Kuala_Lumpur"
-      ]
-    },
-    {
-      "id": "shanghai",
-      "name": "上海",
-      "lat": 31.23,
-      "lon": 121.474,
-      "tz": [
-        "Asia/Shanghai"
-      ]
-    },
-    {
-      "id": "sydney",
-      "name": "雪梨",
-      "lat": -33.869,
-      "lon": 151.209,
-      "tz": [
-        "Australia/Sydney",
-        "Australia/Melbourne"
-      ]
-    },
-    {
-      "id": "losangeles",
-      "name": "洛杉磯",
-      "lat": 34.052,
-      "lon": -118.244,
-      "tz": [
-        "America/Los_Angeles",
-        "America/Vancouver"
-      ]
-    },
-    {
-      "id": "newyork",
-      "name": "紐約",
-      "lat": 40.713,
-      "lon": -74.006,
-      "tz": [
-        "America/New_York",
-        "America/Toronto"
-      ]
-    },
-    {
-      "id": "london",
-      "name": "倫敦",
-      "lat": 51.507,
-      "lon": -0.128,
-      "tz": [
-        "Europe/London"
-      ]
-    }
-  ],
-  "dayNight": {
-    "twilightMinutes": 30,
-    "nightGrowthRate": 0.7,
-    "cloudyDayGrowthRate": 0.85,
-    "animalsAffected": false,
-    "nightTint": {
-      "appliesTo": "drawnPixelsOnly",
-      "noSkyHalo": true,
-      "coversUnderside": true,
-      "tileGapsAtNight": "filledDark"
-    }
+  "peanut": {
+   "name": "花生",
+   "growSeconds": 2700,
+   "seedCost": 45,
+   "sellPrice": 150,
+   "xp": 11,
+   "waterUse": 0.75,
+   "yield": 1
   },
-  "seasons": {
-    "north": {
-      "summerMonths": [
-        6,
-        7,
-        8,
-        9
-      ]
-    },
-    "south": {
-      "summerMonths": [
-        12,
-        1,
-        2,
-        3
-      ]
-    }
+  "strawberry": {
+   "name": "草莓",
+   "growSeconds": 3600,
+   "seedCost": 50,
+   "sellPrice": 180,
+   "xp": 13,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "electricity": {
-    "pricePerKwh": {
-      "summer": {
-        "day": 6,
-        "night": 3
-      },
-      "winter": {
-        "day": 5,
-        "night": 2.5
-      }
-    },
-    "baseFeePerDay": 1,
-    "dayNightSplit": "sunriseSunset"
+  "cabbage": {
+   "name": "高麗菜",
+   "growSeconds": 7200,
+   "seedCost": 80,
+   "sellPrice": 310,
+   "xp": 23,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "water": {
-    "sources": [
-      "rain",
-      "groundwater",
-      "tap"
-    ],
-    "useOrder": [
-      "tower",
-      "tap"
-    ],
-    "tapTiersPerDay": [
-      {
-        "upTo": 100,
-        "price": 0.05
-      },
-      {
-        "upTo": 330,
-        "price": 0.08
-      },
-      {
-        "upTo": null,
-        "price": 0.12
-      }
-    ],
-    "baseFeePerDay": 0.7,
-    "rainFillsStorage": true,
-    "droneDropsPerLevel": 1,
-    "startStorageFull": true,
-    "baseFeeOnlyDaysWithFlow": true,
-    "tower": {
-      "name": "農場水塔",
-      "map": 0,
-      "tile": [
-        2,
-        0
-      ],
-      "size": [
-        1,
-        1
-      ],
-      "removable": false,
-      "levelFrames": [
-        0,
-        0.25,
-        0.5,
-        0.75,
-        1.0
-      ],
-      "tapFlowPerSecond": 10,
-      "fillLines": [
-        null,
-        0.3,
-        0.5,
-        0.8,
-        1.0
-      ],
-      "defaultFillLine": 0.5,
-      "relocateIfOccupied": "nearestFreeGrassToHouse"
-    },
-    "meterStates": {
-      "off": "沒接水或金幣是負的",
-      "idle": "有接水但沒在注水，不計量",
-      "flowing": "正在注水或直接供水，計量"
-    }
+  "rice": {
+   "name": "水稻",
+   "growSeconds": 10800,
+   "seedCost": 120,
+   "sellPrice": 510,
+   "xp": 39,
+   "waterUse": 2.0,
+   "yield": 1
   },
-  "billing": {
-    "cycles": {
-      "half": {
-        "name": "半日結",
-        "hours": 12,
-        "closeAt": [
-          "11:59",
-          "23:59"
-        ]
-      },
-      "d3": {
-        "name": "三日結",
-        "days": 3
-      },
-      "d7": {
-        "name": "七日結",
-        "days": 7
-      },
-      "d30": {
-        "name": "30 日結",
-        "days": 30
-      }
-    },
-    "anchor": "localMidnightOfSelection",
-    "dueFractionOfCycle": 0.5,
-    "dueMaxDays": 7,
-    "discounts": [
-      {
-        "withinHours": 1,
-        "rate": 0.95
-      },
-      {
-        "withinFractionOfDue": 0.5,
-        "rate": 0.98
-      },
-      {
-        "withinDue": true,
-        "rate": 1.0
-      }
-    ],
-    "lateFeeRate": 0.05,
-    "autoPayRate": 0.95,
-    "historyKeep": 12,
-    "negative": {
-      "firstNegativeAllowedAtBilling": true,
-      "whileNegative": {
-        "buy": false,
-        "build": false,
-        "gridPower": false,
-        "tapWater": false,
-        "baseFees": false
-      }
-    }
+  "pumpkin": {
+   "name": "南瓜",
+   "growSeconds": 14400,
+   "seedCost": 140,
+   "sellPrice": 580,
+   "xp": 44,
+   "waterUse": 1.0,
+   "yield": 1
   },
-  "devices": {
-    "grow_lamp": {
-      "name": "植物生長燈",
-      "kind": "lamp",
-      "buildCost": 600,
-      "range": 1,
-      "kwhPerHour": 0.5,
-      "modes": [
-        "manual",
-        "auto",
-        "schedule"
-      ]
-    },
-    "grow_lamp_large": {
-      "name": "大型生長燈",
-      "kind": "lamp",
-      "buildCost": 2000,
-      "range": 2,
-      "kwhPerHour": 1.5,
-      "modes": [
-        "manual",
-        "auto",
-        "schedule"
-      ]
-    },
-    "battery_s": {
-      "name": "小型電池",
-      "kind": "battery",
-      "buildCost": 400,
-      "capacityKwh": 2,
-      "maxRateKwhPerHour": 1
-    },
-    "battery_m": {
-      "name": "中型電池",
-      "kind": "battery",
-      "buildCost": 1200,
-      "capacityKwh": 6,
-      "maxRateKwhPerHour": 2
-    },
-    "battery_l": {
-      "name": "大型電池",
-      "kind": "battery",
-      "buildCost": 3000,
-      "capacityKwh": 15,
-      "maxRateKwhPerHour": 4
-    },
-    "hand_crank": {
-      "name": "手搖發電機",
-      "kind": "crank",
-      "buildCost": 200,
-      "sessionSeconds": 10,
-      "kwhPerTap": 0.01,
-      "maxTaps": 50,
-      "cooldownSeconds": 60,
-      "bufferKwh": 0.5
-    },
-    "biomass_gen": {
-      "name": "生質發電機（充電機）",
-      "kind": "generator",
-      "buildCost": 1500,
-      "kwhPerHour": 1,
-      "fuelSlots": 50
-    },
-    "snow_melter": {
-      "name": "融雪機",
-      "kind": "melter",
-      "buildCost": 1200,
-      "kwhPerHour": 0.3,
-      "capacityTiles": 30
-    },
-    "beehive": {
-      "name": "蜂箱",
-      "kind": "hive",
-      "buildCost": 600,
-      "replacesDeco": "beehive"
-    },
-    "well": {
-      "name": "水井",
-      "kind": "well",
-      "buildCost": 800,
-      "limitTotal": 4,
-      "onlyOn": "grass",
-      "dropsPerHour": 20,
-      "maxDrops": 100,
-      "rainMult": 2,
-      "bucketDrops": 20,
-      "pumpTool": "hand",
-      "autoToTower": false
-    },
-    "solar_panel": {
-      "name": "太陽能板",
-      "kind": "solar",
-      "buildCost": 900,
-      "limitTotal": 8,
-      "onlyOn": "grass",
-      "kwhPerHourSunny": 0.25,
-      "cloudyMult": 0.3,
-      "rainSnowMult": 0.1,
-      "nightMult": 0,
-      "snowCoveredStops": true
-    },
-    "sprinkler_s": {
-      "name": "小型自動灑水器",
-      "kind": "sprinkler",
-      "buildCost": 800,
-      "range": 1,
-      "kwhPerTile": 0.005,
-      "waterLikeManualFull": true,
-      "actions": [
-        "auto",
-        "off"
-      ]
-    },
-    "sprinkler_l": {
-      "name": "大型自動灑水器",
-      "kind": "sprinkler",
-      "buildCost": 2000,
-      "range": 2,
-      "kwhPerTile": 0.005,
-      "waterLikeManualFull": true,
-      "actions": [
-        "auto",
-        "off"
-      ]
-    }
+  "watermelon": {
+   "name": "西瓜",
+   "growSeconds": 21600,
+   "seedCost": 200,
+   "sellPrice": 800,
+   "xp": 60,
+   "waterUse": 1.5,
+   "yield": 1
   },
-  "power": {
-    "batteryEfficiency": 0.9,
-    "priorityOrder": {
-      "battery": [
-        "battery",
-        "crankBuffer",
-        "generator",
-        "grid"
-      ],
-      "grid": [
-        "grid",
-        "battery",
-        "crankBuffer",
-        "generator"
-      ]
-    },
-    "fuels": {
-      "weed": 0.2,
-      "pasture": 0.1
-    },
-    "deviceSellRate": 0.5,
-    "lampEffect": "nightOrCloudyDay",
-    "solarSell": {
-      "enabled": true,
-      "needsGrid": true,
-      "priceRate": 0.5,
-      "onlyAfterBatteryFull": true,
-      "creditOnlyNoCashback": true
-    }
+  "sunflower": {
+   "name": "向日葵",
+   "growSeconds": 28800,
+   "seedCost": 220,
+   "sellPrice": 940,
+   "xp": 72,
+   "waterUse": 1.0,
+   "yield": 1
+  }
+ },
+ "trees": {
+  "lemon": {
+   "name": "檸檬",
+   "saplingCost": 600,
+   "firstFruitSeconds": 43200,
+   "fruitIntervalSeconds": 14400,
+   "harvestPrice": 120,
+   "xp": 12,
+   "waterUse": 1.0
   },
-  "weeds": {
-    "growsOn": "emptyGrass",
-    "minutesPerWeedPerBlock": 20,
-    "maxPerBlock": 12,
-    "item": "weed",
-    "fullStorageCoins": 1,
-    "xp": 0,
-    "clearBeforePlow": true
+  "papaya": {
+   "name": "木瓜",
+   "saplingCost": 900,
+   "firstFruitSeconds": 64800,
+   "fruitIntervalSeconds": 21600,
+   "harvestPrice": 210,
+   "xp": 21,
+   "waterUse": 1.0
   },
-  "buildings": {
-    "barn": {
-      "name": "農產倉庫",
-      "size": [
-        2,
-        2
-      ],
-      "limit": 1,
-      "cost": 0,
-      "opens": "produce",
-      "sellable": false,
-      "startIn": "decoStorage",
-      "fullnessFrames": [
-        {
-          "below": 0.3,
-          "frame": "empty"
-        },
-        {
-          "below": 0.8,
-          "frame": "half"
-        },
-        {
-          "below": null,
-          "frame": "full"
-        }
-      ],
-      "fullBubble": true,
-      "storable": true,
-      "movable": true
-    },
-    "shed": {
-      "name": "飾品倉庫",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 1,
-      "cost": 0,
-      "opens": "deco",
-      "sellable": false,
-      "startIn": "decoStorage",
-      "storable": true,
-      "movable": true
-    },
-    "farmhouse": {
-      "name": "農舍",
-      "size": [
-        2,
-        2
-      ],
-      "limit": 1,
-      "cost": 0,
-      "sellable": false,
-      "storable": true,
-      "movable": true,
-      "attached": "utilityPole",
-      "builtIn": true
-    },
-    "water_tower": {
-      "name": "農場水塔",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 1,
-      "cost": 0,
-      "sellable": false,
-      "storable": true,
-      "movable": true,
-      "attached": "waterMeter",
-      "builtIn": true,
-      "storedStillWorks": true
-    },
-    "drone_pad": {
-      "name": "無人機停機坪",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 3,
-      "cost": 500,
-      "unlockLevel": 3,
-      "buyWith": "build",
-      "sellable": true,
-      "sellRate": 0.5,
-      "storable": true,
-      "movable": true,
-      "serves": "water",
-      "chargeSourceDefault": "solar",
-      "perMapLimit": 3,
-      "slotsMax": 2,
-      "slots": 1
-    },
-    "robot_charger": {
-      "name": "機器人充電站",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 3,
-      "cost": 800,
-      "unlockLevel": 4,
-      "buyWith": "build",
-      "sellable": true,
-      "sellRate": 0.5,
-      "storable": true,
-      "movable": true,
-      "serves": "feed",
-      "chargeSourceDefault": "solar",
-      "perMapLimit": 3,
-      "slotsMax": 2,
-      "slots": 1
-    },
-    "water_tower_extra": {
-      "name": "加掛水塔",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 3,
-      "cost": 1500,
-      "unlockLevel": 5,
-      "buyWith": "build",
-      "capacity": 1000,
-      "sellable": true,
-      "sellRate": 0.5,
-      "storable": true,
-      "movable": true,
-      "linksToMainTower": true
-    },
-    "sweeper_dock": {
-      "name": "掃地基座",
-      "size": [
-        1,
-        1
-      ],
-      "limit": 3,
-      "cost": 300,
-      "comesWith": "sweeper",
-      "sellable": false,
-      "storable": true,
-      "movable": true,
-      "perMapLimit": 3,
-      "slotsMax": 2,
-      "slots": 1,
-      "firstComesWithSweeper": true
-    }
+  "mango": {
+   "name": "芒果",
+   "saplingCost": 1200,
+   "firstFruitSeconds": 86400,
+   "fruitIntervalSeconds": 28800,
+   "harvestPrice": 300,
+   "xp": 30,
+   "waterUse": 1.0
   },
-  "weatherDolls": {
-    "types": {
-      "sun": {
-        "name": "晴天娃娃",
-        "unlockLevel": 2,
-        "usableWhen": "rainingOrCloudyNow",
-        "effect": "clearSky",
-        "nightEffect": "noRainOnly"
-      },
-      "rain": {
-        "name": "雨天娃娃",
-        "unlockLevel": 3,
-        "usableWhen": "notRainingNow",
-        "effect": "rain",
-        "rainEffects": [
-          "moistFull",
-          "reviveWithered",
-          "fillTowerFree",
-          "dronePause",
-          "countsAsCloudy"
-        ]
-      },
-      "snow": {
-        "name": "雪女娃娃",
-        "unlockLevel": 5,
-        "usableWhen": "notSnowingNow",
-        "effect": "snow",
-        "anyClimate": true,
-        "dayAndNight": true,
-        "sameAsNaturalSnow": true
-      }
-    },
-    "sizes": {
-      "s": {
-        "name": "小",
-        "minutes": 10
-      },
-      "m": {
-        "name": "中",
-        "minutes": 60
-      },
-      "l": {
-        "name": "大",
-        "minutes": 120
-      }
-    },
-    "prices": {
-      "sun": {
-        "s": 30,
-        "m": 120,
-        "l": 220
-      },
-      "rain": {
-        "s": 60,
-        "m": 200,
-        "l": 350
-      },
-      "snow": {
-        "s": 50,
-        "m": 180,
-        "l": 300
-      }
-    },
-    "rules": {
-      "maxActive": 1,
-      "conditionCheckedAt": "placement",
-      "scope": "allMaps",
-      "onReplace": "askThenReturnOldToStorageKeepRemaining",
-      "timerRunsOnlyWhilePlaced": true,
-      "offlineCounts": true,
-      "exhaustedStaysAsDeco": true,
-      "rechargeable": false,
-      "sellPrice": 1,
-      "placeOrder": "leastRemainingFirst"
-    }
+  "banana": {
+   "name": "香蕉",
+   "saplingCost": 1600,
+   "firstFruitSeconds": 86400,
+   "fruitIntervalSeconds": 28800,
+   "harvestPrice": 380,
+   "xp": 38,
+   "waterUse": 1.0
   },
-  "automationUnits": {
-    "water": {
-      "name": "無人機",
-      "base": "drone_pad",
-      "workMinutes": 15,
-      "kwhPerCharge": 0.1,
-      "tankDrops": 60,
-      "refillSeconds": 30
-    },
-    "feed": {
-      "name": "機器人",
-      "base": "robot_charger",
-      "workMinutes": 20,
-      "kwhPerCharge": 0.15
-    },
-    "chargeSources": {
-      "solar": {
-        "name": "太陽能",
-        "clearDayMinutes": 20,
-        "cloudyMinutes": 40,
-        "night": null,
-        "cost": 0
-      },
-      "farm": {
-        "name": "農場電力",
-        "minutes": 5,
-        "order": "powerPriority"
-      }
-    },
-    "requireBaseToBuy": true,
-    "noBase": {
-      "behaviour": "useRemainingThenRest",
-      "restAt": [
-        "farmhouseRoof",
-        "mapCorner"
-      ],
-      "expiryKeepsCounting": true
-    },
-    "sellBase": {
-      "anytime": true,
-      "leftoverLost": true
-    },
-    "buyFromBasePanel": true
+  "apple": {
+   "name": "蘋果",
+   "saplingCost": 2400,
+   "firstFruitSeconds": 129600,
+   "fruitIntervalSeconds": 43200,
+   "harvestPrice": 640,
+   "xp": 64,
+   "waterUse": 1.0
   },
-  "move": {
-    "tool": true,
-    "longPressMs": 400,
-    "slopPx": 6,
-    "sameMapOnly": true,
-    "autoPullWeeds": true,
-    "free": true,
-    "movable": [
-      "deco",
-      "doll",
-      "building",
-      "pool",
-      "pond",
-      "device",
-      "machine",
-      "animal"
-    ],
-    "notMovable": [
-      "soil",
-      "tree"
-    ],
-    "poolMovesWhole": true,
-    "dropToStore": {
-      "targets": [
-        "building:shed",
-        "building:barn",
-        "hud:storageBtn"
-      ],
-      "storable": [
-        "deco",
-        "doll",
-        "building",
-        "house",
-        "tower"
-      ],
-      "into": "decoStorage"
-    }
+  "orange": {
+   "name": "柳丁",
+   "saplingCost": 450,
+   "firstFruitSeconds": 36000,
+   "fruitIntervalSeconds": 10800,
+   "harvestPrice": 85,
+   "xp": 8,
+   "waterUse": 1.0
   },
-  "animalRoam": {
-    "walkable": [
-      "grass",
-      "weed",
-      "animal"
-    ],
-    "walls": [
-      "fence",
-      "mapEdge"
-    ],
-    "avoid": [
-      "soil",
-      "tree",
-      "pool",
-      "pond",
-      "building",
-      "house",
-      "tower",
-      "machine",
-      "device",
-      "deco",
-      "doll"
-    ],
-    "tilesPerSecond": 0.35,
-    "pauseSeconds": [
-      2,
-      6
-    ],
-    "hitTest": "drawnPosition"
+  "peach": {
+   "name": "桃子",
+   "saplingCost": 700,
+   "firstFruitSeconds": 50400,
+   "fruitIntervalSeconds": 18000,
+   "harvestPrice": 150,
+   "xp": 15,
+   "waterUse": 1.0,
+   "bloomSeason": "spring"
   },
-  "sky": {
-    "folder": "sprites",
-    "keyframes": [
-      {
-        "id": "starry",
-        "file": "sky_starry.jpg",
-        "name": "星空",
-        "at": "sunset+150m",
-        "holdUntil": "sunrise-60m"
-      },
-      {
-        "id": "dawn",
-        "file": "sky_dawn.jpg",
-        "name": "清晨",
-        "at": "sunrise"
-      },
-      {
-        "id": "noon",
-        "file": "sky_noon.jpg",
-        "name": "中午",
-        "at": "solarNoon-60m",
-        "holdUntil": "solarNoon+60m"
-      },
-      {
-        "id": "afternoon",
-        "file": "sky_afternoon.jpg",
-        "name": "下午",
-        "at": "sunset-150m"
-      },
-      {
-        "id": "evening",
-        "file": "sky_evening.jpg",
-        "name": "傍晚",
-        "at": "sunset-60m"
-      },
-      {
-        "id": "dusk",
-        "file": "sky_dusk.jpg",
-        "name": "黃昏",
-        "at": "sunset+10m"
-      },
-      {
-        "id": "night",
-        "file": "sky_night.jpg",
-        "name": "晚上",
-        "at": "sunset+60m"
-      }
-    ],
-    "blend": "linearBetweenKeyframes",
-    "layers": {
-      "stars": {
-        "file": "sky_stars.png",
-        "twinkle": true,
-        "visibleWhenDarkness": ">0.3"
-      },
-      "milkyway": {
-        "file": "sky_milkyway.png",
-        "everyNight": true,
-        "visibleWhenDarkness": ">0.6"
-      },
-      "moon": {
-        "file": "sky_moon.png",
-        "frames": 24,
-        "realPhase": true,
-        "synodicDays": 29.530588,
-        "refNewMoonUtc": "2000-01-06T18:14:00Z",
-        "dayVisibleAlpha": 0.35,
-        "position": "ephemeris",
-        "limbFacesSun": true,
-        "drawUnlitSide": false
-      },
-      "clouds": {
-        "files": [
-          "bg_cloud_a.png",
-          "bg_cloud_b.png",
-          "bg_cloud_c.png"
-        ],
-        "count": 4
-      },
-      "sun": {
-        "file": "sky_sun.png",
-        "path": "ephemeris",
-        "hiddenWhenOvercast": true
-      }
-    },
-    "overcast": {
-      "tint": "rgba(120,130,140,.45)",
-      "hideSun": true
-    },
-    "view": {
-      "faces": "south (north hemisphere) / north (south hemisphere)",
-      "fovDeg": 150,
-      "horizonY": 0.8,
-      "topY": 0.04,
-      "altitudeCurve": 0.55
-    },
-    "daytimePainted": {
-      "keys": [
-        "dawn",
-        "noon",
-        "afternoon",
-        "evening",
-        "dusk"
-      ],
-      "source": "player-provided illustrations",
-      "cartoonClouds": false,
-      "movingSun": true,
-      "portraitAlign": 0.8
-    }
+  "persimmon": {
+   "name": "柿子",
+   "saplingCost": 1000,
+   "firstFruitSeconds": 64800,
+   "fruitIntervalSeconds": 21600,
+   "harvestPrice": 220,
+   "xp": 22,
+   "waterUse": 0.8,
+   "autumnLeaves": true
   },
-  "easterEggs": {
-    "rooster": {
-      "enabled": true,
-      "needsChicken": false,
-      "window": "06:00..09:00 local",
-      "oncePerDay": true,
-      "needsHouseOnMap": true,
-      "flyInSeconds": 3,
-      "crowSeconds": 3,
-      "flyOutSeconds": 3,
-      "bubble": "喔喔喔～",
-      "sfx": "rooster",
-      "clickable": false,
-      "saved": false,
-      "localStart": "06:00",
-      "localEnd": "09:00",
-      "trigger": "enter farm or open game inside the window"
-    }
+  "lychee": {
+   "name": "荔枝",
+   "saplingCost": 1100,
+   "firstFruitSeconds": 72000,
+   "fruitIntervalSeconds": 25200,
+   "harvestPrice": 260,
+   "xp": 26,
+   "waterUse": 1.2
   },
-  "audio": {
-    "folder": "audio",
-    "sfx": {
-      "rooster": "audio/sfx/rooster.mp3",
-      "coin": "audio/sfx/coin.mp3",
-      "harvest": "audio/sfx/harvest.mp3",
-      "water": "audio/sfx/water.mp3",
-      "plow": "audio/sfx/plow.mp3",
-      "place": "audio/sfx/place.mp3",
-      "levelup": "audio/sfx/levelup.mp3",
-      "click": "audio/sfx/click.mp3",
-      "spray": "audio/sfx/spray.mp3"
-    },
-    "bgm": {
-      "rain": [
-        "audio/bgm/rain.mp3"
-      ],
-      "sleep": [
-        "audio/bgm/sleep.mp3"
-      ],
-      "night": [
-        "audio/bgm/night.mp3"
-      ],
-      "morning": [
-        "audio/bgm/morning.mp3"
-      ],
-      "afternoon": [
-        "audio/bgm/afternoon.mp3"
-      ]
-    },
-    "bgmRules": [
-      {
-        "ctx": "rain",
-        "when": "raining"
-      },
-      {
-        "ctx": "sleep",
-        "when": "sky:starry"
-      },
-      {
-        "ctx": "night",
-        "when": "sky:dusk..starry"
-      },
-      {
-        "ctx": "morning",
-        "when": "sunrise-60m..solarNoon"
-      },
-      {
-        "ctx": "afternoon",
-        "when": "solarNoon..dusk"
-      }
-    ],
-    "crossfadeSeconds": 2,
-    "shuffle": true,
-    "missingFiles": "skipSilently",
-    "startAfterFirstTap": true,
-    "sfxUse": {
-      "water": "澆水、除雪倒雪：只有水滴聲",
-      "spray": "噴農藥",
-      "place": "施化肥、有機肥"
-    }
+  "longan": {
+   "name": "龍眼",
+   "saplingCost": 1300,
+   "firstFruitSeconds": 86400,
+   "fruitIntervalSeconds": 28800,
+   "harvestPrice": 320,
+   "xp": 32,
+   "waterUse": 1.0
   },
-  "forecast": {
-    "dailyPopup": true,
-    "blockHours": 3,
-    "days": 2,
-    "showSun": true,
-    "showMoon": true,
-    "events": [
-      "rain",
-      "snow",
-      "tornado",
-      "quake",
-      "meteorShower"
-    ],
-    "tips": true,
-    "rainSnowExactTimes": true,
-    "disasterRiskOnly": true,
-    "riskLevels": [
-      "低",
-      "中",
-      "高"
-    ],
-    "riskMeaning": "higher risk makes the event more likely but never certain",
-    "noAdvanceAlert": true
+  "pear": {
+   "name": "梨子",
+   "saplingCost": 1400,
+   "firstFruitSeconds": 86400,
+   "fruitIntervalSeconds": 28800,
+   "harvestPrice": 340,
+   "xp": 34,
+   "waterUse": 1.0
   },
-  "meteors": {
-    "showers": [
-      {
-        "name": "象限儀座流星雨",
-        "peak": "01-03"
-      },
-      {
-        "name": "天琴座流星雨",
-        "peak": "04-22"
-      },
-      {
-        "name": "寶瓶座η流星雨",
-        "peak": "05-06"
-      },
-      {
-        "name": "英仙座流星雨",
-        "peak": "08-12"
-      },
-      {
-        "name": "獵戶座流星雨",
-        "peak": "10-21"
-      },
-      {
-        "name": "獅子座流星雨",
-        "peak": "11-17"
-      },
-      {
-        "name": "雙子座流星雨",
-        "peak": "12-14"
-      }
-    ],
-    "showerWindowDays": 1,
-    "showerPerMinute": 6,
-    "sporadicPerHour": 20,
-    "needsDarkness": 0.6,
-    "hiddenWhenRaining": true,
-    "wish": {
-      "maxPerNight": 10,
-      "rewards": [
-        {
-          "type": "coins",
-          "min": 5,
-          "max": 20,
-          "weight": 6
-        },
-        {
-          "type": "xp",
-          "min": 3,
-          "max": 8,
-          "weight": 3
-        },
-        {
-          "type": "seed",
-          "item": "random_unlocked_crop",
-          "qty": 3,
-          "weight": 1
-        }
-      ]
-    }
+  "coconut": {
+   "name": "椰子",
+   "saplingCost": 1800,
+   "firstFruitSeconds": 108000,
+   "fruitIntervalSeconds": 36000,
+   "harvestPrice": 450,
+   "xp": 45,
+   "waterUse": 0.6
   },
-  "scale": {
-    "metersPerTile": 2,
-    "note": "machines x1.2, generator x1.15, barn x1.1 redrawn for consistent scale"
+  "cherry": {
+   "name": "櫻桃",
+   "saplingCost": 2200,
+   "firstFruitSeconds": 108000,
+   "fruitIntervalSeconds": 36000,
+   "harvestPrice": 560,
+   "xp": 56,
+   "waterUse": 1.0,
+   "bloomSeason": "spring"
   },
-  "climate": {
-    "regionGridDeg": 0.5,
-    "zones": [
-      {
-        "id": "tropical",
-        "name": "熱帶",
-        "maxLat": 23.5
-      },
-      {
-        "id": "subtropical",
-        "name": "亞熱帶",
-        "maxLat": 35
-      },
-      {
-        "id": "temperate",
-        "name": "溫帶",
-        "maxLat": 55
-      },
-      {
-        "id": "polar",
-        "name": "寒帶",
-        "maxLat": 90
-      }
-    ],
-    "precipPerSlot": {
-      "tropical": {
-        "wet": 0.1,
-        "dry": 0.04
-      },
-      "subtropical": {
-        "summer": 0.08,
-        "other": 0.05
-      },
-      "temperate": {
-        "all": 0.05
-      },
-      "polar": {
-        "all": 0.04
-      }
-    },
-    "cloudyPerSlot": {
-      "tropical": 0.3,
-      "subtropical": 0.25,
-      "temperate": 0.25,
-      "polar": 0.3
-    },
-    "snowShare": {
-      "temperate": {
-        "winter": 0.6
-      },
-      "polar": {
-        "winter": 1.0,
-        "shoulder": 0.5
-      }
-    },
-    "tropicalWetMonthsNorth": [
-      5,
-      6,
-      7,
-      8,
-      9,
-      10
-    ],
-    "seasonsNorth": {
-      "winter": [
-        12,
-        1,
-        2
-      ],
-      "spring": [
-        3,
-        4,
-        5
-      ],
-      "summer": [
-        6,
-        7,
-        8
-      ],
-      "autumn": [
-        9,
-        10,
-        11
-      ]
-    }
+  "avocado": {
+   "name": "酪梨",
+   "saplingCost": 2800,
+   "firstFruitSeconds": 129600,
+   "fruitIntervalSeconds": 43200,
+   "harvestPrice": 720,
+   "xp": 72,
+   "waterUse": 1.5
   },
-  "snow": {
-    "minutes": 45,
-    "coverMeltHours": 3,
-    "coverMeltHoursSunnyDay": 1.5,
-    "growthRate": 0.3,
-    "growthRateLit": 0.7,
-    "soilDries": false,
-    "fillsTower": false,
-    "meltRefillTowerPct": 0.3,
-    "shovel": {
-      "tool": "shovel",
-      "toolOnlyWhenSnow": true,
-      "tilesPerTap": 1,
-      "bucketMax": 10,
-      "dragToShovel": true,
-      "clearedTilesGrowNormal": true
-    },
-    "towerStore": {
-      "dropsPerTile": 8,
-      "meltPctPerMinute": 0.02,
-      "maxPctOfCapacity": 0.2,
-      "clogPerTile": 0.1,
-      "clearTaps": 5,
-      "clogBlocksTowerWater": true
-    },
-    "melter": {
-      "id": "snow_melter",
-      "dropsPerTile": 10,
-      "secondsPerTile": 20,
-      "kwhPerHour": 0.3,
-      "capacityTiles": 30
-    }
+  "grape": {
+   "name": "葡萄",
+   "saplingCost": 3200,
+   "firstFruitSeconds": 129600,
+   "fruitIntervalSeconds": 43200,
+   "harvestPrice": 820,
+   "xp": 82,
+   "waterUse": 1.2,
+   "look": "trellis"
+  }
+ },
+ "animals": {
+  "egg_hen": {
+   "name": "蛋雞",
+   "type": "producer",
+   "youngCost": 80,
+   "growStages": 2,
+   "stageSeconds": 1800,
+   "product": "雞蛋",
+   "cycleSeconds": 1800,
+   "productPrice": 30,
+   "xpPerCycle": 3,
+   "lifespanCycles": 40,
+   "productItem": "egg",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 1,
+   "cycleFeedQty": 1
   },
-  "tornado": {
-    "zones": [
-      "temperate"
-    ],
-    "seasons": [
-      "spring",
-      "summer"
-    ],
-    "daytimeOnly": true,
-    "chancePerDay": 0.03,
-    "minutes": 5,
-    "tiltsDecos": true,
-    "tiltsCrops": true,
-    "tiltedDecoEffectPaused": true,
-    "tapToStraighten": true,
-    "cropYieldEffect": 0,
-    "weedsToBall": true,
-    "ballRollsToCorner": true,
-    "debrisPieces": [
-      3,
-      6
-    ],
-    "dronePaused": true,
-    "immune": [
-      "building",
-      "house",
-      "tower",
-      "animal",
-      "device",
-      "machine",
-      "road",
-      "fence",
-      "soil-land",
-      "tree-trunk"
-    ],
-    "protection": "windbreak"
+  "wool_sheep": {
+   "name": "毛羊",
+   "type": "producer",
+   "youngCost": 300,
+   "growStages": 2,
+   "stageSeconds": 7200,
+   "product": "羊毛",
+   "cycleSeconds": 7200,
+   "productPrice": 120,
+   "xpPerCycle": 10,
+   "lifespanCycles": 30,
+   "productItem": "wool",
+   "feedItem": "pasture",
+   "stageFeedQty": 5,
+   "cycleFeedQty": 5
   },
-  "earthquake": {
-    "seismicBoxes": [
-      {
-        "name": "台灣",
-        "lat": [
-          21.5,
-          25.5
-        ],
-        "lon": [
-          119.5,
-          122.5
-        ],
-        "chancePerDay": 0.04
-      },
-      {
-        "name": "日本",
-        "lat": [
-          24,
-          46
-        ],
-        "lon": [
-          123,
-          146
-        ],
-        "chancePerDay": 0.03
-      },
-      {
-        "name": "菲律賓",
-        "lat": [
-          5,
-          19
-        ],
-        "lon": [
-          117,
-          127
-        ],
-        "chancePerDay": 0.02
-      },
-      {
-        "name": "印尼",
-        "lat": [
-          -11,
-          6
-        ],
-        "lon": [
-          95,
-          141
-        ],
-        "chancePerDay": 0.02
-      },
-      {
-        "name": "紐西蘭",
-        "lat": [
-          -47,
-          -34
-        ],
-        "lon": [
-          166,
-          179
-        ],
-        "chancePerDay": 0.02
-      },
-      {
-        "name": "美洲西岸",
-        "lat": [
-          -56,
-          61
-        ],
-        "lon": [
-          -125,
-          -66
-        ],
-        "chancePerDay": 0.02,
-        "westCoastOnly": true
-      },
-      {
-        "name": "地中海到喜馬拉雅",
-        "lat": [
-          30,
-          45
-        ],
-        "lon": [
-          10,
-          95
-        ],
-        "chancePerDay": 0.02
-      }
-    ],
-    "levels": {
-      "small": {
-        "name": "小",
-        "weight": 0.6,
-        "shakeSeconds": 2
-      },
-      "medium": {
-        "name": "中",
-        "weight": 0.3,
-        "shakeSeconds": 3,
-        "towerLossPct": 0.1,
-        "machineDelayMinutes": 5
-      },
-      "large": {
-        "name": "大",
-        "weight": 0.1,
-        "shakeSeconds": 3,
-        "towerLossPct": 0.1,
-        "machineDelayMinutes": 5,
-        "fencesFall": [
-          1,
-          3
-        ]
-      }
-    },
-    "fallenFence": {
-      "tapToRaise": true,
-      "animalsPassThrough": true
-    },
-    "towerReinforce": {
-      "name": "耐震加固",
-      "cost": 800,
-      "appliesToAllTowers": true
-    }
+  "dairy_goat": {
+   "name": "乳羊",
+   "type": "producer",
+   "youngCost": 400,
+   "growStages": 3,
+   "stageSeconds": 7200,
+   "product": "羊奶",
+   "cycleSeconds": 10800,
+   "productPrice": 190,
+   "xpPerCycle": 16,
+   "lifespanCycles": 24,
+   "productItem": "goat_milk",
+   "feedItem": "pasture",
+   "stageFeedQty": 5,
+   "cycleFeedQty": 8
   },
-  "news": {
-    "onReturn": true,
-    "items": [
-      "rain",
-      "snow",
-      "tornado",
-      "quake",
-      "death",
-      "bill",
-      "meteor"
-    ],
-    "maxItems": 12
+  "dairy_cow": {
+   "name": "乳牛",
+   "type": "producer",
+   "youngCost": 800,
+   "growStages": 3,
+   "stageSeconds": 14400,
+   "product": "牛奶",
+   "cycleSeconds": 14400,
+   "productPrice": 280,
+   "xpPerCycle": 24,
+   "lifespanCycles": 24,
+   "productItem": "cow_milk",
+   "feedItem": "pasture",
+   "stageFeedQty": 8,
+   "cycleFeedQty": 10
   },
-  "robots": {
-    "ownOrRent": true,
-    "kinds": {
-      "water": {
-        "name": "澆水無人機",
-        "base": "drone_pad",
-        "tiers": [
-          {
-            "id": "drone_1",
-            "name": "初級",
-            "buy": 1500,
-            "workHours": 4,
-            "kwh": 0.4,
-            "chargeHours": 1
-          },
-          {
-            "id": "drone_2",
-            "name": "中級",
-            "buy": 4000,
-            "workHours": 12,
-            "kwh": 1.2,
-            "chargeHours": 2
-          },
-          {
-            "id": "drone_3",
-            "name": "高級",
-            "buy": 9000,
-            "workHours": 24,
-            "kwh": 2.4,
-            "chargeHours": 3
-          }
-        ],
-        "tankDrops": 60
-      },
-      "feed": {
-        "name": "餵食機器人",
-        "base": "robot_charger",
-        "tiers": [
-          {
-            "id": "feeder_1",
-            "name": "初級",
-            "buy": 1500,
-            "workHours": 4,
-            "kwh": 0.4,
-            "chargeHours": 1
-          },
-          {
-            "id": "feeder_2",
-            "name": "中級",
-            "buy": 4000,
-            "workHours": 12,
-            "kwh": 1.2,
-            "chargeHours": 2
-          },
-          {
-            "id": "feeder_3",
-            "name": "高級",
-            "buy": 9000,
-            "workHours": 24,
-            "kwh": 2.4,
-            "chargeHours": 3
-          }
-        ]
-      },
-      "snow": {
-        "name": "除雪機器人",
-        "base": "robot_charger",
-        "unlockLevel": 5,
-        "tiers": [
-          {
-            "id": "snowbot",
-            "name": "標準",
-            "buy": 1200,
-            "workHours": 2,
-            "kwh": 0.3,
-            "chargeHours": 0.667
-          }
-        ],
-        "rent": [
-          {
-            "hours": 2,
-            "cost": 80
-          }
-        ]
-      },
-      "sweep": {
-        "name": "掃地機器人",
-        "base": "sweeper_dock",
-        "unlockLevel": 3,
-        "tiers": [
-          {
-            "id": "sweeper",
-            "name": "標準",
-            "buy": 800,
-            "workHours": 0.5,
-            "kwh": 0.05,
-            "chargeHours": 0.167
-          }
-        ],
-        "rent": [
-          {
-            "hours": 2,
-            "cost": 40
-          }
-        ],
-        "tilesPerMinute": 15,
-        "report": {
-          "heatmapHours": 24
-        }
-      },
-      "poop": {
-        "name": "鏟屎官機器人",
-        "base": "robot_charger",
-        "unlockLevel": 5,
-        "tiers": [
-          {
-            "id": "poopbot",
-            "name": "標準",
-            "buy": 1500,
-            "workHours": 4,
-            "kwh": 0.4,
-            "chargeHours": 1
-          }
-        ],
-        "rent": [
-          {
-            "hours": 4,
-            "cost": 120
-          }
-        ],
-        "perMinute": 4,
-        "storesToBarn": true,
-        "waitsWhenFull": true
-      },
-      "honey": {
-        "name": "採蜜機器人",
-        "base": "drone_pad",
-        "unlockLevel": 6,
-        "tiers": [
-          {
-            "id": "honeybot",
-            "name": "標準",
-            "buy": 1800,
-            "workHours": 4,
-            "kwh": 0.4,
-            "chargeHours": 1
-          }
-        ],
-        "rent": [
-          {
-            "hours": 4,
-            "cost": 150
-          }
-        ],
-        "collectAtJars": 10,
-        "flies": true
-      },
-      "wellbot": {
-        "name": "水井機器人",
-        "base": "robot_charger",
-        "unlockLevel": 5,
-        "tiers": [
-          {
-            "id": "wellbot",
-            "name": "標準",
-            "buy": 1200,
-            "workHours": 2,
-            "kwh": 0.2,
-            "chargeHours": 1
-          }
-        ],
-        "rent": [
-          {
-            "hours": 4,
-            "cost": 80
-          }
-        ],
-        "bucketDrops": 20,
-        "tilesPerSecond": 1,
-        "fillSeconds": 2,
-        "pourSeconds": 2,
-        "minWellDrops": 20,
-        "look": "cute tracked cart with a mini crane holding a bucket, no humanoid head"
-      }
-    },
-    "solarChargeMultiplier": 2,
-    "solarNight": false,
-    "upgradeTradeInRate": 0.5,
-    "onePerKind": true,
-    "rent": {
-      "noChargingNeeded": true,
-      "noBaseNeeded": true,
-      "leavesWhenDone": true,
-      "rentalTakesOverOwned": true,
-      "rentedDroneUsesTowerWater": true
-    },
-    "sharedChargerQueue": "firstComeFirstServed",
-    "sharedPadQueue": "firstComeFirstServed"
+  "broiler": {
+   "name": "肉雞",
+   "type": "meat",
+   "youngCost": 60,
+   "growStages": 3,
+   "stageSeconds": 3600,
+   "product": "雞肉",
+   "salePrice": 220,
+   "xp": 13,
+   "productItem": "chicken_meat",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 2
   },
-  "pests": {
-    "startLevel": 3,
-    "appliesTo": [
-      "crop",
-      "tree"
-    ],
-    "minProgress": 0.15,
-    "perHour": 0.03,
-    "seasonMult": {
-      "summer": 2,
-      "spring": 1,
-      "autumn": 1,
-      "winter": 0.3
-    },
-    "tropicalMult": 1.5,
-    "spreadPerHour": 0.2,
-    "growthRate": 0.5,
-    "yieldMult": 0.6,
-    "greenhouseMult": 0.2,
-    "snowKills": true,
-    "catchTaps": 3,
-    "newsReport": true
+  "meat_sheep": {
+   "name": "肉羊",
+   "type": "meat",
+   "youngCost": 300,
+   "growStages": 4,
+   "stageSeconds": 10800,
+   "product": "羊肉",
+   "salePrice": 1000,
+   "xp": 58,
+   "productItem": "mutton",
+   "feedItem": "pasture",
+   "stageFeedQty": 8
   },
-  "care": {
-    "tool": "care",
-    "drag": true,
-    "oneFertPerPlanting": true,
-    "options": {
-      "catch": {
-        "name": "捉蟲",
-        "unlock": "care",
-        "price": 0
-      },
-      "chem": {
-        "name": "化肥",
-        "unlock": "fert_chem",
-        "pricePctSeed": 0.4,
-        "minPrice": 2,
-        "growth": 0.2,
-        "yield": 0.2,
-        "organicOK": false
-      },
-      "org": {
-        "name": "有機肥",
-        "unlock": "organic_fert",
-        "item": "organic_fert",
-        "growth": 0.1,
-        "yield": 0.1,
-        "organicOK": true
-      },
-      "pesticide": {
-        "name": "農藥",
-        "unlock": "pesticide",
-        "pricePctSeed": 0.1,
-        "minPrice": 1,
-        "treePctSapling": 0.02,
-        "protectHours": 12,
-        "safePctOfGrow": 0.5,
-        "safeMaxMinutes": 10,
-        "organicOK": false
-      }
-    },
-    "askBeforeLosingOrganic": true
+  "pig": {
+   "name": "肉豬",
+   "type": "meat",
+   "youngCost": 500,
+   "growStages": 4,
+   "stageSeconds": 14400,
+   "product": "豬肉",
+   "salePrice": 1600,
+   "xp": 90,
+   "productItem": "pork",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 8
   },
-  "organic": {
-    "auto": true,
-    "yieldMult": 0.8,
-    "priceMult": 1.4,
-    "itemPrefix": "org_",
-    "legacyCropsNormal": true,
-    "machinesPreferNormal": true
+  "beef_cattle": {
+   "name": "肉牛",
+   "type": "meat",
+   "youngCost": 800,
+   "growStages": 4,
+   "stageSeconds": 21600,
+   "product": "牛肉",
+   "salePrice": 2600,
+   "xp": 156,
+   "productItem": "beef",
+   "feedItem": "pasture",
+   "stageFeedQty": 15
+  }
+ },
+ "fishPool": {
+  "buildCostPerTile": 400,
+  "sellRate": 0.5,
+  "sizeBonus": [
+   {
+    "minTiles": 1,
+    "bonus": 0
+   },
+   {
+    "minTiles": 4,
+    "bonus": 0.1
+   },
+   {
+    "minTiles": 9,
+    "bonus": 0.2
+   }
+  ]
+ },
+ "fish": {
+  "tilapia": {
+   "name": "吳郭魚",
+   "fryCostPerTile": 50,
+   "stages": 2,
+   "stageSeconds": 10800,
+   "harvestPerTile": 200,
+   "xpPerTile": 13,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 2
   },
-  "fractionalYield": {
-    "mode": "carry",
-    "note": "fractional yield accumulates per item id; each whole unit is paid out"
+  "milkfish": {
+   "name": "虱目魚",
+   "fryCostPerTile": 100,
+   "stages": 3,
+   "stageSeconds": 14400,
+   "harvestPerTile": 450,
+   "xpPerTile": 31,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 3
   },
-  "poop": {
-    "everyHours": 2,
-    "maxPerRegion": 8,
-    "penalty": null,
-    "item": "poop",
-    "anyToolShovels": true
+  "seabass": {
+   "name": "鱸魚",
+   "fryCostPerTile": 200,
+   "stages": 4,
+   "stageSeconds": 21600,
+   "harvestPerTile": 1000,
+   "xpPerTile": 70,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 5
+  }
+ },
+ "automation": {
+  "drone_1": {
+   "name": "初級澆水無人機",
+   "kind": "water",
+   "hours": 4,
+   "cost": 150
   },
-  "greenhouse": {
-    "name": "溫室",
-    "perTileCost": 350,
-    "unlockLevel": 6,
-    "capByLevel": {
-      "6": 9,
-      "7": 18,
-      "8": 27,
-      "9": 36
-    },
-    "sellRate": 0.5,
-    "placeOn": [
-      "soil",
-      "grass"
-    ],
-    "connectsLikePool": true,
-    "rainBlocked": true,
-    "snowFree": true,
-    "tornadoFree": true,
-    "pestMult": 0.2,
-    "nightGrowthRate": 0.85,
-    "animalsBlocked": true,
-    "storable": false,
-    "moveWholeComponent": true,
-    "dragBuild": true
+  "drone_2": {
+   "name": "中級澆水無人機",
+   "kind": "water",
+   "hours": 12,
+   "cost": 500
+  },
+  "drone_3": {
+   "name": "高級澆水無人機",
+   "kind": "water",
+   "hours": 24,
+   "cost": 1000
+  },
+  "feeder_1": {
+   "name": "初級餵食機器人",
+   "kind": "feed",
+   "hours": 4,
+   "cost": 150
+  },
+  "feeder_2": {
+   "name": "中級餵食機器人",
+   "kind": "feed",
+   "hours": 12,
+   "cost": 500
+  },
+  "feeder_3": {
+   "name": "高級餵食機器人",
+   "kind": "feed",
+   "hours": 24,
+   "cost": 1000
+  }
+ },
+ "decos": {
+  "maple": {
+   "name": "楓樹",
+   "source": "shop",
+   "cost": 30,
+   "sellable": true
+  },
+  "pine": {
+   "name": "松樹",
+   "source": "shop",
+   "cost": 30,
+   "sellable": true
+  },
+  "fence": {
+   "name": "木柵欄",
+   "source": "shop",
+   "cost": 5,
+   "autotile": true,
+   "sellable": true
   },
   "flowers": {
-    "rapeseed": {
-      "name": "油菜花",
-      "seedCost": 10,
-      "growSeconds": 600,
-      "nectar": 4,
-      "blooms": 1,
-      "regrowSeconds": null,
-      "honey": "honey_rapeseed",
-      "waterUse": 1.0
-    },
-    "milk_vetch": {
-      "name": "紫雲英",
-      "seedCost": 12,
-      "growSeconds": 900,
-      "nectar": 5,
-      "blooms": 1,
-      "regrowSeconds": null,
-      "honey": "honey_vetch",
-      "waterUse": 1.0
-    },
-    "wildflower": {
-      "name": "野花",
-      "seedCost": 20,
-      "growSeconds": 1800,
-      "nectar": 3,
-      "blooms": 4,
-      "regrowSeconds": 1800,
-      "honey": "honey_hundred",
-      "waterUse": 1.0
-    },
-    "buckwheat": {
-      "name": "蕎麥花",
-      "seedCost": 25,
-      "growSeconds": 2400,
-      "nectar": 6,
-      "blooms": 1,
-      "regrowSeconds": null,
-      "honey": "honey_buckwheat",
-      "waterUse": 1.0
-    },
-    "lavender": {
-      "name": "薰衣草",
-      "seedCost": 60,
-      "growSeconds": 7200,
-      "nectar": 4,
-      "blooms": 6,
-      "regrowSeconds": 3600,
-      "honey": "honey_lavender",
-      "waterUse": 0.75
-    },
-    "rose": {
-      "name": "玫瑰",
-      "seedCost": 120,
-      "growSeconds": 14400,
-      "nectar": 4,
-      "blooms": 8,
-      "regrowSeconds": 7200,
-      "honey": "honey_rose",
-      "waterUse": 1.0
-    }
+   "name": "花圃",
+   "source": "shop",
+   "cost": 20,
+   "sellable": true
   },
-  "flowerRules": {
-    "plantOn": "soil",
-    "needsWater": true,
-    "dryNectarMult": 0.5,
-    "dryAfterBloomSeconds": 3600,
-    "pests": false,
-    "organic": false,
-    "sellable": false,
-    "seedTabs": [
-      "crops",
-      "flowers"
+  "hay": {
+   "name": "乾草堆",
+   "source": "shop",
+   "cost": 40,
+   "sellable": true
+  },
+  "scarecrow": {
+   "name": "稻草人",
+   "source": "shop",
+   "cost": 120,
+   "effect": {
+    "type": "growth",
+    "value": 0.1,
+    "range": 1
+   },
+   "sellable": true
+  },
+  "pond": {
+   "name": "小池塘",
+   "source": "shop",
+   "cost": 300,
+   "merge": true,
+   "autotile": true,
+   "effect": {
+    "type": "moisture",
+    "value": 0.5,
+    "range": 2
+   },
+   "sellable": true
+  },
+  "water_tower": {
+   "name": "大型儲水槽",
+   "source": "shop",
+   "cost": 1200,
+   "effect": {
+    "type": "storage",
+    "value": 1500,
+    "range": "global"
+   },
+   "sellable": true
+  },
+  "windmill": {
+   "name": "風車",
+   "source": "shop",
+   "cost": 800,
+   "effect": {
+    "type": "growth",
+    "value": 0.15,
+    "range": 3
+   },
+   "sellable": true
+  },
+  "rain_barrel": {
+   "name": "雨水桶",
+   "source": "levelReward",
+   "effect": {
+    "type": "storage",
+    "value": 300,
+    "range": "global"
+   },
+   "sellable": false
+  },
+  "gold_scarecrow": {
+   "name": "金色稻草人",
+   "source": "levelReward",
+   "effect": {
+    "type": "growth",
+    "value": 0.2,
+    "range": 1
+   },
+   "sellable": false
+  },
+  "stone_well": {
+   "name": "石砌水井",
+   "source": "levelReward",
+   "effect": {
+    "type": "storage",
+    "value": 500,
+    "range": "global",
+    "groundwaterPerHour": 30
+   },
+   "sellable": false
+  },
+  "rainbow_windmill": {
+   "name": "彩虹風車",
+   "source": "levelReward",
+   "effect": {
+    "type": "growth",
+    "value": 0.25,
+    "range": 3
+   },
+   "sellable": false
+  },
+  "road_gravel": {
+   "name": "碎石路",
+   "source": "shop",
+   "cost": 5,
+   "autotile": true,
+   "flat": true,
+   "walkable": true,
+   "noWeeds": true,
+   "sellable": true,
+   "kind": "road"
+  },
+  "road_dirt": {
+   "name": "泥土小徑",
+   "source": "shop",
+   "cost": 3,
+   "autotile": true,
+   "flat": true,
+   "walkable": true,
+   "noWeeds": true,
+   "sellable": true,
+   "kind": "road"
+  },
+  "road_stone": {
+   "name": "石板路",
+   "source": "shop",
+   "cost": 15,
+   "autotile": true,
+   "flat": true,
+   "walkable": true,
+   "noWeeds": true,
+   "sellable": true,
+   "kind": "road"
+  },
+  "road_asphalt": {
+   "name": "柏油路",
+   "source": "shop",
+   "cost": 25,
+   "autotile": true,
+   "flat": true,
+   "walkable": true,
+   "noWeeds": true,
+   "sellable": true,
+   "kind": "road"
+  },
+  "road_boardwalk": {
+   "name": "木棧道",
+   "source": "shop",
+   "cost": 20,
+   "autotile": true,
+   "flat": true,
+   "walkable": true,
+   "noWeeds": true,
+   "sellable": true,
+   "kind": "road"
+  },
+  "windbreak": {
+   "name": "防風網",
+   "source": "shop",
+   "cost": 80,
+   "effect": {
+    "type": "windbreak",
+    "range": 2
+   },
+   "sellable": true
+  },
+  "bamboo": {
+   "name": "竹叢",
+   "source": "shop",
+   "cost": 40,
+   "sellable": true
+  },
+  "birch": {
+   "name": "白樺",
+   "source": "shop",
+   "cost": 40,
+   "sellable": true
+  },
+  "sakura": {
+   "name": "櫻花樹",
+   "source": "shop",
+   "cost": 60,
+   "sellable": true
+  },
+  "palm": {
+   "name": "棕櫚樹",
+   "source": "shop",
+   "cost": 50,
+   "sellable": true
+  },
+  "willow": {
+   "name": "垂柳",
+   "source": "shop",
+   "cost": 50,
+   "sellable": true
+  },
+  "ginkgo": {
+   "name": "銀杏",
+   "source": "shop",
+   "cost": 60,
+   "sellable": true
+  },
+  "oak": {
+   "name": "橡樹",
+   "source": "shop",
+   "cost": 70,
+   "sellable": true
+  },
+  "banyan": {
+   "name": "榕樹",
+   "source": "shop",
+   "cost": 80,
+   "sellable": true
+  }
+ },
+ "expansion": {
+  "blocks": [
+   {
+    "index": 1,
+    "map": 1,
+    "level": 1,
+    "cost": 0
+   },
+   {
+    "index": 2,
+    "map": 1,
+    "level": 3,
+    "cost": 2400
+   },
+   {
+    "index": 3,
+    "map": 1,
+    "level": 5,
+    "cost": 6000
+   },
+   {
+    "index": 4,
+    "map": 1,
+    "level": 7,
+    "cost": 12000
+   },
+   {
+    "index": 5,
+    "map": 2,
+    "level": 8,
+    "cost": 18000
+   },
+   {
+    "index": 6,
+    "map": 2,
+    "level": 8,
+    "cost": 24000
+   },
+   {
+    "index": 7,
+    "map": 2,
+    "level": 9,
+    "cost": 30000
+   },
+   {
+    "index": 8,
+    "map": 2,
+    "level": 9,
+    "cost": 36000
+   },
+   {
+    "index": 9,
+    "map": 3,
+    "level": 10,
+    "cost": 45000
+   },
+   {
+    "index": 10,
+    "map": 3,
+    "level": 10,
+    "cost": 54000
+   },
+   {
+    "index": 11,
+    "map": 3,
+    "level": 10,
+    "cost": 63000
+   },
+   {
+    "index": 12,
+    "map": 3,
+    "level": 10,
+    "cost": 75000
+   }
+  ],
+  "beyondCostStep": 12000
+ },
+ "levels": [
+  {
+   "level": 1,
+   "xpToReach": 0,
+   "coinReward": 0,
+   "specialDeco": null,
+   "unlocks": [
+    "pasture",
+    "wheat",
+    "tomato",
+    "egg_hen",
+    "maple",
+    "pine",
+    "fence",
+    "hand_crank",
+    "road_gravel",
+    "road_dirt",
+    "bamboo"
+   ],
+   "animalCap": 3,
+   "fishPoolTileCap": 0,
+   "produceCapacity": 300,
+   "rainStorage": 500
+  },
+  {
+   "level": 2,
+   "xpToReach": 30,
+   "coinReward": 50,
+   "specialDeco": "rain_barrel",
+   "unlocks": [
+    "potato",
+    "corn",
+    "broiler",
+    "flowers",
+    "corn_cake_machine",
+    "doll_sun",
+    "fert_chem",
+    "birch",
+    "sakura"
+   ],
+   "animalCap": 4,
+   "fishPoolTileCap": 0,
+   "produceCapacity": 400,
+   "rainStorage": 600
+  },
+  {
+   "level": 3,
+   "xpToReach": 100,
+   "coinReward": 100,
+   "specialDeco": "gold_scarecrow",
+   "unlocks": [
+    "peanut",
+    "strawberry",
+    "wool_sheep",
+    "hay",
+    "drone_1",
+    "block:2",
+    "grow_lamp",
+    "battery_s",
+    "doll_rain",
+    "drone_pad",
+    "road_stone",
+    "sweeper",
+    "care",
+    "pesticide",
+    "compost_bin",
+    "organic_fert",
+    "orange",
+    "palm",
+    "willow"
+   ],
+   "animalCap": 5,
+   "fishPoolTileCap": 0,
+   "produceCapacity": 500,
+   "rainStorage": 750
+  },
+  {
+   "level": 4,
+   "xpToReach": 300,
+   "coinReward": 200,
+   "specialDeco": null,
+   "unlocks": [
+    "cabbage",
+    "lemon",
+    "dairy_goat",
+    "scarecrow",
+    "fish_pool",
+    "tilapia",
+    "feeder_1",
+    "fish_feed_machine",
+    "biomass_gen",
+    "robot_charger",
+    "windbreak",
+    "beehive",
+    "queen_bee",
+    "rapeseed",
+    "milk_vetch",
+    "well",
+    "solar_panel",
+    "peach",
+    "ginkgo",
+    "sprinkler_s",
+    "trashbot",
+    "recyclebot",
+    "truck_pad"
+   ],
+   "animalCap": 6,
+   "fishPoolTileCap": 4,
+   "produceCapacity": 650,
+   "rainStorage": 900
+  },
+  {
+   "level": 5,
+   "xpToReach": 1000,
+   "coinReward": 300,
+   "specialDeco": null,
+   "unlocks": [
+    "rice",
+    "pumpkin",
+    "papaya",
+    "meat_sheep",
+    "dairy_cow",
+    "block:3",
+    "battery_m",
+    "road_asphalt",
+    "snow_melter",
+    "water_tower_extra",
+    "snowbot",
+    "poopbot",
+    "wildflower",
+    "buckwheat",
+    "wellbot",
+    "doll_snow",
+    "persimmon",
+    "lychee",
+    "oak"
+   ],
+   "animalCap": 8,
+   "fishPoolTileCap": 4,
+   "produceCapacity": 800,
+   "rainStorage": 1100,
+   "rewardFree": {
+    "beehive": 1
+   }
+  },
+  {
+   "level": 6,
+   "xpToReach": 12000,
+   "coinReward": 1000,
+   "specialDeco": null,
+   "unlocks": [
+    "watermelon",
+    "mango",
+    "pig",
+    "milkfish",
+    "pond",
+    "drone_2",
+    "big_bucket",
+    "grow_lamp_large",
+    "road_boardwalk",
+    "greenhouse",
+    "lavender",
+    "honeybot",
+    "longan",
+    "pear",
+    "banyan",
+    "bumble_hive",
+    "bumble_colony",
+    "butterfly_egg"
+   ],
+   "animalCap": 9,
+   "fishPoolTileCap": 8,
+   "produceCapacity": 1000,
+   "rainStorage": 1300
+  },
+  {
+   "level": 7,
+   "xpToReach": 40000,
+   "coinReward": 2000,
+   "specialDeco": "stone_well",
+   "unlocks": [
+    "sunflower",
+    "banana",
+    "beef_cattle",
+    "feeder_2",
+    "block:4",
+    "battery_l",
+    "rose",
+    "coconut",
+    "sprinkler_l"
+   ],
+   "animalCap": 10,
+   "fishPoolTileCap": 8,
+   "produceCapacity": 1250,
+   "rainStorage": 1550
+  },
+  {
+   "level": 8,
+   "xpToReach": 75000,
+   "coinReward": 3000,
+   "specialDeco": null,
+   "unlocks": [
+    "apple",
+    "seabass",
+    "water_tower",
+    "block:5",
+    "block:6",
+    "cherry"
+   ],
+   "animalCap": 12,
+   "fishPoolTileCap": 12,
+   "produceCapacity": 1500,
+   "rainStorage": 1800
+  },
+  {
+   "level": 9,
+   "xpToReach": 120000,
+   "coinReward": 4000,
+   "specialDeco": null,
+   "unlocks": [
+    "windmill",
+    "drone_3",
+    "block:7",
+    "block:8",
+    "avocado"
+   ],
+   "animalCap": 14,
+   "fishPoolTileCap": 12,
+   "produceCapacity": 1800,
+   "rainStorage": 2100
+  },
+  {
+   "level": 10,
+   "xpToReach": 180000,
+   "coinReward": 5000,
+   "specialDeco": "rainbow_windmill",
+   "unlocks": [
+    "feeder_3",
+    "block:9",
+    "block:10",
+    "block:11",
+    "block:12",
+    "grape"
+   ],
+   "animalCap": 16,
+   "fishPoolTileCap": 16,
+   "produceCapacity": 2200,
+   "rainStorage": 2500
+  }
+ ],
+ "items": {
+  "pasture": {
+   "name": "牧草",
+   "category": "feed",
+   "sellPrice": 1
+  },
+  "wheat": {
+   "name": "小麥",
+   "category": "crop",
+   "sellPrice": 15
+  },
+  "tomato": {
+   "name": "番茄",
+   "category": "crop",
+   "sellPrice": 45
+  },
+  "potato": {
+   "name": "馬鈴薯",
+   "category": "crop",
+   "sellPrice": 80
+  },
+  "corn": {
+   "name": "玉米",
+   "category": "crop",
+   "sellPrice": 105
+  },
+  "peanut": {
+   "name": "花生",
+   "category": "crop",
+   "sellPrice": 150
+  },
+  "strawberry": {
+   "name": "草莓",
+   "category": "crop",
+   "sellPrice": 180
+  },
+  "cabbage": {
+   "name": "高麗菜",
+   "category": "crop",
+   "sellPrice": 310
+  },
+  "rice": {
+   "name": "水稻",
+   "category": "crop",
+   "sellPrice": 510
+  },
+  "pumpkin": {
+   "name": "南瓜",
+   "category": "crop",
+   "sellPrice": 580
+  },
+  "watermelon": {
+   "name": "西瓜",
+   "category": "crop",
+   "sellPrice": 800
+  },
+  "sunflower": {
+   "name": "向日葵",
+   "category": "crop",
+   "sellPrice": 940
+  },
+  "lemon": {
+   "name": "檸檬",
+   "category": "fruit",
+   "sellPrice": 120
+  },
+  "papaya": {
+   "name": "木瓜",
+   "category": "fruit",
+   "sellPrice": 210
+  },
+  "mango": {
+   "name": "芒果",
+   "category": "fruit",
+   "sellPrice": 300
+  },
+  "banana": {
+   "name": "香蕉",
+   "category": "fruit",
+   "sellPrice": 380
+  },
+  "apple": {
+   "name": "蘋果",
+   "category": "fruit",
+   "sellPrice": 640
+  },
+  "egg": {
+   "name": "雞蛋",
+   "category": "product",
+   "sellPrice": 30
+  },
+  "wool": {
+   "name": "羊毛",
+   "category": "product",
+   "sellPrice": 120
+  },
+  "goat_milk": {
+   "name": "羊奶",
+   "category": "product",
+   "sellPrice": 190
+  },
+  "cow_milk": {
+   "name": "牛奶",
+   "category": "product",
+   "sellPrice": 280
+  },
+  "chicken_meat": {
+   "name": "雞肉",
+   "category": "meat",
+   "sellPrice": 220
+  },
+  "mutton": {
+   "name": "羊肉",
+   "category": "meat",
+   "sellPrice": 1000
+  },
+  "pork": {
+   "name": "豬肉",
+   "category": "meat",
+   "sellPrice": 1600
+  },
+  "beef": {
+   "name": "牛肉",
+   "category": "meat",
+   "sellPrice": 2600
+  },
+  "tilapia": {
+   "name": "吳郭魚",
+   "category": "fish",
+   "sellPrice": 200
+  },
+  "milkfish": {
+   "name": "虱目魚",
+   "category": "fish",
+   "sellPrice": 450
+  },
+  "seabass": {
+   "name": "鱸魚",
+   "category": "fish",
+   "sellPrice": 1000
+  },
+  "corn_cake": {
+   "name": "玉米餅",
+   "category": "feed",
+   "sellPrice": 2
+  },
+  "fish_feed": {
+   "name": "魚飼料",
+   "category": "feed",
+   "sellPrice": 2
+  },
+  "weed": {
+   "name": "雜草",
+   "category": "feed",
+   "sellPrice": 1
+  },
+  "poop": {
+   "name": "糞便",
+   "category": "material",
+   "sellPrice": 0
+  },
+  "organic_fert": {
+   "name": "有機肥",
+   "category": "material",
+   "sellPrice": 5
+  },
+  "org_wheat": {
+   "name": "有機小麥",
+   "category": "crop",
+   "sellPrice": 21,
+   "organicOf": "wheat"
+  },
+  "org_tomato": {
+   "name": "有機番茄",
+   "category": "crop",
+   "sellPrice": 63,
+   "organicOf": "tomato"
+  },
+  "org_potato": {
+   "name": "有機馬鈴薯",
+   "category": "crop",
+   "sellPrice": 112,
+   "organicOf": "potato"
+  },
+  "org_corn": {
+   "name": "有機玉米",
+   "category": "crop",
+   "sellPrice": 147,
+   "organicOf": "corn"
+  },
+  "org_peanut": {
+   "name": "有機花生",
+   "category": "crop",
+   "sellPrice": 210,
+   "organicOf": "peanut"
+  },
+  "org_strawberry": {
+   "name": "有機草莓",
+   "category": "crop",
+   "sellPrice": 252,
+   "organicOf": "strawberry"
+  },
+  "org_cabbage": {
+   "name": "有機高麗菜",
+   "category": "crop",
+   "sellPrice": 434,
+   "organicOf": "cabbage"
+  },
+  "org_rice": {
+   "name": "有機水稻",
+   "category": "crop",
+   "sellPrice": 714,
+   "organicOf": "rice"
+  },
+  "org_pumpkin": {
+   "name": "有機南瓜",
+   "category": "crop",
+   "sellPrice": 812,
+   "organicOf": "pumpkin"
+  },
+  "org_watermelon": {
+   "name": "有機西瓜",
+   "category": "crop",
+   "sellPrice": 1120,
+   "organicOf": "watermelon"
+  },
+  "org_sunflower": {
+   "name": "有機向日葵",
+   "category": "crop",
+   "sellPrice": 1316,
+   "organicOf": "sunflower"
+  },
+  "org_lemon": {
+   "name": "有機檸檬",
+   "category": "fruit",
+   "sellPrice": 168,
+   "organicOf": "lemon"
+  },
+  "org_papaya": {
+   "name": "有機木瓜",
+   "category": "fruit",
+   "sellPrice": 294,
+   "organicOf": "papaya"
+  },
+  "org_mango": {
+   "name": "有機芒果",
+   "category": "fruit",
+   "sellPrice": 420,
+   "organicOf": "mango"
+  },
+  "org_banana": {
+   "name": "有機香蕉",
+   "category": "fruit",
+   "sellPrice": 532,
+   "organicOf": "banana"
+  },
+  "org_apple": {
+   "name": "有機蘋果",
+   "category": "fruit",
+   "sellPrice": 896,
+   "organicOf": "apple"
+  },
+  "honey_wild": {
+   "name": "野蜂蜜",
+   "category": "honey",
+   "sellPrice": 20
+  },
+  "honey_rapeseed": {
+   "name": "油菜花蜜",
+   "category": "honey",
+   "sellPrice": 40
+  },
+  "honey_vetch": {
+   "name": "紫雲英蜜",
+   "category": "honey",
+   "sellPrice": 45
+  },
+  "honey_hundred": {
+   "name": "百花蜜",
+   "category": "honey",
+   "sellPrice": 50
+  },
+  "honey_buckwheat": {
+   "name": "蕎麥蜜",
+   "category": "honey",
+   "sellPrice": 60
+  },
+  "honey_lavender": {
+   "name": "薰衣草蜜",
+   "category": "honey",
+   "sellPrice": 90
+  },
+  "honey_rose": {
+   "name": "玫瑰花蜜",
+   "category": "honey",
+   "sellPrice": 120
+  },
+  "orange": {
+   "name": "柳丁",
+   "category": "fruit",
+   "sellPrice": 85
+  },
+  "org_orange": {
+   "name": "有機柳丁",
+   "category": "fruit",
+   "sellPrice": 119,
+   "organicOf": "orange"
+  },
+  "peach": {
+   "name": "桃子",
+   "category": "fruit",
+   "sellPrice": 150
+  },
+  "org_peach": {
+   "name": "有機桃子",
+   "category": "fruit",
+   "sellPrice": 210,
+   "organicOf": "peach"
+  },
+  "persimmon": {
+   "name": "柿子",
+   "category": "fruit",
+   "sellPrice": 220
+  },
+  "org_persimmon": {
+   "name": "有機柿子",
+   "category": "fruit",
+   "sellPrice": 308,
+   "organicOf": "persimmon"
+  },
+  "lychee": {
+   "name": "荔枝",
+   "category": "fruit",
+   "sellPrice": 260
+  },
+  "org_lychee": {
+   "name": "有機荔枝",
+   "category": "fruit",
+   "sellPrice": 364,
+   "organicOf": "lychee"
+  },
+  "longan": {
+   "name": "龍眼",
+   "category": "fruit",
+   "sellPrice": 320
+  },
+  "org_longan": {
+   "name": "有機龍眼",
+   "category": "fruit",
+   "sellPrice": 448,
+   "organicOf": "longan"
+  },
+  "pear": {
+   "name": "梨子",
+   "category": "fruit",
+   "sellPrice": 340
+  },
+  "org_pear": {
+   "name": "有機梨子",
+   "category": "fruit",
+   "sellPrice": 476,
+   "organicOf": "pear"
+  },
+  "coconut": {
+   "name": "椰子",
+   "category": "fruit",
+   "sellPrice": 450
+  },
+  "org_coconut": {
+   "name": "有機椰子",
+   "category": "fruit",
+   "sellPrice": 630,
+   "organicOf": "coconut"
+  },
+  "cherry": {
+   "name": "櫻桃",
+   "category": "fruit",
+   "sellPrice": 560
+  },
+  "org_cherry": {
+   "name": "有機櫻桃",
+   "category": "fruit",
+   "sellPrice": 784,
+   "organicOf": "cherry"
+  },
+  "avocado": {
+   "name": "酪梨",
+   "category": "fruit",
+   "sellPrice": 720
+  },
+  "org_avocado": {
+   "name": "有機酪梨",
+   "category": "fruit",
+   "sellPrice": 1008,
+   "organicOf": "avocado"
+  },
+  "grape": {
+   "name": "葡萄",
+   "category": "fruit",
+   "sellPrice": 820
+  },
+  "org_grape": {
+   "name": "有機葡萄",
+   "category": "fruit",
+   "sellPrice": 1148,
+   "organicOf": "grape"
+  },
+  "part_roller": {
+   "name": "滾筒",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_brush": {
+   "name": "清潔刷",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_dustbag": {
+   "name": "集塵袋",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_wheel": {
+   "name": "輪子",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_propeller": {
+   "name": "螺旋槳",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  }
+ },
+ "feedShop": {
+  "pasture": 4,
+  "corn_cake": 6,
+  "fish_feed": 5
+ },
+ "machines": {
+  "corn_cake_machine": {
+   "name": "玉米餅機",
+   "buildCost": 500,
+   "input": {
+    "corn": 1
+   },
+   "output": {
+    "corn_cake": 20
+   },
+   "seconds": 600,
+   "batchesAtOnce": 1,
+   "collect": "manual",
+   "outputShow": {
+    "plate": true,
+    "maxStacks": 3,
+    "oneStackPerBatch": true
+   }
+  },
+  "fish_feed_machine": {
+   "name": "魚飼料機",
+   "buildCost": 800,
+   "input": {
+    "wheat": 1
+   },
+   "output": {
+    "fish_feed": 8
+   },
+   "seconds": 900,
+   "batchesAtOnce": 1,
+   "collect": "manual"
+  },
+  "compost_bin": {
+   "name": "堆肥桶",
+   "buildCost": 600,
+   "input": {
+    "poop": 4,
+    "weed": 2
+   },
+   "output": {
+    "organic_fert": 2
+   },
+   "seconds": 3600,
+   "batchesAtOnce": 1,
+   "collect": "manual"
+  }
+ },
+ "tutorial": {
+  "reward": {
+   "coins": 100
+  },
+  "gift": {
+   "corn_cake": 10
+  },
+  "steps": [
+   {
+    "id": "welcome",
+    "title": "歡迎來到浮島農場",
+    "text": "上面是你的等級、金幣和水桶。跟著幾個步驟，學會怎麼經營農場。",
+    "target": "hud"
+   },
+   {
+    "id": "harvest",
+    "title": "收成",
+    "text": "選「收成」，點一下已經成熟的小麥。收成會先放進農產倉庫，不會直接變金幣。",
+    "target": "tool:hand",
+    "done": "harvestCrop"
+   },
+   {
+    "id": "plow",
+    "title": "開墾",
+    "text": "選「開墾」，把框起來的草地翻成田。有雜草的話先拔掉，拔下的雜草可以賣錢或當燃料。",
+    "target": "tool:plow",
+    "done": "plow"
+   },
+   {
+    "id": "seed",
+    "title": "播種",
+    "text": "選「播種」和牧草，種在剛開墾的田。牧草是牛羊的飼料，長得最快也最便宜。",
+    "target": "tool:seed",
+    "done": "plantCrop:pasture"
+   },
+   {
+    "id": "water",
+    "title": "澆水",
+    "text": "選「澆水」，把這格澆到 4 級。現在用的是免費的雨水。濕的時候作物正常長，乾了只長一半速度，乾太久會枯萎；枯萎了澆水就能救回來。",
+    "target": "tool:water",
+    "done": "moistFull"
+   },
+   {
+    "id": "utilities",
+    "title": "接水接電",
+    "text": "農舍旁的水塔存著雨水，澆水都從這裡拿。接上自來水後會自動把水塔補到你設定的補水線，水錶轉動時才計費；晚上開生長燈要接電。按右上角的水電圖示就能設定。",
+    "target": "button:utilities"
+   },
+   {
+    "id": "storage",
+    "title": "農產倉庫",
+    "text": "打開農產倉庫，把小麥賣掉換金幣。倉庫滿了就不能收成，記得常常整理。",
+    "target": "button:storage",
+    "done": "sellItem"
+   },
+   {
+    "id": "feed",
+    "title": "餵動物",
+    "text": "雞頭上出現「餓了」，點牠餵食。飼料從倉庫扣，不夠會用金幣買。先送你 10 個玉米餅。動物不餵就不會生產，也不會長大。",
+    "target": "animal",
+    "done": "feedAnimal"
+   },
+   {
+    "id": "done",
+    "title": "完成",
+    "text": "圖鑑、天氣、帳單、自動化、擴地都在右上角。祝你農場豐收！",
+    "target": "hud"
+   }
+  ]
+ },
+ "settingsDefaults": {
+  "animation": "system",
+  "location": "auto",
+  "tapWater": false,
+  "grid": false,
+  "billingCycle": "d7",
+  "autoPay": true,
+  "powerPriority": "battery",
+  "batteryGridCharge": "night",
+  "tapFillLine": 0.5,
+  "sfx": true,
+  "sfxVolume": 0.7,
+  "music": true,
+  "musicVolume": 0.4,
+  "dailyForecast": true
+ },
+ "cities": [
+  {
+   "id": "taipei",
+   "name": "台北",
+   "lat": 25.033,
+   "lon": 121.565,
+   "tz": [
+    "Asia/Taipei"
+   ]
+  },
+  {
+   "id": "taichung",
+   "name": "台中",
+   "lat": 24.147,
+   "lon": 120.674
+  },
+  {
+   "id": "tainan",
+   "name": "台南",
+   "lat": 22.999,
+   "lon": 120.227
+  },
+  {
+   "id": "kaohsiung",
+   "name": "高雄",
+   "lat": 22.627,
+   "lon": 120.301
+  },
+  {
+   "id": "hualien",
+   "name": "花蓮",
+   "lat": 23.987,
+   "lon": 121.601
+  },
+  {
+   "id": "hongkong",
+   "name": "香港",
+   "lat": 22.319,
+   "lon": 114.169,
+   "tz": [
+    "Asia/Hong_Kong",
+    "Asia/Macau"
+   ]
+  },
+  {
+   "id": "tokyo",
+   "name": "東京",
+   "lat": 35.676,
+   "lon": 139.65,
+   "tz": [
+    "Asia/Tokyo"
+   ]
+  },
+  {
+   "id": "seoul",
+   "name": "首爾",
+   "lat": 37.566,
+   "lon": 126.978,
+   "tz": [
+    "Asia/Seoul"
+   ]
+  },
+  {
+   "id": "singapore",
+   "name": "新加坡",
+   "lat": 1.352,
+   "lon": 103.82,
+   "tz": [
+    "Asia/Singapore",
+    "Asia/Kuala_Lumpur"
+   ]
+  },
+  {
+   "id": "shanghai",
+   "name": "上海",
+   "lat": 31.23,
+   "lon": 121.474,
+   "tz": [
+    "Asia/Shanghai"
+   ]
+  },
+  {
+   "id": "sydney",
+   "name": "雪梨",
+   "lat": -33.869,
+   "lon": 151.209,
+   "tz": [
+    "Australia/Sydney",
+    "Australia/Melbourne"
+   ]
+  },
+  {
+   "id": "losangeles",
+   "name": "洛杉磯",
+   "lat": 34.052,
+   "lon": -118.244,
+   "tz": [
+    "America/Los_Angeles",
+    "America/Vancouver"
+   ]
+  },
+  {
+   "id": "newyork",
+   "name": "紐約",
+   "lat": 40.713,
+   "lon": -74.006,
+   "tz": [
+    "America/New_York",
+    "America/Toronto"
+   ]
+  },
+  {
+   "id": "london",
+   "name": "倫敦",
+   "lat": 51.507,
+   "lon": -0.128,
+   "tz": [
+    "Europe/London"
+   ]
+  }
+ ],
+ "dayNight": {
+  "twilightMinutes": 30,
+  "nightGrowthRate": 0.7,
+  "cloudyDayGrowthRate": 0.85,
+  "animalsAffected": false,
+  "nightTint": {
+   "appliesTo": "drawnPixelsOnly",
+   "noSkyHalo": true,
+   "coversUnderside": true,
+   "tileGapsAtNight": "filledDark"
+  }
+ },
+ "seasons": {
+  "north": {
+   "summerMonths": [
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "south": {
+   "summerMonths": [
+    12,
+    1,
+    2,
+    3
+   ]
+  }
+ },
+ "electricity": {
+  "pricePerKwh": {
+   "summer": {
+    "day": 6,
+    "night": 3
+   },
+   "winter": {
+    "day": 5,
+    "night": 2.5
+   }
+  },
+  "baseFeePerDay": 1,
+  "dayNightSplit": "sunriseSunset"
+ },
+ "water": {
+  "sources": [
+   "rain",
+   "groundwater",
+   "tap"
+  ],
+  "useOrder": [
+   "tower",
+   "tap"
+  ],
+  "tapTiersPerDay": [
+   {
+    "upTo": 100,
+    "price": 0.05
+   },
+   {
+    "upTo": 330,
+    "price": 0.08
+   },
+   {
+    "upTo": null,
+    "price": 0.12
+   }
+  ],
+  "baseFeePerDay": 0.7,
+  "rainFillsStorage": true,
+  "droneDropsPerLevel": 1,
+  "startStorageFull": true,
+  "baseFeeOnlyDaysWithFlow": true,
+  "tower": {
+   "name": "農場水塔",
+   "map": 0,
+   "tile": [
+    2,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "removable": false,
+   "levelFrames": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+   ],
+   "tapFlowPerSecond": 10,
+   "fillLines": [
+    null,
+    0.3,
+    0.5,
+    0.8,
+    1.0
+   ],
+   "defaultFillLine": 0.5,
+   "relocateIfOccupied": "nearestFreeGrassToHouse"
+  },
+  "meterStates": {
+   "off": "沒接水或金幣是負的",
+   "idle": "有接水但沒在注水，不計量",
+   "flowing": "正在注水或直接供水，計量"
+  }
+ },
+ "billing": {
+  "cycles": {
+   "half": {
+    "name": "半日結",
+    "hours": 12,
+    "closeAt": [
+     "11:59",
+     "23:59"
     ]
+   },
+   "d3": {
+    "name": "三日結",
+    "days": 3
+   },
+   "d7": {
+    "name": "七日結",
+    "days": 7
+   },
+   "d30": {
+    "name": "30 日結",
+    "days": 30
+   }
   },
-  "bees": {
-    "hive": "beehive",
-    "queen": {
-      "id": "queen_bee",
-      "name": "蜂王",
-      "cost": 300,
-      "category": "insect",
-      "lifespan": null
+  "anchor": "localMidnightOfSelection",
+  "dueFractionOfCycle": 0.5,
+  "dueMaxDays": 7,
+  "discounts": [
+   {
+    "withinHours": 1,
+    "rate": 0.95
+   },
+   {
+    "withinFractionOfDue": 0.5,
+    "rate": 0.98
+   },
+   {
+    "withinDue": true,
+    "rate": 1.0
+   }
+  ],
+  "lateFeeRate": 0.05,
+  "autoPayRate": 0.95,
+  "historyKeep": 12,
+  "negative": {
+   "firstNegativeAllowedAtBilling": true,
+   "whileNegative": {
+    "buy": false,
+    "build": false,
+    "gridPower": false,
+    "tapWater": false,
+    "baseFees": false
+   }
+  }
+ },
+ "devices": {
+  "grow_lamp": {
+   "name": "植物生長燈",
+   "kind": "lamp",
+   "buildCost": 600,
+   "range": 1,
+   "kwhPerHour": 0.5,
+   "modes": [
+    "manual",
+    "auto",
+    "schedule"
+   ]
+  },
+  "grow_lamp_large": {
+   "name": "大型生長燈",
+   "kind": "lamp",
+   "buildCost": 2000,
+   "range": 2,
+   "kwhPerHour": 1.5,
+   "modes": [
+    "manual",
+    "auto",
+    "schedule"
+   ]
+  },
+  "battery_s": {
+   "name": "小型電池",
+   "kind": "battery",
+   "buildCost": 400,
+   "capacityKwh": 2,
+   "maxRateKwhPerHour": 1
+  },
+  "battery_m": {
+   "name": "中型電池",
+   "kind": "battery",
+   "buildCost": 1200,
+   "capacityKwh": 6,
+   "maxRateKwhPerHour": 2
+  },
+  "battery_l": {
+   "name": "大型電池",
+   "kind": "battery",
+   "buildCost": 3000,
+   "capacityKwh": 15,
+   "maxRateKwhPerHour": 4
+  },
+  "hand_crank": {
+   "name": "手搖發電機",
+   "kind": "crank",
+   "buildCost": 200,
+   "sessionSeconds": 10,
+   "kwhPerTap": 0.01,
+   "maxTaps": 50,
+   "cooldownSeconds": 60,
+   "bufferKwh": 0.5
+  },
+  "biomass_gen": {
+   "name": "生質發電機（充電機）",
+   "kind": "generator",
+   "buildCost": 1500,
+   "kwhPerHour": 1,
+   "fuelSlots": 50
+  },
+  "snow_melter": {
+   "name": "融雪機",
+   "kind": "melter",
+   "buildCost": 1200,
+   "kwhPerHour": 0.3,
+   "capacityTiles": 30
+  },
+  "beehive": {
+   "name": "蜂箱",
+   "kind": "hive",
+   "buildCost": 600,
+   "replacesDeco": "beehive"
+  },
+  "well": {
+   "name": "水井",
+   "kind": "well",
+   "buildCost": 800,
+   "limitTotal": 4,
+   "onlyOn": "grass",
+   "dropsPerHour": 20,
+   "maxDrops": 100,
+   "rainMult": 2,
+   "bucketDrops": 20,
+   "pumpTool": "hand",
+   "autoToTower": false
+  },
+  "solar_panel": {
+   "name": "太陽能板",
+   "kind": "solar",
+   "buildCost": 900,
+   "limitTotal": 8,
+   "onlyOn": "grass",
+   "kwhPerHourSunny": 0.25,
+   "cloudyMult": 0.3,
+   "rainSnowMult": 0.1,
+   "nightMult": 0,
+   "snowCoveredStops": true
+  },
+  "sprinkler_s": {
+   "name": "小型自動灑水器",
+   "kind": "sprinkler",
+   "buildCost": 800,
+   "range": 1,
+   "kwhPerTile": 0.005,
+   "waterLikeManualFull": true,
+   "actions": [
+    "auto",
+    "off"
+   ]
+  },
+  "sprinkler_l": {
+   "name": "大型自動灑水器",
+   "kind": "sprinkler",
+   "buildCost": 2000,
+   "range": 2,
+   "kwhPerTile": 0.005,
+   "waterLikeManualFull": true,
+   "actions": [
+    "auto",
+    "off"
+   ]
+  },
+  "bumble_hive": {
+   "name": "熊蜂箱",
+   "kind": "hive",
+   "buildCost": 800,
+   "species": "bumble"
+  }
+ },
+ "power": {
+  "batteryEfficiency": 0.9,
+  "priorityOrder": {
+   "battery": [
+    "battery",
+    "crankBuffer",
+    "generator",
+    "grid"
+   ],
+   "grid": [
+    "grid",
+    "battery",
+    "crankBuffer",
+    "generator"
+   ]
+  },
+  "fuels": {
+   "weed": 0.2,
+   "pasture": 0.1
+  },
+  "deviceSellRate": 0.5,
+  "lampEffect": "nightOrCloudyDay",
+  "solarSell": {
+   "enabled": true,
+   "needsGrid": true,
+   "priceRate": 0.5,
+   "onlyAfterBatteryFull": true,
+   "creditOnlyNoCashback": true
+  }
+ },
+ "weeds": {
+  "growsOn": "emptyGrass",
+  "minutesPerWeedPerBlock": 20,
+  "maxPerBlock": 12,
+  "item": "weed",
+  "fullStorageCoins": 1,
+  "xp": 0,
+  "clearBeforePlow": true
+ },
+ "buildings": {
+  "barn": {
+   "name": "農產倉庫",
+   "size": [
+    2,
+    2
+   ],
+   "limit": 1,
+   "cost": 0,
+   "opens": "produce",
+   "sellable": false,
+   "startIn": "decoStorage",
+   "fullnessFrames": [
+    {
+     "below": 0.3,
+     "frame": "empty"
     },
-    "startFrames": 1,
-    "maxFrames": 10,
-    "hoursPerFrame": 2,
-    "range": 4,
-    "jarsPerFramePerHour": 0.2,
-    "noFlowerMult": 0.1,
-    "wildHoney": "honey_wild",
-    "storeMax": 30,
-    "noFlyWhen": [
-      "night",
-      "rain",
-      "snow"
-    ],
-    "starveAfterHours": 72,
-    "starveJarsPer10FramesPerHour": 1,
-    "starveWildOnlyBeforeStarving": true,
-    "pollinationGrowth": 0.15,
-    "pesticideFrameLoss": 2,
-    "pesticideMinFrames": 1,
-    "collectTool": "hand"
-  },
-  "migrations": {
-    "2.0.0": {
-      "decoBeehiveToDevice": true,
-      "storedDecoBeehiveToFreeHive": true
+    {
+     "below": 0.8,
+     "frame": "half"
+    },
+    {
+     "below": null,
+     "frame": "full"
     }
+   ],
+   "fullBubble": true,
+   "storable": true,
+   "movable": true
   },
-  "chickenPest": {
-    "animals": [
+  "shed": {
+   "name": "飾品倉庫",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 1,
+   "cost": 0,
+   "opens": "deco",
+   "sellable": false,
+   "startIn": "decoStorage",
+   "storable": true,
+   "movable": true
+  },
+  "farmhouse": {
+   "name": "農舍",
+   "size": [
+    2,
+    2
+   ],
+   "limit": 1,
+   "cost": 0,
+   "sellable": false,
+   "storable": true,
+   "movable": true,
+   "attached": "utilityPole",
+   "builtIn": true
+  },
+  "water_tower": {
+   "name": "農場水塔",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 1,
+   "cost": 0,
+   "sellable": false,
+   "storable": true,
+   "movable": true,
+   "attached": "waterMeter",
+   "builtIn": true,
+   "storedStillWorks": true
+  },
+  "drone_pad": {
+   "name": "無人機停機坪",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 3,
+   "cost": 500,
+   "unlockLevel": 3,
+   "buyWith": "build",
+   "sellable": true,
+   "sellRate": 0.5,
+   "storable": true,
+   "movable": true,
+   "serves": "water",
+   "chargeSourceDefault": "solar",
+   "perMapLimit": 3,
+   "slotsMax": 2,
+   "slots": 1
+  },
+  "robot_charger": {
+   "name": "機器人充電站",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 3,
+   "cost": 800,
+   "unlockLevel": 4,
+   "buyWith": "build",
+   "sellable": true,
+   "sellRate": 0.5,
+   "storable": true,
+   "movable": true,
+   "serves": "feed",
+   "chargeSourceDefault": "solar",
+   "perMapLimit": 3,
+   "slotsMax": 2,
+   "slots": 1
+  },
+  "water_tower_extra": {
+   "name": "加掛水塔",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 3,
+   "cost": 1500,
+   "unlockLevel": 5,
+   "buyWith": "build",
+   "capacity": 1000,
+   "sellable": true,
+   "sellRate": 0.5,
+   "storable": true,
+   "movable": true,
+   "linksToMainTower": true
+  },
+  "sweeper_dock": {
+   "name": "掃地基座",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 3,
+   "cost": 300,
+   "comesWith": "sweeper",
+   "sellable": false,
+   "storable": true,
+   "movable": true,
+   "perMapLimit": 3,
+   "slotsMax": 2,
+   "slots": 1,
+   "firstComesWithSweeper": true
+  },
+  "trash_station": {
+   "name": "垃圾站",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 3,
+   "cost": 300,
+   "freeFirst": true,
+   "startIn": "decoStorage",
+   "storable": true,
+   "movable": true,
+   "opens": "trash",
+   "capacity": {
+    "general": 5,
+    "recycle": 5,
+    "sewageDrops": 200
+   }
+  },
+  "truck_pad": {
+   "name": "垃圾車停泊平台",
+   "size": [
+    4,
+    2
+   ],
+   "limit": 1,
+   "cost": 1500,
+   "unlockLevel": 4,
+   "movable": true,
+   "sellRate": 0.5,
+   "note": "2×4 platform docked on the invisible 2-cell rim around the island (never on island tiles); any of the 4 sides; move along the edge for free; expansion pushes it out automatically; trucks land on its two 2×2 bays 16:00-16:30",
+   "placement": "rim",
+   "rimDepth": 2,
+   "sides": [
+    "sw",
+    "se",
+    "ne",
+    "nw"
+   ],
+   "bay": [
+    2,
+    2
+   ],
+   "art": {
+    "pad": "truckpad_{sw|se|ne|nw}",
+    "garbage": "truck_garbage_{dir}",
+    "recycle": "truck_recycle_{dir}",
+    "source": "art/src_truckpad/truckpad.json → node art/render25.js",
+    "truckRearFaces": "island"
+   }
+  }
+ },
+ "weatherDolls": {
+  "types": {
+   "sun": {
+    "name": "晴天娃娃",
+    "unlockLevel": 2,
+    "usableWhen": "rainingOrCloudyNow",
+    "effect": "clearSky",
+    "nightEffect": "noRainOnly"
+   },
+   "rain": {
+    "name": "雨天娃娃",
+    "unlockLevel": 3,
+    "usableWhen": "notRainingNow",
+    "effect": "rain",
+    "rainEffects": [
+     "moistFull",
+     "reviveWithered",
+     "fillTowerFree",
+     "dronePause",
+     "countsAsCloudy"
+    ]
+   },
+   "snow": {
+    "name": "雪女娃娃",
+    "unlockLevel": 5,
+    "usableWhen": "notSnowingNow",
+    "effect": "snow",
+    "anyClimate": true,
+    "dayAndNight": true,
+    "sameAsNaturalSnow": true
+   }
+  },
+  "sizes": {
+   "s": {
+    "name": "小",
+    "minutes": 10
+   },
+   "m": {
+    "name": "中",
+    "minutes": 60
+   },
+   "l": {
+    "name": "大",
+    "minutes": 120
+   }
+  },
+  "prices": {
+   "sun": {
+    "s": 30,
+    "m": 120,
+    "l": 220
+   },
+   "rain": {
+    "s": 60,
+    "m": 200,
+    "l": 350
+   },
+   "snow": {
+    "s": 50,
+    "m": 180,
+    "l": 300
+   }
+  },
+  "rules": {
+   "maxActive": 1,
+   "conditionCheckedAt": "placement",
+   "scope": "allMaps",
+   "onReplace": "askThenReturnOldToStorageKeepRemaining",
+   "timerRunsOnlyWhilePlaced": true,
+   "offlineCounts": true,
+   "exhaustedStaysAsDeco": true,
+   "rechargeable": false,
+   "sellPrice": 1,
+   "placeOrder": "leastRemainingFirst"
+  }
+ },
+ "automationUnits": {
+  "water": {
+   "name": "無人機",
+   "base": "drone_pad",
+   "workMinutes": 15,
+   "kwhPerCharge": 0.1,
+   "tankDrops": 60,
+   "refillSeconds": 30
+  },
+  "feed": {
+   "name": "機器人",
+   "base": "robot_charger",
+   "workMinutes": 20,
+   "kwhPerCharge": 0.15
+  },
+  "chargeSources": {
+   "solar": {
+    "name": "太陽能",
+    "clearDayMinutes": 20,
+    "cloudyMinutes": 40,
+    "night": null,
+    "cost": 0
+   },
+   "farm": {
+    "name": "農場電力",
+    "minutes": 5,
+    "order": "powerPriority"
+   }
+  },
+  "requireBaseToBuy": true,
+  "noBase": {
+   "behaviour": "useRemainingThenRest",
+   "restAt": [
+    "farmhouseRoof",
+    "mapCorner"
+   ],
+   "expiryKeepsCounting": true
+  },
+  "sellBase": {
+   "anytime": true,
+   "leftoverLost": true
+  },
+  "buyFromBasePanel": true
+ },
+ "move": {
+  "tool": true,
+  "longPressMs": 400,
+  "slopPx": 6,
+  "sameMapOnly": true,
+  "autoPullWeeds": true,
+  "free": true,
+  "movable": [
+   "deco",
+   "doll",
+   "building",
+   "pool",
+   "pond",
+   "device",
+   "machine",
+   "animal"
+  ],
+  "notMovable": [
+   "soil",
+   "tree"
+  ],
+  "poolMovesWhole": true,
+  "dropToStore": {
+   "targets": [
+    "building:shed",
+    "building:barn",
+    "hud:storageBtn"
+   ],
+   "storable": [
+    "deco",
+    "doll",
+    "building",
+    "house",
+    "tower"
+   ],
+   "into": "decoStorage"
+  }
+ },
+ "animalRoam": {
+  "walkable": [
+   "grass",
+   "weed",
+   "animal"
+  ],
+  "walls": [
+   "fence",
+   "mapEdge"
+  ],
+  "avoid": [
+   "soil",
+   "tree",
+   "pool",
+   "pond",
+   "building",
+   "house",
+   "tower",
+   "machine",
+   "device",
+   "deco",
+   "doll"
+  ],
+  "tilesPerSecond": 0.35,
+  "pauseSeconds": [
+   2,
+   6
+  ],
+  "hitTest": "drawnPosition"
+ },
+ "sky": {
+  "folder": "sprites",
+  "keyframes": [
+   {
+    "id": "starry",
+    "file": "sky_starry.jpg",
+    "name": "星空",
+    "at": "sunset+150m",
+    "holdUntil": "sunrise-60m"
+   },
+   {
+    "id": "dawn",
+    "file": "sky_dawn.jpg",
+    "name": "清晨",
+    "at": "sunrise"
+   },
+   {
+    "id": "noon",
+    "file": "sky_noon.jpg",
+    "name": "中午",
+    "at": "solarNoon-60m",
+    "holdUntil": "solarNoon+60m"
+   },
+   {
+    "id": "afternoon",
+    "file": "sky_afternoon.jpg",
+    "name": "下午",
+    "at": "sunset-150m"
+   },
+   {
+    "id": "evening",
+    "file": "sky_evening.jpg",
+    "name": "傍晚",
+    "at": "sunset-60m"
+   },
+   {
+    "id": "dusk",
+    "file": "sky_dusk.jpg",
+    "name": "黃昏",
+    "at": "sunset+10m"
+   },
+   {
+    "id": "night",
+    "file": "sky_night.jpg",
+    "name": "晚上",
+    "at": "sunset+60m"
+   }
+  ],
+  "blend": "linearBetweenKeyframes",
+  "layers": {
+   "stars": {
+    "file": "sky_stars.png",
+    "twinkle": true,
+    "visibleWhenDarkness": ">0.3"
+   },
+   "milkyway": {
+    "file": "sky_milkyway.png",
+    "everyNight": true,
+    "visibleWhenDarkness": ">0.6"
+   },
+   "moon": {
+    "file": "sky_moon.png",
+    "frames": 24,
+    "realPhase": true,
+    "synodicDays": 29.530588,
+    "refNewMoonUtc": "2000-01-06T18:14:00Z",
+    "dayVisibleAlpha": 0.35,
+    "position": "ephemeris",
+    "limbFacesSun": true,
+    "drawUnlitSide": false
+   },
+   "clouds": {
+    "files": [
+     "bg_cloud_a.png",
+     "bg_cloud_b.png",
+     "bg_cloud_c.png"
+    ],
+    "count": 4
+   },
+   "sun": {
+    "file": "sky_sun.png",
+    "path": "ephemeris",
+    "hiddenWhenOvercast": true
+   }
+  },
+  "overcast": {
+   "tint": "rgba(120,130,140,.45)",
+   "hideSun": true
+  },
+  "view": {
+   "faces": "south (north hemisphere) / north (south hemisphere)",
+   "fovDeg": 150,
+   "horizonY": 0.8,
+   "topY": 0.04,
+   "altitudeCurve": 0.55
+  },
+  "daytimePainted": {
+   "keys": [
+    "dawn",
+    "noon",
+    "afternoon",
+    "evening",
+    "dusk"
+   ],
+   "source": "player-provided illustrations",
+   "cartoonClouds": false,
+   "movingSun": true,
+   "portraitAlign": 0.8
+  }
+ },
+ "easterEggs": {
+  "rooster": {
+   "enabled": true,
+   "needsChicken": false,
+   "window": "06:00..09:00 local",
+   "oncePerDay": true,
+   "needsHouseOnMap": true,
+   "flyInSeconds": 3,
+   "crowSeconds": 3,
+   "flyOutSeconds": 3,
+   "bubble": "喔喔喔～",
+   "sfx": "rooster",
+   "clickable": false,
+   "saved": false,
+   "localStart": "06:00",
+   "localEnd": "09:00",
+   "trigger": "enter farm or open game inside the window"
+  }
+ },
+ "audio": {
+  "folder": "audio",
+  "sfx": {
+   "rooster": "audio/sfx/rooster.mp3",
+   "coin": "audio/sfx/coin.mp3",
+   "harvest": "audio/sfx/harvest.mp3",
+   "water": "audio/sfx/water.mp3",
+   "plow": "audio/sfx/plow.mp3",
+   "place": "audio/sfx/place.mp3",
+   "levelup": "audio/sfx/levelup.mp3",
+   "click": "audio/sfx/click.mp3",
+   "spray": "audio/sfx/spray.mp3"
+  },
+  "bgm": {
+   "rain": [
+    "audio/bgm/rain.mp3"
+   ],
+   "sleep": [
+    "audio/bgm/sleep.mp3"
+   ],
+   "night": [
+    "audio/bgm/night.mp3"
+   ],
+   "morning": [
+    "audio/bgm/morning.mp3"
+   ],
+   "afternoon": [
+    "audio/bgm/afternoon.mp3"
+   ]
+  },
+  "bgmRules": [
+   {
+    "ctx": "rain",
+    "when": "raining"
+   },
+   {
+    "ctx": "sleep",
+    "when": "sky:starry"
+   },
+   {
+    "ctx": "night",
+    "when": "sky:dusk..starry"
+   },
+   {
+    "ctx": "morning",
+    "when": "sunrise-60m..solarNoon"
+   },
+   {
+    "ctx": "afternoon",
+    "when": "solarNoon..dusk"
+   }
+  ],
+  "crossfadeSeconds": 2,
+  "shuffle": true,
+  "missingFiles": "skipSilently",
+  "startAfterFirstTap": true,
+  "sfxUse": {
+   "water": "澆水、除雪倒雪：只有水滴聲",
+   "spray": "噴農藥",
+   "place": "施化肥、有機肥"
+  }
+ },
+ "forecast": {
+  "dailyPopup": true,
+  "blockHours": 3,
+  "days": 2,
+  "showSun": true,
+  "showMoon": true,
+  "events": [
+   "rain",
+   "snow",
+   "tornado",
+   "quake",
+   "meteorShower"
+  ],
+  "tips": true,
+  "rainSnowExactTimes": true,
+  "disasterRiskOnly": true,
+  "riskLevels": [
+   "低",
+   "中",
+   "高"
+  ],
+  "riskMeaning": "higher risk makes the event more likely but never certain",
+  "noAdvanceAlert": true
+ },
+ "meteors": {
+  "showers": [
+   {
+    "name": "象限儀座流星雨",
+    "peak": "01-03"
+   },
+   {
+    "name": "天琴座流星雨",
+    "peak": "04-22"
+   },
+   {
+    "name": "寶瓶座η流星雨",
+    "peak": "05-06"
+   },
+   {
+    "name": "英仙座流星雨",
+    "peak": "08-12"
+   },
+   {
+    "name": "獵戶座流星雨",
+    "peak": "10-21"
+   },
+   {
+    "name": "獅子座流星雨",
+    "peak": "11-17"
+   },
+   {
+    "name": "雙子座流星雨",
+    "peak": "12-14"
+   }
+  ],
+  "showerWindowDays": 1,
+  "showerPerMinute": 6,
+  "sporadicPerHour": 20,
+  "needsDarkness": 0.6,
+  "hiddenWhenRaining": true,
+  "wish": {
+   "maxPerNight": 10,
+   "rewards": [
+    {
+     "type": "coins",
+     "min": 5,
+     "max": 20,
+     "weight": 6
+    },
+    {
+     "type": "xp",
+     "min": 3,
+     "max": 8,
+     "weight": 3
+    },
+    {
+     "type": "seed",
+     "item": "random_unlocked_crop",
+     "qty": 3,
+     "weight": 1
+    }
+   ]
+  }
+ },
+ "scale": {
+  "metersPerTile": 2,
+  "note": "machines x1.2, generator x1.15, barn x1.1 redrawn for consistent scale"
+ },
+ "climate": {
+  "regionGridDeg": 0.5,
+  "zones": [
+   {
+    "id": "tropical",
+    "name": "熱帶",
+    "maxLat": 23.5
+   },
+   {
+    "id": "subtropical",
+    "name": "亞熱帶",
+    "maxLat": 35
+   },
+   {
+    "id": "temperate",
+    "name": "溫帶",
+    "maxLat": 55
+   },
+   {
+    "id": "polar",
+    "name": "寒帶",
+    "maxLat": 90
+   }
+  ],
+  "precipPerSlot": {
+   "tropical": {
+    "wet": 0.1,
+    "dry": 0.04
+   },
+   "subtropical": {
+    "summer": 0.08,
+    "other": 0.05
+   },
+   "temperate": {
+    "all": 0.05
+   },
+   "polar": {
+    "all": 0.04
+   }
+  },
+  "cloudyPerSlot": {
+   "tropical": 0.3,
+   "subtropical": 0.25,
+   "temperate": 0.25,
+   "polar": 0.3
+  },
+  "snowShare": {
+   "temperate": {
+    "winter": 0.6
+   },
+   "polar": {
+    "winter": 1.0,
+    "shoulder": 0.5
+   }
+  },
+  "tropicalWetMonthsNorth": [
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "seasonsNorth": {
+   "winter": [
+    12,
+    1,
+    2
+   ],
+   "spring": [
+    3,
+    4,
+    5
+   ],
+   "summer": [
+    6,
+    7,
+    8
+   ],
+   "autumn": [
+    9,
+    10,
+    11
+   ]
+  }
+ },
+ "snow": {
+  "minutes": 45,
+  "coverMeltHours": 3,
+  "coverMeltHoursSunnyDay": 1.5,
+  "growthRate": 0.3,
+  "growthRateLit": 0.7,
+  "soilDries": false,
+  "fillsTower": false,
+  "meltRefillTowerPct": 0.3,
+  "shovel": {
+   "tool": "shovel",
+   "toolOnlyWhenSnow": true,
+   "tilesPerTap": 1,
+   "bucketMax": 10,
+   "dragToShovel": true,
+   "clearedTilesGrowNormal": true
+  },
+  "towerStore": {
+   "dropsPerTile": 8,
+   "meltPctPerMinute": 0.02,
+   "maxPctOfCapacity": 0.2,
+   "clogPerTile": 0.1,
+   "clearTaps": 5,
+   "clogBlocksTowerWater": true
+  },
+  "melter": {
+   "id": "snow_melter",
+   "dropsPerTile": 10,
+   "secondsPerTile": 20,
+   "kwhPerHour": 0.3,
+   "capacityTiles": 30
+  }
+ },
+ "tornado": {
+  "zones": [
+   "temperate"
+  ],
+  "seasons": [
+   "spring",
+   "summer"
+  ],
+  "daytimeOnly": true,
+  "chancePerDay": 0.03,
+  "minutes": 5,
+  "tiltsDecos": true,
+  "tiltsCrops": true,
+  "tiltedDecoEffectPaused": true,
+  "tapToStraighten": true,
+  "cropYieldEffect": 0,
+  "weedsToBall": true,
+  "ballRollsToCorner": true,
+  "debrisPieces": [
+   3,
+   6
+  ],
+  "dronePaused": true,
+  "immune": [
+   "building",
+   "house",
+   "tower",
+   "animal",
+   "device",
+   "machine",
+   "road",
+   "fence",
+   "soil-land",
+   "tree-trunk"
+  ],
+  "protection": "windbreak"
+ },
+ "earthquake": {
+  "seismicBoxes": [
+   {
+    "name": "台灣",
+    "lat": [
+     21.5,
+     25.5
+    ],
+    "lon": [
+     119.5,
+     122.5
+    ],
+    "chancePerDay": 0.04
+   },
+   {
+    "name": "日本",
+    "lat": [
+     24,
+     46
+    ],
+    "lon": [
+     123,
+     146
+    ],
+    "chancePerDay": 0.03
+   },
+   {
+    "name": "菲律賓",
+    "lat": [
+     5,
+     19
+    ],
+    "lon": [
+     117,
+     127
+    ],
+    "chancePerDay": 0.02
+   },
+   {
+    "name": "印尼",
+    "lat": [
+     -11,
+     6
+    ],
+    "lon": [
+     95,
+     141
+    ],
+    "chancePerDay": 0.02
+   },
+   {
+    "name": "紐西蘭",
+    "lat": [
+     -47,
+     -34
+    ],
+    "lon": [
+     166,
+     179
+    ],
+    "chancePerDay": 0.02
+   },
+   {
+    "name": "美洲西岸",
+    "lat": [
+     -56,
+     61
+    ],
+    "lon": [
+     -125,
+     -66
+    ],
+    "chancePerDay": 0.02,
+    "westCoastOnly": true
+   },
+   {
+    "name": "地中海到喜馬拉雅",
+    "lat": [
+     30,
+     45
+    ],
+    "lon": [
+     10,
+     95
+    ],
+    "chancePerDay": 0.02
+   }
+  ],
+  "levels": {
+   "small": {
+    "name": "小",
+    "weight": 0.6,
+    "shakeSeconds": 2
+   },
+   "medium": {
+    "name": "中",
+    "weight": 0.3,
+    "shakeSeconds": 3,
+    "towerLossPct": 0.1,
+    "machineDelayMinutes": 5
+   },
+   "large": {
+    "name": "大",
+    "weight": 0.1,
+    "shakeSeconds": 3,
+    "towerLossPct": 0.1,
+    "machineDelayMinutes": 5,
+    "fencesFall": [
+     1,
+     3
+    ]
+   }
+  },
+  "fallenFence": {
+   "tapToRaise": true,
+   "animalsPassThrough": true
+  },
+  "towerReinforce": {
+   "name": "耐震加固",
+   "cost": 800,
+   "appliesToAllTowers": true
+  }
+ },
+ "news": {
+  "onReturn": true,
+  "items": [
+   "rain",
+   "snow",
+   "tornado",
+   "quake",
+   "death",
+   "bill",
+   "meteor"
+  ],
+  "maxItems": 12
+ },
+ "robots": {
+  "ownOrRent": true,
+  "kinds": {
+   "water": {
+    "name": "澆水無人機",
+    "base": "drone_pad",
+    "tiers": [
+     {
+      "id": "drone_1",
+      "name": "初級",
+      "buy": 1500,
+      "workHours": 4,
+      "kwh": 0.4,
+      "chargeHours": 1
+     },
+     {
+      "id": "drone_2",
+      "name": "中級",
+      "buy": 4000,
+      "workHours": 12,
+      "kwh": 1.2,
+      "chargeHours": 2
+     },
+     {
+      "id": "drone_3",
+      "name": "高級",
+      "buy": 9000,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
+     }
+    ],
+    "tankDrops": 60
+   },
+   "feed": {
+    "name": "餵食機器人",
+    "base": "robot_charger",
+    "tiers": [
+     {
+      "id": "feeder_1",
+      "name": "初級",
+      "buy": 1500,
+      "workHours": 4,
+      "kwh": 0.4,
+      "chargeHours": 1
+     },
+     {
+      "id": "feeder_2",
+      "name": "中級",
+      "buy": 4000,
+      "workHours": 12,
+      "kwh": 1.2,
+      "chargeHours": 2
+     },
+     {
+      "id": "feeder_3",
+      "name": "高級",
+      "buy": 9000,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
+     }
+    ]
+   },
+   "snow": {
+    "name": "除雪機器人",
+    "base": "robot_charger",
+    "unlockLevel": 5,
+    "tiers": [
+     {
+      "id": "snowbot",
+      "name": "標準",
+      "buy": 1200,
+      "workHours": 2,
+      "kwh": 0.3,
+      "chargeHours": 0.667
+     }
+    ],
+    "rent": [
+     {
+      "hours": 2,
+      "cost": 80
+     }
+    ]
+   },
+   "sweep": {
+    "name": "掃地機器人",
+    "base": "sweeper_dock",
+    "unlockLevel": 3,
+    "tiers": [
+     {
+      "id": "sweeper",
+      "name": "標準",
+      "buy": 800,
+      "workHours": 0.5,
+      "kwh": 0.05,
+      "chargeHours": 0.167
+     }
+    ],
+    "rent": [
+     {
+      "hours": 2,
+      "cost": 40
+     }
+    ],
+    "tilesPerMinute": 15,
+    "report": {
+     "heatmapHours": 24
+    }
+   },
+   "poop": {
+    "name": "鏟屎官機器人",
+    "base": "robot_charger",
+    "unlockLevel": 5,
+    "tiers": [
+     {
+      "id": "poopbot",
+      "name": "標準",
+      "buy": 1500,
+      "workHours": 4,
+      "kwh": 0.4,
+      "chargeHours": 1
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 120
+     }
+    ],
+    "perMinute": 4,
+    "storesToBarn": true,
+    "waitsWhenFull": true
+   },
+   "honey": {
+    "name": "採蜜機器人",
+    "base": "drone_pad",
+    "unlockLevel": 6,
+    "tiers": [
+     {
+      "id": "honeybot",
+      "name": "標準",
+      "buy": 1800,
+      "workHours": 4,
+      "kwh": 0.4,
+      "chargeHours": 1
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 150
+     }
+    ],
+    "collectAtJars": 10,
+    "flies": true
+   },
+   "wellbot": {
+    "name": "水井機器人",
+    "base": "robot_charger",
+    "unlockLevel": 5,
+    "tiers": [
+     {
+      "id": "wellbot",
+      "name": "標準",
+      "buy": 1200,
+      "workHours": 2,
+      "kwh": 0.2,
+      "chargeHours": 1
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 80
+     }
+    ],
+    "bucketDrops": 20,
+    "tilesPerSecond": 1,
+    "fillSeconds": 2,
+    "pourSeconds": 2,
+    "minWellDrops": 20,
+    "look": "cute tracked cart with a mini crane holding a bucket, no humanoid head"
+   },
+   "trashbot": {
+    "name": "倒垃圾機器人",
+    "base": "robot_charger",
+    "unlockLevel": 4,
+    "tiers": [
+     {
+      "id": "trashbot",
+      "name": "標準",
+      "buy": 1200,
+      "workHours": 2,
+      "kwh": 0.2,
+      "chargeHours": 1
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 80
+     }
+    ],
+    "carries": [
+     "general",
+     "sewage"
+    ],
+    "tilesPerSecond": 1,
+    "worksWhen": "trucks are here"
+   },
+   "recyclebot": {
+    "name": "資源回收機器人",
+    "base": "robot_charger",
+    "unlockLevel": 4,
+    "tiers": [
+     {
+      "id": "recyclebot",
+      "name": "標準",
+      "buy": 1200,
+      "workHours": 2,
+      "kwh": 0.2,
+      "chargeHours": 1
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 80
+     }
+    ],
+    "carries": [
+     "recycle"
+    ],
+    "tilesPerSecond": 1,
+    "worksWhen": "trucks are here"
+   }
+  },
+  "solarChargeMultiplier": 2,
+  "solarNight": false,
+  "upgradeTradeInRate": 0.5,
+  "onePerKind": true,
+  "rent": {
+   "noChargingNeeded": true,
+   "noBaseNeeded": true,
+   "leavesWhenDone": true,
+   "rentalTakesOverOwned": true,
+   "rentedDroneUsesTowerWater": true
+  },
+  "sharedChargerQueue": "firstComeFirstServed",
+  "sharedPadQueue": "firstComeFirstServed"
+ },
+ "pests": {
+  "startLevel": 3,
+  "appliesTo": [
+   "crop",
+   "tree"
+  ],
+  "minProgress": 0.15,
+  "perHour": 0.03,
+  "seasonMult": {
+   "summer": 2,
+   "spring": 1,
+   "autumn": 1,
+   "winter": 0.3
+  },
+  "tropicalMult": 1.5,
+  "spreadPerHour": 0.2,
+  "growthRate": 0.5,
+  "yieldMult": 0.6,
+  "greenhouseMult": 0.2,
+  "snowKills": true,
+  "catchTaps": 3,
+  "newsReport": true
+ },
+ "care": {
+  "tool": "care",
+  "drag": true,
+  "oneFertPerPlanting": true,
+  "options": {
+   "catch": {
+    "name": "捉蟲",
+    "unlock": "care",
+    "price": 0
+   },
+   "chem": {
+    "name": "化肥",
+    "unlock": "fert_chem",
+    "pricePctSeed": 0.4,
+    "minPrice": 2,
+    "growth": 0.2,
+    "yield": 0.2,
+    "organicOK": false
+   },
+   "org": {
+    "name": "有機肥",
+    "unlock": "organic_fert",
+    "item": "organic_fert",
+    "growth": 0.1,
+    "yield": 0.1,
+    "organicOK": true
+   },
+   "pesticide": {
+    "name": "農藥",
+    "unlock": "pesticide",
+    "pricePctSeed": 0.1,
+    "minPrice": 1,
+    "treePctSapling": 0.02,
+    "protectHours": 12,
+    "safePctOfGrow": 0.5,
+    "safeMaxMinutes": 10,
+    "organicOK": false
+   }
+  },
+  "askBeforeLosingOrganic": true
+ },
+ "organic": {
+  "auto": true,
+  "yieldMult": 0.8,
+  "priceMult": 1.4,
+  "itemPrefix": "org_",
+  "legacyCropsNormal": true,
+  "machinesPreferNormal": true
+ },
+ "fractionalYield": {
+  "mode": "carry",
+  "note": "fractional yield accumulates per item id; each whole unit is paid out"
+ },
+ "poop": {
+  "everyHours": 2,
+  "maxPerRegion": 8,
+  "penalty": null,
+  "item": "poop",
+  "anyToolShovels": true
+ },
+ "greenhouse": {
+  "name": "溫室",
+  "perTileCost": 350,
+  "unlockLevel": 6,
+  "capByLevel": {
+   "6": 9,
+   "7": 18,
+   "8": 27,
+   "9": 36
+  },
+  "sellRate": 0.5,
+  "placeOn": [
+   "soil",
+   "grass"
+  ],
+  "connectsLikePool": true,
+  "rainBlocked": true,
+  "snowFree": true,
+  "tornadoFree": true,
+  "pestMult": 0.2,
+  "nightGrowthRate": 0.85,
+  "animalsBlocked": true,
+  "storable": false,
+  "moveWholeComponent": true,
+  "dragBuild": true
+ },
+ "flowers": {
+  "rapeseed": {
+   "name": "油菜花",
+   "seedCost": 10,
+   "growSeconds": 600,
+   "nectar": 4,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_rapeseed",
+   "waterUse": 1.0
+  },
+  "milk_vetch": {
+   "name": "紫雲英",
+   "seedCost": 12,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_vetch",
+   "waterUse": 1.0
+  },
+  "wildflower": {
+   "name": "野花",
+   "seedCost": 20,
+   "growSeconds": 1800,
+   "nectar": 3,
+   "blooms": 4,
+   "regrowSeconds": 1800,
+   "honey": "honey_hundred",
+   "waterUse": 1.0
+  },
+  "buckwheat": {
+   "name": "蕎麥花",
+   "seedCost": 25,
+   "growSeconds": 2400,
+   "nectar": 6,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_buckwheat",
+   "waterUse": 1.0
+  },
+  "lavender": {
+   "name": "薰衣草",
+   "seedCost": 60,
+   "growSeconds": 7200,
+   "nectar": 4,
+   "blooms": 6,
+   "regrowSeconds": 3600,
+   "honey": "honey_lavender",
+   "waterUse": 0.75
+  },
+  "rose": {
+   "name": "玫瑰",
+   "seedCost": 120,
+   "growSeconds": 14400,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_rose",
+   "waterUse": 1.0
+  }
+ },
+ "flowerRules": {
+  "plantOn": "soil",
+  "needsWater": true,
+  "dryNectarMult": 0.5,
+  "dryAfterBloomSeconds": 3600,
+  "pests": false,
+  "organic": false,
+  "sellable": false,
+  "seedTabs": [
+   "crops",
+   "flowers"
+  ]
+ },
+ "bees": {
+  "hive": "beehive",
+  "queen": {
+   "id": "queen_bee",
+   "name": "蜂王",
+   "cost": 300,
+   "category": "insect",
+   "lifespan": null
+  },
+  "startFrames": 1,
+  "maxFrames": 10,
+  "hoursPerFrame": 2,
+  "range": 4,
+  "jarsPerFramePerHour": 0.2,
+  "noFlowerMult": 0.1,
+  "wildHoney": "honey_wild",
+  "storeMax": 30,
+  "noFlyWhen": [
+   "night",
+   "rain",
+   "snow"
+  ],
+  "starveAfterHours": 72,
+  "starveJarsPer10FramesPerHour": 1,
+  "starveWildOnlyBeforeStarving": true,
+  "pollinationGrowth": 0.15,
+  "pesticideFrameLoss": 2,
+  "pesticideMinFrames": 1,
+  "collectTool": "hand",
+  "bumble": {
+   "colony": {
+    "id": "bumble_colony",
+    "name": "熊蜂群",
+    "cost": 450,
+    "category": "insect"
+   },
+   "honeyMult": 1.5,
+   "sameRulesAsBees": true,
+   "pollinates": true
+  }
+ },
+ "migrations": {
+  "2.0.0": {
+   "decoBeehiveToDevice": true,
+   "storedDecoBeehiveToFreeHive": true
+  }
+ },
+ "chickenPest": {
+  "animals": [
+   "egg_hen",
+   "broiler"
+  ],
+  "minutesPerTile": 10,
+  "needsAdjacentTo": [
+   "crop",
+   "tree"
+  ],
+  "noNight": true,
+  "noGreenhouse": true,
+  "keepsOrganic": true,
+  "newsReport": true
+ },
+ "ui": {
+  "trayWheelScroll": true,
+  "trayHideScrollbar": true,
+  "trayEdgeArrows": true,
+  "trayTextFit": {
+   "minFontPx": 11,
+   "ellipsis": true
+  },
+  "idleZzz": true,
+  "layoutV25": {
+   "theme": "glass; dark when daylight < 0.5",
+   "topRow": [
+    "player",
+    "coins",
+    "utilitiesBar"
+   ],
+   "secondRow": [
+    "timeWeather",
+    "storage",
+    "automation"
+   ],
+   "moreMenu": [
+    "book",
+    "expand",
+    "news",
+    "forecast",
+    "automation",
+    "bills",
+    "save",
+    "settings",
+    "slots",
+    "help",
+    "hideAll"
+   ],
+   "toolbar": [
+    "hand",
+    "plow",
+    "water",
+    "seed",
+    "animal",
+    "fish",
+    "build",
+    "deco",
+    "move",
+    "store",
+    "remove",
+    "care"
+   ],
+   "collapse": "handle hides top panels and robot chips; toolbar shows only the current tool",
+   "hideAll": "everything hidden except a small show button; taps only pan/zoom",
+   "redDot": [
+    "unreadNews",
+    "robotsNeedHelp",
+    "unpaidBills"
+   ],
+   "phonePortrait": "current-tool button + slide-up 4x3 tool sheet; panels as bottom sheets",
+   "pagesAndTraysFollowTheme": true
+  },
+  "pagesV26": {
+   "hero": true,
+   "storageSections": true,
+   "basePanelCards": true,
+   "utilitiesCards": true,
+   "settingsWorldMap": true,
+   "saveCards": true,
+   "pickerIslandThumbs": true,
+   "bookSearchFilterSortDetail": true
+  },
+  "toolGroups": {
+   "tidy": {
+    "label": "整理",
+    "icon": "ui_tool_tidy",
+    "tools": [
+     "move",
+     "store",
+     "remove"
+    ]
+   }
+  },
+  "toolToggle": {
+   "tapAgainCloses": true,
+   "defaultTool": "hand",
+   "note": "tap an open tool again: submenu closes and the tool goes back to 收成"
+  },
+  "trayTabs": {
+   "seed": [
+    {
+     "id": "crops",
+     "label": "作物",
+     "icon": "ui_tab_crops"
+    },
+    {
+     "id": "trees",
+     "label": "果樹",
+     "icon": "ui_tab_trees"
+    },
+    {
+     "id": "flowers",
+     "label": "花苗",
+     "icon": "ui_tab_flowers"
+    },
+    {
+     "id": "facility",
+     "label": "設施",
+     "icon": "ui_lamp",
+     "ids": [
+      "grow_lamp",
+      "grow_lamp_large",
+      "greenhouse"
+     ],
+     "via": "build"
+    }
+   ],
+   "deco": [
+    {
+     "id": "trees",
+     "label": "樹木",
+     "icon": "ui_tab_deco_trees",
+     "ids": [
+      "maple",
+      "pine",
+      "bamboo",
+      "birch",
+      "sakura",
+      "palm",
+      "willow",
+      "ginkgo",
+      "oak",
+      "banyan"
+     ]
+    },
+    {
+     "id": "scenery",
+     "label": "造景",
+     "icon": "ui_tab_scenery",
+     "ids": [
+      "flowers",
+      "hay",
+      "pond"
+     ]
+    },
+    {
+     "id": "boost",
+     "label": "加成",
+     "icon": "ui_tab_boost",
+     "ids": [
+      "scarecrow",
+      "windmill",
+      "water_tower",
+      "windbreak",
+      "rain_barrel",
+      "gold_scarecrow",
+      "stone_well",
+      "rainbow_windmill"
+     ]
+    },
+    {
+     "id": "paths",
+     "label": "道路",
+     "icon": "ui_tab_paths",
+     "ids": [
+      "road_gravel",
+      "road_dirt",
+      "road_stone",
+      "road_asphalt",
+      "road_boardwalk"
+     ]
+    },
+    {
+     "id": "buildings",
+     "label": "建築",
+     "icon": "ui_tab_buildings",
+     "from": "buildStore"
+    },
+    {
+     "id": "dolls",
+     "label": "娃娃",
+     "icon": "ui_tab_dolls",
+     "from": "dolls"
+    }
+   ],
+   "animal": [
+    {
+     "id": "facility",
+     "label": "設施",
+     "icon": "ui_tab_fac_animal",
+     "ids": [
+      "fence",
+      "compost_bin"
+     ],
+     "via": {
+      "compost_bin": "build"
+     }
+    },
+    {
+     "id": "poultry",
+     "label": "家禽",
+     "icon": "ui_tab_poultry",
+     "ids": [
       "egg_hen",
       "broiler"
-    ],
-    "minutesPerTile": 10,
-    "needsAdjacentTo": [
-      "crop",
-      "tree"
-    ],
-    "noNight": true,
-    "noGreenhouse": true,
-    "keepsOrganic": true,
-    "newsReport": true
-  },
-  "ui": {
-    "trayWheelScroll": true,
-    "trayHideScrollbar": true,
-    "trayEdgeArrows": true,
-    "trayTextFit": {
-      "minFontPx": 11,
-      "ellipsis": true
+     ]
     },
-    "idleZzz": true,
-    "layoutV25": {
-      "theme": "glass; dark when daylight < 0.5",
-      "topRow": [
-        "player",
-        "coins",
-        "utilitiesBar"
-      ],
-      "secondRow": [
-        "timeWeather",
-        "storage",
-        "automation"
-      ],
-      "moreMenu": [
-        "book",
-        "expand",
-        "news",
-        "forecast",
-        "automation",
-        "bills",
-        "save",
-        "settings",
-        "slots",
-        "help",
-        "hideAll"
-      ],
-      "toolbar": [
-        "hand",
-        "plow",
-        "water",
-        "seed",
-        "animal",
-        "fish",
-        "build",
-        "deco",
-        "move",
-        "store",
-        "remove",
-        "care"
-      ],
-      "collapse": "handle hides top panels and robot chips; toolbar shows only the current tool",
-      "hideAll": "everything hidden except a small show button; taps only pan/zoom",
-      "redDot": [
-        "unreadNews",
-        "robotsNeedHelp",
-        "unpaidBills"
-      ],
-      "phonePortrait": "current-tool button + slide-up 4x3 tool sheet; panels as bottom sheets",
-      "pagesAndTraysFollowTheme": true
-    },
-    "pagesV26": {
-      "hero": true,
-      "storageSections": true,
-      "basePanelCards": true,
-      "utilitiesCards": true,
-      "settingsWorldMap": true,
-      "saveCards": true,
-      "pickerIslandThumbs": true,
-      "bookSearchFilterSortDetail": true
+    {
+     "id": "livestock",
+     "label": "家畜",
+     "icon": "ui_tab_livestock",
+     "ids": [
+      "wool_sheep",
+      "meat_sheep",
+      "dairy_goat",
+      "dairy_cow",
+      "beef_cattle",
+      "pig"
+     ]
     }
-  },
-  "droneWatering": {
-    "dryThreshold": 0,
-    "targets": [
-      "planted soil",
-      "tree"
-    ],
-    "tilesPerSecond": 3,
-    "spraySeconds": 2,
-    "oneTileAtATime": true,
-    "noFlyInRain": true,
-    "ownedSource": "tank",
-    "rentedSource": "tower",
-    "ownedReturnToRefillWhenTankShort": true,
-    "keepLeftoverTank": true,
-    "currentMapFirst": true,
-    "idleAt": {
-      "owned": "drone_pad",
-      "rented": "house"
-    }
-  },
-  "houseLight": {
-    "needsPower": true,
-    "kwhPerHour": 0.05,
-    "sources": [
-      "grid",
-      "battery",
-      "crankBuffer"
-    ],
-    "whenLightBelow": 0.5
-  },
-  "islandUnderside": {
-    "depthRatio": 0.2,
-    "minRatio": 0.08,
-    "bumps": 9,
-    "taper": 0.8,
-    "roundness": 0.55,
-    "decorOnly": true,
-    "strata": [
-      "topsoil",
-      "clay",
-      "sandstone",
-      "bedrock"
-    ],
-    "fossils": [
-      "ammonite",
-      "skull",
-      "spine",
-      "leg"
-    ],
-    "fossilsPerIsland": "3-9 by width",
-    "grassLip": false
-  },
-  "sweeperWalk": {
-    "tilesPerSecond": 1,
-    "cleanSeconds": 2,
-    "fourWay": true,
-    "rentedHome": "house door",
-    "ownedHome": "sweeper_dock",
-    "cannotCross": [
-      "soil",
-      "building",
-      "deco",
-      "tree",
-      "fence",
+   ],
+   "fish": [
+    {
+     "id": "facility",
+     "label": "設施",
+     "icon": "ui_tab_fac_fish",
+     "ids": [
       "pool",
-      "pond",
-      "greenhouse"
-    ],
-    "nearestByWalk": true,
-    "ownedReturnBeforeBatteryOut": true,
-    "lowBatteryChargeFirst": 0.25,
-    "ownedNeedsDockPlaced": true,
-    "dockCleanSeconds": 30,
-    "dockCleanNoCharge": true,
-    "afterCleanIdleZzzWhenFull": true,
-    "dockWater": {
-      "tankDrops": 100,
-      "dropsPerClean": 10,
-      "refillWhenEmpty": true,
-      "pumpKwhPerTank": 0.01,
-      "battery": {
-        "kwh": 0.05,
-        "solarKwhPerHourSunny": 0.01,
-        "cloudyMult": 0.5,
-        "night": 0
-      },
-      "manualRefill": "hand tool tap when empty, or panel button; free",
-      "emptySkipsCleaning": true,
-      "lowWarn": 0.2,
-      "dirtyTank": {
-        "cleanShare": 0.6666666666666666,
-        "dirtyShare": 0.3333333333333333,
-        "dirtyFromClean": true,
-        "refillDrainsDirty": true,
-        "perSlotTank": true
-      },
-      "gaugeBar": false
+      "fish_feed_machine"
+     ],
+     "via": {
+      "fish_feed_machine": "build"
+     }
     },
-    "drawDepthSorted": true,
-    "noTeleport": true
-  },
-  "cloudSave": {
-    "provider": "googleDrive",
-    "clientId": "838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com",
-    "scope": "https://www.googleapis.com/auth/drive.appdata",
-    "allowedOrigins": [
-      "https://phoenixruby.github.io",
-      "http://localhost:8765"
-    ],
-    "siteUrl": "https://phoenixruby.github.io/skyfarm/",
-    "intervalMinutes": 5,
-    "perSlotToggle": true,
-    "localCopyAlways": true,
-    "askWhenCloudNewer": true,
-    "uploadWhenLocalNewer": true,
-    "backupLoser": true,
-    "noClientSecret": true,
-    "accounts": {
-      "loginOnStartScreen": true,
-      "farmOwnerByEmail": true,
-      "pickerShows": [
-        "currentAccount",
-        "unbound"
-      ],
-      "otherAccountsFarms": "hiddenNotUploaded",
-      "afterLoginAskAdoptUnbound": true,
-      "cloudFarmsListToPick": true,
-      "newFarmWhileLoggedIn": "ownedBySyncOn",
-      "logoutHidesAccountFarms": true,
-      "tokenExpiryKeepsLoggedIn": true
+    {
+     "id": "fish",
+     "label": "魚",
+     "icon": "ui_tab_fish",
+     "ids": [
+      "tilapia",
+      "milkfish",
+      "seabass"
+     ]
     }
-  },
-  "fleet": {
-    "maxPerKind": 5,
-    "perLevelAfterUnlock": 1,
-    "firstUnitAtUnlockLevel": true,
-    "samePricePerUnit": true,
-    "baseMax": 3,
-    "slotsMax": 2,
-    "expandRate": 0.5,
-    "dockBuildCost": 300,
-    "lowBatteryStay": 0.25,
-    "rentIsExtraUnit": true,
-    "firstSweeperFreeDock": true,
-    "eachUnitOwnTier": true,
-    "baseTypes": [
+   ],
+   "insect": [
+    {
+     "id": "facility",
+     "label": "設施",
+     "icon": "ui_tab_fac_insect",
+     "ids": [
+      "beehive",
+      "bumble_hive"
+     ]
+    },
+    {
+     "id": "insects",
+     "label": "昆蟲",
+     "icon": "ui_tab_insects",
+     "ids": [
+      "queen_bee",
+      "bumble_colony",
+      "butterfly_egg"
+     ]
+    }
+   ],
+   "build": [
+    {
+     "id": "robots",
+     "label": "機器人",
+     "icon": "ui_robot_charger",
+     "ids": [
       "drone_pad",
       "robot_charger",
       "sweeper_dock"
-    ],
-    "twoSlotLayout": {
-      "drone_pad": "stacked: ground pad + upper deck on one post (F shape); slot 1 lower, slot 2 upper",
-      "robot_charger": "taller post, plug on left and right",
-      "sweeper_dock": "taller post, bay on left and right"
+     ]
     },
-    "shrinkRefundRate": 0.5,
-    "pump": {
-      "kwhPerDrop": 0.00016666666666666666,
-      "droneOwnBatteryWhenNoFarmPower": true,
-      "farmPowerFirst": true
+    {
+     "id": "process",
+     "label": "加工",
+     "icon": "ui_compost_bin",
+     "ids": [
+      "corn_cake_machine",
+      "fish_feed_machine",
+      "compost_bin"
+     ]
+    },
+    {
+     "id": "grow",
+     "label": "種植",
+     "icon": "ui_lamp",
+     "ids": [
+      "grow_lamp",
+      "grow_lamp_large",
+      "greenhouse",
+      "sprinkler_s",
+      "sprinkler_l"
+     ]
+    },
+    {
+     "id": "water",
+     "label": "水",
+     "icon": "ui_water_drop",
+     "ids": [
+      "well",
+      "water_tower_extra"
+     ]
+    },
+    {
+     "id": "power",
+     "label": "電力",
+     "icon": "ui_electric",
+     "ids": [
+      "solar_panel",
+      "battery_s",
+      "battery_m",
+      "battery_l",
+      "hand_crank",
+      "biomass_gen"
+     ]
+    },
+    {
+     "id": "env",
+     "label": "環境",
+     "icon": "ui_trash_station",
+     "ids": [
+      "trash_station",
+      "truck_pad",
+      "snow_melter"
+     ]
     }
+   ]
   },
-  "decoSeasons": {
-    "note": "decoration trees follow the farm's local season (spring/summer/autumn/winter); missing seasons use the summer look",
-    "sakura": [
-      "spring",
-      "summer",
-      "autumn",
-      "winter"
-    ],
-    "ginkgo": [
-      "summer",
-      "autumn",
-      "winter"
-    ],
-    "oak": [
-      "summer",
-      "autumn"
-    ],
-    "birch": [
-      "summer",
-      "autumn"
-    ],
-    "maple": [
-      "summer",
-      "autumn",
-      "winter"
-    ]
+  "book": {
+   "sidebarIsTabs": true,
+   "desktop": "fixed left list",
+   "mobile": "floating drawer from the left; button shows the current category",
+   "icon": "ui_pg_book_icon",
+   "headers": {
+    "crops": "bookbg_crops",
+    "trees": "bookbg_trees",
+    "animals": "bookbg_animals",
+    "fish": "bookbg_fish",
+    "machines": "bookbg_devices",
+    "devices": "bookbg_devices",
+    "bills": "bookbg_devices",
+    "auto": "bookbg_devices",
+    "default": "bookbg_crops"
+   }
   },
-  "storageLight": {
-    "buildings": [
-      "shed",
-      "barn"
-    ],
-    "kwhPerHourEach": 0.02,
-    "onlyWhenDark": true,
-    "needsFarmPower": true,
-    "flicker": false
+  "tools": {
+   "fish": {
+    "label": "魚"
+   },
+   "insect": {
+    "label": "昆蟲",
+    "icon": "ui_tool_insect",
+    "new": true
+   },
+   "fenceMovedTo": "animal/facility"
   },
-  "eggNest": {
-    "animals": [
-      "egg_hen"
-    ],
-    "onGroundWhereLaid": true,
-    "tapEggOrHen": true
-  },
-  "soilLook": {
-    "raisedPx": 5,
-    "ridges": 3,
-    "ridgeDir": "+x",
-    "joinNeighbours": true
+  "hud": {
+   "desktop": "name card spans 2 rows; coins + water/power bar on row 1 top-aligned; weather/storage/auto on row 2; rent tag under the name card"
   }
+ },
+ "droneWatering": {
+  "dryThreshold": 0,
+  "targets": [
+   "planted soil",
+   "tree"
+  ],
+  "tilesPerSecond": 3,
+  "spraySeconds": 2,
+  "oneTileAtATime": true,
+  "noFlyInRain": true,
+  "ownedSource": "tank",
+  "rentedSource": "tower",
+  "ownedReturnToRefillWhenTankShort": true,
+  "keepLeftoverTank": true,
+  "currentMapFirst": true,
+  "idleAt": {
+   "owned": "drone_pad",
+   "rented": "house"
+  }
+ },
+ "houseLight": {
+  "needsPower": true,
+  "kwhPerHour": 0.05,
+  "sources": [
+   "grid",
+   "battery",
+   "crankBuffer"
+  ],
+  "whenLightBelow": 0.5
+ },
+ "islandUnderside": {
+  "depthRatio": 0.2,
+  "minRatio": 0.08,
+  "bumps": 9,
+  "taper": 0.8,
+  "roundness": 0.55,
+  "decorOnly": true,
+  "strata": [
+   "topsoil",
+   "clay",
+   "sandstone",
+   "bedrock"
+  ],
+  "fossils": [
+   "ammonite",
+   "skull",
+   "spine",
+   "leg"
+  ],
+  "fossilsPerIsland": "3-9 by width",
+  "grassLip": false
+ },
+ "sweeperWalk": {
+  "tilesPerSecond": 1,
+  "cleanSeconds": 2,
+  "fourWay": true,
+  "rentedHome": "house door",
+  "ownedHome": "sweeper_dock",
+  "cannotCross": [
+   "soil",
+   "building",
+   "deco",
+   "tree",
+   "fence",
+   "pool",
+   "pond",
+   "greenhouse"
+  ],
+  "nearestByWalk": true,
+  "ownedReturnBeforeBatteryOut": true,
+  "lowBatteryChargeFirst": 0.25,
+  "ownedNeedsDockPlaced": true,
+  "dockCleanSeconds": 30,
+  "dockCleanNoCharge": true,
+  "afterCleanIdleZzzWhenFull": true,
+  "dockWater": {
+   "tankDrops": 100,
+   "dropsPerClean": 10,
+   "refillWhenEmpty": true,
+   "pumpKwhPerTank": 0.01,
+   "battery": {
+    "kwh": 0.05,
+    "solarKwhPerHourSunny": 0.01,
+    "cloudyMult": 0.5,
+    "night": 0
+   },
+   "manualRefill": "hand tool tap when empty, or panel button; free",
+   "emptySkipsCleaning": true,
+   "lowWarn": 0.2,
+   "dirtyTank": {
+    "cleanShare": 0.6666666666666666,
+    "dirtyShare": 0.3333333333333333,
+    "dirtyFromClean": true,
+    "refillDrainsDirty": true,
+    "perSlotTank": true
+   },
+   "gaugeBar": false
+  },
+  "drawDepthSorted": true,
+  "noTeleport": true,
+  "sweepsPoop": false,
+  "avoidPoopTiles": true,
+  "avoidMovingAnimals": true,
+  "blockedWaitSeconds": 2
+ },
+ "cloudSave": {
+  "provider": "googleDrive",
+  "clientId": "838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com",
+  "scope": "https://www.googleapis.com/auth/drive.appdata",
+  "allowedOrigins": [
+   "https://phoenixruby.github.io",
+   "http://localhost:8765"
+  ],
+  "siteUrl": "https://phoenixruby.github.io/skyfarm/",
+  "intervalMinutes": 5,
+  "perSlotToggle": true,
+  "localCopyAlways": true,
+  "askWhenCloudNewer": true,
+  "uploadWhenLocalNewer": true,
+  "backupLoser": true,
+  "noClientSecret": true,
+  "accounts": {
+   "loginOnStartScreen": true,
+   "farmOwnerByEmail": true,
+   "pickerShows": [
+    "currentAccount",
+    "unbound"
+   ],
+   "otherAccountsFarms": "hiddenNotUploaded",
+   "afterLoginAskAdoptUnbound": true,
+   "cloudFarmsListToPick": true,
+   "newFarmWhileLoggedIn": "ownedBySyncOn",
+   "logoutHidesAccountFarms": true,
+   "tokenExpiryKeepsLoggedIn": true
+  }
+ },
+ "fleet": {
+  "maxPerKind": 5,
+  "perLevelAfterUnlock": 1,
+  "firstUnitAtUnlockLevel": true,
+  "samePricePerUnit": true,
+  "baseMax": 3,
+  "slotsMax": 2,
+  "expandRate": 0.5,
+  "dockBuildCost": 300,
+  "lowBatteryStay": 0.25,
+  "rentIsExtraUnit": true,
+  "firstSweeperFreeDock": true,
+  "eachUnitOwnTier": true,
+  "baseTypes": [
+   "drone_pad",
+   "robot_charger",
+   "sweeper_dock"
+  ],
+  "twoSlotLayout": {
+   "drone_pad": "stacked: ground pad + upper deck on one post (F shape); slot 1 lower, slot 2 upper",
+   "robot_charger": "taller post, plug on left and right",
+   "sweeper_dock": "taller post, bay on left and right"
+  },
+  "shrinkRefundRate": 0.5,
+  "pump": {
+   "kwhPerDrop": 0.00016666666666666666,
+   "droneOwnBatteryWhenNoFarmPower": true,
+   "farmPowerFirst": true
+  }
+ },
+ "decoSeasons": {
+  "note": "decoration trees follow the farm's local season (spring/summer/autumn/winter); missing seasons use the summer look",
+  "sakura": [
+   "spring",
+   "summer",
+   "autumn",
+   "winter"
+  ],
+  "ginkgo": [
+   "summer",
+   "autumn",
+   "winter"
+  ],
+  "oak": [
+   "summer",
+   "autumn"
+  ],
+  "birch": [
+   "summer",
+   "autumn"
+  ],
+  "maple": [
+   "summer",
+   "autumn",
+   "winter"
+  ]
+ },
+ "storageLight": {
+  "buildings": [
+   "shed",
+   "barn"
+  ],
+  "kwhPerHourEach": 0.02,
+  "onlyWhenDark": true,
+  "needsFarmPower": true,
+  "flicker": false
+ },
+ "eggNest": {
+  "animals": [
+   "egg_hen"
+  ],
+  "onGroundWhereLaid": true,
+  "tapEggOrHen": true
+ },
+ "soilLook": {
+  "raisedPx": 5,
+  "ridges": 3,
+  "ridgeDir": "+x",
+  "joinNeighbours": true
+ },
+ "trash": {
+  "sources": {
+   "houseDailyGeneralBags": 1,
+   "houseDailyRecycleBags": 0.5,
+   "feedItemsPerRecycleBag": 20,
+   "machineBatchRecycleBags": 0.2,
+   "sweptTilesPerGeneralBag": 10,
+   "dockSewage": "sweeper dock dirty water drained on refill",
+   "solarWashSewageDrops": 10,
+   "wornParts": "see consumables.parts[].wasteKind/wasteBags"
+  },
+  "trucks": {
+   "arrive": "16:00",
+   "stayMinutes": 30,
+   "localTime": true,
+   "garbageTruck": "飛天垃圾車 (general + sewage)",
+   "recycleTruck": "飛天資源回收車 (recycle)",
+   "art": {
+    "garbage": "player art: yellow hover truck (45°)",
+    "recycle": "player art: white hover truck with 4-colour sorting labels (45°)",
+    "panel": "player side views"
+   }
+  },
+  "fees": {
+   "generalPerBag": 5,
+   "sewagePer100Drops": 1,
+   "recycleRewardPerBag": 5
+  },
+  "overdue": {
+   "daysWithoutDumping": 3,
+   "orFullForDays": 1,
+   "multiplier": 3,
+   "recycleFeePerBag": 10,
+   "collectors": "the trucks send their own robots"
+  },
+  "overflow": "bags pile on the ground beside the station until dumped",
+  "dumpByHand": "tap a trash station with 收成 while the trucks are here"
+ },
+ "consumables": {
+  "bulkDiscount": [
+   {
+    "qty": 5,
+    "rate": 0.9
+   },
+   {
+    "qty": 10,
+    "rate": 0.8
+   }
+  ],
+  "whenOut": "robot goes home and stops, bubble 換耗材; auto-fits a spare from storage",
+  "parts": {
+   "roller": {
+    "name": "滾筒",
+    "for": [
+     "sweep"
+    ],
+    "lifeWorkHours": 120,
+    "price": 40,
+    "waste": "general",
+    "wasteBags": 0.2
+   },
+   "brush": {
+    "name": "清潔刷",
+    "for": [
+     "sweep"
+    ],
+    "lifeWorkHours": 60,
+    "price": 15,
+    "waste": "general",
+    "wasteBags": 0.1
+   },
+   "dustbag": {
+    "name": "集塵袋",
+    "for": [
+     "sweeper_dock"
+    ],
+    "lifeCleans": 40,
+    "price": 8,
+    "waste": "general",
+    "wasteBags": 0.5
+   },
+   "wheel": {
+    "name": "輪子",
+    "for": [
+     "feed",
+     "snow",
+     "poop",
+     "wellbot",
+     "trashbot",
+     "recyclebot"
+    ],
+    "lifeWorkHours": 240,
+    "price": 50,
+    "waste": "recycle",
+    "wasteBags": 0.3
+   },
+   "propeller": {
+    "name": "螺旋槳",
+    "for": [
+     "water",
+     "honey"
+    ],
+    "lifeWorkHours": 200,
+    "price": 60,
+    "waste": "recycle",
+    "wasteBags": 0.3
+   }
+  },
+  "later": "mop (抹布) for a wiping function"
+ },
+ "solarDust": {
+  "perSunnyDay": 0.05,
+  "max": 0.5,
+  "outputMult": "1 - dust",
+  "rainWashesHalf": true,
+  "washByHand": "tap with 收成",
+  "washDrops": 10,
+  "washSewageDrops": 10,
+  "droneWash": {
+   "by": "water drone (shared)",
+   "when": "idle, tank has water, dust >= 0.2"
+  }
+ },
+ "butterflies": {
+  "egg": {
+   "id": "butterfly_egg",
+   "name": "蝴蝶卵",
+   "cost": 80,
+   "category": "insect"
+  },
+  "unlockLevel": 6,
+  "hostTrees": [
+   "lemon",
+   "orange"
+  ],
+  "maxPerTree": 2,
+  "stagesDays": {
+   "egg": 1,
+   "larva": 3,
+   "pupa": 3,
+   "adult": 7
+  },
+  "larvaTreeSlow": 0.1,
+  "adultRange": 2,
+  "adultGrowthBoost": 0.1,
+  "noNectar": true,
+  "selfBreed": "before dying an adult lays 1 egg on a citrus tree with room (any map); none if no citrus left",
+  "pesticideKills": [
+   "egg",
+   "larva"
+  ]
+ }
 };
