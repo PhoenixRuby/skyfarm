@@ -5269,8 +5269,8 @@ function hurtBeesNear(M, k){
 // pollination: crops near a hive with bees grow faster
 { const _bm = bonusMap; bonusMap = function(mi){
   const fresh = RT.bonusVer !== RT.decoVer || !RT.bonus[mi], out = _bm(mi);
-  if (fresh && BEE){ const M = S.maps[mi], r = BEE.range || 4, v = BEE.pollinationGrowth || .15;
-    for (const k in M.tiles){ const T = M.tiles[k]; if (!isHive(T) || !T.queen) continue; const [x0, y0] = pkey(k);
+  if (fresh && BEE){ const M = S.maps[mi], v = BEE.pollinationGrowth || .15;
+    for (const k in M.tiles){ const T = M.tiles[k]; if (!isHive(T) || !T.queen) continue; const [x0, y0] = pkey(k), r = typeof hiveRange === 'function' ? hiveRange(T) : (BEE.range || 4);   // v2.21.2: follows the hive level
       for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const kk = tkey(x0 + dx, y0 + dy), b = out[kk] || (out[kk] = { g: 0, m: 0 }); b.g = Math.max(b.g, v); } } }
   return out; }; }
 { const _ca = careAt; careAt = function(M, k, T, cx, cy){ const H = hostOf(T), before = H && H.sprayAt; const r = _ca(M, k, T, cx, cy); const after = hostOf(M.tiles[k]); if (after && after.sprayAt && after.sprayAt !== before) hurtBeesNear(M, k); return r; }; }
@@ -5304,7 +5304,7 @@ function openHive(M, k, T){
       <div class="row">${st ? '<button class="btn" id="hvGet">取出全部蜂蜜</button>' : ''}</div>`
       : `<p><b>空蜂箱</b>：裡面沒有蜜蜂。用「動物」→「昆蟲」選蜂王，再點這個蜂箱放進去（${Q.cost} 金幣）。</p>${st ? `<p>箱裡還留著 ${st} 罐蜂蜜。</p><div class="row"><button class="btn" id="hvGet">取出全部蜂蜜</button></div>` : ''}
         <div class="row"><button class="btn${isUnlocked(Q.id) ? '' : ' ghost'}" id="hvQueen" ${isUnlocked(Q.id) ? '' : 'disabled'}>直接買蜂王放進來 · ${Q.cost}</button></div>`;
-    el.insertAdjacentHTML('beforeend', `<p class="small">蜜蜂採蜂箱周圍 ${BEE.range*2+1}×${BEE.range*2+1} 的花，口味跟花走；沒有花只產 ${Math.round(BEE.noFlowerMult*100)}% 的野蜂蜜。連續 3 天沒花可採會開始吃存蜜，吃光整窩就會死光。範圍內作物生長 +${Math.round(BEE.pollinationGrowth*100)}%；範圍內噴農藥蜂群 −${BEE.pesticideFrameLoss} 框。</p>`);
+    el.insertAdjacentHTML('beforeend', `<p class="small">蜜蜂採蜂箱周圍 ${(typeof hiveRange === 'function' ? hiveRange(T) : BEE.range)*2+1}×${(typeof hiveRange === 'function' ? hiveRange(T) : BEE.range)*2+1} 的花，口味跟花走；沒有花只產 ${Math.round(BEE.noFlowerMult*100)}% 的野蜂蜜。連續 3 天沒花可採會開始吃存蜜，吃光整窩就會死光。範圍內作物生長 +${Math.round(BEE.pollinationGrowth*100)}%；範圍內噴農藥蜂群 −${BEE.pesticideFrameLoss} 框。</p>`);
     const g = $('hvGet'); if (g) g.onclick = () => { const c = center(...pkey(k)); closeModal(); collectHoney(T, c.cx, c.cy); };
     const q = $('hvQueen'); if (q) q.onclick = () => { const c = center(...pkey(k)); installQueen(T, c.cx, c.cy); afterAction(); openHive(M, k, T); };
   });
@@ -10570,18 +10570,18 @@ function hiveWhyNot49(M, k, T){ const now = Date.now(), fl = hiveFlowers(M, k);
   const el = $('modalBody'); if (!el) return r; el.querySelectorAll('.hv49').forEach(n => n.remove());
   const lv = hiveLvl(T), rg = hiveRange(T), nx = HLV49[lv], cost = hiveUpCost(T), why = hiveWhyNot49(M, k, T), side = 2 * rg + 1;
   const box = document.createElement('div'); box.className = 'pcard hv49';
-  box.innerHTML = `<h4>採蜜範圍 <span class="small">${T.id === 'bumble_hive' ? '熊蜂箱' : '蜂箱'} ${lv} 級 · ${side}×${side}（${side * side - 1} 格）</span><span class="stars49">${'★'.repeat(lv)}${'☆'.repeat(HLV49.length - lv)}</span></h4><div class="hmw49"></div>
+  box.innerHTML = `<h4>採蜜與授粉範圍 <span class="small">${T.id === 'bumble_hive' ? '熊蜂箱' : '蜂箱'} ${lv} 級 · ${side}×${side}（${side * side - 1} 格）</span><span class="stars49">${'★'.repeat(lv)}${'☆'.repeat(HLV49.length - lv)}</span></h4><div class="hmw49"></div>
     <div class="lg49"><span><i style="background:#4fb35a"></i>開花可採</span><span><i style="background:#f2c94c"></i>花還在長</span><span><i style="background:#b9c2cc"></i>採完休息</span><span><i class="ht"></i>花圃裝飾（不能採）</span><span>🐝 正在採</span>${nx ? '<span>┅ 升級後的範圍</span>' : ''}</div>
     ${why ? `<p class="why49">${why}</p>` : ''}
     ${nx ? `<button class="btn yb47" data-hiveup49="${k}" ${S.player.level < (nx.unlockLevel || 1) ? 'disabled' : ''}>${S.player.level < (nx.unlockLevel || 1) ? `🔒 Lv ${nx.unlockLevel} 才能升到 ${lv + 1} 級` : `升到 ${lv + 1} 級 · ${2 * nx.range + 1}×${2 * nx.range + 1}（${(2 * nx.range + 1) ** 2 - 1} 格）· ${fmtN(cost)}`}</button>` : '<span class="pill ok">已經是最高級</span>'}`;
   box.querySelector('.hmw49').appendChild(hiveMapCanvas49(M, k, T));
   const anchor = el.querySelector('.lay46') || el.firstElementChild; if (anchor) anchor.insertAdjacentElement('afterend', box); else el.appendChild(box);
   el.querySelectorAll('p, span, div').forEach(p => { if (p.children.length === 0 && /\d+×\d+ 的花/.test(p.textContent)) p.textContent = p.textContent.replace(/\d+×\d+ 的花/, `${side}×${side} 的花`); });
-  const up = el.querySelector('[data-hiveup49]'); if (up) up.onclick = () => { if (!spend(hiveUpCost(T))) return; T.lvl = hiveLvl(T) + 1; RT.decoVer++; sfx('place'); toast(`升到 ${T.lvl} 級了：採蜜範圍 ${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1}`, true); afterAction(); openHive(M, k, T); };
+  const up = el.querySelector('[data-hiveup49]'); if (up) up.onclick = () => { if (!spend(hiveUpCost(T))) return; T.lvl = hiveLvl(T) + 1; RT.decoVer++; sfx('place'); toast(`升到 ${T.lvl} 級了：採蜜與授粉範圍 ${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1}`, true); afterAction(); openHive(M, k, T); };
   } catch(e){ console.error(e); } return r; }; }
 { const _bi49 = btnInfo47; btnInfo47 = function(b, price){ if (b.dataset.hiveup49){ const M = curMap(), T = M.tiles[b.dataset.hiveup49], lv = hiveLvl(T), nx = HLV49[lv];
     return { cat: 'build', title: `${T.id === 'bumble_hive' ? '熊蜂箱' : '蜂箱'}升到 ${lv + 1} 級`, spr: [T.id === 'bumble_hive' ? 'device_bumble_hive_bees' : 'device_beehive_bees', 0], price, okText: '確定升級',
-      rows: [['採蜜範圍', `${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1} → ${2 * nx.range + 1}×${2 * nx.range + 1}`], ['範圍內格數', `${(2 * hiveRange(T) + 1) ** 2 - 1} → ${(2 * nx.range + 1) ** 2 - 1} 格`]] }; }
+      rows: [['採蜜與授粉範圍', `${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1} → ${2 * nx.range + 1}×${2 * nx.range + 1}`], ['範圍內格數', `${(2 * hiveRange(T) + 1) ** 2 - 1} → ${(2 * nx.range + 1) ** 2 - 1} 格`]] }; }
   return _bi49(b, price); }; }
 // level stars under the hive bubble
 { const _dd49 = drawDevice; drawDevice = function(T, k, cx, cy, t){ const r = _dd49(T, k, cx, cy, t);
@@ -10660,7 +10660,7 @@ window.__farm221 = { ckToday, ckSign, openCheckin, ckDay, ckNeeded };
 /* ===== 51. v2.21.1: storage first — decos, fences, dens, stored buildings, weather dolls and robots (same tier) are taken from storage
    before coins are spent. The tray shows the price and 「倉庫還有 n」. When this selection has used storage and the stock runs out,
    the first paid placement asks once (CFG.storeFirst.askWhenOut, 「這類以後不再詢問」 respected); switching item or tool starts over.
-   A selection that never had stock is not asked (v2.18.1). ===== */
+   v2.21.2: a selection with no stock at all is asked too (CFG.storeFirst.askNoStock). ===== */
 const SF51 = CFG.storeFirst || { askWhenOut: true };
 const isDen51 = id => id === 'dog_house' || id === 'cat_tree';
 const isFence51 = id => id === 'fence' || isFenceStyle(id);
@@ -10696,10 +10696,10 @@ function placeStored51(M, x, y, id, inner){ const k = tkey(x, y), T = M.tiles[k]
       : tool === 'build' ? placeStored51(M, x, y, id, () => _a51(x, y)) : _a51(x, y));
     if (stockOf51(tool, id) !== n){ UIbuildTray(); updateHint(); }
     return r; }
-  if (SF51.askWhenOut === false || RT.had51 !== key || RT.ok51 === key) return run51(() => _a51(x, y));
+  if (SF51.askWhenOut === false || (RT.had51 !== key && SF51.askNoStock === false) || RT.ok51 === key) return run51(() => _a51(x, y));
   const { price, r } = dry47(() => run51(() => _a51(x, y))); if (price === null) return r;
   const I = selInfo47(price) || { title: '購買', price }; I.cat = cat51(); if (I.price == null) I.price = price;
-  I.q = '倉庫裡的已經用完了，接下來每放一個都要花金幣買。確定後這次連續放置不會再問，換別的東西才會再問。'; I.okText = '確定購買';
+  I.q = (RT.had51 === key ? '倉庫裡的已經用完了，接下來每放一個都要花金幣買。' : '倉庫裡沒有，放一個要花金幣買。') + '確定後這次連續放置不會再問，換別的東西才會再問。'; I.okText = '確定購買';
   const go = () => { RT.ok51 = key; run51(() => _a51(x, y)); UIbuildTray(); };
   if (noAsk47(I.cat)) go(); else buyAsk47(I, go); }; }
 // tray: price and 「倉庫還有 n」 on every item that has stock; a new selection starts over
@@ -10728,6 +10728,65 @@ css38.textContent += `
 .tier47 .w .st51{display:block;font-style:normal;color:#24864a;font-weight:800;font-size:12px}
 `;
 window.__farm2211 = { key51, stockOf51, act: (x, y) => act(x, y), buyRobot: (k, i) => buyRobot(k, i), storedRobots51 };
+
+/* ===== 52. v2.21.2: night versions of the 成就 / 自動化 panels (deep-blue glass, header art dimmed by a filter);
+   自動化 unit rows re-laid out — one aligned row when the card is wide, two layers on tablet / phone (≤1024px) or a narrow card,
+   no fixed-width columns (the locked upgrade button is a dashed outline instead of near-invisible).
+   Also in this version: pollination follows the hive level (g18 bonusMap uses hiveRange), storable items with no stock ask too (g51, CFG.storeFirst.askNoStock). ===== */
+{ const _ar52 = autoRowHTML; autoRowHTML = function(kind){
+  return _ar52(kind).replace(/(<span class="bat47">[\s\S]*?<\/span>)(<span class="wt47">[^<]*<\/span>)\s*(<button class="btn ghost sm up47"[^>]*>[^<]*<\/button>|<span class="pill ok">[^<]*<\/span>)/g,
+    '<span class="r2_47"><span class="st47">$1$2</span>$3</span>'); }; }
+css38.textContent += `
+.left47{container-type:inline-size}
+.units47{display:grid;grid-template-columns:28px 32px minmax(0,1fr) auto auto auto;column-gap:8px;row-gap:6px}.units47>*{grid-column:1/-1}
+.units47 .urow47{display:grid;grid-template-columns:subgrid;grid-template-areas:"n i name stat up store";align-items:center;row-gap:6px;font-size:13.5px;border-bottom:0;padding-bottom:0}
+.units47 .urow47.rent47{grid-template-areas:"n i name name name store"}.urow47 .r2_47{display:contents}
+.urow47>b{grid-area:n}.urow47>.ric47{grid-area:i}.urow47 .un47{grid-area:name;min-width:0}.urow47 .un47,.urow47 .un47 small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.urow47 .st47{grid-area:stat;display:flex;align-items:center;gap:8px;white-space:nowrap}.urow47 .wt47:empty{display:none}
+.urow47 .up47,.r2_47>.pill{grid-area:up;justify-self:start;white-space:nowrap}.urow47 .on47{grid-area:store;white-space:nowrap}.rent47>.pill{grid-area:store;justify-self:end}
+.urow47 .bat47 i{width:32px}.urow47 .up47{font-size:12px;padding:5px 7px}.urow47 .on47{padding:7px 10px}
+.urow47 .up47:disabled{opacity:1;color:#9aa7b6;border:1px dashed #cdd7e2;background:transparent}
+@container (max-width:500px){
+  .units47{display:flex;flex-direction:column;gap:6px}
+  .units47 .urow47{grid-template-columns:28px 32px minmax(0,1fr) auto;grid-template-areas:"n i name store" "n i r2 r2";column-gap:8px;padding:4px 0 8px;border-bottom:1px solid #eef2f6}
+  .units47 .urow47.rent47{grid-template-areas:"n i name store"}.urow47 .on47{justify-self:end}
+  .urow47 .r2_47{grid-area:r2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;min-width:0}}
+@media (max-width:1024px){
+  .units47{display:flex;flex-direction:column;gap:6px}
+  .units47 .urow47{grid-template-columns:28px 32px minmax(0,1fr) auto;grid-template-areas:"n i name store" "n i r2 r2";column-gap:8px;padding:4px 0 8px;border-bottom:1px solid #eef2f6}
+  .units47 .urow47.rent47{grid-template-areas:"n i name store"}.urow47 .on47{justify-self:end}
+  .urow47 .r2_47{grid-area:r2;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;min-width:0}}
+body.night .units47 .urow47{border-bottom-color:rgba(150,185,255,.18)}body.night .urow47 .up47:disabled{color:#7f90a8;border-color:rgba(150,185,255,.3)}
+.r2_47 .up47,.r2_47>.pill{flex:none;margin-left:auto}
+body.night .sheet.ach48h header .hd48,body.night .sheet.auto47h header .hd47{filter:brightness(.62) saturate(.8) hue-rotate(8deg) drop-shadow(0 0 18px rgba(120,160,255,.25))}
+body.night .lay48{color:#eaf2ff}
+body.night .gh48{background:rgba(70,105,170,.42);color:#eaf2ff}
+body.night .cd48{background:rgba(255,255,255,.07);border-color:rgba(150,185,255,.16);color:#eaf2ff;box-shadow:none}
+body.night .cd48 small{color:#a9bbd8}body.night .cd48 i,body.night .bar48 i{background:rgba(255,255,255,.13)}
+body.night .cd48.sel{border-color:#6fb4ff;background:rgba(111,180,255,.18)}
+body.night .lay48 .det48 .pcard{background:rgba(20,34,64,.94);color:#eaf2ff;border:1px solid rgba(150,185,255,.18)}
+body.night .lay48 .det48 .pcard .small,body.night .lay48 .det48 .pcard small{color:#a9bbd8}
+body.night .tb48{background:rgba(255,255,255,.06)}body.night .tr48{border-color:rgba(150,185,255,.14)}body.night .tr48.got span:last-child{color:#6fdc94}
+body.night .ds48{background:#15233f}body.night .x48{background:#24365c;color:#eaf2ff}
+body.night .ar47{color:#eaf2ff}
+body.night .card47{background:rgba(20,34,64,.94);border:1px solid rgba(150,185,255,.16);box-shadow:none}
+body.night .ban47{filter:brightness(.78) saturate(.9)}
+body.night .ban47:after{background:linear-gradient(90deg,rgba(14,26,52,.95) 0,rgba(14,26,52,.72) 34%,rgba(14,26,52,0) 62%)}
+body.night .ti47 h3{color:#fff}body.night .sub47{color:#cfe0f7}body.night .ci47{background:rgba(234,242,255,.92);box-shadow:0 0 0 2px rgba(150,185,255,.35)}
+body.night .own47{background:rgba(20,34,64,.96);color:#eaf2ff}
+body.night .un47 small,body.night .own47 .lk,body.night .tier47 .w,body.night .tier47 .lv,body.night .desc47,body.night .note47,body.night .rp47 .lv{color:#a9bbd8}
+body.night .bat47 i{border-color:#cfd8e6;background:linear-gradient(90deg,#4cd45a var(--p),#1e2e50 0)}
+body.night .urow47>b{color:#fff}body.night .urow47 .on47{background:color-mix(in srgb,var(--c) 70%,#fff 10%)}
+body.night .slot47{border-color:rgba(150,185,255,.35);color:#a9bbd8}
+body.night .tier47{background:rgba(255,255,255,.04);border-color:rgba(150,185,255,.2)}
+body.night .th47.rent{background:color-mix(in srgb,var(--c) 30%,transparent);color:#fff}
+body.night .rp47{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.25);color:#eaf2ff}
+body.night .rp47.first{background:rgba(245,197,71,.16);border-color:#c9a23a}
+body.night .yb47.off{background:rgba(255,255,255,.1);color:#a9bbd8}
+body.night .note47.warn{color:#ffb38a}
+body.night .urow47{border-bottom-color:rgba(150,185,255,.18)}
+`;
+window.__farm2212 = { autoRowHTML: k => autoRowHTML(k), bonusMap: mi => bonusMap(mi), hiveRange: T => hiveRange(T) };
 
   })(CFG, ATLAS_JSON);
 })();

@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.21.1",
+  "configVersion": "2.21.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4449,7 +4449,8 @@
    }
   ],
   "bumbleLevelCostMult": 1.5,
-  "hiveLevelsNote": "蜂箱、熊蜂箱的等級：range＝以蜂箱為中心向外幾格（2＝5×5），cost＝升到這一級的金幣（熊蜂箱 ×bumbleLevelCostMult），unlockLevel＝玩家要到幾級。舊存檔的蜂箱算 1 級"
+  "hiveLevelsNote": "蜂箱、熊蜂箱的等級：range＝以蜂箱為中心向外幾格（2＝5×5），cost＝升到這一級的金幣（熊蜂箱 ×bumbleLevelCostMult），unlockLevel＝玩家要到幾級。舊存檔的蜂箱算 1 級",
+  "note_pollination": "授粉範圍＝採蜜範圍，跟著蜂箱等級（hiveLevels 的 range）；熊蜂箱相同"
  },
  "migrations": {
   "2.0.0": {
@@ -6238,6 +6239,7 @@
  },
  "storeFirst": {
   "askWhenOut": true,
-  "note": "倉庫優先：裝飾、柵欄、狗屋／貓跳台、收回倉庫的建設、天氣娃娃、機器人（同等級）放置或購買時先用倉庫的；這次選的品項用過倉庫、用完後第一次要花金幣時問一次（askWhenOut），確定後連續放置不再問，換品項或工具重算；倉庫本來就沒有的照 v2.18.1 不問"
+  "note": "倉庫優先：裝飾、柵欄、狗屋／貓跳台、收回倉庫的建設、天氣娃娃、機器人（同等級）放置或購買時先用倉庫的；倉庫沒有時第一次要花金幣先問一次（askWhenOut：用完時問；askNoStock：本來就沒有也問），確定後連續放置不再問，換品項或工具重算",
+  "askNoStock": true
  }
 }
