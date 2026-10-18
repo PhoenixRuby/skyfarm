@@ -12733,6 +12733,1196 @@ window.GAME_ATLAS = {
       "sx": 3072,
       "sy": 1024
     },
+    "deco_fence_picket_m00_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3584,
+      "sy": 1024
+    },
+    "deco_fence_picket_m01_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3712,
+      "sy": 1024
+    },
+    "deco_fence_picket_m02_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3840,
+      "sy": 1024
+    },
+    "deco_fence_picket_m03_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3968,
+      "sy": 1024
+    },
+    "deco_fence_picket_m04_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 1152
+    },
+    "deco_fence_picket_m05_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 1152
+    },
+    "deco_fence_picket_m06_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 1152
+    },
+    "deco_fence_picket_m07_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 1152
+    },
+    "deco_fence_picket_m08_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 1152
+    },
+    "deco_fence_picket_m09_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 1152
+    },
+    "deco_fence_picket_m10_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 1152
+    },
+    "deco_fence_picket_m11_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 1152
+    },
+    "deco_fence_picket_m12_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1024,
+      "sy": 1152
+    },
+    "deco_fence_picket_m13_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1152,
+      "sy": 1152
+    },
+    "deco_fence_picket_m14_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1280,
+      "sy": 1152
+    },
+    "deco_fence_picket_m15_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1408,
+      "sy": 1152
+    },
+    "deco_fence_picket_fallen": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1536,
+      "sy": 1152
+    },
+    "deco_fence_stone_m00_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1664,
+      "sy": 1152
+    },
+    "deco_fence_stone_m01_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1792,
+      "sy": 1152
+    },
+    "deco_fence_stone_m02_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1920,
+      "sy": 1152
+    },
+    "deco_fence_stone_m03_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2048,
+      "sy": 1152
+    },
+    "deco_fence_stone_m04_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2176,
+      "sy": 1152
+    },
+    "deco_fence_stone_m05_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2304,
+      "sy": 1152
+    },
+    "deco_fence_stone_m06_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2432,
+      "sy": 1152
+    },
+    "deco_fence_stone_m07_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2560,
+      "sy": 1152
+    },
+    "deco_fence_stone_m08_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2688,
+      "sy": 1152
+    },
+    "deco_fence_stone_m09_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2816,
+      "sy": 1152
+    },
+    "deco_fence_stone_m10_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2944,
+      "sy": 1152
+    },
+    "deco_fence_stone_m11_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3072,
+      "sy": 1152
+    },
+    "deco_fence_stone_m12_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3200,
+      "sy": 1152
+    },
+    "deco_fence_stone_m13_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3328,
+      "sy": 1152
+    },
+    "deco_fence_stone_m14_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3456,
+      "sy": 1152
+    },
+    "deco_fence_stone_m15_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3584,
+      "sy": 1152
+    },
+    "deco_fence_stone_fallen": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3712,
+      "sy": 1152
+    },
+    "deco_fence_bamboo_m00_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3840,
+      "sy": 1152
+    },
+    "deco_fence_bamboo_m01_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3968,
+      "sy": 1152
+    },
+    "deco_fence_bamboo_m02_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m03_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m04_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m05_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m06_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m07_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m08_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m09_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m10_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1024,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m11_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1152,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m12_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1280,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m13_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1408,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m14_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1536,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_m15_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1664,
+      "sy": 1280
+    },
+    "deco_fence_bamboo_fallen": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1792,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m00_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1920,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m01_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2048,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m02_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2176,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m03_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2304,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m04_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2432,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m05_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2560,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m06_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2688,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m07_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2816,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m08_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2944,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m09_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3072,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m10_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3200,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m11_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3328,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m12_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3456,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m13_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3584,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m14_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3712,
+      "sy": 1280
+    },
+    "deco_fence_hedge_m15_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3840,
+      "sy": 1280
+    },
+    "deco_fence_hedge_fallen": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 3968,
+      "sy": 1280
+    },
+    "deco_fence_iron_m00_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 1408
+    },
+    "deco_fence_iron_m01_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 1408
+    },
+    "deco_fence_iron_m02_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 1408
+    },
+    "deco_fence_iron_m03_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 1408
+    },
+    "deco_fence_iron_m04_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 1408
+    },
+    "deco_fence_iron_m05_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 1408
+    },
+    "deco_fence_iron_m06_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 1408
+    },
+    "deco_fence_iron_m07_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 1408
+    },
+    "deco_fence_iron_m08_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1024,
+      "sy": 1408
+    },
+    "deco_fence_iron_m09_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1152,
+      "sy": 1408
+    },
+    "deco_fence_iron_m10_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1280,
+      "sy": 1408
+    },
+    "deco_fence_iron_m11_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1408,
+      "sy": 1408
+    },
+    "deco_fence_iron_m12_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1536,
+      "sy": 1408
+    },
+    "deco_fence_iron_m13_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1664,
+      "sy": 1408
+    },
+    "deco_fence_iron_m14_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1792,
+      "sy": 1408
+    },
+    "deco_fence_iron_m15_idle": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 1920,
+      "sy": 1408
+    },
+    "deco_fence_iron_fallen": {
+      "file": "sheet_06.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 2048,
+      "sy": 1408
+    },
     "fx_pet_heart": {
       "file": "sheet_06.png",
       "frames": 6,
@@ -12744,8 +13934,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 3584,
-      "sy": 1024
+      "sx": 2176,
+      "sy": 1408
     },
     "rat_run": {
       "file": "sheet_06.png",
@@ -12758,8 +13948,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 0,
-      "sy": 1152
+      "sx": 2560,
+      "sy": 1408
     },
     "rat_carry": {
       "file": "sheet_06.png",
@@ -12772,8 +13962,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 256,
-      "sy": 1152
+      "sx": 2816,
+      "sy": 1408
     },
     "fx_cross_bubble": {
       "file": "sheet_06.png",
@@ -12786,8 +13976,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 512,
-      "sy": 1152
+      "sx": 3072,
+      "sy": 1408
     },
     "fx_alert": {
       "file": "sheet_06.png",
@@ -12800,8 +13990,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 768,
-      "sy": 1152
+      "sx": 3328,
+      "sy": 1408
     },
     "fx_scared": {
       "file": "sheet_06.png",
@@ -12814,8 +14004,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 1024,
-      "sy": 1152
+      "sx": 3584,
+      "sy": 1408
     },
     "fx_bandage": {
       "file": "sheet_06.png",
@@ -12828,8 +14018,8 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 1152,
-      "sy": 1152
+      "sx": 3712,
+      "sy": 1408
     },
     "badge_level_bronze": {
       "file": "sheet_06.png",
@@ -12842,8 +14032,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1216,
-      "sy": 1152
+      "sx": 3776,
+      "sy": 1408
     },
     "badge_level_silver": {
       "file": "sheet_06.png",
@@ -12856,8 +14046,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1280,
-      "sy": 1152
+      "sx": 3840,
+      "sy": 1408
     },
     "badge_level_gold": {
       "file": "sheet_06.png",
@@ -12870,8 +14060,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1344,
-      "sy": 1152
+      "sx": 3904,
+      "sy": 1408
     },
     "badge_level_platinum": {
       "file": "sheet_06.png",
@@ -12884,8 +14074,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1408,
-      "sy": 1152
+      "sx": 3968,
+      "sy": 1408
     },
     "badge_harvest_bronze": {
       "file": "sheet_06.png",
@@ -12898,8 +14088,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1472,
-      "sy": 1152
+      "sx": 4032,
+      "sy": 1408
     },
     "badge_harvest_silver": {
       "file": "sheet_06.png",
@@ -12912,8 +14102,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1536,
-      "sy": 1152
+      "sx": 0,
+      "sy": 1536
     },
     "badge_harvest_gold": {
       "file": "sheet_06.png",
@@ -12926,8 +14116,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1600,
-      "sy": 1152
+      "sx": 64,
+      "sy": 1536
     },
     "badge_harvest_platinum": {
       "file": "sheet_06.png",
@@ -12940,8 +14130,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1664,
-      "sy": 1152
+      "sx": 128,
+      "sy": 1536
     },
     "badge_veggies_single": {
       "file": "sheet_06.png",
@@ -12954,8 +14144,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1728,
-      "sy": 1152
+      "sx": 192,
+      "sy": 1536
     },
     "badge_orchard_single": {
       "file": "sheet_06.png",
@@ -12968,8 +14158,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1792,
-      "sy": 1152
+      "sx": 256,
+      "sy": 1536
     },
     "badge_organic_bronze": {
       "file": "sheet_06.png",
@@ -12982,8 +14172,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1856,
-      "sy": 1152
+      "sx": 320,
+      "sy": 1536
     },
     "badge_organic_silver": {
       "file": "sheet_06.png",
@@ -12996,8 +14186,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1920,
-      "sy": 1152
+      "sx": 384,
+      "sy": 1536
     },
     "badge_organic_gold": {
       "file": "sheet_06.png",
@@ -13010,8 +14200,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1984,
-      "sy": 1152
+      "sx": 448,
+      "sy": 1536
     },
     "badge_organic_platinum": {
       "file": "sheet_06.png",
@@ -13024,8 +14214,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2048,
-      "sy": 1152
+      "sx": 512,
+      "sy": 1536
     },
     "badge_ranch_bronze": {
       "file": "sheet_06.png",
@@ -13038,8 +14228,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2112,
-      "sy": 1152
+      "sx": 576,
+      "sy": 1536
     },
     "badge_ranch_silver": {
       "file": "sheet_06.png",
@@ -13052,8 +14242,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2176,
-      "sy": 1152
+      "sx": 640,
+      "sy": 1536
     },
     "badge_ranch_gold": {
       "file": "sheet_06.png",
@@ -13066,8 +14256,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2240,
-      "sy": 1152
+      "sx": 704,
+      "sy": 1536
     },
     "badge_ranch_platinum": {
       "file": "sheet_06.png",
@@ -13080,8 +14270,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2304,
-      "sy": 1152
+      "sx": 768,
+      "sy": 1536
     },
     "badge_ship_bronze": {
       "file": "sheet_06.png",
@@ -13094,8 +14284,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2368,
-      "sy": 1152
+      "sx": 832,
+      "sy": 1536
     },
     "badge_ship_silver": {
       "file": "sheet_06.png",
@@ -13108,8 +14298,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2432,
-      "sy": 1152
+      "sx": 896,
+      "sy": 1536
     },
     "badge_ship_gold": {
       "file": "sheet_06.png",
@@ -13122,8 +14312,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2496,
-      "sy": 1152
+      "sx": 960,
+      "sy": 1536
     },
     "badge_ship_platinum": {
       "file": "sheet_06.png",
@@ -13136,8 +14326,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2560,
-      "sy": 1152
+      "sx": 1024,
+      "sy": 1536
     },
     "badge_allAnimals_single": {
       "file": "sheet_06.png",
@@ -13150,8 +14340,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2624,
-      "sy": 1152
+      "sx": 1088,
+      "sy": 1536
     },
     "badge_fisher_bronze": {
       "file": "sheet_06.png",
@@ -13164,8 +14354,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2688,
-      "sy": 1152
+      "sx": 1152,
+      "sy": 1536
     },
     "badge_fisher_silver": {
       "file": "sheet_06.png",
@@ -13178,8 +14368,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2752,
-      "sy": 1152
+      "sx": 1216,
+      "sy": 1536
     },
     "badge_fisher_gold": {
       "file": "sheet_06.png",
@@ -13192,8 +14382,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2816,
-      "sy": 1152
+      "sx": 1280,
+      "sy": 1536
     },
     "badge_fisher_platinum": {
       "file": "sheet_06.png",
@@ -13206,8 +14396,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2880,
-      "sy": 1152
+      "sx": 1344,
+      "sy": 1536
     },
     "badge_bigPond_bronze": {
       "file": "sheet_06.png",
@@ -13220,8 +14410,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2944,
-      "sy": 1152
+      "sx": 1408,
+      "sy": 1536
     },
     "badge_bigPond_silver": {
       "file": "sheet_06.png",
@@ -13234,8 +14424,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3008,
-      "sy": 1152
+      "sx": 1472,
+      "sy": 1536
     },
     "badge_bigPond_gold": {
       "file": "sheet_06.png",
@@ -13248,8 +14438,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3072,
-      "sy": 1152
+      "sx": 1536,
+      "sy": 1536
     },
     "badge_bigPond_platinum": {
       "file": "sheet_06.png",
@@ -13262,8 +14452,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3136,
-      "sy": 1152
+      "sx": 1600,
+      "sy": 1536
     },
     "badge_honey_bronze": {
       "file": "sheet_06.png",
@@ -13276,8 +14466,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3200,
-      "sy": 1152
+      "sx": 1664,
+      "sy": 1536
     },
     "badge_honey_silver": {
       "file": "sheet_06.png",
@@ -13290,8 +14480,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3264,
-      "sy": 1152
+      "sx": 1728,
+      "sy": 1536
     },
     "badge_honey_gold": {
       "file": "sheet_06.png",
@@ -13304,8 +14494,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3328,
-      "sy": 1152
+      "sx": 1792,
+      "sy": 1536
     },
     "badge_honey_platinum": {
       "file": "sheet_06.png",
@@ -13318,8 +14508,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3392,
-      "sy": 1152
+      "sx": 1856,
+      "sy": 1536
     },
     "badge_honeyAll_single": {
       "file": "sheet_06.png",
@@ -13332,8 +14522,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3456,
-      "sy": 1152
+      "sx": 1920,
+      "sy": 1536
     },
     "badge_butterfly_bronze": {
       "file": "sheet_06.png",
@@ -13346,8 +14536,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3520,
-      "sy": 1152
+      "sx": 1984,
+      "sy": 1536
     },
     "badge_butterfly_silver": {
       "file": "sheet_06.png",
@@ -13360,8 +14550,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3584,
-      "sy": 1152
+      "sx": 2048,
+      "sy": 1536
     },
     "badge_butterfly_gold": {
       "file": "sheet_06.png",
@@ -13374,8 +14564,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3648,
-      "sy": 1152
+      "sx": 2112,
+      "sy": 1536
     },
     "badge_butterfly_platinum": {
       "file": "sheet_06.png",
@@ -13388,8 +14578,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3712,
-      "sy": 1152
+      "sx": 2176,
+      "sy": 1536
     },
     "badge_guard_bronze": {
       "file": "sheet_06.png",
@@ -13402,8 +14592,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3776,
-      "sy": 1152
+      "sx": 2240,
+      "sy": 1536
     },
     "badge_guard_silver": {
       "file": "sheet_06.png",
@@ -13416,8 +14606,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3840,
-      "sy": 1152
+      "sx": 2304,
+      "sy": 1536
     },
     "badge_guard_gold": {
       "file": "sheet_06.png",
@@ -13430,8 +14620,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3904,
-      "sy": 1152
+      "sx": 2368,
+      "sy": 1536
     },
     "badge_guard_platinum": {
       "file": "sheet_06.png",
@@ -13444,8 +14634,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3968,
-      "sy": 1152
+      "sx": 2432,
+      "sy": 1536
     },
     "badge_allDogs_single": {
       "file": "sheet_06.png",
@@ -13458,8 +14648,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 4032,
-      "sy": 1152
+      "sx": 2496,
+      "sy": 1536
     },
     "badge_nurse_bronze": {
       "file": "sheet_06.png",
@@ -13472,8 +14662,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 0,
-      "sy": 1216
+      "sx": 2560,
+      "sy": 1536
     },
     "badge_nurse_silver": {
       "file": "sheet_06.png",
@@ -13486,8 +14676,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 64,
-      "sy": 1216
+      "sx": 2624,
+      "sy": 1536
     },
     "badge_nurse_gold": {
       "file": "sheet_06.png",
@@ -13500,8 +14690,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 128,
-      "sy": 1216
+      "sx": 2688,
+      "sy": 1536
     },
     "badge_mouser_bronze": {
       "file": "sheet_06.png",
@@ -13514,8 +14704,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 192,
-      "sy": 1216
+      "sx": 2752,
+      "sy": 1536
     },
     "badge_mouser_silver": {
       "file": "sheet_06.png",
@@ -13528,8 +14718,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 256,
-      "sy": 1216
+      "sx": 2816,
+      "sy": 1536
     },
     "badge_mouser_gold": {
       "file": "sheet_06.png",
@@ -13542,8 +14732,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 320,
-      "sy": 1216
+      "sx": 2880,
+      "sy": 1536
     },
     "badge_mouser_platinum": {
       "file": "sheet_06.png",
@@ -13556,8 +14746,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 384,
-      "sy": 1216
+      "sx": 2944,
+      "sy": 1536
     },
     "badge_allCats_single": {
       "file": "sheet_06.png",
@@ -13570,8 +14760,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 448,
-      "sy": 1216
+      "sx": 3008,
+      "sy": 1536
     },
     "badge_robots_bronze": {
       "file": "sheet_06.png",
@@ -13584,8 +14774,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 512,
-      "sy": 1216
+      "sx": 3072,
+      "sy": 1536
     },
     "badge_robots_silver": {
       "file": "sheet_06.png",
@@ -13598,8 +14788,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 576,
-      "sy": 1216
+      "sx": 3136,
+      "sy": 1536
     },
     "badge_robots_gold": {
       "file": "sheet_06.png",
@@ -13612,8 +14802,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 640,
-      "sy": 1216
+      "sx": 3200,
+      "sy": 1536
     },
     "badge_robots_platinum": {
       "file": "sheet_06.png",
@@ -13626,8 +14816,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 704,
-      "sy": 1216
+      "sx": 3264,
+      "sy": 1536
     },
     "badge_hours_bronze": {
       "file": "sheet_06.png",
@@ -13640,8 +14830,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 768,
-      "sy": 1216
+      "sx": 3328,
+      "sy": 1536
     },
     "badge_hours_silver": {
       "file": "sheet_06.png",
@@ -13654,8 +14844,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 832,
-      "sy": 1216
+      "sx": 3392,
+      "sy": 1536
     },
     "badge_hours_gold": {
       "file": "sheet_06.png",
@@ -13668,8 +14858,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 896,
-      "sy": 1216
+      "sx": 3456,
+      "sy": 1536
     },
     "badge_hours_platinum": {
       "file": "sheet_06.png",
@@ -13682,8 +14872,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 960,
-      "sy": 1216
+      "sx": 3520,
+      "sy": 1536
     },
     "badge_fullFleet_single": {
       "file": "sheet_06.png",
@@ -13696,8 +14886,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1024,
-      "sy": 1216
+      "sx": 3584,
+      "sy": 1536
     },
     "badge_crop_pasture_bronze": {
       "file": "sheet_06.png",
@@ -13710,8 +14900,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1088,
-      "sy": 1216
+      "sx": 3648,
+      "sy": 1536
     },
     "badge_crop_pasture_silver": {
       "file": "sheet_06.png",
@@ -13724,8 +14914,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1152,
-      "sy": 1216
+      "sx": 3712,
+      "sy": 1536
     },
     "badge_crop_pasture_gold": {
       "file": "sheet_06.png",
@@ -13738,8 +14928,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1216,
-      "sy": 1216
+      "sx": 3776,
+      "sy": 1536
     },
     "badge_crop_pasture_platinum": {
       "file": "sheet_06.png",
@@ -13752,8 +14942,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1280,
-      "sy": 1216
+      "sx": 3840,
+      "sy": 1536
     },
     "badge_crop_wheat_bronze": {
       "file": "sheet_06.png",
@@ -13766,8 +14956,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1344,
-      "sy": 1216
+      "sx": 3904,
+      "sy": 1536
     },
     "badge_crop_wheat_silver": {
       "file": "sheet_06.png",
@@ -13780,8 +14970,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1408,
-      "sy": 1216
+      "sx": 3968,
+      "sy": 1536
     },
     "badge_crop_wheat_gold": {
       "file": "sheet_06.png",
@@ -13794,8 +14984,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1472,
-      "sy": 1216
+      "sx": 4032,
+      "sy": 1536
     },
     "badge_crop_wheat_platinum": {
       "file": "sheet_06.png",
@@ -13808,8 +14998,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1536,
-      "sy": 1216
+      "sx": 0,
+      "sy": 1600
     },
     "badge_crop_tomato_bronze": {
       "file": "sheet_06.png",
@@ -13822,8 +15012,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1600,
-      "sy": 1216
+      "sx": 64,
+      "sy": 1600
     },
     "badge_crop_tomato_silver": {
       "file": "sheet_06.png",
@@ -13836,8 +15026,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1664,
-      "sy": 1216
+      "sx": 128,
+      "sy": 1600
     },
     "badge_crop_tomato_gold": {
       "file": "sheet_06.png",
@@ -13850,8 +15040,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1728,
-      "sy": 1216
+      "sx": 192,
+      "sy": 1600
     },
     "badge_crop_tomato_platinum": {
       "file": "sheet_06.png",
@@ -13864,8 +15054,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1792,
-      "sy": 1216
+      "sx": 256,
+      "sy": 1600
     },
     "badge_crop_potato_bronze": {
       "file": "sheet_06.png",
@@ -13878,8 +15068,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1856,
-      "sy": 1216
+      "sx": 320,
+      "sy": 1600
     },
     "badge_crop_potato_silver": {
       "file": "sheet_06.png",
@@ -13892,8 +15082,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1920,
-      "sy": 1216
+      "sx": 384,
+      "sy": 1600
     },
     "badge_crop_potato_gold": {
       "file": "sheet_06.png",
@@ -13906,8 +15096,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 1984,
-      "sy": 1216
+      "sx": 448,
+      "sy": 1600
     },
     "badge_crop_potato_platinum": {
       "file": "sheet_06.png",
@@ -13920,8 +15110,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2048,
-      "sy": 1216
+      "sx": 512,
+      "sy": 1600
     },
     "badge_crop_corn_bronze": {
       "file": "sheet_06.png",
@@ -13934,8 +15124,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2112,
-      "sy": 1216
+      "sx": 576,
+      "sy": 1600
     },
     "badge_crop_corn_silver": {
       "file": "sheet_06.png",
@@ -13948,8 +15138,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2176,
-      "sy": 1216
+      "sx": 640,
+      "sy": 1600
     },
     "badge_crop_corn_gold": {
       "file": "sheet_06.png",
@@ -13962,8 +15152,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2240,
-      "sy": 1216
+      "sx": 704,
+      "sy": 1600
     },
     "badge_crop_corn_platinum": {
       "file": "sheet_06.png",
@@ -13976,8 +15166,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2304,
-      "sy": 1216
+      "sx": 768,
+      "sy": 1600
     },
     "badge_crop_peanut_bronze": {
       "file": "sheet_06.png",
@@ -13990,8 +15180,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2368,
-      "sy": 1216
+      "sx": 832,
+      "sy": 1600
     },
     "badge_crop_peanut_silver": {
       "file": "sheet_06.png",
@@ -14004,8 +15194,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2432,
-      "sy": 1216
+      "sx": 896,
+      "sy": 1600
     },
     "badge_crop_peanut_gold": {
       "file": "sheet_06.png",
@@ -14018,8 +15208,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2496,
-      "sy": 1216
+      "sx": 960,
+      "sy": 1600
     },
     "badge_crop_peanut_platinum": {
       "file": "sheet_06.png",
@@ -14032,8 +15222,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2560,
-      "sy": 1216
+      "sx": 1024,
+      "sy": 1600
     },
     "badge_crop_strawberry_bronze": {
       "file": "sheet_06.png",
@@ -14046,8 +15236,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2624,
-      "sy": 1216
+      "sx": 1088,
+      "sy": 1600
     },
     "badge_crop_strawberry_silver": {
       "file": "sheet_06.png",
@@ -14060,8 +15250,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2688,
-      "sy": 1216
+      "sx": 1152,
+      "sy": 1600
     },
     "badge_crop_strawberry_gold": {
       "file": "sheet_06.png",
@@ -14074,8 +15264,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2752,
-      "sy": 1216
+      "sx": 1216,
+      "sy": 1600
     },
     "badge_crop_strawberry_platinum": {
       "file": "sheet_06.png",
@@ -14088,8 +15278,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2816,
-      "sy": 1216
+      "sx": 1280,
+      "sy": 1600
     },
     "badge_crop_cabbage_bronze": {
       "file": "sheet_06.png",
@@ -14102,8 +15292,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2880,
-      "sy": 1216
+      "sx": 1344,
+      "sy": 1600
     },
     "badge_crop_cabbage_silver": {
       "file": "sheet_06.png",
@@ -14116,8 +15306,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 2944,
-      "sy": 1216
+      "sx": 1408,
+      "sy": 1600
     },
     "badge_crop_cabbage_gold": {
       "file": "sheet_06.png",
@@ -14130,8 +15320,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3008,
-      "sy": 1216
+      "sx": 1472,
+      "sy": 1600
     },
     "badge_crop_cabbage_platinum": {
       "file": "sheet_06.png",
@@ -14144,8 +15334,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3072,
-      "sy": 1216
+      "sx": 1536,
+      "sy": 1600
     },
     "badge_crop_rice_bronze": {
       "file": "sheet_06.png",
@@ -14158,8 +15348,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3136,
-      "sy": 1216
+      "sx": 1600,
+      "sy": 1600
     },
     "badge_crop_rice_silver": {
       "file": "sheet_06.png",
@@ -14172,8 +15362,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3200,
-      "sy": 1216
+      "sx": 1664,
+      "sy": 1600
     },
     "badge_crop_rice_gold": {
       "file": "sheet_06.png",
@@ -14186,8 +15376,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3264,
-      "sy": 1216
+      "sx": 1728,
+      "sy": 1600
     },
     "badge_crop_rice_platinum": {
       "file": "sheet_06.png",
@@ -14200,8 +15390,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3328,
-      "sy": 1216
+      "sx": 1792,
+      "sy": 1600
     },
     "badge_crop_pumpkin_bronze": {
       "file": "sheet_06.png",
@@ -14214,8 +15404,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3392,
-      "sy": 1216
+      "sx": 1856,
+      "sy": 1600
     },
     "badge_crop_pumpkin_silver": {
       "file": "sheet_06.png",
@@ -14228,8 +15418,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3456,
-      "sy": 1216
+      "sx": 1920,
+      "sy": 1600
     },
     "badge_crop_pumpkin_gold": {
       "file": "sheet_06.png",
@@ -14242,8 +15432,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3520,
-      "sy": 1216
+      "sx": 1984,
+      "sy": 1600
     },
     "badge_crop_pumpkin_platinum": {
       "file": "sheet_06.png",
@@ -14256,8 +15446,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3584,
-      "sy": 1216
+      "sx": 2048,
+      "sy": 1600
     },
     "badge_crop_watermelon_bronze": {
       "file": "sheet_06.png",
@@ -14270,8 +15460,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3648,
-      "sy": 1216
+      "sx": 2112,
+      "sy": 1600
     },
     "badge_crop_watermelon_silver": {
       "file": "sheet_06.png",
@@ -14284,8 +15474,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3712,
-      "sy": 1216
+      "sx": 2176,
+      "sy": 1600
     },
     "badge_crop_watermelon_gold": {
       "file": "sheet_06.png",
@@ -14298,8 +15488,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3776,
-      "sy": 1216
+      "sx": 2240,
+      "sy": 1600
     },
     "badge_crop_watermelon_platinum": {
       "file": "sheet_06.png",
@@ -14312,8 +15502,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3840,
-      "sy": 1216
+      "sx": 2304,
+      "sy": 1600
     },
     "badge_crop_sunflower_bronze": {
       "file": "sheet_06.png",
@@ -14326,8 +15516,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3904,
-      "sy": 1216
+      "sx": 2368,
+      "sy": 1600
     },
     "badge_crop_sunflower_silver": {
       "file": "sheet_06.png",
@@ -14340,8 +15530,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 3968,
-      "sy": 1216
+      "sx": 2432,
+      "sy": 1600
     },
     "badge_crop_sunflower_gold": {
       "file": "sheet_06.png",
@@ -14354,8 +15544,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 4032,
-      "sy": 1216
+      "sx": 2496,
+      "sy": 1600
     },
     "badge_crop_sunflower_platinum": {
       "file": "sheet_06.png",
@@ -14368,8 +15558,8 @@ window.GAME_ATLAS = {
         32,
         30
       ],
-      "sx": 0,
-      "sy": 1280
+      "sx": 2560,
+      "sy": 1600
     },
     "ui_pet_shiba": {
       "file": "ui_pet_shiba.png",
@@ -14825,6 +16015,18 @@ window.GAME_ATLAS = {
       "anchor": [
         160,
         160
+      ]
+    },
+    "ui_tab_fences": {
+      "file": "ui_tab_fences.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        46
       ]
     },
     "ui_pg_st_honey": {
@@ -15324,6 +16526,834 @@ window.GAME_ATLAS = {
       "frames": 1,
       "frameWidth": 1200,
       "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_level": {
+      "file": "ui_badge_level.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_level_off": {
+      "file": "ui_badge_level_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_harvest": {
+      "file": "ui_badge_harvest.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_harvest_off": {
+      "file": "ui_badge_harvest_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_veggies": {
+      "file": "ui_badge_veggies.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_veggies_off": {
+      "file": "ui_badge_veggies_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_orchard": {
+      "file": "ui_badge_orchard.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_orchard_off": {
+      "file": "ui_badge_orchard_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_organic": {
+      "file": "ui_badge_organic.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_organic_off": {
+      "file": "ui_badge_organic_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_cropgroup": {
+      "file": "ui_badge_cropgroup.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_cropgroup_off": {
+      "file": "ui_badge_cropgroup_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_pasture": {
+      "file": "ui_badge_crop_pasture.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_pasture_off": {
+      "file": "ui_badge_crop_pasture_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_wheat": {
+      "file": "ui_badge_crop_wheat.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_wheat_off": {
+      "file": "ui_badge_crop_wheat_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_tomato": {
+      "file": "ui_badge_crop_tomato.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_tomato_off": {
+      "file": "ui_badge_crop_tomato_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_potato": {
+      "file": "ui_badge_crop_potato.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_potato_off": {
+      "file": "ui_badge_crop_potato_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_corn": {
+      "file": "ui_badge_crop_corn.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_corn_off": {
+      "file": "ui_badge_crop_corn_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_peanut": {
+      "file": "ui_badge_crop_peanut.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_peanut_off": {
+      "file": "ui_badge_crop_peanut_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_strawberry": {
+      "file": "ui_badge_crop_strawberry.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_strawberry_off": {
+      "file": "ui_badge_crop_strawberry_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_cabbage": {
+      "file": "ui_badge_crop_cabbage.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_cabbage_off": {
+      "file": "ui_badge_crop_cabbage_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_rice": {
+      "file": "ui_badge_crop_rice.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_rice_off": {
+      "file": "ui_badge_crop_rice_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_pumpkin": {
+      "file": "ui_badge_crop_pumpkin.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_pumpkin_off": {
+      "file": "ui_badge_crop_pumpkin_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_watermelon": {
+      "file": "ui_badge_crop_watermelon.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_watermelon_off": {
+      "file": "ui_badge_crop_watermelon_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_sunflower": {
+      "file": "ui_badge_crop_sunflower.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_crop_sunflower_off": {
+      "file": "ui_badge_crop_sunflower_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_ranch": {
+      "file": "ui_badge_ranch.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_ranch_off": {
+      "file": "ui_badge_ranch_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_ship": {
+      "file": "ui_badge_ship.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_ship_off": {
+      "file": "ui_badge_ship_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allAnimals": {
+      "file": "ui_badge_allAnimals.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allAnimals_off": {
+      "file": "ui_badge_allAnimals_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_fisher": {
+      "file": "ui_badge_fisher.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_fisher_off": {
+      "file": "ui_badge_fisher_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bigPond": {
+      "file": "ui_badge_bigPond.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bigPond_off": {
+      "file": "ui_badge_bigPond_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_honey": {
+      "file": "ui_badge_honey.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_honey_off": {
+      "file": "ui_badge_honey_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_honeyAll": {
+      "file": "ui_badge_honeyAll.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_honeyAll_off": {
+      "file": "ui_badge_honeyAll_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_butterfly": {
+      "file": "ui_badge_butterfly.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_butterfly_off": {
+      "file": "ui_badge_butterfly_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_guard": {
+      "file": "ui_badge_guard.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_guard_off": {
+      "file": "ui_badge_guard_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allDogs": {
+      "file": "ui_badge_allDogs.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allDogs_off": {
+      "file": "ui_badge_allDogs_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_nurse": {
+      "file": "ui_badge_nurse.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_nurse_off": {
+      "file": "ui_badge_nurse_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_mouser": {
+      "file": "ui_badge_mouser.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_mouser_off": {
+      "file": "ui_badge_mouser_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allCats": {
+      "file": "ui_badge_allCats.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_allCats_off": {
+      "file": "ui_badge_allCats_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_robots": {
+      "file": "ui_badge_robots.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_robots_off": {
+      "file": "ui_badge_robots_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_hours": {
+      "file": "ui_badge_hours.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_hours_off": {
+      "file": "ui_badge_hours_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_fullFleet": {
+      "file": "ui_badge_fullFleet.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_fullFleet_off": {
+      "file": "ui_badge_fullFleet_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_ach_head": {
+      "file": "ui_pg_ach_head.png",
+      "frames": 1,
+      "frameWidth": 1000,
+      "frameHeight": 257,
       "fps": 0,
       "loop": false,
       "anchor": [

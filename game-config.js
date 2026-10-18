@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.18",
+  "configVersion": "2.19",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -565,7 +565,9 @@ window.GAME_CONFIG = {
    "source": "shop",
    "cost": 5,
    "autotile": true,
-   "sellable": true
+   "sellable": true,
+   "fenceStyle": true,
+   "note": "有 fenceStyle 的都是柵欄：放在地圖上一律存成 { t:\"deco\", id:\"fence\", style:<款式> }（木柵欄沒有 style），所以圍欄、龍捲風吹倒、扶起來都和木柵欄一樣，不同款式也會連在一起"
   },
   "flowers": {
    "name": "花圃",
@@ -846,6 +848,46 @@ window.GAME_CONFIG = {
    "sellable": false,
    "skinOf": "farmhouse",
    "note": "農舍換成金色外觀（設定可切換），不另外佔格子"
+  },
+  "fence_picket": {
+   "name": "白色尖頭柵欄",
+   "source": "shop",
+   "cost": 10,
+   "autotile": true,
+   "sellable": true,
+   "fenceStyle": true
+  },
+  "fence_bamboo": {
+   "name": "竹籬笆",
+   "source": "shop",
+   "cost": 12,
+   "autotile": true,
+   "sellable": true,
+   "fenceStyle": true
+  },
+  "fence_stone": {
+   "name": "石牆",
+   "source": "shop",
+   "cost": 20,
+   "autotile": true,
+   "sellable": true,
+   "fenceStyle": true
+  },
+  "fence_hedge": {
+   "name": "樹籬",
+   "source": "shop",
+   "cost": 25,
+   "autotile": true,
+   "sellable": true,
+   "fenceStyle": true
+  },
+  "fence_iron": {
+   "name": "鐵欄杆",
+   "source": "shop",
+   "cost": 35,
+   "autotile": true,
+   "sellable": true,
+   "fenceStyle": true
   }
  },
  "expansion": {
@@ -994,7 +1036,8 @@ window.GAME_CONFIG = {
     "organic_fert",
     "orange",
     "palm",
-    "willow"
+    "willow",
+    "fence_picket"
    ],
    "animalCap": 5,
    "fishPoolTileCap": 0,
@@ -1029,7 +1072,8 @@ window.GAME_CONFIG = {
     "sprinkler_s",
     "trashbot",
     "recyclebot",
-    "truck_pad"
+    "truck_pad",
+    "fence_bamboo"
    ],
    "animalCap": 6,
    "fishPoolTileCap": 4,
@@ -1103,7 +1147,8 @@ window.GAME_CONFIG = {
     "trashbot_2",
     "rent_trashbot_1",
     "recyclebot_2",
-    "rent_recyclebot_1"
+    "rent_recyclebot_1",
+    "fence_stone"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1152,7 +1197,8 @@ window.GAME_CONFIG = {
     "cat_tree",
     "dog_food",
     "cat_food",
-    "honeybot_2"
+    "honeybot_2",
+    "fence_hedge"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1201,7 +1247,8 @@ window.GAME_CONFIG = {
     "block:12",
     "grape",
     "poopbot_3",
-    "rent_poop_2"
+    "rent_poop_2",
+    "fence_iron"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -4539,6 +4586,19 @@ window.GAME_CONFIG = {
      ]
     },
     {
+     "id": "fences",
+     "label": "柵欄",
+     "icon": "ui_tab_fences",
+     "ids": [
+      "fence",
+      "fence_picket",
+      "fence_bamboo",
+      "fence_stone",
+      "fence_hedge",
+      "fence_iron"
+     ]
+    },
+    {
      "id": "scenery",
      "label": "造景",
      "icon": "ui_tab_scenery",
@@ -4600,6 +4660,11 @@ window.GAME_CONFIG = {
      "icon": "ui_tab_fac_animal",
      "ids": [
       "fence",
+      "fence_picket",
+      "fence_bamboo",
+      "fence_stone",
+      "fence_hedge",
+      "fence_iron",
       "compost_bin",
       "dog_house",
       "cat_tree"
@@ -4888,6 +4953,12 @@ window.GAME_CONFIG = {
     "insect": "昆蟲",
     "expand": "擴地",
     "other": "其他購買"
+   }
+  },
+  "ach": {
+   "note": "成就面板（v2.19）：徽章圖 ui_badge_<id>（彩色）與 ui_badge_<id>_off（灰色），分組圖示用該組第一個徽章，groupIcon 可以另外指定",
+   "groupIcon": {
+    "作物專家": "ui_badge_cropgroup"
    }
   }
  },
@@ -6051,7 +6122,7 @@ window.GAME_CONFIG = {
    },
    {
     "id": "nurse",
-    "name": "小護士",
+    "name": "救護犬",
     "group": "狗",
     "stat": "nurse",
     "tiers": [

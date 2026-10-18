@@ -10216,6 +10216,146 @@ body.night .sheet.auto47h header h2,body.night .sheet.auto47h header .pgsub{text
 `;
 window.__farm218 = { act: (x, y) => act(x, y), inMap: (M, x, y) => inMap(M, x, y), CFG, buyAsk47, selKey47, selInfo47, btnInfo47, autoRowHTML, rentOptions: k => rentOptions(k) };
 
+/* ===== 48. v2.18.1 + v2.19
+   v2.18.1: purchase confirmation only for things that take coins on a single tap (panel buttons, tray 「上限 +1」 items, 擴地);
+            picking something to place on the map no longer asks. buyBoost itself also asks, so a tray tap can never buy silently.
+   v2.19:   成就 panel in the player's layout (groups with collapsible headers, badge cards, detail column), player badge art
+            (ui_badge_<id> / ui_badge_<id>_off, tier medal in the corner), five more fence styles (柵欄 tab in 裝飾, also in 動物 · 設施). ===== */
+
+/* ---------- v2.18.1: no asking when picking / placing; 擴地 still asks (g47's act wrapper handles UI.expand) ---------- */
+function selKey47(){ return null; }
+{ const _bb48 = buyBoost; buyBoost = function(k, ...a){
+  if (RT.pass47 || RT.dry47 || noAsk47('boost') || !BK38[k]) return _bb48(k, ...a);
+  const B = BK38[k], n = boostN(k); if (n >= B.max || !boostOpen(k)) return _bb48(k, ...a);
+  buyAsk47({ cat: 'boost', title: `用金幣擴充${B.name}`, price: boostPrice(k), okText: '確定擴充',
+    rows: [['每次', boostAddText(k)], ['目前', typeof boostNow(k) === 'number' ? fmtN(boostNow(k)) : boostNow(k)], ['已擴充', `${n} → ${n + 1} / ${B.max} 次`]] },
+    () => { RT.pass47 = true; try { if (_bb48(k, ...a)) UIbuildTray(); } finally { RT.pass47 = false; } });
+  return false; }; }
+
+/* ---------- fences: every style is stored on the map as { t:'deco', id:'fence', style } so all fence rules keep working ---------- */
+const FSTY48 = Object.keys(CFG.decos).filter(id => id !== 'fence' && CFG.decos[id].fenceStyle);
+const isFenceStyle = id => FSTY48.includes(id);
+for (const id of FSTY48) DECO_SPR[id] = `deco_${id}_m10_idle`;
+{ const _is48 = itemSprite; itemSprite = function(kind, id){ if ((kind === 'deco' || kind === 'item') && isFenceStyle(id)) return [`deco_${id}_m10_idle`, 0]; return _is48(kind, id); }; }
+{ const _os48 = objSprite; objSprite = function(M, k){ const T = M.tiles[k]; if (T && T.t === 'deco' && T.id === 'fence' && T.style) return [`deco_${T.style}_m10_idle`, 0]; return _os48(M, k); }; }
+// drawing: the fence sprite for a styled tile is swapped by looking up the tile under the draw point
+{ const _spr48 = spr; spr = function(name, frame, x, y, ...a){
+  if (typeof name === 'string' && name.startsWith('deco_fence_') && S){ const M = curMap(), u = x / HW, v = (y - HH) / HH, tx = Math.round((u + v) / 2), ty = Math.round((v - u) / 2), T = M && M.tiles[tkey(tx, ty)];
+    if (T && T.t === 'deco' && T.id === 'fence' && T.style && ATLAS['deco_' + T.style + name.slice(10)]) name = 'deco_' + T.style + name.slice(10); }
+  return _spr48(name, frame, x, y, ...a); }; }
+const fenceDef = T => CFG.decos[(T && T.style) || 'fence'];
+{ const _a48f = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _a48f(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (tool === 'animal' && isFenceStyle(S.sel.animal)) return withTool('deco', { deco: S.sel.animal }, () => act(x, y));
+  if (tool === 'deco' && isFenceStyle(S.sel.deco)){
+    if (T){ return _a48f(x, y); }
+    const id = S.sel.deco, D = CFG.decos[id], stock = S.storage[id] || 0;
+    if (stock > 0) S.storage[id] = stock - 1;
+    else if (!isUnlocked(id)){ toast(lockedMsg(id)); return; }
+    else if (!spend(D.cost)) return;
+    M.tiles[k] = { t: 'deco', id: 'fence', style: id }; RT.decoVer++; RT.regionsAt = 0; sfx('place');
+    floatText(cx, cy - 24, stock > 0 ? '從倉庫拿出' : `-${fmtN(D.cost)}`, '#8a5d36', 11); afterAction(); return; }
+  if (T && T.t === 'deco' && T.id === 'fence' && T.style && (tool === 'store' || tool === 'remove') && !T.fallen){
+    const D = fenceDef(T);
+    if (tool === 'store'){ S.storage[T.style] = (S.storage[T.style] || 0) + 1; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); }
+    else { const back = Math.floor(D.cost * R.decoSellRate); flyCoins(worldToScreen(cx, cy - 20), back); S.player.coins += back; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, `+${fmtN(back)}`, '#c98a0c', 12); }
+    afterAction(); return; }
+  return _a48f(x, y); }; }
+// v2.18.1: placing on the map is never asked — run the map action with the confirmation switched off (擴地 still asks)
+{ const _a48p = act; act = function(x, y){ if (UI.expand || RT.pass47 || RT.dry47) return _a48p(x, y); RT.pass47 = true; try { return _a48p(x, y); } finally { RT.pass47 = false; } }; }
+// trays: wood fence back in 裝飾 · 柵欄; every style in 動物 · 設施
+{ const _ut48 = UIbuildTray; UIbuildTray = function(){ _ut48(); if (!S || RT.borrow34) return; const tray = $('tray'), tool = S.sel.tool; if (!tray) return;
+  const mk = (id, selected, onPick) => { const D = CFG.decos[id], n = S.storage[id] || 0, lk = !isUnlocked(id) && !n;
+    const el = trayItem('deco', id, D.name, [`${coinImg()}${fmtN(D.cost)}／格`, '圍住動物'], selected, lk, { book: 'decos', count: n, lockLv: UNLOCK[id] });
+    el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } onPick(); }; return el; };
+  if (tool === 'deco' && !tray.querySelector('.item[data-id="fence"]')){
+    const el = mk('fence', S.sel.deco === 'fence', () => { S.sel.deco = 'fence'; S.sel.decoTab = 'fences'; UIbuildTray(); updateHint(); });
+    const first = tray.querySelector(`.item[data-id="${FSTY48[0]}"]`); if (first) tray.insertBefore(el, first); else tray.appendChild(el);
+    applyTrayTabs(); }
+  if (tool === 'animal'){ let after = tray.querySelector('.item[data-id="fence"]');
+    for (const id of FSTY48){ if (tray.querySelector(`.item[data-id="${id}"]`)) continue;
+      const el = mk(id, S.sel.animal === id, () => { S.sel.animal = id; S.sel.animalTab = 'facility'; UIbuildTray(); updateHint(); });
+      if (after) after.insertAdjacentElement('afterend', el); else tray.insertBefore(el, tray.firstChild); after = el; }
+    applyTabs33(); } }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _h48 = ta.hint; ta.hint = () => isFenceStyle(S.sel.animal) ? `點草地放${CFG.decos[S.sel.animal].name} · 每格 ${CFG.decos[S.sel.animal].cost} 金幣，相鄰的柵欄會連在一起，可以圍住動物` : _h48(); }
+{ const td = TOOLS.find(t => t.id === 'deco'); if (td){ const _h48d = td.hint; td.hint = () => (isFenceStyle(S.sel.deco) || S.sel.deco === 'fence') ? `點草地放${CFG.decos[S.sel.deco].name} · 每格 ${CFG.decos[S.sel.deco].cost} 金幣，相鄰的柵欄（不同款式也可以）會連在一起` : _h48d(); }; }
+
+/* ---------- 成就: new layout ---------- */
+const ACH48 = (CFG.ui && CFG.ui.ach) || {};
+PAGE['成就'] = { ic: 'ui_trophy', sub: '', wide: 1 };
+const MEDAL48 = { bronze: ['#c97b42', '#8a4a20'], silver: ['#dfe4e8', '#7c8a96'], gold: ['#ffd24a', '#c98a0c'], platinum: ['#cdbbff', '#6d55c9'] };
+const medal48 = t => { const C = MEDAL48[t]; if (!C) return ''; return `<svg class="md48" viewBox="0 0 40 46" aria-hidden="true"><path d="M12 30 L8 44 L16 40 L20 46 L22 31Z" fill="#3a76c9"/><path d="M28 30 L32 44 L24 40 L20 46 L18 31Z" fill="#2f63b0"/><circle cx="20" cy="18" r="16" fill="${C[1]}"/><circle cx="20" cy="18" r="13" fill="${C[0]}"/><path d="M20 8l3 6.5 7 .8-5.2 4.7 1.5 7-6.3-3.6-6.3 3.6 1.5-7L10 15.3l7-.8z" fill="rgba(255,255,255,.55)"/></svg>`; };
+// what the bar shows: single badges count their collection (e.g. 9 / 12 kinds) instead of 0 / 1
+function achShow48(a){ const A = ach39(), T = achTiers(a), G = A.got[a.id] || {}, top = [...T].reverse().find(([t]) => G[t]), nx = T.find(([t]) => !G[t]);
+  let v = achValue(a), need = nx ? nx[1] : T[T.length - 1][1];
+  const col = { veggies: ['crops', CFG.crops], orchard: ['fruits', CFG.trees], allAnimals: ['animals', CFG.animals], allDogs: ['dogs', DOGS39], allCats: ['cats', CATS39] }[a.stat];
+  if (col){ need = Object.keys(col[1]).length; v = Object.keys(A.seen[col[0]] || {}).length; }
+  else if (a.stat === 'honeyAll'){ need = HONEY_ORDER.length; v = Object.keys(A.seen.honeys || {}).length; }
+  else if (a.stat === 'fullFleet'){ need = 5; v = S.fleet ? Math.max(0, ...Object.values(S.fleet).map(f => (f || []).length)) : 0; }
+  if (!nx){ v = Math.max(v, need); }
+  return { top, nx, v: Math.min(v, need), need, pct: Math.min(100, Math.floor(Math.min(v, need) / need * 100)), done: !nx }; }
+const badgeSrc48 = (a, on) => IMGSRC[`ui_badge_${a.id}${on ? '' : '_off'}`] || IMGSRC[`ui_badge_${a.id}`] || '';
+function achDetail48(a){ const A = ach39(), G = A.got[a.id] || {}, T = achTiers(a), sh = achShow48(a), TN = ACHC.tierNames || {}, TR = ACHC.tierRewards || {};
+  const cond = a.stat === 'level' ? `到達等級（目前 ${S.player.level} 級）` : `${a.desc}（目前 ${fmtN(achValue(a))}）`;
+  const needTxt = need => a.stat === 'level' ? `達成 ${need} 級` : `達成 ${fmtN(need)}`;
+  return `<div class="pcard dh48"><img src="${badgeSrc48(a, !!sh.top)}" alt=""><div><h4>${a.name}</h4><span class="small">${sh.top ? `目前階段：${TN[sh.top[0]] || ''}` : '還沒拿到'}</span></div></div>
+    <div class="pcard"><h4>目前進度</h4><div class="bar48"><i><u style="width:${sh.pct}%"></u></i><b>${fmtN(sh.v)} / ${fmtN(sh.need)}</b></div>
+      <p class="small">${sh.nx ? (sh.nx[0] === 'single' ? '完成就拿到徽章' : `下一階：${TN[sh.nx[0]]}（${needTxt(sh.nx[1])}）`) : '全部完成了！'}</p></div>
+    <div class="pcard"><h4>徽章條件</h4><ul class="ul48"><li>${cond}</li></ul></div>
+    <div class="pcard"><h4>階段獎勵</h4><div class="tb48">${T.map(([t, need]) => `<div class="tr48${G[t] ? ' got' : ''}">${t === 'single' ? `<img src="${badgeSrc48(a, true)}" alt="">` : medal48(t)}<span>${TN[t] || ''}獎勵</span><span>${t === 'single' ? '完成' : needTxt(need)}</span><span>${G[t] ? `✓ 已領 ${fmtN(TR[t] || 0)}` : `金幣 ${fmtN(TR[t] || 0)}`}</span></div>`).join('')}</div></div>`; }
+function openAch(sel){
+  achCheck(false); const A = ach39(), list = ACHC.list || [], groups = [];
+  for (const a of list){ let g = groups.find(x => x.n === a.group); if (!g) groups.push(g = { n: a.group, l: [] }); g.l.push(a); }
+  const total = list.reduce((s, a) => s + achTiers(a).length, 0), have = list.reduce((s, a) => s + achTiers(a).filter(([t]) => (A.got[a.id] || {})[t]).length, 0), TR = ACHC.tierRewards || {};
+  RT.achOpen48 = RT.achOpen48 || {}; let cur = sel || RT.achSel48 || (list[0] && list[0].id);
+  openModal('成就', null, (kk, el) => {
+    el.innerHTML = `<div class="tip">亮的是已經拿到的徽章，灰的還沒拿到。已拿到 ${have} / ${total} 階。每階獎勵：銅 ${fmtN(TR.bronze)}、銀 ${fmtN(TR.silver)}、金 ${fmtN(TR.gold)}、白金 ${fmtN(TR.platinum)} 金幣（一階的 ${fmtN(TR.single)}）。點徽章看條件。</div>
+      <div class="lay48"><div class="list48">${groups.map(g => { const gt = g.l.reduce((s, a) => s + achTiers(a).length, 0), gh = g.l.reduce((s, a) => s + achTiers(a).filter(([t]) => (A.got[a.id] || {})[t]).length, 0), closed = RT.achOpen48[g.n] === false;
+        const gi = (ACH48.groupIcon || {})[g.n]; const icon = gi ? IMGSRC[gi] : badgeSrc48(g.l[0], true);
+        return `<section class="grp48${closed ? ' closed' : ''}"><button class="gh48" data-g="${g.n}"><img src="${icon}" alt="">${g.n}<span class="n">${gh} / ${gt}</span><span class="ar">${closed ? '﹀' : '︿'}</span></button>
+          <div class="cards48">${g.l.map(a => { const sh = achShow48(a);
+            return `<button class="cd48${a.id === cur ? ' sel' : ''}${sh.top ? '' : ' off'}" data-a="${a.id}"><span class="bw48"><img src="${badgeSrc48(a, !!sh.top)}" alt="">${sh.top && sh.top[0] !== 'single' ? medal48(sh.top[0]) : ''}</span><b>${a.name}</b><small>${sh.done ? '全部完成' : `${fmtN(sh.v)} / ${fmtN(sh.need)}`}</small><i><u style="width:${sh.pct}%"></u></i></button>`; }).join('')}</div></section>`; }).join('')}</div>
+      <div class="det48" id="achDet48"><div class="ds48"><button class="x48" aria-label="關閉">✕</button>${cur ? achDetail48(list.find(a => a.id === cur)) : ''}</div></div></div>`;
+    el.onclick = e => { const g = e.target.closest('[data-g]'); if (g){ RT.achOpen48[g.dataset.g] = RT.achOpen48[g.dataset.g] === false; g.parentElement.classList.toggle('closed'); g.querySelector('.ar').textContent = g.parentElement.classList.contains('closed') ? '﹀' : '︿'; return; }
+      const b = e.target.closest('[data-a]'); if (!b) return; const a = list.find(x => x.id === b.dataset.a); RT.achSel48 = a.id;
+      el.querySelectorAll('.cd48.sel').forEach(x => x.classList.remove('sel')); b.classList.add('sel');
+      const det = el.querySelector('#achDet48'); det.innerHTML = `<div class="ds48"><button class="x48" aria-label="關閉">✕</button>${achDetail48(a)}</div>`;
+      if (isM() && window.matchMedia('(max-width:760px)').matches){ det.classList.add('show'); } };
+    const det = el.querySelector('#achDet48'); det.addEventListener('click', e => { if (e.target === det || e.target.closest('.x48')) det.classList.remove('show'); });
+  });
+  const hd = document.querySelector('#modal .sheet header'); if (hd && PIMG('ach_head')) hd.insertAdjacentHTML('beforeend', `<img class="hd47 hd48" src="${PIMG('ach_head')}" alt="">`);
+  document.querySelector('#modal .sheet').classList.add('auto47h', 'ach48h'); }
+{ const _om48 = openModal; openModal = function(title, ...a){ const sh = document.querySelector('#modal .sheet'); sh.classList.remove('ach48h'); return _om48(title, ...a); }; }
+css38.textContent += `
+.sheet.ach48h header .pgic{display:block;position:relative;z-index:1}.sheet.ach48h header h2{grid-column:2}
+.lay48{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:14px;align-items:start;color:#24344a}
+.grp48{margin-bottom:10px}.gh48{display:flex;width:100%;align-items:center;gap:10px;background:rgba(200,225,248,.75);border:0;border-radius:14px;padding:6px 14px;font:inherit;font-weight:800;font-size:18px;color:#24344a;cursor:pointer}
+.gh48 img{width:34px;height:34px;object-fit:contain}.gh48 .n{margin-left:auto;font-weight:600;font-size:16px}.gh48 .ar{font-size:14px;width:16px}
+.grp48.closed .cards48{display:none}
+.cards48{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;padding:10px 2px}
+.cd48{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;background:#fff;border-radius:16px;box-shadow:0 2px 6px rgba(0,0,0,.07);padding:10px 6px;border:2px solid transparent;font:inherit;color:#24344a;cursor:pointer}
+.cd48.sel{border-color:#47a3e6}.bw48{position:relative;display:block;width:80px;height:80px}.bw48 img{width:80px;height:80px;object-fit:contain}
+.bw48 .md48{position:absolute;right:-8px;bottom:-4px;width:28px;height:32px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.cd48 b{font-size:14px;margin-top:3px}.cd48 small{font-size:11.5px;color:#55677c}
+.cd48 i{display:block;width:84%;height:6px;border-radius:3px;background:#e5ebf1;margin-top:4px;overflow:hidden}.cd48 i u{display:block;height:100%;background:#f5b51d}
+.det48{position:sticky;top:0}.ds48{display:flex;flex-direction:column;gap:10px}.x48{display:none}.lay48 .det48 .pcard{background:#fff;color:#24344a;-webkit-backdrop-filter:none;backdrop-filter:none}.dh48 h4{margin:0}.det48 h4{margin:0 0 6px;font-size:17px}
+.dh48{display:flex;gap:14px;align-items:center}.dh48 img{width:84px;height:84px;object-fit:contain}
+.bar48{display:flex;align-items:center;gap:12px}.bar48 i{flex:1;height:14px;border-radius:7px;background:#e3e9ef;overflow:hidden}.bar48 i u{display:block;height:100%;background:#f5b51d}
+.ul48{margin:0;padding-left:20px;font-size:14px}
+.tb48{display:flex;flex-direction:column;gap:2px;background:#f5f9fd;border-radius:12px;padding:6px 10px}
+.tr48{display:grid;grid-template-columns:36px 1fr 1fr 1.1fr;gap:6px;align-items:center;font-size:13.5px;padding:4px 0;border-bottom:1px solid #e8eef4}.tr48:last-child{border:0}
+.tr48 .md48,.tr48 img{width:30px;height:34px;object-fit:contain}.tr48.got span:last-child{color:#2f8a5c;font-weight:700}
+.sheet.ach48h header .hd48{right:80px;bottom:-24px;height:150px}
+body.m-land .sheet.ach48h header{min-height:64px}body.m-land .sheet.ach48h header .hd48{height:78px;bottom:-12px;right:70px}body.m-land .sheet.ach48h header .pgic{width:40px;height:36px}
+body.m-land .lay48{grid-template-columns:minmax(0,1fr) 270px}body.m-land .cards48{grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}body.m-land .bw48,body.m-land .bw48 img{width:54px;height:54px}body.m-land .cd48 b{font-size:12px}body.m-land .dh48 img{width:54px;height:54px}body.m-land .det48 .pcard{padding:8px 12px}body.m-land .tr48{font-size:12px}
+@media (max-width:760px){.lay48{grid-template-columns:1fr}.cards48{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.bw48,.bw48 img{width:62px;height:62px}.cd48 b{font-size:12.5px}
+  .det48{display:none;position:fixed;inset:0;z-index:30;background:rgba(10,25,40,.5);padding:10px}.det48.show{display:flex;flex-direction:column;justify-content:flex-end}
+  .ds48{background:#eef5fc;border-radius:20px;padding:12px;max-height:82%;overflow:auto;position:relative}.x48{display:block;position:absolute;right:10px;top:10px;z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:#fff;font-size:16px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  .sheet.ach48h header .hd48{height:72px;right:auto;left:50%;transform:translateX(-50%);bottom:-6px}}
+`;
+window.__farm219 = {  buyBoost: k => buyBoost(k), openAch, achShow48, isFenceStyle, FSTY48, act: (x, y) => act(x, y), inMap: (M, x, y) => inMap(M, x, y) };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>
