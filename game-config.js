@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.20.1",
+  "configVersion": "2.21",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -6222,5 +6222,19 @@ window.GAME_CONFIG = {
   "themeColorDay": "#7fd0f5",
   "themeColorNight": "#1d2a44",
   "maskableIcon": "icons/icon-maskable-512.png"
+ },
+ "checkin": {
+  "rewards": [
+   100,
+   150,
+   200,
+   250,
+   300,
+   350,
+   400
+  ],
+  "utcOffsetHours": 8,
+  "popup": true,
+  "note": "每日簽到：七天一輪，rewards＝第 1～7 天的金幣；換日用 utcOffsetHours（台北 +8）的午夜；漏掉一天以上回到第 1 天；簽完第 7 天隔天回到第 1 天；每座農場各自簽（存檔 S.checkin）"
  }
 };

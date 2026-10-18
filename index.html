@@ -10602,6 +10602,61 @@ css38.textContent += `
 `;
 window.__farm220 = { user: () => { RT.userAt49 = Date.now(); }, save: () => save(), itemPrice: id => CFG.items[id].sellPrice, setFiles: f => { CL.files = f; }, clSetSlot: (...a) => clSetSlot(...a), clSlot: id => clSlot(id), slot: () => SLOT, act: (x, y) => act(x, y), storeRobot49, placeBackRobot49, robotStore, sellAsk49, hiveLvl, hiveRange, syncState49, openHive: (...a) => openHive(...a), syncSlot: (...a) => syncSlot(...a) };
 
+/* ===== 50. v2.21: daily check-in — seven-day cycle (CFG.checkin.rewards), day changes at Taipei midnight, one per farm
+   (S.checkin = { last: 'YYYY-MM-DD', streak: 0..7 }). Pops up before the daily forecast; only today's card can be tapped. ===== */
+const CK50 = CFG.checkin || { rewards: [100, 150, 200, 250, 300, 350, 400], utcOffsetHours: 8, popup: true };
+const ckDay = ms => new Date(ms + (CK50.utcOffsetHours ?? 8) * 3600e3).toISOString().slice(0, 10);
+const ckPrev = key => new Date(Date.parse(key + 'T00:00:00Z') - 864e5).toISOString().slice(0, 10);
+function ckState(){ const C = S.checkin || (S.checkin = { last: '', streak: 0 }); return C; }
+// which day of the cycle today is (1..7), and whether it is already signed
+function ckToday(now = Date.now()){ const C = ckState(), today = ckDay(now), n = CK50.rewards.length;
+  if (C.last === today) return { day: C.streak, done: true, today };
+  const cont = C.last && C.last === ckPrev(today) && C.streak < n;
+  return { day: cont ? C.streak + 1 : 1, done: false, today, prevStreak: cont ? C.streak : 0 }; }
+const ckNeeded = () => !!S && !window.__noCheckin50 && !ckToday().done;   // window.__noCheckin50: regression tests only
+function ckSign(card){ const t = ckToday(); if (t.done) return false;
+  if (t.today < (S.checkin.last || '')){ toast('裝置的日期比上次簽到還早，先不能簽到'); return false; }   // clock moved back
+  const coin = CK50.rewards[t.day - 1] || 0; S.checkin = { last: t.today, streak: t.day };
+  S.player.coins += coin; if (card) flyCoins(card, coin); sfx('coin'); toast(`簽到第 ${t.day} 天，+${fmtN(coin)} 金幣`, true, 2600); afterAction(); return true; }
+function checkinHTML(){ const t = ckToday(), n = CK50.rewards.length, signedUpTo = t.done ? t.day : t.day - 1;
+  const cards = CK50.rewards.map((v, i) => { const d = i + 1, done = d <= signedUpTo, now = !t.done && d === t.day, last = d === n;
+    return `<button class="ck50${now ? ' t' : ''}${last ? ' c' : ''}${done ? ' done' : (!now ? ' later' : '')}" data-ck50="${d}" ${now ? '' : 'tabindex="-1"'}>
+      <img src="${PIMG(now ? 'ck_today' : last ? 'ck_chest' : 'ck_card')}" alt=""><span class="h">第 ${d} 天</span><span class="n">${fmtN(v)}</span></button>`; }).join('');
+  const head = t.done ? `今天已經簽到了（連續第 ${t.day} 天）。明天記得再來！` : t.day > 1 ? `連續簽到第 ${t.day} 天！點發光的「第 ${t.day} 天」就能領 ${fmtN(CK50.rewards[t.day - 1])} 金幣。` : `點發光的「第 1 天」就能領 ${fmtN(CK50.rewards[0])} 金幣。每天簽到，獎勵越來越多。`;
+  return `<div class="cksub">${head}中間漏掉一天會從第 1 天重新開始。</div><div class="ckrow">${cards}</div>
+    <p class="small cknote">台北時間每天 0 點換日；每座農場各自簽到。</p>`; }
+PAGE['每日簽到'] = { ic: 'ui_coin', sub: '每天登入點一下，連續七天獎勵越來越多', wide: 1 };
+function openCheckin(after){
+  openModal('每日簽到', null, (k, el) => { el.innerHTML = checkinHTML();
+    el.onclick = e => { const b = e.target.closest('[data-ck50]'); if (!b) return; if (!b.classList.contains('t')){ if (b.classList.contains('later')) toast('還沒到這一天'); return; }
+      if (ckSign(b.querySelector('img'))){ el.innerHTML = checkinHTML(); } }; });
+  if (after){ const done = () => { $('modalClose').removeEventListener('click', done); setTimeout(after, 250); }; $('modalClose').addEventListener('click', done); } }
+{ const _mf50 = maybeDailyForecast; maybeDailyForecast = function(){
+  if (S && CK50.popup !== false && ckNeeded() && !tutActive() && $('modal').hidden){ RT.ckShown50 = ckDay(Date.now()); openCheckin(() => _mf50()); return; }
+  return _mf50(); }; }
+setInterval(() => { try { if (S && SLOT && CK50.popup !== false && ckNeeded() && RT.ckShown50 !== ckDay(Date.now()) && !tutActive() && $('modal').hidden && !document.hidden){ RT.ckShown50 = ckDay(Date.now()); openCheckin(); } } catch(e){} }, 60e3);
+// 更多 menu entry with a red dot when not signed yet
+{ const _mh50 = moreHTML; moreHTML = function(){ const dot = S && ckNeeded() ? '<i class="rd"></i>' : '';
+  return _mh50().replace(/(<button class="mi" data-m="news")/, `<button class="mi" data-m="ck50"><img src="${IMGSRC.ui_coin}" alt=""><span>每日簽到</span>${dot}</button>$1`); }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="ck50"]'); if (!b) return; e.stopPropagation(); closeMore(); openCheckin(); }, true);
+{ const _ns50 = normalizeState; normalizeState = function(d){ const r = _ns50(d); if (!r) return r; r.checkin = r.checkin || { last: '', streak: 0 }; r.v221 = true; return r; }; }
+css38.textContent += `
+.cksub{color:#4b5d72;font-size:14px;margin:0 0 12px}
+.ckrow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end}
+.ck50{position:relative;border:0;background:none;padding:0;font:inherit;cursor:default;text-align:center}.ck50 img{width:100%;display:block}
+.ck50 .h{position:absolute;left:0;right:0;top:9%;color:#fff;font-weight:900;font-size:clamp(12px,1.7vw,18px);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.ck50 .n{position:absolute;left:0;right:0;top:66%;font-weight:900;font-size:clamp(14px,2.1vw,23px);color:#4a2c10}
+.ck50.t .h{top:13%}.ck50.c .n{top:74%}.ck50.c .h{top:10%}
+.ck50.t{cursor:pointer;animation:ckp50 1.6s ease-in-out infinite}@keyframes ckp50{50%{transform:scale(1.045)}}
+.ck50.later img{filter:grayscale(1) brightness(.95);opacity:.75}.ck50.later .h,.ck50.later .n{filter:grayscale(1);opacity:.8}
+.ck50.done img{filter:saturate(.55) brightness(.92)}
+.ck50.done::after{content:"✓";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#2f9a5a;color:#fff;font-size:28px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.cknote{text-align:center;margin-top:12px}
+@media (max-width:640px){.ckrow{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:12px}.ck50 .h{font-size:13px}.ck50 .n{font-size:16px}.ck50.done::after{width:30px;height:30px;font-size:19px;top:44%}}
+body.m-land .ckrow{gap:5px}body.m-land .ck50 .h{font-size:11px}body.m-land .ck50 .n{font-size:13px}body.m-land .ck50.done::after{width:24px;height:24px;font-size:15px}
+`;
+window.__farm221 = { ckToday, ckSign, openCheckin, ckDay, ckNeeded };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>

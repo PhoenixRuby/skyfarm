@@ -17360,6 +17360,42 @@ window.GAME_ATLAS = {
         0,
         0
       ]
+    },
+    "ui_pg_ck_today": {
+      "file": "ui_pg_ck_today.png",
+      "frames": 1,
+      "frameWidth": 300,
+      "frameHeight": 393,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_ck_chest": {
+      "file": "ui_pg_ck_chest.png",
+      "frames": 1,
+      "frameWidth": 300,
+      "frameHeight": 402,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_ck_card": {
+      "file": "ui_pg_ck_card.png",
+      "frames": 1,
+      "frameWidth": 300,
+      "frameHeight": 376,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };
