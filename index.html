@@ -10657,6 +10657,78 @@ body.m-land .ckrow{gap:5px}body.m-land .ck50 .h{font-size:11px}body.m-land .ck50
 `;
 window.__farm221 = { ckToday, ckSign, openCheckin, ckDay, ckNeeded };
 
+/* ===== 51. v2.21.1: storage first — decos, fences, dens, stored buildings, weather dolls and robots (same tier) are taken from storage
+   before coins are spent. The tray shows the price and 「倉庫還有 n」. When this selection has used storage and the stock runs out,
+   the first paid placement asks once (CFG.storeFirst.askWhenOut, 「這類以後不再詢問」 respected); switching item or tool starts over.
+   A selection that never had stock is not asked (v2.18.1). ===== */
+const SF51 = CFG.storeFirst || { askWhenOut: true };
+const isDen51 = id => id === 'dog_house' || id === 'cat_tree';
+const isFence51 = id => id === 'fence' || isFenceStyle(id);
+const dollStock51 = (t, s) => (S.dolls || []).filter(d => d.type === t && d.size === s && d.left > 0 && !dollPlaced(d.id)).length;
+function stockOf51(tool, id){ id = String(id || '');
+  if (tool === 'deco'){ if (id.startsWith('dollbuy:')){ const [, t, s] = id.split(':'); return dollStock51(t, s); }
+    const D = CFG.decos[id]; return D && D.source === 'shop' ? (S.storage[id] || 0) : 0; }
+  if (tool === 'animal') return (isFence51(id) || isDen51(id)) ? (S.storage[id] || 0) : 0;
+  if (tool === 'build') return BLD[id] && id !== 'truck_pad' ? (S.buildStore[id] || 0) : 0;
+  return 0; }
+const selId51 = () => { const s = S.sel; return s.tool === 'deco' ? s.deco : s.tool === 'animal' ? s.animal : s.tool === 'build' ? s.build : null; };
+function key51(){ if (!S) return null; const t = S.sel.tool, id = String(selId51() || '');
+  if (t === 'deco' && (id.startsWith('dollbuy:') || (CFG.decos[id] && CFG.decos[id].source === 'shop'))) return 'deco:' + id;
+  if (t === 'animal' && (isFence51(id) || isDen51(id))) return 'animal:' + id;
+  if (t === 'build' && BLD[id] && id !== 'truck_pad') return 'build:' + id;
+  return null; }
+const cat51 = () => S.sel.tool === 'build' ? 'build' : (S.sel.tool === 'deco' && String(S.sel.deco).startsWith('dollbuy:')) ? 'doll' : 'deco';
+const run51 = fn => { const was = RT.in51; RT.in51 = true; try { return fn(); } finally { RT.in51 = was; } };
+// a stored building picked in 建設: put the stored one down (same as 裝飾 · 倉庫建築)
+function placeStored51(M, x, y, id, inner){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y);
+  if (T && T.t !== 'weed') return inner();
+  if (!isUnlocked(id) && !(S.buildStore[id] > 0)){ toast(lockedMsg(id)); return; }
+  if (!placeAny(M, x, y, id, cx, cy, true)) return;
+  sfx('place'); try { assignHomes(); } catch(e){} afterAction(); }
+{ const _a51 = act; act = function(x, y){
+  if (!S || UI.expand || RT.dry47 || RT.in51) return _a51(x, y);
+  const M = curMap(); if (!M || !inMap(M, x, y)) return _a51(x, y);
+  const key = key51(); if (!key) return _a51(x, y);
+  if (document.getElementById('ask47')) return;
+  const tool = S.sel.tool, id = String(selId51()), n = stockOf51(tool, id);
+  if (n > 0){ RT.had51 = key;
+    const r = run51(() => tool === 'deco' && id.startsWith('dollbuy:') ? withTool('deco', { deco: 'dollown:' + id.slice(8) }, () => _a51(x, y))
+      : tool === 'build' ? placeStored51(M, x, y, id, () => _a51(x, y)) : _a51(x, y));
+    if (stockOf51(tool, id) !== n){ UIbuildTray(); updateHint(); }
+    return r; }
+  if (SF51.askWhenOut === false || RT.had51 !== key || RT.ok51 === key) return run51(() => _a51(x, y));
+  const { price, r } = dry47(() => run51(() => _a51(x, y))); if (price === null) return r;
+  const I = selInfo47(price) || { title: '購買', price }; I.cat = cat51(); if (I.price == null) I.price = price;
+  I.q = '倉庫裡的已經用完了，接下來每放一個都要花金幣買。確定後這次連續放置不會再問，換別的東西才會再問。'; I.okText = '確定購買';
+  const go = () => { RT.ok51 = key; run51(() => _a51(x, y)); UIbuildTray(); };
+  if (noAsk47(I.cat)) go(); else buyAsk47(I, go); }; }
+// tray: price and 「倉庫還有 n」 on every item that has stock; a new selection starts over
+{ const _ut51 = UIbuildTray; UIbuildTray = function(){ _ut51(); if (!S || RT.borrow34) return;
+  if (!RT.in51){ const key = key51(); if (key !== RT.key51){ RT.key51 = key; RT.had51 = RT.ok51 = null; } }
+  const tool = S.sel.tool, tray = $('tray'); if (!tray || !['deco', 'animal', 'build'].includes(tool)) return;
+  tray.querySelectorAll('.item').forEach(el => { const id = el.dataset.id || '', sm = el.querySelectorAll('small');
+    if (isDen51(id) && sm[0] && CFG.decos[id]) sm[0].innerHTML = `${coinImg()}${fmtN(CFG.decos[id].cost)}`;
+    if (![...sm].some(s => s.querySelector('img'))) return;                     // only items that show a price (not 倉庫建築 / owned dolls / rewards)
+    const n = tool === 'deco' && id.includes(':') ? dollStock51(...id.split(':')) : stockOf51(tool, id);
+    if (!(n > 0)) return;
+    const c = el.querySelector('.count'); if (c) c.remove();
+    const s = document.createElement('small'); s.className = 'st51'; s.textContent = `倉庫還有 ${fmtN(n)}`;
+    if (sm[0]) sm[0].insertAdjacentElement('afterend', s); else el.appendChild(s);
+    el.classList.remove('locked'); }); }; }
+{ const _uh51 = updateHint; updateHint = function(){ _uh51(); try { if (!S) return; const key = key51(); if (!key) return; const n = stockOf51(S.sel.tool, selId51());
+  if (n > 0) $('hint').textContent += ` · 倉庫還有 ${fmtN(n)}，先用倉庫的`; } catch(e){} }; }
+// robots: 購買新機 places a stored robot of the same kind and tier back first (free)
+const storedRobots51 = (kind, ti) => robotStore().filter(r => r.kind === kind && r.tier === ti).sort((a, b) => (b.batt || 0) - (a.batt || 0));
+{ const _br51 = buyRobot; buyRobot = function(kind, ti, ...a){ const r = storedRobots51(kind, +ti)[0]; if (r) return placeBackRobot49(r.sid); return _br51(kind, ti, ...a); }; }
+{ const _ar51 = autoRowHTML; autoRowHTML = function(kind){
+  return _ar51(kind).replace(/(<span class="w">[^<]*)(<\/span>)([\s\S]*?)(<button class="btn yb47[^"]*" data-rbuy="([^":]+):(\d+)"[^>]*>)購買(<\/button>)/g, (m, w, we, mid, b0, k, i, b1) => {
+    const n = storedRobots51(k, +i).length; return n ? `${w}<em class="st51">倉庫還有 ${n} 台</em>${we}${mid}${b0}放回${b1}` : m; }); }; }
+css38.textContent += `
+#tray .item small.st51{display:inline-block;margin:2px auto 0;padding:0 6px;border-radius:8px;background:#2f9a5a;color:#fff;font-weight:800;line-height:1.5}
+.tier47 .w .st51{display:block;font-style:normal;color:#24864a;font-weight:800;font-size:12px}
+`;
+window.__farm2211 = { key51, stockOf51, act: (x, y) => act(x, y), buyRobot: (k, i) => buyRobot(k, i), storedRobots51 };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>

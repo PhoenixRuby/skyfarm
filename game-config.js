@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.21",
+  "configVersion": "2.21.1",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -6236,5 +6236,9 @@ window.GAME_CONFIG = {
   "utcOffsetHours": 8,
   "popup": true,
   "note": "每日簽到：七天一輪，rewards＝第 1～7 天的金幣；換日用 utcOffsetHours（台北 +8）的午夜；漏掉一天以上回到第 1 天；簽完第 7 天隔天回到第 1 天；每座農場各自簽（存檔 S.checkin）"
+ },
+ "storeFirst": {
+  "askWhenOut": true,
+  "note": "倉庫優先：裝飾、柵欄、狗屋／貓跳台、收回倉庫的建設、天氣娃娃、機器人（同等級）放置或購買時先用倉庫的；這次選的品項用過倉庫、用完後第一次要花金幣時問一次（askWhenOut），確定後連續放置不再問，換品項或工具重算；倉庫本來就沒有的照 v2.18.1 不問"
  }
 };
