@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.19",
+  "configVersion": "2.20",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4164,7 +4164,9 @@ window.GAME_CONFIG = {
   },
   "sharedChargerQueue": "firstComeFirstServed",
   "sharedPadQueue": "firstComeFirstServed",
-  "tierNote": "每種機器人都有初／中／高三級，只差工作時數（耗電照初級每小時的用電比例、充電時間 1／2／3 倍）。舊存檔的「標準」機＝初級（tier id 不變）。rent[].unlock 沒寫＝和初級一起解鎖"
+  "tierNote": "每種機器人都有初／中／高三級，只差工作時數（耗電照初級每小時的用電比例、充電時間 1／2／3 倍）。舊存檔的「標準」機＝初級（tier id 不變）。rent[].unlock 沒寫＝和初級一起解鎖",
+  "storeSellRate": 0.5,
+  "storeNote": "收回倉庫的機器人不算台數；賣掉＝該級購買價 × storeSellRate"
  },
  "pests": {
   "startLevel": 3,
@@ -4431,7 +4433,24 @@ window.GAME_CONFIG = {
    "pollinates": true,
    "beesPerFrame": 100
   },
-  "beesPerFrame": 100
+  "beesPerFrame": 100,
+  "hiveLevels": [
+   {
+    "range": 2
+   },
+   {
+    "range": 3,
+    "cost": 1500,
+    "unlockLevel": 8
+   },
+   {
+    "range": 4,
+    "cost": 4000,
+    "unlockLevel": 12
+   }
+  ],
+  "bumbleLevelCostMult": 1.5,
+  "hiveLevelsNote": "蜂箱、熊蜂箱的等級：range＝以蜂箱為中心向外幾格（2＝5×5），cost＝升到這一級的金幣（熊蜂箱 ×bumbleLevelCostMult），unlockLevel＝玩家要到幾級。舊存檔的蜂箱算 1 級"
  },
  "migrations": {
   "2.0.0": {

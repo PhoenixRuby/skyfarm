@@ -10356,6 +10356,247 @@ body.m-land .lay48{grid-template-columns:minmax(0,1fr) 270px}body.m-land .cards4
 `;
 window.__farm219 = {  buyBoost: k => buyBoost(k), openAch, achShow48, isFenceStyle, FSTY48, act: (x, y) => act(x, y), inMap: (M, x, y) => inMap(M, x, y) };
 
+/* ===== 49. v2.20: no item is pre-selected when switching tray tabs or tools · Google Drive sync decides by "did anyone play"
+   (action counter) instead of save time, dedupes cloud files · robots are 收回倉庫 (S.robotStore) instead of switched off,
+   倉庫 · 機器人倉庫 tab (放回農場 / 半價賣掉) · every 賣 in the storage asks with a quantity dialog · hive levels 1–3
+   (5×5 / 7×7 / 9×9) with an upgrade and a range mini-map in the hive panel ===== */
+
+/* ---------- 1. nothing selected after a tab or tool switch ---------- */
+const ITEM_TOOLS49 = ['seed', 'animal', 'fish', 'insect', 'build', 'deco', 'care'];
+RT.userAt49 = 0; ['pointerdown', 'keydown', 'click'].forEach(ev => window.addEventListener(ev, e => { if (e.isTrusted) RT.userAt49 = Date.now(); }, true));
+const userNow49 = () => Date.now() - RT.userAt49 < 1500;
+window.addEventListener('click', e => {   // runs before every other click handler
+  const it = e.target.closest && e.target.closest('#tray .item'); if (!it || !S) return;
+  if (RT.tabPick49 && !e.isTrusted){ e.stopImmediatePropagation(); e.preventDefault(); return; }   // the old "pick the first item" on a tab switch
+  if (!it.classList.contains('locked')) S.sel.none49 = false;
+}, true);
+{ const _tb49 = tabsBar; tabsBar = function(list, cur, onPick){
+  return _tb49(list, cur, k => { if (!userNow49()) return onPick(k);   // scripted switches (tests, tutorial) keep the old behaviour
+    RT.tabPick49 = true; try { onPick(k); } finally { RT.tabPick49 = false; } if (ITEM_TOOLS49.includes(S.sel.tool)){ S.sel.none49 = true; UIbuildTray(); updateHint(); } }); }; }
+{ const _pf49 = pickFirstVisible; pickFirstVisible = function(tray){ if (RT.tabPick49) return; return _pf49(tray); }; }
+{ const _st49 = setTool; setTool = function(id){ if (S && ITEM_TOOLS49.includes(id) && id !== S.sel.tool && userNow49()) S.sel.none49 = true; return _st49(id); }; }
+{ const _ut49 = UIbuildTray; UIbuildTray = function(){ _ut49(); if (!S || !S.sel.none49 || !ITEM_TOOLS49.includes(S.sel.tool)) return;
+  const tray = $('tray'); if (tray) tray.querySelectorAll('.item.sel').forEach(el => { el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); }); }; }
+{ const _uh49 = updateHint; updateHint = function(){ _uh49(); if (S && S.sel.none49 && ITEM_TOOLS49.includes(S.sel.tool)) $('hint').textContent = '先從下面選一個，再點地圖'; }; }
+// with nothing selected, tapping the map only works on things already there (feeding an animal, opening a machine…), never places or buys
+function noSelBlocks49(T){ const tool = S.sel.tool;
+  if (!T || T.t === 'weed') return true;
+  if (tool === 'seed') return T.t === 'soil' && !T.crop && !T.flower;
+  if (tool === 'fish') return T.t === 'pool';
+  if (tool === 'care') return true;
+  if (tool === 'insect') return (T.t === 'device' && DEV[T.id] && DEV[T.id].kind === 'hive' && !T.queen) || T.t === 'tree';
+  return false; }
+{ const _a49 = act; act = function(x, y){
+  if (S && S.sel.none49 && ITEM_TOOLS49.includes(S.sel.tool) && !UI.expand){ const M = curMap();
+    if (inMap(M, x, y) && noSelBlocks49(M.tiles[tkey(x, y)])){ toast('先從下面選一個，再點地圖'); return; } }
+  return _a49(x, y); }; }
+
+/* ---------- 2. Google Drive: count real play, compare against what was synced last ---------- */
+{ const _aa49 = afterAction; afterAction = function(...a){ if (S && Date.now() - RT.userAt49 < 3000){ S.acts = (S.acts || 0) + 1; S.actAt = Date.now(); S.actDev = deviceName(); } return _aa49(...a); }; }
+async function driveList(){
+  const r = await gfetch(`${DRIVE}/files?spaces=appDataFolder&pageSize=200&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime,appProperties)`); const j = await r.json();
+  const all = (j.files || []).filter(f => f.appProperties && f.appProperties.slot), seen = new Set(), keep = [];
+  for (const f of all){ if (seen.has(f.appProperties.slot)){ driveDelete(f.id).catch(() => {}); continue; } seen.add(f.appProperties.slot); keep.push(f); }   // newest wins, older duplicates go
+  CL.files = keep; return CL.files; }
+async function driveUpload(id){
+  if (id === SLOT && S) save();
+  const raw = lsGet(SLOT_PREFIX + id), e = slotList().find(x => x.id === id); if (!raw || !e) return false;
+  const d = parseSaved(raw); if (!d) return false;
+  const m = summarize(d), props = { slot: id, name: String(e.name).slice(0, 12), level: String(m.level), coins: String(m.coins), blocks: String(m.blocks), savedAt: String(d.savedAt || 0),
+    device: deviceName(), acts: String(d.acts || 0), actAt: String(d.actAt || d.savedAt || 0), actDev: String(d.actDev || deviceName()).slice(0, 20) };
+  const st = clSlot(id) || {}, f = st.fileId ? { id: st.fileId } : fileOf(id);
+  const meta = f ? { appProperties: props } : { name: `skyfarm-slot-${id}.json`, parents: ['appDataFolder'], appProperties: props };
+  const mp = multipart(meta, raw);
+  let r; try { r = await gfetch(f ? `${DRIVE_UP}/files/${f.id}?uploadType=multipart&fields=id,appProperties` : `${DRIVE_UP}/files?uploadType=multipart&fields=id,appProperties`, { method: f ? 'PATCH' : 'POST', headers: { 'Content-Type': mp.type }, body: mp.body }); }
+  catch(err){ if (f && /404/.test(err.message)){ clSetSlot(id, { fileId: null }); CL.files = null; return driveUpload(id); } throw err; }
+  const j = await r.json(); clSetSlot(id, { fileId: j.id, lastUp: d.savedAt || 0, lastRemote: String(d.savedAt || 0), lastActs: d.acts || 0, syncedAt: Date.now() }); return true; }
+const localActs49 = id => { const d = parseSaved(lsGet(SLOT_PREFIX + id)); return d ? (d.acts || 0) : 0; };
+function syncState49(id){ const st = clSlot(id) || {}, f = fileOf(id); if (!f) return { f: null, remoteChanged: false, localChanged: true };
+  const rAt = String(f.appProperties.savedAt || 0), acts = localActs49(id);
+  const remoteChanged = st.lastRemote != null ? rAt !== String(st.lastRemote) : (+rAt > (st.lastUp || 0) + 1000);
+  const localChanged = st.lastActs != null ? acts > st.lastActs : (((slotList().find(x => x.id === id) || {}).savedAt || 0) > (st.lastUp || 0));
+  return { f, remoteChanged, localChanged }; }
+async function syncSlot(id, opts = {}){
+  const st = clSlot(id); if (!st || !st.on || CL.pending[id]) return;
+  cloudBusy(true);
+  try {
+    if (id === SLOT && S) save();
+    await driveList(); const s = syncState49(id); if (s.f) clSetSlot(id, { fileId: s.f.id });
+    if (s.f && s.remoteChanged){ CL.pending[id] = true; cloudConflict(id, s.f, s.localChanged); }
+    else if (!s.f || s.localChanged) await driveUpload(id);
+    else clSetSlot(id, { syncedAt: Date.now() });
+    CL.status = 'ok';
+  } catch(err){ CL.status = /login/.test(err.message) ? 'login' : 'err'; }
+  finally { cloudBusy(false); } }
+async function cloudConflict(id, f, localChanged){
+  let remote = null; try { remote = await driveDownload(f.id); } catch(e){ CL.pending[id] = false; return; }
+  const rd = parseSaved(remote); if (!rd){ CL.pending[id] = false; toast('雲端那份存檔讀不到（校驗失敗），先保留這台的進度'); return; }
+  const ld = parseSaved(lsGet(SLOT_PREFIX + id)), lm = ld ? summarize(ld) : {}, rm = summarize(rd), name = (slotList().find(x => x.id === id) || {}).name || '農場';
+  const when = ms => { if (!ms) return '—'; const d = new Date(+ms); return `${d.getMonth() + 1}/${d.getDate()} ${fmtHM(+ms)}`; };
+  const A = f.appProperties, lAt = ld && (ld.actAt || ld.savedAt), lDev = (ld && ld.actDev) || deviceName();
+  const done = () => { CL.pending[id] = false; };
+  openModal('要用哪一份？', null, (k, el) => {
+    el.innerHTML = `<p>「${escapeHTML(name)}」在 Google Drive 有別台裝置的新進度。${localChanged ? '這台自上次同步後<b>也有玩</b>，兩邊都有新進度。' : '這台自上次同步後<b>沒有玩</b>。'}</p>
+      <div class="cmp"><div class="card"><h4>這台裝置 <span class="cl ${localChanged ? 'ok' : 'warn'}">${localChanged ? '有新進度' : '沒有新進度'}</span></h4><div class="kv"><span>等級</span><span>Lv ${lm.level ?? '—'}</span><span>金幣</span><span>${fmtN(lm.coins || 0)}</span><span>土地</span><span>${lm.blocks || 1} 塊</span><span>最後玩</span><span>${when(lAt)} · ${escapeHTML(lDev)}</span></div><button class="btn ghost" id="cfLocal">用這台的</button></div>
+      <div class="card new"><h4>Google Drive <span class="cl ok">有新進度</span></h4><div class="kv"><span>等級</span><span>Lv ${rm.level}</span><span>金幣</span><span>${fmtN(rm.coins)}</span><span>土地</span><span>${rm.blocks} 塊</span><span>最後玩</span><span>${when(A.actAt || A.savedAt)} · ${escapeHTML(A.actDev || A.device || '')}</span></div><button class="btn" id="cfRemote">用雲端的</button></div></div>
+      <p class="small">沒選的那份會先備份，之後可以在「存檔與換電腦」復原。</p>`;
+    $('cfRemote').onclick = () => { const cur = lsGet(SLOT_PREFIX + id); if (cur) lsSet(BACKUP_PREFIX + id, cur); done();
+      if (id === SLOT) adoptState(rd); else { lsSet(SLOT_PREFIX + id, remote); const l = slotList(), e = l.find(x => x.id === id); if (e){ e.savedAt = rd.savedAt; e.summary = rm; writeSlotList(l); } }
+      clSetSlot(id, { lastUp: (slotList().find(x => x.id === id) || {}).savedAt || rd.savedAt, lastRemote: String(A.savedAt || 0), lastActs: localActs49(id), syncedAt: Date.now() });
+      closeModal(); toast('已改用雲端的進度；這台原本的進度已備份', true, 3200); renderHUD(); };
+    $('cfLocal').onclick = async () => { lsSet(BACKUP_PREFIX + id, remote); done(); closeModal(); cloudBusy(true);
+      try { await driveUpload(id); CL.status = 'ok'; toast('已用這台的進度覆蓋雲端；雲端原本那份已備份', true, 3200); } catch(e){ CL.status = 'err'; } finally { cloudBusy(false); } };
+  });
+  $('modalClose').onclick = () => { done(); closeModal(); }; }
+{ const _cb49 = cloudBadge; cloudBadge = function(){ _cb49(); const b = $('cloudBadge'); if (!b || b.hidden || !SLOT) return;
+  const st = clSlot(SLOT) || {}, dirty = S && st.lastActs != null && (S.acts || 0) > st.lastActs;
+  if (b.classList.contains('ok')){ b.textContent = dirty ? '☁ 尚未上傳' : st.syncedAt ? `☁ ${fmtHM(st.syncedAt)}` : '☁'; b.title = dirty ? '這台有還沒上傳的進度，點一下可以立刻同步' : `上次同步 ${st.syncedAt ? fmtHM(st.syncedAt) : '—'}`; b.classList.toggle('dirty49', !!dirty); } }; }
+
+/* ---------- 3. robots: 收回倉庫 instead of 關閉, 倉庫 · 機器人倉庫 ---------- */
+const RSR49 = (RB && RB.storeSellRate) || .5;
+const robotStore = () => S.robotStore || (S.robotStore = []);
+function storeRobot49(kind, id){ const f = fleet(kind), i = f.findIndex(u => u.id === id); if (i < 0) return false; const u = f[i];
+  f.splice(i, 1); try { delete WS[wKey(kind, u)]; } catch(e){}
+  robotStore().push({ sid: 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), kind, tier: u.tier, batt: u.batt, tank: u.tank || 0 });
+  assignHomes(); afterAction(); toast(`${unitTier(kind, u) ? unitTier(kind, u).name : ''}${RK(kind).name}收回機器人倉庫了，可以在「倉庫 · 機器人倉庫」放回農場或賣掉`, true, 3600); return true; }
+function placeBackRobot49(sid){ const R = robotStore(), i = R.findIndex(r => r.sid === sid); if (i < 0) return false; const r = R[i], K = RK(r.kind), f = fleet(r.kind), mx = maxUnits(r.kind);
+  if (f.length >= mx){ toast(`${K.name}已經 ${f.length} / ${mx} 台，農場上沒有空位`); return false; }
+  if (r.kind !== 'sweep' && baseCount(K.base) === 0){ toast(`要先用「建設」蓋${BLD[K.base].name}`); return false; }
+  R.splice(i, 1); f.push({ id: newUnitId(r.kind), tier: r.tier, batt: r.batt, tank: r.tank, state: 'idle', on: true, refill: 0, carry: 0 });
+  assignHomes(); afterAction(); toast(`${K.name}放回農場了`, true); return true; }
+const robotSellPrice49 = r => Math.floor(((RK(r.kind).tiers[r.tier] || {}).buy || 0) * RSR49);
+{ const _ar49 = autoRowHTML; autoRowHTML = function(kind){ return _ar49(kind).replace(/<button class="btn sm on47" data-ron2="([^"]+)">[^<]*<\/button>/g, '<button class="btn sm on47" data-rstore49="$1">收回倉庫</button>'); }; }
+{ const _wr49 = wireRobotButtons; wireRobotButtons = function(el, again){ _wr49(el, again); const prev = el.onclick;
+  el.onclick = e => { const b = e.target.closest('[data-rstore49]'); if (b){ const [k, id] = b.dataset.rstore49.split(':'); if (storeRobot49(k, id)) again(); return; } return prev && prev(e); }; }; }
+{ const _ns49 = normalizeState; normalizeState = function(d){ const r = _ns49(d); if (!r) return r;
+  if (!r.v220){ r.robotStore = r.robotStore || [];
+    if (r.fleet) for (const kind in r.fleet){ const f = r.fleet[kind] || []; for (let i = f.length - 1; i >= 0; i--) if (f[i] && f[i].on === false){ const u = f.splice(i, 1)[0]; r.robotStore.push({ sid: 'r' + i + kind, kind, tier: u.tier, batt: u.batt, tank: u.tank || 0 }); } }
+    for (const M of r.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && DEV[T.id] && DEV[T.id].kind === 'hive' && !T.lvl) T.lvl = 1; }
+    r.v220 = true; }
+  r.robotStore = r.robotStore || []; return r; }; }
+function robotStoreHTML(){ const R = robotStore(); if (!IMGSRC.ui_pg_badge_robots && IMGSRC.ui_badge_robots) IMGSRC.ui_pg_badge_robots = IMGSRC.ui_badge_robots;
+  const rows = R.map(r => { const K = RK(r.kind), tr = K.tiers[r.tier] || {}; return `<tr><td><img class="ico" src="${IMGSRC[R_ICON[r.kind]] || ''}" alt=""></td><td>${K.name}</td><td>${tr.name || ''}・${fmtHours(tr.workHours || 0)}</td><td class="num">${Math.round(Math.min(1, (r.batt || 0) / ((tr.workHours || 1) * 3600)) * 100)}%</td>
+    <td class="acts"><button class="btn" data-rback49="${r.sid}">放回農場</button><button class="btn ghost" data-rsell49="${r.sid}">賣掉 +${fmtN(robotSellPrice49(r))}</button></td></tr>`; });
+  return `<div class="stcap stnote"><span>在「自動化」每台機器人那一列按「收回倉庫」就會放到這裡。收在倉庫的不算台數、不工作；放回農場要有空位和機座（掃地機器人不用）。賣掉是購買價的 ${Math.round(RSR49 * 100)}%。</span></div>`
+    + stBlock45('機器人倉庫', 'badge_robots', 'b', R.length ? stTable45([[''], ['機器人'], ['等級'], ['電量', 1], ['']], rows) : '<div class="empty">倉庫裡沒有機器人。</div>'); }
+{ const _om49 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '倉庫' && Array.isArray(tabs) && !tabs.some(t => t[0] === 'robots')){ tabs = [...tabs, ['robots', '機器人倉庫']]; const r0 = render;
+    render = (k, el) => { if (k === 'robots'){ el.innerHTML = robotStoreHTML(); el.onclick = e => {
+        const bb = e.target.closest('[data-rback49]'); if (bb){ if (placeBackRobot49(bb.dataset.rback49)) openStorage('robots'); return; }
+        const bs = e.target.closest('[data-rsell49]'); if (bs){ const r = robotStore().find(x => x.sid === bs.dataset.rsell49); if (!r) return; const K = RK(r.kind), tr = K.tiers[r.tier] || {};
+          sellAsk49({ title: `${tr.name || ''}${K.name}`, img: IMGSRC[R_ICON[r.kind]], price: robotSellPrice49(r), max: 1, fixed: 1, note: '收在倉庫的這一台', onSell: () => { const i = robotStore().indexOf(r); if (i < 0) return; robotStore().splice(i, 1); const c = robotSellPrice49(r); S.player.coins += c; flyCoins(bs, c); toast(`賣掉${K.name}，+${fmtN(c)} 金幣`, true); afterAction(); openStorage('robots'); } }); } }; return; }
+      r0(k, el); }; }
+  return _om49(title, tabs, render, initial); }; }
+
+/* ---------- 4. selling asks with a quantity dialog ---------- */
+function sellAsk49(I){
+  if (document.getElementById('ask47')) return;
+  const max = Math.max(1, I.max || 1), box = document.createElement('div'); box.id = 'ask47'; box.className = 'ask47'; let q = I.fixed || 1, mode = 'one';
+  const pic = I.img ? `<img src="${I.img}" alt="">` : I.spr ? `<canvas data-spr47="${I.spr[0]}" data-f="${I.spr[1] || 0}" data-sz="70"></canvas>` : '';
+  box.innerHTML = `<div class="cf47 sell49" role="dialog" aria-modal="true"><div class="sh49">${pic}<div><h3>賣出 ${I.title}</h3><div class="q47">${I.fixed ? I.note || '' : `倉庫裡有 ${fmtN(max)} 個`} · 每個 ${fmtN(I.price)} 金幣</div></div></div><div class="bd47">
+    ${I.fixed ? '' : `<div class="qm49"><button data-m="one" class="on">1 個</button><button data-m="all">全部（${fmtN(max)}）</button><button data-m="cus">自訂</button></div>`}
+    <div class="ql49">${I.fixed ? '<div></div>' : `<div class="cus49"><button data-d="-1">−</button><input type="number" min="1" max="${max}" value="1" inputmode="numeric"><button data-d="1">＋</button><input type="range" min="1" max="${max}" value="1"></div>`}
+      <div class="est49"><small>這次會得到</small><b>${coinI()}<span id="sl49v">0</span></b><small id="sl49l"></small></div></div>
+    <div class="btns47"><button class="btn ghost" id="ask47c">取消</button><button class="btn" id="ask47y">確定賣出</button></div></div></div>`;
+  ($('modal').parentElement || document.body).appendChild(box); paint47(box);
+  const num = box.querySelector('input[type=number]'), rng = box.querySelector('input[type=range]');
+  const upd = () => { q = Math.max(1, Math.min(max, Math.floor(+q || 1))); if (num && document.activeElement !== num) num.value = q; if (rng) rng.value = q;
+    box.querySelector('#sl49v').textContent = fmtN(q * I.price); box.querySelector('#sl49l').textContent = I.fixed ? '' : `賣完剩 ${fmtN(max - q)} 個`;
+    box.querySelectorAll('.qm49 button').forEach(b => b.classList.toggle('on', b.dataset.m === mode)); box.querySelectorAll('.cus49 input, .cus49 button').forEach(x => x.disabled = mode !== 'cus'); };
+  box.addEventListener('click', e => { const m = e.target.closest('[data-m]'); if (m){ mode = m.dataset.m; q = mode === 'all' ? max : mode === 'one' ? 1 : q; upd(); return; }
+    const d = e.target.closest('[data-d]'); if (d){ q = q + +d.dataset.d; upd(); return; } if (e.target === box) box.remove(); });
+  if (num) num.addEventListener('input', () => { q = num.value; upd(); }); if (rng) rng.addEventListener('input', () => { q = +rng.value; upd(); });
+  box.querySelector('#ask47c').onclick = () => box.remove();
+  box.querySelector('#ask47y').onclick = () => { box.remove(); I.onSell(q); };
+  upd(); }
+// 農產倉庫: one 賣出 button per row; 裝飾 / 天氣娃娃 sells go through the dialog too
+{ const _om49s = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '倉庫' && typeof render === 'function'){ const r0 = render; render = (k, el) => { r0(k, el);
+    if (k === 'produce'){ const fix = () => el.querySelectorAll('td.acts').forEach(td => { const b = td.querySelector('[data-sell]'); if (b) td.innerHTML = `<button class="btn" data-sell49="${b.dataset.sell}">賣出</button>`; }); fix(); queueMicrotask(fix); setTimeout(fix, 0); } }; }
+  return _om49s(title, tabs, render, initial); }; }
+window.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('#modalBody [data-sell49], #modalBody [data-sell], #modalBody [data-dsell], #modalBody [data-dollsell]'); if (!b || RT.sell49) return;
+  e.stopImmediatePropagation(); e.preventDefault();
+  if (b.dataset.sell49 || b.dataset.sell){ const id = b.dataset.sell49 || b.dataset.sell, I = CFG.items[id]; if (!I || !(S.inv[id] > 0)) return;
+    sellAsk49({ title: itemName(id), spr: itemSprite('item', id), price: I.sellPrice, max: S.inv[id], onSell: q => { const n = invTake(id, q); if (!n) return; const coin = n * I.sellPrice; flyCoins(b, coin); S.player.coins += coin;
+      toast(`賣掉 ${itemName(id)} ${n} 個，+${fmtN(coin)} 金幣`); afterAction(); if (typeof tutEvent === 'function') tutEvent('sellItem'); openStorage('produce'); } }); return; }
+  if (b.dataset.dsell){ const id = b.dataset.dsell, D = CFG.decos[id], n = S.storage[id] || 0; if (!n) return; const price = Math.floor(D.cost * R.decoSellRate);
+    sellAsk49({ title: D.name, spr: itemSprite('deco', id), price, max: n, onSell: q => { q = Math.min(q, S.storage[id] || 0); S.storage[id] -= q; const c = q * price; S.player.coins += c; flyCoins(b, c); toast(`賣掉${D.name} ${q} 個，+${fmtN(c)} 金幣`); afterAction(); openStorage('deco'); } }); return; }
+  if (b.dataset.dollsell){ const d = S.dolls.find(x => x.id === b.dataset.dollsell); if (!d) return; const p = DOLL.rules.sellPrice || 1;
+    sellAsk49({ title: dollName(d), spr: itemSprite('doll', d.type + ':' + (d.left > 0 ? d.size : 'spent')), price: p, max: 1, fixed: 1, note: d.left > 0 ? `剩 ${fmtDur(d.left)}` : '用完了',
+      onSell: () => { RT.sell49 = true; try { b.click(); } finally { RT.sell49 = false; } } }); }
+}, true);
+
+/* ---------- 5. hive levels and the range mini-map ---------- */
+const HLV49 = (BEE && BEE.hiveLevels) || [{ range: BEE ? BEE.range : 4 }];
+const hiveLvl = T => Math.max(1, Math.min(HLV49.length, (T && T.lvl) || 1));
+const hiveRange = T => HLV49[hiveLvl(T) - 1].range;
+const hiveUpCost = T => { const n = HLV49[hiveLvl(T)]; return n ? Math.round(n.cost * (T.id === 'bumble_hive' ? (BEE.bumbleLevelCostMult || 1.5) : 1)) : 0; };
+function hiveFlowers(M, k){ const [x0, y0] = pkey(k), r = hiveRange(M.tiles[k]), out = [];
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const kk = tkey(x0 + dx, y0 + dy), U = M.tiles[kk];
+    if (U && U.t === 'soil' && U.flower && U.flower.stage === 'bloom' && U.flower.nectar > 0) out.push([Math.max(Math.abs(dx), Math.abs(dy)), kk, U]); }
+  return out.sort((a, b) => a[0] - b[0]); }
+function hiveMapCanvas49(M, k, T){
+  const R = 4, r = hiveRange(T), nx = HLV49[hiveLvl(T)] ? HLV49[hiveLvl(T)].range : r, W = 38, H = 19, cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = (2 * R + 1) * W * dpr; cv.height = ((2 * R + 1) * H + 16) * dpr; cv.style.width = (2 * R + 1) * W + 'px'; cv.className = 'hm49'; const c = cv.getContext('2d'); c.scale(dpr, dpr);
+  const [x0, y0] = pkey(k), ox = (2 * R + 1) * W / 2, oy = 8 + H / 2;
+  const cells = []; for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++) cells.push([dx, dy]);
+  cells.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [dx, dy] of cells){ const cx = ox + (dx - dy) * W / 2, cy = oy + (dx + dy + 2 * R) * H / 2, d = Math.max(Math.abs(dx), Math.abs(dy)), U = M.tiles[tkey(x0 + dx, y0 + dy)], inR = d <= r;
+    c.beginPath(); c.moveTo(cx, cy - H / 2); c.lineTo(cx + W / 2, cy); c.lineTo(cx, cy + H / 2); c.lineTo(cx - W / 2, cy); c.closePath();
+    let col = inR ? '#cfe8b8' : '#eef3f7', hatch = false;
+    if (!inMap(M, x0 + dx, y0 + dy)) col = inR ? '#d9e4ec' : '#f4f7fa';
+    if (U && U.t === 'soil' && U.flower){ const st = U.flower.stage; col = st === 'bloom' && U.flower.nectar > 0 ? '#4fb35a' : (st === 'grow' ? '#f2c94c' : '#b9c2cc'); if (!inR) col = st === 'bloom' ? 'rgba(79,179,90,.35)' : '#e7ebef'; }
+    else if (U && U.t === 'deco' && U.id === 'flowers'){ col = inR ? '#ccd3da' : '#eceff2'; hatch = inR; }
+    if (dx === 0 && dy === 0) col = '#8a5d36';
+    c.fillStyle = col; c.fill(); c.strokeStyle = 'rgba(0,0,0,.08)'; c.lineWidth = 1; c.setLineDash([]); c.stroke();
+    if (hatch){ c.save(); c.clip(); c.strokeStyle = '#fff'; for (let i = -24; i < 24; i += 5){ c.beginPath(); c.moveTo(cx + i, cy - 10); c.lineTo(cx + i + 10, cy + 10); c.stroke(); } c.restore(); }
+    if (d === nx && nx > r){ c.setLineDash([3, 3]); c.strokeStyle = '#2f7fd0'; c.lineWidth = 1.2; c.stroke(); c.setLineDash([]); }
+    if (T.target === tkey(x0 + dx, y0 + dy)){ c.font = '14px sans-serif'; c.fillText('🐝', cx - 7, cy + 5); } }
+  c.fillStyle = '#fff'; c.font = 'bold 10px sans-serif'; c.fillText('箱', ox - 5, oy + R * H + 4);
+  return cv; }
+function hiveWhyNot49(M, k, T){ const now = Date.now(), fl = hiveFlowers(M, k);
+  if (!T.queen) return '蜂箱裡沒有蜂群。';
+  if (honeyStored(T) >= BEE.storeMax) return `現在沒有在採：存蜜滿了（${honeyStored(T)} / ${BEE.storeMax} 罐），先收蜂蜜。`;
+  if (isNightAt(now)) return '現在沒有在採：晚上蜜蜂不出門。'; if (farmRain(now)) return '現在沒有在採：下雨中。'; if (farmSnow(now)) return '現在沒有在採：下雪中。';
+  if (!fl.length) return '範圍內沒有開花的花：只產少量野蜂蜜。用「播種 · 花」把花種在範圍內的田裡（裝飾的花圃不算）。';
+  return ''; }
+{ const _oh49 = openHive; openHive = function(M, k, T){ const r = _oh49(M, k, T); try {
+  const el = $('modalBody'); if (!el) return r; el.querySelectorAll('.hv49').forEach(n => n.remove());
+  const lv = hiveLvl(T), rg = hiveRange(T), nx = HLV49[lv], cost = hiveUpCost(T), why = hiveWhyNot49(M, k, T), side = 2 * rg + 1;
+  const box = document.createElement('div'); box.className = 'pcard hv49';
+  box.innerHTML = `<h4>採蜜範圍 <span class="small">${T.id === 'bumble_hive' ? '熊蜂箱' : '蜂箱'} ${lv} 級 · ${side}×${side}（${side * side - 1} 格）</span><span class="stars49">${'★'.repeat(lv)}${'☆'.repeat(HLV49.length - lv)}</span></h4><div class="hmw49"></div>
+    <div class="lg49"><span><i style="background:#4fb35a"></i>開花可採</span><span><i style="background:#f2c94c"></i>花還在長</span><span><i style="background:#b9c2cc"></i>採完休息</span><span><i class="ht"></i>花圃裝飾（不能採）</span><span>🐝 正在採</span>${nx ? '<span>┅ 升級後的範圍</span>' : ''}</div>
+    ${why ? `<p class="why49">${why}</p>` : ''}
+    ${nx ? `<button class="btn yb47" data-hiveup49="${k}" ${S.player.level < (nx.unlockLevel || 1) ? 'disabled' : ''}>${S.player.level < (nx.unlockLevel || 1) ? `🔒 Lv ${nx.unlockLevel} 才能升到 ${lv + 1} 級` : `升到 ${lv + 1} 級 · ${2 * nx.range + 1}×${2 * nx.range + 1}（${(2 * nx.range + 1) ** 2 - 1} 格）· ${fmtN(cost)}`}</button>` : '<span class="pill ok">已經是最高級</span>'}`;
+  box.querySelector('.hmw49').appendChild(hiveMapCanvas49(M, k, T));
+  const anchor = el.querySelector('.lay46') || el.firstElementChild; if (anchor) anchor.insertAdjacentElement('afterend', box); else el.appendChild(box);
+  el.querySelectorAll('p, span, div').forEach(p => { if (p.children.length === 0 && /\d+×\d+ 的花/.test(p.textContent)) p.textContent = p.textContent.replace(/\d+×\d+ 的花/, `${side}×${side} 的花`); });
+  const up = el.querySelector('[data-hiveup49]'); if (up) up.onclick = () => { if (!spend(hiveUpCost(T))) return; T.lvl = hiveLvl(T) + 1; RT.decoVer++; sfx('place'); toast(`升到 ${T.lvl} 級了：採蜜範圍 ${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1}`, true); afterAction(); openHive(M, k, T); };
+  } catch(e){ console.error(e); } return r; }; }
+{ const _bi49 = btnInfo47; btnInfo47 = function(b, price){ if (b.dataset.hiveup49){ const M = curMap(), T = M.tiles[b.dataset.hiveup49], lv = hiveLvl(T), nx = HLV49[lv];
+    return { cat: 'build', title: `${T.id === 'bumble_hive' ? '熊蜂箱' : '蜂箱'}升到 ${lv + 1} 級`, spr: [T.id === 'bumble_hive' ? 'device_bumble_hive_bees' : 'device_beehive_bees', 0], price, okText: '確定升級',
+      rows: [['採蜜範圍', `${2 * hiveRange(T) + 1}×${2 * hiveRange(T) + 1} → ${2 * nx.range + 1}×${2 * nx.range + 1}`], ['範圍內格數', `${(2 * hiveRange(T) + 1) ** 2 - 1} → ${(2 * nx.range + 1) ** 2 - 1} 格`]] }; }
+  return _bi49(b, price); }; }
+// level stars under the hive bubble
+{ const _dd49 = drawDevice; drawDevice = function(T, k, cx, cy, t){ const r = _dd49(T, k, cx, cy, t);
+  if (T && DEV[T.id] && DEV[T.id].kind === 'hive'){ const lv = hiveLvl(T); ctx.save(); ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 2.5; ctx.strokeStyle = 'rgba(80,50,10,.8)'; ctx.fillStyle = '#ffd24a';
+    const s = '★'.repeat(lv); ctx.strokeText(s, cx, cy - 34); ctx.fillText(s, cx, cy - 34); ctx.restore(); }
+  return r; }; }
+css38.textContent += `
+.cloudbadge.dirty49{background:#fff4e0;color:#9a5a12}
+.sell49 .sh49{display:flex;gap:14px;align-items:center;background:linear-gradient(#eaf5ff,#fff);padding:14px 20px}.sell49 .sh49 img,.sell49 .sh49 canvas{width:64px;height:64px;object-fit:contain}.sell49 h3{margin:0 0 2px;font-size:20px}
+.qm49{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.qm49 button{border:1.5px solid #d6dfea;background:#fff;border-radius:12px;padding:9px;font:inherit;font-weight:700;color:#24344a}.qm49 button.on{border-color:#2f7fd0;background:#e8f2fd;color:#1f5fa8}
+.ql49{display:grid;grid-template-columns:minmax(0,1fr) 128px;gap:10px;align-items:center;margin-bottom:12px}
+.cus49{display:flex;gap:6px;align-items:center;min-width:0}.cus49 button{width:34px;height:34px;flex:none;border-radius:10px;border:1px solid #d6dfea;background:#fff;font-size:17px;color:#24344a}.cus49 input[type=number]{width:56px;height:34px;border:1px solid #d6dfea;border-radius:10px;text-align:center;font-size:15px}.cus49 input[type=range]{flex:1;min-width:0}.cus49 :disabled{opacity:.45}
+.est49{background:#fff8e4;border:1px solid #f5d77a;border-radius:14px;padding:8px;text-align:center;display:flex;flex-direction:column}.est49 small{color:#7a6326;font-size:11.5px}.est49 b{display:flex;gap:4px;justify-content:center;align-items:center;font-size:22px;color:#8a5a00}.est49 img{width:20px}
+.hv49 h4{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.hv49 .stars49{margin-left:auto;color:#e0a72a;letter-spacing:2px}.hmw49{overflow-x:auto;text-align:center}.hm49{max-width:100%;height:auto}
+.lg49{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:#4b5d72;margin:6px 0}.lg49 i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:3px;vertical-align:-1px}.lg49 i.ht{background:repeating-linear-gradient(45deg,#ccd3da 0 3px,#fff 3px 6px)}
+.why49{font-size:12.5px;background:#fff4e5;border-radius:10px;padding:6px 10px;color:#9a5a12;margin:6px 0}.hv49 .yb47{width:100%;padding:10px}
+@media (max-width:480px){.ql49{grid-template-columns:1fr}}
+`;
+window.__farm220 = { user: () => { RT.userAt49 = Date.now(); }, save: () => save(), itemPrice: id => CFG.items[id].sellPrice, setFiles: f => { CL.files = f; }, clSetSlot: (...a) => clSetSlot(...a), clSlot: id => clSlot(id), slot: () => SLOT, act: (x, y) => act(x, y), storeRobot49, placeBackRobot49, robotStore, sellAsk49, hiveLvl, hiveRange, syncState49, openHive: (...a) => openHive(...a), syncSlot: (...a) => syncSlot(...a) };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>
