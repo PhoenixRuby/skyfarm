@@ -15210,6 +15210,126 @@ window.GAME_ATLAS = {
         0,
         0
       ]
+    },
+    "ui_pg_auto_head": {
+      "file": "ui_pg_auto_head.png",
+      "frames": 1,
+      "frameWidth": 1000,
+      "frameHeight": 204,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_feed": {
+      "file": "ui_pg_rb_feed.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_honey": {
+      "file": "ui_pg_rb_honey.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_poop": {
+      "file": "ui_pg_rb_poop.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_recyclebot": {
+      "file": "ui_pg_rb_recyclebot.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_snow": {
+      "file": "ui_pg_rb_snow.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_sweep": {
+      "file": "ui_pg_rb_sweep.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_trashbot": {
+      "file": "ui_pg_rb_trashbot.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_water": {
+      "file": "ui_pg_rb_water.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_rb_wellbot": {
+      "file": "ui_pg_rb_wellbot.jpg",
+      "frames": 1,
+      "frameWidth": 1200,
+      "frameHeight": 400,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };

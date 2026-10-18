@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.17.5",
+  "configVersion": "2.18",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -1093,7 +1093,17 @@ window.GAME_CONFIG = {
     "banyan",
     "bumble_hive",
     "bumble_colony",
-    "butterfly_egg"
+    "butterfly_egg",
+    "snowbot_2",
+    "rent_snow_1",
+    "sweeper_2",
+    "rent_sweep_1",
+    "wellbot_2",
+    "rent_wellbot_1",
+    "trashbot_2",
+    "rent_trashbot_1",
+    "recyclebot_2",
+    "rent_recyclebot_1"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1114,7 +1124,10 @@ window.GAME_CONFIG = {
     "battery_l",
     "rose",
     "coconut",
-    "sprinkler_l"
+    "sprinkler_l",
+    "poopbot_2",
+    "rent_poop_1",
+    "rent_honey_1"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -1138,7 +1151,8 @@ window.GAME_CONFIG = {
     "dog_house",
     "cat_tree",
     "dog_food",
-    "cat_food"
+    "cat_food",
+    "honeybot_2"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1155,7 +1169,19 @@ window.GAME_CONFIG = {
     "drone_3",
     "block:7",
     "block:8",
-    "avocado"
+    "avocado",
+    "snowbot_3",
+    "rent_snow_2",
+    "sweeper_3",
+    "rent_sweep_2",
+    "honeybot_3",
+    "rent_honey_2",
+    "wellbot_3",
+    "rent_wellbot_2",
+    "trashbot_3",
+    "rent_trashbot_2",
+    "recyclebot_3",
+    "rent_recyclebot_2"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -1173,7 +1199,9 @@ window.GAME_CONFIG = {
     "block:10",
     "block:11",
     "block:12",
-    "grape"
+    "grape",
+    "poopbot_3",
+    "rent_poop_2"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -3727,17 +3755,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "snowbot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1200,
       "workHours": 2,
       "kwh": 0.3,
       "chargeHours": 0.667
+     },
+     {
+      "id": "snowbot_2",
+      "name": "中級",
+      "buy": 3200,
+      "workHours": 6,
+      "kwh": 0.9,
+      "chargeHours": 1.334
+     },
+     {
+      "id": "snowbot_3",
+      "name": "高級",
+      "buy": 6800,
+      "workHours": 12,
+      "kwh": 1.8,
+      "chargeHours": 2.001
      }
     ],
     "rent": [
      {
       "hours": 2,
       "cost": 80
+     },
+     {
+      "hours": 12,
+      "cost": 300,
+      "unlock": "rent_snow_1"
+     },
+     {
+      "hours": 24,
+      "cost": 600,
+      "unlock": "rent_snow_2"
      }
     ]
    },
@@ -3748,17 +3802,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "sweeper",
-      "name": "標準",
+      "name": "初級",
       "buy": 800,
       "workHours": 0.5,
       "kwh": 0.05,
       "chargeHours": 0.167
+     },
+     {
+      "id": "sweeper_2",
+      "name": "中級",
+      "buy": 2200,
+      "workHours": 1,
+      "kwh": 0.1,
+      "chargeHours": 0.334
+     },
+     {
+      "id": "sweeper_3",
+      "name": "高級",
+      "buy": 4800,
+      "workHours": 2,
+      "kwh": 0.2,
+      "chargeHours": 0.501
      }
     ],
     "rent": [
      {
       "hours": 2,
       "cost": 40
+     },
+     {
+      "hours": 12,
+      "cost": 150,
+      "unlock": "rent_sweep_1"
+     },
+     {
+      "hours": 24,
+      "cost": 320,
+      "unlock": "rent_sweep_2"
      }
     ],
     "tilesPerMinute": 15,
@@ -3773,17 +3853,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "poopbot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1500,
       "workHours": 4,
       "kwh": 0.4,
       "chargeHours": 1
+     },
+     {
+      "id": "poopbot_2",
+      "name": "中級",
+      "buy": 4000,
+      "workHours": 12,
+      "kwh": 1.2,
+      "chargeHours": 2
+     },
+     {
+      "id": "poopbot_3",
+      "name": "高級",
+      "buy": 8500,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
      }
     ],
     "rent": [
      {
       "hours": 4,
       "cost": 120
+     },
+     {
+      "hours": 12,
+      "cost": 400,
+      "unlock": "rent_poop_1"
+     },
+     {
+      "hours": 24,
+      "cost": 900,
+      "unlock": "rent_poop_2"
      }
     ],
     "perMinute": 4,
@@ -3797,17 +3903,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "honeybot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1800,
       "workHours": 4,
       "kwh": 0.4,
       "chargeHours": 1
+     },
+     {
+      "id": "honeybot_2",
+      "name": "中級",
+      "buy": 4500,
+      "workHours": 8,
+      "kwh": 0.8,
+      "chargeHours": 2
+     },
+     {
+      "id": "honeybot_3",
+      "name": "高級",
+      "buy": 8800,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
      }
     ],
     "rent": [
      {
       "hours": 4,
       "cost": 150
+     },
+     {
+      "hours": 12,
+      "cost": 500,
+      "unlock": "rent_honey_1"
+     },
+     {
+      "hours": 24,
+      "cost": 1000,
+      "unlock": "rent_honey_2"
      }
     ],
     "collectAtJars": 10,
@@ -3820,17 +3952,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "wellbot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1200,
       "workHours": 2,
       "kwh": 0.2,
       "chargeHours": 1
+     },
+     {
+      "id": "wellbot_2",
+      "name": "中級",
+      "buy": 3500,
+      "workHours": 8,
+      "kwh": 0.8,
+      "chargeHours": 2
+     },
+     {
+      "id": "wellbot_3",
+      "name": "高級",
+      "buy": 7800,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
      }
     ],
     "rent": [
      {
       "hours": 4,
       "cost": 80
+     },
+     {
+      "hours": 12,
+      "cost": 300,
+      "unlock": "rent_wellbot_1"
+     },
+     {
+      "hours": 24,
+      "cost": 600,
+      "unlock": "rent_wellbot_2"
      }
     ],
     "bucketDrops": 20,
@@ -3847,17 +4005,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "trashbot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1200,
       "workHours": 2,
       "kwh": 0.2,
       "chargeHours": 1
+     },
+     {
+      "id": "trashbot_2",
+      "name": "中級",
+      "buy": 3500,
+      "workHours": 8,
+      "kwh": 0.8,
+      "chargeHours": 2
+     },
+     {
+      "id": "trashbot_3",
+      "name": "高級",
+      "buy": 7800,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
      }
     ],
     "rent": [
      {
       "hours": 4,
       "cost": 80
+     },
+     {
+      "hours": 12,
+      "cost": 300,
+      "unlock": "rent_trashbot_1"
+     },
+     {
+      "hours": 24,
+      "cost": 600,
+      "unlock": "rent_trashbot_2"
      }
     ],
     "carries": [
@@ -3874,17 +4058,43 @@ window.GAME_CONFIG = {
     "tiers": [
      {
       "id": "recyclebot",
-      "name": "標準",
+      "name": "初級",
       "buy": 1200,
       "workHours": 2,
       "kwh": 0.2,
       "chargeHours": 1
+     },
+     {
+      "id": "recyclebot_2",
+      "name": "中級",
+      "buy": 3500,
+      "workHours": 8,
+      "kwh": 0.8,
+      "chargeHours": 2
+     },
+     {
+      "id": "recyclebot_3",
+      "name": "高級",
+      "buy": 7800,
+      "workHours": 24,
+      "kwh": 2.4,
+      "chargeHours": 3
      }
     ],
     "rent": [
      {
       "hours": 4,
       "cost": 80
+     },
+     {
+      "hours": 12,
+      "cost": 300,
+      "unlock": "rent_recyclebot_1"
+     },
+     {
+      "hours": 24,
+      "cost": 600,
+      "unlock": "rent_recyclebot_2"
      }
     ],
     "carries": [
@@ -3906,7 +4116,8 @@ window.GAME_CONFIG = {
    "rentedDroneUsesTowerWater": true
   },
   "sharedChargerQueue": "firstComeFirstServed",
-  "sharedPadQueue": "firstComeFirstServed"
+  "sharedPadQueue": "firstComeFirstServed",
+  "tierNote": "每種機器人都有初／中／高三級，只差工作時數（耗電照初級每小時的用電比例、充電時間 1／2／3 倍）。舊存檔的「標準」機＝初級（tier id 不變）。rent[].unlock 沒寫＝和初級一起解鎖"
  },
  "pests": {
   "startLevel": 3,
@@ -4607,6 +4818,77 @@ window.GAME_CONFIG = {
    "outTiles": 0.35,
    "upPx": 8,
    "note": "平台貼在島的左上、右上時，往外推幾格、往上抬幾像素"
+  },
+  "auto": {
+   "note": "自動化面板：每種機器人的主色、淺色與一句說明（v2.18）",
+   "water": {
+    "c": "#1f6fb2",
+    "cl": "#e4f0fb",
+    "sub": "會自動到田區上方灑水"
+   },
+   "feed": {
+    "c": "#a8601f",
+    "cl": "#fbefe3",
+    "sub": "會自動到畜舍投放飼料"
+   },
+   "poop": {
+    "c": "#2f8a5c",
+    "cl": "#e3f4ea",
+    "sub": "自動清理便便，保持農場衛生"
+   },
+   "snow": {
+    "c": "#4a74a8",
+    "cl": "#e6eef8",
+    "sub": "自動清除積雪，保持場地暢通"
+   },
+   "sweep": {
+    "c": "#2f8a5c",
+    "cl": "#e3f4ea",
+    "sub": "自動打掃地面，維持環境整潔"
+   },
+   "honey": {
+    "c": "#a8601f",
+    "cl": "#fbefe3",
+    "sub": "自動採集蜂蜜，增加蜂箱產量"
+   },
+   "wellbot": {
+    "c": "#1f6fb2",
+    "cl": "#e4f0fb",
+    "sub": "提水灌溉，維持農作生長"
+   },
+   "trashbot": {
+    "c": "#2f8a5c",
+    "cl": "#e3f4ea",
+    "sub": "收集垃圾，維持環境整潔"
+   },
+   "recyclebot": {
+    "c": "#1f6fb2",
+    "cl": "#e4f0fb",
+    "sub": "自動回收資源，保持環境整潔"
+   }
+  },
+  "buyConfirm": {
+   "note": "購買前確認視窗（v2.18）：除了播種作物以外，花金幣都先問。地圖放置類在選品項時問一次，之後連續放同一種不再問。玩家可以勾「這類以後不再詢問」，記在 S.settings.noAsk",
+   "cats": {
+    "robot": "買機器人",
+    "upgrade": "升級機器人",
+    "rent": "租機器人",
+    "base": "擴充機座",
+    "boost": "金幣擴充",
+    "shop": "商店買東西",
+    "doll": "買天氣娃娃",
+    "pet": "買寵物",
+    "animal": "買動物",
+    "build": "蓋建設",
+    "deco": "買裝飾",
+    "plant": "種樹苗、花苗",
+    "plow": "開墾",
+    "care": "施化肥、噴農藥",
+    "fish": "蓋魚池",
+    "insect": "昆蟲",
+    "expand": "擴地",
+    "other": "其他購買"
+   }
   }
  },
  "droneWatering": {
