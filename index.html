@@ -10375,7 +10375,12 @@ window.addEventListener('click', e => {   // runs before every other click handl
     RT.tabPick49 = true; try { onPick(k); } finally { RT.tabPick49 = false; } if (ITEM_TOOLS49.includes(S.sel.tool)){ S.sel.none49 = true; UIbuildTray(); updateHint(); } }); }; }
 { const _pf49 = pickFirstVisible; pickFirstVisible = function(tray){ if (RT.tabPick49) return; return _pf49(tray); }; }
 { const _st49 = setTool; setTool = function(id){ if (S && ITEM_TOOLS49.includes(id) && id !== S.sel.tool && userNow49()) S.sel.none49 = true; return _st49(id); }; }
-{ const _ut49 = UIbuildTray; UIbuildTray = function(){ _ut49(); if (!S || !S.sel.none49 || !ITEM_TOOLS49.includes(S.sel.tool)) return;
+{ const _ut49 = UIbuildTray; UIbuildTray = function(){
+  // v2.20.1: with nothing selected the tab must follow S.sel.<tool>Tab, not the (stale) selected item — act as if the tab was just picked
+  const keep = S && S.sel.none49 && ITEM_TOOLS49.includes(S.sel.tool), f = [RT.tab33Pick, RT.buildTabPick, RT.decoTabPick];
+  if (keep){ RT.tab33Pick = RT.buildTabPick = RT.decoTabPick = true; }
+  try { _ut49(); } finally { if (keep){ [RT.tab33Pick, RT.buildTabPick, RT.decoTabPick] = f; } }
+  if (!S || !S.sel.none49 || !ITEM_TOOLS49.includes(S.sel.tool)) return;
   const tray = $('tray'); if (tray) tray.querySelectorAll('.item.sel').forEach(el => { el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); }); }; }
 { const _uh49 = updateHint; updateHint = function(){ _uh49(); if (S && S.sel.none49 && ITEM_TOOLS49.includes(S.sel.tool)) $('hint').textContent = '先從下面選一個，再點地圖'; }; }
 // with nothing selected, tapping the map only works on things already there (feeding an animal, opening a machine…), never places or buys
