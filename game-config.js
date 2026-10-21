@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.22",
+  "configVersion": "2.22.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -5262,7 +5262,17 @@ window.GAME_CONFIG = {
    "lamp": true,
    "hive": true
   },
-  "fenceTurnSingle": true
+  "fenceTurnSingle": true,
+  "entryOrder": {
+   "order": [
+    "levelUp",
+    "checkin",
+    "news",
+    "forecast",
+    "rooster"
+   ],
+   "note": "進入農場或從背景回來時一次一個，前一個關掉才出下一個；公雞只在畫面上沒有視窗時才飛，過了 09:00 就不飛"
+  }
  },
  "droneWatering": {
   "dryThreshold": 2,

@@ -11347,9 +11347,11 @@ function showLevelUp(){
   if (motion){ const b = ov.querySelector('.lvmedal b'), steps = Q.to - Q.from, dt = Math.max(70, Math.min(160, 800 / Math.max(1, steps))); let v = Q.from;
     setTimeout(function tick(){ if (!ov.isConnected) return; v++; b.textContent = v; b.classList.remove('flip53'); void b.offsetWidth; b.classList.add('flip53'); if (v < Q.to) setTimeout(tick, dt); }, 450); }
   let done = false; const stopC = confetti53(ov, 'confetti');
-  const close = () => { if (done) return; done = true; stopC(); clearTimeout(tm); ov.remove(); UIbuildTray(); updateHint(); renderHUD(); };
+  const close = () => { if (done) return; done = true; stopC(); clearInterval(tm); ov.remove(); UIbuildTray(); updateHint(); renderHUD(); };
   setTimeout(() => { try { if (ov.isConnected) flyCoins(ov.querySelector('.lvcoin'), Q.coins); } catch(e){} }, 900);
-  const tm = setTimeout(close, 6000); ov.addEventListener('click', close); ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
+  // v2.22.1: the 6 s auto-close only counts while the page is visible (a level-up is never missed)
+  let left = 6000, last = performance.now(); const tm = setInterval(() => { const now = performance.now(); if (!document.hidden) left -= now - last; last = now; if (left <= 0 || !ov.isConnected){ clearInterval(tm); if (ov.isConnected) close(); } }, 200);
+  ov.addEventListener('click', close); ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
 let MEDAL53 = null;
 function meteorMedal53(){ if (MEDAL53) return MEDAL53; const c = document.createElement('canvas'); c.width = c.height = 360; const g = c.getContext('2d');
   const R = 128, cx = 180, cy = 186;
@@ -11522,6 +11524,25 @@ function moveOk53(){ const m = RT.mv; if (!m) return false; const M = S.maps[m.m
   try { return _dg53b(M, x, y); } finally { let moved = 0; for (const m of moves){ if (M.glass && M.glass[m.from]) moved++; else homeBack(M, S.cur, m); }
     if (moved){ toast(moved > 1 ? `${moved} 隻動物的家搬到旁邊的草地了` : `${nameOf(moves[0].T.id)}的家搬到旁邊的草地了`, false, 2200); afterAction(); } } }; }
 
+
+/* ---------- 18. the farmhouse utility pole stands behind the house (back-left), drawn in depth order; status bubbles are drawn on top of the farm ---------- */
+const POLE53 = { dx: -37, dy: -25 };   // from the house centre, just outside the back-left wall (tile ≈ (rx-1, ry))
+function drawPole53(rx, ry){ const c = center(rx, ry), hx = c.cx, hy = c.cy + HH; spr(S.settings.grid ? 'utility_pole_on' : 'utility_pole_off', 0, hx + POLE53.dx, hy + POLE53.dy); }
+function drawHouse(T, x, y, now){
+  if (x !== T.rx + 1 || y !== T.ry + 1) return;
+  const c = center(T.rx, T.ry), hx = c.cx, hy = c.cy + HH;
+  if (!inMap(curMap(), T.rx - 1, T.ry)) drawPole53(T.rx, T.ry);          // its own tile is off the island: draw it right behind the house
+  spr(houseLitNow(now) ? 'building_farmhouse_night' : 'building_farmhouse_idle', 0, hx, hy);
+}
+{ const _dte53b = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte53b(M, k, T, x, y, t, now);
+  if (RT.hp53t !== t){ RT.hp53t = t; RT.hp53 = housePos(M); }
+  const hp = RT.hp53; if (hp && x === hp.rx - 1 && y === hp.ry) drawPole53(hp.rx, hp.ry); }; }
+RT.bq53 = null;
+{ const _bb53b = bubble; bubble = function(...a){ if (RT.bq53){ RT.bq53.push({ a, tf: ctx.getTransform(), al: ctx.globalAlpha }); return; } return _bb53b(...a); }; }
+{ const _dw53 = drawWorld; drawWorld = function(t, now){ RT.bq53 = []; let q;
+  try { return _dw53(t, now); } finally { q = RT.bq53; RT.bq53 = null;
+    for (const b of q){ ctx.save(); ctx.setTransform(b.tf); ctx.globalAlpha = b.al; try { if (b.fn) b.fn(); else bubble(...b.a); } catch(e){} ctx.restore(); } } }; }
+
 /* ---------- save data ---------- */
 { const _ns53 = normalizeState; normalizeState = function(d){ const r = _ns53(d); if (!r) return r;
   for (const M of r.maps || []){ M.ghl = M.ghl || {};
@@ -11531,6 +11552,94 @@ function moveOk53(){ const m = RT.mv; if (!m) return false; const M = S.maps[m.m
 
 window.__farm222 = { act: (x, y) => act(x, y), news: l => newsItems(l), flush: s => flushNotices(s), dispatch53, load53, sweepStart53, robotLine53, metFind53, meteorTap: (x, y) => meteorTap(x, y), ghl53, placeGhLamp53, sellGhLamp53, glassDo53,
   capCanvas53, soilSnow53, wmXY53, showMeteor53, showLevelUp: () => showLevelUp(), ghFrame53, baseSnowy53, roofShovel53, trashPlan: (...a) => trashPlan(...a), simNow53, closePop53, get pop(){ return POP53; }, lampMapCanvas53, themeTick: () => themeTick() };
+
+/* ===== 54. v2.22.1: what pops up when you enter the farm (or come back to it) comes one at a time, in this order:
+   level-up cutscene → daily check-in → farm news → weather forecast → morning rooster. A level-up is never missed: it waits while the
+   page is hidden and its 6 s auto-close only counts while you can see it. The rooster only flies when nothing is on screen (and not after
+   09:00 any more). v2.22.2: every panel header has its own small icon (player art, batch33 ui_hd_*), 倉庫 · 水果 gets a picture. ===== */
+
+/* ---------- 1. the queue ---------- */
+const lvWait54 = () => !!document.getElementById('lvup') || !!RT.lvQ || !!RT.pendingLv;
+const busy54 = () => lvWait54() || !$('modal').hidden || !!document.getElementById('ask47') || (S && tutActive());
+const ckPending54 = () => !!S && CK50.popup !== false && ckNeeded() && RT.ckShown50 !== ckDay(Date.now());
+const fcPending54 = () => !!S && S.settings.dailyForecast !== false && !!FC.dailyPopup && S.lastForecastDay !== dayKeyLocal(Date.now());
+RT.newsQ54 = null;
+// 農場新聞 is kept until the level-up and the check-in are done
+{ const _fn54 = flushNotices; flushNotices = function(summary){
+  if (summary && NEWS.onReturn !== false && RT.notices.length){ const list = RT.notices.splice(0), items = newsItems(list);
+    if (items.length){ const Q = RT.newsQ54 || (RT.newsQ54 = []); Q.push(...items); if (Q.length > 30) Q.splice(0, Q.length - 30); }
+    return; }
+  return _fn54(summary); }; }
+setInterval(() => { try {
+  if (!S || document.hidden || !RT.newsQ54 || !RT.newsQ54.length || busy54() || ckPending54()) return;
+  const items = RT.newsQ54; RT.newsQ54 = null; openNews(items);
+} catch(e){ console.error(e); } }, 400);
+// the daily check-in waits for the level-up cutscene
+{ const _oc54 = openCheckin; openCheckin = function(after){
+  if (lvWait54()){ if (RT.ckShown50 === ckDay(Date.now())) RT.ckShown50 = null; return; }
+  return _oc54(after); }; }
+// the weather forecast waits for the news
+{ const _mf54 = maybeDailyForecast; maybeDailyForecast = function(){
+  if (!S || lvWait54()) return;
+  // check-in first (on its own: the forecast must not follow it directly while the news is still waiting)
+  if (ckPending54() && !tutActive() && $('modal').hidden && !document.getElementById('ask47')){ RT.ckShown50 = ckDay(Date.now()); openCheckin(); return; }
+  if (RT.newsQ54 && RT.newsQ54.length) return;
+  // the forecast itself (same checks as v1.7; the check-in was handled above, once a day)
+  if (S.settings.dailyForecast === false || !FC.dailyPopup || S.lastForecastDay === dayKeyLocal(Date.now()) || tutActive() || !$('modal').hidden) return;
+  openForecast(true); }; }
+// the morning rooster flies only when nothing is waiting or open (its own 06:00–09:00 window is checked when it is free to fly)
+{ const _cr54 = checkRooster; checkRooster = function(now){
+  if (!S || document.hidden || busy54() || (RT.newsQ54 && RT.newsQ54.length) || ckPending54() || fcPending54()) return;
+  return _cr54(now); }; }
+
+/* ---------- 2. level-up cutscene: never missed ---------- */
+{ const _sl54 = showLevelUp; showLevelUp = function(){
+  if (!RT.lvQ) return;
+  // wait while the page is hidden, or a panel is open (mid-game); on entering, nothing is open yet because the news waits
+  if (document.hidden || (!$('modal').hidden && $('modalTitle').textContent !== '選擇農場') || document.getElementById('ask47')){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 600); return; }
+  return _sl54(); }; }
+document.addEventListener('visibilitychange', () => { if (document.hidden || !S) return; if (RT.lvQ){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 300); } });
+
+/* ---------- 3. panel header icons (v2.22.2) ---------- */
+const HD54 = { '圖鑑': 'dex', '成就': 'ach', '每日簽到': 'checkin', '農場新聞': 'news', '天氣預報': 'forecast', '今日天氣預報': 'forecast', '自動化': 'auto', '水電與帳單': 'bill',
+  '等級': 'level', '蜂箱': 'hive', '熊蜂箱': 'hive', '金幣歷程': 'coinlog', '垃圾站': 'trash', '植物生長燈': 'lamp', '大型生長燈': 'lamp', '溫室生長燈': 'lamp',
+  '機器人充電站': 'charger', '掃地基座': 'dock', '無人機停機坪': 'pad' };
+const HDTAB54 = { produce: 'st_produce', shop: 'st_feed', deco: 'st_deco', robots: 'st_robot' };
+for (const id of Object.keys(DEV)) if (DEV[id].kind === 'lamp' && !HD54[DEV[id].name]) HD54[DEV[id].name] = 'lamp';
+if (TRB && TRB.name) HD54[TRB.name] = 'trash';
+const hdKey54 = (title, tab) => { const t = String(title || ''); if (t === '倉庫') return HDTAB54[tab] || 'st_produce'; if (t.startsWith('農場水塔')) return 'tower'; return HD54[t] || null; };
+function setHd54(title, tab){ const h = $('modalTitle'); if (!h) return; const key = hdKey54(title, tab), src = key && IMGSRC['ui_hd_' + key], sh = document.querySelector('#modal .sheet');
+  let im = h.querySelector('img.hd54');
+  if (!src){ if (im) im.remove(); if (sh) sh.classList.remove('hd54on'); return; }
+  if (!im){ im = document.createElement('img'); im.className = 'hd54'; im.alt = ''; h.prepend(im); }
+  if (im.getAttribute('src') !== src) im.src = src; if (sh) sh.classList.add('hd54on'); }
+{ const _om54 = openModal; openModal = function(title, tabs, render, initial){
+  const r0 = typeof render === 'function' ? render : null;
+  const rr = r0 ? (k, el) => { const v = r0(k, el); try { setHd54(title, k); } catch(e){} return v; } : render;
+  const r = _om54(title, tabs, rr, initial); try { setHd54(title, initial || (tabs && tabs[0] && tabs[0][0])); } catch(e){} return r; }; }
+$('modalTabs').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) setTimeout(() => { try { setHd54(($('modalTitle').textContent || '').trim(), b.dataset.k); } catch(err){} }, 0); });
+{ const st = document.createElement('style'); st.textContent = `
+#modalTitle img.hd54{width:44px;height:44px;object-fit:contain;vertical-align:middle;margin:-8px 10px -6px 0;filter:drop-shadow(0 2px 3px rgba(0,0,0,.22))}
+body.m #modalTitle img.hd54{width:34px;height:34px;margin:-6px 8px -4px 0}
+.sheet.hd54on header .pgic{display:none!important}
+.sheet.pg.hd54on header h2{grid-column:1/3}
+.sheet.pg.hd54on header .pgsub{grid-column:1/3}
+`; document.head.appendChild(st); }
+
+/* ---------- 4. 倉庫 · 農產倉庫 · 水果 picture ---------- */
+{ const f = ST_CAT.find(c => c[0] === 'fruit'); if (f && IMGSRC.ui_pg_st_fruit) f[2] = 'st_fruit'; }
+
+
+/* ---------- 5. hive honey bar sits on its bubble: since v2.22 bubbles are drawn last, so the bar is queued right after it ---------- */
+{ const _dd54 = drawDevice; drawDevice = function(T, k, cx, cy, t){ const r = _dd54(T, k, cx, cy, t);
+  if (RT.bq53 && isHive(T) && T.queen && S){ const st = honeyStored(T), p = st >= BEE.storeMax ? 1 : hiveRate(curMap(), k, T).prog, txt = isBumbleHive(T) ? (st ? `${st} 罐` : '') : `${T.frames}框 · 蜜 ${st}`;
+    RT.bq53.push({ tf: ctx.getTransform(), al: ctx.globalAlpha, fn: () => { ctx.font = '700 9px ' + getComputedStyle(document.documentElement).getPropertyValue('--font-body');
+      const w = txt ? 13 + ctx.measureText(txt).width + 8 : 30, x0 = cx - w / 2 + 3, y = cy - 50 - (txt ? 3 : 1), bw = w - 6;
+      ctx.fillStyle = 'rgba(30,58,42,.18)'; ctx.beginPath(); ctx.roundRect(x0, y, bw, 2, 1); ctx.fill();
+      if (p > 0){ ctx.fillStyle = '#e0a21b'; ctx.beginPath(); ctx.roundRect(x0, y, Math.max(2, bw * p), 2, 1); ctx.fill(); } } }); }
+  return r; }; }
+
+window.__farm2221 = { busy54, ckPending54, fcPending54, get newsQ(){ return RT.newsQ54; }, setHd54, hdKey54, showLevelUp: () => showLevelUp() };
 
   })(CFG, ATLAS_JSON);
 })();
