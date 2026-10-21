@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.21.2",
+  "configVersion": "2.22",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -1148,7 +1148,8 @@ window.GAME_CONFIG = {
     "rent_trashbot_1",
     "recyclebot_2",
     "rent_recyclebot_1",
-    "fence_stone"
+    "fence_stone",
+    "gh_lamp"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -2728,6 +2729,25 @@ window.GAME_CONFIG = {
    "kind": "hive",
    "buildCost": 800,
    "species": "bumble"
+  },
+  "gh_lamp": {
+   "name": "溫室生長燈",
+   "kind": "lamp",
+   "buildCost": 500,
+   "range": 1,
+   "kwhPerHour": 0.4,
+   "modes": [
+    "manual",
+    "auto",
+    "schedule"
+   ],
+   "hang": true,
+   "drawLift": 25,
+   "onlyInGreenhouse": true,
+   "perTile": 1,
+   "storable": true,
+   "mount": "ceiling",
+   "note": "吸頂式，裝在溫室棚頂內側，不往下吊（不會碰到作物）；不佔格子，只能裝在溫室格上"
   }
  },
  "power": {
@@ -3429,6 +3449,13 @@ window.GAME_CONFIG = {
      "weight": 1
     }
    ]
+  },
+  "tap": {
+   "radius": 60,
+   "radiusTouch": 72,
+   "graceSeconds": 0.3,
+   "downMemoryMs": 900,
+   "note": "判斷整條流星（頭到尾巴的線段），按下時就判斷"
   }
  },
  "scale": {
@@ -3552,6 +3579,28 @@ window.GAME_CONFIG = {
    "secondsPerTile": 20,
    "kwhPerHour": 0.3,
    "capacityTiles": 30
+  },
+  "cover": {
+   "fullTile": true,
+   "objects": [
+    "tree_",
+    "building_",
+    "animal_",
+    "deco_tree",
+    "device_beehive",
+    "device_bumble"
+   ],
+   "capDepth": [
+    4,
+    9
+   ],
+   "fieldScale": 0.84,
+   "fieldLift": 2.5,
+   "roofArt": "batch31 snow_<sprite>",
+   "shovelRoofs": true,
+   "snowBlocksBaseSolar": true,
+   "animalsCosmeticOnly": true,
+   "note": "田的積雪蓋住整個田面、外圈田埂露出一點土；樹、屋頂、充電站、動物背上積雪；屋頂與充電站可用鏟雪除雪（動物、樹不能鏟），充電站頂上有雪時太陽能不充電"
   }
  },
  "tornado": {
@@ -3729,7 +3778,9 @@ window.GAME_CONFIG = {
    "petGrown",
    "petGift"
   ],
-  "maxItems": 12
+  "maxItems": 12,
+  "robotLog": true,
+  "robotLogMinOfflineSeconds": 120
  },
  "robots": {
   "ownOrRent": true,
@@ -4166,7 +4217,23 @@ window.GAME_CONFIG = {
   "sharedPadQueue": "firstComeFirstServed",
   "tierNote": "每種機器人都有初／中／高三級，只差工作時數（耗電照初級每小時的用電比例、充電時間 1／2／3 倍）。舊存檔的「標準」機＝初級（tier id 不變）。rent[].unlock 沒寫＝和初級一起解鎖",
   "storeSellRate": 0.5,
-  "storeNote": "收回倉庫的機器人不算台數；賣掉＝該級購買價 × storeSellRate"
+  "storeNote": "收回倉庫的機器人不算台數；賣掉＝該級購買價 × storeSellRate",
+  "sweepStart": {
+   "default": 5,
+   "min": 1,
+   "max": 10,
+   "note": "掃地機器人在家時，同一張地圖待清的雜草＋垃圾滿 n 格才出發（已出門的照常做完）"
+  },
+  "dispatch": {
+   "perUnit": {
+    "water": 6,
+    "sweep": 4,
+    "wellbot": 1,
+    "trashbot": 1,
+    "recyclebot": 1
+   },
+   "note": "同種輪流出勤：一次只派「工作量 ÷ perUnit（無條件進位）」台，其餘留在機座充電；工作量＝待澆的格數／待清格數／有水的井／有東西的垃圾站"
+  }
  },
  "pests": {
   "startLevel": 3,
@@ -4310,12 +4377,19 @@ window.GAME_CONFIG = {
   "rainBlocked": true,
   "snowFree": true,
   "tornadoFree": true,
-  "pestMult": 0.2,
+  "pestMult": 0,
   "nightGrowthRate": 0.85,
   "animalsBlocked": true,
   "storable": false,
-  "moveWholeComponent": true,
-  "dragBuild": true
+  "moveWholeComponent": false,
+  "dragBuild": true,
+  "pestSpreadIn": false,
+  "look": {
+   "glassAlpha": 0.22,
+   "frameMinRGB": 200,
+   "frameMinAlpha": 150,
+   "note": "只畫骨架（亮白的框）＋很淡的玻璃，作物看得清楚"
+  }
  },
  "flowers": {
   "rapeseed": {
@@ -4567,7 +4641,8 @@ window.GAME_CONFIG = {
      "ids": [
       "grow_lamp",
       "grow_lamp_large",
-      "greenhouse"
+      "greenhouse",
+      "gh_lamp"
      ],
      "via": "build"
     },
@@ -4820,6 +4895,7 @@ window.GAME_CONFIG = {
       "grow_lamp",
       "grow_lamp_large",
       "greenhouse",
+      "gh_lamp",
       "sprinkler_s",
       "sprinkler_l"
      ]
@@ -4972,7 +5048,8 @@ window.GAME_CONFIG = {
     "fish": "蓋魚池",
     "insect": "昆蟲",
     "expand": "擴地",
-    "other": "其他購買"
+    "other": "其他購買",
+    "move": "搬移田或果樹"
    }
   },
   "ach": {
@@ -4980,7 +5057,212 @@ window.GAME_CONFIG = {
    "groupIcon": {
     "作物專家": "ui_badge_cropgroup"
    }
-  }
+  },
+  "worldMap": {
+   "w": 1589,
+   "h": 990,
+   "note": "設定 · 地點的世界地圖（玩家提供，art/src_ui/world_map.png → batch32）。ctrl = [經度, 緯度, 圖上 x, 圖上 y] 對位點，其他地點用最近對位點內插；labels = 城市名稱標籤放的位置（圖上座標），用延伸線連到城市的點",
+   "ctrl": [
+    [
+     121.0,
+     23.7,
+     1333,
+     443
+    ],
+    [
+     127.0,
+     37.5,
+     1347,
+     373
+    ],
+    [
+     131.0,
+     32.5,
+     1372,
+     402
+    ],
+    [
+     139.7,
+     35.7,
+     1407,
+     383
+    ],
+    [
+     121.5,
+     31.2,
+     1332,
+     405
+    ],
+    [
+     109.7,
+     19.2,
+     1275,
+     467
+    ],
+    [
+     114.2,
+     22.3,
+     1300,
+     452
+    ],
+    [
+     103.8,
+     1.35,
+     1247,
+     578
+    ],
+    [
+     142.5,
+     -10.7,
+     1455,
+     625
+    ],
+    [
+     151.2,
+     -33.9,
+     1500,
+     755
+    ],
+    [
+     146.5,
+     -42,
+     1450,
+     810
+    ],
+    [
+     175,
+     -39,
+     1557,
+     785
+    ],
+    [
+     -118.2,
+     34.05,
+     192,
+     380
+    ],
+    [
+     -122.4,
+     37.8,
+     180,
+     352
+    ],
+    [
+     -110,
+     23,
+     227,
+     430
+    ],
+    [
+     -74,
+     40.7,
+     420,
+     335
+    ],
+    [
+     -63,
+     45,
+     485,
+     300
+    ],
+    [
+     -0.13,
+     51.5,
+     732,
+     290
+    ],
+    [
+     -8,
+     53.4,
+     690,
+     273
+    ],
+    [
+     121.56,
+     25.03,
+     1336,
+     437
+    ],
+    [
+     120.3,
+     22.6,
+     1330,
+     450
+    ],
+    [
+     121.6,
+     24.0,
+     1338,
+     443
+    ]
+   ],
+   "labels": {
+    "taipei": [
+     1400,
+     408
+    ],
+    "taichung": [
+     1400,
+     456
+    ],
+    "hualien": [
+     1400,
+     504
+    ],
+    "tainan": [
+     1400,
+     552
+    ],
+    "kaohsiung": [
+     1400,
+     600
+    ],
+    "tokyo": [
+     1432,
+     352
+    ],
+    "seoul": [
+     1262,
+     336
+    ],
+    "shanghai": [
+     1262,
+     398
+    ],
+    "hongkong": [
+     1250,
+     478
+    ],
+    "singapore": [
+     1200,
+     612
+    ],
+    "sydney": [
+     1470,
+     842
+    ],
+    "losangeles": [
+     160,
+     446
+    ],
+    "newyork": [
+     470,
+     384
+    ],
+    "london": [
+     655,
+     250
+    ]
+   }
+  },
+  "levelCumulative": true,
+  "animalSellOnTap": true,
+  "nightRangeMaps": {
+   "pickBanner": "filter",
+   "lamp": true,
+   "hive": true
+  },
+  "fenceTurnSingle": true
  },
  "droneWatering": {
   "dryThreshold": 2,
@@ -6242,5 +6524,12 @@ window.GAME_CONFIG = {
   "askWhenOut": true,
   "note": "倉庫優先：裝飾、柵欄、狗屋／貓跳台、收回倉庫的建設、天氣娃娃、機器人（同等級）放置或購買時先用倉庫的；倉庫沒有時第一次要花金幣先問一次（askWhenOut：用完時問；askNoStock：本來就沒有也問），確定後連續放置不再問，換品項或工具重算",
   "askNoStock": true
+ },
+ "moveFees": {
+  "soil": 30,
+  "soilCrop": 60,
+  "treeRate": 0.3,
+  "treeMin": 50,
+  "note": "田和果樹本來不能搬；要搬時付移墾費（田 30、有作物 60）或移植費（樹苗價 30%，最少 50），先跳確認，放好才扣"
  }
 };

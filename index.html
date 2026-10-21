@@ -10788,6 +10788,750 @@ body.night .urow47{border-bottom-color:rgba(150,185,255,.18)}
 `;
 window.__farm2212 = { autoRowHTML: k => autoRowHTML(k), bonusMap: mi => bonusMap(mi), hiveRange: T => hiveRange(T) };
 
+/* ===== 53. v2.22: offline robots really work (simulation time instead of the clock) + 農場新聞 lists what each robot did;
+   sweeper start threshold (1–10 tiles) and robots of one kind take turns; cloud "use the cloud copy" goes back to 選擇農場;
+   a single fence turns when tapped again; night versions of the 選擇農場 banner / lamp & hive range maps; greenhouses: no pests,
+   see-through (frame + faint glass), hanging greenhouse grow lamp, chooser for 搬移／剷除／收回 on a greenhouse tile; old animals can
+   be sold from the tap popup; level numbers are cumulative XP; meteors are easier to tap; snow covers whole fields, trees, roofs,
+   chargers and animals, roofs / chargers can be shovelled (a snowy charger does not charge on solar). ===== */
+const V53 = {
+  RB: CFG.robots || {}, NW: CFG.news || {}, MT: (CFG.meteors && CFG.meteors.tap) || { radius: 60, radiusTouch: 72, graceSeconds: .3, downMemoryMs: 900 },
+  GL: (CFG.greenhouse && CFG.greenhouse.look) || { glassAlpha: .22, frameMinRGB: 200, frameMinAlpha: 150 },
+  SC: (CFG.snow && CFG.snow.cover) || { fullTile: true, capDepth: [4, 9], shovelRoofs: true, snowBlocksBaseSolar: true },
+  UI: CFG.ui || {}
+};
+const SWS53 = V53.RB.sweepStart || { default: 5, min: 1, max: 10 }, DISP53 = (V53.RB.dispatch && V53.RB.dispatch.perUnit) || {};
+const GHL53 = 'gh_lamp', GHD53 = DEV[GHL53];
+
+/* ---------- 0. styles ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+#pick53{position:fixed;z-index:60;min-width:170px;max-width:260px;padding:8px;border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 8px 26px rgba(20,40,70,.28);border:1px solid rgba(120,160,200,.35);font-size:14px}
+#pick53[hidden]{display:none}
+#pick53 h5{margin:2px 4px 6px;font-size:13px;color:#4b6075;font-weight:700}
+#pick53 p{margin:2px 4px 8px;font-size:13px;line-height:1.45;color:#34495e}
+#pick53 button{display:flex;align-items:center;gap:8px;width:100%;margin:3px 0;padding:7px 10px;border-radius:10px;border:1px solid #d6e2ee;background:#f5f9fd;font:inherit;cursor:pointer;color:#22384e;text-align:left}
+#pick53 button:hover,#pick53 button.hl{background:#e3f0fb;border-color:#8ab8e0}
+#pick53 button img,#pick53 button canvas{width:24px;height:24px;object-fit:contain}
+#pick53 button.sell53{background:#fff6dc;border-color:#e8c76a;font-weight:700}
+body.night #pick53{background:rgba(20,34,64,.96);border-color:rgba(150,185,255,.3);box-shadow:0 8px 26px rgba(0,0,0,.45)}
+body.night #pick53 h5{color:#a9bbd8} body.night #pick53 p{color:#dce6f5}
+body.night #pick53 button{background:rgba(255,255,255,.07);border-color:rgba(150,185,255,.25);color:#eef3fb}
+body.night #pick53 button:hover,body.night #pick53 button.hl{background:rgba(111,180,255,.22);border-color:#6fb4ff}
+body.night #pick53 button.sell53{background:rgba(255,205,90,.18);border-color:rgba(255,205,90,.5)}
+.rm53{margin:8px 0}.rm53 canvas{display:block;max-width:100%;height:auto;margin:4px auto}
+.lg53{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12px;margin:4px 0}.lg53 span{display:inline-flex;align-items:center;gap:4px}
+.lg53 i{display:inline-block;width:14px;height:9px;border-radius:2px;border:1px solid rgba(0,0,0,.12)}
+.ss53{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 4px;padding:6px 10px;border-radius:10px;background:rgba(80,150,220,.1);font-size:13px}
+.ss53 select{font:inherit;padding:2px 6px;border-radius:8px}
+.ss53 small{opacity:.75}
+body.night .ss53{background:rgba(111,180,255,.14)}
+body.night .sheet.pg.pickpg header{background:linear-gradient(90deg,rgba(14,24,52,.95) 0%,rgba(14,24,52,.82) 36%,rgba(14,24,52,0) 64%),radial-gradient(1.4px 1.4px at 70% 18%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 82% 36%,#fff 60%,transparent),radial-gradient(1.6px 1.6px at 90% 12%,#fff8d0 60%,transparent),radial-gradient(1px 1px at 76% 58%,#fff 60%,transparent),radial-gradient(1.3px 1.3px at 95% 48%,#fff 60%,transparent),radial-gradient(1px 1px at 64% 30%,#dfe9ff 60%,transparent),linear-gradient(rgba(12,24,70,.5),rgba(12,24,70,.5)),var(--pickbg,none) right center/cover no-repeat}
+body.m.night .sheet.pg.pickpg header{background:linear-gradient(90deg,rgba(14,24,52,.95) 0%,rgba(14,24,52,.82) 52%,rgba(14,24,52,0) 86%),radial-gradient(1.4px 1.4px at 78% 20%,#fff 60%,transparent),radial-gradient(1.2px 1.2px at 90% 40%,#fff 60%,transparent),radial-gradient(1.5px 1.5px at 94% 14%,#fff8d0 60%,transparent),linear-gradient(rgba(12,24,70,.5),rgba(12,24,70,.5)),var(--pickbg,none) 70% center/cover no-repeat}
+`; document.head.appendChild(st); }
+
+/* ---------- 1. offline: robots use the simulated time; what they did goes into 農場新聞 ---------- */
+RT.sim53 = null;
+{ const _sa53 = stepAll; stepAll = function(dt, t){ const p = RT.sim53; RT.sim53 = t; try { return _sa53(dt, t); } finally { RT.sim53 = p; } }; }
+const simNow53 = () => RT.sim53 != null ? RT.sim53 : Date.now();
+// replaces g32: the truck window is checked at the simulated time (it used Date.now(), so robots never went out while catching up)
+function trashPlan(kind, W, M, key, getC){
+  const now = simNow53(); if (!truckWindow(now)) return null;
+  if (carrySum(getC()) > .01){ const ts = truckStop(W.mi); if (!ts) return null; const prev = swBFS(M, W.x, W.y), p = prev.has(ts.k) ? swPathTo(prev, ts.k) : null; return p ? { path: p, goal: 'truck', target: ts.k } : null; }
+  const fst = firstStation(), cl = walkerClaims(kind, key);
+  const p = wbPathToAny(M, W.x, W.y, wbStandTiles(M, (T, k) => isTrashSt(T) && !cl.has(k) && loadOf(T, LOADS[kind], fst && fst.T === T) > .01));
+  if (p) p.goal = 'station'; return p;
+}
+const log53 = (kind, f, n = 1) => { const L = RT.log53; if (!L) return; const o = L[kind] || (L[kind] = {}); o[f] = (o[f] || 0) + n; };
+// water drones: same as g25 plus a tally line
+function droneStep(key, u, dt, t){
+  const home = workerHome('water', u), D = droneState(key, home);
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 600){
+    if (!D.tgt || !dwNeeds(S.maps[D.tgt.mi].tiles[D.tgt.k])){
+      const n = dronePick(D, key); if (!n){ D.tgt = null; D.el = 0; return; }
+      if (u && u.tank < dwNeed(S.maps[n.mi].tiles[n.k]) - 1e-6){ u.tankLow = true; D.tgt = null; D.el = 0; return; }
+      D.tgt = n; D.ax = D.x; D.ay = D.y; D.el = 0; D.ft = (n.mi === D.mi ? Math.hypot(n.x - D.x, n.y - D.y) : 6) / (DW.tilesPerSecond || 3);
+    }
+    const total = D.ft + (DW.spraySeconds || 2), left = total - D.el;
+    if (budget < left){ D.el += budget; D.simAt = t; return; }
+    budget -= left; D.el = total;
+    const T = S.maps[D.tgt.mi].tiles[D.tgt.k], need = dwNeed(T);
+    if (!u){ if (!useWater(need, false, t)){ D.wait = true; return; } }
+    else { if (u.tank < need - 1e-6){ u.tankLow = true; return; } u.tank -= need; }
+    D.wait = false; D.simAt = t; T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false; log53('water', 'tiles');
+    D.mi = D.tgt.mi; D.x = D.tgt.x; D.y = D.tgt.y; D.ax = D.x; D.ay = D.y; D.tgt = null; D.el = 0; D.ft = 0;
+  }
+}
+{ const _sc53 = swClean; swClean = function(M, mi, k, t){ const T = M.tiles[k], was = isTrash(T) ? T.t : null; const r = _sc53(M, mi, k, t);
+  if (was && !isTrash(M.tiles[k])){ log53('sweep', 'tiles'); log53('sweep', was === 'weed' ? 'weeds' : 'trash'); } return r; }; }
+{ const _at53 = addTrash; addTrash = function(kind, amt){ if (kind === 's' && amt > 0) log53('sweep', 'sewage', amt); return _at53(kind, amt); }; }
+{ const _ww53 = wellWorker; wellWorker = function(key, u, dt, t){ const w0 = S.player.water; const r = _ww53(key, u, dt, t); const d = S.player.water - w0; if (d > 0) log53('wellbot', 'drops', d); return r; }; }
+{ const _pl53 = payLoad; payLoad = function(L, overdue, x, y, live){ const money = _pl53(L, overdue, x, y, live);
+  if (!overdue && RT.log53){ if ((L.g || 0) + (L.s || 0) > .01 && !(L.r > .01)){ log53('trashbot', 'bags', L.g || 0); log53('trashbot', 'sewage', L.s || 0); log53('trashbot', 'money', money); }
+    else if (L.r > .01 && !((L.g || 0) + (L.s || 0) > .01)){ log53('recyclebot', 'bags', L.r); log53('recyclebot', 'money', money); }
+    else { log53('trashbot', 'bags', L.g || 0); log53('recyclebot', 'bags', L.r || 0); log53('trashbot', 'money', money); } }
+  return money; }; }
+const clearedN53 = () => { let n = 0; const c = S.snow && S.snow.cleared || {}; for (const m in c) n += Object.keys(c[m]).length; return n; };
+{ const _sb53 = snowbotStep; snowbotStep = function(dt){ if (!RT.log53) return _sb53(dt); const a = clearedN53(); const r = _sb53(dt); const d = clearedN53() - a; if (d > 0) log53('snow', 'tiles', d); return r; }; }
+{ const _ps53 = poopStep; poopStep = function(dt){ RT.inPoop53 = true; try { return _ps53(dt); } finally { RT.inPoop53 = false; } }; }
+{ const _sp53 = shovelPoop; shovelPoop = function(...a){ if (RT.inPoop53) log53('poop', 'n'); return _sp53(...a); }; }
+{ const _hs53 = honeyStep; honeyStep = function(dt){ if (!RT.log53) return _hs53(dt); const a = invUsed(); const r = _hs53(dt); const d = invUsed() - a; if (d > 0) log53('honey', 'jars', d); return r; }; }
+{ const _fa53 = feedAnimal; feedAnimal = function(T, A){ const r = _fa53(T, A); if (RT.log53 && r && r.ok) log53('feed', 'n'); return r; }; }
+{ const _st53 = simulateTo; simulateTo = function(toMs){
+  const gap = (toMs - (S.lastSim || toMs)) / 1000;
+  if (V53.NW.robotLog === false || RT.log53 || gap < (V53.NW.robotLogMinOfflineSeconds || 120)) return _st53(toMs);
+  RT.log53 = {};
+  try { return _st53(toMs); }
+  finally { const L = RT.log53; RT.log53 = null;
+    const stall = []; for (const kind of KINDS){ for (const u of fleet(kind)){ if (!unitTier(kind, u) || u.on === false) continue;
+      if (u.needPart) stall.push({ kind, why: 'part' }); else if (u.state === 'rest' || (u.batt <= 0 && u.state !== 'charge')) stall.push({ kind, why: 'batt' }); } }
+    if (Object.keys(L).length || stall.length) RT.notices.push({ kind: 'robots53', L, stall, t: toMs }); } }; }
+const robotLine53 = (k, o) => { const r = x => Math.round(x * 10) / 10, mo = m => `${m >= 0 ? '得到' : '付'} ${fmtN(Math.abs(Math.round(m)))} 金幣`;
+  switch (k){
+    case 'water': return o.tiles ? `澆了 ${fmtN(o.tiles)} 格` : '';
+    case 'feed': return o.n ? `餵了 ${fmtN(o.n)} 次` : '';
+    case 'sweep': return o.tiles || o.sewage ? `清了 ${fmtN(o.tiles || 0)} 格（雜草 ${fmtN(o.weeds || 0)}、垃圾 ${fmtN(o.trash || 0)}）${o.sewage > .5 ? `，產生污水 ${fmtN(Math.round(o.sewage))} 滴` : ''}` : '';
+    case 'wellbot': return o.drops ? `運了 ${fmtN(Math.round(o.drops))} 滴水進水塔` : '';
+    case 'snow': return o.tiles ? `鏟了 ${fmtN(o.tiles)} 格雪` : '';
+    case 'poop': return o.n ? `撿了 ${fmtN(o.n)} 坨糞便` : '';
+    case 'honey': return o.jars ? `採了 ${fmtN(o.jars)} 罐蜂蜜` : '';
+    case 'trashbot': return o.bags || o.sewage ? `倒了 ${r(o.bags || 0)} 袋一般垃圾${o.sewage > .5 ? `、污水 ${fmtN(Math.round(o.sewage))} 滴` : ''}，${mo(o.money || 0)}` : '';
+    case 'recyclebot': return o.bags ? `回收 ${r(o.bags)} 袋，${mo(o.money || 0)}` : '';
+  } return ''; };
+{ const _ni53 = newsItems; newsItems = function(list){ const out = _ni53(list), add = [];
+  for (const n of list.filter(x => x.kind === 'robots53')){
+    for (const kind of Object.keys(n.L)){ const s = robotLine53(kind, n.L[kind]); if (s) add.push({ icon: R_ICON[kind], text: `${KIND_NAME(kind)}：${s}` }); }
+    const seen = new Set(); for (const s of n.stall){ const key = s.kind + s.why; if (seen.has(key)) continue; seen.add(key);
+      add.push({ icon: R_ICON[s.kind], text: `${KIND_NAME(s.kind)}${s.why === 'part' ? '缺耗材，停工中（倉庫補耗材後會自己換）' : '沒電躺著，停工中'}` }); } }
+  if (add.length) add.unshift({ icon: 'ui_news', text: '<b>機器人做了什麼</b>' });
+  return out.concat(add); }; }
+
+/* ---------- 2. sweeper start threshold; robots of the same kind take turns ---------- */
+const sweepStart53 = () => { const v = +((S.settings || {}).sweepStart ?? SWS53.default); return Math.max(SWS53.min || 1, Math.min(SWS53.max || 10, v || SWS53.default)); };
+const trashOn53 = mi => { let n = 0; const M = S.maps[mi]; if (!M) return 0; for (const k in M.tiles) if (isTrash(M.tiles[k])) n++; return n; };
+function load53(kind){
+  if (kind === 'water'){ let n = 0; for (const M of S.maps) for (const k in M.tiles) if (dwNeeds(M.tiles[k])) n++; return n; }
+  if (kind === 'sweep'){ let n = 0; for (let mi = 0; mi < S.maps.length; mi++) n += trashOn53(mi); return n; }
+  if (kind === 'wellbot'){ let n = 0; for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (isWell(T) && (T.water || 0) >= wbMin()) n++; } return n; }
+  if (kind === 'trashbot' || kind === 'recyclebot'){ const fst = firstStation(); return stations().filter(s => loadOf(s.T, LOADS[kind], fst && fst.T === s.T) > .01).length || (pileTotal() > .01 ? 1 : 0); }
+  return 1; }
+RT.d53 = {};
+function dispatch53(kind, key, u, f){
+  const home = workerHome(kind, u), W = WS[key], away = !!(W && home && kind !== 'water' && walkAway(W, home));
+  if (away || (u && u.state === 'work')) return f(key, u);
+  if (kind === 'sweep' && home && trashOn53(home.mi) < sweepStart53()) return false;
+  if (!f(key, u)) return false;
+  if (!u) return true;
+  const per = DISP53[kind]; if (!per) return true;
+  const stamp = simNow53(); let D = RT.d53[kind]; if (!D || D.t !== stamp) D = RT.d53[kind] = { t: stamp, n: 0, need: Math.max(1, Math.ceil(load53(kind) / per)) };
+  const busy = fleet(kind).filter(v => v !== u && v.state === 'work').length;
+  if (busy + D.n >= D.need) return false;
+  D.n++; return true; }
+for (const kind of Object.keys(workerWants)){ const f = workerWants[kind]; workerWants[kind] = (key, u) => dispatch53(kind, key, u, f); }
+{ const _ar53 = autoRowHTML; autoRowHTML = function(kind){ let h = _ar53(kind); if (kind !== 'sweep' || !isUnlocked(RK('sweep').tiers[0].id)) return h;
+  const v = sweepStart53(), opts = []; for (let i = SWS53.min || 1; i <= (SWS53.max || 10); i++) opts.push(`<option value="${i}" ${i === v ? 'selected' : ''}>${i}</option>`);
+  const box = `<div class="ss53">出發條件：待清的雜草＋垃圾滿 <select data-ss53 aria-label="掃地機器人出發門檻">${opts.join('')}</select> 格才出門 <small>（每趟都會產生污水；已出門的會做完）</small></div>`;
+  const i = h.search(/<div class="(urow47|slot47)/); return i >= 0 ? h.slice(0, i) + box + h.slice(i) : h + box; }; }
+document.addEventListener('change', e => { const s = e.target.closest && e.target.closest('[data-ss53]'); if (!s || !S) return;
+  S.settings.sweepStart = +s.value; save(); toast(`掃地機器人：待清滿 ${s.value} 格才出門`, true); });
+{ const _ut53 = unitText; unitText = function(kind, u){ const t = _ut53(kind, u);
+  if (u && u.state === 'charge' && baseSnowy53((slotByKey(u.home) || {}).T)) return '充電站頂上有雪，鏟掉才能充電';
+  if (kind === 'sweep' && u && u.state === 'idle' && !(S.settings.sweepStart === 1)){ const h = workerHome('sweep', u); if (h){ const n = trashOn53(h.mi), m = sweepStart53(); if (n > 0 && n < m) return `待命（待清 ${n}/${m} 格）`; } }
+  return t; }; }
+
+/* ---------- 3. cloud conflict on the 選擇農場 screen: come back to the picker afterwards ---------- */
+{ const _cc53 = cloudConflict; cloudConflict = async function(id, f, lc){ const r = await _cc53(id, f, lc);
+  if (!S && document.querySelector('#modal:not([hidden])') && $('cfRemote')){
+    const back = () => { if (!S) setTimeout(() => { if (!S && document.querySelector('#modal[hidden]')) openSlotPicker(); }, 0); };
+    for (const idb of ['cfRemote', 'cfLocal', 'modalClose']){ const b = $(idb); if (!b) continue; const h = b.onclick; b.onclick = async ev => { let p = null; try { p = h && h.call(b, ev); } catch(e){ console.warn(e); } finally { back(); } if (p && p.then){ try { await p; } catch(e){} back(); } }; } }
+  return r; }; }
+
+/* ---------- 4. night theme also before a farm is opened (選擇農場) ---------- */
+function themeTick(){ const night = dayPhase(Date.now()).light < .5; if (document.body.classList.contains('night') !== night) document.body.classList.toggle('night', night); }
+themeTick();
+
+/* ---------- 5. a single fence turns when tapped again with a fence ---------- */
+const fenceSel53 = () => { const tl = S.sel.tool; if (tl === 'hand' || (tl === 'move' && !RT.mv && !RT.gmv)) return 'fence'; if (tl === 'deco') return isFence51(S.sel.deco) ? S.sel.deco : null; if (tl === 'animal') return isFence51(S.sel.animal) ? S.sel.animal : null; return null; };
+function fenceTurn53(M, x, y, T){ if (!T || T.t !== 'deco' || T.id !== 'fence' || T.fallen || maskAt(M, x, y, isFence) !== '00') return false;
+  T.dir = T.dir ? 0 : 1; RT.decoVer++; sfx('place'); const { cx, cy } = center(x, y); floatText(cx, cy - 24, '轉向', '#8a5d36', 11); afterAction(); return true; }
+
+/* ---------- 6. greenhouses: no pests inside, and pests never spread in ---------- */
+function pestRate(mi, k, t){ if (glassAt(mi, k)) return 0; const G = geo(); return PE.perHour * (PE.seasonMult[climSeason(t, G.lat)] ?? 1) * (G.zone === 'tropical' ? PE.tropicalMult : 1); }
+function stepPest(M, mi, k, T, dt, t, live){
+  const H = hostOf(T); if (!H) return;
+  if (glassAt(mi, k)){ if (H.pest){ H.pest = false; H.pestTaps = 0; } return; }
+  if (snowyAt(mi, k)){ if (H.pest){ H.pest = false; H.pestTaps = 0; } return; }
+  if (H.pest){
+    const pr = 1 - Math.exp(-PE.spreadPerHour * dt/3600), [x,y] = pkey(k);
+    for (const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ if (Math.random() >= pr) continue;
+      const nk = tkey(x+dx, y+dy), N = M.tiles[nk], NH = hostOf(N);
+      if (NH && !NH.pest && !glassAt(mi, nk) && pestEligible(N) && !(NH.protectUntil && t < NH.protectUntil) && !snowyAt(mi, nk)){ NH.pest = true; NH.pestTaps = 0; notePest(live); } }
+    return;
+  }
+  if (!pestEligible(T) || (H.protectUntil && t < H.protectUntil)) return;
+  if (Math.random() < 1 - Math.exp(-pestRate(mi, k, t) * dt/3600)){ H.pest = true; H.pestTaps = 0; notePest(live); }
+}
+
+/* ---------- 7. greenhouse grow lamp (hangs under the roof, no tile of its own) ---------- */
+const ghl53 = M => M.ghl || (M.ghl = {});
+const ghlAt53 = (M, k) => M && M.ghl && M.ghl[k];
+{ const _ad53 = allDevices; allDevices = function(){ const out = _ad53(); if (!GHD53 || !S) return out;
+  S.maps.forEach((M, mi) => { if (M.ghl) for (const k in M.ghl){ const T = M.ghl[k]; if (T) out.push({ T, M, mi, k }); } }); return out; }; }
+{ const _is53 = itemSprite; itemSprite = function(kind, id){ if (id === GHL53 && (kind === 'device' || kind === 'building')) return ['device_grow_lamp_off', 0]; return _is53(kind, id); }; }
+{ const tb = TOOLS.find(t => t.id === 'build'); if (tb && GHD53){ const _h53 = tb.hint; tb.hint = () => S.sel.build === GHL53 ? `點溫室格裝一盞${GHD53.name}（吸頂式） · ${fmtN(GHD53.buildCost)} 金幣 · 不佔格子，一格最多 1 盞；點已吊燈的格子可以設定` : _h53(); } }
+function placeGhLamp53(M, k, x, y){ const { cx, cy } = center(x, y), D = GHD53;
+  if (ghlAt53(M, k)){ openDevice(M, k, M.ghl[k]); return; }
+  if (!(M.glass && M.glass[k])){ toast(`${D.name}只能裝在溫室裡，先蓋溫室`); return; }
+  if (!isUnlocked(GHL53)){ toast(lockedMsg(GHL53)); return; }
+  if ((S.buildStore[GHL53] || 0) > 0){ S.buildStore[GHL53]--; ghl53(M)[k] = { t: 'device', id: GHL53, mode: 'auto', on: false, from: '18:00', to: '23:00', lit: false };
+    RT.decoVer++; sfx('place'); floatText(cx, cy - 34, '從倉庫拿出', '#2f7fa8', 10); afterAction(); return; }
+  if (!RT.ghOk53 && !window.__noAsk47 && !(S.settings.noAsk || {}).build){
+    buyAsk47({ cat: 'build', title: `裝${D.name}`, spr: ['device_grow_lamp_on', 0], price: D.buildCost, okText: '確定購買',
+      rows: [['範圍', `${2 * D.range + 1}×${2 * D.range + 1}`], ['耗電', `每小時 ${D.kwhPerHour} 度`], ['安裝', '吸頂式，裝在溫室棚頂，不佔格子']] }, () => { RT.ghOk53 = true; placeGhLamp53(M, k, x, y); }); return; }
+  if (!spend(D.buildCost)) return;
+  ghl53(M)[k] = { t: 'device', id: GHL53, mode: 'auto', on: false, from: '18:00', to: '23:00', lit: false };
+  RT.decoVer++; sfx('place'); floatText(cx, cy - 34, `${D.name} -${fmtN(D.buildCost)}`, '#2f7fa8', 10);
+  if (!S.settings.grid) toast(`${D.name}裝好了。要接電、或有電池／發電機才會亮`); afterAction(); }
+function sellGhLamp53(M, k, silent){ const T = ghlAt53(M, k); if (!T) return 0; delete M.ghl[k]; const back = Math.floor(GHD53.buildCost * (POW.deviceSellRate || .5)); S.player.coins += back; RT.decoVer++;
+  if (!silent){ const [x, y] = pkey(k), { cx, cy } = center(x, y); flyCoins(worldToScreen(cx, cy - 30), back); floatText(cx, cy - 30, `拆掉${GHD53.name} +${fmtN(back)}`, '#c98a0c', 11); } return back; }
+{ const _sg53 = sellGlass; sellGlass = function(M, k, cx, cy){ const back = sellGhLamp53(M, k, true); const r = _sg53(M, k, cx, cy); if (back) toast(`溫室上裝的${GHD53.name}一起拆了，退 ${fmtN(back)} 金幣`); return r; }; }
+{ const _dg53 = dropGlassMove; dropGlassMove = function(M, x, y){ const g = RT.gmv; if (!g) return _dg53(M, x, y);
+  const dx = x - g.gx, dy = y - g.gy, lamps = g.cells.filter(c => ghlAt53(M, c)).map(c => [c, M.ghl[c]]); const r = _dg53(M, x, y);
+  if (!RT.gmv) setTimeout(backTool53, 0);
+  if (!RT.gmv && (dx || dy) && lamps.length){ for (const [c] of lamps) delete M.ghl[c]; for (const [c, T] of lamps){ const [cx, cy] = pkey(c); ghl53(M)[tkey(cx + dx, cy + dy)] = T; } RT.decoVer++; }
+  return r; }; }
+function drawGhLamp53(T, x, y, t){ const { cx, cy } = center(x, y), ly = cy - (CFG.devices.gh_lamp.drawLift ?? 25);   // flat panel fixed to the greenhouse ceiling, in the middle of the cell's roof face (nothing hangs down to the plants)
+  ctx.save();
+  if (T.lit){ const g = ctx.createLinearGradient(0, ly, 0, cy + 4); g.addColorStop(0, 'rgba(255,120,230,.34)'); g.addColorStop(1, 'rgba(255,120,230,0)'); ctx.fillStyle = g;
+    ctx.beginPath(); ctx.moveTo(cx - 9, ly + 2); ctx.lineTo(cx + 9, ly + 2); ctx.lineTo(cx + 24, cy + 3); ctx.lineTo(cx - 24, cy + 3); ctx.closePath(); ctx.fill(); }
+  const pnl = (dy, s) => { ctx.beginPath(); ctx.moveTo(cx, ly - 4.5 * s + dy); ctx.lineTo(cx + 10 * s, ly + dy); ctx.lineTo(cx, ly + 4.5 * s + dy); ctx.lineTo(cx - 10 * s, ly + dy); ctx.closePath(); };
+  ctx.fillStyle = '#56626e'; pnl(.6, 1); ctx.fill();                       // housing edge
+  ctx.fillStyle = '#7d8995'; pnl(0, 1); ctx.fill();                        // housing
+  ctx.fillStyle = T.lit ? '#ff9be9' : '#c6ced6'; pnl(.8, .72); ctx.fill(); // light face (underside)
+  if (T.lit){ ctx.fillStyle = 'rgba(255,225,250,.95)'; for (let i = -2; i <= 2; i++){ ctx.beginPath(); ctx.arc(cx + i * 3, ly + .8 + Math.abs(i) * -.1, .8, 0, 7); ctx.fill(); } }
+  ctx.restore(); }
+{ const _slh53 = storeLightHoles; storeLightHoles = function(M, now){ const out = _slh53(M, now).slice();
+  if (M && M.ghl) for (const k in M.ghl){ const T = M.ghl[k]; if (T && T.lit){ const [x, y] = pkey(k), c = center(x, y); out.push({ x: c.cx, y: c.cy - 8, r: (GHD53.range + .7) * HW * 1.5, col: 'rgba(255,150,230,' }); } }
+  return out; }; }
+
+{ const _st53 = setTool; setTool = function(id){ RT.ghOk53 = false; return _st53(id); }; }
+{ const _ut53b = UIbuildTray; UIbuildTray = function(){ if (S && RT.ghSel53 !== S.sel.build){ RT.ghSel53 = S.sel.build; RT.ghOk53 = false; } return _ut53b(); }; }
+
+/* ---------- 8. chooser on a greenhouse tile (搬移／剷除／收回) and small popups ---------- */
+const POP53 = document.createElement('div'); POP53.id = 'pick53'; POP53.hidden = true; document.body.appendChild(POP53);
+function closePop53(){ POP53.hidden = true; POP53.innerHTML = ''; RT.pick53 = null; }
+function showPop53(x, y, html){ const p = worldToScreen(x, y); POP53.innerHTML = html; POP53.hidden = false;
+  const w = POP53.offsetWidth || 200, h = POP53.offsetHeight || 120;
+  POP53.style.left = Math.max(8, Math.min(innerWidth - w - 8, p.x - w / 2)) + 'px'; POP53.style.top = Math.max(8, Math.min(innerHeight - h - 8, p.y - h - 26)) + 'px'; }
+document.addEventListener('pointerdown', e => { if (!POP53.hidden && !POP53.contains(e.target)) closePop53(); }, true);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !POP53.hidden) closePop53(); });
+const objName53 = T => !T ? '' : T.t === 'soil' ? (T.crop ? `作物（${CFG.crops[T.crop.id].name}）` : T.flower ? '花' : '田') : T.t === 'tree' ? `果樹（${CFG.trees[T.id].name}）` : (nameOf(T.id) || '這格的東西');
+function glassChoose53(M, k, x, y, T, tool){
+  const opts = [{ id: 'glass', label: '溫室棚', icon: 'ui_greenhouse' }];
+  if (ghlAt53(M, k)) opts.push({ id: 'lamp', label: GHD53.name, icon: 'ui_lamp' });
+  if (T && !(tool === 'move' && (T.t === 'soil' || T.t === 'tree'))) opts.push({ id: 'obj', label: objName53(T), icon: T.t === 'tree' ? 'ui_tab_trees' : 'ui_tab_crops' });
+  if (opts.length < 2) return false;
+  const verb = { move: '要搬哪一個？', remove: '要剷除哪一個？', store: '要收回哪一個？' }[tool];
+  RT.pick53 = { mi: S.cur, k, hl: opts[0].id };
+  const { cx, cy } = center(x, y);
+  showPop53(cx, cy - 30, `<h5>${verb}</h5>${opts.map(o => `<button data-p53="${o.id}"><img src="${IMGSRC[o.icon] || ''}" alt="">${o.label}</button>`).join('')}`);
+  POP53.querySelectorAll('[data-p53]').forEach(b => { b.onpointerenter = () => { if (RT.pick53) RT.pick53.hl = b.dataset.p53; };
+    b.onclick = () => { const what = b.dataset.p53; closePop53(); glassDo53(M, k, x, y, what, tool); }; });
+  return true; }
+function glassDo53(M, k, x, y, what, tool){ const { cx, cy } = center(x, y);
+  if (what === 'glass'){
+    if (tool === 'move'){ if (S.sel.tool !== 'move') setTool('move'); startGlassMove(M, k, x, y); return; }
+    if (tool === 'remove'){ sellGlass(M, k, cx, cy); afterAction(); UIbuildTray(); return; }
+    toast('溫室不能收回倉庫，可以用「剷除」拆掉（退一半）'); return; }
+  if (what === 'lamp'){
+    if (tool === 'move'){ RT.ghmv53 = { mi: S.cur, k }; toast(`拿起${GHD53.name}，點要裝的溫室格`, false, 3200); return; }
+    if (tool === 'remove'){ sellGhLamp53(M, k); afterAction(); return; }
+    lpDo53(M, k, x, y, 'lamp', 'store'); return; }
+  if (tool === 'move'){ const T = M.tiles[k]; if (T && (T.t === 'soil' || T.t === 'tree')){ askFarmMove53(M, k, x, y); return; } }
+  // the thing on the tile: run the normal tool with the greenhouse out of the way
+  const g = M.glass[k]; delete M.glass[k]; RT.noPick53 = true;
+  try { act(x, y); } finally { RT.noPick53 = false; if (!M.glass[k]) M.glass[k] = g; } }
+function dropGhLamp53(M, k, x, y){ const g = RT.ghmv53; RT.ghmv53 = null; if (g.mi !== S.cur){ toast('已取消搬移'); return; }
+  if (g.k === k){ toast('已取消搬移'); return; }
+  if (!(M.glass && M.glass[k])){ toast(`${GHD53.name}只能裝在溫室格`); RT.ghmv53 = g; return; }
+  if (ghlAt53(M, k)){ toast('那一格已經有生長燈了'); RT.ghmv53 = g; return; }
+  const T = M.ghl[g.k]; if (!T) return; delete M.ghl[g.k]; M.ghl[k] = T; RT.decoVer++; sfx('place'); toast(`${GHD53.name}搬好了`); afterAction(); }
+
+/* ---------- 9. old animals can be sold from the tap popup ---------- */
+const animalBack53 = T => Math.floor(CFG.animals[T.id].youngCost * R.animalSellRate);
+{ const _ta53 = tapAnimal; tapAnimal = function(M, k, T, cx, cy){
+  const A = CFG.animals[T.id], info = !(A.type === 'meat' && isAdult(T, A)) && !(T.stack > 0) && !canFeed(T, A) && T.timer > 0;
+  const r = _ta53(M, k, T, cx, cy);
+  if (info && V53.UI.animalSellOnTap !== false && M.tiles[k] === T){
+    const old = A.type === 'producer' && isAdult(T, A) && T.cycles / A.lifespanCycles < R.animalOldWarningRatio, back = animalBack53(T);
+    const what = isAdult(T, A) ? `${fmtDur(T.timer)}後產出${A.product}` : `${fmtDur(T.timer)}後長大一階（${T.stage + 1}/${A.growStages}）`;
+    showPop53(cx, cy - 24, `<h5>${A.name}${old ? ' · 年老' : ''}</h5><p>${what}${A.type === 'producer' ? `<br>還能生產 ${T.cycles} 輪${old ? '，之後會老死' : ''}` : ''}</p><button class="sell53" data-sell53="1"><img src="${IMGSRC.ui_coin || ''}" alt="">賣掉 +${fmtN(back)} 金幣</button>`);
+    const b = POP53.querySelector('[data-sell53]'); if (b) b.onclick = () => { closePop53(); if (M.tiles[k] !== T) return; S.player.coins += back; delete M.tiles[k]; RT.regionsAt = 0;
+      flyCoins(worldToScreen(cx, cy - 20), back); floatText(cx, cy - 24, `賣掉 +${fmtN(back)}`, '#c98a0c', 12); sfx('coin'); afterAction(); }; }
+  return r; }; }
+
+/* ---------- the act wrapper (outermost) ---------- */
+{ const _act53 = act; act = function(x, y){
+  if (!S || UI.expand) return _act53(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act53(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool;
+  if (RT.ghmv53){ dropGhLamp53(M, k, x, y); return; }
+  if (fenceSel53() && fenceTurn53(M, x, y, T)) return;
+  if (tool === 'build' && S.sel.build === GHL53 && GHD53){ placeGhLamp53(M, k, x, y); return; }
+  if (tool === 'shovel' && roofShovel53(M, k, T, x, y)) return;
+  if (!RT.noPick53 && M.glass && M.glass[k] && (tool === 'move' || tool === 'remove' || tool === 'store') && !RT.gmv && !RT.mv){
+    if (glassChoose53(M, k, x, y, T, tool)) return;
+    if (ghlAt53(M, k) && !T){ glassChoose53b53(M, k, x, y, tool); return; } }
+  if (tool === 'hand' && ghlAt53(M, k) && (!T || (T.t === 'soil' && !T.crop && !T.flower))){ openDevice(M, k, M.ghl[k]); return; }
+  return _act53(x, y); }; }
+// glass + lamp only (no object): still ask
+function glassChoose53b53(M, k, x, y, tool){ const T = null;
+  const opts = [{ id: 'glass', label: '溫室棚', icon: 'ui_greenhouse' }, { id: 'lamp', label: GHD53.name, icon: 'ui_lamp' }];
+  RT.pick53 = { mi: S.cur, k, hl: 'glass' }; const { cx, cy } = center(x, y), verb = { move: '要搬哪一個？', remove: '要剷除哪一個？', store: '要收回哪一個？' }[tool];
+  showPop53(cx, cy - 30, `<h5>${verb}</h5>${opts.map(o => `<button data-p53="${o.id}"><img src="${IMGSRC[o.icon] || ''}" alt="">${o.label}</button>`).join('')}`);
+  POP53.querySelectorAll('[data-p53]').forEach(b => { b.onpointerenter = () => { if (RT.pick53) RT.pick53.hl = b.dataset.p53; }; b.onclick = () => { const w = b.dataset.p53; closePop53(); glassDo53(M, k, x, y, w, tool); }; }); }
+// ghlAt53-only tiles must reach the chooser even when glassChoose53 counts <2 (glass + lamp, no object) — handled above
+
+/* ---------- 10. range maps (lamp + hive), day and night ---------- */
+const PAL53 = {
+  day: { out: '#eef3f7', outR: '#cfe8b8', off: '#f4f7fa', offR: '#d9e4ec', glass: '#d7ecf3', lit: '#ffd8f3', crop: '#4fb35a', grow: '#f2c94c', rest: '#b9c2cc', flowerOut: 'rgba(79,179,90,.35)', gray: '#e7ebef', deco: '#ccd3da', decoOut: '#eceff2', center: '#8a5d36', line: 'rgba(0,0,0,.08)', dash: '#2f7fd0', text: '#fff', hatch: '#fff' },
+  night: { out: '#1c2a45', outR: '#2f5240', off: '#16223a', offR: '#24324d', glass: '#21405a', lit: '#5b3a68', crop: '#5fd06b', grow: '#d9b440', rest: '#5b6678', flowerOut: 'rgba(95,208,107,.35)', gray: '#26324a', deco: '#3a4660', decoOut: '#202b42', center: '#c7925c', line: 'rgba(255,255,255,.1)', dash: '#6fb4ff', text: '#fff', hatch: 'rgba(255,255,255,.55)' } };
+const pal53 = () => document.body.classList.contains('night') ? PAL53.night : PAL53.day;
+function hiveMapCanvas49(M, k, T){
+  const P = pal53(), R = 4, r = hiveRange(T), nx = HLV49[hiveLvl(T)] ? HLV49[hiveLvl(T)].range : r, W = 38, H = 19, cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = (2 * R + 1) * W * dpr; cv.height = ((2 * R + 1) * H + 16) * dpr; cv.style.width = (2 * R + 1) * W + 'px'; cv.className = 'hm49'; const c = cv.getContext('2d'); c.scale(dpr, dpr);
+  const [x0, y0] = pkey(k), ox = (2 * R + 1) * W / 2, oy = 8 + H / 2;
+  const cells = []; for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++) cells.push([dx, dy]);
+  cells.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [dx, dy] of cells){ const cx = ox + (dx - dy) * W / 2, cy = oy + (dx + dy + 2 * R) * H / 2, d = Math.max(Math.abs(dx), Math.abs(dy)), U = M.tiles[tkey(x0 + dx, y0 + dy)], inR = d <= r;
+    c.beginPath(); c.moveTo(cx, cy - H / 2); c.lineTo(cx + W / 2, cy); c.lineTo(cx, cy + H / 2); c.lineTo(cx - W / 2, cy); c.closePath();
+    let col = inR ? P.outR : P.out, hatch = false;
+    if (!inMap(M, x0 + dx, y0 + dy)) col = inR ? P.offR : P.off;
+    if (U && U.t === 'soil' && U.flower){ const st = U.flower.stage; col = st === 'bloom' && U.flower.nectar > 0 ? P.crop : (st === 'grow' ? P.grow : P.rest); if (!inR) col = st === 'bloom' ? P.flowerOut : P.gray; }
+    else if (U && U.t === 'deco' && U.id === 'flowers'){ col = inR ? P.deco : P.decoOut; hatch = inR; }
+    if (dx === 0 && dy === 0) col = P.center;
+    c.fillStyle = col; c.fill(); c.strokeStyle = P.line; c.lineWidth = 1; c.setLineDash([]); c.stroke();
+    if (hatch){ c.save(); c.clip(); c.strokeStyle = P.hatch; for (let i = -24; i < 24; i += 5){ c.beginPath(); c.moveTo(cx + i, cy - 10); c.lineTo(cx + i + 10, cy + 10); c.stroke(); } c.restore(); }
+    if (d === nx && nx > r){ c.setLineDash([3, 3]); c.strokeStyle = P.dash; c.lineWidth = 1.2; c.stroke(); c.setLineDash([]); }
+    if (T.target === tkey(x0 + dx, y0 + dy)){ c.font = '14px sans-serif'; c.fillText('🐝', cx - 7, cy + 5); } }
+  c.fillStyle = P.text; c.font = 'bold 10px sans-serif'; c.fillText('箱', ox - 5, oy + R * H + 4);
+  return cv; }
+// hive legend colours follow the palette at night
+{ const _oh53 = openHive; openHive = function(M, k, T){ const r = _oh53(M, k, T); try { const P = pal53(), el = $('modalBody'), lg = el && el.querySelector('.lg49');
+  if (lg){ const is = lg.querySelectorAll('i'); if (is[0]) is[0].style.background = P.crop; if (is[1]) is[1].style.background = P.grow; if (is[2]) is[2].style.background = P.rest; } } catch(e){} return r; }; }
+function lampMapCanvas53(M, k, T){
+  const P = pal53(), D = DEV[T.id], r = D.range, R = Math.max(2, r + 1), W = 38, H = 19, cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = (2 * R + 1) * W * dpr; cv.height = ((2 * R + 1) * H + 16) * dpr; cv.style.width = (2 * R + 1) * W + 'px'; const c = cv.getContext('2d'); c.scale(dpr, dpr);
+  const [x0, y0] = pkey(k), ox = (2 * R + 1) * W / 2, oy = 8 + H / 2, mi = S.maps.indexOf(M), lit = (litTiles[mi] || new Set());
+  const cells = []; for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++) cells.push([dx, dy]);
+  cells.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [dx, dy] of cells){ const cx = ox + (dx - dy) * W / 2, cy = oy + (dx + dy + 2 * R) * H / 2, d = Math.max(Math.abs(dx), Math.abs(dy)), kk = tkey(x0 + dx, y0 + dy), U = M.tiles[kk], inR = d <= r;
+    c.beginPath(); c.moveTo(cx, cy - H / 2); c.lineTo(cx + W / 2, cy); c.lineTo(cx, cy + H / 2); c.lineTo(cx - W / 2, cy); c.closePath();
+    let col = inR ? P.outR : P.out;
+    if (!inMap(M, x0 + dx, y0 + dy)) col = inR ? P.offR : P.off;
+    else if (M.glass && M.glass[kk]) col = inR ? P.glass : P.out;
+    const plant = U && ((U.t === 'soil' && (U.crop || U.flower)) || U.t === 'tree');
+    if (plant) col = inR ? P.crop : P.gray;
+    if (dx === 0 && dy === 0 && !plant) col = P.center;
+    c.fillStyle = col; c.fill();
+    if (inR && T.lit){ c.fillStyle = P === PAL53.night ? 'rgba(255,140,230,.28)' : 'rgba(255,140,230,.22)'; c.fill(); }
+    c.strokeStyle = P.line; c.lineWidth = 1; c.stroke();
+    if (d === r){ c.setLineDash([3, 3]); c.strokeStyle = P.dash; c.lineWidth = 1.1; c.stroke(); c.setLineDash([]); }
+    if (dx === 0 && dy === 0){ c.font = '13px sans-serif'; c.fillText('💡', cx - 7, cy + 5); } }
+  return cv; }
+{ const _od53 = openDevice; openDevice = function(M, k, T){ const r = _od53(M, k, T);
+  try { if (T && DEV[T.id] && DEV[T.id].kind === 'lamp'){ const el = $('modalBody'); if (el && !el.querySelector('.rm53')){ const P = pal53(), D = DEV[T.id], side = 2 * D.range + 1;
+      const box = document.createElement('div'); box.className = 'card rm53';
+      box.innerHTML = `<h4>照射範圍 <span class="small">${side}×${side}${D.hang ? ' · 吸頂裝在溫室棚頂' : ''}</span></h4><div class="cv53"></div>
+        <div class="lg53"><span><i style="background:${P.crop}"></i>照得到的作物／果樹</span><span><i style="background:${P.outR}"></i>範圍內空地</span>${M.glass ? `<span><i style="background:${P.glass}"></i>溫室</span>` : ''}<span><i style="background:rgba(255,140,230,.5)"></i>燈亮著</span><span>┅ 範圍邊界</span></div>`;
+      box.querySelector('.cv53').appendChild(lampMapCanvas53(M, k, T));
+      const first = el.querySelector('p'); if (first) first.insertAdjacentElement('afterend', box); else el.prepend(box); } } } catch(e){ console.error(e); }
+  return r; }; }
+
+/* ---------- 11. level numbers are cumulative XP everywhere ---------- */
+{ const _rh53 = renderHUD; renderHUD = function(){ _rh53(); if (!S || V53.UI.levelCumulative === false) return; const P = S.player, next = LV[P.level];
+  if (next && P.level < R.maxLevel){ const tx = `${fmtN(P.xp)} / ${fmtN(next.xpToReach)} 經驗`; if ($('xptext').textContent !== tx) $('xptext').textContent = tx; } }; }
+{ const _li53 = levelInfo46; levelInfo46 = function(el){ const r = _li53(el); if (V53.UI.levelCumulative === false) return r; try { const P = S.player, N = LV[P.level];
+  const sm = el.querySelector('.now46 .half46 small:last-of-type'); if (N && sm && /累計/.test(sm.textContent)) sm.textContent = `累計 ${fmtN(P.xp)} / ${fmtN(N.xpToReach)} 經驗`;
+  const nx = el.querySelectorAll('.now46 .half46')[1]; if (N && nx){ const p = nx.querySelector('p'); if (p) p.textContent = `還差 ${fmtN(Math.max(0, N.xpToReach - P.xp))} 經驗（累計 ${fmtN(N.xpToReach)} 升級）`; }
+  el.querySelectorAll('.lc46').forEach((c, i) => { const s = c.querySelector('small'), L = LV[i]; if (s && L) s.textContent = L.xpToReach ? `累計 ${fmtN(L.xpToReach)} 起` : '起點'; });
+  } catch(e){ console.error(e); } return r; }; }
+
+/* ---------- 12. meteors: hit test on the whole streak, at pointer-down too, a short grace after they fade ---------- */
+RT.metGone = [];
+const metR53 = () => (isM() || (RT.lastPtr53 === 'touch')) ? (V53.MT.radiusTouch || 72) : (V53.MT.radius || 60);
+function metHit53(m, x, y, R2){ if (m.hx === undefined) return Infinity; const tx = m.hx - m.vx * m.len, ty = m.hy - m.vy * m.len, vx = m.hx - tx, vy = m.hy - ty, L = vx * vx + vy * vy || 1;
+  const u = Math.max(0, Math.min(1, ((x - tx) * vx + (y - ty) * vy) / L)), px = tx + u * vx, py = ty + u * vy, d = Math.hypot(x - px, y - py); return d <= R2 ? d : Infinity; }
+function metFind53(x, y){ const R2 = metR53(), now = performance.now() / 1000; let best = null, bd = Infinity;
+  for (const m of RT.meteors){ const d = metHit53(m, x, y, R2); if (d < bd){ bd = d; best = m; } }
+  if (!best) for (const g of RT.metGone){ if (now - g.at > (V53.MT.graceSeconds ?? .3)) continue; const d = metHit53(g.m, x, y, R2); if (d < bd){ bd = d; best = g.m; } }
+  return best; }
+{ const _dm53 = drawMeteors; drawMeteors = function(t, dark){ const before = RT.meteors.slice(); const r = _dm53(t, dark); const now = performance.now() / 1000;
+  for (const m of before) if (!RT.meteors.includes(m)) RT.metGone.push({ m, at: now }); RT.metGone = RT.metGone.filter(g => now - g.at < 1); return r; }; }
+cv.addEventListener('pointerdown', e => { RT.lastPtr53 = e.pointerType; if (!RT.meteors.length && !RT.metGone.length) { RT.metDown = null; return; }
+  const r = cv.getBoundingClientRect(), m = metFind53(e.clientX - r.left, e.clientY - r.top); RT.metDown = m ? { m, at: performance.now() } : null; }, true);
+function meteorTap(sx, sy){
+  if (!S) return false;
+  const r = cv.getBoundingClientRect(), x = sx - r.left, y = sy - r.top;
+  let hit = metFind53(x, y);
+  if (!hit && RT.metDown && performance.now() - RT.metDown.at < (V53.MT.downMemoryMs || 900)) hit = RT.metDown.m;
+  RT.metDown = null;
+  if (!hit) return false;
+  RT.meteors = RT.meteors.filter(m => m !== hit); RT.metGone = RT.metGone.filter(g => g.m !== hit);
+  const nk = nightKey(Date.now()); if (!S.wish || S.wish.night !== nk) S.wish = { night: nk, n: 0 };
+  const W = (MET && MET.wish) || { maxPerNight: 10, rewards: [{ type: 'coins', min: 5, max: 20, weight: 1 }] };
+  if (S.wish.n >= W.maxPerNight){ toast('今晚的願望已經許滿了，明晚再來'); return true; }
+  S.wish.n++;
+  const tot = W.rewards.reduce((s, r) => s + r.weight, 0); let pick = Math.random()*tot, rw = W.rewards[0];
+  for (const r of W.rewards){ pick -= r.weight; if (pick <= 0){ rw = r; break; } }
+  let msg = '';
+  if (rw.type === 'coins'){ const n = rw.min + Math.floor(Math.random()*(rw.max - rw.min + 1)); S.player.coins += n; flyCoins({ x: sx, y: sy }, n); msg = `+${n} 金幣`; }
+  else if (rw.type === 'xp'){ const n = rw.min + Math.floor(Math.random()*(rw.max - rw.min + 1)); const lv = S.player.level; addXP(n); if (S.player.level > lv) sfx('levelup'); msg = `+${n} 經驗`; }
+  else { S.freeSeeds = (S.freeSeeds || 0) + (rw.qty || 3); msg = `接下來 ${S.freeSeeds} 次播種免費`; }
+  sfx('coin'); showMeteor53(rw, msg, S.wish.n, W.maxPerNight); afterAction();
+  return true;
+}
+
+/* ---------- 13. snow: whole fields, caps on trees / roofs / chargers / animals; roofs and chargers can be shovelled ---------- */
+const SNOWTREES53 = new Set(((CFG.ui.trayTabs.deco || []).find(t => t.id === 'trees') || { ids: [] }).ids.map(id => 'deco_' + id));
+const capKind53 = name => { if (name.includes('_light') || name.includes('_bubble')) return 0;
+  if (name.startsWith('tree_') || name.startsWith('building_')) return 2;
+  if (name.startsWith('animal_')) return 1;
+  if (name.startsWith('device_beehive') || name.startsWith('device_bumble')) return 2;
+  for (const p of SNOWTREES53) if (name.startsWith(p)) return 2; return 0; };
+const CAP53 = new Map(), SOILSNOW53 = new Map();
+function silo53(im, sx, sy, fw, fh, col, dy){ const c = document.createElement('canvas'); c.width = fw; c.height = fh; const g = c.getContext('2d');
+  g.drawImage(im, sx, sy, fw, fh, 0, 0, fw, fh); g.globalCompositeOperation = 'source-in'; g.fillStyle = col; g.fillRect(0, 0, fw, fh);
+  if (dy){ g.globalCompositeOperation = 'destination-out'; g.drawImage(im, sx, sy, fw, fh, 0, dy, fw, fh); } return c; }
+function capCanvas53(name, frame, kind){ const key = name + '|' + frame; if (CAP53.has(key)) return CAP53.get(key);
+  const a = ATLAS[name], im = IMG[name]; if (!a || !im){ CAP53.set(key, null); return null; }
+  const fw = a.frameWidth, fh = a.frameHeight, sx = (a.sx || 0) + frame * fw, sy = a.sy || 0, sc = (a.scale || 2) / 2, dp = V53.SC.capDepth || [4, 9];
+  const d = Math.max(2, Math.round((kind === 1 ? dp[0] : dp[1]) * sc));
+  let out = null;
+  try { out = document.createElement('canvas'); out.width = fw; out.height = fh; const g = out.getContext('2d');
+    g.drawImage(silo53(im, sx, sy, fw, fh, '#bcd3e8', d + Math.max(2, Math.round(2 * sc))), 0, 0);
+    g.drawImage(silo53(im, sx, sy, fw, fh, '#f7fbff', d), 0, 0);
+  } catch(e){ out = null; }
+  CAP53.set(key, out); return out; }
+function soilSnow53(f){ if (SOILSNOW53.has(f)) return SOILSNOW53.get(f); const n = 'ground_soil22_m4', a = ATLAS[n], im = IMG[n], sn = ATLAS.ground_snow_a, si = IMG.ground_snow_a;
+  if (!a || !im){ SOILSNOW53.set(f, null); return null; }
+  const fw = a.frameWidth, fh = a.frameHeight, c = silo53(im, (a.sx || 0) + f * fw, a.sy || 0, fw, fh, '#eef5fc', 0), g = c.getContext('2d');
+  if (sn && si){ g.globalCompositeOperation = 'source-atop'; const w = fw * .98, h = w * sn.frameHeight / sn.frameWidth; g.globalAlpha = .9;
+    g.drawImage(si, sn.sx || 0, sn.sy || 0, sn.frameWidth, sn.frameHeight, a.anchor[0] - w / 2, a.anchor[1] - h * (sn.anchor[1] / sn.frameHeight) - 4, w, h); g.globalAlpha = 1; }
+  g.globalCompositeOperation = 'source-atop'; const gr = g.createLinearGradient(0, 0, 0, fh); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, 'rgba(150,180,210,.25)'); g.fillStyle = gr; g.fillRect(0, 0, fw, fh);
+  SOILSNOW53.set(f, c); return c; }
+const tileUnder53 = (x, y) => { const u = x / HW, v = (y - HH) / HH; return tkey(Math.round((u + v) / 2), Math.round((v - u) / 2)); };
+function roofSnowy53(mi, M, x, y, name){ let k = tileUnder53(x, y), T = M.tiles[k];
+  if (!T || (T.t !== 'building' && T.t !== 'house' && T.t !== 'tower')){ // farmhouse / barn sprites are drawn below their anchor: look one tile up as well
+    for (const kk of [tkey(...pkey(k).map(v => v - 1)), tkey(pkey(k)[0] - 1, pkey(k)[1]), tkey(pkey(k)[0], pkey(k)[1] - 1)]){ const U = M.tiles[kk]; if (U && (U.t === 'building' || U.t === 'house')){ k = kk; T = U; break; } } }
+  if (T && T.rx !== undefined) k = tkey(T.rx, T.ry);
+  return snowyAt(mi, k); }
+function baseSnowy53(T){ if (!T || !S || !S.snow || !S.snow.cover || V53.SC.snowBlocksBaseSolar === false) return false;
+  for (let mi = 0; mi < S.maps.length; mi++){ const M = S.maps[mi]; if (T.rx !== undefined && M.tiles[tkey(T.rx, T.ry)] === T) return snowyAt(mi, tkey(T.rx, T.ry));
+    for (const k in M.tiles) if (M.tiles[k] === T) return snowyAt(mi, k); } return false; }
+{ const _cf53 = chargeFrac; chargeFrac = function(tier, base, dt, t){ if (base && base.T && (base.T.src || 'solar') === 'solar' && baseSnowy53(base.T)) return 0; return _cf53(tier, base, dt, t); }; }
+function footprint53(M, T){ if (T.t === 'house' && T.rx !== undefined) return houseCells(M, T); if (T.t === 'building' && T.rx !== undefined){ const [w, h] = bldSize(T.id), out = []; for (let dy = 0; dy < h; dy++) for (let dx = 0; dx < w; dx++) out.push(tkey(T.rx + dx, T.ry + dy)); return out; } return null; }
+function roofShovel53(M, k, T, x, y){ if (V53.SC.shovelRoofs === false || !T || (T.t !== 'building' && T.t !== 'house')) return false;
+  const cells = footprint53(M, T) || [k], Sn = S.snow, mi = S.cur, { cx, cy } = center(x, y);
+  if (!cells.some(c => snowyAt(mi, c))){ toast(Sn.cover ? '屋頂已經鏟乾淨了' : '現在沒有積雪'); return true; }
+  if (Sn.bucket >= SH.bucketMax){ toast(`雪桶滿了（${SH.bucketMax}/${SH.bucketMax}），點水塔或融雪機倒掉`); return true; }
+  const C = Sn.cleared[mi] = Sn.cleared[mi] || {}; for (const c of cells) C[c] = 1; Sn.bucket++;
+  const charger = T.t === 'building' && BASE_TYPES.includes(T.id);
+  floatText(cx, cy - 40, `${charger ? '充電站' : '屋頂'}的雪鏟掉了（${Sn.bucket}/${SH.bucketMax}）`, '#4f86b0', 10); sfx('plow'); afterAction(); return true; }
+{ const _spr53 = spr; spr = function(name, frame, x, y, flip, alpha){
+  if (!RT.inWorld || !S || typeof name !== 'string') return _spr53(name, frame, x, y, flip, alpha);
+  // single fence turned the other way
+  if (name.startsWith('deco_fence_m00')){ const M = curMap(), T = M && M.tiles[tileUnder53(x, y)]; if (T && T.t === 'deco' && T.id === 'fence' && T.dir) name = 'deco_fence_m05' + name.slice(14); }
+  // greenhouse: frame + faint glass
+  if (name.startsWith('greenhouse_m')){ ghDraw53(name, frame, x, y); return; }
+  const snow = S.snow && S.snow.cover;
+  if (snow && V53.SC.fullTile !== false && name.startsWith('ground_snow_')){ const M = curMap(), k = tileUnder53(x, y), T = M && M.tiles[k];
+    if (T && T.t === 'soil'){ const f = RT.soilMask.get(Math.round(x) + ',' + Math.round(y)), sa = ATLAS.snow_ground_soil22, si = IMG.snow_ground_soil22;
+      // batch31 field snow: follows the 3 ridges / 2 furrows; only the outer fields (frames with a free side) show the 田埂
+      if (sa && si){ const fr = f == null ? 0 : f, s = .5 * 1.025; ctx.drawImage(si, (sa.sx || 0) + fr * sa.frameWidth, sa.sy || 0, sa.frameWidth, sa.frameHeight, x - sa.anchor[0] * s, y - sa.anchor[1] * s + .5, sa.frameWidth * s, sa.frameHeight * s); return; }
+      const a = ATLAS.ground_soil22_m4, c = soilSnow53(f == null ? 0 : f);
+      if (c && a){ const s = .5 * 1.025 * (V53.SC.fieldScale || .84), oy = V53.SC.fieldLift ?? 2.5; ctx.drawImage(c, x - a.anchor[0] * s, y - oy - a.anchor[1] * s + .5, a.frameWidth * s, a.frameHeight * s); return; } } }
+  const r = _spr53(name, frame, x, y, flip, alpha);
+  if (snow && V53.SC.objects !== false){ const kind = capKind53(name);
+    if (kind){ const M = curMap(), mi = S.cur; let on = true;
+      if (name.startsWith('building_')) on = roofSnowy53(mi, M, x, y, name);
+      else if (kind === 2 && glassAt(mi, tileUnder53(x, y))) on = false;
+      if (on && ATLAS['snow_' + name] && IMG['snow_' + name]){ _spr53('snow_' + name, frame, x, y, flip, alpha); on = false; }
+      if (on){ const c = capCanvas53(name, frame, kind), a = ATLAS[name];
+        if (c && a){ const s = 1 / (a.scale || 2); if (alpha != null && alpha !== 1) ctx.globalAlpha = alpha;
+          if (flip){ ctx.save(); ctx.translate(x, y); ctx.scale(-1, 1); ctx.drawImage(c, -a.anchor[0] * s, -a.anchor[1] * s, a.frameWidth * s, a.frameHeight * s); ctx.restore(); }
+          else ctx.drawImage(c, x - a.anchor[0] * s, y - a.anchor[1] * s, a.frameWidth * s, a.frameHeight * s);
+          if (alpha != null && alpha !== 1) ctx.globalAlpha = 1; } } } }
+  return r; }; }
+// greenhouse look: the bright frame pixels stay solid, the glass is very faint (pixel read; file:// falls back to a lighter whole sprite)
+const GHF53 = new Map();
+function ghFrame53(name, frame){ const key = name + '|' + frame; if (GHF53.has(key)) return GHF53.get(key);
+  const a = ATLAS[name], im = IMG[name]; let out = null;
+  if (a && im){ const fw = a.frameWidth, fh = a.frameHeight, sx = (a.sx || 0) + frame * fw, sy = a.sy || 0;
+    try { const fr = document.createElement('canvas'); fr.width = fw; fr.height = fh; const g = fr.getContext('2d'); g.drawImage(im, sx, sy, fw, fh, 0, 0, fw, fh);
+      const gl = document.createElement('canvas'); gl.width = fw; gl.height = fh; const g2 = gl.getContext('2d'); g2.drawImage(im, sx, sy, fw, fh, 0, 0, fw, fh);
+      const A = g.getImageData(0, 0, fw, fh), B = g2.getImageData(0, 0, fw, fh), mn = V53.GL.frameMinRGB || 200, ma = V53.GL.frameMinAlpha || 150, ga = V53.GL.glassAlpha ?? .22;
+      for (let i = 0; i < A.data.length; i += 4){ const d = A.data, fr_ = d[i + 3] > ma && Math.min(d[i], d[i + 1], d[i + 2]) > mn;
+        if (fr_){ B.data[i + 3] = 0; } else { d[i + 3] = 0; B.data[i + 3] = Math.round(B.data[i + 3] * ga); } }
+      g.putImageData(A, 0, 0); g2.putImageData(B, 0, 0); out = { fr, gl };
+    } catch(e){ out = { fallback: true }; } }
+  GHF53.set(key, out); return out; }
+function ghDraw53(name, frame, x, y){ const a = ATLAS[name], o = ghFrame53(name, frame); if (!a || !o) return;
+  if (o.fallback){ ctx.globalAlpha = .4; spr(name, frame, x, y); ctx.globalAlpha = 1; return; }   // (spr would recurse into ghDraw53 — use the base path)
+  const s = 1 / (a.scale || 2), dx = x - a.anchor[0] * s, dy = y - a.anchor[1] * s, w = a.frameWidth * s, h = a.frameHeight * s;
+  ctx.drawImage(o.gl, dx, dy, w, h); ctx.drawImage(o.fr, dx, dy, w, h); }
+// the file:// fallback must not recurse: draw the plain sprite directly
+{ const _gd53 = ghDraw53; ghDraw53 = function(name, frame, x, y){ const o = ghFrame53(name, frame);
+  if (o && o.fallback){ const a = ATLAS[name], im = IMG[name]; if (!a || !im) return; const s = 1 / (a.scale || 2), fw = a.frameWidth, fh = a.frameHeight;
+    ctx.globalAlpha = .4; ctx.drawImage(im, (a.sx || 0) + frame * fw, a.sy || 0, fw, fh, x - a.anchor[0] * s, y - a.anchor[1] * s, fw * s, fh * s); ctx.globalAlpha = 1; return; }
+  return _gd53(name, frame, x, y); }; }
+// extras on each tile: greenhouse lamp + highlight of what the chooser points at
+{ const _dte53 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte53(M, k, T, x, y, t, now);
+  const L = ghlAt53(M, k); if (L) drawGhLamp53(L, x, y, t);
+  const P = RT.pick53; if (P && P.mi === S.cur){ const { cx, cy } = center(x, y);
+    const mark = (P.hl === 'glass' && M.glass && M.glass[k] && glassComp(M, P.k).includes(k)) || (P.hl === 'obj' && k === P.k);
+    if (mark){ ctx.save(); ctx.strokeStyle = 'rgba(255,214,90,.95)'; ctx.lineWidth = 2.5; diamondPath(cx, cy, .96); ctx.stroke(); ctx.restore(); }
+    if (P.hl === 'lamp' && k === P.k){ ctx.save(); ctx.strokeStyle = 'rgba(255,214,90,.95)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(cx, cy - (CFG.devices.gh_lamp.drawLift ?? 25), 14, 8, 0, 0, 7); ctx.stroke(); ctx.restore(); } }
+  const GM = RT.gmv; if (GM && GM.mi === S.cur && typeof hover !== 'undefined' && hover && inMap(M, hover.x, hover.y)){ const ddx = hover.x - GM.gx, ddy = hover.y - GM.gy;
+    if ((ddx || ddy) && GM.cells.some(c => { const [a, b2] = pkey(c); return tkey(a + ddx, b2 + ddy) === k; })){ const own = new Set(GM.cells), okc = inMap(M, x, y) && (glassPlaceable(M.tiles[k]) || (M.tiles[k] && M.tiles[k].t === 'animal')) && !(M.glass[k] && !own.has(k)), { cx, cy } = center(x, y);
+      ctx.save(); ctx.fillStyle = okc ? 'rgba(90,210,120,.28)' : 'rgba(240,80,70,.32)'; ctx.strokeStyle = okc ? 'rgba(60,180,90,.95)' : 'rgba(220,60,50,.95)'; ctx.lineWidth = 2; diamondPath(cx, cy, .96); ctx.fill(); ctx.stroke(); ctx.restore(); } }
+  const G = RT.ghmv53; if (G && G.mi === S.cur && G.k === k){ const { cx, cy } = center(x, y); ctx.save(); ctx.strokeStyle = 'rgba(255,214,90,.95)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(cx, cy - (CFG.devices.gh_lamp.drawLift ?? 25), 14, 8, 0, 0, 7); ctx.stroke(); ctx.restore(); } }; }
+// old animals: the bubble says they can be sold
+{ const _bb53 = bubble; bubble = function(x, y, text, ...a){ if (text === '年老' && V53.UI.animalSellOnTap !== false) text = '年老·可賣'; return _bb53(x, y, text, ...a); }; }
+
+
+/* ---------- 14. level-up cutscene per the rules (number flips old → new, unlock grid ≤ 8 + "…還有 N 個", coins fly, 6 s);
+   catching a meteor gets the same kind of cutscene ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+#lvup .lvitems{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px 6px;align-items:start}
+#lvup .lvitems span{width:auto;min-height:62px;justify-content:flex-start;gap:3px;line-height:1.25}
+#lvup .lvitems span i.ph53{display:block;width:44px;height:44px;border-radius:12px;background:rgba(120,150,180,.18)}
+#lvup .lvitems span.more53{justify-content:center;color:#6a7a8a;font-weight:700}
+#lvup .lvmedal b.flip53{animation:flip53 .16s ease-in-out}
+@keyframes flip53{0%{transform:translateY(-25%) scaleY(1)}50%{transform:translateY(-25%) scaleY(.1)}100%{transform:translateY(-25%) scaleY(1)}}
+#lvup.met53{background:radial-gradient(circle at 50% 40%,rgba(30,50,110,.55),rgba(6,10,30,.78))}
+#lvup.met53 .lvmedal::before{background:repeating-conic-gradient(rgba(170,210,255,.55) 0 8deg,transparent 8deg 22deg);animation:lvSpin 6s linear infinite reverse}
+#lvup.met53 .lvmedal img{filter:drop-shadow(0 0 18px rgba(170,215,255,.9))}
+#lvup.met53 .lvcard{text-align:center}
+#lvup.met53 .rw53{font-size:22px;font-weight:900;color:#b8860b;margin:4px 0}
+#lvup.met53 .rw53.xp{color:#2f7fd0}#lvup.met53 .rw53.seed{color:#2f8a3a}
+body.night #lvup .lvcard{background:rgba(20,34,64,.96);color:#eef3fb} body.night #lvup .lvdeco,body.night #lvup .lvcard .small{color:#c9d6ea} body.night #lvup .lvcard h4{color:#cfe0ff} body.night #lvup .lvitems span{color:#dce6f5}
+`; document.head.appendChild(st); }
+function confetti53(ov, kind){ if (!motion) return () => {}; const c = ov.querySelector('canvas'), g = c.getContext('2d'), W = c.width = innerWidth, Hh = c.height = innerHeight, t0 = performance.now(); let stop = false;
+  const cols = kind === 'star' ? ['#fff8c0', '#bfe3ff', '#ffffff', '#ffe27a', '#d8c4ff'] : ['#ffd84a', '#ff7a8a', '#6fd3ff', '#8ee08a', '#c79bff', '#fff'];
+  const P = Array.from({ length: kind === 'star' ? 70 : 90 }, () => ({ x: Math.random() * W * (kind === 'star' ? 1.3 : 1), y: -Math.random() * Hh * .6, v: 1.5 + Math.random() * 3, r: Math.random() * 6, s: 4 + Math.random() * 6, c: cols[Math.floor(Math.random() * cols.length)], w: Math.random() * 6 }));
+  const star = (r) => { g.beginPath(); for (let i = 0; i < 10; i++){ const a = i * Math.PI / 5 - Math.PI / 2, rr = i % 2 ? r * .45 : r; g.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } g.closePath(); g.fill(); };
+  const step = () => { if (stop) return; const el = (performance.now() - t0) / 1000; g.clearRect(0, 0, W, Hh);
+    for (const p of P){ p.y += p.v; if (kind === 'star') p.x -= p.v * .7; else p.x += Math.sin(el * 2 + p.w) * .8; p.r += .08;
+      g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.fillStyle = p.c; if (kind === 'star'){ g.globalAlpha = .6 + .4 * Math.sin(el * 8 + p.w); star(p.s * .8); } else g.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); g.restore(); }
+    if (el < 3.2) requestAnimationFrame(step); else g.clearRect(0, 0, W, Hh); };
+  requestAnimationFrame(step); return () => { stop = true; }; }
+function showLevelUp(){
+  if (!RT.lvQ) return;
+  if ((typeof drag !== 'undefined' && drag) || (!$('modal').hidden && $('modalTitle').textContent === '選擇農場') || document.querySelector('#lvup.met53')){ RT.lvT = setTimeout(showLevelUp, 600); return; }
+  const Q = RT.lvQ; RT.lvQ = null; const old = $('lvup'); if (old) old.remove();
+  const ov = document.createElement('div'); ov.id = 'lvup'; if (!motion) ov.classList.add('still');
+  const all = [...Q.unlocks.map(u => ({ u, n: nameOf(u) })).filter(x => x.n), ...Q.decos.map(d => ({ u: d, n: nameOf(d) }))], shown = all.slice(0, 8), more = Math.max(0, all.length - 8);
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvmedal"><img src="${IMGSRC.ui_levelup_medal}" alt=""><b>${motion ? Q.from : Q.to}</b></div>
+    <h2>升級了！${Q.from + 1 < Q.to ? `Lv ${Q.from} → Lv ${Q.to}` : `Lv ${Q.to}`}</h2>
+    <div class="lvcard">${all.length || Q.notes.length ? `<h4>新解鎖</h4><div class="lvitems"></div>${Q.notes.length ? `<p class="small">${Q.notes.join('、')}</p>` : ''}` : ''}
+      ${Q.decos.length ? `<p class="lvdeco">特殊裝飾：${Q.decos.map(d => d === 'golden_farmhouse' ? '金色農舍（農舍已換成金色，設定裡可以切換）' : `${nameOf(d)}（已放進飾品倉庫）`).join('、')}</p>` : ''}
+      <div class="lvfoot"><span class="lvcoin">金幣 +${fmtN(Q.coins)}${Q.to - Q.from > 1 ? `（${Q.to - Q.from} 級合計）` : ''}</span><button class="btn" id="lvOk">太好了</button></div></div>
+    <div class="lvskip">點一下可以跳過</div></div>`;
+  document.body.appendChild(ov);
+  const box = ov.querySelector('.lvitems');
+  if (box){ for (const x of shown){ const sp = document.createElement('span'), [n, f] = unlockIcon38(x.u); const ui = IMGSRC['ui_' + x.u] || IMGSRC['ui_' + String(x.u).replace(/_\d+$/, '')]; if (n) sp.appendChild(iconCanvas(n, f)); else if (ui){ const im = document.createElement('img'); im.src = ui; im.alt = ''; im.style.cssText = 'width:44px;height:44px;object-fit:contain'; sp.appendChild(im); } else { const i = document.createElement('i'); i.className = 'ph53'; sp.appendChild(i); } sp.appendChild(document.createTextNode(x.n.replace('（花苗）', ''))); box.appendChild(sp); }
+    if (more){ const sp = document.createElement('span'); sp.className = 'more53'; sp.textContent = `…還有 ${more} 個`; box.appendChild(sp); } }
+  sfx('levelup');
+  // the badge number flips from the old level to the new one
+  if (motion){ const b = ov.querySelector('.lvmedal b'), steps = Q.to - Q.from, dt = Math.max(70, Math.min(160, 800 / Math.max(1, steps))); let v = Q.from;
+    setTimeout(function tick(){ if (!ov.isConnected) return; v++; b.textContent = v; b.classList.remove('flip53'); void b.offsetWidth; b.classList.add('flip53'); if (v < Q.to) setTimeout(tick, dt); }, 450); }
+  let done = false; const stopC = confetti53(ov, 'confetti');
+  const close = () => { if (done) return; done = true; stopC(); clearTimeout(tm); ov.remove(); UIbuildTray(); updateHint(); renderHUD(); };
+  setTimeout(() => { try { if (ov.isConnected) flyCoins(ov.querySelector('.lvcoin'), Q.coins); } catch(e){} }, 900);
+  const tm = setTimeout(close, 6000); ov.addEventListener('click', close); ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
+let MEDAL53 = null;
+function meteorMedal53(){ if (MEDAL53) return MEDAL53; const c = document.createElement('canvas'); c.width = c.height = 360; const g = c.getContext('2d');
+  const R = 128, cx = 180, cy = 186;
+  let gr = g.createRadialGradient(cx - 40, cy - 50, 20, cx, cy, R + 14); gr.addColorStop(0, '#e9f4ff'); gr.addColorStop(.55, '#7fb2ff'); gr.addColorStop(1, '#3a4fae');
+  g.fillStyle = '#26307a'; g.beginPath(); g.arc(cx, cy + 6, R + 16, 0, 7); g.fill();
+  g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, R + 12, 0, 7); g.fill();
+  gr = g.createRadialGradient(cx, cy - 30, 10, cx, cy, R); gr.addColorStop(0, '#1d2f78'); gr.addColorStop(1, '#0c1440'); g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, R - 4, 0, 7); g.fill();
+  g.save(); g.beginPath(); g.arc(cx, cy, R - 4, 0, 7); g.clip();
+  for (let i = 0; i < 40; i++){ const a = Math.random() * 7, r = Math.random() * R; g.fillStyle = `rgba(255,255,255,${.3 + Math.random() * .6})`; g.fillRect(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 2, 2); }
+  const tail = g.createLinearGradient(cx - 120, cy - 110, cx + 20, cy + 10); tail.addColorStop(0, 'rgba(160,210,255,0)'); tail.addColorStop(1, 'rgba(230,245,255,.95)');
+  g.strokeStyle = tail; g.lineCap = 'round'; for (const [w, o] of [[26, 0], [12, 18], [10, -18]]){ g.lineWidth = w; g.beginPath(); g.moveTo(cx - 130 + o, cy - 120 - o); g.lineTo(cx + 10, cy + 0); g.stroke(); }
+  g.restore();
+  g.fillStyle = '#ffe36a'; g.strokeStyle = '#c98a0c'; g.lineWidth = 6; g.beginPath();
+  for (let i = 0; i < 10; i++){ const a = i * Math.PI / 5 - Math.PI / 2, rr = i % 2 ? 26 : 60; g.lineTo(cx + 22 + Math.cos(a) * rr, cy + 22 + Math.sin(a) * rr); } g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = '#fffbe0'; g.beginPath(); g.arc(cx + 10, cy + 6, 8, 0, 7); g.fill();
+  return (MEDAL53 = c.toDataURL()); }
+function showMeteor53(rw, msg, n, max){
+  if (document.getElementById('lvup')){ toast(`流星許願成功！${msg}（今晚 ${n}/${max}）`, true, 3000); return; }
+  const ov = document.createElement('div'); ov.id = 'lvup'; ov.className = 'met53' + (motion ? '' : ' still');
+  const cls = rw.type === 'xp' ? 'xp' : rw.type === 'coins' ? '' : 'seed', img = meteorMedal53();
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvmedal"><img src="${img}" alt=""></div>
+    <h2>抓到流星，許願成功！</h2>
+    <div class="lvcard"><div class="rw53 ${cls}">${msg}</div><p class="small">今晚已許 ${n} / ${max} 個願望${n >= max ? '，明晚再來' : ''}</p>
+      <div class="lvfoot" style="justify-content:center"><button class="btn" id="lvOk">太好了</button></div></div>
+    <div class="lvskip">點一下可以跳過</div></div>`;
+  document.body.appendChild(ov); sfx('levelup');
+  let done = false; const stopC = confetti53(ov, 'star');
+  const close = () => { if (done) return; done = true; stopC(); clearTimeout(tm); ov.remove(); renderHUD(); if (RT.lvQ){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 200); } };
+  const tm = setTimeout(close, 3600); ov.addEventListener('click', close); ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
+
+
+/* ---------- 15. fields and fruit trees can be moved for a fee (移墾費／移植費), asked first; long-press on a greenhouse tile asks what to move ---------- */
+const MVF53 = CFG.moveFees || { soil: 30, soilCrop: 60, treeRate: .3, treeMin: 50 };
+const M53T = (mi, k) => (S.maps[mi].tiles[k] || {});
+const farmFee53 = T => !T ? 0 : T.t === 'soil' ? ((T.crop || T.flower) ? MVF53.soilCrop : MVF53.soil) : T.t === 'tree' ? Math.max(MVF53.treeMin || 0, Math.round((CFG.trees[T.id].saplingCost || 0) * (MVF53.treeRate ?? .3))) : 0;
+const farmName53 = T => T.t === 'tree' ? `果樹（${CFG.trees[T.id].name}）` : T.crop ? `田（${CFG.crops[T.crop.id].name}）` : T.flower ? '田（花）' : '田';
+{ const _oa53 = objectAt; objectAt = function(M, k){ const o = _oa53(M, k); if (o || !RT.farmMv53) return o; const T = M.tiles[k];
+  if (T && (T.t === 'soil' || T.t === 'tree') && RT.farmMv53.k === k){ const [x, y] = pkey(k); return { kind: T.t, bid: null, cells: [k], ax: x, ay: y }; } return o; }; }
+function askFarmMove53(M, k, x, y){ const T = M.tiles[k], fee = farmFee53(T), nm = farmName53(T), go = () => {
+    RT.farmMv53 = { k, fee, mi: S.cur }; if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); }
+    const ok = startMove(M, k, x, y, 'tool'); if (!ok) RT.farmMv53 = null; else { RT.mv.fee53 = fee; RT.mv.name = nm; toast(`拿起${nm}，點空地放下；放好才收${T.t === 'tree' ? '移植費' : '移墾費'} ${fmtN(fee)} 金幣（Esc 取消）`, false, 3600); } };
+  if (window.__noAsk47 || (S.settings.noAsk || {}).move) return go();
+  buyAsk47({ cat: 'move', title: `搬移${nm}`, q: `${T.t === 'tree' ? '果樹要挖起來移植' : '田要重新整地'}，放好之後才扣錢，取消不收。`, spr: T.t === 'tree' ? itemSprite('tree', T.id) : ['ui_tool_plow', 0], price: fee, priceLabel: T.t === 'tree' ? '移植費' : '移墾費', okText: '確定搬移',
+    rows: T.t === 'soil' && T.crop ? [['作物', '跟著田一起搬，生長進度不變']] : T.t === 'tree' ? [['果實', '生長進度不變']] : [] }, go); }
+{ const _sm53 = startMove; startMove = function(M, k, gx, gy, via){ const T = M.tiles[k];
+  if (!_oa53x(M, k) && T && (T.t === 'soil' || T.t === 'tree') && !(RT.farmMv53 && RT.farmMv53.k === k)){ toast('田和果樹要「長按」才能選擇付費搬移'); return false; }
+  return _sm53(M, k, gx, gy, via); }; }
+function _oa53x(M, k){ const f = RT.farmMv53; RT.farmMv53 = null; try { return objectAt(M, k); } finally { RT.farmMv53 = f; } }
+{ const _dm53 = dropMove; dropMove = function(){ const m = RT.mv; if (!m || !m.fee53) return _dm53();
+  if (m.defer53){ const { dx, dy } = moveOffset(), from = m.o.cells[0], [fx, fy] = pkey(from), to = tkey(fx + dx, fy + dy), fee = m.fee53, nm = m.name, mi = m.mi, tree = m.o.kind === 'tree', Tm = S.maps[mi].tiles[from];
+    if (!(dx || dy) || !moveOk53()){ const r = _dm53(); RT.farmMv53 = null; return r; }
+    _dm53(); RT.farmMv53 = null; if (S.maps[mi].tiles[to] !== Tm) return;   // did not land (an animal could not step aside…)
+    const undo = () => { const M = S.maps[mi], T = M.tiles[to]; if (!T || M.tiles[from]) return; delete M.tiles[to]; M.tiles[from] = T; RT.decoVer++; RT.regionsAt = 0; toast(`${nm}放回原位`); afterAction(); };
+    const pay = () => { if (!spend(fee)){ undo(); return; } toast(`${nm}搬好了，付${tree ? '移植費' : '移墾費'} ${fmtN(fee)} 金幣`); afterAction(); };
+    if (window.__noAsk47 || (S.settings.noAsk || {}).move){ pay(); return; }
+    buyAsk47({ cat: 'move', title: `搬移${nm}`, q: `已經先放到新位置。付${tree ? '移植費' : '移墾費'}就搬好了；取消的話放回原位。`, spr: tree ? itemSprite('tree', M53T(mi, to).id) : ['ui_tool_plow', 0], price: fee, priceLabel: tree ? '移植費' : '移墾費', okText: '確定付費', onCancel: undo }, pay);
+    return; }
+  const { dx, dy } = moveOffset();
+  if ((dx || dy) && moveOk53()){ if (!spend(m.fee53)){ toast(`金幣不夠付${m.o.kind === 'tree' ? '移植費' : '移墾費'}，${m.name}放回原位`); RT.mv = null; RT.farmMv53 = null; updateHint(); backTool53(); return; } }
+  const r = _dm53(); if (!RT.mv){ RT.farmMv53 = null; backTool53(); } return r; }; }
+function backTool53(){ const t = RT.prevTool53; RT.prevTool53 = null; if (t && S.sel.tool === 'move') setTool(t); }
+{ const _cm53 = cancelMove; cancelMove = function(...a){ const was = !!RT.farmMv53; RT.farmMv53 = null; if (was) setTimeout(backTool53, 0); if (RT.ghmv53){ RT.ghmv53 = null; toast('已取消搬移'); return; } return _cm53(...a); }; }
+{ const _sto53 = storeMoved; storeMoved = function(...a){ if (RT.mv && RT.mv.fee53){ toast('田和果樹不能收進倉庫'); return; } return _sto53(...a); }; }
+// long press (same delay as the normal one): greenhouse tile → choose 溫室棚 / 吸頂燈 / 田; a field or tree outside → ask the fee.
+// Fires from a timer while held, or on release if the timer was late (busy page); the tap that would follow is swallowed.
+// long-press menu: what to do with each thing on the tile (搬移／收進倉庫／剷除); only the paid action asks again
+function lpMenu53(M, k, x, y, T){
+  const glass = M.glass && M.glass[k], L = ghlAt53(M, k), farm = T && (T.t === 'soil' || T.t === 'tree'), fee = farm ? farmFee53(T) : 0, sec = [];
+  if (glass) sec.push({ h: '溫室棚', icon: 'ui_greenhouse', id: 'glass', acts: [['move', '搬移'], ['store', '收進倉庫', '溫室不能收進倉庫']] });
+  if (L) sec.push({ h: GHD53.name, icon: 'ui_lamp', id: 'lamp', acts: [['info', '查看資訊／設定'], ['move', '搬移'], ['store', '收進倉庫']] });
+  if (farm) sec.push({ h: farmName53(T), icon: T.t === 'tree' ? 'ui_tab_trees' : 'ui_tab_crops', id: 'obj', acts: [['move', `搬移（${T.t === 'tree' ? '移植費' : '移墾費'} ${fmtN(fee)}）`], ['remove', T.t === 'tree' ? '剷除果樹' : '剷除（變回草地）']] });
+  if (!sec.length) return false;
+  RT.pick53 = { mi: S.cur, k, hl: sec[0].id }; const { cx, cy } = center(x, y);
+  showPop53(cx, cy - 30, sec.map(g => `<h5>${g.h}</h5>${g.acts.map(([a, l, no]) => `<button data-s53="${g.id}" data-a53="${a}" ${no ? `disabled title="${no}" style="opacity:.5"` : ''}><img src="${IMGSRC[a === 'move' ? 'ui_tool_move' : a === 'store' ? 'ui_tool_store' : a === 'info' ? 'ui_lamp' : 'ui_tool_remove'] || IMGSRC[g.icon] || ''}" alt="">${l}${no ? `<small style="margin-left:auto;font-size:11px">${no}</small>` : ''}</button>`).join('')}`).join(''));
+  POP53.querySelectorAll('[data-s53]').forEach(b => { b.onpointerenter = () => { if (RT.pick53) RT.pick53.hl = b.dataset.s53; };
+    b.onclick = () => { if (b.disabled) return; const what = b.dataset.s53, act = b.dataset.a53; closePop53(); lpDo53(M, k, x, y, what, act); }; });
+  return true; }
+function lpDo53(M, k, x, y, what, act){ const { cx, cy } = center(x, y);
+  if (what === 'glass' && act === 'move'){ if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); } startGlassMove(M, k, x, y); return; }
+  if (what === 'lamp'){ if (act === 'info'){ if (M.ghl[k]) openDevice(M, k, M.ghl[k]); return; }
+    if (act === 'move'){ RT.ghmv53 = { mi: S.cur, k }; toast(`拿起${GHD53.name}，點要裝的溫室格`, false, 3200); return; }
+    if (act === 'store'){ const T = M.ghl[k]; if (!T) return; delete M.ghl[k]; S.buildStore[GHL53] = (S.buildStore[GHL53] || 0) + 1; RT.decoVer++; floatText(cx, cy - 30, '收進倉庫', '#2f7fa8', 11); sfx('place'); afterAction(); return; } }
+  if (what === 'obj'){ if (act === 'move'){ askFarmMove53(M, k, x, y); return; }
+    if (act === 'remove'){ const g = M.glass && M.glass[k]; if (g) delete M.glass[k]; RT.noPick53 = true;
+      try { withTool('remove', {}, () => act53(x, y)); } finally { RT.noPick53 = false; if (g && !M.glass[k]) M.glass[k] = g; } } } }
+const act53 = (x, y) => act(x, y);
+function longPress53(sx, sy, held){ if (!S || RT.mv || RT.gmv || RT.ghmv53 || UI.expand) return false;
+  const tl = toTileAny(sx, sy), M = curMap(); if (!inMap(M, tl.x, tl.y)) return false; const k = tkey(tl.x, tl.y), T = M.tiles[k];
+  if (T && objectAtPlain53(M, k)) return false;          // buildings, animals… keep the normal press-drag (drop on a barn = store)
+  if (!(M.glass && M.glass[k]) && !(T && (T.t === 'soil' || T.t === 'tree'))) return false;
+  try { navigator.vibrate && navigator.vibrate(20); } catch(err){}
+  if (held && !(M.glass && M.glass[k]) && T && (T.t === 'soil' || T.t === 'tree') && drag){ const fee = farmFee53(T);
+    RT.farmMv53 = { k, fee, mi: S.cur }; if (!startMove(M, k, tl.x, tl.y, 'press')){ RT.farmMv53 = null; return false; }
+    Object.assign(RT.mv, { fee53: fee, defer53: true, name: farmName53(T), screen: { x: sx, y: sy } }); drag.pressMove = true; cv.style.cursor = 'grabbing'; return 'press'; }
+  return lpMenu53(M, k, tl.x, tl.y, T); }
+RT.lp53 = null;
+cv.addEventListener('pointerdown', e => { if (e.button > 0 || !S) return; const L = RT.lp53 = { sx: e.clientX, sy: e.clientY, at: performance.now(), done: false };
+  setTimeout(() => { if (RT.lp53 !== L || L.done || !drag || drag.moved || pointers.size !== 1) return; const r = longPress53(L.sx, L.sy, true); if (r){ L.done = true; if (r !== 'press') drag.moved = true; } }, (MOVE.longPressMs || 400) + 20); }, true);
+cv.addEventListener('pointerup', e => { const L = RT.lp53; if (!L || L.done || !drag || drag.moved || pointers.size !== 1) return;
+  if (performance.now() - L.at >= (MOVE.longPressMs || 400) + 150 && Math.hypot(e.clientX - L.sx, e.clientY - L.sy) <= (MOVE.slopPx || 6) + 1){ if (longPress53(L.sx, L.sy)){ L.done = true; drag.moved = true; } } }, true);
+const objectAtPlain53 = (M, k) => _oa53x(M, k);
+
+
+/* ---------- 16. night colours for every dropdown; world map (player art) with labelled pins and leader lines ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+body.night{color-scheme:dark}
+body.night select{background-color:#1c2a48;color:#eef3fb;border-color:rgba(150,185,255,.35)}
+body.night select option,body.night select optgroup{background-color:#1c2a48;color:#eef3fb}
+body.night select option:checked{background-color:#2f5d9e;color:#fff}
+body.night select:disabled{color:#7f8da6}
+.wmap{position:relative}.wmap svg.wsvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.wsvg g.cp{cursor:pointer}.wsvg line{stroke:#ffffff;stroke-width:3;opacity:.95}.wsvg line.sh{stroke:rgba(20,40,70,.55);stroke-width:6}
+.wsvg rect{fill:rgba(255,255,255,.93);stroke:rgba(30,60,100,.35);stroke-width:2}.wsvg text{font:700 30px system-ui,sans-serif;fill:#1d2b3a;dominant-baseline:central}
+.wsvg circle{fill:#2f86d6;stroke:#fff;stroke-width:4}.wsvg g.cp.on circle{fill:#ff5a4a}.wsvg g.cp.on rect{fill:#fff4d6;stroke:#ff8a4a}
+.wsvg g.cp:hover rect{stroke:#2f86d6;stroke-width:3}
+body.night .wsvg rect{fill:rgba(20,34,64,.92);stroke:rgba(150,185,255,.45)}body.night .wsvg text{fill:#eef3fb}body.night .wsvg g.cp.on rect{fill:rgba(255,160,90,.3)}
+body.night .wsvg line{stroke:#cfe0ff}
+`; document.head.appendChild(st); }
+const WM53 = (CFG.ui && CFG.ui.worldMap) || null;
+function wmXY53(lon, lat){ const C = WM53.ctrl; let sw = 0, sx = 0, sy = 0;
+  // base: least-squares line per axis, then inverse-distance correction from the nearest calibration points
+  if (!WM53._f){ const n = C.length; let a = 0, b = 0, c = 0, d = 0; for (const [lo, , x] of C){ a += lo; b += x; c += lo * lo; d += lo * x; } const kx = (n * d - a * b) / (n * c - a * a), bx = (b - kx * a) / n;
+    let A = 0, B = 0, Cc = 0, Dd = 0; for (const [, la, , y] of C){ A += la; B += y; Cc += la * la; Dd += la * y; } const ky = (n * Dd - A * B) / (n * Cc - A * A), by = (B - ky * A) / n; WM53._f = { kx, bx, ky, by }; }
+  const F = WM53._f, base = (lo, la) => [F.kx * lo + F.bx, F.ky * la + F.by];
+  for (const [lo, la, x, y] of C){ const dd = Math.hypot(lo - lon, la - lat); if (dd < 1e-6) return [x, y]; const w = 1 / dd ** 3, [px, py] = base(lo, la); sw += w; sx += w * (x - px); sy += w * (y - py); }
+  const [bx, by] = base(lon, lat); return [bx + sx / sw, by + sy / sw]; }
+{ const _rs53 = renderSettings; renderSettings = function(el){ const r = _rs53(el); try { if (!WM53) return r; const box = el.querySelector('.wmap'); if (!box) return r;
+  const L = S.settings.location, curId = L.mode === 'city' ? L.cityId : L.mode === 'auto' ? guessCity().id : null, cur = getLatLon(), night = document.body.classList.contains('night'), W = WM53.w, H = WM53.h;
+  const g = CFG.cities.map(cc => { const [px, py] = wmXY53(cc.lon, cc.lat), lab = (WM53.labels || {})[cc.id] || [px + 40, py - 30], left = lab[0] < px, tw = cc.name.length * 31 + 22, rx = left ? lab[0] - tw : lab[0], ex = left ? lab[0] : lab[0];
+    return `<g class="cp${cc.id === curId ? ' on' : ''}" data-city="${cc.id}"><title>${cc.name}</title><line class="sh" x1="${px}" y1="${py}" x2="${ex}" y2="${lab[1]}"/><line x1="${px}" y1="${py}" x2="${ex}" y2="${lab[1]}"/>
+      <rect x="${rx}" y="${lab[1] - 21}" width="${tw}" height="42" rx="12"/><text x="${rx + 11}" y="${lab[1] + 1}">${cc.name}</text><circle cx="${px}" cy="${py}" r="${cc.id === curId ? 11 : 8}"/></g>`; }).join('');
+  const isCity = CFG.cities.some(cc => Math.abs(cc.lat - cur.lat) < 1e-3 && Math.abs(cc.lon - cur.lon) < 1e-3), [hx, hy] = wmXY53(cur.lon, cur.lat);
+  box.innerHTML = `<img src="${PIMG(night ? 'world_night' : 'world_day')}" alt="世界地圖"><svg class="wsvg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${g}${isCity ? '' : `<text x="${hx}" y="${hy - 22}" text-anchor="middle" style="font-size:48px">📍</text>`}</svg>`;
+  } catch(e){ console.error(e); } return r; }; }
+
+
+/* ---------- 17. carry bubble while dragging a field / tree (icon + fee, never "拖到倉庫可收回"); greenhouse moves one cell at a time ---------- */
+{ const _os53 = objSprite; objSprite = function(M, k){ const m = RT.mv, T = M.tiles[k];
+  if (m && m.fee53 && T && k === m.o.cells[0]){ if (T.t === 'tree') return itemSprite('tree', T.id); if (T.crop) return itemSprite('crop', T.crop.id); return ['ui_tool_plow', 0]; }
+  return _os53(M, k); }; }
+{ const _sta53 = storeTargetAt; storeTargetAt = function(...a){ if (RT.mv && RT.mv.fee53) return null; return _sta53(...a); }; }
+function drawCarry(t){
+  const m = RT.mv; if (!m || !m.screen) return;
+  if (!RT.carryIcon || RT.carryIcon.key !== m.o.cells[0]){ const sp = objSprite(S.maps[m.mi], m.o.cells[0]); RT.carryIcon = { key: m.o.cells[0], cv: sp && sp[0] ? iconCanvas(sp[0], sp[1], 64) : null }; }
+  const r = cv.getBoundingClientRect(), x = m.screen.x - r.left, y = m.screen.y - r.top, on = !!m.storeTarget, fee = m.fee53;
+  const by = y > 140 ? y - 58 : y + 64;
+  ctx.save();
+  ctx.fillStyle = on ? 'rgba(255,214,90,.9)' : 'rgba(255,255,255,.85)'; ctx.strokeStyle = on ? '#c98a0c' : '#3a7d47'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(x, by, 34, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  if (RT.carryIcon.cv) ctx.drawImage(RT.carryIcon.cv, x - 28, by - 28, 56, 56);
+  ctx.font = '600 12px system-ui, sans-serif'; ctx.textAlign = 'center';
+  // the bubble is a magnified view of what you are carrying; the label says what releasing does
+  const label = fee ? `放開後確認${m.o.kind === 'tree' ? '移植費' : '移墾費'} ${fmtN(fee)}` : on ? '放開就收回倉庫' : m.via === 'press' ? (STORABLE.has(m.o.kind) ? '拖到倉庫可收回' : '') : '';
+  if (label){ const w = ctx.measureText(label).width + 16, ly = y > 140 ? by - 54 : by + 38; ctx.fillStyle = on ? '#c98a0c' : 'rgba(30,58,42,.85)'; ctx.beginPath(); ctx.roundRect(x - w/2, ly, w, 20, 10); ctx.fill(); ctx.fillStyle = '#fff'; ctx.fillText(label, x, ly + 14); }
+  ctx.restore();
+}
+function startGlassMove(M, k, x, y){ const one = (CFG.greenhouse || {}).moveWholeComponent === false;
+  RT.gmv = { mi: S.cur, cells: one ? [k] : glassComp(M, k), gx: x, gy: y };
+  toast(one ? '拿起這一格溫室棚，點要放的位置（上面的吸頂燈會一起搬）' : `拿起溫室（${RT.gmv.cells.length} 格），點要放的位置：點的格子對應你剛剛點的那一格`, false, 3600); updMoveBar(); }
+
+
+// move check that lets an animal's home step aside (g36 moves it to the nearest free grass when the thing lands)
+function moveOk53(){ const m = RT.mv; if (!m) return false; const M = S.maps[m.mi], own = new Set(m.o.cells);
+  for (const [, nk, x, y] of moveTargets()){ if (!inMap(M, x, y)) return false; const U = M.tiles[nk]; if (U && !own.has(nk) && U.t !== 'weed' && U.t !== 'animal') return false; } return true; }
+// greenhouse cells: an animal living on the target steps aside too (animals never live in a greenhouse)
+{ const _dg53b = dropGlassMove; dropGlassMove = function(M, x, y){ const g = RT.gmv; if (!g) return _dg53b(M, x, y);
+  const dx = x - g.gx, dy = y - g.gy, own = new Set(g.cells), cells = g.cells.map(c => { const [a, b] = pkey(c); return tkey(a + dx, b + dy); }).filter(k => !own.has(k));
+  if (!(dx || dy) || !cells.some(k => M.tiles[k] && M.tiles[k].t === 'animal')) return _dg53b(M, x, y);
+  const moves = stepAside(M, S.cur, cells, null); if (!moves) return;
+  try { return _dg53b(M, x, y); } finally { let moved = 0; for (const m of moves){ if (M.glass && M.glass[m.from]) moved++; else homeBack(M, S.cur, m); }
+    if (moved){ toast(moved > 1 ? `${moved} 隻動物的家搬到旁邊的草地了` : `${nameOf(moves[0].T.id)}的家搬到旁邊的草地了`, false, 2200); afterAction(); } } }; }
+
+/* ---------- save data ---------- */
+{ const _ns53 = normalizeState; normalizeState = function(d){ const r = _ns53(d); if (!r) return r;
+  for (const M of r.maps || []){ M.ghl = M.ghl || {};
+    if (!r.v222 && M.glass) for (const k in M.glass){ const T = M.tiles[k], H = T && (T.t === 'soil' ? T.crop : T.t === 'tree' ? T : null); if (H && H.pest){ H.pest = false; H.pestTaps = 0; } } }
+  r.settings = r.settings || {}; if (r.settings.sweepStart == null) r.settings.sweepStart = SWS53.default;
+  r.v222 = true; return r; }; }
+
+window.__farm222 = { act: (x, y) => act(x, y), news: l => newsItems(l), flush: s => flushNotices(s), dispatch53, load53, sweepStart53, robotLine53, metFind53, meteorTap: (x, y) => meteorTap(x, y), ghl53, placeGhLamp53, sellGhLamp53, glassDo53,
+  capCanvas53, soilSnow53, wmXY53, showMeteor53, showLevelUp: () => showLevelUp(), ghFrame53, baseSnowy53, roofShovel53, trashPlan: (...a) => trashPlan(...a), simNow53, closePop53, get pop(){ return POP53; }, lampMapCanvas53, themeTick: () => themeTick() };
+
   })(CFG, ATLAS_JSON);
 })();
 </script>

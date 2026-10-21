@@ -7842,10 +7842,10 @@ window.GAME_ATLAS = {
       ]
     },
     "ui_pg_world_night": {
-      "file": "ui_pg_world_night.png",
+      "file": "ui_pg_world_night.jpg",
       "frames": 1,
-      "frameWidth": 1200,
-      "frameHeight": 557,
+      "frameWidth": 1589,
+      "frameHeight": 990,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -7914,10 +7914,10 @@ window.GAME_ATLAS = {
       ]
     },
     "ui_pg_world_day": {
-      "file": "ui_pg_world_day.png",
+      "file": "ui_pg_world_day.jpg",
       "frames": 1,
-      "frameWidth": 1200,
-      "frameHeight": 532,
+      "frameWidth": 1589,
+      "frameHeight": 990,
       "fps": 0,
       "loop": false,
       "anchor": [
@@ -17395,6 +17395,522 @@ window.GAME_ATLAS = {
       "anchor": [
         0,
         0
+      ]
+    },
+    "snow_building_farmhouse_idle": {
+      "file": "snow_building_farmhouse_idle.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_farmhouse_night": {
+      "file": "snow_building_farmhouse_night.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_water_tower_level": {
+      "file": "snow_building_water_tower_level.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower_fill_0": {
+      "file": "snow_building_water_tower_fill_0.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower_fill_1": {
+      "file": "snow_building_water_tower_fill_1.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower_fill_2": {
+      "file": "snow_building_water_tower_fill_2.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower_fill_3": {
+      "file": "snow_building_water_tower_fill_3.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower_fill_4": {
+      "file": "snow_building_water_tower_fill_4.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_barn_empty": {
+      "file": "snow_building_barn_empty.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_barn_half": {
+      "file": "snow_building_barn_half.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_barn_full": {
+      "file": "snow_building_barn_full.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_shed_idle": {
+      "file": "snow_building_shed_idle.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ]
+    },
+    "snow_building_drone_pad_idle": {
+      "file": "snow_building_drone_pad_idle.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_drone_pad_charge": {
+      "file": "snow_building_drone_pad_charge.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_drone_pad_refill": {
+      "file": "snow_building_drone_pad_refill.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_robot_charger_idle": {
+      "file": "snow_building_robot_charger_idle.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_robot_charger_charge": {
+      "file": "snow_building_robot_charger_charge.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_water_tower_brace": {
+      "file": "snow_building_water_tower_brace.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_water_tower2_level": {
+      "file": "snow_building_water_tower2_level.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 224,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        200
+      ]
+    },
+    "snow_building_sweeper_dock_idle": {
+      "file": "snow_building_sweeper_dock_idle.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_sweeper_dock_charge": {
+      "file": "snow_building_sweeper_dock_charge.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_sweeper_dock_clean": {
+      "file": "snow_building_sweeper_dock_clean.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ]
+    },
+    "snow_building_drone_pad_x2": {
+      "file": "snow_building_drone_pad_x2.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_robot_charger_x2": {
+      "file": "snow_building_robot_charger_x2.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2": {
+      "file": "snow_building_sweeper_dock_x2.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_tank": {
+      "file": "snow_building_sweeper_dock_tank.png",
+      "frames": 11,
+      "frameWidth": 128,
+      "frameHeight": 144,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l0": {
+      "file": "snow_building_sweeper_dock_x2_l0.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l1": {
+      "file": "snow_building_sweeper_dock_x2_l1.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l2": {
+      "file": "snow_building_sweeper_dock_x2_l2.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l3": {
+      "file": "snow_building_sweeper_dock_x2_l3.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l4": {
+      "file": "snow_building_sweeper_dock_x2_l4.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_sweeper_dock_x2_l5": {
+      "file": "snow_building_sweeper_dock_x2_l5.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ]
+    },
+    "snow_building_shed_off": {
+      "file": "snow_building_shed_off.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ]
+    },
+    "snow_building_shed_lit": {
+      "file": "snow_building_shed_lit.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ]
+    },
+    "snow_building_trash_station": {
+      "file": "snow_building_trash_station.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 144,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_building_farmhouse_idle_gold": {
+      "file": "snow_building_farmhouse_idle_gold.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_farmhouse_night_gold": {
+      "file": "snow_building_farmhouse_night_gold.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        128,
+        200
+      ]
+    },
+    "snow_building_dog_house_1": {
+      "file": "snow_building_dog_house_1.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_building_dog_house_2": {
+      "file": "snow_building_dog_house_2.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_building_dog_house_3": {
+      "file": "snow_building_dog_house_3.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_building_dog_house_gold": {
+      "file": "snow_building_dog_house_gold.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_deco_water_tower_idle": {
+      "file": "snow_deco_water_tower_idle.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ]
+    },
+    "snow_ground_soil22": {
+      "file": "snow_ground_soil22.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
       ]
     }
   }
