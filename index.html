@@ -696,7 +696,7 @@ body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border
       <button class="chip iconbtn" id="autoBtn">自動化</button>
       <button class="chip iconbtn" id="expandBtn">擴地</button>
       <button class="chip iconbtn" id="bookBtn"><img data-icon="ui_tool_book" alt="">圖鑑</button>
-      <button class="chip iconbtn" id="menuBtn">選單</button>
+      <button class="chip iconbtn" id="menuBtn">我的浮島農場</button>
       <button class="chip iconbtn more" id="moreBtn" aria-label="更多">⋯</button>
     </div>
   </div>
@@ -2011,7 +2011,7 @@ function openBook(tab, focusId){
         <h3>大雨</h3><p>每小時有 ${Math.round(W.rainChancePerSlot*100)}% 機率下 ${W.rainMinutes} 分鐘大雨，所有玩家看到的天氣都一樣。下雨時雨水儲量補滿、所有地圖的田變全濕，枯萎的作物也會復活。離線時下的雨也算。</p>
         <h3>倉庫與飼料</h3><p>所有收成先進農產倉庫，滿了會問你要直接賣掉還是丟棄。動物吃牧草或玉米餅、魚吃魚飼料，先用倉庫裡的；不夠時可以自動用金幣照商店價買。自己種牧草、用機器做玉米餅和魚飼料，成本比買的低很多，但要花時間。</p>
         <h3>經驗</h3><p>經驗大約是淨利的十分之一。開墾和澆水不給經驗。</p>
-        <h3>存檔</h3><p>每次操作、每 ${R.autosaveSeconds} 秒和離開頁面時自動存在這台裝置。換電腦要從「選單」匯出存檔，再到另一台匯入。</p>`;
+        <h3>存檔</h3><p>每次操作、每 ${R.autosaveSeconds} 秒和離開頁面時自動存在這台裝置。換電腦要從「我的浮島農場」匯出存檔，再到另一台匯入。</p>`;
     } else if (k === 'plan'){
       el.innerHTML = `<p>輸入你打算多久後回來，列出目前已解鎖、這段時間內來得及收成、每格淨利最高的作物。會把目前有沒有無人機一起算進去。</p>
         <div class="row"><label for="planH">離開</label><input type="number" id="planH" min="0.1" step="0.5" value="4"><span>小時</span><button class="btn" id="planGo">計算</button></div><div id="planOut"></div>`;
@@ -2071,7 +2071,7 @@ function openMenu(tab){
     if (k === 'settings'){ renderSettings(el); return; }
     if (k === 'save'){
       const hasBackup = (() => { try { return !!localStorage.getItem(BACKUP_KEY); } catch(e){ return false; } })();
-      el.innerHTML = `<p>遊戲會自動存在這台裝置。要換電腦時，先在這裡匯出，再到另一台電腦的「選單 → 存檔與換電腦」匯入。</p>
+      el.innerHTML = `<p>遊戲會自動存在這台裝置。要換電腦時，先在這裡匯出，再到另一台電腦的「我的浮島農場 → 存檔與換電腦」匯入。</p>
         <h3>匯出</h3><div class="row"><button class="btn" id="dlBtn">下載存檔檔案</button><button class="btn ghost" id="copyBtn">複製存檔代碼</button></div>
         <p class="small">如果無法下載，請用存檔代碼：複製後貼到訊息或筆記裡帶走。</p>
         <textarea id="exportBox" readonly aria-label="存檔代碼"></textarea>
@@ -4861,7 +4861,7 @@ function openMore(){
   $('modal').classList.add('bsheet');
   openModal('更多', null, (k, el) => {
     const items = [['auto', 'ui_drone_pad', '自動化'], ['expand', null, '擴地', '⬚'], ['book', 'ui_tool_book', '圖鑑'], ['news', 'ui_news', '農場新聞'],
-      ['fc', 'ui_forecast', '天氣預報'], ['loc', null, '地點設定', '📍'], ['menu', null, '選單', '≡'], ['slots', null, '切換農場', '⇄']];
+      ['fc', 'ui_forecast', '天氣預報'], ['loc', null, '地點設定', '📍'], ['menu', null, '我的浮島農場', '≡'], ['slots', null, '切換農場', '⇄']];
     el.innerHTML = `<div class="moregrid">${items.map(([id, ic, l, sym]) => `<button data-more="${id}">${ic ? `<img src="${IMGSRC[ic]}" alt="">` : `<b>${sym}</b>`}<span>${l}</span></button>`).join('')}</div>`;
     el.onclick = e => { const b = e.target.closest('[data-more]'); if (!b) return; const id = b.dataset.more; closeModal();
       if (id === 'auto') openAuto(); else if (id === 'expand') openExpand(); else if (id === 'book') openBook('crops');
@@ -8376,7 +8376,7 @@ document.addEventListener('error', e => { const im = e.target; if (!im || im.tag
   const from = RT.menuTab; if (title === '選單') RT.menuOpen = true;
   const sh = document.querySelector('#modal .sheet'), old = sh.querySelector('#backBtn'); if (old) old.remove();
   const r = _om33(title, tabs, render, initial);
-  if (title === '選擇農場' && S && RT.pickFromMenu){ const b = document.createElement('button'); b.id = 'backBtn'; b.className = 'close back'; b.textContent = '‹ 返回選單';
+  if (title === '選擇農場' && S && RT.pickFromMenu){ const b = document.createElement('button'); b.id = 'backBtn'; b.className = 'close back'; b.textContent = '‹ 返回我的浮島農場';
     b.onclick = e => { e.stopPropagation(); RT.pickFromMenu = false; openMenu(from && from !== 'slots' ? from : 'settings'); };
     $('modalClose').insertAdjacentElement('beforebegin', b); }
   if (title !== '選擇農場') RT.pickFromMenu = false;
@@ -11640,6 +11640,689 @@ body.m #modalTitle img.hd54{width:34px;height:34px;margin:-6px 8px -4px 0}
   return r; }; }
 
 window.__farm2221 = { busy54, ckPending54, fcPending54, get newsQ(){ return RT.newsQ54; }, setHd54, hdKey54, showLevelUp: () => showLevelUp() };
+
+/* ===== 55. v2.23: 金幣歷程依日／原因分組（繳帳單可看明細）、水電每小時歷程與帳單對帳、拖曳一律移地圖（取消連續塗刷）、
+   路燈 4 款（會亮也算生長燈）與長椅 4 款（可轉向，都有積雪圖）、iPhone 主畫面 App 版面、溫室棚單格／多選搬移 ===== */
+const UL55 = CFG.utilityLog || { bucketMinutes: 60, keepDays: 14 };
+const IN55 = (CFG.ui && CFG.ui.input) || {};
+const IOS55 = (CFG.ui && CFG.ui.iosStandalone) || {};
+const LAMPS55 = Object.keys(DEV).filter(id => DEV[id].street);
+const BENCH55 = Object.keys(CFG.decos).filter(id => id.startsWith('bench_'));
+const LP55 = 'lamp:';
+{ const st = document.createElement('style');
+  st.textContent = `
+.cl55 details{border-radius:12px;margin:6px 0;background:rgba(255,255,255,.55);border:1px solid rgba(120,160,200,.25)}
+.cl55 details details{margin:4px 8px;background:rgba(255,255,255,.6)}
+.cl55 summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:9px 12px;user-select:none}
+.cl55 summary::-webkit-details-marker{display:none}
+.cl55 summary::before{content:"▸";font-size:12px;opacity:.6;transition:transform .15s}
+.cl55 details[open]>summary::before{transform:rotate(90deg)}
+.cl55 summary .lb{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cl55 summary .n{font-size:12px;opacity:.65;white-space:nowrap}
+.cl55 summary .v{white-space:nowrap;font-variant-numeric:tabular-nums}
+.cl55 .cin{color:#2f8a3a;font-style:normal;font-weight:700}.cl55 .cout{color:#c5452f;font-style:normal;font-weight:700}
+.cl55 .rows{padding:2px 12px 10px}
+.cl55 .r{display:grid;grid-template-columns:52px 1fr auto auto;gap:8px;align-items:center;padding:5px 0;border-top:1px dashed rgba(120,150,180,.25);font-variant-numeric:tabular-nums}
+.cl55 .r .w{font-size:12px;opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cl55 .r .b{font-size:12px;opacity:.6;min-width:64px;text-align:right}
+.cl55 .bl55{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #8ab8e0;background:#e9f3fc;color:#1f5f8a;cursor:pointer;margin-left:6px}
+.cl55 .ds{font-size:12px;opacity:.75;white-space:nowrap}
+.ut55{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.ut55 th,.ut55 td{padding:5px 6px;text-align:right;border-top:1px solid rgba(120,150,180,.2);white-space:nowrap}
+.ut55 th:first-child,.ut55 td:first-child{text-align:left}
+.ut55 th{font-size:12px;opacity:.7;font-weight:600;border-top:0}
+.ut55 tr.sum td{font-weight:700;border-top:2px solid rgba(120,150,180,.45)}
+.utw55{overflow-x:auto;padding:0 8px 8px}
+.ck55{margin:6px 12px 10px;padding:8px 10px;border-radius:10px;font-size:13px}
+.ck55.ok{background:#e6f5e8;color:#245c2e}.ck55.diff{background:#fff3d6;color:#6a4b00}
+.bk55{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:4px 10px;padding:4px 12px 8px;font-size:13px}
+.bk55 span:nth-child(odd){opacity:.7}
+body.night .cl55 details{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.2)}
+body.night .cl55 .cin{color:#7fdc8c}body.night .cl55 .cout{color:#ff9b8a}
+body.night .cl55 .bl55{background:rgba(111,180,255,.18);border-color:#6fb4ff;color:#dbeaff}
+body.night .ck55.ok{background:rgba(90,200,120,.15);color:#bff0c9}body.night .ck55.diff{background:rgba(255,200,90,.15);color:#ffe2a3}
+#gsel55{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 10px;border-radius:16px;background:rgba(255,255,255,.95);box-shadow:0 8px 26px rgba(20,40,70,.28);border:1px solid rgba(120,160,200,.35);font-size:14px;max-width:calc(100% - 24px)}
+#gsel55 b{padding:0 6px}
+#gsel55 button{border:1px solid #d6e2ee;background:#f5f9fd;border-radius:10px;padding:7px 12px;font:inherit;cursor:pointer;color:#22384e}
+#gsel55 button.go{background:#2c7fc0;border-color:#2c7fc0;color:#fff;font-weight:700}
+#gsel55 button:disabled{opacity:.45}
+body.night #gsel55{background:rgba(20,34,64,.96);border-color:rgba(150,185,255,.3);color:#eef3fb}
+body.night #gsel55 button{background:rgba(255,255,255,.07);border-color:rgba(150,185,255,.25);color:#eef3fb}
+body.night #gsel55 button.go{background:#2c6fb0;border-color:#6fb4ff}
+html.ios55,body.ios55{position:fixed;inset:0;width:100%;height:var(--vh55,100%);overflow:hidden}
+body.ios55 #app{height:var(--vh55,100%)}
+body.ios55 .hud{top:calc(8px + env(safe-area-inset-top,0px))}
+body.ios55.m-land .hud{top:calc(6px + env(safe-area-inset-top,0px))}
+body.ios55 #hamb{top:calc(8px + env(safe-area-inset-top,0px))}
+body.ios55.m #hamb{top:calc(6px + env(safe-area-inset-top,0px))}
+body.ios55 #morePanel{top:calc(60px + env(safe-area-inset-top,0px))}
+body.ios55 .status{top:calc(96px + env(safe-area-inset-top,0px))}
+body.ios55.m-land .hint{top:calc(8px + env(safe-area-inset-top,0px))}`;
+  document.head.appendChild(st); }
+
+/* ---------- 1. 金幣歷程：日 → 原因 → 每筆；繳帳單那一筆可看帳單明細 ---------- */
+RT.coinMeta55 = null;
+function logCoin(st, d, b){ if (!d) return; const L = st.coinLog || (st.coinLog = []), now = Date.now(), old = now - CLOG.keepDays * 86400e3;
+  const e = [now, Math.round(d * 100) / 100, Math.round(b * 100) / 100, coinWhy()]; if (RT.coinMeta55) e.push(RT.coinMeta55); L.push(e);
+  let cut = Math.max(0, L.length - CLOG.maxEntries); while (cut < L.length && L[cut][0] < old) cut++; if (cut) L.splice(0, cut); }
+// the bill spreads computeBill's `water` (the charge) over the drops: keep the drops as waterDrops
+{ const _cb55 = closeBill; closeBill = function(t, reason){ ulSample55(t); const pv = RT.coinMeta55, id = 'b' + t.toString(36), drops = S.bill.cur.water || 0; RT.coinMeta55 = 'bill:' + id;
+  try { return _cb55(t, reason); } finally { RT.coinMeta55 = pv; const b = S.bill.list.find(x => x.id === id); if (b && b.waterDrops === undefined) b.waterDrops = drops; ulSnapReset55(); } }; }
+{ const _pb55 = payBill; payBill = function(b, ...a){ const pv = RT.coinMeta55; RT.coinMeta55 = b && b.id ? 'bill:' + b.id : pv;
+  try { return _pb55(b, ...a); } finally { RT.coinMeta55 = pv; } }; }
+// reasons that carry numbers ("倉庫：賣 全部 +120") are grouped without the numbers
+const reasonKey55 = w => String(w || '其他').replace(/[（(]?第\s*[\d,，]+\s*(天|輪|次|級)[）)]?/g, '').replace(/[+\-−×x]?\s*[\d,，.]+\s*(金幣|罐|個|格|度|滴)?/g, '').replace(/\s+/g, ' ').replace(/[：:]\s*$/, '').trim() || '其他';
+const dayKey55 = ms => { const d = new Date(ms); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+const signN55 = v => `${v > 0 ? '+' : v < 0 ? '−' : ''}${fmtN(Math.abs(Math.round(v)))}`;
+function coinDays55(){ const L = S.coinLog || [], days = new Map();
+  for (let i = L.length - 1; i >= 0; i--){ const e = L[i], dk = dayKey55(e[0]); let D = days.get(dk);
+    if (!D){ D = { key: dk, t: e[0], in: 0, out: 0, n: 0, reasons: new Map() }; days.set(dk, D); }
+    D.n++; if (e[1] > 0) D.in += e[1]; else D.out -= e[1];
+    const rk = (e[1] > 0 ? '+' : '-') + reasonKey55(e[3]); let R = D.reasons.get(rk);
+    if (!R){ R = { key: rk, label: reasonKey55(e[3]), sum: 0, n: 0, list: [] }; D.reasons.set(rk, R); }
+    R.sum += e[1]; R.n++; R.list.push(e); }
+  return [...days.values()]; }
+function reasonRows55(R){ return R.list.map(([t, d, b, w, m]) => `<div class="r"><span>${fmtHM(t)}</span><span class="w">${escapeHTML(w || '')}${m && String(m).startsWith('bill:') ? `<button class="bl55" data-bill55="${escapeHTML(String(m).slice(5))}">帳單明細</button>` : ''}</span><span class="${d > 0 ? 'cin' : 'cout'}">${signN55(d)}</span><span class="b">${fmtN(Math.floor(b))}</span></div>`).join(''); }
+function dayBody55(D){ const rs = [...D.reasons.values()].sort((a, b) => (b.sum > 0) - (a.sum > 0) || Math.abs(b.sum) - Math.abs(a.sum));
+  return rs.map((R, i) => `<details data-r55="${i}"><summary><span class="lb">${escapeHTML(R.label)}</span><span class="n">${fmtN(R.n)} 筆</span><span class="v ${R.sum > 0 ? 'cin' : 'cout'}">${signN55(R.sum)}</span></summary><div class="rows"></div></details>`).join(''); }
+function openCoinLog(){
+  openModal('金幣歷程', null, (kk, el) => {
+    const days = coinDays55();
+    let h = `<p class="small">金幣的每一筆變動，保留最近 ${CLOG.keepDays} 天、最多 ${fmtN(CLOG.maxEntries)} 筆。目前 ${fmtN(Math.floor(S.player.coins))} 金幣。點日期展開，依原因合併；再點原因看每一筆。</p>`;
+    if (!days.length) h += '<p>還沒有紀錄。</p>';
+    h += '<div class="cl55">' + days.map((D, i) => `<details data-d55="${i}"><summary><span class="lb">${dayLabel(D.t)}</span><span class="ds">收入 <i class="cin">+${fmtN(Math.round(D.in))}</i>　支出 <i class="cout">−${fmtN(Math.round(D.out))}</i></span><span class="v ${D.in - D.out >= 0 ? 'cin' : 'cout'}">${signN55(D.in - D.out)}</span></summary><div class="rows"></div></details>`).join('') + '</div>';
+    el.innerHTML = h;
+    // fill lazily: a day's reasons when the day opens, a reason's entries when it opens
+    el.querySelectorAll('details[data-d55]').forEach(dd => dd.addEventListener('toggle', () => { const box = dd.querySelector(':scope > .rows'); if (!dd.open || box.dataset.f) return; box.dataset.f = 1;
+      const D = days[+dd.dataset.d55], rs = [...D.reasons.values()].sort((a, b) => (b.sum > 0) - (a.sum > 0) || Math.abs(b.sum) - Math.abs(a.sum));
+      box.innerHTML = dayBody55(D);
+      box.querySelectorAll('details[data-r55]').forEach(rd => rd.addEventListener('toggle', () => { const rb = rd.querySelector(':scope > .rows'); if (!rd.open || rb.dataset.f) return; rb.dataset.f = 1; rb.innerHTML = reasonRows55(rs[+rd.dataset.r55]); })); }));
+    el.onclick = e => { const b = e.target.closest('[data-bill55]'); if (!b) return; e.preventDefault(); e.stopPropagation(); openBillDetail55(b.dataset.bill55); };
+    const first = el.querySelector('details[data-d55]'); if (first) first.open = true;
+  }); }
+
+/* ---------- 2. 水電每小時歷程：每小時、每個帳期一筆 [小時起點, 帳期起點, 自來水滴, 白天度, 夜間度, 電費, 賣電度, 賣電折抵] ---------- */
+const UF55 = [['water', c => c.water || 0], ['kd', c => c.elecKwh ? c.elecKwh.day : 0], ['kn', c => c.elecKwh ? c.elecKwh.night : 0], ['ec', c => c.elecCost || 0], ['sk', c => c.sellKwh || 0], ['sc', c => c.sellCredit || 0]];
+const curVals55 = c => UF55.map(([, f]) => +f(c) || 0);
+function ulSnapReset55(){ if (!S || !S.bill) return; S.ulSnap55 = { p: S.bill.cur.start, v: curVals55(S.bill.cur) }; }
+function hourStart55(t){ const m = (UL55.bucketMinutes || 60) * 60e3, d = new Date(t); d.setMinutes(0, 0, 0); return d.getTime() + Math.floor((t - d.getTime()) / m) * m; }
+function ulSample55(t){ if (!S || !S.bill || !S.bill.cur) return; const cur = S.bill.cur;
+  let sn = S.ulSnap55; if (!sn || sn.p !== cur.start) sn = S.ulSnap55 = { p: cur.start, v: UF55.map(() => 0) };
+  const v = curVals55(cur), d = v.map((x, i) => x - sn.v[i]); sn.v = v;
+  if (!d.some(x => Math.abs(x) > 1e-9)) return;
+  const L = S.ulog55 || (S.ulog55 = []), h = hourStart55(t); let e = null;
+  for (let i = L.length - 1; i >= 0 && i >= L.length - 4; i--) if (L[i][0] === h && L[i][1] === cur.start){ e = L[i]; break; }
+  if (!e){ e = [h, cur.start, 0, 0, 0, 0, 0, 0]; L.push(e); const old = t - (UL55.keepDays || 14) * 86400e3; let cut = 0; while (cut < L.length && L[cut][0] < old) cut++; if (cut) L.splice(0, cut); }
+  d.forEach((x, i) => { e[2 + i] = Math.round((e[2 + i] + x) * 1e5) / 1e5; }); }
+{ const _sb55 = stepBilling; stepBilling = function(t){ ulSample55(t); return _sb55(t); }; }
+{ const _cc55 = changeCycle; changeCycle = function(id){ ulSample55(Date.now()); return _cc55(id); }; }
+const f1_55 = v => (Math.round(v * 100) / 100).toFixed(2), f0_55 = v => fmtN(Math.round(v));
+function hourTable55(rows, withDay){ let sw = 0, sd = 0, sn = 0, se = 0, sk = 0, sc = 0;
+  const tr = rows.map(r => { sw += r[2]; sd += r[3]; sn += r[4]; se += r[5]; sk += r[6]; sc += r[7];
+    const d = new Date(r[0]), lbl = (withDay ? `${d.getMonth() + 1}/${d.getDate()} ` : '') + `${String(d.getHours()).padStart(2, '0')}:00`;
+    return `<tr><td>${lbl}</td><td>${f0_55(r[2])}</td><td>${f1_55(r[3])}</td><td>${f1_55(r[4])}</td><td>${f1_55(r[5])}</td><td>${r[6] ? f1_55(r[6]) : '—'}</td><td>${r[7] ? f1_55(r[7]) : '—'}</td></tr>`; }).join('');
+  return { html: `<div class="utw55"><table class="ut55"><thead><tr><th>時間</th><th>自來水（滴）</th><th>白天（度）</th><th>夜間（度）</th><th>電費</th><th>賣電（度）</th><th>折抵</th></tr></thead><tbody>${tr}
+    <tr class="sum"><td>合計</td><td>${f0_55(sw)}</td><td>${f1_55(sd)}</td><td>${f1_55(sn)}</td><td>${f1_55(se)}</td><td>${sk ? f1_55(sk) : '—'}</td><td>${sc ? f1_55(sc) : '—'}</td></tr></tbody></table></div>`, sw, sd, sn, se, sk, sc }; }
+function usageHTML55(){ ulSample55(Date.now()); const L = (S.ulog55 || []).slice().sort((a, b) => b[0] - a[0]), days = new Map();
+  for (const r of L){ const k = dayKey55(r[0]); if (!days.has(k)) days.set(k, []); days.get(k).push(r); }
+  let h = `<p class="small">每小時記一筆自來水注入的滴數、市電白天／夜間度數、電費與賣電折抵，保留 ${UL55.keepDays || 14} 天。水費是整期依級距算，所以每小時只列滴數；基本費在「帳單」裡每張帳單另列。</p>`;
+  if (!days.size) return h + '<p>還沒有紀錄。從這一版開始，有用自來水或市電就會記在這裡。</p>';
+  h += '<div class="cl55">' + [...days.values()].map((rows, i) => { const s = rows.reduce((a, r) => [a[0] + r[2], a[1] + r[3] + r[4], a[2] + r[5]], [0, 0, 0]);
+    return `<details data-u55="${i}"${i === 0 ? ' open' : ''}><summary><span class="lb">${dayLabel(rows[0][0])}</span><span class="ds">自來水 ${f0_55(s[0])} 滴　用電 ${f1_55(s[1])} 度</span><span class="v">電費 ${f1_55(s[2])}</span></summary>${hourTable55(rows.slice().reverse(), false).html}</details>`; }).join('') + '</div>';
+  return h; }
+function billDetailHTML55(b){ const rows = (S.ulog55 || []).filter(r => r[1] === b.from).sort((a, c) => a[0] - c[0]);
+  const eDays = ELEC.baseFeePerDay ? (b.elecBase || 0) / ELEC.baseFeePerDay : 0, wDays = WAT.baseFeePerDay ? (b.waterBase || 0) / WAT.baseFeePerDay : 0, drops = b.waterDrops;
+  let h = `<div class="bk55"><span>用電 白天</span><span>${f1_55(b.kwhDay)} 度</span><span>用電 夜間</span><span>${f1_55(b.kwhNight)} 度</span>
+    <span>電費</span><span>${f1_55(b.elec)}</span><span>電基本費</span><span>${f1_55(b.elecBase || 0)}（${eDays.toFixed(2)} 天 × ${ELEC.baseFeePerDay}）</span>
+    <span>自來水</span><span>${drops === undefined ? '—' : f0_55(drops) + ' 滴'}</span><span>水費</span><span>${f1_55(b.water || 0)}</span>
+    <span>水基本費</span><span>${f1_55(b.waterBase || 0)}（${Math.round(wDays)} 天 × ${WAT.baseFeePerDay}）</span><span>賣電折抵</span><span>${b.sell ? '−' + f1_55(b.sell) : '—'}</span>
+    <span>金額</span><span><b>${fmtN(b.total)}</b></span><span>實付</span><span>${b.paid ? fmtN(b.paid) : '—'}</span></div>`;
+  if (!rows.length) return h + `<div class="ck55 diff">這張帳單沒有逐時紀錄（v2.23 之前開的，或已超過 ${UL55.keepDays || 14} 天）。</div>`;
+  const T = hourTable55(rows, true), dw = drops === undefined ? 0 : drops - T.sw;
+  const ok = Math.abs(dw) < .5 && Math.abs(T.sd - b.kwhDay) < .01 && Math.abs(T.sn - b.kwhNight) < .01 && Math.abs(T.se - b.elec) < .05;
+  return h + T.html + (ok ? `<div class="ck55 ok">逐時合計和帳單一致：自來水 ${f0_55(T.sw)} 滴、白天 ${f1_55(T.sd)} 度、夜間 ${f1_55(T.sn)} 度、電費 ${f1_55(T.se)}。</div>`
+    : `<div class="ck55 diff">逐時紀錄只涵蓋這期的一部分（v2.23 之前或超過 ${UL55.keepDays || 14} 天的沒有逐時紀錄）：差 ${drops === undefined ? '' : `自來水 ${f0_55(dw)} 滴、`}白天 ${f1_55(b.kwhDay - T.sd)} 度、夜間 ${f1_55(b.kwhNight - T.sn)} 度、電費 ${f1_55(b.elec - T.se)}。</div>`); }
+function billsListHTML55(){ const list = S.bill.list.slice(0, BILL.historyKeep);
+  if (!list.length) return '<p>還沒有帳單。</p>';
+  return '<div class="cl55">' + list.map(b => `<details data-b55="${b.id}"${RT.billOpen55 === b.id ? ' open' : ''}><summary><span class="lb">${fmtDate(b.from)}～${fmtDate(b.to)}</span><span class="ds">${billStatusText(b)}</span><span class="v">${fmtN(b.total)} 金幣</span></summary>${billDetailHTML55(b)}</details>`).join('') + '</div>'; }
+function openBillDetail55(id){ RT.billOpen55 = id; if (!$('modal').hidden) closeModal(); openUtilities('bills');
+  setTimeout(() => { const d = document.querySelector(`#modalBody details[data-b55="${id}"]`); if (d){ d.open = true; d.scrollIntoView({ block: 'nearest' }); } else toast('這張帳單已經不在最近的帳單裡了'); RT.billOpen55 = null; }, 30); }
+{ const _om55 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '水電與帳單' && Array.isArray(tabs)){
+    if (!tabs.some(t => t[0] === 'usage')){ tabs = tabs.slice(); const i = tabs.findIndex(t => t[0] === 'bills'); tabs.splice(i < 0 ? tabs.length : i + 1, 0, ['usage', '用量歷程']); }
+    const r0 = render; render = (k, el) => { if (k === 'usage'){ el.innerHTML = usageHTML55(); return; } r0(k, el);
+      if (k === 'bills') queueMicrotask(() => { const h3 = [...el.querySelectorAll('h3')].find(x => /最近帳單/.test(x.textContent)); if (!h3) return;
+        while (h3.nextSibling) h3.nextSibling.remove(); h3.insertAdjacentHTML('afterend', '<p class="small">點一張帳單看它的水電明細：每小時的用量、基本費，和帳單金額對帳。</p>' + billsListHTML55()); }); }; }
+  return _om55(title, tabs, render, initial); }; }
+
+/* ---------- 3. 拖曳一律移動地圖：不再連續塗刷 ---------- */
+function paintTool(){ if (IN55.paintDrag === false) return false; const tl = S.sel.tool; return (tl === 'deco' && isRoadId(S.sel.deco)) || tl === 'shovel' || tl === 'care' || (tl === 'build' && S.sel.build === 'greenhouse'); }
+for (const id of ['care', 'shovel', 'build']){ const T = TOOLS.find(t => t.id === id); if (!T) continue; const _h = T.hint;
+  T.hint = () => { const s = String(typeof _h === 'function' ? _h() : _h); return IN55.paintDrag === false ? s.replace(/（可以拖曳）/g, '').replace(/點或拖曳/g, '點') : s; }; }
+
+/* ---------- 4. 路燈（裝飾 → 建築，用建設的放置）與長椅 ---------- */
+Object.assign(DECO_SPR, Object.fromEntries(BENCH55.map(id => [id, `deco_${id}_idle`])));
+for (const id of LAMPS55) if (DEV[id].unlockLevel && !(id in UNLOCK)) UNLOCK[id] = DEV[id].unlockLevel;
+for (const id of LAMPS55) if (IMGSRC && !IMGSRC['ui_' + id] && IMGSRC['ui_it_' + id]) IMGSRC['ui_' + id] = IMGSRC['ui_it_' + id];
+if (typeof HD54 === 'object') for (const id of LAMPS55) HD54[DEV[id].name] = 'lamp';
+const lampSel55 = () => S && S.sel.tool === 'deco' && String(S.sel.deco).startsWith(LP55) ? String(S.sel.deco).slice(LP55.length) : null;
+{ const _dc55 = decoCatOf; decoCatOf = function(el){ const id = el.dataset.id || ''; if (LAMPS55.includes(id)) return 'buildings'; return _dc55(el); }; }
+{ const _ut55 = UIbuildTray; UIbuildTray = function(){
+  if (!S || RT.borrow34 || S.sel.tool !== 'deco' || !LAMPS55.length) return _ut55();
+  const tab = S.sel.decoTab, cur = lampSel55();
+  const els = tab === 'buildings' || cur ? borrowBuildItems(LAMPS55, cur) : [];
+  _ut55();
+  if (S.sel.decoTab !== 'buildings' || !els.length) return;
+  const tray = $('tray'); tray.querySelectorAll(':scope > .trayempty').forEach(e => e.remove());
+  const first = [...tray.querySelectorAll('.item')].find(x => !x.hidden);
+  els.sort((a, b) => LAMPS55.indexOf(a.dataset.id) - LAMPS55.indexOf(b.dataset.id));
+  adoptItems(els, id => cur === id, id => { S.sel.deco = LP55 + id; S.sel.decoTab = 'buildings'; }, first);
+  els.forEach(e => { e.dataset.l55 = 1; });
+  if (typeof fitTrayText === 'function') fitTrayText(); }; }
+// a decoration picked while the tab was showing a lamp: cancel the lamp (selection is S.sel.deco, so picking anything else replaces it)
+{ const T = TOOLS.find(t => t.id === 'deco'); if (T){ const _h = T.hint; T.hint = () => { const id = lampSel55(); if (id) return buildHintFor(id); const b = S.sel.deco; if (BENCH55.includes(b)) return `${String(_h())} · 再點一下已放好的${CFG.decos[b].name}可以轉向`; return _h(); }; } }
+const benchAt55 = T => T && T.t === 'deco' && BENCH55.includes(T.id);
+{ const _act55 = act; act = function(x, y){
+  if (!S) return _act55(x, y);
+  const M = curMap(), on = inMap(M, x, y), k = tkey(x, y), T = on ? M.tiles[k] : null, tool = S.sel.tool;
+  if (RT.gsel55){ gselTap55(M, x, y); return; }
+  const lamp = lampSel55(); if (lamp){ if (!on) return _act55(x, y); return withTool('build', { build: lamp }, () => act(x, y)); }
+  // benches: tap a placed bench again (same bench selected) to turn it
+  if (on && tool === 'deco' && benchAt55(T) && S.sel.deco === T.id){ T.dir = T.dir ? 0 : 1; RT.decoVer++; sfx('place'); const { cx, cy } = center(x, y); floatText(cx, cy - 24, '轉向', '#2f7fa8', 10); afterAction(); return; }
+  // greenhouse cells with the move tool: 搬移這一格／多選搬移 (plus the lamp / field on that cell)
+  if (on && tool === 'move' && M.glass && M.glass[k] && !RT.gmv && !RT.mv && !RT.ghmv53 && !RT.noPick53){ glassMenu55(M, k, x, y, T); return; }
+  return _act55(x, y); }; }
+// draw: benches turned, snow overlays for lamps and benches
+{ const _spr55 = spr; spr = function(name, frame, x, y, flip, alpha){
+  if (!RT.inWorld || !S || typeof name !== 'string') return _spr55(name, frame, x, y, flip, alpha);
+  const isB = name.startsWith('deco_bench_'), isL = name.startsWith('device_street_lamp_');
+  if (!isB && !isL) return _spr55(name, frame, x, y, flip, alpha);
+  let f = flip; if (isB){ const M = curMap(), U = M && M.tiles[tileUnder53(x, y)]; if (benchAt55(U) && U.dir) f = !f; }
+  const r = _spr55(name, frame, x, y, f, alpha);
+  if (S.snow && S.snow.cover && ATLAS['snow_' + name] && IMG['snow_' + name]){ const M = curMap(), mi = S.cur, kk = tileUnder53(x, y);
+    if (!glassAt(mi, kk)) _spr55('snow_' + name, Math.min(frame || 0, (ATLAS['snow_' + name].frames || 1) - 1), x, y, f, alpha); }
+  return r; }; }
+// warm light pool for street lamps (grow lamps stay pink)
+{ const _slh55 = storeLightHoles; storeLightHoles = function(M, now){ const out = _slh55(M, now); if (!M || !Array.isArray(out)) return out;
+  const pts = []; for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && T.lit && DEV[T.id] && DEV[T.id].street){ const [x, y] = pkey(k), c = center(x, y); pts.push([c.cx, c.cy - 6]); } }
+  if (!pts.length) return out;
+  return out.map(h => pts.some(([px, py]) => Math.abs(h.x - px) < .5 && Math.abs(h.y - py) < .5) ? { ...h, col: 'rgba(255,214,130,' } : h); }; }
+
+/* ---------- 6. 溫室棚：搬移這一格／多選搬移 ---------- */
+const GSB55 = document.createElement('div'); GSB55.id = 'gsel55'; GSB55.hidden = true; document.body.appendChild(GSB55);
+function glassMenu55(M, k, x, y, T){
+  const L = ghlAt53(M, k), farm = T && (T.t === 'soil' || T.t === 'tree');
+  RT.pick53 = { mi: S.cur, k, hl: 'glass' }; const { cx, cy } = center(x, y);
+  let h = `<h5>溫室棚</h5><button data-g55="one"><img src="${IMGSRC.ui_tool_move || ''}" alt="">搬移這一格</button><button data-g55="multi"><img src="${IMGSRC.ui_greenhouse || ''}" alt="">多選搬移</button>`;
+  if (L) h += `<h5>${GHD53.name}</h5><button data-g55="lamp"><img src="${IMGSRC.ui_lamp || ''}" alt="">搬移${GHD53.name}</button>`;
+  if (farm) h += `<h5>${objName53(T)}</h5><button data-g55="obj"><img src="${IMGSRC[T.t === 'tree' ? 'ui_tab_trees' : 'ui_tab_crops'] || ''}" alt="">搬移${T.t === 'tree' ? '果樹' : '田'}</button>`;
+  showPop53(cx, cy - 30, h);
+  POP53.querySelectorAll('[data-g55]').forEach(b => { b.onpointerenter = () => { if (RT.pick53) RT.pick53.hl = b.dataset.g55 === 'lamp' ? 'lamp' : b.dataset.g55 === 'obj' ? 'obj' : 'glass'; };
+    b.onclick = () => { const w = b.dataset.g55; closePop53(); glassPick55(M, k, x, y, w); }; }); }
+function glassPick55(M, k, x, y, w){
+  if (w === 'one'){ if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); }
+    RT.gmv = { mi: S.cur, cells: [k], gx: x, gy: y }; toast('拿起這一格溫室棚，點要放的位置（上面的吸頂燈會一起搬）', false, 3200); updMoveBar(); return; }
+  if (w === 'multi'){ startGsel55(M, k, x, y); return; }
+  if (w === 'lamp'){ glassDo53(M, k, x, y, 'lamp', 'move'); return; }
+  if (w === 'obj'){ glassDo53(M, k, x, y, 'obj', 'move'); return; } }
+function startGsel55(M, k, x, y){ RT.gsel55 = { mi: S.cur, first: k, cells: new Set([k]) }; renderGsel55(); toast('多選搬移：點其他溫室格加選，再點一次取消', false, 2800); }
+function endGsel55(){ RT.gsel55 = null; GSB55.hidden = true; GSB55.innerHTML = ''; }
+function renderGsel55(){ const G = RT.gsel55; if (!G){ GSB55.hidden = true; return; }
+  GSB55.innerHTML = `<span>多選溫室棚</span><b>已選 ${G.cells.size} 格</b><button class="go" data-q55="lift" ${G.cells.size ? '' : 'disabled'}>拿起</button><button data-q55="all">整棟全選</button><button data-q55="cancel">取消</button>`;
+  GSB55.hidden = false; placeGsel55(); }
+// sit just above whatever is at the bottom (hint, 整理 sub-menu, tray, dock)
+function placeGsel55(){ if (GSB55.hidden) return; let top = innerHeight;
+  for (const sel of ['#tidySub', '.hint', '#tray', '.dock', '#toolBtn', '#moveBar']){ for (const el of document.querySelectorAll(sel)){ if (el.hidden || !el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue; const r = el.getBoundingClientRect(); if (r.height && r.top > innerHeight * .5 && r.top < top) top = r.top; } }
+  GSB55.style.bottom = Math.round(innerHeight - top + 8) + 'px'; }
+setInterval(placeGsel55, 500); addEventListener('resize', placeGsel55);
+GSB55.addEventListener('click', e => { const b = e.target.closest('[data-q55]'); if (!b) return; e.stopPropagation(); const G = RT.gsel55; if (!G) return; const M = S.maps[G.mi];
+  if (b.dataset.q55 === 'cancel'){ endGsel55(); toast('已取消多選'); return; }
+  if (b.dataset.q55 === 'all'){ const base = G.cells.has(G.first) ? G.first : [...G.cells][0]; if (base) for (const c of glassComp(M, base)) G.cells.add(c); renderGsel55(); return; }
+  if (b.dataset.q55 === 'lift'){ if (!G.cells.size) return; const first = G.cells.has(G.first) ? G.first : [...G.cells][0], [fx, fy] = pkey(first), cells = [...G.cells];
+    endGsel55(); if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); }
+    RT.gmv = { mi: S.cur, cells, gx: fx, gy: fy }; toast(`拿起溫室棚（${cells.length} 格），點要放的位置：點的格子對應第一個選的那一格`, false, 3600); updMoveBar(); } });
+function gselTap55(M, x, y){ const G = RT.gsel55; if (G.mi !== S.cur){ endGsel55(); return; }
+  const k = tkey(x, y); if (!(inMap(M, x, y) && M.glass && M.glass[k])){ toast('只能選溫室格'); return; }
+  if (G.cells.has(k)){ G.cells.delete(k); if (G.first === k) G.first = [...G.cells][0] || null; } else { G.cells.add(k); if (!G.first) G.first = k; }
+  sfx('click'); renderGsel55(); }
+{ const _st55 = setTool; setTool = function(id){ if (RT.gsel55 && id !== S.sel.tool) endGsel55(); return _st55(id); }; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && RT.gsel55){ endGsel55(); toast('已取消多選'); } });
+{ const _cm55 = cancelMove; cancelMove = function(...a){ if (RT.gsel55){ endGsel55(); return; } return _cm55(...a); }; }
+// long-press menu on a greenhouse cell: the glass section gets the same two choices
+{ const _lpm55 = lpMenu53; lpMenu53 = function(M, k, x, y, T){ const r = _lpm55(M, k, x, y, T); if (!r || !(M.glass && M.glass[k])) return r;
+  const mv = POP53.querySelector('[data-s53="glass"][data-a53="move"]');
+  if (mv){ mv.lastChild.textContent = '搬移這一格'; mv.onclick = () => { closePop53(); glassPick55(M, k, x, y, 'one'); };
+    const m2 = mv.cloneNode(true); m2.dataset.a53 = 'multi'; m2.lastChild.textContent = '多選搬移'; const im = m2.querySelector('img'); if (im && IMGSRC.ui_greenhouse) im.src = IMGSRC.ui_greenhouse;
+    m2.onclick = () => { closePop53(); glassPick55(M, k, x, y, 'multi'); }; m2.onpointerenter = mv.onpointerenter; mv.after(m2);
+    const p = POP53.getBoundingClientRect(); if (p.bottom > innerHeight - 8) POP53.style.top = Math.max(8, innerHeight - p.height - 8) + 'px'; }
+  return r; }; }
+// selected cells: yellow outline
+{ const _dte55 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte55(M, k, T, x, y, t, now);
+  const G = RT.gsel55; if (G && G.mi === S.cur && G.cells.has(k)){ const { cx, cy } = center(x, y); ctx.save(); ctx.strokeStyle = k === G.first ? 'rgba(255,170,40,.98)' : 'rgba(255,214,90,.95)'; ctx.lineWidth = k === G.first ? 3 : 2.5; diamondPath(cx, cy, .96); ctx.stroke(); ctx.restore(); } }; }
+
+/* ---------- 5. iPhone／iPad 主畫面 App：高度跟著實際視窗、捲回頂端，上排讓出動態島 ---------- */
+const isIOSApp55 = () => { try { return isIOS40() && isStandalone40(); } catch(e){ return false; } };
+function fixVP55(){ if (!document.body.classList.contains('ios55')) return; const h = Math.round((window.visualViewport && visualViewport.height > 200 ? Math.max(visualViewport.height, innerHeight) : innerHeight));
+  document.documentElement.style.setProperty('--vh55', h + 'px'); document.body.style.setProperty('--vh55', h + 'px');
+  if (scrollX || scrollY) scrollTo(0, 0); if (document.documentElement.scrollTop) document.documentElement.scrollTop = 0; if (document.body.scrollTop) document.body.scrollTop = 0; }
+function settleVP55(){ for (const ms of [0, 60, 200, 450, 900, 1600]) setTimeout(() => { fixVP55(); try { layoutHUD(); } catch(e){} }, ms); }
+if (IOS55.enabled !== false && (isIOSApp55() || window.__ios55)){
+  document.documentElement.classList.add('ios55'); document.body.classList.add('ios55'); fixVP55();
+  for (const ev of ['resize', 'orientationchange', 'pageshow', 'focus']) addEventListener(ev, settleVP55);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) settleVP55(); });
+  if (window.visualViewport) visualViewport.addEventListener('resize', settleVP55);
+  addEventListener('scroll', () => { if (scrollY) scrollTo(0, 0); }, { passive: true });
+  settleVP55(); }
+
+/* ---------- save upgrade ---------- */
+{ const _ns55 = normalizeState; normalizeState = function(d){ const r = _ns55(d); if (!r) return r;
+  if (!r.v223){ r.v223 = true; if (!Array.isArray(r.ulog55)) r.ulog55 = [];
+    // usage before this version is not split by hour: start counting from what the current period already has
+    if (r.bill && r.bill.cur) r.ulSnap55 = { p: r.bill.cur.start, v: curVals55(r.bill.cur) }; }
+  if (!Array.isArray(r.ulog55)) r.ulog55 = [];
+  return r; }; }
+
+window.__farm223 = { openCoinLog, coinDays55, reasonKey55, ulSample55, usageHTML55, billDetailHTML55, openBillDetail55, paintTool, LAMPS55, BENCH55, glassMenu55, glassPick55, startGsel55, endGsel55, gselTap55,
+  get gsel(){ return RT.gsel55; }, fixVP55, settleVP55, act: (x, y) => act(x, y) };
+
+/* ===== 56. v2.24: 透明魚池（池底 → 魚 → 水面＋細池邊，島邊玻璃側面；batch35）、魚池一格一種、新魚種與食人魚、
+   魚晚上長得慢＋魚池水底燈（M.pll，不佔格子）、設施收回倉庫、購買確認視窗夜晚版、金幣歷程原因 ===== */
+const FP56 = CFG.fishPool || {}, SW56 = FP56.swim || { perTile: 2, speed: 6, margin: .18 }, SB56 = CFG.storeBack || {};
+const PL56 = 'pool_lamp', PLD56 = DEV[PL56];
+const MACH56 = CFG.machines || {};
+// 魚 → 設施 borrows the pool lamp from 建設 (same as the fish-feed machine)
+if (PLD56 && typeof VIA34 === 'object' && VIA34.fish) VIA34.fish[PL56] = 1;
+{ const st = document.createElement('style');
+  st.textContent = `
+.btns47 #ask47c,.cf47 .btn.ghost{color:#2c4a66;background:#f1f6fb;border:1px solid #c9d8e6}
+body.night .cf47{background:#18284a;color:#eaf2ff;box-shadow:0 20px 50px rgba(0,0,0,.6);border:1px solid rgba(150,185,255,.25)}
+body.night .cf47 .pic47.icon47{background:linear-gradient(#22375f,#18284a)}
+body.night .cf47 .q47,body.night .cf47 .chk47{color:#b9c8e0}
+body.night .cf47 .kv47{background:rgba(255,255,255,.06)}body.night .cf47 .kv47 span:nth-child(odd){color:#9fb1cc}
+body.night .cf47 .tot47.bad{color:#ff9b8a}
+body.night .btns47 #ask47c,body.night .cf47 .btn.ghost{color:#eaf2ff;background:rgba(255,255,255,.08);border-color:rgba(150,185,255,.35)}
+body.night .btns47 #ask47y:disabled{background:rgba(255,255,255,.1);color:#8796ad}`;
+  document.head.appendChild(st); }
+
+/* ---------- helpers ---------- */
+const pll56 = M => M.pll || (M.pll = {});
+const pllAt56 = (M, k) => M && M.pll && M.pll[k];
+const isShark56 = id => /shark|hammer/.test(id);
+const fishName56 = id => (CFG.fish[id] || {}).name || id;
+RT.t55 = Date.now();
+{ const _sa56 = stepAll; stepAll = function(dt, t){ RT.t55 = t || Date.now();
+  if (S) for (const M of S.maps) for (const pk in (M.pools || {})){ const P = M.pools[pk]; if (P && !P.M56) Object.defineProperty(P, 'M56', { value: M, enumerable: false, writable: true }); }
+  return _sa56(dt, t); }; }
+{ const _rp56 = reconcilePools; reconcilePools = function(M){ const r = _rp56(M); for (const pk in M.pools) Object.defineProperty(M.pools[pk], 'M56', { value: M, enumerable: false, writable: true });
+  // a lamp on a cell that is no longer a pool goes back to storage
+  if (M.pll) for (const k in M.pll) if (!isPool(M.tiles[k])){ S.buildStore[PL56] = (S.buildStore[PL56] || 0) + 1; delete M.pll[k]; }
+  return r; }; }
+const poolFish56 = P => (P && P.M56 ? P.tiles.map(k => [k, P.M56.tiles[k]]).filter(([, T]) => T && T.fish) : []);
+
+/* ---------- growth: per cell, slower at night unless a pool lamp lights the cell; piranhas eat the others ---------- */
+RT.eat56 = [];
+function stepPool(P, dt, feedOn){ const M = P.M56; if (!M) return;
+  const mi = S.maps.indexOf(M), t = RT.t55 || Date.now(), night = dayPhase(t).phase === 'night', lit = litTiles[mi];
+  const nr = FP56.nightGrowthRate ?? .5, lr = FP56.litGrowthRate ?? 1;
+  const cells = poolFish56(P);
+  for (const [k, T] of cells){ const F = CFG.fish[T.fish]; if (!F) continue;
+    if (T.timer > 0){ const rate = night ? (lit && lit.has(k) ? lr : nr) : 1; T.timer -= dt * rate; if (T.timer <= 0){ T.timer = 0; T.stage++; } }
+    if (T.timer === 0 && T.stage < F.stages && feedOn){ const r = payFeed(F.feedItem, F.stageFeedQtyPerTile); if (r.ok) T.timer = F.stageSeconds; } }
+  // piranhas: one bite (one other cell) every eats.everySeconds while there is anything else in the pool
+  const PIR = (CFG.fish.piranha || {}).eats; if (!PIR) return;
+  const pir = cells.filter(([, T]) => T.fish === 'piranha'); if (!pir.length) return;
+  const T0 = pir[0][1]; let prey = cells.filter(([, T]) => T.fish && T.fish !== 'piranha');
+  if (!prey.length){ T0.eat56 = 0; return; }
+  T0.eat56 = (T0.eat56 || 0) + dt;
+  while (T0.eat56 >= PIR.everySeconds && prey.length){ T0.eat56 -= PIR.everySeconds;
+    const [pk2, V] = prey.shift(); RT.eat56.push({ name: fishName56(V.fish), at: t, mi }); V.fish = null; V.stage = 0; V.timer = 0; V.eat56 = 0; } }
+setInterval(() => { if (!RT.eat56.length || !S) return; const L = RT.eat56.splice(0); const by = {}; for (const e of L) by[e.name] = (by[e.name] || 0) + 1;
+  const msg = '食人魚把' + Object.entries(by).map(([n, c]) => `${c} 格${n}`).join('、') + '吃掉了';
+  toast(msg, true, 4200); try { (S.news56 = S.news56 || []).push({ at: Date.now(), text: msg }); if (S.news56.length > 30) S.news56.splice(0, S.news56.length - 30); } catch(e){} }, 1500);
+function hasFeedables(){ for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (T.t === 'animal' || (T.t === 'pool' && T.fish)) return true; } return false; }
+
+/* ---------- tap a pool: harvest every ready cell, feed every hungry cell, else show what is in it ---------- */
+function tapPool(M, pk, cx, cy){ const P = M.pools[pk]; if (!P) return; if (!P.M56) Object.defineProperty(P, 'M56', { value: M, enumerable: false, writable: true });
+  const cells = poolFish56(P);
+  if (!cells.length){ toast('這個魚池是空的：選一種魚苗，點空的格子放進去（一格一種）'); return; }
+  const ready = cells.filter(([, T]) => T.stage >= CFG.fish[T.fish].stages);
+  if (ready.length){ const bonus = poolSizeBonus(P.n), by = {}; let xp = 0;
+    for (const [, T] of ready){ by[T.fish] = (by[T.fish] || 0) + 1; xp += CFG.fish[T.fish].xpPerTile; }
+    const goods = Object.entries(by).map(([id, n]) => ({ id, qty: Math.round(n * (1 + bonus)) }));
+    deliver(goods, cx, cy, () => { gain(0, xp, cx, cy); if (bonus) floatText(cx, cy - 56, `連通加成 +${Math.round(bonus * 100)}%`, '#2f7fa8', 11);
+      for (const [, T] of ready){ T.fish = null; T.stage = 0; T.timer = 0; T.eat56 = 0; } });
+    return; }
+  const hungry = cells.filter(([, T]) => T.timer === 0 && T.stage < CFG.fish[T.fish].stages);
+  if (hungry.length){ const by = {}; for (const [, T] of hungry){ const F = CFG.fish[T.fish]; by[F.feedItem] = (by[F.feedItem] || 0) + F.stageFeedQtyPerTile; }
+    for (const [item, q] of Object.entries(by)){ const r = payFeed(item, q, true); if (!r.ok){ feedMsg(r, cx, cy); return; } }
+    for (const [item, q] of Object.entries(by)) feedMsg(payFeed(item, q), cx, cy);
+    for (const [, T] of hungry) T.timer = CFG.fish[T.fish].stageSeconds; return; }
+  const by = {}; for (const [, T] of cells){ const F = CFG.fish[T.fish], b = by[T.fish] || (by[T.fish] = { n: 0, st: T.stage, tm: T.timer, F }); b.n++; if (T.timer > 0 && T.timer < b.tm) b.tm = T.timer; }
+  toast(`魚池 ${P.n} 格：` + Object.entries(by).map(([id, b]) => `${b.F.name} ${b.n} 格（${b.st + 1}/${b.F.stages}，${fmtDur(b.tm)}後長大）`).join('；'), false, 4200); }
+function stockCell56(M, k, id, cx, cy){ const T = M.tiles[k], F = CFG.fish[id];
+  if (!T || T.t !== 'pool') return;
+  if (T.fish){ tapPool(M, poolOf(M, k), cx, cy); return; }
+  if (!isUnlocked(id)){ toast(lockedMsg(id)); return; }
+  const fry = F.fryCostPerTile;
+  if (S.player.coins < fry){ toast(`金幣不夠，魚苗要 ${fmtN(fry)}`); return; }
+  const r = payFeed(F.feedItem, F.stageFeedQtyPerTile, true); if (!r.ok){ feedMsg(r, cx, cy); return; }
+  const go = () => { if (M.tiles[k] !== T || T.fish) return; withWhy(`放魚苗：${F.name}`, () => { S.player.coins -= fry; }, []);
+    feedMsg(payFeed(F.feedItem, F.stageFeedQtyPerTile), cx, cy - 14); Object.assign(T, { fish: id, stage: 0, timer: F.stageSeconds, eat56: 0 });
+    floatText(cx, cy - 30, `放${F.name}苗 -${fmtN(fry)}`, '#8a5d36', 11); sfx('place'); afterAction(); };
+  // piranhas and other fish in the same pool: warn first
+  const P = M.pools[poolOf(M, k)]; if (P && !P.M56) Object.defineProperty(P, 'M56', { value: M, enumerable: false, writable: true });
+  const others = poolFish56(P), hasPir = others.some(([, U]) => U.fish === 'piranha'), hasOther = others.some(([, U]) => U.fish !== 'piranha');
+  if ((id === 'piranha' && hasOther) || (id !== 'piranha' && hasPir)){
+    if (pendingPrompt) return;
+    confirmBox('食人魚會吃別的魚', id === 'piranha' ? `這個魚池裡還有別的魚。放食人魚進去，每 2 小時會吃掉一格別種的魚、蝦或蟹，直到吃光。要放嗎？` : `這個魚池裡有食人魚，${F.name}放進去會被吃掉（每 2 小時一格）。還是要放嗎？`, '還是要放', ok => { if (ok) go(); });
+    return; }
+  go(); }
+// old saves: one fish for the whole pool → the same fish in every cell
+function migratePools56(r){ for (const M of r.maps || []) for (const pk in (M.pools || {})){ const P = M.pools[pk]; if (!P || !P.fish) continue;
+  for (const k of P.tiles || []){ const T = M.tiles[k]; if (T && T.t === 'pool' && !T.fish) Object.assign(T, { fish: P.fish, stage: P.stage || 0, timer: P.timer || 0 }); }
+  P.fish = null; P.stage = 0; P.timer = 0; } }
+
+/* ---------- drawing: bed (+ pool lamp, glass side) in the ground pass; fish + water surface on top in the object pass ---------- */
+function poolLook56(M, x, y){ const has = (a, b) => isPool(M.tiles[tkey(a, b)]), out = (a, b) => !inMap(M, a, b);
+  let m = 0; if (has(x, y - 1)) m |= 1; if (has(x + 1, y) || out(x + 1, y)) m |= 2; if (has(x, y + 1) || out(x, y + 1)) m |= 4; if (has(x - 1, y)) m |= 8;
+  let c = 0; if (has(x, y - 1) && has(x - 1, y) && !has(x - 1, y - 1)) c |= 1; if (has(x, y - 1) && has(x + 1, y) && !has(x + 1, y - 1)) c |= 2;
+  if (has(x + 1, y) && has(x, y + 1) && !has(x + 1, y + 1)) c |= 4; if (has(x, y + 1) && has(x - 1, y) && !has(x - 1, y + 1)) c |= 8;
+  const v = ((x * 7 + y * 3) % 3 + 3) % 3, mm = String(m).padStart(2, '0'), cc = String(c).padStart(2, '0');
+  let nm = c ? `m${mm}_c${cc}_v${v}` : `m${mm}_v${v}`; if (!ATLAS['pool2_bed_' + nm]) nm = `m${mm}_v${v}`;
+  return { nm, sw: out(x, y + 1), se: out(x + 1, y) }; }
+RT.poolDraw56 = 0;
+{ const _spr56 = spr; spr = function(name, frame, x, y, flip, alpha){
+  if (RT.inWorld && S && typeof name === 'string' && name.startsWith('water_fishpool_m') && ATLAS.pool2_bed_m00_v0){
+    const M = curMap(), k = tileUnder53(x, y), [tx, ty] = pkey(k); if (!M || !isPool(M.tiles[k])) return _spr56(name, frame, x, y, flip, alpha);
+    const L = poolLook56(M, tx, ty), t = performance.now() / 1000;
+    _spr56('pool2_bed_' + L.nm, 0, x, y);
+    const fr = n => motion ? frameOf(n, t, tx + ty) : 0;
+    if (L.sw) _spr56(`pool2_side_sw_v${tx % 2}`, fr('pool2_side_sw_v0'), x, y);
+    if (L.se) _spr56(`pool2_side_se_v${ty % 2}`, fr('pool2_side_se_v0'), x, y);
+    const lamp = pllAt56(M, k); if (lamp){ const n = `device_pool_lamp_${lamp.lit ? 'on' : 'off'}`; _spr56(n, lamp.lit && motion ? frameOf(n, t, tx) : 0, x, y); }
+    return; }
+  return _spr56(name, frame, x, y, flip, alpha); }; }
+function drawFishSprite56(id, fr, x, y, ang, scale){ const n = 'fishtop_' + id, a = ATLAS[n], im = IMG[n]; if (!a || !im) return;
+  const k = scale / (a.scale || 2), fw = a.frameWidth, fh = a.frameHeight;
+  ctx.save(); ctx.translate(x, y); ctx.scale(1, .5); ctx.rotate(ang);
+  ctx.drawImage(im, (a.sx || 0) + fr * fw, a.sy || 0, fw, fh, -a.anchor[0] * k, -a.anchor[1] * k, fw * k, fh * k); ctx.restore(); }
+const h56 = (a, b) => { const s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return s - Math.floor(s); };
+function drawPoolCell56(M, k, T, x, y, t){ const { cx, cy } = center(x, y), L = poolLook56(M, x, y);
+  if (T.fish && CFG.fish[T.fish]){ const F = CFG.fish[T.fish], n = isShark56(T.fish) ? 1 : T.fish === 'shrimp' ? 3 : (SW56.perTile || 2), amp = .5 - (SW56.margin ?? .18);
+    const grow = .6 + .4 * Math.min(1, T.stage / Math.max(1, F.stages)), sc = (F.swimScale || 1.5) * grow, sp = (SW56.speed || 6) / 60 * (F.walker ? .5 : 1);
+    for (let i = 0; i < n; i++){ const p1 = h56(x + i, y) * 6.28, p2 = h56(y + i, x + 3) * 6.28, w1 = sp * (.8 + h56(i, x * y) * .6), w2 = sp * (.6 + h56(x, i + y) * .6);
+      const tt = motion ? t : 0, a = amp * Math.sin(tt * w1 + p1), b = amp * Math.sin(tt * w2 + p2);
+      const da = amp * w1 * Math.cos(tt * w1 + p1), db = amp * w2 * Math.cos(tt * w2 + p2);
+      const sx = cx + (a - b) * HW, sy = cy + (a + b) * HH, vx = (da - db) * HW, vy = (da + db) * HH * 2, ang = Math.atan2(vy, vx);
+      const fr = motion ? [0, 1, 2, 1][Math.floor(tt * (T.timer === 0 ? 3 : 6) + i * 1.7) % 4] : 1;
+      drawFishSprite56(T.fish, fr, sx, sy, ang, sc); } }
+  const nm = 'pool2_top_' + L.nm; spr(nm, motion ? frameOf(nm, t, x + y) : 0, cx, cy); }
+{ const _dte56 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte56(M, k, T, x, y, t, now);
+  if (!T || T.t !== 'pool' || !ATLAS.pool2_top_m00_v0) return;
+  drawPoolCell56(M, k, T, x, y, t);
+  // one bubble per pool: 收成 if any cell is ready, else 餓了 if any is hungry
+  const pk = poolOf(M, k), P = pk && M.pools[pk]; if (!P || P.tiles[0] !== k) return;
+  if (!P.M56) Object.defineProperty(P, 'M56', { value: M, enumerable: false, writable: true });
+  const cells = poolFish56(P); if (!cells.length) return; const { cx, cy } = center(x, y);
+  if (cells.some(([, U]) => U.stage >= CFG.fish[U.fish].stages)) bubble(cx, cy - 10, '收成', 'ui_coin', '#fffbe9');
+  else if (cells.some(([, U]) => U.timer === 0)) bubble(cx, cy - 10, '餓了', 'ui_tool_fishpool'); }; }
+// icons: new fish use their own little pictures (crab upright, shrimp from the side)
+{ const _is56 = itemSprite; itemSprite = function(kind, id){ if (id === PL56 && (kind === 'device' || kind === 'building' || kind === 'build')) return ['ui_it_pool_lamp', 0];
+  const r = _is56(kind, id); if (r && typeof r[0] === 'string' && /^fish_.*_jump$/.test(r[0])){ const f = r[0].slice(5, -5); if (ATLAS['ui_fish_' + f]) return ['ui_fish_' + f, 0]; }
+  if (kind === 'fish' && CFG.fish[id] && ATLAS['ui_fish_' + id]) return ['ui_fish_' + id, 0];
+  if (kind === 'fish' && id === 'pool' && ATLAS.pool2_top_m00_v0) return ['pool2_top_m00_v0', 0];
+  return r; }; }
+
+/* ---------- pool lamp: on a pool cell, not taking the cell; powered like a grow lamp ---------- */
+{ const _ad56 = allDevices; allDevices = function(){ const out = _ad56(); if (!S || !PLD56) return out;
+  S.maps.forEach((M, mi) => { if (M.pll) for (const k in M.pll){ const T = M.pll[k]; if (T) out.push({ T, M, mi, k }); } }); return out; }; }
+{ const _slh56 = storeLightHoles; storeLightHoles = function(M, now){ const out = _slh56(M, now); if (!M || !M.pll || !Array.isArray(out)) return out; const o2 = out.slice();
+  // (v2.24.2: the pool-lamp light is drawn as a glow on top of the night, clipped to the pool cells — see g58)
+  return o2; }; }
+if (typeof HD54 === 'object' && PLD56) HD54[PLD56.name] = 'lamp';
+{ const tb = TOOLS.find(t => t.id === 'build'); if (tb && PLD56){ const _h = tb.hint; tb.hint = () => S.sel.build === PL56 ? `點魚池格裝一盞${PLD56.name}（裝在池底，不佔格子）· ${fmtN(PLD56.buildCost)} 金幣 · 晚上亮，照到的 3×3 魚池格晚上照常長` : _h(); } }
+function placePoolLamp56(M, k, x, y){ const { cx, cy } = center(x, y), D = PLD56;
+  if (!isPool(M.tiles[k])){ toast(`${D.name}要裝在魚池格（可以有魚）`); return; }
+  if (pllAt56(M, k)){ openDevice(M, k, M.pll[k]); return; }
+  const stored = (S.buildStore[PL56] || 0) > 0;
+  if (!stored){ if (!isUnlocked(PL56)){ toast(lockedMsg(PL56)); return; } if (!withWhy(`建設：${D.name}`, () => spend(D.buildCost), [])) return; }
+  else S.buildStore[PL56]--;
+  pll56(M)[k] = { t: 'device', id: PL56, mode: 'auto', on: false, from: '18:00', to: '23:00', lit: false };
+  floatText(cx, cy - 24, stored ? '從倉庫拿出來' : `-${fmtN(D.buildCost)}`, '#8a5d36', 11); sfx('place');
+  if (!S.settings.grid) toast(`${D.name}裝好了。要接電、或有電池／發電機才會亮`); afterAction(); UIbuildTray(); }
+function storePoolLamp56(M, k, quiet){ const T = pllAt56(M, k); if (!T) return false; delete M.pll[k]; S.buildStore[PL56] = (S.buildStore[PL56] || 0) + 1; RT.decoVer++;
+  if (!quiet){ const [x, y] = pkey(k), c = center(x, y); floatText(c.cx, c.cy - 24, `${PLD56.name}收進倉庫`, '#2f7fa8', 11); sfx('place'); } afterAction(); return true; }
+function poolMenu56(M, k, x, y, opts){ const { cx, cy } = center(x, y); RT.pick53 = { mi: S.cur, k, hl: 'obj' };
+  showPop53(cx, cy - 30, opts.map(([id, label, icon]) => `<button data-p56="${id}"><img src="${IMGSRC[icon] || ''}" alt="">${label}</button>`).join(''));
+  POP53.querySelectorAll('[data-p56]').forEach(b => { b.onclick = () => { const w = b.dataset.p56; closePop53(); const o = opts.find(q => q[0] === w); if (o) o[3](); }; }); }
+
+/* ---------- store facilities back (devices, machines) ---------- */
+STORABLE.add('device'); STORABLE.add('machine');
+function storeDev56(M, k, T){ if (!T) return false; const [x, y] = pkey(k), { cx, cy } = center(x, y);
+  if (T.t === 'machine'){ if (SB56.machines === false) return false; if (T.state !== 'idle'){ toast((SB56.blockIf || {}).machineBusy || '機器裡還有東西，先收成品或等它做完'); return true; } }
+  else if (T.t === 'device'){ if (SB56.devices === false) return false; const D = DEV[T.id] || {};
+    if (D.kind === 'hive' && T.queen){ toast((SB56.blockIf || {}).hiveColony || '蜂箱裡還有蜂群，不能收'); return true; }
+    if (D.kind === 'generator' && (SB56.keep || {}).generatorFuel !== false && T.fuel > 0) S.fuel56 = (S.fuel56 || 0) + T.fuel; }
+  else return false;
+  const id = T.id; delete M.tiles[k];
+  if (DEV[id] && DEV[id].kind === 'battery'){ try { S.power.battery = Math.min(S.power.battery, batteryCap()); } catch(e){} }
+  S.buildStore[id] = (S.buildStore[id] || 0) + 1; RT.decoVer++; RT.regionsAt = 0;
+  floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('place'); afterAction(); UIbuildTray(); return true; }
+{ const _so56 = storeObject; storeObject = function(M, k){ const T = M.tiles[k]; if (T && (T.t === 'device' || T.t === 'machine')) return storeDev56(M, k, T); return _so56(M, k); }; }
+// the tray / hint know about stored facilities too (倉庫還有 n)
+function stockOf51(tool, id){ id = String(id || '');
+  if (tool === 'deco'){ if (id.startsWith('dollbuy:')){ const [, t, s] = id.split(':'); return dollStock51(t, s); }
+    const D = CFG.decos[id]; return D && D.source === 'shop' ? (S.storage[id] || 0) : 0; }
+  if (tool === 'animal') return (isFence51(id) || isDen51(id)) ? (S.storage[id] || 0) : 0;
+  if (tool === 'build') return (BLD[id] && id !== 'truck_pad') || DEV[id] || MACH56[id] ? (S.buildStore[id] || 0) : 0;
+  return 0; }
+// placing a stored device / machine: the normal build path, but free
+RT.free56 = false;
+{ const _sp56 = spend; spend = function(n, ...a){ if (RT.free56){ RT.freeUsed56 = true; return true; } return _sp56(n, ...a); }; }
+function placeStoredDev56(M, x, y, id, inner){ const k = tkey(x, y), before = M.tiles[k];
+  RT.free56 = true; RT.freeUsed56 = false; const was51 = RT.in51; RT.in51 = true; let r;
+  try { r = inner(); } finally { RT.free56 = false; RT.in51 = was51; }
+  const T = M.tiles[k];
+  if (T && T !== before && T.id === id){ S.buildStore[id] = Math.max(0, (S.buildStore[id] || 0) - 1);
+    if (DEV[id] && DEV[id].kind === 'generator' && S.fuel56 > 0){ const cap = DEV[id].fuelSlots || 50, f = Math.min(cap, S.fuel56); T.fuel = f; S.fuel56 -= f; }
+    const { cx, cy } = center(x, y); floatText(cx, cy - 40, '從倉庫拿出來（免費）', '#2f7fa8', 10); UIbuildTray(); updateHint(); }
+  return r; }
+// storage page: a block for stored facilities
+{ const _sd56 = storageDecoHTML; storageDecoHTML = function(){ let h = _sd56(); const ids = Object.keys(S.buildStore || {}).filter(id => S.buildStore[id] > 0 && (DEV[id] || MACH56[id]));
+  if (!ids.length) return h;
+  const rows = ids.map(id => { const sp = itemSprite(DEV[id] ? 'device' : 'machine', id) || []; return `<tr><td>${sp[0] ? `<canvas data-spr="${sp[0]}" data-f="${sp[1] || 0}" class="ico"></canvas>` : ''}</td><td>${(DEV[id] || MACH56[id]).name}${S.buildStore[id] > 1 ? ` ×${S.buildStore[id]}` : ''}</td><td>用「建設」放回（免費）</td></tr>`; });
+  return h + stBlock45('收回的設施', 'st_buildings', 'o', stTable45([[''], ['設施'], ['']], rows)); }; }
+
+/* ---------- the act wrapper (outermost) ---------- */
+{ const _act56 = act; act = function(x, y){
+  if (!S || UI.expand) return _act56(x, y);
+  const M = curMap(), on = inMap(M, x, y), k = tkey(x, y), T = on ? M.tiles[k] : null, tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (!on) return _act56(x, y);
+  // a lamp being moved
+  if (RT.plmv56){ const g = RT.plmv56; RT.plmv56 = null;
+    if (g.mi !== S.cur || g.k === k){ toast('已取消搬移'); return; }
+    if (!isPool(T)){ toast(`${PLD56.name}只能裝在魚池格`); RT.plmv56 = g; return; }
+    if (pllAt56(M, k)){ toast('那一格已經有水底燈了'); RT.plmv56 = g; return; }
+    const L = M.pll[g.k]; if (!L) return; delete M.pll[g.k]; M.pll[k] = L; RT.decoVer++; sfx('place'); toast(`${PLD56.name}搬好了`); afterAction(); return; }
+  const bid = tool === 'build' ? S.sel.build : null;
+  if (bid === PL56){ placePoolLamp56(M, k, x, y); return; }
+  // stored device / machine: put the stored one down for free
+  if (bid && (DEV[bid] || MACH56[bid]) && !BLD[bid] && (S.buildStore[bid] || 0) > 0 && (!T || T.t === 'weed') && !RT.free56) return placeStoredDev56(M, x, y, bid, () => _act56(x, y));
+  // fish tool
+  if (tool === 'fish'){ const sel = S.sel.fish;
+    if (sel === 'pool' && !T) return withWhy('蓋魚池', _act56, [x, y]);
+    if (sel && sel !== 'pool' && CFG.fish[sel] && T && T.t === 'pool'){ stockCell56(M, k, sel, cx, cy); return; } }
+  // pool cells with a lamp: choose
+  if (T && T.t === 'pool' && pllAt56(M, k)){
+    if (tool === 'store'){ storePoolLamp56(M, k); return; }
+    if (tool === 'remove'){ if (T.fish){ toast('這格還有魚，收成後才能拆'); return; } storePoolLamp56(M, k, true); toast(`${PLD56.name}先收進倉庫了`); return _act56(x, y); }
+    if (tool === 'move' && !RT.mv && !RT.gmv){ poolMenu56(M, k, x, y, [['pool', '搬移魚池', 'ui_tool_fishpool', () => _act56(x, y)], ['lamp', `搬移${PLD56.name}`, 'ui_lamp', () => { RT.plmv56 = { mi: S.cur, k }; toast(`拿起${PLD56.name}，點要裝的魚池格`, false, 3200); }]]); return; }
+    if (tool === 'hand' || tool === 'fish'){ poolMenu56(M, k, x, y, [['pool', '魚池（收成／餵食）', 'ui_tool_fishpool', () => tapPool(M, poolOf(M, k), cx, cy)], ['lamp', `${PLD56.name}設定`, 'ui_lamp', () => openDevice(M, k, M.pll[k])]]); return; } }
+  // a pool cell that still has fish cannot be removed
+  if (T && T.t === 'pool' && tool === 'remove' && T.fish){ toast('這格還有魚，收成後才能拆'); return; }
+  // store facilities back
+  if (tool === 'store' && T && (T.t === 'device' || T.t === 'machine') && !(DEV[T.id] && DEV[T.id].kind === 'hive' && false)){ if (storeDev56(M, k, T)) return; }
+  return _act56(x, y); }; }
+// moving a pool takes its lamps along
+{ const _dm56 = dropMove; dropMove = function(...a){ const m = RT.mv; const lamps = m && m.o && m.o.kind === 'pool' && S.maps[m.mi] && S.maps[m.mi].pll ? m.o.cells.filter(c => S.maps[m.mi].pll[c]).map(c => [c, S.maps[m.mi].pll[c]]) : null;
+  let off = null; try { off = moveOffset(); } catch(e){}
+  const r = _dm56(...a);
+  if (lamps && lamps.length && !RT.mv && off && (off.dx || off.dy)){ const M = S.maps[m.mi]; for (const [c] of lamps) delete M.pll[c];
+    for (const [c, L] of lamps){ const [x, y] = pkey(c), nk = tkey(x + off.dx, y + off.dy); if (isPool(M.tiles[nk])) M.pll[nk] = L; else S.buildStore[PL56] = (S.buildStore[PL56] || 0) + 1; } RT.decoVer++; }
+  return r; }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns56 = normalizeState; normalizeState = function(d){ const r = _ns56(d); if (!r) return r;
+  if (!r.v224){ r.v224 = true; migratePools56(r); }
+  for (const M of r.maps || []) M.pll = M.pll || {};
+  return r; }; }
+
+window.__farm224 = { tapPool: (...a) => tapPool(...a), stockCell56, stepPool: (...a) => stepPool(...a), poolLook56, migratePools56, placePoolLamp56, storePoolLamp56, storeDev56, stockOf51: (...a) => stockOf51(...a),
+  get eat(){ return RT.eat56; }, act: (x, y) => act(x, y), drawPoolCell56 };
+
+/* ---------- v2.24 fixes: trash stations count each kind separately; drones take turns; tray text one size ---------- */
+const KN56 = { g: '垃圾', r: '回收', s: '污水' };
+// bags piled up next to the first station move into any station that still has room for that kind
+function rebalancePile56(){ if (!S || !S.trash || !S.trash.pile) return; const P = S.trash.pile; let moved = false;
+  for (const kind of ['g', 'r', 's']){ if (!(P[kind] > 1e-9)) continue;
+    for (const s of stations()){ const room = capOf(kind) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
+  if (moved && pileTotal() <= .01) S.trash.fullSince = null; }
+{ const _sa56b = stepAll; stepAll = function(dt, t){ const r = _sa56b(dt, t); try { rebalancePile56(); } catch(e){} return r; }; }
+{ const _db56 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (!T || T.id !== 'trash_station') return _db56(T, x, y, t);
+  // draw without the old bubble (it used the fullest kind and the farm-wide 'last dumped' time), then our own
+  const _bb = bubble; let q = null; bubble = (...a) => { q = a; };
+  try { _db56(T, x, y, t); } finally { bubble = _bb; }
+  if (!q) return; const { cx, cy } = center(x, y), now = Date.now();
+  if (q[1] === '倒垃圾'){ bubble(...q); return; }
+  const full = ['g', 'r', 's'].filter(k => (T[k] || 0) >= capOf(k) - 1e-6);
+  if (full.length) bubble(cx, cy - 46, full.map(k => KN56[k]).join('、') + '滿了', 'ui_trash_general');
+  else if (daysSinceDump(now) >= 2 && loadOf(T, ['g', 'r', 's'], false) > .01) bubble(cx, cy - 46, '該倒了', 'ui_trash_general'); }; }
+// drones (and every robot kind that is rationed): the idle unit with the most battery goes first, so they take turns
+function dispatch53(kind, key, u, f){
+  const home = workerHome(kind, u), W = WS[key], away = !!(W && home && kind !== 'water' && walkAway(W, home));
+  if (away || (u && u.state === 'work')) return f(key, u);
+  if (kind === 'sweep' && home && trashOn53(home.mi) < sweepStart53()) return false;
+  if (!f(key, u)) return false;
+  if (!u) return true;
+  const per = DISP53[kind]; if (!per) return true;
+  const stamp = simNow53(); let D = RT.d53[kind]; if (!D || D.t !== stamp) D = RT.d53[kind] = { t: stamp, n: 0, need: Math.max(1, Math.ceil(load53(kind) / per)), sent: new Set() };
+  const busy = fleet(kind).filter(v => v !== u && v.state === 'work').length;
+  if (busy + D.n >= D.need) return false;
+  // whose turn: among idle units that could go now, the one with the most battery (then the one that went out longest ago)
+  const idle = fleet(kind).filter(v => v.state !== 'work' && v.on !== false && unitTier(kind, v) && !D.sent.has(v));
+  const score = v => (v.batt ?? v.battery ?? 100) * 1e6 - (v.out56 || 0) / 1e6;
+  const ready = idle.filter(v => v === u || (() => { try { return f(wKey(kind, v), v); } catch(e){ return false; } })());
+  const best = ready.sort((a, b) => score(b) - score(a))[0];
+  if (best && best !== u) return false;
+  D.n++; D.sent.add(u); u.out56 = stamp; return true; }
+// tray: every item uses the same text size; long names wrap instead of shrinking
+fitTrayText = function(){ const tray = $('tray'); if (!tray || tray.hidden || !tray.clientWidth) return;
+  for (const it of tray.querySelectorAll('.item')){ const b = it.querySelector('b');
+    if (b){ b.style.fontSize = ''; b.style.whiteSpace = 'normal'; b.style.wordBreak = 'keep-all'; b.style.overflowWrap = 'anywhere'; b.style.lineHeight = '1.15'; }
+    for (const s of it.querySelectorAll('small')){ s.style.fontSize = ''; s.style.whiteSpace = 'normal'; }
+    if (!it.title && b){ const parts = [b.textContent, ...[...it.querySelectorAll('small')].map(s => s.textContent.trim())].filter(Boolean); it.title = parts.join('\n'); } } };
+window.__farm224.rebalancePile56 = rebalancePile56; window.__farm224.dispatch53 = (...a) => dispatch53(...a);
+
+/* ===== 57. v2.24.1: 新版本自動更新（iPhone 主畫面 App 沒有重新整理鈕）：回到前景就檢查；下載好之後在切到背景或下次打開時
+   自動存檔並換新版；☰ 選單與設定有「檢查更新」，有新版時 ☰ 亮紅點 ===== */
+const UP57 = (CFG.pwa && CFG.pwa.autoUpdate) || {};
+RT.swReady57 = false; RT.applying57 = false;
+const swOn57 = () => !!(PWA40.serviceWorker && 'serviceWorker' in navigator && location.protocol !== 'file:');
+function swWaiting57(){ const r = RT.swReg; return !!(r && r.waiting && navigator.serviceWorker.controller); }
+function markReady57(){ if (!swWaiting57()) return; RT.swReady57 = true; try { renderAttention(); } catch(e){} }
+// switch to the waiting version: save first, then the existing controllerchange listener reloads the page
+function applyUpdate57(why){ const r = RT.swReg; if (!r || !r.waiting || RT.applying57) return false; RT.applying57 = true;
+  try { if (S) save(); } catch(e){}
+  try { sessionStorage.setItem('upd57', why || '1'); } catch(e){}
+  r.waiting.postMessage('skipWaiting');
+  setTimeout(() => { if (RT.applying57) location.reload(); }, 4000);   // in case controllerchange never fires
+  return true; }
+async function checkUpdate57(manual){ if (!swOn57()){ if (manual) toast('直接打開的檔案沒有自動更新；重新下載成品包就是新版'); return; }
+  let r = RT.swReg; try { if (!r) r = RT.swReg = await navigator.serviceWorker.getRegistration(); } catch(e){}
+  if (!r){ if (manual) toast('還沒裝好離線版，稍後再試'); return; }
+  try { await r.update(); } catch(e){}
+  // the new worker may still be installing: wait for it a little
+  if (!r.waiting && r.installing){ await new Promise(ok => { const w = r.installing; const t = setTimeout(ok, 15000); w.addEventListener('statechange', () => { if (w.state === 'installed' || w.state === 'redundant'){ clearTimeout(t); ok(); } }); }); }
+  if (swWaiting57()){ markReady57(); if (manual){ toast('找到新版本，存檔後重新載入…', true); setTimeout(() => applyUpdate57('manual'), 600); } }
+  else if (manual) toast(`已經是最新版本（${CFG.meta.configVersion}）`); }
+if (swOn57()){
+  // back to the foreground (the home-screen app keeps running in the background and never reloads): look for a new version
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden){ if (RT.swReady57 && UP57.applyWhenHidden !== false) applyUpdate57('hidden'); }
+    else checkUpdate57(false); });
+  addEventListener('pageshow', () => checkUpdate57(false));
+  // a new version already waiting right after opening: switch now, before you start playing
+  navigator.serviceWorker.ready.then(reg => { RT.swReg = RT.swReg || reg;
+    if (swWaiting57() && UP57.applyOnLaunch !== false && performance.now() < 20000) applyUpdate57('launch'); else markReady57();
+    reg.addEventListener('updatefound', () => { const w = reg.installing; if (w) w.addEventListener('statechange', () => { if (w.state === 'installed') markReady57(); }); }); }).catch(() => {});
+  setInterval(() => markReady57(), 5000); }
+// after an update: say so once
+try { const u = sessionStorage.getItem('upd57'); if (u){ sessionStorage.removeItem('upd57'); setTimeout(() => toast(`已更新到新版本 ${CFG.meta.configVersion}`, true, 3200), 1500); } } catch(e){}
+// ☰: red dot + 「檢查更新」
+{ const _na57 = needsAttention; needsAttention = function(){ const r = _na57(); r.update = RT.swReady57; return r; }; }
+{ const _ra57 = renderAttention; renderAttention = function(){ const r = _ra57(); const d = HAMB.querySelector('.rdot'); if (d && RT.swReady57) d.hidden = false; return r; }; }
+{ const _mh57 = moreHTML; moreHTML = function(){ const h = _mh57();
+  return h + `<button class="mi" data-m="update57"><b class="sym">⟳</b><span>${RT.swReady57 ? '有新版本，更新' : '檢查更新'}<small style="display:block;opacity:.7;font-size:11px">目前版本 ${CFG.meta.configVersion}</small></span>${RT.swReady57 ? '<i class="rd"></i>' : ''}</button>`; }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="update57"]'); if (!b) return; if (RT.swReady57) { toast('存檔後重新載入新版本…', true); setTimeout(() => applyUpdate57('manual'), 500); } else checkUpdate57(true); }, true);
+// 設定: version card
+{ const _rs57 = renderSettings; renderSettings = function(el, ...a){ const r = _rs57(el, ...a);
+  el.insertAdjacentHTML('beforeend', `<div class="pcard"><h4><span class="hic">⟳</span>版本與更新</h4><p class="small">目前版本 ${CFG.meta.configVersion}。有新版本時會自動下載，切到背景或下次打開時自動存檔並換新版；也可以按下面的按鈕馬上檢查。</p><div class="row"><button class="btn" id="upd57">${RT.swReady57 ? '有新版本，立即更新' : '檢查更新'}</button></div></div>`);
+  const b = el.querySelector('#upd57'); if (b) b.onclick = () => { if (RT.swReady57) applyUpdate57('manual'); else checkUpdate57(true); };
+  return r; }; }
+// the old prompt moves to the bottom so it is not under the Dynamic Island
+{ const st = document.createElement('style'); st.textContent = `#swBar{top:auto!important;bottom:calc(110px + env(safe-area-inset-bottom,0px))}`; document.head.appendChild(st); }
+// a tray rebuild from inside withTool (e.g. 魚 → 設施 borrowing 建設 to place a pool lamp) would draw the 建設 tray: wait until the tool is restored
+RT.wt57 = 0;
+{ const _wt57 = withTool; withTool = function(...a){ RT.wt57++; try { return _wt57(...a); } finally { RT.wt57--; } }; }
+{ const _ut57 = UIbuildTray; UIbuildTray = function(){ if (RT.wt57 > 0 && !RT.borrow34){ clearTimeout(RT.utT57); RT.utT57 = setTimeout(() => UIbuildTray(), 0); return; } return _ut57(); }; }
+window.__farm2241 = { checkUpdate57, applyUpdate57, markReady57, get ready(){ return RT.swReady57; } };
+
+/* ===== 58. v2.24.2: 魚池水底燈的夜晚光改成和預覽圖一樣：一整片柔和的藍白光，從燈往外淡出，只照在範圍內的魚池格上
+   （畫在夜色上面、用魚池格的形狀裁切；不再是每格一個亮點） ===== */
+const PG58 = (CFG.devices.pool_lamp || {}).glow || { color: [120, 200, 255], alpha: .45, core: [255, 244, 210], coreAlpha: .35, radius: 1.7 };
+function poolLampGlow58(now){ if (!S || !PLD56) return; const M = curMap(); if (!M || !M.pll) return;
+  const dark = nightDark(now); if (dark < .03) return;
+  const lamps = []; for (const k in M.pll){ const T = M.pll[k]; if (T && T.lit && isPool(M.tiles[k])) lamps.push(pkey(k)); } if (!lamps.length) return;
+  const R = PLD56.range || 1, cells = new Set();
+  for (const [x0, y0] of lamps) for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++){ const k = tkey(x0 + dx, y0 + dy); if (isPool(M.tiles[k])) cells.add(k); }
+  ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y);
+  // clip: the lit pool cells (slightly grown so neighbouring cells join without seams), plus the glass side when the pool is on the island edge
+  ctx.beginPath();
+  for (const k of cells){ const [x, y] = pkey(k), { cx, cy } = center(x, y), e = 1.02; ctx.moveTo(cx, cy - HH * e); ctx.lineTo(cx + HW * e, cy); ctx.lineTo(cx, cy + HH * e); ctx.lineTo(cx - HW * e, cy); ctx.closePath();
+    if (!inMap(M, x, y + 1)){ ctx.moveTo(cx - HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + 19); ctx.lineTo(cx - HW, cy + 19); ctx.closePath(); }
+    if (!inMap(M, x + 1, y)){ ctx.moveTo(cx + HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + 19); ctx.lineTo(cx + HW, cy + 19); ctx.closePath(); } }
+  ctx.clip();
+  ctx.globalCompositeOperation = 'lighter';
+  const [r, g, b] = PG58.color, [cr, cg, cb] = PG58.core, A = (PG58.alpha ?? .45) * Math.min(1, dark * 1.4), CA = (PG58.coreAlpha ?? .35) * Math.min(1, dark * 1.4);
+  const flick = motion ? 1 + Math.sin(performance.now() / 700) * .03 : 1;
+  for (const [x0, y0] of lamps){ const { cx, cy } = center(x0, y0), rad = HW * (R + .7) * (PG58.radius ? PG58.radius / 1.7 : 1) * 1.7 * flick;
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(1, .5);
+    const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, rad); gr.addColorStop(0, `rgba(${r},${g},${b},${A})`); gr.addColorStop(.55, `rgba(${r},${g},${b},${A * .45})`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, rad, 0, 7); ctx.fill();
+    const g2 = ctx.createRadialGradient(0, 0, 0, 0, 0, HW * .75); g2.addColorStop(0, `rgba(${cr},${cg},${cb},${CA})`); g2.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(0, 0, HW * .75, 0, 7); ctx.fill(); ctx.restore(); }
+  ctx.restore(); }
+{ const _ds58 = drawSky; drawSky = function(t, now, atop){ const r = _ds58(t, now, atop); try { poolLampGlow58(now); } catch(e){} return r; }; }
+window.__farm2242 = { poolLampGlow58 };
+
+/* ---------- 「選單」改名「我的浮島農場」，抬頭用遊戲本身的圖示（浮島） ---------- */
+const MENU58 = (CFG.ui && CFG.ui.menuTitle) || '我的浮島農場';
+IMGSRC.ui_hd_farm58 = 'icons/icon-192.png';
+if (typeof HD54 === 'object'){ HD54['選單'] = 'farm58'; HD54[MENU58] = 'farm58'; }
+function menuTitle58(){ const h = $('modalTitle'); if (!h) return; h.dataset.real = '選單';
+  for (const n of [...h.childNodes]) if (n.nodeType === 3) n.remove();
+  h.appendChild(document.createTextNode(MENU58)); }
+{ const _om58 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '選單' && typeof render === 'function'){ const r0 = render; render = (k, el) => { const v = r0(k, el); queueMicrotask(menuTitle58); return v; }; }
+  const r = _om58(title, tabs, render, initial);
+  const h = $('modalTitle'); if (title === '選單') menuTitle58(); else if (h) delete h.dataset.real;
+  return r; }; }
+// the old tab listener compares the title text with 「選單」: do the same with the real title
+$('modalTabs').addEventListener('click', e => { const b = e.target.closest('button[data-k]'), h = $('modalTitle'); if (!b || !h || h.dataset.real !== '選單') return;
+  if (b.dataset.k === 'slots') RT.pickFromMenu = true; else RT.menuTab = b.dataset.k; setTimeout(() => { try { setHd54('選單', b.dataset.k); } catch(err){} menuTitle58(); }, 0); }, true);
+if (typeof PAGE === 'object' && PAGE['選單']) PAGE[MENU58] = PAGE['選單'];
 
   })(CFG, ATLAS_JSON);
 })();

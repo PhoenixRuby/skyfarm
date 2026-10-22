@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.22.2",
+  "configVersion": "2.24.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -475,7 +475,17 @@ window.GAME_CONFIG = {
     "minTiles": 9,
     "bonus": 0.2
    }
-  ]
+  ],
+  "perTile": true,
+  "look": "clear",
+  "swim": {
+   "perTile": 2,
+   "speed": 6,
+   "margin": 0.18
+  },
+  "note": "v2.24 起每一格各放一種（點空格放魚苗、點有魚的格子餵／收成整池）；水面半透明看得到魚，池底與水面分兩層畫（batch35）",
+  "nightGrowthRate": 0.5,
+  "litGrowthRate": 1.0
  },
  "fish": {
   "tilapia": {
@@ -486,7 +496,8 @@ window.GAME_CONFIG = {
    "harvestPerTile": 200,
    "xpPerTile": 13,
    "feedItem": "fish_feed",
-   "stageFeedQtyPerTile": 2
+   "stageFeedQtyPerTile": 2,
+   "swimScale": 2.0
   },
   "milkfish": {
    "name": "虱目魚",
@@ -496,7 +507,8 @@ window.GAME_CONFIG = {
    "harvestPerTile": 450,
    "xpPerTile": 31,
    "feedItem": "fish_feed",
-   "stageFeedQtyPerTile": 3
+   "stageFeedQtyPerTile": 3,
+   "swimScale": 2.0
   },
   "seabass": {
    "name": "鱸魚",
@@ -506,7 +518,113 @@ window.GAME_CONFIG = {
    "harvestPerTile": 1000,
    "xpPerTile": 70,
    "feedItem": "fish_feed",
-   "stageFeedQtyPerTile": 5
+   "stageFeedQtyPerTile": 5,
+   "swimScale": 2.0
+  },
+  "goldfish": {
+   "name": "金魚",
+   "fryCostPerTile": 30,
+   "stages": 2,
+   "stageSeconds": 7200,
+   "harvestPerTile": 110,
+   "xpPerTile": 8,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 1,
+   "swimScale": 2.0
+  },
+  "shrimp": {
+   "name": "蝦子",
+   "fryCostPerTile": 40,
+   "stages": 2,
+   "stageSeconds": 9000,
+   "harvestPerTile": 150,
+   "xpPerTile": 10,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 1,
+   "swimScale": 2.0
+  },
+  "carp": {
+   "name": "鯉魚",
+   "fryCostPerTile": 120,
+   "stages": 3,
+   "stageSeconds": 14400,
+   "harvestPerTile": 560,
+   "xpPerTile": 38,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 3,
+   "swimScale": 2.0
+  },
+  "crab": {
+   "name": "螃蟹",
+   "fryCostPerTile": 150,
+   "stages": 3,
+   "stageSeconds": 18000,
+   "harvestPerTile": 750,
+   "xpPerTile": 50,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 3,
+   "swimScale": 1.8,
+   "walker": true
+  },
+  "piranha": {
+   "name": "食人魚",
+   "fryCostPerTile": 300,
+   "stages": 3,
+   "stageSeconds": 21600,
+   "harvestPerTile": 1500,
+   "xpPerTile": 100,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 4,
+   "swimScale": 2.0,
+   "eats": {
+    "everySeconds": 7200,
+    "tilesPerBite": 1,
+    "note": "同一個魚池（相連的格子）有食人魚時，每 2 小時吃掉一格別種的魚／蝦／蟹（那格變空），直到吃光；鯊魚不吃"
+   }
+  },
+  "cat_shark": {
+   "name": "貓鯊",
+   "fryCostPerTile": 450,
+   "stages": 4,
+   "stageSeconds": 25200,
+   "harvestPerTile": 2600,
+   "xpPerTile": 170,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 6,
+   "swimScale": 1.4
+  },
+  "bamboo_shark": {
+   "name": "竹鯊",
+   "fryCostPerTile": 550,
+   "stages": 4,
+   "stageSeconds": 28800,
+   "harvestPerTile": 3300,
+   "xpPerTile": 210,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 6,
+   "swimScale": 1.4
+  },
+  "blacktip_shark": {
+   "name": "黑鰭鯊",
+   "fryCostPerTile": 750,
+   "stages": 4,
+   "stageSeconds": 36000,
+   "harvestPerTile": 4800,
+   "xpPerTile": 300,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 8,
+   "swimScale": 1.4
+  },
+  "hammerhead": {
+   "name": "雙髻鯊",
+   "fryCostPerTile": 1100,
+   "stages": 5,
+   "stageSeconds": 36000,
+   "harvestPerTile": 7600,
+   "xpPerTile": 470,
+   "feedItem": "fish_feed",
+   "stageFeedQtyPerTile": 10,
+   "swimScale": 1.4
   }
  },
  "automation": {
@@ -888,6 +1006,42 @@ window.GAME_CONFIG = {
    "autotile": true,
    "sellable": true,
    "fenceStyle": true
+  },
+  "bench_wood": {
+   "name": "木頭長椅",
+   "source": "shop",
+   "cost": 120,
+   "sellable": true,
+   "turnable": true,
+   "snowArt": true,
+   "note": "再點一下轉向（左右翻轉）"
+  },
+  "bench_park": {
+   "name": "公園鑄鐵長椅",
+   "source": "shop",
+   "cost": 180,
+   "sellable": true,
+   "turnable": true,
+   "snowArt": true,
+   "note": "再點一下轉向（左右翻轉）"
+  },
+  "bench_log": {
+   "name": "原木長凳",
+   "source": "shop",
+   "cost": 90,
+   "sellable": true,
+   "turnable": true,
+   "snowArt": true,
+   "note": "再點一下轉向（左右翻轉）"
+  },
+  "bench_stone": {
+   "name": "石椅",
+   "source": "shop",
+   "cost": 150,
+   "sellable": true,
+   "turnable": true,
+   "snowArt": true,
+   "note": "再點一下轉向（左右翻轉）"
   }
  },
  "expansion": {
@@ -1073,7 +1227,8 @@ window.GAME_CONFIG = {
     "trashbot",
     "recyclebot",
     "truck_pad",
-    "fence_bamboo"
+    "fence_bamboo",
+    "goldfish"
    ],
    "animalCap": 6,
    "fishPoolTileCap": 4,
@@ -1104,7 +1259,9 @@ window.GAME_CONFIG = {
     "doll_snow",
     "persimmon",
     "lychee",
-    "oak"
+    "oak",
+    "street_lamp_garden",
+    "shrimp"
    ],
    "animalCap": 8,
    "fishPoolTileCap": 4,
@@ -1149,7 +1306,9 @@ window.GAME_CONFIG = {
     "recyclebot_2",
     "rent_recyclebot_1",
     "fence_stone",
-    "gh_lamp"
+    "gh_lamp",
+    "street_lamp_classic",
+    "pool_lamp"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1173,7 +1332,8 @@ window.GAME_CONFIG = {
     "sprinkler_l",
     "poopbot_2",
     "rent_poop_1",
-    "rent_honey_1"
+    "rent_honey_1",
+    "carp"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -1228,7 +1388,8 @@ window.GAME_CONFIG = {
     "trashbot_3",
     "rent_trashbot_2",
     "recyclebot_3",
-    "rent_recyclebot_2"
+    "rent_recyclebot_2",
+    "crab"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -1249,7 +1410,8 @@ window.GAME_CONFIG = {
     "grape",
     "poopbot_3",
     "rent_poop_2",
-    "fence_iron"
+    "fence_iron",
+    "street_lamp_modern"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -1275,7 +1437,8 @@ window.GAME_CONFIG = {
    "coinReward": 7000,
    "specialDeco": null,
    "unlocks": [
-    "cat_calico"
+    "cat_calico",
+    "street_lamp_double"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -1288,7 +1451,8 @@ window.GAME_CONFIG = {
    "coinReward": 8000,
    "specialDeco": null,
    "unlocks": [
-    "dog_pomeranian"
+    "dog_pomeranian",
+    "piranha"
    ],
    "animalCap": 19,
    "fishPoolTileCap": 19,
@@ -1312,7 +1476,8 @@ window.GAME_CONFIG = {
    "coinReward": 20000,
    "specialDeco": "dog_house_gold",
    "unlocks": [
-    "dog_corgi"
+    "dog_corgi",
+    "cat_shark"
    ],
    "animalCap": 21,
    "fishPoolTileCap": 21,
@@ -1336,7 +1501,8 @@ window.GAME_CONFIG = {
    "coinReward": 12000,
    "specialDeco": null,
    "unlocks": [
-    "cat_black"
+    "cat_black",
+    "bamboo_shark"
    ],
    "animalCap": 23,
    "fishPoolTileCap": 23,
@@ -1372,7 +1538,9 @@ window.GAME_CONFIG = {
    "xpToReach": 813000,
    "coinReward": 30000,
    "specialDeco": "cat_tree_gold",
-   "unlocks": [],
+   "unlocks": [
+    "blacktip_shark"
+   ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
    "produceCapacity": 4700,
@@ -1433,7 +1601,9 @@ window.GAME_CONFIG = {
    "xpToReach": 1152000,
    "coinReward": 40000,
    "specialDeco": "fountain",
-   "unlocks": [],
+   "unlocks": [
+    "hammerhead"
+   ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
    "produceCapacity": 5950,
@@ -2173,6 +2343,51 @@ window.GAME_CONFIG = {
    "category": "feed",
    "sellPrice": 3,
    "shopOnly": true
+  },
+  "goldfish": {
+   "name": "金魚",
+   "category": "fish",
+   "sellPrice": 110
+  },
+  "shrimp": {
+   "name": "蝦子",
+   "category": "fish",
+   "sellPrice": 150
+  },
+  "carp": {
+   "name": "鯉魚",
+   "category": "fish",
+   "sellPrice": 560
+  },
+  "crab": {
+   "name": "螃蟹",
+   "category": "fish",
+   "sellPrice": 750
+  },
+  "piranha": {
+   "name": "食人魚",
+   "category": "fish",
+   "sellPrice": 1500
+  },
+  "cat_shark": {
+   "name": "貓鯊",
+   "category": "fish",
+   "sellPrice": 2600
+  },
+  "bamboo_shark": {
+   "name": "竹鯊",
+   "category": "fish",
+   "sellPrice": 3300
+  },
+  "blacktip_shark": {
+   "name": "黑鰭鯊",
+   "category": "fish",
+   "sellPrice": 4800
+  },
+  "hammerhead": {
+   "name": "雙髻鯊",
+   "category": "fish",
+   "sellPrice": 7600
   }
  },
  "feedShop": {
@@ -2748,6 +2963,113 @@ window.GAME_CONFIG = {
    "storable": true,
    "mount": "ceiling",
    "note": "吸頂式，裝在溫室棚頂內側，不往下吊（不會碰到作物）；不佔格子，只能裝在溫室格上"
+  },
+  "street_lamp_classic": {
+   "name": "經典鑄鐵路燈",
+   "kind": "lamp",
+   "street": true,
+   "buildCost": 650,
+   "range": 1,
+   "kwhPerHour": 0.4,
+   "unlockLevel": 6,
+   "modes": [
+    "auto",
+    "manual",
+    "schedule"
+   ],
+   "defaultMode": "auto",
+   "storable": true,
+   "snowArt": true,
+   "note": "路燈：天黑自動亮（耗電，走電力順序並計入帳單），照到的作物晚上照常生長，和生長燈一樣"
+  },
+  "street_lamp_garden": {
+   "name": "花園矮燈",
+   "kind": "lamp",
+   "street": true,
+   "buildCost": 500,
+   "range": 1,
+   "kwhPerHour": 0.35,
+   "unlockLevel": 5,
+   "modes": [
+    "auto",
+    "manual",
+    "schedule"
+   ],
+   "defaultMode": "auto",
+   "storable": true,
+   "snowArt": true,
+   "note": "路燈：天黑自動亮（耗電，走電力順序並計入帳單），照到的作物晚上照常生長，和生長燈一樣"
+  },
+  "street_lamp_double": {
+   "name": "雙頭歐式路燈",
+   "kind": "lamp",
+   "street": true,
+   "buildCost": 2200,
+   "range": 2,
+   "kwhPerHour": 1.4,
+   "unlockLevel": 12,
+   "modes": [
+    "auto",
+    "manual",
+    "schedule"
+   ],
+   "defaultMode": "auto",
+   "storable": true,
+   "snowArt": true,
+   "note": "路燈：天黑自動亮（耗電，走電力順序並計入帳單），照到的作物晚上照常生長，和生長燈一樣"
+  },
+  "street_lamp_modern": {
+   "name": "現代 LED 路燈",
+   "kind": "lamp",
+   "street": true,
+   "buildCost": 2000,
+   "range": 2,
+   "kwhPerHour": 1.2,
+   "unlockLevel": 10,
+   "modes": [
+    "auto",
+    "manual",
+    "schedule"
+   ],
+   "defaultMode": "auto",
+   "storable": true,
+   "snowArt": true,
+   "note": "路燈：天黑自動亮（耗電，走電力順序並計入帳單），照到的作物晚上照常生長，和生長燈一樣"
+  },
+  "pool_lamp": {
+   "name": "魚池水底燈",
+   "kind": "lamp",
+   "buildCost": 500,
+   "range": 1,
+   "kwhPerHour": 0.3,
+   "unlockLevel": 6,
+   "modes": [
+    "auto",
+    "manual",
+    "schedule"
+   ],
+   "defaultMode": "auto",
+   "onlyOnPool": true,
+   "perTile": 1,
+   "mount": "poolFloor",
+   "storable": true,
+   "note": "裝在魚池池底，不佔格子（格子有魚池、有魚也能裝），一格最多一盞；晚上亮，照自己和周圍 8 格的魚池，照到的魚晚上照常長",
+   "glow": {
+    "color": [
+     120,
+     200,
+     255
+    ],
+    "alpha": 0.5,
+    "core": [
+     255,
+     244,
+     210
+    ],
+    "coreAlpha": 0.35,
+    "radius": 1.7,
+    "note": "晚上的光：一整片從燈往外淡出的藍白光，只畫在範圍內的魚池格（含島邊玻璃側面）"
+   }
   }
  },
  "power": {
@@ -3588,7 +3910,9 @@ window.GAME_CONFIG = {
     "animal_",
     "deco_tree",
     "device_beehive",
-    "device_bumble"
+    "device_bumble",
+    "device_street_lamp_",
+    "deco_bench_"
    ],
    "capDepth": [
     4,
@@ -4389,6 +4713,13 @@ window.GAME_CONFIG = {
    "frameMinRGB": 200,
    "frameMinAlpha": 150,
    "note": "只畫骨架（亮白的框）＋很淡的玻璃，作物看得清楚"
+  },
+  "move": {
+   "modes": [
+    "one",
+    "multi"
+   ],
+   "note": "溫室棚小選單：搬移這一格／多選搬移（點溫室格加選、再點取消，拿起後一起移動，點的格子對應第一個選的格子）"
   }
  },
  "flowers": {
@@ -4739,7 +5070,18 @@ window.GAME_CONFIG = {
      "id": "buildings",
      "label": "建築",
      "icon": "ui_tab_buildings",
-     "from": "buildStore"
+     "from": "buildStore",
+     "ids": [
+      "street_lamp_classic",
+      "street_lamp_garden",
+      "street_lamp_double",
+      "street_lamp_modern",
+      "bench_wood",
+      "bench_park",
+      "bench_log",
+      "bench_stone"
+     ],
+     "note": "路燈走「建設」的放置（是會耗電的燈），長椅是一般裝飾；後面接倉庫裡收起來的建築"
     },
     {
      "id": "dolls",
@@ -4828,10 +5170,12 @@ window.GAME_CONFIG = {
      "icon": "ui_tab_fac_fish",
      "ids": [
       "pool",
-      "fish_feed_machine"
+      "fish_feed_machine",
+      "pool_lamp"
      ],
      "via": {
-      "fish_feed_machine": "build"
+      "fish_feed_machine": "build",
+      "pool_lamp": "build"
      }
     },
     {
@@ -4841,7 +5185,16 @@ window.GAME_CONFIG = {
      "ids": [
       "tilapia",
       "milkfish",
-      "seabass"
+      "seabass",
+      "goldfish",
+      "shrimp",
+      "carp",
+      "crab",
+      "piranha",
+      "cat_shark",
+      "bamboo_shark",
+      "blacktip_shark",
+      "hammerhead"
      ]
     }
    ],
@@ -4897,7 +5250,12 @@ window.GAME_CONFIG = {
       "greenhouse",
       "gh_lamp",
       "sprinkler_s",
-      "sprinkler_l"
+      "sprinkler_l",
+      "street_lamp_classic",
+      "street_lamp_garden",
+      "street_lamp_double",
+      "street_lamp_modern",
+      "pool_lamp"
      ]
     },
     {
@@ -5272,7 +5630,19 @@ window.GAME_CONFIG = {
     "rooster"
    ],
    "note": "進入農場或從背景回來時一次一個，前一個關掉才出下一個；公雞只在畫面上沒有視窗時才飛，過了 09:00 就不飛"
-  }
+  },
+  "input": {
+   "dragPans": true,
+   "paintDrag": false,
+   "note": "一按就拖＝移動地圖；長按（longPressMs）＝拖物品；點一下放開＝原本的動作。照顧、開墾、道路、溫室不再拖曳連續塗刷，要一格一格點"
+  },
+  "iosStandalone": {
+   "enabled": true,
+   "hudTopPad": "env(safe-area-inset-top)",
+   "fixViewport": true,
+   "note": "iPhone 加到主畫面時（navigator.standalone）：頁面高度跟著實際視窗、旋轉／回到前景後捲回頂端，HUD 往下讓出動態島與狀態列"
+  },
+  "menuTitle": "我的浮島農場"
  },
  "droneWatering": {
   "dryThreshold": 2,
@@ -5647,7 +6017,18 @@ window.GAME_CONFIG = {
  "coinLog": {
   "keepDays": 7,
   "maxEntries": 3000,
-  "pageSize": 100
+  "pageSize": 100,
+  "group": [
+   "day",
+   "reason",
+   "entry"
+  ],
+  "note": "每天一列（收入／支出合計），點開依原因合併，再點原因看每一筆；繳帳單那一筆可再點開看帳單的水電明細",
+  "reasonNames": {
+   "fish:pool": "蓋魚池",
+   "fish:stock": "放魚苗",
+   "note": "金幣歷程依原因合併時，「第 n 天」「+n」這類數字會拿掉；魚工具蓋池顯示「蓋魚池」、放魚苗顯示「放魚苗：魚名」"
+  }
  },
  "pets": {
   "unlockLevel": 8,
@@ -6514,7 +6895,13 @@ window.GAME_CONFIG = {
   "iosHint": "Safari「分享」→「加入主畫面」",
   "themeColorDay": "#7fd0f5",
   "themeColorNight": "#1d2a44",
-  "maskableIcon": "icons/icon-maskable-512.png"
+  "maskableIcon": "icons/icon-maskable-512.png",
+  "autoUpdate": {
+   "checkOnForeground": true,
+   "applyWhenHidden": true,
+   "applyOnLaunch": true,
+   "note": "iPhone 主畫面 App 沒有重新整理鈕：回到前景就檢查新版；下載好之後在切到背景或下次打開時自動存檔並換新版；☰ 選單與設定有「檢查更新」，有新版時 ☰ 亮紅點"
+  }
  },
  "checkin": {
   "rewards": [
@@ -6541,5 +6928,33 @@ window.GAME_CONFIG = {
   "treeRate": 0.3,
   "treeMin": 50,
   "note": "田和果樹本來不能搬；要搬時付移墾費（田 30、有作物 60）或移植費（樹苗價 30%，最少 50），先跳確認，放好才扣"
+ },
+ "utilityLog": {
+  "bucketMinutes": 60,
+  "keepDays": 14,
+  "fields": [
+   "water",
+   "kwhDay",
+   "kwhNight",
+   "elecCost",
+   "sellKwh",
+   "sellCredit"
+  ],
+  "note": "每小時一筆：自來水注入滴數、白天／夜間市電度數、電費、賣電度數與折抵；依日分組可展開；每張帳單可點開看它涵蓋的每小時用量，合計與帳單對得起來"
+ },
+ "storeBack": {
+  "devices": true,
+  "machines": true,
+  "decos": true,
+  "blockIf": {
+   "machineBusy": "機器裡還有東西，先收成品或等它做完",
+   "hiveColony": "蜂箱裡還有蜂群，先收蜜並等蜂群離開（或送走蜂群）才能收"
+  },
+  "keep": {
+   "generatorFuel": true,
+   "batteryCharge": false,
+   "wellWater": false
+  },
+  "note": "植物生長燈、路燈、灑水器、電池、太陽能板、發電機、手搖發電、融雪機、水井、加工機、空的蜂箱都能用「收回」或長按拖到倉庫；收回後放在建設倉庫（S.buildStore），之後用建設或裝飾 → 建築放回，免費"
  }
 };
