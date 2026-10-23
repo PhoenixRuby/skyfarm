@@ -196,6 +196,14 @@ input[type=number]{width:80px;font:inherit;border:2px solid var(--line);border-r
 .newslot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .newslot input{flex:1 1 180px;min-width:0;font:inherit;border:2px solid var(--line);border-radius:10px;padding:7px 10px;background:#fff;color:var(--ink)}
 .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-family:var(--font-display);font-size:18px;line-height:1.7;background:var(--sky);z-index:20;white-space:pre-line;user-select:text;-webkit-user-select:text}
+/* v2.31 loading bar */
+#loading{z-index:9000;transition:opacity .35s}#loading.out67{opacity:0;pointer-events:none}
+.ld67{display:flex;flex-direction:column;align-items:center;gap:8px;width:min(320px,80vw)}
+.ld67 img{width:88px;height:88px;border-radius:22px;box-shadow:0 8px 24px rgba(20,60,110,.25)}
+.ld67 b{font-size:22px;color:#1d3b5a}.ldt67{font-size:14px;color:#3d5a78}
+.lbar67{width:100%;height:12px;border-radius:8px;background:rgba(255,255,255,.55);box-shadow:inset 0 1px 3px rgba(20,50,90,.25);overflow:hidden}
+.lbar67 i{display:block;height:100%;width:0;border-radius:8px;background:linear-gradient(90deg,#5fc36b,#2f9ad8);transition:width .25s}
+.ldp67{font-size:13px;color:#3d5a78;font-variant-numeric:tabular-nums}
 @media (max-width:520px){.tut{top:auto;bottom:150px}.bar{width:76px}.water .bar{width:64px}.farmname{font-size:13px}.item{width:80px}.tool{width:52px}.status{top:128px}}
 @media (prefers-reduced-motion:reduce){.bar>i,.toast{transition:none}}
 
@@ -663,6 +671,26 @@ body.m .emptypick .slot.newcard{display:flex;flex-direction:column;text-align:ce
 /* v2.14.1: Google button follows Google's own light / dark styles so its text is readable day and night */
 .gbtn,body .sheet .gbtn{background:#fff;color:#1f1f1f;border:1px solid #747775}
 body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border-color:#8e918f}
+/* v2.28: floating-island mini map (top right), island names, import card on 選擇農場 */
+#isl63{position:absolute;z-index:3;padding:0;border-radius:13px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#isl63 canvas{display:block;cursor:pointer}
+#isl63 .isl63min{position:absolute;top:4px;right:28px;width:20px;height:18px;border:0;border-radius:6px;background:rgba(255,255,255,.28);color:#fff;font-size:14px;line-height:14px;cursor:pointer;padding:0}
+#isl63 .isl63min:hover{background:rgba(255,255,255,.45)}
+#isl63btn{position:absolute;z-index:3;width:44px;height:44px;border-radius:14px;padding:0;display:flex;align-items:center;justify-content:center}
+body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
+.isl63list{display:flex;flex-direction:column;gap:8px}
+.isl63row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--gline,#ddd);border-radius:14px;background:var(--gcard,rgba(255,255,255,.5))}
+.isl63th canvas{display:block}.isl63f{flex:1;min-width:0}
+.isl63in{display:flex;gap:6px;align-items:center;margin-top:4px}
+.isl63in input{flex:1 1 120px;min-width:0;font:inherit;border:1px solid var(--glb,#ccc);border-radius:10px;padding:6px 10px;background:var(--gin,#fff);color:var(--gtx,#17384a)}
+.isl63in .btn{padding:6px 10px}
+.isl63new{width:100%;flex:1 1 100%;text-align:left;margin:2px 0}.newslot #newSlotName{flex:1 1 100%}.isl63new label{font-size:13px;color:var(--gsub)}
+.slot.imp63{text-align:left;align-items:stretch;display:flex;flex-direction:column;gap:6px}
+.slot.imp63 textarea{width:100%;min-height:70px;font:12px/1.4 ui-monospace,monospace;border-radius:10px;padding:6px 8px;resize:vertical}
+.slot.imp63 textarea.drop{outline:2px dashed var(--gsel)}
+.emptypick .slots.two63,.emptypick .slots:has(.imp63){flex-wrap:wrap;gap:12px;align-items:stretch}
+.emptypick .slot.newcard.imp63{display:flex;width:min(380px,100%);padding:16px 20px}
+.emptypick .slots:has(.imp63) .slot.newcard:not(.imp63){width:min(560px,100%)}
 </style>
 </head>
 <body>
@@ -670,7 +698,13 @@ body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border
 
 <div id="app">
   <canvas id="farm" aria-label="農場地圖"></canvas>
-  <div class="loading" id="loading">正在載入浮島農場…</div>
+  <div class="loading" id="loading"><div class="ld67"><img src="icons/icon-192.png" alt=""><b>浮島農場</b><span class="ldt67" id="ldText67">正在載入…</span><div class="lbar67"><i id="ldFill67"></i></div><span class="ldp67" id="ldPct67">0%</span></div></div>
+  <script>
+  // v2.31: loading bar (the bundle's g67 keeps it up to date and removes it once the first picture is ready)
+  window.__boot67 = function(p, txt){ var f = document.getElementById('ldFill67'), n = document.getElementById('ldPct67'), t = document.getElementById('ldText67'); if (!f) return;
+    p = Math.max(window.__bootP67 || 0, Math.min(100, p)); window.__bootP67 = p; f.style.width = p + '%'; n.textContent = Math.round(p) + '%'; if (txt) t.textContent = txt; };
+  window.__boot67(3);
+  </script>
   <div class="hud">
     <div class="grp">
       <div class="chip player">
@@ -722,7 +756,7 @@ body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border
 <script>
 (async () => {
   const getJSON = async url => { const r = await fetch(url, { cache: 'no-cache' }); if (!r.ok) throw new Error(url + ' ' + r.status); return r.json(); };
-  let CFG, ATLAS_JSON;
+  let CFG, ATLAS_JSON; if (window.__boot67) window.__boot67(8);
   const viaScript = (src, name) => new Promise((ok, no) => { const el = document.createElement('script'); el.src = src;
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
@@ -732,7 +766,7 @@ body.night .gbtn,body.night .sheet .gbtn{background:#131314;color:#e3e3e3;border
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
   }
-  document.getElementById('loading').remove();
+  if (window.__boot67) window.__boot67(30, '正在準備農場…'); else document.getElementById('loading').remove();   // v2.31: the bar stays until the first picture is ready (g67)
   (function (CFG, ATLAS_JSON) {
 /* ===== 1. core: config, state, rules, simulation ===== */
 const ATLAS = ATLAS_JSON.sprites;
@@ -12953,6 +12987,1121 @@ body.night #psel62{background:rgba(20,34,64,.96);border-color:rgba(150,185,255,.
 document.head.appendChild(css62);
 window.__farm227 = { openCoinLog, clIcon62, CGLIST62, CGOF62, curGroup62, applyCropGroups62, devMenu62, devStats62, devUpgrade62, dlvl62, dmult62, fuelSlots62, dUpCost62, stepMelters,
   poolPick62, liftPool62, pselTap62, endPsel62, poolCellsFee62, get psel(){ return RT.psel62; }, act: (x, y) => act(x, y) };
+
+/* ===== 63. v2.28: island names (S.maps[i].name), floating-island mini map (switch / rename / collapse), welcome toast when switching,
+   農場新聞 tags island events with 【島名】, import a save straight from 選擇農場 (and name the first island when creating a farm),
+   trash is kept per island (stations, ground pile, dumping, overdue collection) ===== */
+const ISL63 = CFG.islands || {}, MM63 = ISL63.miniMap || {}, ISLMAX63 = ISL63.nameMaxLen || 8;
+const fmt63 = (s, o) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => o[k] ?? '');
+const islName63 = mi => { const M = S && S.maps[mi]; return (M && M.name) || `第 ${mi + 1} 座島`; };
+const multi63 = () => !!(S && S.maps.length > 1);
+
+/* ---------- names ---------- */
+function pickName63(used){
+  const L = (ISL63.names || ['浮島']).filter(n => !used.includes(n));
+  if (L.length) return L[Math.floor(Math.random() * L.length)];
+  const b = (ISL63.names || ['浮島'])[0]; let i = 2; while (used.includes(b + i)) i++; return b + i; }
+const cleanName63 = n => [...String(n || '').trim()].slice(0, ISLMAX63).join('');
+function islNameErr63(name, mi){
+  const n = String(name || '').trim();
+  if (!n) return '島名不能空白';
+  if ([...n].length > ISLMAX63) return `島名最長 ${ISLMAX63} 個字`;
+  if (S.maps.some((M, i) => i !== mi && M.name === n)) return '已經有同名的島了';
+  return null; }
+function ensureNames63(){ if (!S) return; const used = S.maps.map(M => M.name).filter(Boolean);
+  for (const M of S.maps) if (!M.name){ M.name = pickName63(used); used.push(M.name); } }
+function renameIsland63(mi, name){ const err = islNameErr63(name, mi); if (err){ toast(err); return false; }
+  S.maps[mi].name = String(name).trim(); afterAction(); drawMini63(true); toast(`改好了：${S.maps[mi].name}`); return true; }
+
+/* ---------- old saves: name every island once; move the farm-wide trash pile onto one island ---------- */
+function migrateTrash63(s){
+  if (!s.trash || s.trash.isl) return;
+  const T = s.trash, has = (M, f) => Object.values(M.tiles || {}).some(x => x && f(x));
+  let pm = s.maps.findIndex(M => has(M, x => x.t === 'building' && x.id === 'trash_station'));
+  if (pm < 0) pm = s.maps.findIndex(M => has(M, x => x.t === 'house' && x.rx !== undefined)); if (pm < 0) pm = 0;
+  T.isl = {};
+  s.maps.forEach((M, mi) => { T.isl[mi] = { pile: mi === pm ? { g: 0, r: 0, s: 0, ...(T.pile || {}) } : { g: 0, r: 0, s: 0 }, lastDump: T.lastDump ?? Date.now() };
+    if (mi === pm) for (const f of ['fullSince', 'collectUntil', 'overdueDay', 'lastOverdue']) if (T[f] != null) T.isl[mi][f] = T[f]; });
+  for (const f of ['pile', 'lastDump', 'fullSince', 'collectUntil', 'overdueDay', 'lastOverdue']) delete T[f];
+}
+{ const _ns63 = normalizeState; normalizeState = function(d){ const r = _ns63(d); const s = r || d;
+  if (s && Array.isArray(s.maps)){ const used = s.maps.map(M => M.name).filter(n => typeof n === 'string' && n); let miss = false;
+    for (const M of s.maps) if (typeof M.name !== 'string' || !M.name){ M.name = pickName63(used); used.push(M.name); miss = true; }
+    if (miss && !s.v228) s.isl63Hint = 1;
+    migrateTrash63(s); s.v228 = 1; }
+  return r; }; }
+
+/* ---------- switching islands: one function, welcome toast ---------- */
+function goIsland63(mi, quiet){
+  if (!S || !S.maps[mi] || mi === S.cur) return;
+  if (RT.mv) cancelMove();
+  S.cur = mi; UI.expand = false; fitCamera(); renderHUD(); save();
+  if (!quiet) toast(fmt63(ISL63.welcomeText || '歡迎主人回到 {name}', { name: islName63(mi) }), true, (ISL63.welcomeSeconds || 1.6) * 1000);
+}
+$('maps').addEventListener('click', e => { const b = e.target.closest('button[data-map]'); if (!b) return; e.stopImmediatePropagation(); goIsland63(+b.dataset.map); }, true);
+{ const _onm63 = openNewMap; openNewMap = function(){ const n0 = S.maps.length; const r = _onm63(); if (S.maps.length > n0){
+    const M = S.maps[S.maps.length - 1]; M.name = pickName63(S.maps.slice(0, -1).map(x => x.name)); save(); renderHUD();
+    toast(fmt63(ISL63.newIslandText || '開了新的島：{name}', { name: M.name }), true, 3600); } return r; }; }
+// the old "第 N 張地圖" wording in toasts becomes the island's name
+{ const _t63 = toast; toast = function(msg, ...a){ if (typeof msg === 'string'){ msg = msg.replace(/第 (\d+) 張地圖/g, (m, n) => S && S.maps[n - 1] ? `「${islName63(n - 1)}」` : `第 ${n} 座島`);
+    if (RT.pfx63) msg = RT.pfx63 + msg; } return _t63(msg, ...a); }; }
+{ const _bi63 = btnInfo47; btnInfo47 = function(b, price){ if (b && b.id === 'newMapBtn') return { cat: 'expand', title: `開第 ${S.maps.length + 1} 座島`, price, rows: [['大小', '先送 1 塊地，之後可以再擴地'], ['名字', '開好時先隨機取一個，之後可以改']] }; return _bi63(b, price); }; }
+function openExpand(){
+  const M = curMap(), nb = nextBlockInfo();
+  if (M.blocks.length < R.maxBlocksPerMap){
+    UI.expand = !UI.expand;
+    if (UI.expand) toast(S.player.level < nb.level ? `第 ${nb.index} 塊地要 Lv ${nb.level}` : `點虛線區塊擴地 · 第 ${nb.index} 塊 ${fmtN(nb.cost)} 金幣`, false, 3000);
+    renderHUD(); return;
+  }
+  openModal('擴地', null, (k, el) => {
+    const can = S.maps.length < R.maxMaps;
+    el.innerHTML = `<p>「${escapeHTML(islName63(S.cur))}」已經有 ${M.blocks.length} 塊地，滿了（一座島最多 ${R.maxBlocksPerMap} 塊）。${can ? `下一塊（第 ${nb.index} 塊）會開一座新的島，需要 Lv ${nb.level}、${fmtN(nb.cost)} 金幣。` : `島已經有 ${R.maxMaps} 座，到上限了。`}</p>
+      ${can ? `<div class="row"><button class="btn" id="newMapBtn" ${S.player.level >= nb.level && S.player.coins >= nb.cost ? '' : 'disabled'}>開新的島</button></div>` : ''}`;
+    const b = $('newMapBtn'); if (b) b.onclick = () => { closeModal(); openNewMap(); };
+  });
+}
+
+/* ---------- HUD: island names on the switch chip; one-time rename hint ---------- */
+{ const _rh63 = renderHUD; renderHUD = function(){ const r = _rh63(); if (!S) { drawMini63(); return r; }
+  ensureNames63();
+  if (ISL63.hideSwitchChip !== false) $('maps').hidden = true;   // the mini map is the island switcher now
+  else { const html = S.maps.map((M, i) => `<button class="${i === S.cur ? 'on' : ''}" data-map="${i}">${escapeHTML(islName63(i))}</button>`).join('');
+    if ($('maps').innerHTML !== html) $('maps').innerHTML = html; }
+  if (S.isl63Hint){ delete S.isl63Hint; setTimeout(() => { if (S) toast(fmt63(ISL63.renameHintText || '你的島叫「{name}」', { name: islName63(S.cur) }), false, 4200); }, 2600); }
+  drawMini63(); return r; }; }
+
+/* ---------- island names editor (menu tab + mini map long-press) ---------- */
+function islNamesBody63(el, focus){
+  el.innerHTML = `<p class="small">每座島可以取自己的名字，最長 ${ISLMAX63} 個字，同一座農場裡不能重複。</p>
+    <div class="isl63list">${S.maps.map((M, i) => `<div class="isl63row" data-mi="${i}"><span class="isl63th"></span>
+      <div class="isl63f"><div class="small">第 ${i + 1} 座島${i === S.cur ? ' · <b>你在這裡</b>' : ''}</div>
+      <div class="isl63in"><input maxlength="${ISLMAX63}" value="${escapeHTML(islName63(i))}" aria-label="第 ${i + 1} 座島的名字"><button class="btn ghost" data-dice63 title="換一個隨機名字">🎲</button><button class="btn" data-save63>儲存</button></div></div>
+      ${i !== S.cur ? `<button class="btn ghost" data-go63>過去</button>` : ''}</div>`).join('')}</div>`;
+  el.querySelectorAll('.isl63row').forEach(row => { const mi = +row.dataset.mi; { const cv = islIso63(S.maps[mi], 84, 56, !!(S.snow && S.snow.cover)); cv.style.width = '84px'; cv.style.height = '56px'; row.querySelector('.isl63th').appendChild(cv); } });
+  el.onclick = e => { const row = e.target.closest('.isl63row'); if (!row) return; const mi = +row.dataset.mi, inp = row.querySelector('input');
+    if (e.target.closest('[data-dice63]')){ inp.value = pickName63(S.maps.filter((M, i) => i !== mi).map(M => M.name)); inp.focus(); }
+    else if (e.target.closest('[data-save63]')){ if (renameIsland63(mi, inp.value)) islNamesBody63(el); }
+    else if (e.target.closest('[data-go63]')){ closeModal(); goIsland63(mi); } };
+  el.onkeydown = e => { if (e.key === 'Enter' && e.target.matches('.isl63row input')){ const row = e.target.closest('.isl63row'); row.querySelector('[data-save63]').click(); } };
+  if (focus != null){ const inp = el.querySelector(`.isl63row[data-mi="${focus}"] input`); if (inp) setTimeout(() => { inp.focus(); inp.select(); }, 60); }
+}
+function openIslNames63(focus){ openModal('島的名字', null, (k, el) => islNamesBody63(el, focus)); }
+{ const _om63 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '選單' && S && Array.isArray(tabs) && !tabs.some(t => t[0] === 'islands')){
+    const at = Math.max(0, tabs.findIndex(t => t[0] === 'settings')) + 1; tabs = tabs.slice(); tabs.splice(at, 0, ['islands', '島的名字']);
+    const r0 = render; render = (k, el) => { if (k === 'islands'){ islNamesBody63(el); return; } return r0(k, el); }; }
+  const res = _om63(title, tabs, render, initial);
+  if (title === '選擇農場') setTimeout(() => pickerExtras63(), 0);
+  return res; }; }
+
+/* ---------- floating-island mini map ---------- */
+const MINI63 = document.createElement('div'); MINI63.id = 'isl63'; MINI63.className = 'gbtnx'; MINI63.hidden = true;
+MINI63.innerHTML = '<canvas aria-label="浮島小地圖：點島切換，長按改名"></canvas><button class="isl63min" aria-label="收起小地圖">–</button>';
+const MINIB63 = document.createElement('button'); MINIB63.id = 'isl63btn'; MINIB63.className = 'gbtnx'; MINIB63.hidden = true; MINIB63.setAttribute('aria-label', '打開浮島小地圖');
+MINIB63.innerHTML = '<canvas></canvas>';
+APP.appendChild(MINI63); APP.appendChild(MINIB63);
+RT.mini63 = { sig: '', hits: [] };
+// v2.28.1: size follows the number of islands; each island is the same isometric thumbnail as on 選擇農場 (islandThumb)
+const miniSize63 = () => { const n = S ? S.maps.length : 2, sz = (MM63.sizes || {})[n] || (MM63.sizes || {})[3] || [132, 124], k = isM() ? (MM63.mobileScale || .92) : 1; return [Math.round(sz[0] * k), Math.round(sz[1] * k)]; };
+RT.th63 = {};
+function islThumbCv63(mi, w, h){ const M = S.maps[mi], night = document.body.classList.contains('night'), snow = !!(S.snow && S.snow.cover);
+  const key = [w, h, snow, M.blocks.length, Object.keys(M.tiles).length, Math.floor(Date.now() / ((MM63.thumbRefreshSeconds || 5) * 1000))].join('|'), c = RT.th63[mi];
+  if (c && c.key === key) return c.cv;
+  const cv = islIso63(M, w, h, snow); RT.th63[mi] = { key, cv }; return cv; }
+function miniPlace63(el, w){
+  const vw = APP.clientWidth || window.innerWidth, right = Math.max(12, vw - (vw - 12)), left = vw - 12 - w; let top = 8;
+  const els = [$('hamb'), ...document.querySelectorAll('.hud .chip, .hud .grp > *, #status .chip, #cloudBadge')];
+  for (const e of els){ if (!e || e.offsetParent === null) continue; const r = e.getBoundingClientRect(), a = APP.getBoundingClientRect();
+    if (r.width && r.right - a.left > left - 4 && r.top - a.top < 260) top = Math.max(top, r.bottom - a.top + (MM63.gap || 8)); }
+  el.style.top = top + 'px'; el.style.right = right + 'px';
+}
+// same look as islandThumb (選擇農場) but fills its box: no side margins, a shallower underside
+function islIso63(M, w, h, snow){
+  const cv = document.createElement('canvas'), dp = 3; cv.width = Math.round(w * dp); cv.height = Math.round(h * dp); const g = cv.getContext('2d'); g.scale(dp, dp);
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const tiles = [];
+  for (const [bx, by] of M.blocks) for (let y = by * BS; y < by * BS + BS; y++) for (let x = bx * BS; x < bx * BS + BS; x++){ tiles.push([x, y]); const sx = x - y, sy = x + y; x0 = Math.min(x0, sx); x1 = Math.max(x1, sx); y0 = Math.min(y0, sy); y1 = Math.max(y1, sy); }
+  const U = MM63.undersideRatio || .2, s = Math.min((w - 2) / ((x1 - x0 + 2) * 2), (h - 2) / ((y1 - y0 + 2) + (x1 - x0 + 2) * 2 * U)), ox = w / 2 - (x0 + x1) / 2 * s * 2, oy = 1 - y0 * s;
+  const P = (x, y) => [ox + (x - y) * s * 2, oy + (x + y) * s], ext = f => tiles.reduce((a, t) => f(t) > f(a) ? t : a);
+  const L = P(...ext(t => t[1] - t[0])), R2 = P(...ext(t => t[0] - t[1])), B = P(...ext(t => t[0] + t[1]));
+  const lx = L[0] - s * 2, ly = L[1] + s, rx = R2[0] + s * 2, ry = R2[1] + s, bx = B[0], byy = B[1] + s * 2, dep = (rx - lx) * U;
+  g.fillStyle = '#9a6a42'; g.beginPath(); g.moveTo(lx, ly); g.lineTo(bx, byy); g.lineTo(bx, byy + dep * .25); g.quadraticCurveTo(lx + (bx - lx) * .3, ly + dep * .9, lx, ly); g.fill();
+  g.fillStyle = '#7a5032'; g.beginPath(); g.moveTo(rx, ry); g.lineTo(bx, byy); g.lineTo(bx, byy + dep * .25); g.quadraticCurveTo(rx - (rx - bx) * .3, ry + dep * .9, rx, ry); g.fill();
+  const col = T => !T ? (snow ? '#eef4fa' : '#79c25e') : T.t === 'soil' ? (T.crop ? '#6fa53f' : '#9b6a3f') : T.t === 'tree' ? '#2f7a34' : T.t === 'pool' || T.t === 'pond' ? '#4aa7e0' : T.t === 'animal' ? '#f2efe2'
+    : T.t === 'house' ? '#d0603e' : T.t === 'building' || T.t === 'machine' || T.t === 'device' || T.t === 'tower' ? '#c9a46a' : T.t === 'weed' ? '#5f9a3a' : T.t === 'greenhouse' ? '#bfe6f0' : T.t === 'deco' ? '#a3b18a' : (snow ? '#eef4fa' : '#79c25e');
+  tiles.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [x, y] of tiles){ const T = M.tiles[x + ',' + y], [px, py] = P(x, y); g.fillStyle = snow && T && T.t !== 'pool' && T.t !== 'pond' ? '#f4f8fc' : col(T);
+    g.beginPath(); g.moveTo(px, py - .15); g.lineTo(px + s * 2 + .15, py + s); g.lineTo(px, py + s * 2 + .15); g.lineTo(px - s * 2 - .15, py + s); g.closePath(); g.fill();
+    if (T && (T.t === 'tree' || T.t === 'house' || T.t === 'building' || T.t === 'machine' || T.t === 'tower')){ g.fillStyle = T.t === 'tree' ? '#256b2c' : T.t === 'house' ? '#b84a2e' : '#a77d45'; g.fillRect(px - s * .9, py - s * 1.2, s * 1.8, s * 2); } }
+  return cv;
+}
+function drawMini63(force){
+  const show = !!(S && S.maps.length > 1), min = !!(S && S.settings && S.settings.isl63Min);
+  MINI63.hidden = !show || min; MINIB63.hidden = !show || !min; if (!show) return;
+  const night = document.body.classList.contains('night'), [W, H] = miniSize63(), n = S.maps.length;
+  const sig = JSON.stringify([S.cur, S.maps.map(M => [M.name, M.blocks, Object.keys(M.tiles).length]), night, W, H, min, APP.clientWidth, Math.floor(Date.now() / ((MM63.thumbRefreshSeconds || 5) * 1000))]);
+  if (min){ miniPlace63(MINIB63, 44); if (!force && sig === RT.mini63.sig) return; RT.mini63.sig = sig;
+    const c = MINIB63.querySelector('canvas'), dp = 2; c.width = 36 * dp; c.height = 36 * dp; c.style.width = '36px'; c.style.height = '36px';
+    const g = c.getContext('2d'); g.setTransform(dp, 0, 0, dp, 0, 0); g.clearRect(0, 0, 36, 36); g.drawImage(islThumbCv63(S.cur, 72, 56), 0, 3, 36, 28); return; }
+  miniPlace63(MINI63, W);
+  if (!force && sig === RT.mini63.sig) return; RT.mini63.sig = sig;
+  const c = MINI63.querySelector('canvas'), dp = Math.min(2, window.devicePixelRatio || 1) * 1.5; c.width = Math.round(W * dp); c.height = Math.round(H * dp); c.style.width = W + 'px'; c.style.height = H + 'px';
+  const g = c.getContext('2d'); g.setTransform(dp, 0, 0, dp, 0, 0); g.clearRect(0, 0, W, H); RT.mini63.hits = [];
+  // sea
+  const C = MM63.colors || {}, sea = night ? (C.seaNight || ['#1b3358', '#0e1f3c']) : (C.sea || ['#4aa3d6', '#2f7bb3']), rr = 12;
+  const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, sea[0]); gr.addColorStop(1, sea[1]); g.fillStyle = gr;
+  g.beginPath(); if (g.roundRect) g.roundRect(0, 0, W, H, rr); else g.rect(0, 0, W, H); g.fill();
+  g.save(); g.clip(); g.strokeStyle = night ? 'rgba(160,190,240,.16)' : 'rgba(255,255,255,.22)'; g.lineWidth = 1;
+  for (let i = 0; i < 9; i++){ const x = (i * 37 + 11) % W, y = (i * 23 + 17) % H; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 4, y - 2, x + 8, y); g.stroke(); } g.restore();
+  // compass
+  const cr = 8, ccx = W - cr - 5, ccy = cr + 5; g.fillStyle = 'rgba(255,255,255,.9)'; g.beginPath(); g.arc(ccx, ccy, cr, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#d64541'; g.beginPath(); g.moveTo(ccx, ccy - cr + 2); g.lineTo(ccx + 2.6, ccy); g.lineTo(ccx - 2.6, ccy); g.fill();
+  g.fillStyle = '#7d8a96'; g.beginPath(); g.moveTo(ccx, ccy + cr - 2); g.lineTo(ccx + 2.6, ccy); g.lineTo(ccx - 2.6, ccy); g.fill();
+  g.font = '700 8px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'top'; g.fillStyle = night ? '#dfe9ff' : '#ffffff'; g.fillText('N', ccx, ccy + cr + 1);
+  // islands
+  const slots = (MM63.slotsByCount || {})[n] || MM63.slots || [[.3, .32], [.73, .38], [.42, .74]], tb = (MM63.thumbByCount || {})[n] || [.44, .38], fs = isM() ? 9 : 10;
+  const tw = Math.round(W * tb[0]), th = Math.round(H * tb[1]);
+  S.maps.forEach((M, i) => { const cx = slots[i][0] * W, cy = slots[i][1] * H, cur = i === S.cur, x = cx - tw / 2, y = cy - th / 2;
+    g.drawImage(islThumbCv63(i, tw, th), x, y, tw, th);
+    if (cur){ g.save(); g.strokeStyle = '#ffffff'; g.lineWidth = 1.6; g.setLineDash([4, 3]); g.beginPath(); if (g.roundRect) g.roundRect(x - 4, y - 4, tw + 8, th + 6, 6); else g.rect(x - 4, y - 4, tw + 8, th + 6); g.stroke(); g.restore(); }
+    g.font = `${cur ? 700 : 500} ${fs}px system-ui, -apple-system, "Noto Sans TC", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'top';
+    const name = islName63(i), ty = y + th + 3, w2 = g.measureText(name).width;
+    g.fillStyle = cur ? 'rgba(255,255,255,.92)' : 'rgba(10,30,55,.55)'; g.beginPath(); if (g.roundRect) g.roundRect(cx - w2 / 2 - 4, ty - 1, w2 + 8, fs + 4, 5); else g.rect(cx - w2 / 2 - 4, ty - 1, w2 + 8, fs + 4); g.fill();
+    g.fillStyle = cur ? '#1f5f8a' : '#ffffff'; g.fillText(name, cx, ty + 1);
+    RT.mini63.hits.push({ i, x0: Math.min(x, cx - w2 / 2 - 4), y0: y, x1: Math.max(x + tw, cx + w2 / 2 + 4), y1: ty + fs + 3 }); });
+}
+function miniHit63(e){ const r = MINI63.querySelector('canvas').getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  let best = null, bd = 1e9; for (const h of RT.mini63.hits){ const dx = Math.max(h.x0 - x, 0, x - h.x1), dy = Math.max(h.y0 - y, 0, y - h.y1), d = Math.hypot(dx, dy); if (d < bd){ bd = d; best = h; } }
+  return best && bd <= 14 ? best.i : null; }
+{ let lp = null;
+  const cvM = MINI63.querySelector('canvas');
+  cvM.addEventListener('pointerdown', e => { e.stopPropagation(); const i = miniHit63(e); clearTimeout(lp && lp.tm);
+    lp = { i, done: false, tm: setTimeout(() => { if (lp && lp.i != null){ lp.done = true; try { navigator.vibrate && navigator.vibrate(20); } catch(err){} openIslNames63(lp.i); } }, MM63.longPressMs || 500) }; });
+  cvM.addEventListener('pointerup', e => { e.stopPropagation(); if (!lp) return; clearTimeout(lp.tm); const was = lp; lp = null; if (was.done || was.i == null) return; goIsland63(was.i); });
+  cvM.addEventListener('pointerleave', () => { if (lp){ clearTimeout(lp.tm); lp = null; } });
+  cvM.addEventListener('contextmenu', e => { e.preventDefault(); const i = miniHit63(e); if (lp){ clearTimeout(lp.tm); lp = null; } if (i != null) openIslNames63(i); });
+  MINI63.querySelector('.isl63min').onclick = e => { e.stopPropagation(); S.settings.isl63Min = true; save(); drawMini63(true); };
+  MINIB63.onclick = e => { e.stopPropagation(); S.settings.isl63Min = false; save(); drawMini63(true); };
+  for (const el of [MINI63, MINIB63]) for (const ev of ['pointerdown', 'pointermove', 'wheel', 'click']) el.addEventListener(ev, e => e.stopPropagation()); }
+window.addEventListener('resize', () => { if (S) drawMini63(true); });
+{ const _lh63 = layoutHUD; layoutHUD = function(){ const r = _lh63(); try { drawMini63(); } catch(e){} return r; }; }
+
+/* ---------- 選擇農場: name the first island, import a save as a new farm ---------- */
+function importAsNew63(d){
+  if (S) save(); const id = newSlotId(); d.profile = d.profile || { name: '匯入的農場' };
+  let nm = d.profile.name, i = 2; while (slotList().some(x => x.name === nm)) nm = `${d.profile.name} ${i++}`; d.profile.name = nm;
+  SLOT = id; BACKUP_KEY = BACKUP_PREFIX + id; lsSet(LAST_SLOT_KEY, id); closeModal(); adoptState(d); renderHUD(); renderTutorial();
+  toast(`已匯入成新農場「${nm}」，離開期間的時間也一起算進去了`, true, 3600); }
+function pickerExtras63(){
+  const md = $('modal'); if (md.hidden || $('modalTitle').textContent !== '選擇農場') return;
+  const ns = md.querySelector('.newslot'); if (ns && !md.querySelector('#newIsl63')){
+    const box = document.createElement('div'); box.className = 'isl63new';
+    box.innerHTML = `<label for="newIsl63">第一座島的名字</label><div class="isl63in"><input id="newIsl63" maxlength="${ISLMAX63}" value="${escapeHTML(pickName63([]))}"><button class="btn ghost" id="newIsl63dice" title="換一個隨機名字">🎲</button></div>`;
+    const nameIn = $('newSlotName'); if (nameIn && nameIn.parentNode === ns) ns.insertBefore(box, nameIn.nextSibling); else ns.parentNode.insertBefore(box, ns);
+    $('newIsl63dice').onclick = e => { e.preventDefault(); $('newIsl63').value = pickName63([$('newIsl63').value]); };
+    $('newIsl63').onkeydown = e => { if (e.key === 'Enter') $('newSlotBtn').click(); }; }
+  const card = md.querySelector('.slot.newcard'); if (card && !md.querySelector('#imp63')){
+    const ic = document.createElement('div'); ic.className = 'slot newcard imp63'; ic.id = 'imp63';
+    ic.innerHTML = `<h4><span>⬇ 匯入存檔</span></h4><p class="small">已經有進度？把存檔代碼貼上，或把存檔檔案拖進來，直接變成一座新農場接著玩。</p>
+      <textarea id="imp63Box" placeholder="貼上存檔代碼（GHFARM1:…）或把存檔檔案拖進來" aria-label="存檔代碼"></textarea>
+      <div class="row"><label class="btn ghost" for="imp63File">選擇存檔檔案</label><input type="file" id="imp63File" accept=".json,.txt,application/json" hidden><button class="btn" id="imp63Go">匯入並開始</button></div><div id="imp63Out" class="small"></div>`;
+    card.parentNode.insertBefore(ic, card.nextSibling);
+    const box = $('imp63Box'), out = $('imp63Out');
+    const check = () => { const res = importCode(box.value); if (res.error){ out.innerHTML = `<span style="color:var(--gwarn,#c0392b)">${res.error}</span>`; return null; }
+      const d = res.data, blocks = d.maps.reduce((a, M) => a + M.blocks.length, 0); out.textContent = `找到存檔：Lv ${d.player.level}、${fmtN(Math.floor(d.player.coins))} 金幣、${d.maps.length} 座島 ${blocks} 塊地`; return d; };
+    box.addEventListener('input', () => { if (box.value.trim().length > 20) check(); else out.textContent = ''; });
+    box.addEventListener('dragover', e => { e.preventDefault(); box.classList.add('drop'); }); box.addEventListener('dragleave', () => box.classList.remove('drop'));
+    const readFile = f => { if (!f) return; const r = new FileReader(); r.onload = () => { box.value = r.result; check(); }; r.readAsText(f); };
+    box.addEventListener('drop', e => { e.preventDefault(); box.classList.remove('drop'); readFile(e.dataTransfer.files[0]); });
+    $('imp63File').onchange = e => readFile(e.target.files[0]);
+    $('imp63Go').onclick = () => { const d = check(); if (d) importAsNew63(d); };
+    const grid = card.parentNode; if (grid) grid.classList.toggle('two63', !md.querySelector('.slot[data-id]')); }
+}
+{ const _cs63 = createSlot; createSlot = function(name){ const inp = $('newIsl63'), want = inp ? cleanName63(inp.value) : ''; const r = _cs63(name);
+  if (r && S){ S.maps[0].name = want || pickName63([]); save(); renderHUD(); } return r; }; }
+
+/* ---------- 農場新聞 and live toasts: which island it happened on ---------- */
+RT.tmi63 = null;
+const ctxMi63 = () => (S && RT.tmi63 != null && S.maps[RT.tmi63]) ? RT.tmi63 : (S ? S.cur || 0 : 0);
+function withIsl63(mi, fn){ const was = RT.tmi63; RT.tmi63 = mi; try { return fn(); } finally { RT.tmi63 = was; } }
+{ const A = RT.notices, _push = A.push; A.push = function(...items){ for (const n of items) if (n && typeof n === 'object' && n.map == null){ if (n.mi != null) n.map = n.mi; else if (RT.tmi63 != null) n.map = RT.tmi63; } return _push.apply(this, items); }; }
+const GLOBAL63 = new Set(ISL63.newsGlobalKinds || []);
+const ownIsl63 = n => n && n.map != null && !GLOBAL63.has(n.kind) && S && S.maps[n.map] ? n.map : null;
+{ const _ni63a = newsItems; newsItems = function(list){ const out = _ni63a(list);
+  for (const n of list.filter(x => x.kind === 'trashOverdue')) out.push({ icon: 'ui_trash_general', text: `垃圾太久沒倒，垃圾車派機器人代收，付 ${fmtN(Math.abs(n.money || 0))} 金幣` });
+  return out; }; }
+{ const _ni63 = newsItems; newsItems = function(list){ if (!multi63()) return _ni63(list);
+  const base = [], by = {}; for (const n of list){ const m = ownIsl63(n); if (m == null) base.push(n); else (by[m] = by[m] || []).push(n); }
+  if (!Object.keys(by).length) return _ni63(list);
+  let out = base.length ? _ni63(base) : [];
+  for (const m of Object.keys(by).map(Number).sort((a, b) => a - b)){ const tag = `【${escapeHTML(islName63(m))}】`;
+    out = out.concat(_ni63(by[m]).map(it => ({ ...it, text: /^<b>/.test(it.text) ? it.text.replace(/^<b>/, `<b>${tag}`) : tag + it.text }))); }
+  return out; }; }
+{ const _fn63 = flushNotices; flushNotices = function(summary){
+  if (summary || !multi63() || !RT.notices.some(n => { const m = ownIsl63(n); return m != null && m !== S.cur; })) return _fn63(summary);
+  const all = RT.notices.splice(0), groups = new Map(); groups.set(null, []);
+  for (const n of all){ const m = ownIsl63(n), key = m == null || m === S.cur ? null : m; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(n); }
+  let res; for (const [m, g] of groups){ RT.notices.push(...g); RT.pfx63 = m == null ? null : `【${islName63(m)}】`; try { res = _fn63(summary); } finally { RT.pfx63 = null; } }
+  return res; }; }
+// robots' offline log, one block per island (g53 skips its own log when RT.log53 is already set)
+{ const _st63 = simulateTo; simulateTo = function(toMs){
+  const NW = CFG.news || {}, gap = (toMs - ((S && S.lastSim) || toMs)) / 1000;
+  if (!multi63() || NW.robotLog === false || RT.log53 || gap < (NW.robotLogMinOfflineSeconds || 120)) return _st63(toMs);
+  const per = {}, bucket = () => { const m = RT.tmi63 != null && S.maps[RT.tmi63] ? RT.tmi63 : 'x'; return (per[m] = per[m] || {}); };
+  RT.log53 = new Proxy({}, { get: (o, k) => typeof k === 'string' ? bucket()[k] : undefined, set: (o, k, v) => { bucket()[k] = v; return true; } });
+  try { return _st63(toMs); }
+  finally { RT.log53 = null; const stall = {};
+    for (const kind of KINDS) for (const u of fleet(kind)){ if (!unitTier(kind, u) || u.on === false) continue; const mi = u.home ? +String(u.home).split('|')[0] : 'x', why = u.needPart ? 'part' : (u.state === 'rest' || (u.batt <= 0 && u.state !== 'charge')) ? 'batt' : null;
+      if (why) (stall[mi] = stall[mi] || []).push({ kind, why }); }
+    for (const m of new Set([...Object.keys(per), ...Object.keys(stall)])){ const L = per[m] || {}; if (!Object.keys(L).length && !(stall[m] || []).length) continue;
+      const n = { kind: 'robots53', L, stall: stall[m] || [], t: toMs }; if (m !== 'x') n.map = +m; RT.notices.push(n); } } }; }
+
+/* ---------- context: which island a piece of simulation belongs to ---------- */
+const homeMi63 = u => u && u.home ? +String(u.home).split('|')[0] : null;
+{ const _sa63 = stepAnimal; stepAnimal = function(M, ...a){ return withIsl63(S.maps.indexOf(M), () => _sa63(M, ...a)); }; }
+{ const _sp63 = stepPool; stepPool = function(P, ...a){ const M = P && P.M56, mi = M ? S.maps.indexOf(M) : -1; return mi >= 0 ? withIsl63(mi, () => _sp63(P, ...a)) : _sp63(P, ...a); }; }
+{ const _spe63 = stepPest; stepPest = function(M, mi, ...a){ return withIsl63(mi, () => _spe63(M, mi, ...a)); }; }
+{ const _sc63 = swClean; swClean = function(M, mi, ...a){ return withIsl63(mi, () => _sc63(M, mi, ...a)); }; }
+{ const _wp63 = washPanel; washPanel = function(M, mi, ...a){ return withIsl63(mi, () => _wp63(M, mi, ...a)); }; }
+{ const _tm63 = tapMachine; tapMachine = function(M, ...a){ const mi = S.maps.indexOf(M); return mi >= 0 ? withIsl63(mi, () => _tm63(M, ...a)) : _tm63(M, ...a); }; }
+{ const _wu63 = wearUnit; wearUnit = function(kind, u, dt){ const mi = homeMi63(u); return mi != null ? withIsl63(mi, () => _wu63(kind, u, dt)) : _wu63(kind, u, dt); }; }
+{ const _fp63 = fitPart; fitPart = function(kind, u){ const mi = homeMi63(u); return mi != null ? withIsl63(mi, () => _fp63(kind, u)) : _fp63(kind, u); }; }
+// every robot works for the island of its home; the context is reset after the robot step
+{ const _wh63 = workerHome; workerHome = function(kind, u){ const h = _wh63(kind, u); if (RT.inRob63 && h && h.mi != null) RT.tmi63 = h.mi; return h; }; }
+{ const _sr63 = stepRobots; stepRobots = function(...a){ const was = RT.tmi63, wr = RT.inRob63; RT.inRob63 = true; try { return _sr63(...a); } finally { RT.inRob63 = wr; RT.tmi63 = was; } }; }
+{ const _su63 = stepUnit; stepUnit = function(kind, u, ...a){ const mi = homeMi63(u), was = RT.tmi63; if (mi != null) RT.tmi63 = mi; try { return _su63(kind, u, ...a); } finally { RT.tmi63 = was; } }; }
+
+/* ---------- trash per island ---------- */
+function islTrash63(mi){ S.trash = S.trash || {}; const G = S.trash; G.isl = G.isl || {}; let I = G.isl[mi];
+  if (!I) I = G.isl[mi] = { pile: { g: 0, r: 0, s: 0 }, lastDump: Date.now() };
+  I.pile = I.pile || { g: 0, r: 0, s: 0 }; if (I.lastDump == null) I.lastDump = Date.now(); return I; }
+// replaces g32: the trash state of the island in context (pile, last dump, overdue) — the farm-wide fields stay on S.trash
+function trashState(){ return islTrash63(ctxMi63()); }
+const stationsOn63 = mi => stations().filter(s => s.mi === mi);
+const firstOn63 = mi => stations().find(s => s.mi === mi) || null;
+const pileOf63 = I => (I.pile.g || 0) + (I.pile.r || 0) + (I.pile.s || 0) / 100;
+const anyPile63 = () => S.maps.some((M, mi) => pileOf63(islTrash63(mi)) > .01);
+// replaces g32: new trash only goes into stations on the same island, the rest piles up on that island
+function addTrash(kind, amt){
+  if (!(amt > 0)) return; const mi = ctxMi63(), I = islTrash63(mi); let left = amt;
+  for (const s of stationsOn63(mi)){ const T = s.T, room = capOf(kind) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
+  if (left > 1e-9){ I.pile[kind] = (I.pile[kind] || 0) + left; if (!I.fullSince) I.fullSince = Date.now(); }
+}
+// replaces g32: the pile goes with the first station of the station's own island
+function loadOf(T, kinds){ const mi = ctxMi63(), f = firstOn63(mi), I = islTrash63(mi), wp = !!(f && f.T === T); let n = 0;
+  for (const k of kinds) n += ((T[k] || 0) + (wp ? I.pile[k] || 0 : 0)) / (k === 's' ? 100 : 1); return n; }
+function takeLoad(T, kinds){ const mi = ctxMi63(), f = firstOn63(mi), I = islTrash63(mi), wp = !!(f && f.T === T), L = { g: 0, r: 0, s: 0 };
+  for (const k of kinds){ L[k] += T[k] || 0; T[k] = 0; if (wp){ L[k] += I.pile[k] || 0; I.pile[k] = 0; } }
+  if (pileOf63(I) <= .01) I.fullSince = null; return L; }
+function rebalancePile56(){ if (!S || !S.trash) return;
+  S.maps.forEach((M, mi) => { const I = islTrash63(mi), P = I.pile; let moved = false;
+    for (const kind of ['g', 'r', 's']){ if (!(P[kind] > 1e-9)) continue;
+      for (const s of stationsOn63(mi)){ const room = capOf(kind) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
+    if (moved && pileOf63(I) <= .01) I.fullSince = null; }); }
+function stepPartsAutoFit(){ for (const kind of KINDS) for (const u of fleet(kind)) if (u.needPart) fitPart(kind, u);
+  for (const b of basesOf('sweeper_dock')) if (b.T.needBag && invTake(partItem('dustbag'), 1)){ b.T.needBag = false; b.T.bagUse = 0; withIsl63(b.mi, () => partWaste('dustbag')); } }
+// replaces g32: farmhouse trash goes to the house's island; trucks' overdue collection is counted per island
+function stepTrash(dt, t){
+  ensureV29(); const G = S.trash, TS = TR.sources || {}, dk = dayKeyLocal(t), mid = localMidnight(t);
+  if (G.day !== dk){ if (G.day && G.dayMs){ const days = Math.max(1, Math.round((mid - G.dayMs) / DAY)), hm = houseMapIndex();
+      if (housePos(S.maps[hm])) withIsl63(hm, () => { addTrash('g', days * (TS.houseDailyGeneralBags ?? 1)); addTrash('r', days * (TS.houseDailyRecycleBags ?? .5)); }); }
+    G.day = dk; G.dayMs = mid; }
+  if (!truckWindow(t)) return;
+  const live = Math.abs(Date.now() - t) < 5000;
+  if (live && G.arriveNote !== dk){ G.arriveNote = dk; toast(`飛天垃圾車和資源回收車來了，停到 ${fmtHM(truckWindowStart(t) + TRUCK_STAY * 60e3)}。用「收成」點垃圾站倒垃圾`, true, 4200); }
+  if (minuteOfDay(t) < TRUCK_AT + 10) return;
+  S.maps.forEach((M, mi) => withIsl63(mi, () => { const I = trashState(); if (I.overdueDay === dk || !overdueNow(t)) return; I.overdueDay = dk;
+    const L = { g: 0, r: 0, s: 0 }; for (const s of stationsOn63(mi)){ const l = takeLoad(s.T, ['g', 'r', 's']); for (const k in L) L[k] += l[k]; }
+    for (const k in L){ L[k] += I.pile[k] || 0; I.pile[k] = 0; } I.fullSince = null;
+    if (L.g + L.r + L.s / 100 > .01){ const total = payLoad(L, true); I.collectUntil = truckWindowStart(t) + TRUCK_STAY * 60e3; I.lastOverdue = { t, money: total, L };
+      if (live) toast(`${multi63() ? `【${islName63(mi)}】` : ''}太久沒倒垃圾，垃圾車派機器人來代收：付 ${-total} 金幣（比自己倒貴，回收也要收費）`, false, 5200);
+      else RT.notices.push({ kind: 'trashOverdue', t, money: total, map: mi }); }
+    else I.lastDump = Date.now(); }));
+}
+// no station on this island: the bags pile up next to the house, or at the island edge where the trucks stop
+function drawHousePile(M){ const mi = S.maps.indexOf(M); if (mi < 0 || stationsOn63(mi).length) return; const p = pileOf63(islTrash63(mi)); if (p <= .01) return;
+  const fr = Math.min(6, Math.ceil(p)) - 1, hp = housePos(M); if (hp){ spr('fx_trash_pile', fr, hp.x + 34, hp.y + 18); return; }
+  const ts = truckStop(mi); if (ts){ const c = center(ts.x, ts.y); spr('fx_trash_pile', fr, c.cx - 10, c.cy); } }
+{ const _db63 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){ const r = _db63(T, x, y, t);
+  if (T && T.id === 'trash_station'){ const gf = firstStation(), f = firstOn63(S.cur), I = islTrash63(S.cur);
+    if (f && f.T === T && !(gf && gf.T === T) && pileOf63(I) > .01){ const { cx, cy } = center(x, y); spr('fx_trash_pile', Math.min(6, Math.ceil(pileOf63(I))) - 1, cx + 22, cy + 8); } }
+  return r; }; }
+{ const _hd63 = handDump; handDump = function(st){ return withIsl63(st.mi, () => _hd63(st)); }; }
+{ const _ot63 = openTrash; openTrash = function(mi, k){ return withIsl63(mi, () => _ot63(mi, k)); }; }
+{ const _tw63 = trashWorker; trashWorker = function(kind, key, u, dt, t){ let h = null; try { h = workerHome(kind, u); } catch(e){} return withIsl63(h && h.mi != null ? h.mi : ctxMi63(), () => _tw63(kind, key, u, dt, t)); }; }
+{ const _tp63 = trashPlan; trashPlan = function(kind, W, M, key, getC){ return withIsl63(W && W.mi != null ? W.mi : ctxMi63(), () => _tp63(kind, W, M, key, getC)); }; }
+for (const kind of MYK) robotJob[kind] = t => truckWindow(t) && (stations().some(s => withIsl63(s.mi, () => loadOf(s.T, LOADS[kind]) > .01)) || anyPile63() || fleet(kind).some(u => carrySum(u.tcarry) > .01));
+
+window.__farm228 = { goIsland63, renameIsland63, pickName63, islNameErr63, openIslNames63, drawMini63, importAsNew63, islTrash63, withIsl63, stationsOn63, addTrash: (k, a, mi) => withIsl63(mi ?? ctxMi63(), () => addTrash(k, a)),
+  newsItems: l => newsItems(l), handDump: st => handDump(st), openTrash: (mi, k) => openTrash(mi, k), stepTrash: (dt, t) => stepTrash(dt, t), get mini(){ return RT.mini63; }, migrateTrash63 };
+
+/* ===== 64. v2.28.1: memory and battery on phones
+   - images load lazily: IMG[name] is a getter that starts loading its file the first time something draws it, and files nobody has
+     drawn for a while are dropped again (the browser can then free the decoded pixels); sheets are packed per family (game/sheetpack.py)
+   - DOM icons drawn before their image arrived are redrawn when it arrives (iconCanvas registry, paint47)
+   - the farm you will most likely open is warmed up while 選擇農場 is showing
+   - 省電模式 (default on for phones): at most 30 frames a second
+   - the sky skips layers that are invisible (stars and milky way in daytime were drawn every frame at alpha 0) ===== */
+const PERF64 = CFG.performance || {};
+const LZ64 = { files: {}, missed: false, wait: null, reg: [] };
+function lzEntry64(src){ return LZ64.files[src] || (LZ64.files[src] = { src, keys: [], im: null, ok: false, used: 0, loading: false }); }
+function lzStart64(e){
+  if (e.loading || e.ok) return; e.loading = true; const im = new Image();
+  im.onload = () => { e.im = im; e.ok = true; e.loading = false; e.used = performance.now(); lzLoaded64(); };
+  im.onerror = () => { e.loading = false; e.failed = (e.failed || 0) + 1; };
+  im.src = e.src; }
+function lzDefine64(k, e){
+  Object.defineProperty(IMG, k, { configurable: true, enumerable: true,
+    get(){ e.used = performance.now(); if (e.ok) return e.im; if (!e.failed || e.failed < 3) lzStart64(e); LZ64.missed = true; return undefined; },
+    set(v){ Object.defineProperty(IMG, k, { value: v, writable: true, configurable: true, enumerable: true }); } }); }
+// replaces g1: nothing is fetched up front any more (IMGSRC entries added by later files are picked up too, since this runs after the whole bundle)
+function loadImages(){ return Promise.resolve().then(() => { for (const [k, src] of Object.entries(IMGSRC)){ const e = lzEntry64(src); if (!e.keys.includes(k)) e.keys.push(k); if (!Object.getOwnPropertyDescriptor(IMG, k)) lzDefine64(k, e); } }); }
+const lzPreload64 = names => { for (const n of names){ const src = IMGSRC[n]; if (src) lzStart64(lzEntry64(src)); } };
+// something new arrived: redraw DOM icons that were drawn without it (debounced)
+function lzLoaded64(){ clearTimeout(LZ64.wait); LZ64.wait = setTimeout(() => {
+  const keep = [];
+  for (const r of LZ64.reg){ const c = r.ref.deref ? r.ref.deref() : r.ref; if (!c) continue; LZ64.missed = false; const n = _ic64(...r.args);
+    if (LZ64.missed){ keep.push(r); continue; } try { const g = c.getContext('2d'); g.clearRect(0, 0, c.width, c.height); g.drawImage(n, 0, 0, c.width, c.height); } catch(e){} }
+  LZ64.reg = keep.slice(-300);
+  try { if (typeof paint47 === 'function') paint47(document.body); } catch(e){}
+  // caches that remembered "no picture yet" (g53 snow caps, field snow, greenhouse frames) try again
+  try { for (const C of [CAP53, SOILSNOW53, GHF53]) for (const [k, v] of C) if (v == null) C.delete(k); } catch(e){}
+  try { RT.decoVer++; } catch(e){} }, 120); }
+const _ic64 = iconCanvas;
+iconCanvas = function(...args){ LZ64.missed = false; const c = _ic64(...args); if (LZ64.missed) LZ64.reg.push({ ref: typeof WeakRef === 'function' ? new WeakRef(c) : c, args }); return c; };
+// drop files nobody has drawn for a while (snow overlays after winter, a pet you sold, panels you closed…)
+setInterval(() => { const ttl = (PERF64.imageUnloadMinutes ?? 5) * 60e3; if (!(ttl > 0)) return; const now = performance.now();
+  for (const e of Object.values(LZ64.files)){ if (!e.ok || now - e.used < ttl) continue; e.ok = false; e.im = null; } }, 60e3);
+// warm up: the sheets a farm draws (its tiles' ids + ground, house, water…)
+function warmFarm64(d){
+  try { if (!d || !d.maps) return; const ids = new Set(); const pre = PERF64.warmPrefixes || ['ground_', 'building_farmhouse', 'utility_', 'fossil_', 'deco_fence', 'water_', 'road_', 'island'];
+    for (const M of d.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (!T) continue; if (T.id) ids.add(String(T.id)); if (T.crop && T.crop.id) ids.add(String(T.crop.id)); if (T.t) ids.add(String(T.t)); }
+    const want = Object.keys(ATLAS).filter(n => !n.startsWith('ui_') && !n.startsWith('snow_') && (pre.some(p => n.startsWith(p)) || [...ids].some(id => id.length > 2 && (n.includes('_' + id + '_') || n.endsWith('_' + id)))));
+    lzPreload64(want); } catch(e){} }
+{ const _osp64 = openSlotPicker; openSlotPicker = function(...a){ const r = _osp64(...a); try { const last = lsGet(LAST_SLOT_KEY); if (last) setTimeout(() => warmFarm64(load(last)), 50); } catch(e){} return r; }; }
+{ const _es64 = enterSlot; enterSlot = function(...a){ const r = _es64(...a); if (S) warmFarm64(S); return r; }; }
+{ const _as64 = adoptState; adoptState = function(...a){ const r = _as64(...a); if (S) warmFarm64(S); return r; }; }
+
+/* ---------- 省電模式: frame cap ---------- */
+const PW_KEY64 = 'skyfarm-power';
+const isPhone64 = () => { try { return matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < (PERF64.phoneMaxShortSide || 820); } catch(e){ return false; } };
+function powerMode64(){ let v = null; try { v = localStorage.getItem(PW_KEY64); } catch(e){} return v === 'on' || v === 'off' ? v : 'auto'; }
+const powerSave64 = () => { const m = powerMode64(); return m === 'on' || (m === 'auto' && isPhone64()); };
+RT.fps64 = { last: 0 };
+{ const _fr64 = frame; frame = function(...a){ const cap = powerSave64() ? (PERF64.powerSaveFps || 30) : (PERF64.normalFps || 0);
+  if (cap > 0){ const now = performance.now(); if (now - RT.fps64.last < 1000 / cap - 4){ requestAnimationFrame(frame); return; } RT.fps64.last = now; }
+  return _fr64(...a); }; }
+{ const _rs64 = renderSettings; renderSettings = function(el, ...a){ const r = _rs64(el, ...a);
+  try { const m = powerMode64(), auto = isPhone64() ? '自動（這台是手機：開）' : '自動（這台不是手機：關）';
+    el.insertAdjacentHTML('beforeend', `<h3>省電模式</h3><p class="small">開著時畫面每秒最多更新 ${PERF64.powerSaveFps || 30} 次，手機比較不會發燙、比較省電；動畫會稍微沒那麼滑順。這個設定只存在這台裝置。</p>
+      <div class="row" id="pw64">${[['auto', auto], ['on', '開'], ['off', '關']].map(([v, l]) => `<label><input type="radio" name="pw64" value="${v}" ${m === v ? 'checked' : ''}> ${l}</label>`).join('')}</div>`);
+    el.querySelectorAll('input[name=pw64]').forEach(i => i.onchange = () => { try { if (i.value === 'auto') localStorage.removeItem(PW_KEY64); else localStorage.setItem(PW_KEY64, i.value); } catch(e){} toast(powerSave64() ? '省電模式：開' : '省電模式：關'); }); } catch(e){}
+  return r; }; }
+
+/* ---------- sky: don't draw what you can't see ---------- */
+// replaces g11: same picture; stars / milky way only when visible, and the current sky image decides the fallback (lazy images)
+function drawBackground(t, raining){
+  const now = Date.now(), bl = skyBlend(now);
+  if (!SKYC || !IMG['sky_' + bl.a]){ const g = ctx.createLinearGradient(0,0,0,VH); g.addColorStop(0,'#a9dbe0'); g.addColorStop(1,'#bfe0b0'); ctx.fillStyle = g; ctx.fillRect(0,0,VW,VH); return; }
+  drawCover(bl.a, 1); if (bl.b && bl.f > .004) drawCover(bl.b, bl.f);
+  const ph = dayPhase(now), light = ph.light, dark = 1 - light;
+  const rain = S ? farmRain(now) : false, overcast = S ? (farmCloudy(now) || rain) && light > 0 : false;
+  if (!rain){
+    const mw = clamp01((dark - .55)/.35) * .9; if (mw > .004 && IMG.sky_milkyway){ ctx.globalAlpha = mw; ctx.drawImage(IMG.sky_milkyway, 0, 0, VW, VH); }
+    const sa = clamp01((dark - .3)/.4);
+    if (sa > .004 && IMG.sky_stars){ ctx.globalAlpha = sa * (motion ? .85 + .15*Math.sin(t*1.7) : 1); const s = Math.max(VW/1600, VH/900); ctx.drawImage(IMG.sky_stars, 0, 0, 1600*s, 900*s);
+      if (motion){ ctx.globalAlpha = sa * (.5 + .5*Math.sin(t*2.3 + 1)) * .5; ctx.drawImage(IMG.sky_stars, 0, 0, 1600*s, 900*s, 37, 23, 1600*s, 900*s); } }
+    ctx.globalAlpha = 1;
+  }
+  if (!rain) drawMeteors(t, dark);
+  drawSunMoon(now, light, overcast, rain);
+  if (overcast){ ctx.fillStyle = `rgba(120,130,140,${(rain ? .55 : .42)*light})`; ctx.fillRect(0, 0, VW, VH); }
+  if (rain && light <= 0){ ctx.fillStyle = 'rgba(30,36,50,.35)'; ctx.fillRect(0, 0, VW, VH); }
+}
+
+window.__farm2281 = { LZ64, lzPreload: lzPreload64, img: n => IMG[n], powerSave64, powerMode64, isPhone64, warmFarm64, lzStats(){ let n = 0, px = 0; for (const e of Object.values(LZ64.files)) if (e.ok && e.im){ n++; px += e.im.naturalWidth * e.im.naturalHeight; } return { files: n, decodedMB: +(px * 4 / 1048576).toFixed(1) }; } };
+
+/* ===== 65. v2.29: garbage trucks visit the islands one after another (15 min each, 30 with one island; empty islands skipped;
+   up to 15 min longer while the island's trash robots are still carrying), new player-supplied truck pictures (hover / flying,
+   batch38), trucks on the floating-island mini map ===== */
+const RTE65 = (CFG.trash || {}).route || {};
+const STAY1_65 = (RTE65.singleIslandMinutes || 30) * 60e3, STAYN_65 = (RTE65.stayMinutes || 15) * 60e3, WAIT65 = (RTE65.maxExtraWaitMinutes || 15) * 60e3,
+  FLY65 = (RTE65.flyMinutes || 1) * 60e3, OVERDUE65 = (RTE65.overdueAfterMinutes || 10) * 60e3, ARR65 = (RTE65.arriveSeconds || 15) * 1e3;
+const hasTrash65 = mi => stationsOn63(mi).length > 0 || pileOf63(islTrash63(mi)) > .01;
+// is anything still being carried on this island by its own trash / recycling robots?
+function robotsBusy65(mi){
+  for (const kind of MYK) for (const u of fleet(kind)){ if (!u || u.on === false || !unitTier(kind, u)) continue; if (homeMi63(u) !== mi) continue;
+    if (carrySum(u.tcarry) > .01) return true;
+    if (u.state === 'work' && stationsOn63(mi).some(s => withIsl63(mi, () => loadOf(s.T, LOADS[kind])) > .01)) return true; }
+  return false; }
+function routeState65(){ S.trash = S.trash || {}; return S.trash.route || null; }
+// advance the day's route up to time t (works for live play and for offline catch-up)
+function routeStep65(t){
+  const G = S.trash || (S.trash = {}), dk = dayKeyLocal(t), start = truckWindowStart(t);
+  let R = G.route;
+  if (R && R.day === dk && t < (R.made || 0) - 1000) R = G.route = null;          // time went back (offline catch-up from earlier): plan again
+  if (t < start){ if (R && R.day !== dk) G.route = null; return; }
+  // nothing to collect yet: look again while the first stop would still be on
+  if (R && R.day === dk && R.empty && t < start + (S.maps.length === 1 ? STAY1_65 : STAYN_65)) R = G.route = null;
+  if (!R || R.day !== dk){
+    const order = S.maps.map((M, mi) => mi).filter(hasTrash65);
+    R = G.route = { day: dk, made: t, order, i: 0, phase: order.length ? 'stay' : 'gone', empty: !order.length, mi: order[0] ?? null, at: start, from: null, to: null, busyAt: 0 };
+    if (order.length) arrive65(R, t);
+  }
+  for (let guard = 0; guard < 12; guard++){
+    if (R.phase === 'stay'){
+      const stay = S.maps.length === 1 ? STAY1_65 : STAYN_65, base = R.at + stay;
+      if (t < base) return;
+      const busy = robotsBusy65(R.mi); if (busy) R.busyAt = t;
+      if (busy && t < base + WAIT65) return;
+      const leave = Math.min(base + WAIT65, Math.max(base, R.busyAt || 0));
+      const rest = S.maps.map((M, mi) => mi).filter(mi => mi > R.mi && hasTrash65(mi)), next = rest[0]; R.order = R.order.slice(0, R.i + 1).concat(rest);
+      if (next != null){ R.phase = 'fly'; R.from = R.mi; R.to = next; R.at = leave; }
+      else { R.phase = 'out'; R.from = R.mi; R.at = leave; }
+      continue; }
+    if (R.phase === 'fly'){ if (t < R.at + FLY65) return; R.i++; R.mi = R.to; R.phase = 'stay'; R.at = R.at + FLY65; R.busyAt = 0; arrive65(R, t); continue; }
+    if (R.phase === 'out'){ if (t < R.at + FLY65) return; R.phase = 'gone'; return; }
+    return; }
+}
+function arrive65(R, t){
+  const live = Math.abs(Date.now() - t) < 5000; if (!live || R.mi !== S.cur || t - R.at > 60e3) return;   // no toast when catching up later in the day
+  const stay = S.maps.length === 1 ? STAY1_65 : STAYN_65, until = fmtHM(R.at + stay);
+  toast(S.maps.length === 1 ? `飛天垃圾車和資源回收車來了，停到 ${until}。用「收成」點垃圾站倒垃圾` : `垃圾車和資源回收車到「${islName63(R.mi)}」了，停到 ${until}。用「收成」點垃圾站倒垃圾`, true, 4200); }
+// are the trucks parked at island mi right now?
+function trucksHere65(mi, t){ const R = routeState65(); return !!(R && R.day === dayKeyLocal(t) && R.phase === 'stay' && R.mi === mi && t >= R.at); }
+// how far away the trucks are from island mi (0 = parked, 1 = gone) and whether they are flying; null = not around
+function truckVis65(mi, t){ const R = routeState65(); if (!R || R.day !== dayKeyLocal(t)) return null;
+  if (R.phase === 'stay' && R.mi === mi){ const el = t - R.at; return { k: Math.max(0, 1 - el / ARR65), fly: el < ARR65 }; }
+  if ((R.phase === 'fly' || R.phase === 'out') && R.from === mi){ const el = t - R.at; if (el > ARR65) return null; return { k: Math.min(1, el / ARR65), fly: true }; }
+  return null; }
+function nextTruckText65(t){ const R = routeState65(); if (R && R.day === dayKeyLocal(t) && R.phase !== 'gone'){
+    if (R.phase === 'stay') return `垃圾車正在「${islName63(R.mi)}」`; if (R.phase === 'fly') return `垃圾車正飛往「${islName63(R.to)}」`; }
+  return `垃圾車明天 ${fmtHM(truckWindowStart(t))} 才來`; }
+
+// replaces g63: the route decides when each island's trucks are there; overdue collection 10 minutes after they park
+function stepTrash(dt, t){
+  ensureV29(); const G = S.trash, TS = TR.sources || {}, dk = dayKeyLocal(t), mid = localMidnight(t);
+  if (G.day !== dk){ if (G.day && G.dayMs){ const days = Math.max(1, Math.round((mid - G.dayMs) / DAY)), hm = houseMapIndex();
+      if (housePos(S.maps[hm])) withIsl63(hm, () => { addTrash('g', days * (TS.houseDailyGeneralBags ?? 1)); addTrash('r', days * (TS.houseDailyRecycleBags ?? .5)); }); }
+    G.day = dk; G.dayMs = mid; }
+  routeStep65(t);
+  const R = G.route; if (!R || R.day !== dk || R.phase !== 'stay' || t < R.at + OVERDUE65) return;
+  const mi = R.mi, live = Math.abs(Date.now() - t) < 5000;
+  withIsl63(mi, () => { const I = trashState(); if (I.overdueDay === dk || !overdueNow(t)) return; I.overdueDay = dk;
+    const L = { g: 0, r: 0, s: 0 }; for (const s of stationsOn63(mi)){ const l = takeLoad(s.T, ['g', 'r', 's']); for (const k in L) L[k] += l[k]; }
+    for (const k in L){ L[k] += I.pile[k] || 0; I.pile[k] = 0; } I.fullSince = null;
+    if (L.g + L.r + L.s / 100 > .01){ const total = payLoad(L, true); I.collectUntil = R.at + (S.maps.length === 1 ? STAY1_65 : STAYN_65); I.lastOverdue = { t, money: total, L };
+      if (live) toast(`${multi63() ? `【${islName63(mi)}】` : ''}太久沒倒垃圾，垃圾車派機器人來代收：付 ${-total} 金幣（比自己倒貴，回收也要收費）`, false, 5200);
+      else RT.notices.push({ kind: 'trashOverdue', t, money: total, map: mi }); }
+    else I.lastDump = Date.now(); });
+}
+// robots only work while the trucks are at their own island (replaces g53's trashPlan; g63's wrapper still sets the island context)
+function trashPlan(kind, W, M, key, getC){
+  const now = simNow53(); if (!trucksHere65(W.mi, now)) return null;
+  if (carrySum(getC()) > .01){ const ts = truckStop(W.mi); if (!ts) return null; const prev = swBFS(M, W.x, W.y), p = prev.has(ts.k) ? swPathTo(prev, ts.k) : null; return p ? { path: p, goal: 'truck', target: ts.k } : null; }
+  const fst = firstStation(), cl = walkerClaims(kind, key);
+  const p = wbPathToAny(M, W.x, W.y, wbStandTiles(M, (T, k) => isTrashSt(T) && !cl.has(k) && loadOf(T, LOADS[kind], fst && fst.T === T) > .01));
+  if (p) p.goal = 'station'; return p; }
+for (const kind of MYK) robotJob[kind] = t => S.maps.some((M, mi) => trucksHere65(mi, t) && (stationsOn63(mi).some(s => withIsl63(mi, () => loadOf(s.T, LOADS[kind]) > .01)) || pileOf63(islTrash63(mi)) > .01))
+  || fleet(kind).some(u => carrySum(u.tcarry) > .01);
+// tapping a station with 收成: dump only when the trucks are at this island
+{ const _act65 = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _act65(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool;
+  if (isTrashSt(T) && (tool === 'hand' || tool === 'seed')){ if (trucksHere65(S.cur, Date.now())) handDump({ mi: S.cur, k, x, y, T }); else openTrash(S.cur, k); return; }
+  return _act65(x, y); }; }
+// the "倒垃圾" bubble follows the trucks, not the old fixed 16:00–16:30
+{ const _bb65 = bubble; bubble = function(x, y, text, ...a){ if (RT.trashDraw65 && text === '倒垃圾' && !trucksHere65(S.cur, Date.now())) return; return _bb65(x, y, text, ...a); }; }
+{ const _db65 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){ if (!T || T.id !== 'trash_station') return _db65(T, x, y, t);
+  RT.trashDraw65 = true; try { const r = _db65(T, x, y, t);
+    if (trucksHere65(S.cur, Date.now()) && !truckWindow(Date.now()) && withIsl63(S.cur, () => loadOf(T, ['g', 'r', 's'])) > .01){ const { cx, cy } = center(x, y); bubble(cx, cy - 46, '倒垃圾', 'ui_trash_general', '#fffbe9'); }
+    return r; } finally { RT.trashDraw65 = false; } }; }
+// trash panel: the dump button and the truck line follow the route
+{ const _ot65 = openTrash; openTrash = function(mi, k){ const r = _ot65(mi, k); try { const now = Date.now(), here = trucksHere65(mi, now), b = $('trDump');
+    if (b){ b.disabled = !here; b.textContent = here ? '現在倒垃圾' : nextTruckText65(now); }
+    const kv = [...document.querySelectorAll('#modalBody .kv span')].find(s => s.textContent === '垃圾車、回收車');
+    if (kv && kv.nextElementSibling) kv.nextElementSibling.textContent = S.maps.length === 1 ? `每天 ${fmtHM(truckWindowStart(now))} 來，停 ${Math.round(STAY1_65 / 60e3)} 分鐘`
+      : `每天 ${fmtHM(truckWindowStart(now))} 從第 1 座島開始輪流收，每座島停 ${Math.round(STAYN_65 / 60e3)} 分鐘（沒垃圾的島跳過；機器人還在搬時最多多等 ${Math.round(WAIT65 / 60e3)} 分鐘）`;
+  } catch(e){} return r; }; }
+
+/* ---------- drawing: hover pictures when parked, flying pictures when arriving / leaving ---------- */
+const TRK65 = (kind, side, fly) => `truck_${kind}_${fly ? 'fly_' : ''}${side}`;
+function truckHover(now){ const v = truckVis65(S.cur, now); return v ? v.k : 1; }
+drawTrucks = function(M, now, t){
+  const P = S.truckPad; if (P && P.mi === S.cur) return; const v = truckVis65(S.cur, now); if (!v) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), off = v.k * 420, bob = motion ? Math.sin(t * 2) * 1.5 : 0, X = RTE65.besideOffsets || [[96, -4], [76, 46]];
+  spr(TRK65('garbage', 'se', v.fly), 0, c.cx + X[0][0] + off, c.cy + X[0][1] - off * .3 + bob);
+  spr(TRK65('recycle', 'se', v.fly), 0, c.cx + X[1][0] + off, c.cy + X[1][1] - off * .3 - bob);
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6); };
+// replaces g34: same pad, trucks follow the route and use the new pictures
+function drawPad(P, t, now, ghost){
+  const m = padMid(P), c = center(m.x, m.y);
+  if (ghost){ ctx.save(); ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = 'rgba(120,200,255,.18)';
+    for (const [x, y] of padCells(P)){ const q = center(x, y); diamondPath(q.cx, q.cy, .96); ctx.fill(); ctx.stroke(); } ctx.restore(); }
+  drawPadBase65(P, c, ghost);
+  if (ghost) return; const v = truckVis65(P.mi, now); if (!v) return;
+  const k = v.k, [ox, oy] = OUTV34[P.side], bob = motion ? Math.sin(t * 2) * k * 1.5 : 0;
+  const bays = padBays(P).map((b, i) => ({ ...b, kind: i ? 'recycle' : 'garbage' })).sort((a, b) => (a.x + a.y) - (b.x + b.y));
+  for (const b of bays){ const q = center(b.x, b.y), fly = k * 300; spr(TRK65(b.kind, P.side, v.fly), 0, q.cx + ox * fly * .9, q.cy + oy * fly * .45 - k * 150 + bob); }
+  if ((trashState().collectUntil || 0) > now){ const ts = truckStop(P.mi); if (ts){ const q = center(ts.x, ts.y); spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, q.cx, q.cy - 4); } }
+}
+function drawPadBase65(P, c, ghost){ spr('truckpad_' + P.side, 0, c.cx, c.cy, false, ghost ? .6 : 1); }
+
+/* ---------- mini map: where the trucks are ---------- */
+{ const _dm65 = drawMini63; drawMini63 = function(force){ const R = routeState65(), now = Date.now(), on = R && R.day === dayKeyLocal(now) && R.phase !== 'gone' && now >= R.at - 1;
+  if (on) RT.mini63.sig = ''; const r = _dm65(force || on); if (!on || MINI63.hidden) return r;
+  try { const c = MINI63.querySelector('canvas'), W = parseFloat(c.style.width), H = parseFloat(c.style.height), n = S.maps.length, g = c.getContext('2d'), dp = c.width / W;
+    const slots = (MM63.slotsByCount || {})[n] || MM63.slots, tb = (MM63.thumbByCount || {})[n] || [.44, .38], pos = mi => [slots[mi][0] * W + W * tb[0] * .32, slots[mi][1] * H - H * tb[1] * .42];
+    let p; if (R.phase === 'stay') p = pos(R.mi); else if (R.phase === 'fly'){ const f = Math.min(1, (now - R.at) / FLY65), a = pos(R.from), b = pos(R.to); p = [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f - Math.sin(f * Math.PI) * 8]; }
+    else { const f = Math.min(1, (now - R.at) / FLY65), a = pos(R.from); p = [a[0] + f * 30, a[1] - f * 20]; }
+    const im = IMG.ui_truck_garbage, s = MM63.truckIcon || 18; g.setTransform(dp, 0, 0, dp, 0, 0);
+    g.fillStyle = 'rgba(255,255,255,.85)'; g.beginPath(); g.arc(p[0], p[1], s * .62, 0, Math.PI * 2); g.fill();
+    if (im) g.drawImage(im, p[0] - s / 2, p[1] - s / 2, s, s); else { g.fillStyle = '#f2b51c'; g.fillRect(p[0] - 6, p[1] - 4, 12, 8); }
+  } catch(e){}
+  return r; }; }
+setInterval(() => { try { if (S) drawMini63(); } catch(e){} }, 1000);
+
+window.__farm229 = { routeStep65, trucksHere65, truckVis65, robotsBusy65, get route(){ return routeState65(); }, stepTrash: (dt, t) => stepTrash(dt, t), trashPlan: (...a) => trashPlan(...a), openTrash: (mi, k) => openTrash(mi, k) };
+
+/* ===== v2.29 robots: the poop robot pokes poop into the bag on its back (5, then home to empty it);
+   the feed robot walks the tiles with a feed bucket (10 servings), fills a small bowl in front of hungry animals,
+   scatters feed at the edge of fish pools, and goes home to refill ===== */
+const RBW65 = (CFG.robots || {}).walkers229 || {};
+const BAG65 = RBW65.poopBag || 5, BUCKET65 = RBW65.feedBucket || 10, BOWL65 = (RBW65.bowlSeconds || 90) * 1e3;
+if (RB.kinds.feed && !MINE59.includes('feed')){ MINE59.push('feed'); WALK59.feed = (RB.kinds.feed.walk) || { tilesPerSecond: 1.2, feedSeconds: 1.2 }; workerWants.feed = wants59('feed'); }
+const workT65 = kind => kind === 'poop' ? (WALK59.poop.shovelSeconds || 1.5) : kind === 'feed' ? (WALK59.feed.feedSeconds || 1.2) : (WALK59.snow.clearSeconds || 5);
+// hungry animals / fish cells the feed robot can serve
+function feedTarget65(M, k){ const T = M.tiles[k]; if (!T) return null;
+  if (T.t === 'animal'){ const A = CFG.animals[T.id]; if (!A || T.hurt > Date.now() || T.scared > Date.now()) return null; return T.timer === 0 && canFeed(T, A) ? 'animal' : null; }
+  if (T.t === 'pool' && T.fish){ const F = CFG.fish[T.fish]; return F && T.timer === 0 && T.stage < F.stages ? 'pool' : null; }
+  return null; }
+// replaces g59: poop stops when the bag is full; the feed robot looks for hungry animals / fish to stand next to
+function job59(kind, W, M, key){
+  if (kind === 'poop' && (invFree() < 1 || (W && (W.bag65 || 0) >= BAG65))) return null;
+  if (kind === 'snow' && !S.snow.cover) return null;
+  if (kind === 'feed' && W && (W.bucket65 ?? BUCKET65) <= 0) return null;
+  const cl = walkerClaims(kind, key), mi = W.mi, start = tkey(W.x, W.y), prev = new Map([[start, null]]), q = [start]; let qi = 0;
+  const isJob = k => !cl.has(k) && (kind === 'poop' ? !!(M.tiles[k] && M.tiles[k].t === 'poop') : kind === 'feed' ? !!feedTarget65(M, k) : snowyAt(mi, k));
+  const path = k => swPathTo(prev, k);
+  while (qi < q.length){ const c = q[qi++], [x, y] = pkey(c);
+    if (kind === 'snow' && c !== start && isJob(c)) return { path: path(c), target: c };
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx = x + dx, ny = y + dy, n = tkey(nx, ny); if (prev.has(n) || !inMap(M, nx, ny)) continue;
+      if (kind === 'feed' && isJob(n)) return { path: path(c), target: n };   // stand next to the animal / pool
+      if (!swPass(M, n)){ if (isJob(n)){ const p = path(c); if (kind === 'poop') p.push(n); return { path: p, target: n }; } continue; }
+      prev.set(n, c); q.push(n); } }
+  return null; }
+// replaces g59: one more kind and the bag / bucket
+function doJob59(kind, W, M, t){
+  const k = W.target, live = Math.abs(Date.now() - t) < 5000 && W.mi === S.cur;
+  if (kind === 'poop'){ const T = M.tiles[k]; if (!(T && T.t === 'poop') || invFree() < 1) return;
+    const [x, y] = pkey(k), c = center(x, y); RT.inPoop53 = true; try { if (shovelPoop(M, k, undefined, c.cy)) W.bag65 = (W.bag65 || 0) + 1; } finally { RT.inPoop53 = false; } RT.regionsAt = 0;
+    if (live) RT.fly65.push({ from: [c.cx, c.cy - 4], key: W.key65, t0: performance.now() }); return; }
+  if (kind === 'feed'){ const T = M.tiles[k], what = feedTarget65(M, k); if (!what) return;
+    let ok = false;
+    if (what === 'animal'){ const r = feedAnimal(T, CFG.animals[T.id]); ok = !!(r && r.ok); }
+    else { const F = CFG.fish[T.fish], r = payFeed(F.feedItem, F.stageFeedQtyPerTile); if (r && r.ok){ T.timer = F.stageSeconds; ok = true; } }
+    if (!ok){ W.nofeed65 = t; return; }
+    W.nofeed65 = 0; W.bucket65 = (W.bucket65 ?? BUCKET65) - 1; try { log53('feed', 'n'); } catch(e){}
+    const [sx, sy] = [W.x, W.y], [tx, ty] = pkey(k);
+    if (what === 'animal') RT.bowls65[W.mi + '|' + k] = { mi: W.mi, at: tkey(sx, sy), x: (sx + tx) / 2, y: (sy + ty) / 2, until: Date.now() + BOWL65, item: CFG.animals[T.id].feedItem };
+    else if (live) RT.scat65.push({ x: tx, y: ty, t0: performance.now() });
+    return; }
+  if (snowyAt(W.mi, k)){ (S.snow.cleared[W.mi] = S.snow.cleared[W.mi] || {})[k] = 1; RT.snowBot = null; }
+}
+// back at the charger: empty the bag / refill the bucket even when there is no next job (worker59 only runs while working)
+for (const kind of ['poop', 'feed']) if (workerWants[kind]){ const _w = workerWants[kind]; workerWants[kind] = (key, u) => { try { const home = workerHome(kind, u), W = WS[key];
+  if (W && home && W.x === home.x && W.y === home.y && W.phase === 'home'){ if (kind === 'poop') W.bag65 = 0; else W.bucket65 = BUCKET65; } } catch(e){} return _w(key, u); }; }
+RT.fly65 = []; RT.scat65 = []; RT.bowls65 = RT.bowls65 || {};
+// replaces g59: per-kind work time; at home the bag is emptied / the bucket refilled
+function worker59(kind, key, u, dt, t){
+  const home = workerHome(kind, u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = stepT59(kind), wt = workT65(kind);
+  W.key65 = key; if (kind === 'feed' && W.bucket65 == null) W.bucket65 = BUCKET65;
+  const atHome = () => W.x === home.x && W.y === home.y;
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      if (atHome()){ if (kind === 'poop') W.bag65 = 0; if (kind === 'feed') W.bucket65 = BUCKET65; }
+      let plan = job59(kind, W, M, key);
+      if (plan && u){ const [tx, ty] = pkey(plan.path[plan.path.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length; if (u.batt < (plan.path.length + back) * stepT + wt + 2) plan = null; }
+      if (!plan){ if (W.phase === 'pick' && walkAway(W, home)) walkGoHome(W, M, home); else { W.phase = 'home'; W.target = null; } if (W.phase === 'home') return; continue; }
+      W.path = plan.path; W.i = 0; W.el = 0; W.goal = kind; W.target = plan.target; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      const still = kind === 'poop' ? (M.tiles[W.target] && M.tiles[W.target].t === 'poop') : kind === 'feed' ? !!feedTarget65(M, W.target) : snowyAt(W.mi, W.target);
+      if (W.goal !== 'home' && W.target && !still){ W.phase = 'pick'; W.target = null; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; W.target = null; return; } W.phase = 'fill'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1], last = W.i + 1 === W.path.length - 1;
+      if (!swPass(M, nk) && !(last && (W.goal === 'home' || (W.goal === 'poop' && nk === W.target)))){ if (W.goal === 'home') walkGoHome(W, M, home); else W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue;
+    }
+    if (W.phase === 'fill'){ const left = wt - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; doJob59(kind, W, M, t); W.target = null; W.phase = 'pick'; continue; }
+    W.phase = 'pick';
+  }
+}
+// the feed robot no longer feeds everything from afar: while one is set up, animals and fish wait for it
+const feedWalk65 = () => !!(RB.kinds.feed && (fleet('feed').some(u => u && u.on !== false && unitTier('feed', u)) || rentActive('feed', Date.now())));
+{ const _sa65 = stepAnimal; stepAnimal = function(M, k, T, dt, t, feedOn){ return _sa65(M, k, T, dt, t, feedOn && !feedWalk65()); }; }
+{ const _sp65 = stepPool; stepPool = function(P, dt, feedOn){ return _sp65(P, dt, feedOn && !feedWalk65()); }; }
+// sprite names: the walker pass asks for robot_feed_*, the pictures are robot_feeder_*
+{ const _spr65 = spr; spr = function(name, ...a){ if (typeof name === 'string' && name.startsWith('robot_feed_')) name = 'robot_feeder_' + name.slice(11); return _spr65(name, ...a); }; }
+
+/* ---------- drawing: bag, bucket, poke, flying poop, bowls, scattered feed (same depth pass as the walkers) ---------- */
+const PEND65 = new Map();
+class WMap65 extends Map {
+  set(k, list){ const p = PEND65.get(k); if (p){ for (const f of p) list.push(f); PEND65.delete(k); } return super.set(k, list); }
+  clear(){ PEND65.clear(); super.clear(); if (!S) return; const now = Date.now();
+    for (const [id, B] of Object.entries(RT.bowls65)){ if (B.until < now){ delete RT.bowls65[id]; continue; } if (B.mi !== S.cur) continue;
+      const k = B.at, l = super.get(k) || []; l.push(() => drawBowl65(B, now)); super.set(k, l); } }
+}
+RT.walkAt2 = new WMap65();
+function drawBowl65(B, now){ const c = center(B.x, B.y), full = Math.max(0, (B.until - now) / BOWL65 - .35) / .65, cx = c.cx, cy = c.cy - 2;
+  ctx.fillStyle = 'rgba(0,0,0,.18)'; ctx.beginPath(); ctx.ellipse(cx, cy + 3, 9, 3.5, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#8a5a35'; ctx.beginPath(); ctx.ellipse(cx, cy + 1, 8, 3.6, 0, 0, Math.PI); ctx.lineTo(cx - 8, cy - 1); ctx.ellipse(cx, cy - 1, 8, 3.2, 0, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = '#5e3a20'; ctx.beginPath(); ctx.ellipse(cx, cy - 1.4, 6.6, 2.4, 0, 0, Math.PI * 2); ctx.fill();
+  if (full > 0){ ctx.fillStyle = B.item === 'corn_cake' ? '#e7b84a' : '#9cc95a'; ctx.beginPath(); ctx.ellipse(cx, cy - 1.6 - full, 6 * (.6 + .4 * full), 2 * (.6 + .4 * full), 0, 0, Math.PI * 2); ctx.fill(); } }
+function drawBag65(p, n, t){ const f = Math.min(1, n / BAG65), dir = p.fx ? 1 : -1, x = p.x + dir * 8, y = p.y - 24, w = 6 + f * 4, h = 6 + f * 5;
+  ctx.fillStyle = '#7a5530'; ctx.beginPath(); ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#a77a4a'; ctx.beginPath(); ctx.ellipse(x - dir * 1.5, y - 1, w * .7, h * .75, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#4b321b'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x - 3, y - h + 1); ctx.lineTo(x + 3, y - h + 1); ctx.stroke();
+  if (n > 0){ ctx.fillStyle = '#6b4423'; ctx.beginPath(); ctx.arc(x + 1, y - h + .5, 2.2, 0, Math.PI * 2); ctx.fill(); } }
+function drawBucket65(p, n){ const f = Math.max(0, Math.min(1, n / BUCKET65)), dir = p.fx ? 1 : -1, x = p.x + dir * 9, y = p.y - 22;
+  ctx.fillStyle = '#8b98a5'; ctx.beginPath(); ctx.moveTo(x - 6, y - 6); ctx.lineTo(x + 6, y - 6); ctx.lineTo(x + 4.5, y + 6); ctx.lineTo(x - 4.5, y + 6); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = '#c7d1da'; ctx.beginPath(); ctx.ellipse(x, y - 6, 6, 2, 0, 0, Math.PI * 2); ctx.fill();
+  if (f > 0){ ctx.fillStyle = '#d9a94a'; ctx.beginPath(); ctx.ellipse(x, y - 6 + (1 - f) * 2, 5 * (.5 + .5 * f), 1.6, 0, 0, Math.PI * 2); ctx.fill(); }
+  ctx.strokeStyle = '#5d6872'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y - 6, 6, Math.PI, 0); ctx.stroke(); }
+{ const _ws65 = walkerScreenSmooth; walkerScreenSmooth = function(e){ const r = _ws65(e); if (!r || (e.kind !== 'poop' && e.kind !== 'feed')) return r;
+  const W = e.W, t = performance.now() / 1000, list = PEND65.get(r.k) || [];
+  list.push(() => { const p = r.p;
+    if (e.kind === 'poop'){ drawBag65(p, W.bag65 || 0, t);
+      if (W.phase === 'fill' && W.target){ const [tx, ty] = pkey(W.target), c = center(tx, ty), a = (W.el || 0) / workT65('poop'), jab = Math.sin(Math.min(1, a * 1.4) * Math.PI) * 6, dir = p.fx ? 1 : -1;
+        ctx.strokeStyle = '#5b5f66'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(p.x - dir * 6, p.y - 16); ctx.lineTo(c.cx + (p.x - c.cx) * .25 - jab * .3, c.cy - 4 + jab * .2); ctx.stroke(); } }
+    else { drawBucket65(p, W.bucket65 ?? BUCKET65); if (W.nofeed65) bubble(p.x, p.y - 44, '沒飼料', 'ui_item_pasture', '#ffe6dc'); }
+    // poop flying into the bag
+    for (let i = RT.fly65.length - 1; i >= 0; i--){ const f = RT.fly65[i]; if (f.key !== e.key) continue; const a = (performance.now() - f.t0) / 500; if (a >= 1){ RT.fly65.splice(i, 1); continue; }
+      const dir = p.fx ? 1 : -1, bx = p.x + dir * 8, by = p.y - 26, x = f.from[0] + (bx - f.from[0]) * a, y = f.from[1] + (by - f.from[1]) * a - Math.sin(a * Math.PI) * 26; spr('poop_a', 0, x, y + 8); } });
+  PEND65.set(r.k, list); return r; }; }
+// scattered fish feed: a few grains falling on the pool
+{ const _dw65 = drawWorld; drawWorld = function(t, now){ const r = _dw65(t, now);
+  for (let i = RT.scat65.length - 1; i >= 0; i--){ const s = RT.scat65[i], a = (performance.now() - s.t0) / 900; if (a >= 1){ RT.scat65.splice(i, 1); continue; } const c = center(s.x, s.y);
+    ctx.fillStyle = `rgba(214,170,80,${1 - a})`; for (let j = 0; j < 7; j++){ const ang = j * .9, d = 4 + a * 12; ctx.beginPath(); ctx.arc(c.cx + Math.cos(ang) * d, c.cy - 6 + Math.sin(ang) * d * .5 + a * 6, 1.4, 0, Math.PI * 2); ctx.fill(); } }
+  return r; }; }
+KIND_DESC.poop = `從自己的充電站位子出發，沿格子走到糞便那裡用夾棒戳起來、丟進背上的背袋（一坨約 ${WALK59.poop.shovelSeconds || 1.5} 秒），背袋裝 ${BAG65} 坨，滿了走回充電站倒掉；糞便直接進倉庫。只管充電站所在的那座島。`;
+if (RB.kinds.feed) KIND_DESC.feed = `從自己的充電站位子出發，背著飼料桶（${BUCKET65} 份）沿格子走到肚子餓的動物旁邊，把飼料倒進小飼料盆；魚池走到池邊撒飼料。桶子空了、電只夠回程或沒工作就走回充電站補料。只管充電站所在的那座島。`;
+window.__farm229r = { job59, worker59, doJob59, feedTarget65, feedWalk65, get bowls(){ return RT.bowls65; }, BAG65, BUCKET65 };
+
+/* ===== 66. v2.30: rocky floating-island underside (soil band, jagged rock points, hanging vines), and the truck pad
+   becomes a 2×4 piece of land sticking out of the island (grass + two stone parking bays, same soil and rock underneath) ===== */
+const UND66 = CFG.islandUnderside || {};
+const ROCK66 = UND66.rock || {};
+// cells that make up the island's outline on map mi: its tiles plus the parking land
+function islandCells66(M){ const set = new Set(mapTiles(M).map(([x, y]) => tkey(x, y))), mi = S.maps.indexOf(M), P = S.truckPad;
+  if (P && P.mi === mi) for (const [x, y] of padCells(P)) set.add(tkey(x, y)); return set; }
+// replaces g21: same outline sampling (bottom of the soil band), new rock body
+function drawUnderside(M){
+  const cells = islandCells66(M), has = (x, y) => cells.has(tkey(x, y)), list = [...cells].map(pkey);
+  let x0 = 1e9, x1 = -1e9; for (const [x, y] of list){ const c = center(x, y); x0 = Math.min(x0, c.cx - HW); x1 = Math.max(x1, c.cx + HW); }
+  const W = x1 - x0, STEP = 5, n = Math.ceil(W / STEP), yb = new Array(n + 1).fill(-1e9);
+  for (const [x, y] of list){ const { cx, cy } = center(x, y);
+    for (const [ex, ax, ay] of [[!has(x + 1, y), cx + HW, cy + DEPTH], [!has(x, y + 1), cx - HW, cy + DEPTH]]){ if (!ex) continue;
+      const bx = cx, by = cy + HH + DEPTH, lo = Math.min(ax, bx), hi = Math.max(ax, bx);
+      for (let i = Math.max(0, Math.floor((lo - x0) / STEP)); i <= Math.min(n, Math.ceil((hi - x0) / STEP)); i++){ const sx = x0 + i * STEP; if (sx < lo - .01 || sx > hi + .01) continue;
+        const f = (sx - ax) / (bx - ax), yy = ay + (by - ay) * f; if (yy > yb[i]) yb[i] = yy; } } }
+  const top = []; let corner = { x: (x0 + x1) / 2, y: -1e9 };
+  for (let i = 0; i <= n; i++){ if (yb[i] < -1e8) continue; const sx = x0 + i * STEP; top.push([sx, yb[i] - 1]); if (yb[i] > corner.y) corner = { x: sx, y: yb[i] }; }
+  if (top.length < 2) return;
+  // rock body: a rounded mass that narrows, with hanging points (fixed per island: seeded by its index)
+  const seed = (S.maps.indexOf(M) + 1) * 13.7, H = k => islHash(seed + k), xc = (x0 + x1) / 2, D = W * (ROCK66.depthRatio ?? UND66.depthRatio ?? .2), taper = ROCK66.taper ?? .86, flat = ROCK66.roundness ?? .5;
+  const spikes = []; const NS = Math.max(5, Math.round(W / (ROCK66.spikeEvery || 70)));
+  for (let i = 0; i < NS; i++){ const u = (i + .25 + .5 * H(i * 3.1)) / NS; spikes.push({ x: x0 + W * (.06 + .88 * u), w: W * (.035 + .05 * H(i * 5.3)), L: D * (.18 + .55 * H(i * 7.7)) * (1 - Math.abs(u - .5) * 1.2) }); }
+  const bot = top.map(([sx, ty]) => { const u = (sx - xc) / (W / 2), mound = Math.pow(Math.max(0, 1 - u * u), .7), base = ty + (corner.y - ty) * flat;
+    let jag = 0; for (const s of spikes){ const d = Math.abs(sx - s.x) / s.w; if (d < 1) jag = Math.max(jag, s.L * (1 - d)); }
+    const rough = Math.sin(sx / 9 + seed) * 2 + Math.sin(sx / 23 + seed * 2) * 3;
+    return [xc + (sx - xc) * taper, Math.max(ty + 14, base + D * (.25 + .75 * mound) + jag * mound + rough)]; });
+  const path = () => { ctx.beginPath(); ctx.moveTo(top[0][0], top[0][1]); for (const p of top) ctx.lineTo(p[0], p[1]); for (let i = bot.length - 1; i >= 0; i--) ctx.lineTo(bot[i][0], bot[i][1]); ctx.closePath(); };
+  const maxY = Math.max(...bot.map(p => p[1])), C = ROCK66.colors || {};
+  const half = (side, f) => { ctx.save(); ctx.beginPath(); if (side === 'L') ctx.rect(x0 - 60, corner.y - W, corner.x - x0 + 60, W * 3); else ctx.rect(corner.x, corner.y - W, x1 - corner.x + 60, W * 3); ctx.clip(); f(); ctx.restore(); };
+  ctx.save(); path(); ctx.clip();
+  for (const side of ['L', 'R']) half(side, () => { const g = ctx.createLinearGradient(0, corner.y - HH, 0, maxY), c = side === 'R' ? (C.rockLight || ['#97806a', '#76604d', '#4f3f33']) : (C.rockDark || ['#76604f', '#5a4839', '#3a2e25']);
+    g.addColorStop(0, c[0]); g.addColorStop(.55, c[1]); g.addColorStop(1, c[2]); ctx.fillStyle = g; ctx.fillRect(x0 - 60, corner.y - W, W + 120, W * 3); });
+  // soil under the grass: two wavy brown bands, then rock
+  const lerp = fr => top.map((p, i) => { const q = bot[i], xx = p[0] + (q[0] - p[0]) * fr; return [xx, p[1] + (q[1] - p[1]) * fr + Math.sin(xx / 17 + fr * 9) * 2]; });
+  for (const [a, b2, col] of ROCK66.soil || [[0, .1, ['#6b4528', '#573720']], [.1, .2, ['#8f5a35', '#74462a']]]){ const A2 = lerp(a), B2 = lerp(b2);
+    for (const side of ['L', 'R']) half(side, () => { ctx.fillStyle = side === 'R' ? col[0] : col[1]; ctx.beginPath(); A2.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); for (let i = B2.length - 1; i >= 0; i--) ctx.lineTo(B2[i][0], B2[i][1]); ctx.closePath(); ctx.fill(); }); }
+  // rock facets: light / dark slanted strokes following the points
+  ctx.lineCap = 'round';
+  for (const s of spikes){ const i = Math.max(0, Math.min(top.length - 1, Math.round((s.x - x0) / STEP))), p = top[i], q = bot[i]; if (!p) continue; const y0 = p[1] + (q[1] - p[1]) * .3;
+    ctx.strokeStyle = 'rgba(255,240,215,.16)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(q[0] - s.w * .55, y0); ctx.lineTo(q[0], q[1] - 3); ctx.stroke();
+    ctx.strokeStyle = 'rgba(25,15,8,.28)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(q[0] + s.w * .5, y0 + 4); ctx.lineTo(q[0] + 1, q[1] - 2); ctx.stroke(); }
+  for (let i = 0; i < top.length; i += 4){ const h = H(i * 1.9); if (h < .45) continue; const p = top[i], q = bot[i], fr = .3 + .6 * H(i * 2.7), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr;
+    ctx.strokeStyle = h > .75 ? 'rgba(255,235,205,.13)' : 'rgba(20,12,6,.22)'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(xx - 6, yy - 4); ctx.lineTo(xx + 5, yy + 3); ctx.stroke(); }
+  { const sg = ctx.createLinearGradient(0, corner.y, 0, maxY); sg.addColorStop(0, 'rgba(0,0,0,0)'); sg.addColorStop(1, 'rgba(15,8,4,.38)'); ctx.fillStyle = sg; ctx.fillRect(x0 - 60, corner.y - W, W + 120, W * 3); }
+  // fossils stay hidden in the rock
+  { const kinds = ['fossil_ammonite', 'fossil_skull', 'fossil_spine', 'fossil_leg'], nF = Math.max(2, Math.min(7, Math.round(W / 220))); ctx.globalAlpha = .5;
+    for (let j = 0; j < nF; j++){ const i = Math.floor(top.length * (.15 + .7 * ((j + H(j * 3.7)) / nF))), p = top[i], q = bot[i]; if (!p) continue;
+      const fr = .3 + .3 * H(j * 9.1), xx = p[0] + (q[0] - p[0]) * fr, yy = p[1] + (q[1] - p[1]) * fr; if (yy > q[1] - 14) continue; spr(kinds[(j + Math.floor(H(1) * 4)) % 4], 0, xx, yy, H(j) > .5); }
+    ctx.globalAlpha = 1; }
+  ctx.restore();
+  // hanging vines from the grass edge
+  const VN = ROCK66.vines || {}; ctx.lineCap = 'round';
+  for (let i = 0; i < top.length; i++){ const h = H(i * 4.13 + 2); if (h < (VN.threshold ?? .9)) continue; const p = top[i], L = (VN.minLen || 16) + ((VN.maxLen || 70) - (VN.minLen || 16)) * H(i * 6.1), sway = (H(i * 8.3) - .5) * 10;
+    ctx.strokeStyle = VN.color || '#4f8a3a'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(p[0], p[1] - DEPTH * .6); ctx.bezierCurveTo(p[0] + sway, p[1] - DEPTH * .2 + L * .3, p[0] - sway, p[1] + L * .6, p[0] + sway * .5, p[1] - DEPTH * .6 + L); ctx.stroke();
+    ctx.fillStyle = VN.leaf || '#6fae45';
+    for (let s = 8; s < L; s += 8){ const f = s / L, lx = p[0] + sway * (Math.sin(f * 3) * .6), ly = p[1] - DEPTH * .6 + s; ctx.beginPath(); ctx.ellipse(lx + (s % 16 ? 2.5 : -2.5), ly, 2.6, 1.5, s % 16 ? .6 : -.6, 0, Math.PI * 2); ctx.fill(); } }
+}
+
+/* ---------- the parking land ---------- */
+// replaces g65: grass cells, soil band on the open faces, two stone bays (no metal platform any more)
+function drawPadBase65(P, c, ghost){
+  const cells = padCells(P), isl = islandCells66(S.maps[P.mi]), has = (x, y) => isl.has(tkey(x, y)), PC = (UND66.parking || {}).colors || {};
+  if (ghost) ctx.globalAlpha = .6;
+  const order = cells.slice().sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [x, y] of order){ const { cx, cy } = center(x, y);
+    if (!has(x + 1, y)){ ctx.fillStyle = '#a7703f'; ctx.beginPath(); ctx.moveTo(cx + HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + DEPTH); ctx.lineTo(cx + HW, cy + DEPTH); ctx.closePath(); ctx.fill(); }
+    if (!has(x, y + 1)){ ctx.fillStyle = '#8a5a33'; ctx.beginPath(); ctx.moveTo(cx - HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + DEPTH); ctx.lineTo(cx - HW, cy + DEPTH); ctx.closePath(); ctx.fill(); }
+    spr('ground_grass_idle', 0, cx, cy); }
+  // stone bays: each 2×2, a slab with a few joints and a painted border
+  for (const b of padBays(P)){ const q = (dx, dy) => { const p = center(b.x + dx, b.y + dy); return [p.cx, p.cy]; }, k = PC.inset ?? .12;
+    const pts = [q(-1 + k, -1 + k), q(1 - k, -1 + k), q(1 - k, 1 - k), q(-1 + k, 1 - k)];
+    ctx.fillStyle = PC.slab || '#bdb5a8'; ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = PC.edge || '#8d8579'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.strokeStyle = 'rgba(90,82,72,.45)'; ctx.lineWidth = 1;
+    for (const f of [1 / 3, 2 / 3]){ const a = [pts[0][0] + (pts[1][0] - pts[0][0]) * f, pts[0][1] + (pts[1][1] - pts[0][1]) * f], bb = [pts[3][0] + (pts[2][0] - pts[3][0]) * f, pts[3][1] + (pts[2][1] - pts[3][1]) * f];
+      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(bb[0], bb[1]); ctx.stroke();
+      const c2 = [pts[0][0] + (pts[3][0] - pts[0][0]) * f, pts[0][1] + (pts[3][1] - pts[0][1]) * f], d2 = [pts[1][0] + (pts[2][0] - pts[1][0]) * f, pts[1][1] + (pts[2][1] - pts[1][1]) * f];
+      ctx.beginPath(); ctx.moveTo(c2[0], c2[1]); ctx.lineTo(d2[0], d2[1]); ctx.stroke(); }
+    // painted "P" mark in the middle
+    const m = q(0, 0); ctx.save(); ctx.translate(m[0], m[1]); ctx.scale(1, .5); ctx.rotate(Math.PI / 4); ctx.strokeStyle = PC.paint || 'rgba(255,255,255,.85)'; ctx.lineWidth = 2.4;
+    ctx.beginPath(); ctx.arc(0, 0, 13, 0, Math.PI * 2); ctx.stroke(); ctx.fillStyle = PC.paint || 'rgba(255,255,255,.85)'; ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.rotate(-Math.PI / 4); ctx.scale(1, 2); ctx.fillText('P', 0, 0); ctx.restore(); }
+  ctx.globalAlpha = 1;
+}
+// the land is lower than the old floating deck: trucks sit right on the bays
+{ const _dp66 = drawPad; drawPad = function(P, t, now, ghost){ return _dp66(P, t, now, ghost); }; }
+window.__farm230 = { islandCells66, drawUnderside: M => drawUnderside(M), drawPadBase65: (...a) => drawPadBase65(...a) };
+{ const _ns66 = normalizeState; normalizeState = function(d){ const r = _ns66(d); const s = r || d; if (s){ s.v229 = 1; s.v230 = 1; } return r; }; }
+
+/* ===== 67. v2.31: the player's own pictures for the island body (bg_island_body) and the parking platform (bg_parking_pad)
+   replace v2.30's drawn rock and parking land; island switcher panel (two columns of island cards) replaces the v2.28 mini map;
+   loading bar until the first picture is ready; clock / forecast in the farm location's own time + a row of world clocks;
+   tap anywhere on the world map to pick a location; pool-lamp glow fades over the whole pool instead of stopping at a hard 3×3 edge ===== */
+const UND67 = CFG.islandUnderside || {}, BODY67 = UND67.image || {}, PADI67 = UND67.parkingImage || {};
+const SWC67 = (CFG.islands || {}).switcher || {}, WCL67 = (CFG.ui || {}).worldClocks || {}, LD67 = (CFG.ui || {}).loading || {};
+
+/* ---------- island body: the picture laid column by column on the island's outline ---------- */
+RT.body67 = null;
+// image top edge (y in the picture) at picture column ix
+function bodyTop67(ix){ const T = BODY67.top || [], st = BODY67.topStep || 4, i = Math.max(0, Math.min(T.length - 1, ix / st)), a = Math.floor(i), b = Math.min(T.length - 1, a + 1);
+  return T.length ? T[a] + (T[b] - T[a]) * (i - a) : 0; }
+// lower outline of the island's open sides (grass edge), sampled every `step` screen px — same sampling as g21, only the island's own tiles
+function islandEdge67(M, step){
+  const b = mapBounds(M), x0 = b.minX, x1 = b.maxX, W = x1 - x0, n = Math.ceil(W / step), yb = new Array(n + 1).fill(-1e9);
+  for (const [x, y] of mapTiles(M)){ const { cx, cy } = center(x, y);
+    for (const [open, ax, ay] of [[!inMap(M, x + 1, y), cx + HW, cy], [!inMap(M, x, y + 1), cx - HW, cy]]){ if (!open) continue;
+      const bx = cx, by = cy + HH, lo = Math.min(ax, bx), hi = Math.max(ax, bx);
+      for (let i = Math.max(0, Math.floor((lo - x0) / step)); i <= Math.min(n, Math.ceil((hi - x0) / step)); i++){ const sx = x0 + i * step; if (sx < lo - .01 || sx > hi + .01) continue;
+        const yy = ay + (by - ay) * (sx - ax) / (bx - ax); if (yy > yb[i]) yb[i] = yy; } } }
+  let corner = { x: (x0 + x1) / 2, y: -1e9 }; for (let i = 0; i <= n; i++) if (yb[i] > corner.y) corner = { x: x0 + i * step, y: yb[i] };
+  return { x0, x1, W, n, yb, corner };
+}
+function buildBody67(M, im){
+  const st = BODY67.columnPx || 2, E = islandEdge67(M, st), iw = im.naturalWidth || im.width, ih = im.naturalHeight || im.height;
+  const ic = Math.max(1, Math.min(iw - 1, BODY67.corner || iw / 2)), hs = E.W / iw, vs = hs * (BODY67.depthScale || .82), off = BODY67.topOffset || 0;
+  let minY = 1e9, maxY = -1e9; for (const y of E.yb) if (y > -1e8){ minY = Math.min(minY, y); }
+  maxY = E.corner.y + ih * vs + 4; minY -= 4;
+  const k = Math.max(1, Math.min(BODY67.cacheScale || 2, 2.5)), cvw = Math.ceil((E.W + 4) * k), cvh = Math.ceil((maxY - minY) * k);
+  if (cvw < 2 || cvh < 2 || cvw * cvh > 24e6) return null;
+  const c = document.createElement('canvas'); c.width = cvw; c.height = cvh; const g = c.getContext('2d'); g.imageSmoothingQuality = 'high';
+  const ixAt = sx => sx <= E.corner.x ? ic * (sx - E.x0) / Math.max(1, E.corner.x - E.x0) : ic + (iw - ic) * (sx - E.corner.x) / Math.max(1, E.x1 - E.corner.x);
+  for (let i = 0; i < E.n; i++){ const y = E.yb[i]; if (y < -1e8) continue; const sx = E.x0 + i * st, a = ixAt(sx), b2 = ixAt(sx + st), sw = Math.max(.5, b2 - a), it = bodyTop67(a);
+    const dh = (ih - it) * vs; if (dh <= 0) continue;
+    g.drawImage(im, a, it, Math.min(sw, iw - a), ih - it, (sx - E.x0 + 2) * k, (y + off - minY) * k, (st + .7) * k, dh * k); }
+  return { c, x: E.x0 - 2, y: minY, w: cvw / k, h: cvh / k };
+}
+// replaces g66 (and g21): the player's picture; nothing is drawn until it has loaded (the loading bar covers the first frames)
+function drawUnderside(M){
+  const im = IMG[BODY67.sprite || 'bg_island_body']; if (!im || !M) return;
+  const sig = JSON.stringify([S.maps.indexOf(M), M.blocks]);
+  if (!RT.body67 || RT.body67.sig !== sig || RT.body67.im !== im){ const b = buildBody67(M, im); RT.body67 = { sig, im, b }; }
+  const B = RT.body67.b; if (B) ctx.drawImage(B.c, B.x, B.y, B.w, B.h);
+}
+
+/* ---------- parking platform: the player's four-direction pictures, the top surface mapped onto the 4×2 cells ---------- */
+// affine transform that takes three picture points to three screen points
+function affine67(s0, s1, s2, d0, d1, d2){
+  const ux = s1[0] - s0[0], uy = s1[1] - s0[1], vx = s2[0] - s0[0], vy = s2[1] - s0[1], det = ux * vy - vx * uy;
+  const Ux = d1[0] - d0[0], Uy = d1[1] - d0[1], Vx = d2[0] - d0[0], Vy = d2[1] - d0[1];
+  const a = (Ux * vy - Vx * uy) / det, c = (Vx * ux - Ux * vx) / det, b = (Uy * vy - Vy * uy) / det, d = (Vy * ux - Uy * vx) / det;
+  return [a, b, c, d, d0[0] - a * s0[0] - c * s0[1], d0[1] - b * s0[0] - d * s0[1]]; }
+const gridPt67 = (gx, gy) => [(gx - gy) * HW, (gx + gy) * HH];
+// replaces g66's parking land (g65 drawPad calls it)
+function drawPadBase65(P, c, ghost){
+  const sd = (PADI67.sides || {})[P.side]; if (!sd) return; const im = IMG[sd.sprite]; if (!im) return;
+  const x0 = P.x0, y0 = P.y0, T = ALONG_X34(P.side)
+    ? affine67(sd.left, sd.front, sd.back, gridPt67(x0, y0 + 2), gridPt67(x0 + 4, y0 + 2), gridPt67(x0, y0))
+    : affine67(sd.right, sd.front, sd.back, gridPt67(x0 + 2, y0), gridPt67(x0 + 2, y0 + 4), gridPt67(x0, y0));
+  ctx.save(); ctx.transform(...T); if (ghost) ctx.globalAlpha *= .6; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(im, 0, 0); ctx.restore();
+}
+
+/* ---------- island switcher (replaces the v2.28 mini map) ---------- */
+const ISW67 = document.createElement('button'); ISW67.id = 'isw67'; ISW67.className = 'gbtnx'; ISW67.hidden = true; ISW67.setAttribute('aria-label', '浮島切換');
+ISW67.innerHTML = '<canvas></canvas>';
+const ISP67 = document.createElement('div'); ISP67.id = 'isp67'; ISP67.hidden = true;
+const ISWN67 = document.createElement('div'); ISWN67.id = 'iswn67'; ISWN67.hidden = true;
+APP.appendChild(ISW67); APP.appendChild(ISWN67); APP.appendChild(ISP67);
+{ const st = document.createElement('style'); st.textContent = `
+#isw67{position:absolute;z-index:3;padding:0;display:flex;align-items:center;justify-content:center;transition:box-shadow .15s,border-color .15s}
+#iswn67{position:absolute;z-index:3;transform:translateX(-50%);max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none;
+  font-size:11px;font-weight:700;line-height:16px;padding:0 7px;border-radius:8px;color:#fff;background:rgba(20,40,70,.55);text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.lvl.ring67{position:relative}
+.lvl.ring67::before{content:'';position:absolute;inset:-2px;border-radius:50%;pointer-events:none;
+  background:conic-gradient(var(--ring67a,#7ee36a) calc(var(--xp67,0) * 1%), var(--ring67b,#2f6e33) 0);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3.5px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3.5px))}
+#isw67 canvas{display:block}
+#isp67{position:absolute;z-index:4;border-radius:18px;padding:10px 10px 12px;background:rgba(28,52,88,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;box-shadow:0 10px 30px rgba(5,20,45,.45);border:1px solid rgba(150,200,255,.25)}
+#isp67::before{content:'';position:absolute;top:-8px;right:var(--ar67,22px);border:8px solid transparent;border-top:0;border-bottom-color:rgba(28,52,88,.88)}
+#isp67 .h67{display:flex;align-items:center;gap:8px;padding:2px 4px 10px;font-weight:700;font-size:16px}
+#isp67 .h67 .n67{margin-left:auto;font-size:14px;background:rgba(255,255,255,.12);border-radius:10px;padding:2px 10px}
+#isp67 .h67 button{background:none;border:0;color:#fff;font-size:20px;line-height:1;padding:2px 6px;cursor:pointer}
+#isp67 .g67{display:grid;grid-template-columns:repeat(2,var(--cw67,132px));gap:10px}
+#isp67 .c67{position:relative;border-radius:14px;background:rgba(255,255,255,.08);border:2px solid transparent;padding:4px 4px 6px;color:#fff;cursor:pointer;font:inherit;text-align:center}
+#isp67 .c67:hover{background:rgba(255,255,255,.14)}
+#isp67 .c67.on{border-color:#7fdcff;box-shadow:0 0 12px rgba(110,210,255,.7);background:rgba(120,200,255,.14)}
+#isp67 .c67 canvas{display:block;margin:0 auto}
+#isp67 .c67 b{display:flex;align-items:center;justify-content:center;gap:5px;font-size:14px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#isp67 .c67.on b::before{content:'';width:8px;height:8px;border-radius:50%;background:#38b6ff;box-shadow:0 0 6px #38b6ff}
+#isp67 .c67 .tr67{position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center}
+#isp67 .c67 .tr67 img{width:20px;height:20px;object-fit:contain}
+#isp67 .tip67{font-size:12px;opacity:.75;margin:8px 4px 0}
+body:not(.night) #isp67{background:rgba(30,60,100,.82)}
+`; document.head.appendChild(st); }
+RT.isw67 = { sig: '' };
+const swScale67 = () => isM() ? (SWC67.mobileScale || .9) : 1;
+// replaces g63: the mini map is gone; the button shows the island you are on
+function drawMini63(force){
+  MINI63.hidden = true; MINIB63.hidden = true;
+  const show = !!(S && S.maps.length > 1); ISW67.hidden = !show; ISWN67.hidden = !show; if (!show){ ISP67.hidden = true; return; }
+  // v2.31: same size as ☰, right under it
+  const hb = $('hamb'), ar = APP.getBoundingClientRect(), hr = hb && hb.offsetParent ? hb.getBoundingClientRect() : null, B = Math.round(hr ? hr.width : (SWC67.button || 44));
+  if (hr){ ISW67.style.top = Math.round(hr.bottom - ar.top + (SWC67.gap ?? 8)) + 'px'; ISW67.style.right = Math.round(ar.right - hr.right) + 'px'; } else miniPlace63(ISW67, B);
+  ISW67.style.width = B + 'px'; ISW67.style.height = B + 'px';
+  // the island you are on: its name in small type right under the button
+  { const nm = islName63(S.cur); if (ISWN67.textContent !== nm) ISWN67.textContent = nm; const top = parseFloat(ISW67.style.top) || 0, right = parseFloat(ISW67.style.right) || 12;
+    ISWN67.style.top = (top + B + (SWC67.nameGap ?? 3)) + 'px'; ISWN67.style.left = ((APP.clientWidth || innerWidth) - right - B / 2) + 'px'; }
+  fixStatus67();
+  const snow = !!(S.snow && S.snow.cover), sig = JSON.stringify([S.cur, B, snow, curMap().blocks, Object.keys(curMap().tiles).length, Math.floor(Date.now() / 5000)]);
+  if (force || sig !== RT.isw67.sig){ RT.isw67.sig = sig; const c = ISW67.querySelector('canvas'), dp = 2, w = B - 6, h = B - 6;
+    c.width = w * dp; c.height = h * dp; c.style.width = w + 'px'; c.style.height = h + 'px'; const g = c.getContext('2d'); g.setTransform(dp, 0, 0, dp, 0, 0); g.clearRect(0, 0, w, h);
+    drawFit67(g, islThumbCv63(S.cur, w * 2, h * 2), w, h, .86); }
+  if (!ISP67.hidden) placePanel67();
+}
+// v2.31: the thumbnail is drawn from the top of its canvas; crop to the island's real outline and centre it (no name under it)
+function drawFit67(g, src, w, h, fill){
+  let x0 = src.width, y0 = src.height, x1 = -1, y1 = -1;
+  try { const d = src.getContext('2d').getImageData(0, 0, src.width, src.height).data;
+    for (let y = 0; y < src.height; y++) for (let x = 0; x < src.width; x++) if (d[(y * src.width + x) * 4 + 3] > 16){ if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } } catch(e){}
+  if (x1 < 0){ x0 = 0; y0 = 0; x1 = src.width - 1; y1 = src.height - 1; }
+  const sw = x1 - x0 + 1, sh = y1 - y0 + 1, k = Math.min(w * fill / sw, h * fill / sh), dw = sw * k, dh = sh * k;
+  g.drawImage(src, x0, y0, sw, sh, (w - dw) / 2, (h - dh) / 2, dw, dh); }
+function fixStatus67(){
+  // phone portrait: the robot / status chips used to sit right under ☰ — move them below the island name so they don't crowd it
+  try { const st = $('status'); if (document.body.classList.contains('m-port') && st && st.innerHTML && !st.classList.contains('open')){
+      const nb = ISWN67.getBoundingClientRect(), sb = st.getBoundingClientRect();
+      if (nb.height && sb.height && sb.right > nb.left - 4 && sb.top < nb.bottom + 4){ const t = Math.round(nb.bottom + (SWC67.statusGap ?? 6)) + 'px'; if (st.style.top !== t) st.style.top = t;
+        const tt = Math.round(st.getBoundingClientRect().bottom + 8) + 'px', te = $('toast'); if (te && parseFloat(te.style.top || 0) < parseFloat(tt)) te.style.top = tt; } } } catch(e){}
+}
+{ const _lh67 = layoutHUD; layoutHUD = function(...a){ const r = _lh67(...a); fixStatus67(); return r; }; }
+function placePanel67(){ const a = APP.getBoundingClientRect(), r = ISW67.getBoundingClientRect();
+  ISP67.style.top = (r.bottom - a.top + 10) + 'px'; ISP67.style.right = Math.max(8, a.right - r.right) + 'px';
+  ISP67.style.setProperty('--ar67', Math.max(10, r.width / 2 - 8) + 'px'); }
+function openSwitcher67(){
+  if (!S) return; const n = S.maps.length, sc = swScale67(), cw = Math.round((SWC67.cardW || 132) * sc), ch = Math.round((SWC67.cardH || 92) * sc);
+  const R = typeof routeState65 === 'function' ? routeState65() : null, now = Date.now(), truckAt = R && R.phase === 'stay' && R.day === dayKeyLocal(now) ? R.mi : -1;
+  ISP67.style.setProperty('--cw67', cw + 'px');
+  ISP67.innerHTML = `<div class="h67"><span>🏝</span><span>浮島切換</span><span class="n67">${S.cur + 1} / ${n}</span><button class="x67" aria-label="關閉">✕</button></div>
+    <div class="g67">${S.maps.map((M, i) => `<button class="c67${i === S.cur ? ' on' : ''}" data-mi="${i}"><span class="th67"></span><b>${escapeHTML(islName63(i))}</b>${i === truckAt && IMGSRC.ui_truck_garbage ? `<span class="tr67" title="垃圾車在這座島"><img src="${IMGSRC.ui_truck_garbage}" alt=""></span>` : ''}</button>`).join('')}</div>
+    <p class="tip67">點島換過去；長按（或按右鍵）改名字</p>`;
+  ISP67.querySelectorAll('.c67').forEach(b => { const mi = +b.dataset.mi, cv = islThumbCv63(mi, cw * 2, ch * 1.5); const c2 = document.createElement('canvas'), dp = 2, w = cw - 8, h = ch - 22;
+    c2.width = w * dp; c2.height = h * dp; c2.style.width = w + 'px'; c2.style.height = h + 'px'; const g = c2.getContext('2d'); g.scale(dp, dp);
+    drawFit67(g, cv, w, h, .94); b.querySelector('.th67').appendChild(c2); });
+  ISP67.hidden = false; placePanel67(); }
+const closeSwitcher67 = () => { ISP67.hidden = true; };
+ISW67.addEventListener('click', e => { e.stopPropagation(); if (ISP67.hidden) openSwitcher67(); else closeSwitcher67(); });
+{ let lp = null;
+  ISP67.addEventListener('pointerdown', e => { e.stopPropagation(); const b = e.target.closest('.c67'); if (!b) return; clearTimeout(lp && lp.tm);
+    lp = { mi: +b.dataset.mi, done: false, tm: setTimeout(() => { if (!lp) return; lp.done = true; try { navigator.vibrate && navigator.vibrate(20); } catch(err){} closeSwitcher67(); openIslNames63(lp.mi); }, SWC67.longPressMs || 500) }; });
+  ISP67.addEventListener('pointerup', e => { e.stopPropagation(); if (e.target.closest('.x67')){ closeSwitcher67(); return; } if (!lp) return; clearTimeout(lp.tm); const was = lp; lp = null;
+    if (was.done) return; const b = e.target.closest('.c67'); if (!b || +b.dataset.mi !== was.mi) return; closeSwitcher67(); if (was.mi !== S.cur) goIsland63(was.mi); });
+  ISP67.addEventListener('pointerleave', () => { if (lp){ clearTimeout(lp.tm); lp = null; } });
+  ISP67.addEventListener('contextmenu', e => { e.preventDefault(); const b = e.target.closest('.c67'); if (lp){ clearTimeout(lp.tm); lp = null; } if (b){ closeSwitcher67(); openIslNames63(+b.dataset.mi); } });
+  for (const el of [ISW67, ISP67]) for (const ev of ['pointerdown', 'pointermove', 'wheel', 'click']) el.addEventListener(ev, e => e.stopPropagation());
+  // tapping anywhere else closes it
+  document.addEventListener('pointerdown', e => { if (!ISP67.hidden && !ISP67.contains(e.target) && !ISW67.contains(e.target)) closeSwitcher67(); }, true); }
+{ const _gi67 = goIsland63; goIsland63 = function(...a){ closeSwitcher67(); return _gi67(...a); }; }
+
+/* ---------- loading bar: stays until the images of the first picture are in ---------- */
+{ const t0 = performance.now(), minMs = LD67.minMs ?? 400, maxMs = LD67.maxMs ?? 20000; let okSince = 0, done = false;
+  const _dw67 = drawWorld; drawWorld = function(t, now){ if (done) return _dw67(t, now); LZ64.missed = false; const r = _dw67(t, now); if (!LZ64.missed) RT.drew67 = (RT.drew67 || 0) + 1; else RT.drew67 = 0; return r; };
+  const finish = () => { if (done) return; done = true; const el = document.getElementById('loading'); if (!el) return; window.__boot67 && window.__boot67(100, '好了！');
+    el.classList.add('out67'); setTimeout(() => el.remove(), 400); };
+  const tick = () => { if (done) return; const el = document.getElementById('loading'); if (!el || !document.getElementById('ldFill67')){ done = true; return; }
+    const fs = Object.values(LZ64.files), want = fs.filter(e => e.loading || e.ok), got = fs.filter(e => e.ok).length, loading = fs.filter(e => e.loading).length;
+    const frac = want.length ? got / want.length : 0; window.__boot67 && window.__boot67(30 + 65 * frac, S ? '正在畫你的農場…' : '正在準備農場…');
+    const modalUp = !$('modal').hidden, ready = !loading && (S ? (RT.drew67 || 0) >= 2 : modalUp);
+    const el2 = performance.now() - t0; if (ready){ if (!okSince) okSince = el2; } else okSince = 0;
+    if ((okSince && el2 - okSince > 150 && el2 > minMs) || el2 > maxMs) finish(); else setTimeout(tick, 100); };
+  setTimeout(tick, 50); window.__boot67done = () => done; }
+
+/* ---------- the farm location's own time ---------- */
+function farmTZ67(){
+  const L = (S && S.settings && S.settings.location) || { mode: 'auto' }, ok = tz => { try { new Intl.DateTimeFormat('en', { timeZone: tz }); return true; } catch(e){ return false; } };
+  if (L.mode === 'city'){ const c = cityById(L.cityId); const z = c && cityTZ(c); if (z) return z; }
+  if (L.mode === 'auto'){ try { const z = Intl.DateTimeFormat().resolvedOptions().timeZone; if (z) return z; } catch(e){} }
+  const { lat, lon } = getLatLon();
+  // a city close by gives the real zone (summer time included); otherwise a fixed offset from the longitude
+  let best = null, bd = 1e9; for (const c of CFG.cities){ const d = Math.hypot(c.lat - lat, (c.lon - lon) * Math.cos(lat * Math.PI / 180)); if (d < bd){ bd = d; best = c; } }
+  if (best && bd < 2 && cityTZ(best)) return cityTZ(best);
+  const h = Math.max(-12, Math.min(14, Math.round(lon / 15))), z = h === 0 ? 'Etc/GMT' : `Etc/GMT${h > 0 ? '-' : '+'}${Math.abs(h)}`; return ok(z) ? z : 'Asia/Taipei'; }
+const tzParts67 = (ms, tz) => { const o = {}; try { for (const p of new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', weekday: 'short' }).formatToParts(ms)) o[p.type] = p.value; } catch(e){}
+  return { y: +o.year, mo: +o.month, d: +o.day, h: +o.hour % 24, mi: +o.minute, s: +o.second, wd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(o.weekday) }; };
+const tzOffset67 = (ms, tz) => { const p = tzParts67(ms, tz); return Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s) - Math.floor(ms / 1000) * 1000; };
+const locHM67 = (ms, tz) => localHM(ms, tz || farmTZ67());
+const locMidnight67 = (ms, tz) => { tz = tz || farmTZ67(); const o = tzOffset67(ms, tz), loc = ms + o, mid = loc - ((loc % DAY) + DAY) % DAY; return mid - tzOffset67(mid - o, tz); };
+// replaces g8: the HUD clock, sunrise and sunset in the farm's own time
+function renderClockChip(){
+  const now = Date.now(), ph = dayPhase(now), rain = farmRain(now), cloudy = farmCloudy(now), dl = activeDoll(), tz = farmTZ67();
+  const icon = rain ? 'ui_weather_rain' : ph.phase === 'night' ? 'ui_moon' : cloudy ? 'ui_weather_cloudy' : 'ui_weather_sun';
+  const s = ph.sun; let nxt = '';
+  if (s && s.rise){ if (now < s.rise) nxt = `日出 ${locHM67(s.rise, tz)}`; else if (now < s.set) nxt = `日落 ${locHM67(s.set, tz)}`; else { const t2 = sunTimes(now + DAY); nxt = t2.rise ? `日出 ${locHM67(t2.rise, tz)}` : ''; } }
+  const src = IMGSRC[icon]; if ($('weatherIcon').getAttribute('src') !== src) $('weatherIcon').src = src;
+  { const html = `<b class="wt-time">${locHM67(now, tz)}</b><span class="wt-more">${rain ? ' 大雨' : (typeof farmSnow === 'function' && farmSnow(now)) ? ' 下雪' : cloudy && ph.phase !== 'night' ? ' 陰天' : ''}${dl ? `（${DOLL.types[dl.type].name}）` : ''} · ${nxt}</span>`; if ($('weatherText').innerHTML !== html) $('weatherText').innerHTML = html; }
+  const ub = $('utilitiesBtn'); if (ub){ ub.querySelector('.u-tap').classList.toggle('off', !tapOn()); ub.querySelector('.u-elec').classList.toggle('off', !gridOn()); }
+}
+// replaces g13: days and hours of the forecast are the farm location's days and hours
+function forecastHTML(now){
+  const bh = FC.blockHours || 3, days = FC.days || 2, loc = getLatLon(), il = AST.illum(now), tz = farmTZ67(), hm = ms => locHM67(ms, tz);
+  const rows = [], mid0 = locMidnight67(now, tz);
+  for (let d = 0; d < days; d++){
+    const day0 = locMidnight67(mid0 + d * DAY + 12 * 3600e3, tz), p = tzParts67(day0 + 12 * 3600e3, tz), st = sunTimes(day0 + 12 * 3600e3);
+    const cells = []; for (let h = 0; h < 24; h += bh){ const b = blockWeather(day0 + h * 3600e3, bh), past = d === 0 && day0 + (h + bh) * 3600e3 < now;
+      cells.push(`<div class="fc-cell${past ? ' past' : ''}${b.rain ? ' rain' : ''}"><span>${String(h).padStart(2,'0')}</span><img src="${IMGSRC[b.icon]}" alt="${b.text}"><small>${b.rain ? hm(b.rain.start) : b.text}</small></div>`); }
+    const sh = showerTonight(day0 + 22 * 3600e3);
+    rows.push(`<h3>${d === 0 ? '今天' : '明天'} ${p.mo}/${p.d}（${WD[p.wd] || ''}）<span class="small"> · 日出 ${st.rise ? hm(st.rise) : '—'}、日落 ${st.set ? hm(st.set) : '—'}</span></h3>
+      <div class="fc-row">${cells.join('')}</div>${sh ? `<p class="fc-event"><img src="${IMGSRC.ui_meteor}" alt="">今晚有${sh.name}，天黑後抬頭看看，點流星可以許願。</p>` : ''}`);
+  }
+  const later = []; for (let h = 0; h < 24; h++){ const ms = now + h * 3600e3, r = slotRain(slotOf(ms)); if (r && r.end > now && !later.some(x => x.start === r.start)) later.push(r); }
+  const todayEnd = mid0 + DAY, rainToday = later.find(r => r.start < todayEnd);
+  let tip = rainToday ? `今天 ${hm(rainToday.start)} 左右會下雨，水塔會補滿，可以少澆一次水。` : '今天沒有雨，記得幫作物澆水，或請無人機幫忙。';
+  if (showerTonight(now)) tip += ' 今晚有流星雨。'; else if (il.fraction > .97) tip += ' 今晚是滿月。';
+  return `<div class="fc-head"><div><b>${loc.name}</b><span class="small">　當地時間 ${hm(now)} · 月相：${moonName(il.phase)}（亮 ${Math.round(il.fraction * 100)}%）</span></div></div>
+    ${rows.join('')}<p class="fc-tip">${tip}</p>
+    <div class="row"><label><input type="checkbox" id="fcAuto" ${S.settings.dailyForecast !== false ? 'checked' : ''}> 每天第一次打開時自動跳出</label></div>`;
+}
+
+/* ---------- world clocks at the bottom of the forecast ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+.wclk67{margin-top:14px;padding:12px 10px 10px;border-radius:16px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(40,80,130,.12)}
+body.night .wclk67{background:rgba(20,34,64,.55);box-shadow:inset 0 0 0 1px rgba(150,185,255,.2)}
+.wclk67 h4{margin:0 0 8px;font-size:15px;display:flex;align-items:center;gap:6px}
+.wclk67 .row67{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.wclk67 .ck67{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;min-width:72px;gap:2px}
+.wclk67 .ck67 b{font-size:13px}.wclk67 .ck67 .t67{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}.wclk67 .ck67 .d67{font-size:11px;opacity:.7}
+.wclk67 .ck67.here b::after{content:' 📍'}
+.wclk67 svg .face{fill:#fff;stroke:#2c4a6b;stroke-width:3}.wclk67 svg .tick{stroke:#2c4a6b;stroke-width:2}.wclk67 svg .hh{stroke:#1d2b3a;stroke-width:4;stroke-linecap:round}
+.wclk67 svg .mm{stroke:#1d2b3a;stroke-width:2.6;stroke-linecap:round}.wclk67 svg .ss{stroke:#e2483d;stroke-width:1.4;stroke-linecap:round}.wclk67 svg .pin{fill:#e2483d}
+.wclk67 svg.nt .face{fill:#24365c;stroke:#9fc0ef}.wclk67 svg.nt .tick{stroke:#9fc0ef}.wclk67 svg.nt .hh,.wclk67 svg.nt .mm{stroke:#eef3fb}
+`; document.head.appendChild(st); }
+function clockSVG67(p, size){ const a = (p.h % 12 + p.mi / 60) * 30, b = (p.mi + p.s / 60) * 6, c = p.s * 6, R = 46, hand = (ang, L) => { const r = (ang - 90) * Math.PI / 180; return `x2="${50 + Math.cos(r) * L}" y2="${50 + Math.sin(r) * L}"`; };
+  const ticks = Array.from({ length: 12 }, (_, i) => { const r = i * 30 * Math.PI / 180, L = i % 3 ? 6 : 10; return `<line class="tick" x1="${50 + Math.sin(r) * (R - 2)}" y1="${50 - Math.cos(r) * (R - 2)}" x2="${50 + Math.sin(r) * (R - 2 - L)}" y2="${50 - Math.cos(r) * (R - 2 - L)}"/>`; }).join('');
+  const night = p.h < 6 || p.h >= 18;
+  return `<svg class="${night ? 'nt' : ''}" viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true"><circle class="face" cx="50" cy="50" r="${R}"/>${ticks}<line class="hh" x1="50" y1="50" ${hand(a, 24)}/><line class="mm" x1="50" y1="50" ${hand(b, 34)}/><line class="ss" x1="50" y1="56" ${hand(c, 38)}/><circle class="pin" cx="50" cy="50" r="3.2"/></svg>`; }
+function worldClockList67(){ const here = { name: getLatLon().name, tz: farmTZ67(), here: true }, out = [here];
+  for (const id of WCL67.cities || ['taipei', 'tokyo', 'london', 'newyork']){ const c = cityById(id), tz = c && cityTZ(c); if (!tz) continue; if (tz === here.tz && out.length && c.name === here.name) continue; out.push({ name: c.name, tz }); }
+  return out; }
+function worldClocksHTML67(){ const now = Date.now(), size = WCL67.size || 62, base = tzParts67(now, farmTZ67()), bday = Date.UTC(base.y, base.mo - 1, base.d);
+  return `<div class="wclk67"><h4>🕰 世界時間</h4><div class="row67">${worldClockList67().map(c => { const p = tzParts67(now, c.tz), dd = Math.round((Date.UTC(p.y, p.mo - 1, p.d) - bday) / DAY);
+    return `<div class="ck67${c.here ? ' here' : ''}" data-tz="${c.tz}">${clockSVG67(p, size)}<b>${escapeHTML(c.name)}</b><span class="t67">${String(p.h).padStart(2, '0')}:${String(p.mi).padStart(2, '0')}</span><span class="d67">${dd > 0 ? '明天' : dd < 0 ? '昨天' : '今天'} ${p.mo}/${p.d}</span></div>`; }).join('')}</div></div>`; }
+function tickClocks67(){ const box = document.querySelector('.wclk67'); if (!box){ clearInterval(RT.wclk67); RT.wclk67 = null; return; } const tmp = document.createElement('div'); tmp.innerHTML = worldClocksHTML67();
+  const sc = box.querySelector('.row67').scrollLeft; box.replaceWith(tmp.firstChild); const nb = document.querySelector('.wclk67 .row67'); if (nb) nb.scrollLeft = sc; }
+{ const _om67 = openModal; openModal = function(title, tabs, render, initial){
+  if ((title === '天氣預報' || title === '今日天氣預報') && typeof render === 'function'){ const r0 = render; render = (k, el) => { const v = r0(k, el);
+    queueMicrotask(() => { if (!el.querySelector('.wclk67')) el.insertAdjacentHTML('beforeend', worldClocksHTML67()); clearInterval(RT.wclk67); RT.wclk67 = setInterval(tickClocks67, 1000); }); return v; }; }
+  return _om67(title, tabs, render, initial); }; }
+
+/* ---------- 設定 · 地點: tap anywhere on the world map ---------- */
+function wmLonLat67(px, py){ let best = [0, 0], bd = 1e18;
+  for (let lo = -180; lo <= 180; lo += 3) for (let la = -60; la <= 80; la += 3){ const [x, y] = wmXY53(lo, la), d = (x - px) ** 2 + (y - py) ** 2; if (d < bd){ bd = d; best = [lo, la]; } }
+  for (const step of [1, .25, .05]) { const [l0, a0] = best; for (let lo = l0 - step * 3; lo <= l0 + step * 3; lo += step) for (let la = a0 - step * 3; la <= a0 + step * 3; la += step){ const [x, y] = wmXY53(lo, la), d = (x - px) ** 2 + (y - py) ** 2; if (d < bd){ bd = d; best = [lo, la]; } } }
+  let [lon, lat] = best; lon = ((lon + 540) % 360) - 180; return { lat: Math.max(-66, Math.min(80, +lat.toFixed(2))), lon: +lon.toFixed(2) }; }
+{ const _rs67 = renderSettings; renderSettings = function(el){ const r = _rs67(el); try { const box = el.querySelector('.wmap'); if (!box || !WM53) return r;
+    box.style.cursor = 'crosshair'; const p = box.parentElement && box.parentElement.querySelector('p.small'); if (p) p.textContent = p.textContent.replace('點地圖上的點或下面的城市就會換地點。', '點地圖上的城市，或地圖上任何地方（自訂位置），就會換地點；時鐘會改成當地時間。');
+    box.addEventListener('click', e => { if (e.target.closest('[data-city]')) return; const rc = box.getBoundingClientRect(); if (!rc.width) return;
+      const px = (e.clientX - rc.left) / rc.width * WM53.w, py = (e.clientY - rc.top) / rc.height * WM53.h, { lat, lon } = wmLonLat67(px, py);
+      S.settings.location = { mode: 'custom', lat, lon }; sunCache.clear(); RT.geo = null; save();
+      toast(`地點改成自訂位置（${lat.toFixed(2)}, ${lon.toFixed(2)}），當地時間 ${locHM67(Date.now())}`, true); renderHUD(); el.innerHTML = ''; renderSettings(el); });
+  } catch(e){ console.error(e); } return r; }; }
+
+/* ---------- pool lamps: the glow fades out over the whole pool (no hard dark cell just outside the 3×3 range) ---------- */
+// replaces g58: same glow, clipped to every pool cell joined to a lit lamp; which cells count as lit for growth does not change (still 3×3)
+function poolLampGlow58(now){ if (!S || !PLD56) return; const M = curMap(); if (!M || !M.pll) return;
+  const dark = nightDark(now); if (dark < .03) return;
+  const lamps = []; for (const k in M.pll){ const T = M.pll[k]; if (T && T.lit && isPool(M.tiles[k])) lamps.push(pkey(k)); } if (!lamps.length) return;
+  const R = PLD56.range || 1, cells = new Set(), q = lamps.map(([x, y]) => tkey(x, y));
+  for (const k of q) cells.add(k);
+  while (q.length){ const [x, y] = pkey(q.pop()); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]){ const k = tkey(x + dx, y + dy); if (!cells.has(k) && isPool(M.tiles[k])){ cells.add(k); q.push(k); } } }
+  ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y);
+  ctx.beginPath();
+  for (const k of cells){ const [x, y] = pkey(k), { cx, cy } = center(x, y), e = 1.02; ctx.moveTo(cx, cy - HH * e); ctx.lineTo(cx + HW * e, cy); ctx.lineTo(cx, cy + HH * e); ctx.lineTo(cx - HW * e, cy); ctx.closePath();
+    if (!inMap(M, x, y + 1)){ ctx.moveTo(cx - HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + 19); ctx.lineTo(cx - HW, cy + 19); ctx.closePath(); }
+    if (!inMap(M, x + 1, y)){ ctx.moveTo(cx + HW, cy); ctx.lineTo(cx, cy + HH); ctx.lineTo(cx, cy + HH + 19); ctx.lineTo(cx + HW, cy + 19); ctx.closePath(); } }
+  ctx.clip();
+  ctx.globalCompositeOperation = 'lighter';
+  const [r, g, b] = PG58.color, [cr, cg, cb] = PG58.core, A = (PG58.alpha ?? .45) * Math.min(1, dark * 1.4), CA = (PG58.coreAlpha ?? .35) * Math.min(1, dark * 1.4);
+  const flick = motion ? 1 + Math.sin(performance.now() / 700) * .03 : 1;
+  for (const [x0, y0] of lamps){ const { cx, cy } = center(x0, y0), rad = HW * (R + 1.2) * (PG58.radius ? PG58.radius / 1.7 : 1) * 1.7 * flick;
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(1, .5);
+    const gr = ctx.createRadialGradient(0, 0, 0, 0, 0, rad); gr.addColorStop(0, `rgba(${r},${g},${b},${A})`); gr.addColorStop(.45, `rgba(${r},${g},${b},${A * .5})`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(0, 0, rad, 0, 7); ctx.fill();
+    const g2 = ctx.createRadialGradient(0, 0, 0, 0, 0, HW * .75); g2.addColorStop(0, `rgba(${cr},${cg},${cb},${CA})`); g2.addColorStop(1, `rgba(${cr},${cg},${cb},0)`);
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(0, 0, HW * .75, 0, 7); ctx.fill(); ctx.restore(); }
+  ctx.restore(); }
+
+/* ---------- level badge: an outer ring that fills with this level's experience ---------- */
+{ const _rh67 = renderHUD; renderHUD = function(...a){ const r = _rh67(...a); try { const e = $('lvl'), bar = $('xpbar'); if (e && bar){ e.classList.add('ring67');
+    const v = Math.max(0, Math.min(100, parseFloat(bar.style.width) || 0)), c = (CFG.ui || {}).levelRing || {}; e.style.setProperty('--xp67', v.toFixed(1));
+    if (c.fill) e.style.setProperty('--ring67a', c.fill); if (c.track) e.style.setProperty('--ring67b', c.track); } } catch(e){} return r; }; }
+
+/* ---------- tab rows that do not fit (作物分類 #cgrp62, 工具分頁 #trayTabs): mouse wheel, drag, and ‹ › arrows on desktop ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+.hsa67{position:fixed;z-index:22;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0;cursor:pointer;
+  border:1px solid var(--glb,rgba(255,255,255,.8));background:var(--gsheet,rgba(255,255,255,.92));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  color:var(--gtx,#1d2b3a);font-size:20px;font-weight:700;line-height:1;box-shadow:0 2px 8px rgba(20,40,70,.25)}
+.hsa67[hidden]{display:none}
+.hs67.drag67{cursor:grabbing}.hs67.drag67 *{cursor:grabbing!important}`; document.head.appendChild(st); }
+function hscroll67(el){ if (!el || el.dataset.hs67) return; el.dataset.hs67 = 1; el.classList.add('hs67');
+  const mk = (dir, txt) => { const b = document.createElement('button'); b.className = 'hsa67'; b.hidden = true; b.textContent = txt; b.setAttribute('aria-label', dir < 0 ? '往左' : '往右');
+    b.addEventListener('click', e => { e.stopPropagation(); el.scrollBy({ left: dir * Math.max(120, el.clientWidth * .7), behavior: 'smooth' }); });
+    for (const ev of ['pointerdown', 'pointerup', 'wheel']) b.addEventListener(ev, e => e.stopPropagation()); document.body.appendChild(b); return b; };
+  const L = mk(-1, '‹'), R = mk(1, '›');
+  const upd = () => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el), vis = !el.hidden && r.width > 0 && cs.visibility !== 'hidden' && cs.display !== 'none' && el.scrollWidth > el.clientWidth + 2;
+    const atL = el.scrollLeft <= 2, atR = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2, y = r.top + r.height / 2 - 14;
+    L.hidden = !vis || atL; R.hidden = !vis || atR;
+    if (!L.hidden){ L.style.left = (r.left - 4) + 'px'; L.style.top = y + 'px'; } if (!R.hidden){ R.style.left = (r.right - 24) + 'px'; R.style.top = y + 'px'; } };
+  // wheel: vertical wheel scrolls the row sideways
+  el.addEventListener('wheel', e => { if (el.scrollWidth <= el.clientWidth + 2) return; const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY; el.scrollLeft += d; e.preventDefault(); e.stopPropagation(); upd(); }, { passive: false });
+  // drag with the mouse (touch already scrolls natively); a drag does not count as a click
+  let dr = null, moved = false;
+  el.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse' || e.button !== 0) return; dr = { x: e.clientX, l: el.scrollLeft }; moved = false; });
+  window.addEventListener('pointermove', e => { if (!dr) return; const dx = e.clientX - dr.x; if (!moved && Math.abs(dx) < 6) return; moved = true; el.classList.add('drag67'); el.scrollLeft = dr.l - dx; upd(); });
+  window.addEventListener('pointerup', () => { if (!dr) return; dr = null; el.classList.remove('drag67'); if (moved) setTimeout(() => { moved = false; }, 0); });
+  el.addEventListener('click', e => { if (moved){ e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+  el.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd);
+  // the row is moved / refilled by other code: keep the arrows in step; bring the selected tab into view when the row is rebuilt
+  new MutationObserver(() => { requestAnimationFrame(() => { const on = el.querySelector('button.on'); if (on){ const a = on.offsetLeft, b2 = a + on.offsetWidth; if (a < el.scrollLeft || b2 > el.scrollLeft + el.clientWidth) el.scrollLeft = Math.max(0, a - 30); } upd(); }); }).observe(el, { childList: true });
+  new MutationObserver(() => requestAnimationFrame(upd)).observe(el, { attributes: true, attributeFilter: ['style', 'hidden', 'class'] });
+  setInterval(upd, 400); upd(); }
+hscroll67(document.getElementById('cgrp62')); hscroll67(document.getElementById('trayTabs'));
+window.__farm231 = { farmTZ67, locHM67, locMidnight67, tzParts67, wmLonLat67, openSwitcher67, closeSwitcher67, affine67, islandEdge67, drawPadBase65: (...a) => drawPadBase65(...a), drawUnderside: M => drawUnderside(M), worldClockList67 };
+{ const _ns67 = normalizeState; normalizeState = function(d){ const r = _ns67(d); const s = r || d; if (s) s.v231 = 1; return r; }; }
 
   })(CFG, ATLAS_JSON);
 })();

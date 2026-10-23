@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.27",
+  "configVersion": "2.31",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4242,7 +4242,7 @@ window.GAME_CONFIG = {
    }
   },
   "truck_pad": {
-   "name": "垃圾車停泊平台",
+   "name": "垃圾車停車場",
    "size": [
     4,
     2
@@ -5138,7 +5138,11 @@ window.GAME_CONFIG = {
       "kwh": 2.4,
       "chargeHours": 3
      }
-    ]
+    ],
+    "walk": {
+     "tilesPerSecond": 1.2,
+     "feedSeconds": 1.2
+    }
    },
    "snow": {
     "name": "除雪機器人",
@@ -5294,7 +5298,7 @@ window.GAME_CONFIG = {
     "waitsWhenFull": true,
     "walk": {
      "tilesPerSecond": 1,
-     "shovelSeconds": 3,
+     "shovelSeconds": 1.5,
      "note": "從充電站沿格子走到糞便那格才鏟；收工走回充電站"
     }
    },
@@ -5537,6 +5541,12 @@ window.GAME_CONFIG = {
     "recyclebot": 1
    },
    "note": "同種輪流出勤：一次只派「工作量 ÷ perUnit（無條件進位）」台，其餘留在機座充電；工作量＝待澆的格數／待清格數／有水的井／有東西的垃圾站"
+  },
+  "walkers229": {
+   "poopBag": 5,
+   "feedBucket": 10,
+   "bowlSeconds": 90,
+   "note": "鏟屎官背袋可裝 poopBag 坨、餵食機器人飼料桶 feedBucket 份；小飼料盆在地上留 bowlSeconds 秒"
   }
  },
  "pests": {
@@ -6324,9 +6334,9 @@ window.GAME_CONFIG = {
    "inputMinFontPx": 16
   },
   "truckPadBack": {
-   "outTiles": 0.35,
-   "upPx": 8,
-   "note": "平台貼在島的左上、右上時，往外推幾格、往上抬幾像素"
+   "outTiles": 0,
+   "upPx": 0,
+   "note": "v2.31：停車場改成和島齊平的玩家圖，後側不再往外推、往上抬"
   },
   "auto": {
    "note": "自動化面板：每種機器人的主色、淺色與一句說明（v2.18）",
@@ -6751,6 +6761,29 @@ window.GAME_CONFIG = {
     "sunflower"
    ],
    "note": "播種 → 作物分頁裡再分 9 類（照 ids 順序排）；向日葵暫時放在最後一類之外的「其他」，下一階段移到花苗"
+  },
+  "worldClocks": {
+   "cities": [
+    "taipei",
+    "tokyo",
+    "singapore",
+    "sydney",
+    "london",
+    "newyork",
+    "losangeles"
+   ],
+   "size": 62,
+   "note": "v2.31：天氣預報最下面一排世界時鐘（指針＋下方文字時間），第一個是農場所在地；cities 用 cities 的 id"
+  },
+  "loading": {
+   "minMs": 400,
+   "maxMs": 20000,
+   "note": "v2.31：打開遊戲時的進度條，圖都載好、第一個畫面畫完才收起（最多 maxMs）"
+  },
+  "levelRing": {
+   "fill": "#7ee36a",
+   "track": "#2f6e33",
+   "note": "v2.31：抬頭等級圓圈外的經驗環，從正上方順時針，亮綠＝這一級已得的經驗比例"
   }
  },
  "droneWatering": {
@@ -6785,7 +6818,7 @@ window.GAME_CONFIG = {
   "whenLightBelow": 0.5
  },
  "islandUnderside": {
-  "depthRatio": 0.2,
+  "depthRatio": 0.5,
   "minRatio": 0.08,
   "bumps": 9,
   "taper": 0.8,
@@ -6804,7 +6837,523 @@ window.GAME_CONFIG = {
    "leg"
   ],
   "fossilsPerIsland": "3-9 by width",
-  "grassLip": false
+  "grassLip": false,
+  "rock": {
+   "depthRatio": 0.2,
+   "taper": 0.86,
+   "roundness": 0.5,
+   "spikeEvery": 70,
+   "colors": {
+    "rockLight": [
+     "#97806a",
+     "#76604d",
+     "#4f3f33"
+    ],
+    "rockDark": [
+     "#76604f",
+     "#5a4839",
+     "#3a2e25"
+    ]
+   },
+   "soil": [
+    [
+     0,
+     0.1,
+     [
+      "#6b4528",
+      "#573720"
+     ]
+    ],
+    [
+     0.1,
+     0.2,
+     [
+      "#8f5a35",
+      "#74462a"
+     ]
+    ]
+   ],
+   "vines": {
+    "threshold": 0.9,
+    "minLen": 16,
+    "maxLen": 70,
+    "color": "#4f8a3a",
+    "leaf": "#6fae45"
+   },
+   "note": "v2.30：島底改成岩石：上面兩層土、下面岩石往下收、有幾個垂下的尖角（spikeEvery 像素一個，依島的位置固定）、草邊垂下藤蔓（threshold 越小藤蔓越多）"
+  },
+  "parking": {
+   "colors": {
+    "slab": "#bdb5a8",
+    "edge": "#8d8579",
+    "paint": "rgba(255,255,255,.85)"
+   },
+   "inset": 0.12,
+   "note": "v2.30：停車的地＝島凸出去的 2×4 草地，兩個 2×2 石板車位"
+  },
+  "image": {
+   "sprite": "bg_island_body",
+   "corner": 806,
+   "topStep": 4,
+   "top": [
+    14,
+    7,
+    6,
+    3,
+    2,
+    2,
+    7,
+    6,
+    7,
+    9,
+    9,
+    9,
+    11,
+    12,
+    12,
+    11,
+    12,
+    13,
+    13,
+    17,
+    20,
+    18,
+    18,
+    19,
+    23,
+    24,
+    28,
+    29,
+    32,
+    32,
+    34,
+    36,
+    38,
+    37,
+    40,
+    43,
+    44,
+    46,
+    48,
+    48,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    75,
+    76,
+    76,
+    75,
+    76,
+    76,
+    78,
+    77,
+    77,
+    78,
+    76,
+    77,
+    79,
+    80,
+    81,
+    85,
+    86,
+    86,
+    85,
+    89,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    103,
+    104,
+    105,
+    106,
+    107,
+    107,
+    106,
+    105,
+    105,
+    106,
+    106,
+    105,
+    107,
+    107,
+    106,
+    109,
+    108,
+    111,
+    111,
+    110,
+    115,
+    114,
+    114,
+    118,
+    119,
+    120,
+    122,
+    123,
+    126,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    145,
+    144,
+    141,
+    141,
+    142,
+    142,
+    146,
+    146,
+    150,
+    150,
+    152,
+    152,
+    155,
+    154,
+    156,
+    156,
+    157,
+    158,
+    159,
+    159,
+    160,
+    161,
+    163,
+    163,
+    162,
+    166,
+    167,
+    167,
+    169,
+    168,
+    171,
+    171,
+    173,
+    174,
+    178,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    189,
+    190,
+    192,
+    192,
+    193,
+    194,
+    195,
+    196,
+    194,
+    194,
+    193,
+    192,
+    193,
+    192,
+    193,
+    191,
+    195,
+    196,
+    196,
+    195,
+    194,
+    193,
+    192,
+    191,
+    190,
+    189,
+    188,
+    187,
+    186,
+    185,
+    184,
+    183,
+    182,
+    181,
+    181,
+    180,
+    179,
+    177,
+    174,
+    173,
+    171,
+    172,
+    173,
+    173,
+    172,
+    171,
+    170,
+    170,
+    169,
+    168,
+    167,
+    166,
+    165,
+    164,
+    163,
+    162,
+    161,
+    160,
+    159,
+    158,
+    158,
+    157,
+    156,
+    155,
+    155,
+    154,
+    153,
+    152,
+    151,
+    151,
+    150,
+    149,
+    149,
+    148,
+    147,
+    146,
+    145,
+    144,
+    144,
+    143,
+    142,
+    141,
+    141,
+    141,
+    142,
+    142,
+    141,
+    139,
+    138,
+    137,
+    136,
+    135,
+    134,
+    133,
+    132,
+    131,
+    130,
+    129,
+    128,
+    127,
+    126,
+    126,
+    125,
+    124,
+    123,
+    122,
+    121,
+    120,
+    119,
+    118,
+    117,
+    117,
+    116,
+    115,
+    113,
+    112,
+    111,
+    108,
+    106,
+    105,
+    103,
+    103,
+    101,
+    100,
+    99,
+    99,
+    97,
+    95,
+    93,
+    91,
+    91,
+    90,
+    87,
+    87,
+    85,
+    86,
+    86,
+    84,
+    85,
+    86,
+    84,
+    84,
+    84,
+    82,
+    81,
+    80,
+    78,
+    77,
+    75,
+    74,
+    73,
+    72,
+    71,
+    70,
+    68,
+    68,
+    66,
+    65,
+    63,
+    62,
+    61,
+    60,
+    58,
+    57,
+    55,
+    54,
+    52,
+    51,
+    50,
+    48,
+    46,
+    45,
+    44,
+    43,
+    41,
+    40,
+    38,
+    37,
+    36,
+    34,
+    33,
+    28,
+    26,
+    25,
+    22,
+    23,
+    19,
+    16,
+    12,
+    12,
+    11,
+    10,
+    7,
+    8,
+    7,
+    5,
+    6,
+    6,
+    5,
+    8,
+    7,
+    11
+   ],
+   "depthScale": 0.82,
+   "topOffset": 0,
+   "columnPx": 2,
+   "cacheScale": 2,
+   "note": "v2.31：島身用玩家圖（art/src_island/island_body.png → batch39 bg_island_body）。圖的上緣一欄一欄貼在島的外形（草地邊）上，corner＝圖上最低的轉角欄位，左半貼島的左下邊、右半貼右下邊；depthScale＝高度相對寬度的比例（1＝照原圖比例），topOffset＝往下移幾像素；top＝每 topStep 欄圖上緣的 y（art/v231_39.py 產生）"
+  },
+  "parkingImage": {
+   "sides": {
+    "nw": {
+     "sprite": "bg_parking_pad_nw",
+     "right": [
+      1014.2,
+      130.8
+     ],
+     "front": [
+      331.0,
+      449.3
+     ],
+     "back": [
+      687.7,
+      4.4
+     ]
+    },
+    "ne": {
+     "sprite": "bg_parking_pad_ne",
+     "left": [
+      1.8,
+      122.9
+     ],
+     "front": [
+      666.1,
+      449.7
+     ],
+     "back": [
+      311.7,
+      4.5
+     ]
+    },
+    "sw": {
+     "sprite": "bg_parking_pad_sw",
+     "left": [
+      10.4,
+      128.2
+     ],
+     "front": [
+      671.6,
+      441.9
+     ],
+     "back": [
+      329.3,
+      4.3
+     ]
+    },
+    "se": {
+     "sprite": "bg_parking_pad_se",
+     "right": [
+      990.5,
+      128.2
+     ],
+     "front": [
+      327.6,
+      441.9
+     ],
+     "back": [
+      669.8,
+      4.3
+     ]
+    }
+   },
+   "note": "v2.31：停車場用玩家的四方向圖（art/src_island/parking_pad_4dir.png → batch39 bg_parking_pad_<方向>，方向＝停車場貼在島的哪一邊：sw 左下、se 右下、ne 右上、nw 左上；ne／nw 在島後面，貼著島的那面是切開的）。每個方向給圖上草地外圍的三個角（像素）：沿 x 的（sw／ne）left、front、back，沿 y 的（se／nw）right、front、back，遊戲用仿射變換把它們對到 4×2 停車格的外角"
+  }
  },
  "sweeperWalk": {
   "tilesPerSecond": 1,
@@ -7007,7 +7556,30 @@ window.GAME_CONFIG = {
    "collectors": "the trucks send their own robots"
   },
   "overflow": "bags pile on the ground beside the station until dumped",
-  "dumpByHand": "tap a trash station with 收成 while the trucks are here"
+  "dumpByHand": "tap a trash station with 收成 while the trucks are here",
+  "perIsland": {
+   "on": true,
+   "note": "每座島的垃圾自己管：垃圾放進同一座島的垃圾站，裝不下或沒有垃圾站就堆在那座島的地上；倒垃圾、逾期代收都各島分開算；飼料袋算在吃飼料的動物或魚所在的島；垃圾站上限、價格不變（整座農場 3 座，第 1 座免費）"
+  },
+  "route": {
+   "singleIslandMinutes": 30,
+   "stayMinutes": 15,
+   "maxExtraWaitMinutes": 15,
+   "flyMinutes": 1,
+   "overdueAfterMinutes": 10,
+   "arriveSeconds": 15,
+   "besideOffsets": [
+    [
+     96,
+     -4
+    ],
+    [
+     76,
+     46
+    ]
+   ],
+   "note": "每天 trucks.arrive（16:00）從第 1 座島開始輪流：每座島停 stayMinutes（只有 1 座島時 singleIslandMinutes），沒有垃圾站也沒堆垃圾的島跳過；停滿時間後，這座島的倒垃圾／資源回收機器人還在搬就多等，最多 maxExtraWaitMinutes；島和島之間飛 flyMinutes；停下 overdueAfterMinutes 分鐘後檢查逾期代收"
+  }
  },
  "consumables": {
   "bulkDiscount": [
@@ -9070,5 +9642,139 @@ window.GAME_CONFIG = {
    "note": "速度每級 +15%（發電量 ×、融雪每格秒數 ÷ (1+0.15×(Lv-1))），耗電不變；生質發電機燃料格每級 +10（50→90）；費用同 costMultOfBuild"
   }
  },
- "animals_note227": "productQty：生產型每次收幾個（沒寫＝1）；羽鵝一次 2 根羽毛。肉／羽共用一個徽章（badge）"
+ "animals_note227": "productQty：生產型每次收幾個（沒寫＝1）；羽鵝一次 2 根羽毛。肉／羽共用一個徽章（badge）",
+ "islands": {
+  "nameMaxLen": 8,
+  "names": [
+   "晨霧島",
+   "雲杉島",
+   "蜂蜜島",
+   "星砂島",
+   "薄荷島",
+   "楓葉島",
+   "月光島",
+   "彩虹島",
+   "棉花島",
+   "風鈴島",
+   "橡實島",
+   "蘋果島",
+   "白鷺島",
+   "琥珀島",
+   "青苔島",
+   "麥穗島",
+   "櫻花島",
+   "海鹽島",
+   "松果島",
+   "晴空島"
+  ],
+  "welcomeText": "歡迎主人回到 {name}",
+  "welcomeSeconds": 1.6,
+  "newIslandText": "開了新的島：{name}（可以在小地圖或「我的浮島農場」改名）",
+  "renameHintText": "你的島叫「{name}」，可以在「我的浮島農場」裡改名",
+  "miniMap": {
+   "sizes": {
+    "2": [
+     132,
+     96
+    ],
+    "3": [
+     140,
+     132
+    ]
+   },
+   "mobileScale": 0.92,
+   "slotsByCount": {
+    "2": [
+     [
+      0.3,
+      0.4
+     ],
+     [
+      0.72,
+      0.56
+     ]
+    ],
+    "3": [
+     [
+      0.28,
+      0.27
+     ],
+     [
+      0.72,
+      0.38
+     ],
+     [
+      0.4,
+      0.7
+     ]
+    ]
+   },
+   "thumbByCount": {
+    "2": [
+     0.42,
+     0.4
+    ],
+    "3": [
+     0.38,
+     0.27
+    ]
+   },
+   "thumbRefreshSeconds": 5,
+   "longPressMs": 500,
+   "gap": 8,
+   "colors": {
+    "sea": [
+     "#4aa3d6",
+     "#2f7bb3"
+    ],
+    "seaNight": [
+     "#1b3358",
+     "#0e1f3c"
+    ]
+   },
+   "note": "v2.28.1：小地圖大小依島的數量（sizes，手機乘 mobileScale）；每座島用選擇農場同款的等角縮圖（thumbByCount＝縮圖佔小地圖寬高的比例），slotsByCount＝每座島中心位置（0～1）；縮圖每 thumbRefreshSeconds 秒更新；只有 2 座島以上才出現",
+   "undersideRatio": 0.2,
+   "truckIcon": 18
+  },
+  "newsGlobalKinds": [
+   "rain",
+   "snow",
+   "melt",
+   "bill",
+   "billLate",
+   "dollEnd",
+   "rentEnd",
+   "tornado",
+   "quake",
+   "v216intro"
+  ],
+  "note": "島＝原本的「地圖」（S.maps[i]），名字存在 S.maps[i].name；農場新聞只在 2 座島以上時，替跟某座島有關的事加上【島名】",
+  "hideSwitchChip": true,
+  "switcher": {
+   "cardW": 132,
+   "cardH": 92,
+   "mobileScale": 0.9,
+   "longPressMs": 500,
+   "note": "v2.31：浮島切換鈕和 ☰ 一樣大、放在 ☰ 正下方（gap＝間距像素），下面一行小字是目前這座島的名字（nameGap）；點開是兩欄卡片（只列已有的島），點卡片換島、長按或右鍵改名；取代 v2.28 的小地圖",
+   "gap": 8,
+   "nameGap": 3
+  }
+ },
+ "performance": {
+  "powerSaveFps": 30,
+  "normalFps": 0,
+  "phoneMaxShortSide": 820,
+  "imageUnloadMinutes": 5,
+  "warmPrefixes": [
+   "ground_",
+   "building_farmhouse",
+   "utility_",
+   "fossil_",
+   "deco_fence",
+   "water_",
+   "road_",
+   "island"
+  ],
+  "note": "省電模式（手機預設開，設定可改，存在這台裝置 localStorage skyfarm-power）：畫面每秒最多 powerSaveFps 張；normalFps 0＝不限。圖片用到才載入，imageUnloadMinutes 分鐘沒畫到的圖檔會放掉；精靈圖依種類拼成 1024×1024 的小張（game/sheetpack.py）"
+ }
 };
