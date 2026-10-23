@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.24.2",
+  "configVersion": "2.27",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -98,7 +98,10 @@ window.GAME_CONFIG = {
    "yield": 5,
    "xp": 0,
    "waterUse": 1.0,
-   "isFeed": true
+   "isFeed": true,
+   "group": "forage",
+   "feedValue": 1,
+   "note_feed": "吃牧草的動物也可以吃苜蓿草（1 份抵 2 份）、提摩西草（1 份抵 3 份），先用牧草"
   },
   "wheat": {
    "name": "小麥",
@@ -107,7 +110,8 @@ window.GAME_CONFIG = {
    "sellPrice": 15,
    "xp": 1,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "grain"
   },
   "tomato": {
    "name": "番茄",
@@ -116,7 +120,8 @@ window.GAME_CONFIG = {
    "sellPrice": 45,
    "xp": 3,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "fruitveg"
   },
   "potato": {
    "name": "馬鈴薯",
@@ -125,7 +130,8 @@ window.GAME_CONFIG = {
    "sellPrice": 80,
    "xp": 6,
    "waterUse": 0.75,
-   "yield": 1
+   "yield": 1,
+   "group": "root"
   },
   "corn": {
    "name": "玉米",
@@ -134,7 +140,8 @@ window.GAME_CONFIG = {
    "sellPrice": 105,
    "xp": 8,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "grain"
   },
   "peanut": {
    "name": "花生",
@@ -143,7 +150,8 @@ window.GAME_CONFIG = {
    "sellPrice": 150,
    "xp": 11,
    "waterUse": 0.75,
-   "yield": 1
+   "yield": 1,
+   "group": "bean"
   },
   "strawberry": {
    "name": "草莓",
@@ -152,7 +160,8 @@ window.GAME_CONFIG = {
    "sellPrice": 180,
    "xp": 13,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "melon"
   },
   "cabbage": {
    "name": "高麗菜",
@@ -161,7 +170,8 @@ window.GAME_CONFIG = {
    "sellPrice": 310,
    "xp": 23,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "leafy"
   },
   "rice": {
    "name": "水稻",
@@ -170,7 +180,8 @@ window.GAME_CONFIG = {
    "sellPrice": 510,
    "xp": 39,
    "waterUse": 2.0,
-   "yield": 1
+   "yield": 1,
+   "group": "grain"
   },
   "pumpkin": {
    "name": "南瓜",
@@ -179,7 +190,8 @@ window.GAME_CONFIG = {
    "sellPrice": 580,
    "xp": 44,
    "waterUse": 1.0,
-   "yield": 1
+   "yield": 1,
+   "group": "fruitveg"
   },
   "watermelon": {
    "name": "西瓜",
@@ -188,7 +200,8 @@ window.GAME_CONFIG = {
    "sellPrice": 800,
    "xp": 60,
    "waterUse": 1.5,
-   "yield": 1
+   "yield": 1,
+   "group": "melon"
   },
   "sunflower": {
    "name": "向日葵",
@@ -198,6 +211,419 @@ window.GAME_CONFIG = {
    "xp": 72,
    "waterUse": 1.0,
    "yield": 1
+  },
+  "alfalfa": {
+   "name": "苜蓿草",
+   "growSeconds": 180,
+   "seedCost": 4,
+   "sellPrice": 2,
+   "yield": 5,
+   "xp": 0,
+   "waterUse": 1.0,
+   "isFeed": true,
+   "feedAs": "pasture",
+   "feedValue": 2,
+   "group": "forage",
+   "unlockLevel": 3
+  },
+  "timothy": {
+   "name": "提摩西草",
+   "growSeconds": 300,
+   "seedCost": 6,
+   "sellPrice": 3,
+   "yield": 5,
+   "xp": 0,
+   "waterUse": 1.0,
+   "isFeed": true,
+   "feedAs": "pasture",
+   "feedValue": 3,
+   "group": "forage",
+   "unlockLevel": 6
+  },
+  "oats": {
+   "name": "燕麥",
+   "growSeconds": 900,
+   "seedCost": 15,
+   "sellPrice": 65,
+   "xp": 5,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "grain",
+   "unlockLevel": 2
+  },
+  "barley": {
+   "name": "大麥",
+   "growSeconds": 1500,
+   "seedCost": 25,
+   "sellPrice": 100,
+   "xp": 7,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "grain",
+   "unlockLevel": 4
+  },
+  "rye": {
+   "name": "黑麥",
+   "growSeconds": 2400,
+   "seedCost": 40,
+   "sellPrice": 155,
+   "xp": 11,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "grain",
+   "unlockLevel": 8
+  },
+  "millet": {
+   "name": "小米",
+   "growSeconds": 3000,
+   "seedCost": 50,
+   "sellPrice": 190,
+   "xp": 14,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "grain",
+   "unlockLevel": 11
+  },
+  "sorghum": {
+   "name": "高粱",
+   "growSeconds": 5400,
+   "seedCost": 80,
+   "sellPrice": 315,
+   "xp": 23,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "grain",
+   "unlockLevel": 14
+  },
+  "soybean": {
+   "name": "黃豆",
+   "growSeconds": 1500,
+   "seedCost": 25,
+   "sellPrice": 100,
+   "xp": 7,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "bean",
+   "unlockLevel": 3
+  },
+  "pea": {
+   "name": "豌豆",
+   "growSeconds": 1200,
+   "seedCost": 20,
+   "sellPrice": 85,
+   "xp": 6,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "bean",
+   "unlockLevel": 5
+  },
+  "mung_bean": {
+   "name": "綠豆",
+   "growSeconds": 2400,
+   "seedCost": 40,
+   "sellPrice": 150,
+   "xp": 11,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "bean",
+   "unlockLevel": 6
+  },
+  "green_bean": {
+   "name": "四季豆",
+   "growSeconds": 1800,
+   "seedCost": 30,
+   "sellPrice": 120,
+   "xp": 9,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "bean",
+   "unlockLevel": 7
+  },
+  "red_bean": {
+   "name": "紅豆",
+   "growSeconds": 3600,
+   "seedCost": 55,
+   "sellPrice": 215,
+   "xp": 16,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "bean",
+   "unlockLevel": 9
+  },
+  "carrot": {
+   "name": "胡蘿蔔",
+   "growSeconds": 900,
+   "seedCost": 15,
+   "sellPrice": 65,
+   "xp": 5,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "root",
+   "unlockLevel": 2
+  },
+  "sweet_potato": {
+   "name": "地瓜",
+   "growSeconds": 3600,
+   "seedCost": 55,
+   "sellPrice": 210,
+   "xp": 16,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "root",
+   "unlockLevel": 8
+  },
+  "daikon": {
+   "name": "白蘿蔔",
+   "growSeconds": 2700,
+   "seedCost": 45,
+   "sellPrice": 175,
+   "xp": 13,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "root",
+   "unlockLevel": 10
+  },
+  "beet": {
+   "name": "甜菜根",
+   "growSeconds": 4800,
+   "seedCost": 75,
+   "sellPrice": 280,
+   "xp": 21,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "root",
+   "unlockLevel": 12
+  },
+  "taro": {
+   "name": "芋頭",
+   "growSeconds": 9000,
+   "seedCost": 125,
+   "sellPrice": 480,
+   "xp": 36,
+   "waterUse": 2.0,
+   "yield": 1,
+   "group": "root",
+   "unlockLevel": 16
+  },
+  "lettuce": {
+   "name": "生菜",
+   "growSeconds": 300,
+   "seedCost": 8,
+   "sellPrice": 30,
+   "xp": 2,
+   "waterUse": 1.25,
+   "yield": 1,
+   "group": "leafy",
+   "unlockLevel": 2
+  },
+  "spinach": {
+   "name": "菠菜",
+   "growSeconds": 600,
+   "seedCost": 15,
+   "sellPrice": 50,
+   "xp": 4,
+   "waterUse": 1.25,
+   "yield": 1,
+   "group": "leafy",
+   "unlockLevel": 4
+  },
+  "bok_choy": {
+   "name": "青江菜",
+   "growSeconds": 900,
+   "seedCost": 20,
+   "sellPrice": 70,
+   "xp": 5,
+   "waterUse": 1.25,
+   "yield": 1,
+   "group": "leafy",
+   "unlockLevel": 6
+  },
+  "napa_cabbage": {
+   "name": "大白菜",
+   "growSeconds": 5400,
+   "seedCost": 80,
+   "sellPrice": 310,
+   "xp": 23,
+   "waterUse": 1.25,
+   "yield": 1,
+   "group": "leafy",
+   "unlockLevel": 13
+  },
+  "cucumber": {
+   "name": "小黃瓜",
+   "growSeconds": 1800,
+   "seedCost": 30,
+   "sellPrice": 120,
+   "xp": 9,
+   "waterUse": 1.5,
+   "yield": 1,
+   "group": "fruitveg",
+   "unlockLevel": 7
+  },
+  "eggplant": {
+   "name": "茄子",
+   "growSeconds": 3600,
+   "seedCost": 55,
+   "sellPrice": 215,
+   "xp": 16,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "fruitveg",
+   "unlockLevel": 9
+  },
+  "okra": {
+   "name": "秋葵",
+   "growSeconds": 2700,
+   "seedCost": 45,
+   "sellPrice": 175,
+   "xp": 13,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "fruitveg",
+   "unlockLevel": 11
+  },
+  "bell_pepper": {
+   "name": "甜椒",
+   "growSeconds": 5400,
+   "seedCost": 80,
+   "sellPrice": 305,
+   "xp": 23,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "fruitveg",
+   "unlockLevel": 12
+  },
+  "chili": {
+   "name": "辣椒",
+   "growSeconds": 7200,
+   "seedCost": 105,
+   "sellPrice": 400,
+   "xp": 30,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "fruitveg",
+   "unlockLevel": 15
+  },
+  "muskmelon": {
+   "name": "香瓜",
+   "growSeconds": 10800,
+   "seedCost": 140,
+   "sellPrice": 540,
+   "xp": 40,
+   "waterUse": 1.5,
+   "yield": 1,
+   "group": "melon",
+   "unlockLevel": 14
+  },
+  "honeydew": {
+   "name": "哈密瓜",
+   "growSeconds": 18000,
+   "seedCost": 220,
+   "sellPrice": 840,
+   "xp": 62,
+   "waterUse": 1.5,
+   "yield": 1,
+   "group": "melon",
+   "unlockLevel": 18
+  },
+  "sugarcane": {
+   "name": "甘蔗",
+   "growSeconds": 25200,
+   "seedCost": 320,
+   "sellPrice": 1230,
+   "xp": 91,
+   "waterUse": 1.5,
+   "yield": 1,
+   "group": "cash",
+   "unlockLevel": 20
+  },
+  "cotton": {
+   "name": "棉花",
+   "growSeconds": 21600,
+   "seedCost": 290,
+   "sellPrice": 1115,
+   "xp": 83,
+   "waterUse": 0.75,
+   "yield": 1,
+   "group": "cash",
+   "unlockLevel": 22
+  },
+  "tea": {
+   "name": "茶樹",
+   "growSeconds": 32400,
+   "seedCost": 410,
+   "sellPrice": 1580,
+   "xp": 117,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "cash",
+   "unlockLevel": 25
+  },
+  "coffee": {
+   "name": "咖啡",
+   "growSeconds": 36000,
+   "seedCost": 460,
+   "sellPrice": 1770,
+   "xp": 131,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "cash",
+   "unlockLevel": 28
+  },
+  "mint": {
+   "name": "薄荷",
+   "growSeconds": 1200,
+   "seedCost": 25,
+   "sellPrice": 95,
+   "xp": 7,
+   "waterUse": 1.25,
+   "yield": 1,
+   "group": "herb",
+   "unlockLevel": 10
+  },
+  "basil": {
+   "name": "羅勒",
+   "growSeconds": 1800,
+   "seedCost": 35,
+   "sellPrice": 130,
+   "xp": 10,
+   "waterUse": 1.0,
+   "yield": 1,
+   "group": "herb",
+   "unlockLevel": 13
+  },
+  "thyme": {
+   "name": "百里香",
+   "growSeconds": 3600,
+   "seedCost": 60,
+   "sellPrice": 240,
+   "xp": 18,
+   "waterUse": 0.5,
+   "yield": 1,
+   "group": "herb",
+   "unlockLevel": 17
+  },
+  "rosemary": {
+   "name": "迷迭香",
+   "growSeconds": 4800,
+   "seedCost": 75,
+   "sellPrice": 295,
+   "xp": 22,
+   "waterUse": 0.5,
+   "yield": 1,
+   "group": "herb",
+   "unlockLevel": 16
+  },
+  "sage": {
+   "name": "鼠尾草",
+   "growSeconds": 6000,
+   "seedCost": 95,
+   "sellPrice": 365,
+   "xp": 27,
+   "waterUse": 0.5,
+   "yield": 1,
+   "group": "herb",
+   "unlockLevel": 19
   }
  },
  "trees": {
@@ -457,6 +883,70 @@ window.GAME_CONFIG = {
    "productItem": "beef",
    "feedItem": "pasture",
    "stageFeedQty": 15
+  },
+  "meat_duck": {
+   "name": "肉鴨",
+   "type": "meat",
+   "youngCost": 120,
+   "growStages": 3,
+   "stageSeconds": 5400,
+   "product": "鴨肉",
+   "salePrice": 480,
+   "xp": 28,
+   "productItem": "duck_meat",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 3,
+   "badge": "duck"
+  },
+  "down_duck": {
+   "name": "羽鴨",
+   "type": "producer",
+   "youngCost": 150,
+   "growStages": 2,
+   "stageSeconds": 3600,
+   "product": "羽毛",
+   "cycleSeconds": 5400,
+   "productPrice": 70,
+   "productQty": 1,
+   "xpPerCycle": 6,
+   "lifespanCycles": 30,
+   "productItem": "feather",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 1,
+   "cycleFeedQty": 2,
+   "badge": "duck"
+  },
+  "meat_goose": {
+   "name": "肉鵝",
+   "type": "meat",
+   "youngCost": 250,
+   "growStages": 4,
+   "stageSeconds": 7200,
+   "product": "鵝肉",
+   "salePrice": 1050,
+   "xp": 62,
+   "productItem": "goose_meat",
+   "feedItem": "pasture",
+   "stageFeedQty": 6,
+   "badge": "goose"
+  },
+  "down_goose": {
+   "name": "羽鵝",
+   "type": "producer",
+   "youngCost": 300,
+   "growStages": 3,
+   "stageSeconds": 5400,
+   "product": "羽毛",
+   "cycleSeconds": 7200,
+   "productPrice": 70,
+   "productQty": 2,
+   "xpPerCycle": 12,
+   "lifespanCycles": 30,
+   "productItem": "feather",
+   "feedItem": "pasture",
+   "stageFeedQty": 4,
+   "cycleFeedQty": 5,
+   "badge": "goose"
   }
  },
  "fishPool": {
@@ -485,7 +975,14 @@ window.GAME_CONFIG = {
   },
   "note": "v2.24 起每一格各放一種（點空格放魚苗、點有魚的格子餵／收成整池）；水面半透明看得到魚，池底與水面分兩層畫（batch35）",
   "nightGrowthRate": 0.5,
-  "litGrowthRate": 1.0
+  "litGrowthRate": 1.0,
+  "move": {
+   "modes": [
+    "one",
+    "multi"
+   ],
+   "note": "點魚池小選單：搬移這一格／多選搬移（整池全選），魚和水底燈跟著格子走"
+  }
  },
  "fish": {
   "tilapia": {
@@ -1159,7 +1656,10 @@ window.GAME_CONFIG = {
     "doll_sun",
     "fert_chem",
     "birch",
-    "sakura"
+    "sakura",
+    "oats",
+    "carrot",
+    "lettuce"
    ],
    "animalCap": 4,
    "fishPoolTileCap": 0,
@@ -1191,7 +1691,9 @@ window.GAME_CONFIG = {
     "orange",
     "palm",
     "willow",
-    "fence_picket"
+    "fence_picket",
+    "alfalfa",
+    "soybean"
    ],
    "animalCap": 5,
    "fishPoolTileCap": 0,
@@ -1228,7 +1730,9 @@ window.GAME_CONFIG = {
     "recyclebot",
     "truck_pad",
     "fence_bamboo",
-    "goldfish"
+    "goldfish",
+    "barley",
+    "spinach"
    ],
    "animalCap": 6,
    "fishPoolTileCap": 4,
@@ -1261,7 +1765,8 @@ window.GAME_CONFIG = {
     "lychee",
     "oak",
     "street_lamp_garden",
-    "shrimp"
+    "shrimp",
+    "pea"
    ],
    "animalCap": 8,
    "fishPoolTileCap": 4,
@@ -1308,7 +1813,10 @@ window.GAME_CONFIG = {
     "fence_stone",
     "gh_lamp",
     "street_lamp_classic",
-    "pool_lamp"
+    "pool_lamp",
+    "timothy",
+    "mung_bean",
+    "bok_choy"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1333,7 +1841,9 @@ window.GAME_CONFIG = {
     "poopbot_2",
     "rent_poop_1",
     "rent_honey_1",
-    "carp"
+    "carp",
+    "green_bean",
+    "cucumber"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -1359,7 +1869,10 @@ window.GAME_CONFIG = {
     "dog_food",
     "cat_food",
     "honeybot_2",
-    "fence_hedge"
+    "fence_hedge",
+    "rye",
+    "sweet_potato",
+    "meat_duck"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1389,7 +1902,10 @@ window.GAME_CONFIG = {
     "rent_trashbot_2",
     "recyclebot_3",
     "rent_recyclebot_2",
-    "crab"
+    "crab",
+    "red_bean",
+    "eggplant",
+    "down_duck"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -1411,7 +1927,9 @@ window.GAME_CONFIG = {
     "poopbot_3",
     "rent_poop_2",
     "fence_iron",
-    "street_lamp_modern"
+    "street_lamp_modern",
+    "daikon",
+    "mint"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -1424,7 +1942,9 @@ window.GAME_CONFIG = {
    "coinReward": 6000,
    "specialDeco": null,
    "unlocks": [
-    "dog_maltese"
+    "dog_maltese",
+    "millet",
+    "okra"
    ],
    "animalCap": 17,
    "fishPoolTileCap": 17,
@@ -1438,7 +1958,10 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "cat_calico",
-    "street_lamp_double"
+    "street_lamp_double",
+    "beet",
+    "bell_pepper",
+    "meat_goose"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -1452,7 +1975,9 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "dog_pomeranian",
-    "piranha"
+    "piranha",
+    "napa_cabbage",
+    "basil"
    ],
    "animalCap": 19,
    "fishPoolTileCap": 19,
@@ -1464,7 +1989,11 @@ window.GAME_CONFIG = {
    "xpToReach": 426000,
    "coinReward": 9000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "sorghum",
+    "muskmelon",
+    "down_goose"
+   ],
    "animalCap": 20,
    "fishPoolTileCap": 20,
    "produceCapacity": 3200,
@@ -1477,7 +2006,8 @@ window.GAME_CONFIG = {
    "specialDeco": "dog_house_gold",
    "unlocks": [
     "dog_corgi",
-    "cat_shark"
+    "cat_shark",
+    "chili"
    ],
    "animalCap": 21,
    "fishPoolTileCap": 21,
@@ -1489,7 +2019,10 @@ window.GAME_CONFIG = {
    "xpToReach": 552600,
    "coinReward": 11000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "taro",
+    "rosemary"
+   ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
    "produceCapacity": 3700,
@@ -1502,7 +2035,8 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "cat_black",
-    "bamboo_shark"
+    "bamboo_shark",
+    "thyme"
    ],
    "animalCap": 23,
    "fishPoolTileCap": 23,
@@ -1515,7 +2049,8 @@ window.GAME_CONFIG = {
    "coinReward": 13000,
    "specialDeco": null,
    "unlocks": [
-    "dog_border"
+    "dog_border",
+    "honeydew"
    ],
    "animalCap": 24,
    "fishPoolTileCap": 24,
@@ -1527,7 +2062,9 @@ window.GAME_CONFIG = {
    "xpToReach": 747000,
    "coinReward": 14000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "sage"
+   ],
    "animalCap": 25,
    "fishPoolTileCap": 25,
    "produceCapacity": 4450,
@@ -1539,7 +2076,8 @@ window.GAME_CONFIG = {
    "coinReward": 30000,
    "specialDeco": "cat_tree_gold",
    "unlocks": [
-    "blacktip_shark"
+    "blacktip_shark",
+    "sugarcane"
    ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
@@ -1564,7 +2102,9 @@ window.GAME_CONFIG = {
    "xpToReach": 946800,
    "coinReward": 17000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "cotton"
+   ],
    "animalCap": 28,
    "fishPoolTileCap": 28,
    "produceCapacity": 5200,
@@ -1602,7 +2142,8 @@ window.GAME_CONFIG = {
    "coinReward": 40000,
    "specialDeco": "fountain",
    "unlocks": [
-    "hammerhead"
+    "hammerhead",
+    "tea"
    ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
@@ -1638,7 +2179,9 @@ window.GAME_CONFIG = {
    "xpToReach": 1362600,
    "coinReward": 23000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "coffee"
+   ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
    "produceCapacity": 6700,
@@ -2388,6 +2931,416 @@ window.GAME_CONFIG = {
    "name": "雙髻鯊",
    "category": "fish",
    "sellPrice": 7600
+  },
+  "alfalfa": {
+   "name": "苜蓿草",
+   "category": "feed",
+   "sellPrice": 2
+  },
+  "timothy": {
+   "name": "提摩西草",
+   "category": "feed",
+   "sellPrice": 3
+  },
+  "oats": {
+   "name": "燕麥",
+   "category": "crop",
+   "sellPrice": 65
+  },
+  "org_oats": {
+   "name": "有機燕麥",
+   "category": "crop",
+   "sellPrice": 91,
+   "organicOf": "oats"
+  },
+  "barley": {
+   "name": "大麥",
+   "category": "crop",
+   "sellPrice": 100
+  },
+  "org_barley": {
+   "name": "有機大麥",
+   "category": "crop",
+   "sellPrice": 140,
+   "organicOf": "barley"
+  },
+  "rye": {
+   "name": "黑麥",
+   "category": "crop",
+   "sellPrice": 155
+  },
+  "org_rye": {
+   "name": "有機黑麥",
+   "category": "crop",
+   "sellPrice": 217,
+   "organicOf": "rye"
+  },
+  "millet": {
+   "name": "小米",
+   "category": "crop",
+   "sellPrice": 190
+  },
+  "org_millet": {
+   "name": "有機小米",
+   "category": "crop",
+   "sellPrice": 266,
+   "organicOf": "millet"
+  },
+  "sorghum": {
+   "name": "高粱",
+   "category": "crop",
+   "sellPrice": 315
+  },
+  "org_sorghum": {
+   "name": "有機高粱",
+   "category": "crop",
+   "sellPrice": 441,
+   "organicOf": "sorghum"
+  },
+  "soybean": {
+   "name": "黃豆",
+   "category": "crop",
+   "sellPrice": 100
+  },
+  "org_soybean": {
+   "name": "有機黃豆",
+   "category": "crop",
+   "sellPrice": 140,
+   "organicOf": "soybean"
+  },
+  "pea": {
+   "name": "豌豆",
+   "category": "crop",
+   "sellPrice": 85
+  },
+  "org_pea": {
+   "name": "有機豌豆",
+   "category": "crop",
+   "sellPrice": 119,
+   "organicOf": "pea"
+  },
+  "mung_bean": {
+   "name": "綠豆",
+   "category": "crop",
+   "sellPrice": 150
+  },
+  "org_mung_bean": {
+   "name": "有機綠豆",
+   "category": "crop",
+   "sellPrice": 210,
+   "organicOf": "mung_bean"
+  },
+  "green_bean": {
+   "name": "四季豆",
+   "category": "crop",
+   "sellPrice": 120
+  },
+  "org_green_bean": {
+   "name": "有機四季豆",
+   "category": "crop",
+   "sellPrice": 168,
+   "organicOf": "green_bean"
+  },
+  "red_bean": {
+   "name": "紅豆",
+   "category": "crop",
+   "sellPrice": 215
+  },
+  "org_red_bean": {
+   "name": "有機紅豆",
+   "category": "crop",
+   "sellPrice": 301,
+   "organicOf": "red_bean"
+  },
+  "carrot": {
+   "name": "胡蘿蔔",
+   "category": "crop",
+   "sellPrice": 65
+  },
+  "org_carrot": {
+   "name": "有機胡蘿蔔",
+   "category": "crop",
+   "sellPrice": 91,
+   "organicOf": "carrot"
+  },
+  "sweet_potato": {
+   "name": "地瓜",
+   "category": "crop",
+   "sellPrice": 210
+  },
+  "org_sweet_potato": {
+   "name": "有機地瓜",
+   "category": "crop",
+   "sellPrice": 294,
+   "organicOf": "sweet_potato"
+  },
+  "daikon": {
+   "name": "白蘿蔔",
+   "category": "crop",
+   "sellPrice": 175
+  },
+  "org_daikon": {
+   "name": "有機白蘿蔔",
+   "category": "crop",
+   "sellPrice": 245,
+   "organicOf": "daikon"
+  },
+  "beet": {
+   "name": "甜菜根",
+   "category": "crop",
+   "sellPrice": 280
+  },
+  "org_beet": {
+   "name": "有機甜菜根",
+   "category": "crop",
+   "sellPrice": 392,
+   "organicOf": "beet"
+  },
+  "taro": {
+   "name": "芋頭",
+   "category": "crop",
+   "sellPrice": 480
+  },
+  "org_taro": {
+   "name": "有機芋頭",
+   "category": "crop",
+   "sellPrice": 672,
+   "organicOf": "taro"
+  },
+  "lettuce": {
+   "name": "生菜",
+   "category": "crop",
+   "sellPrice": 30
+  },
+  "org_lettuce": {
+   "name": "有機生菜",
+   "category": "crop",
+   "sellPrice": 42,
+   "organicOf": "lettuce"
+  },
+  "spinach": {
+   "name": "菠菜",
+   "category": "crop",
+   "sellPrice": 50
+  },
+  "org_spinach": {
+   "name": "有機菠菜",
+   "category": "crop",
+   "sellPrice": 70,
+   "organicOf": "spinach"
+  },
+  "bok_choy": {
+   "name": "青江菜",
+   "category": "crop",
+   "sellPrice": 70
+  },
+  "org_bok_choy": {
+   "name": "有機青江菜",
+   "category": "crop",
+   "sellPrice": 98,
+   "organicOf": "bok_choy"
+  },
+  "napa_cabbage": {
+   "name": "大白菜",
+   "category": "crop",
+   "sellPrice": 310
+  },
+  "org_napa_cabbage": {
+   "name": "有機大白菜",
+   "category": "crop",
+   "sellPrice": 434,
+   "organicOf": "napa_cabbage"
+  },
+  "cucumber": {
+   "name": "小黃瓜",
+   "category": "crop",
+   "sellPrice": 120
+  },
+  "org_cucumber": {
+   "name": "有機小黃瓜",
+   "category": "crop",
+   "sellPrice": 168,
+   "organicOf": "cucumber"
+  },
+  "eggplant": {
+   "name": "茄子",
+   "category": "crop",
+   "sellPrice": 215
+  },
+  "org_eggplant": {
+   "name": "有機茄子",
+   "category": "crop",
+   "sellPrice": 301,
+   "organicOf": "eggplant"
+  },
+  "okra": {
+   "name": "秋葵",
+   "category": "crop",
+   "sellPrice": 175
+  },
+  "org_okra": {
+   "name": "有機秋葵",
+   "category": "crop",
+   "sellPrice": 245,
+   "organicOf": "okra"
+  },
+  "bell_pepper": {
+   "name": "甜椒",
+   "category": "crop",
+   "sellPrice": 305
+  },
+  "org_bell_pepper": {
+   "name": "有機甜椒",
+   "category": "crop",
+   "sellPrice": 427,
+   "organicOf": "bell_pepper"
+  },
+  "chili": {
+   "name": "辣椒",
+   "category": "crop",
+   "sellPrice": 400
+  },
+  "org_chili": {
+   "name": "有機辣椒",
+   "category": "crop",
+   "sellPrice": 560,
+   "organicOf": "chili"
+  },
+  "muskmelon": {
+   "name": "香瓜",
+   "category": "crop",
+   "sellPrice": 540
+  },
+  "org_muskmelon": {
+   "name": "有機香瓜",
+   "category": "crop",
+   "sellPrice": 756,
+   "organicOf": "muskmelon"
+  },
+  "honeydew": {
+   "name": "哈密瓜",
+   "category": "crop",
+   "sellPrice": 840
+  },
+  "org_honeydew": {
+   "name": "有機哈密瓜",
+   "category": "crop",
+   "sellPrice": 1176,
+   "organicOf": "honeydew"
+  },
+  "sugarcane": {
+   "name": "甘蔗",
+   "category": "crop",
+   "sellPrice": 1230
+  },
+  "org_sugarcane": {
+   "name": "有機甘蔗",
+   "category": "crop",
+   "sellPrice": 1722,
+   "organicOf": "sugarcane"
+  },
+  "cotton": {
+   "name": "棉花",
+   "category": "crop",
+   "sellPrice": 1115
+  },
+  "org_cotton": {
+   "name": "有機棉花",
+   "category": "crop",
+   "sellPrice": 1561,
+   "organicOf": "cotton"
+  },
+  "tea": {
+   "name": "茶樹",
+   "category": "crop",
+   "sellPrice": 1580
+  },
+  "org_tea": {
+   "name": "有機茶樹",
+   "category": "crop",
+   "sellPrice": 2212,
+   "organicOf": "tea"
+  },
+  "coffee": {
+   "name": "咖啡",
+   "category": "crop",
+   "sellPrice": 1770
+  },
+  "org_coffee": {
+   "name": "有機咖啡",
+   "category": "crop",
+   "sellPrice": 2478,
+   "organicOf": "coffee"
+  },
+  "mint": {
+   "name": "薄荷",
+   "category": "crop",
+   "sellPrice": 95
+  },
+  "org_mint": {
+   "name": "有機薄荷",
+   "category": "crop",
+   "sellPrice": 133,
+   "organicOf": "mint"
+  },
+  "basil": {
+   "name": "羅勒",
+   "category": "crop",
+   "sellPrice": 130
+  },
+  "org_basil": {
+   "name": "有機羅勒",
+   "category": "crop",
+   "sellPrice": 182,
+   "organicOf": "basil"
+  },
+  "thyme": {
+   "name": "百里香",
+   "category": "crop",
+   "sellPrice": 240
+  },
+  "org_thyme": {
+   "name": "有機百里香",
+   "category": "crop",
+   "sellPrice": 336,
+   "organicOf": "thyme"
+  },
+  "rosemary": {
+   "name": "迷迭香",
+   "category": "crop",
+   "sellPrice": 295
+  },
+  "org_rosemary": {
+   "name": "有機迷迭香",
+   "category": "crop",
+   "sellPrice": 413,
+   "organicOf": "rosemary"
+  },
+  "sage": {
+   "name": "鼠尾草",
+   "category": "crop",
+   "sellPrice": 365
+  },
+  "org_sage": {
+   "name": "有機鼠尾草",
+   "category": "crop",
+   "sellPrice": 511,
+   "organicOf": "sage"
+  },
+  "feather": {
+   "name": "羽毛",
+   "category": "product",
+   "sellPrice": 70
+  },
+  "duck_meat": {
+   "name": "鴨肉",
+   "category": "meat",
+   "sellPrice": 480
+  },
+  "goose_meat": {
+   "name": "鵝肉",
+   "category": "meat",
+   "sellPrice": 1050
   }
  },
  "feedShop": {
@@ -2413,7 +3366,8 @@ window.GAME_CONFIG = {
    "outputShow": {
     "plate": true,
     "maxStacks": 3,
-    "oneStackPerBatch": true
+    "oneStackPerBatch": true,
+    "container": "fx_cake_plate"
    }
   },
   "fish_feed_machine": {
@@ -2427,7 +3381,12 @@ window.GAME_CONFIG = {
    },
    "seconds": 900,
    "batchesAtOnce": 1,
-   "collect": "manual"
+   "collect": "manual",
+   "outputShow": {
+    "container": "fx_feed_cans",
+    "maxStacks": 3,
+    "oneStackPerBatch": true
+   }
   },
   "compost_bin": {
    "name": "堆肥桶",
@@ -2441,7 +3400,12 @@ window.GAME_CONFIG = {
    },
    "seconds": 3600,
    "batchesAtOnce": 1,
-   "collect": "manual"
+   "collect": "manual",
+   "outputShow": {
+    "container": "fx_fert_sacks",
+    "maxStacks": 3,
+    "oneStackPerBatch": true
+   }
   }
  },
  "tutorial": {
@@ -3900,7 +4864,13 @@ window.GAME_CONFIG = {
    "dropsPerTile": 10,
    "secondsPerTile": 20,
    "kwhPerHour": 0.3,
-   "capacityTiles": 30
+   "capacityTiles": 30,
+   "bottles": {
+    "sprite": "fx_pet_bottle",
+    "maxRow": 6,
+    "rollSeconds": 1.5,
+    "note": "每融好一格雪（dropsPerTile 滴）滾出一瓶寶特瓶水，排在出口旁（最多 maxRow 瓶），再自動加進水塔；水塔滿了瓶子停著、融雪暫停"
+   }
   },
   "cover": {
    "fullTile": true,
@@ -4215,7 +5185,12 @@ window.GAME_CONFIG = {
       "cost": 600,
       "unlock": "rent_snow_2"
      }
-    ]
+    ],
+    "walk": {
+     "tilesPerSecond": 1,
+     "clearSeconds": 5,
+     "note": "沿格子走到有雪的格子清雪（田、建物站在旁邊清）；收工走回充電站"
+    }
    },
    "sweep": {
     "name": "掃地機器人",
@@ -4316,7 +5291,12 @@ window.GAME_CONFIG = {
     ],
     "perMinute": 4,
     "storesToBarn": true,
-    "waitsWhenFull": true
+    "waitsWhenFull": true,
+    "walk": {
+     "tilesPerSecond": 1,
+     "shovelSeconds": 3,
+     "note": "從充電站沿格子走到糞便那格才鏟；收工走回充電站"
+    }
    },
    "honey": {
     "name": "採蜜機器人",
@@ -4856,7 +5836,13 @@ window.GAME_CONFIG = {
   ],
   "bumbleLevelCostMult": 1.5,
   "hiveLevelsNote": "蜂箱、熊蜂箱的等級：range＝以蜂箱為中心向外幾格（2＝5×5），cost＝升到這一級的金幣（熊蜂箱 ×bumbleLevelCostMult），unlockLevel＝玩家要到幾級。舊存檔的蜂箱算 1 級",
-  "note_pollination": "授粉範圍＝採蜜範圍，跟著蜂箱等級（hiveLevels 的 range）；熊蜂箱相同"
+  "note_pollination": "授粉範圍＝採蜜範圍，跟著蜂箱等級（hiveLevels 的 range）；熊蜂箱相同",
+  "forage": {
+   "mode": "spread",
+   "showFlowers": 4,
+   "note": "spread＝每罐輪流採最久沒被這個蜂箱採的花（一樣久挑近的）；nearest＝舊的一直採最近那朵"
+  },
+  "bubbleOnlyWithHoney": true
  },
  "migrations": {
   "2.0.0": {
@@ -5116,7 +6102,11 @@ window.GAME_CONFIG = {
      "icon": "ui_tab_poultry",
      "ids": [
       "egg_hen",
-      "broiler"
+      "broiler",
+      "meat_duck",
+      "down_duck",
+      "meat_goose",
+      "down_goose"
      ]
     },
     {
@@ -5642,7 +6632,126 @@ window.GAME_CONFIG = {
    "fixViewport": true,
    "note": "iPhone 加到主畫面時（navigator.standalone）：頁面高度跟著實際視窗、旋轉／回到前景後捲回頂端，HUD 往下讓出動態島與狀態列"
   },
-  "menuTitle": "我的浮島農場"
+  "menuTitle": "我的浮島農場",
+  "cropGroups": {
+   "groups": [
+    {
+     "id": "forage",
+     "label": "牧草",
+     "icon": "ui_cg_forage",
+     "ids": [
+      "pasture",
+      "alfalfa",
+      "timothy"
+     ]
+    },
+    {
+     "id": "grain",
+     "label": "穀物",
+     "icon": "ui_cg_grain",
+     "ids": [
+      "wheat",
+      "corn",
+      "rice",
+      "oats",
+      "barley",
+      "rye",
+      "millet",
+      "sorghum"
+     ]
+    },
+    {
+     "id": "bean",
+     "label": "豆類",
+     "icon": "ui_cg_bean",
+     "ids": [
+      "peanut",
+      "soybean",
+      "red_bean",
+      "mung_bean",
+      "pea",
+      "green_bean"
+     ]
+    },
+    {
+     "id": "root",
+     "label": "根莖",
+     "icon": "ui_cg_root",
+     "ids": [
+      "potato",
+      "carrot",
+      "sweet_potato",
+      "daikon",
+      "beet",
+      "taro"
+     ]
+    },
+    {
+     "id": "leafy",
+     "label": "葉菜",
+     "icon": "ui_cg_leafy",
+     "ids": [
+      "cabbage",
+      "lettuce",
+      "spinach",
+      "bok_choy",
+      "napa_cabbage"
+     ]
+    },
+    {
+     "id": "fruitveg",
+     "label": "果菜",
+     "icon": "ui_cg_fruitveg",
+     "ids": [
+      "tomato",
+      "pumpkin",
+      "eggplant",
+      "cucumber",
+      "bell_pepper",
+      "chili",
+      "okra"
+     ]
+    },
+    {
+     "id": "melon",
+     "label": "瓜果",
+     "icon": "ui_cg_melon",
+     "ids": [
+      "strawberry",
+      "watermelon",
+      "honeydew",
+      "muskmelon"
+     ]
+    },
+    {
+     "id": "cash",
+     "label": "經濟作物",
+     "icon": "ui_cg_cash",
+     "ids": [
+      "sugarcane",
+      "cotton",
+      "tea",
+      "coffee"
+     ]
+    },
+    {
+     "id": "herb",
+     "label": "香草",
+     "icon": "ui_cg_herb",
+     "ids": [
+      "mint",
+      "basil",
+      "rosemary",
+      "thyme",
+      "sage"
+     ]
+    }
+   ],
+   "ungrouped": [
+    "sunflower"
+   ],
+   "note": "播種 → 作物分頁裡再分 9 類（照 ids 順序排）；向日葵暫時放在最後一類之外的「其他」，下一階段移到花苗"
+  }
  },
  "droneWatering": {
   "dryThreshold": 2,
@@ -6023,11 +7132,43 @@ window.GAME_CONFIG = {
    "reason",
    "entry"
   ],
-  "note": "每天一列（收入／支出合計），點開依原因合併，再點原因看每一筆；繳帳單那一筆可再點開看帳單的水電明細",
+  "note": "一次顯示一天（左右箭頭切換，最舊／最新那天箭頭變灰）；上方日曆、收入、支出、淨變動；表格依原因合併，展開看每一筆（時間、內容、金幣變動、結餘）",
   "reasonNames": {
    "fish:pool": "蓋魚池",
    "fish:stock": "放魚苗",
    "note": "金幣歷程依原因合併時，「第 n 天」「+n」這類數字會拿掉；魚工具蓋池顯示「蓋魚池」、放魚苗顯示「放魚苗：魚名」"
+  },
+  "layout": "dayPage",
+  "dayNav": {
+   "arrows": true,
+   "disableAtEnds": true
+  },
+  "columns": [
+   "time",
+   "what",
+   "count",
+   "delta",
+   "balance",
+   "expand"
+  ],
+  "summary": [
+   "calendar",
+   "income",
+   "expense",
+   "net"
+  ],
+  "icons": {
+   "store": "ui_cl_store",
+   "ranch": "ui_cl_ranch",
+   "crop": "ui_cl_crop",
+   "feed": "ui_cl_feed",
+   "build": "ui_cl_build",
+   "bill": "ui_cl_bill",
+   "fish": "ui_cl_fish",
+   "robot": "ui_cl_robot",
+   "checkin": "ui_cl_checkin",
+   "other": "ui_cl_other",
+   "note": "每一列的圖示照原因分類；作物的那列用作物本身的圖示"
   }
  },
  "pets": {
@@ -6519,7 +7660,7 @@ window.GAME_CONFIG = {
     "group": "種菜",
     "stat": "veggies",
     "tiers": null,
-    "desc": "收過全部 12 種田作物"
+    "desc": "收過全部 49 種田作物"
    },
    {
     "id": "orchard",
@@ -6730,7 +7871,7 @@ window.GAME_CONFIG = {
     "group": "動物",
     "stat": "allAnimals",
     "tiers": null,
-    "desc": "養過全部 8 種動物"
+    "desc": "養過全部 12 種動物"
    },
    {
     "id": "fisher",
@@ -6879,8 +8020,931 @@ window.GAME_CONFIG = {
     "stat": "fullFleet",
     "tiers": null,
     "desc": "同一種機器人買滿 5 台"
+   },
+   {
+    "id": "crop_alfalfa",
+    "name": "苜蓿草專家",
+    "group": "作物專家",
+    "stat": "crop:alfalfa",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成苜蓿草個數"
+   },
+   {
+    "id": "crop_timothy",
+    "name": "提摩西草專家",
+    "group": "作物專家",
+    "stat": "crop:timothy",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成提摩西草個數"
+   },
+   {
+    "id": "crop_oats",
+    "name": "燕麥專家",
+    "group": "作物專家",
+    "stat": "crop:oats",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成燕麥個數"
+   },
+   {
+    "id": "crop_barley",
+    "name": "大麥專家",
+    "group": "作物專家",
+    "stat": "crop:barley",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成大麥個數"
+   },
+   {
+    "id": "crop_rye",
+    "name": "黑麥專家",
+    "group": "作物專家",
+    "stat": "crop:rye",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成黑麥個數"
+   },
+   {
+    "id": "crop_millet",
+    "name": "小米專家",
+    "group": "作物專家",
+    "stat": "crop:millet",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成小米個數"
+   },
+   {
+    "id": "crop_sorghum",
+    "name": "高粱專家",
+    "group": "作物專家",
+    "stat": "crop:sorghum",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成高粱個數"
+   },
+   {
+    "id": "crop_soybean",
+    "name": "黃豆專家",
+    "group": "作物專家",
+    "stat": "crop:soybean",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成黃豆個數"
+   },
+   {
+    "id": "crop_pea",
+    "name": "豌豆專家",
+    "group": "作物專家",
+    "stat": "crop:pea",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成豌豆個數"
+   },
+   {
+    "id": "crop_mung_bean",
+    "name": "綠豆專家",
+    "group": "作物專家",
+    "stat": "crop:mung_bean",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成綠豆個數"
+   },
+   {
+    "id": "crop_green_bean",
+    "name": "四季豆專家",
+    "group": "作物專家",
+    "stat": "crop:green_bean",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成四季豆個數"
+   },
+   {
+    "id": "crop_red_bean",
+    "name": "紅豆專家",
+    "group": "作物專家",
+    "stat": "crop:red_bean",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成紅豆個數"
+   },
+   {
+    "id": "crop_carrot",
+    "name": "胡蘿蔔專家",
+    "group": "作物專家",
+    "stat": "crop:carrot",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成胡蘿蔔個數"
+   },
+   {
+    "id": "crop_sweet_potato",
+    "name": "地瓜專家",
+    "group": "作物專家",
+    "stat": "crop:sweet_potato",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成地瓜個數"
+   },
+   {
+    "id": "crop_daikon",
+    "name": "白蘿蔔專家",
+    "group": "作物專家",
+    "stat": "crop:daikon",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成白蘿蔔個數"
+   },
+   {
+    "id": "crop_beet",
+    "name": "甜菜根專家",
+    "group": "作物專家",
+    "stat": "crop:beet",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成甜菜根個數"
+   },
+   {
+    "id": "crop_taro",
+    "name": "芋頭專家",
+    "group": "作物專家",
+    "stat": "crop:taro",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成芋頭個數"
+   },
+   {
+    "id": "crop_lettuce",
+    "name": "生菜專家",
+    "group": "作物專家",
+    "stat": "crop:lettuce",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成生菜個數"
+   },
+   {
+    "id": "crop_spinach",
+    "name": "菠菜專家",
+    "group": "作物專家",
+    "stat": "crop:spinach",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成菠菜個數"
+   },
+   {
+    "id": "crop_bok_choy",
+    "name": "青江菜專家",
+    "group": "作物專家",
+    "stat": "crop:bok_choy",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成青江菜個數"
+   },
+   {
+    "id": "crop_napa_cabbage",
+    "name": "大白菜專家",
+    "group": "作物專家",
+    "stat": "crop:napa_cabbage",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成大白菜個數"
+   },
+   {
+    "id": "crop_cucumber",
+    "name": "小黃瓜專家",
+    "group": "作物專家",
+    "stat": "crop:cucumber",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成小黃瓜個數"
+   },
+   {
+    "id": "crop_eggplant",
+    "name": "茄子專家",
+    "group": "作物專家",
+    "stat": "crop:eggplant",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成茄子個數"
+   },
+   {
+    "id": "crop_okra",
+    "name": "秋葵專家",
+    "group": "作物專家",
+    "stat": "crop:okra",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成秋葵個數"
+   },
+   {
+    "id": "crop_bell_pepper",
+    "name": "甜椒專家",
+    "group": "作物專家",
+    "stat": "crop:bell_pepper",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成甜椒個數"
+   },
+   {
+    "id": "crop_chili",
+    "name": "辣椒專家",
+    "group": "作物專家",
+    "stat": "crop:chili",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成辣椒個數"
+   },
+   {
+    "id": "crop_muskmelon",
+    "name": "香瓜專家",
+    "group": "作物專家",
+    "stat": "crop:muskmelon",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成香瓜個數"
+   },
+   {
+    "id": "crop_honeydew",
+    "name": "哈密瓜專家",
+    "group": "作物專家",
+    "stat": "crop:honeydew",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成哈密瓜個數"
+   },
+   {
+    "id": "crop_sugarcane",
+    "name": "甘蔗專家",
+    "group": "作物專家",
+    "stat": "crop:sugarcane",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成甘蔗個數"
+   },
+   {
+    "id": "crop_cotton",
+    "name": "棉花專家",
+    "group": "作物專家",
+    "stat": "crop:cotton",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成棉花個數"
+   },
+   {
+    "id": "crop_tea",
+    "name": "茶樹專家",
+    "group": "作物專家",
+    "stat": "crop:tea",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成茶樹個數"
+   },
+   {
+    "id": "crop_coffee",
+    "name": "咖啡專家",
+    "group": "作物專家",
+    "stat": "crop:coffee",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成咖啡個數"
+   },
+   {
+    "id": "crop_mint",
+    "name": "薄荷專家",
+    "group": "作物專家",
+    "stat": "crop:mint",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成薄荷個數"
+   },
+   {
+    "id": "crop_basil",
+    "name": "羅勒專家",
+    "group": "作物專家",
+    "stat": "crop:basil",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成羅勒個數"
+   },
+   {
+    "id": "crop_thyme",
+    "name": "百里香專家",
+    "group": "作物專家",
+    "stat": "crop:thyme",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成百里香個數"
+   },
+   {
+    "id": "crop_rosemary",
+    "name": "迷迭香專家",
+    "group": "作物專家",
+    "stat": "crop:rosemary",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成迷迭香個數"
+   },
+   {
+    "id": "crop_sage",
+    "name": "鼠尾草專家",
+    "group": "作物專家",
+    "stat": "crop:sage",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成鼠尾草個數"
+   },
+   {
+    "id": "fish_tilapia",
+    "name": "吳郭魚專家",
+    "group": "魚類專家",
+    "stat": "fish:tilapia",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成吳郭魚條數"
+   },
+   {
+    "id": "fish_milkfish",
+    "name": "虱目魚專家",
+    "group": "魚類專家",
+    "stat": "fish:milkfish",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成虱目魚條數"
+   },
+   {
+    "id": "fish_seabass",
+    "name": "鱸魚專家",
+    "group": "魚類專家",
+    "stat": "fish:seabass",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成鱸魚條數"
+   },
+   {
+    "id": "fish_goldfish",
+    "name": "金魚專家",
+    "group": "魚類專家",
+    "stat": "fish:goldfish",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成金魚條數"
+   },
+   {
+    "id": "fish_shrimp",
+    "name": "蝦子專家",
+    "group": "魚類專家",
+    "stat": "fish:shrimp",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成蝦子條數"
+   },
+   {
+    "id": "fish_carp",
+    "name": "鯉魚專家",
+    "group": "魚類專家",
+    "stat": "fish:carp",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成鯉魚條數"
+   },
+   {
+    "id": "fish_crab",
+    "name": "螃蟹專家",
+    "group": "魚類專家",
+    "stat": "fish:crab",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成螃蟹條數"
+   },
+   {
+    "id": "fish_piranha",
+    "name": "食人魚專家",
+    "group": "魚類專家",
+    "stat": "fish:piranha",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成食人魚條數"
+   },
+   {
+    "id": "fish_cat_shark",
+    "name": "貓鯊專家",
+    "group": "魚類專家",
+    "stat": "fish:cat_shark",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成貓鯊條數"
+   },
+   {
+    "id": "fish_bamboo_shark",
+    "name": "竹鯊專家",
+    "group": "魚類專家",
+    "stat": "fish:bamboo_shark",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成竹鯊條數"
+   },
+   {
+    "id": "fish_blacktip_shark",
+    "name": "黑鰭鯊專家",
+    "group": "魚類專家",
+    "stat": "fish:blacktip_shark",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成黑鰭鯊條數"
+   },
+   {
+    "id": "fish_hammerhead",
+    "name": "雙髻鯊專家",
+    "group": "魚類專家",
+    "stat": "fish:hammerhead",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收成雙髻鯊條數"
+   },
+   {
+    "id": "animal_egg_hen",
+    "name": "蛋雞專家",
+    "group": "動物專家",
+    "stat": "animal:egg_hen",
+    "statIds": [
+     "egg_hen"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收雞蛋個數"
+   },
+   {
+    "id": "animal_broiler",
+    "name": "肉雞專家",
+    "group": "動物專家",
+    "stat": "animal:broiler",
+    "statIds": [
+     "broiler"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉雞隻數"
+   },
+   {
+    "id": "animal_duck",
+    "name": "鴨專家",
+    "group": "動物專家",
+    "stat": "animal:duck",
+    "statIds": [
+     "meat_duck",
+     "down_duck"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收鴨產物個數（羽毛＋出貨肉鴨）"
+   },
+   {
+    "id": "animal_goose",
+    "name": "鵝專家",
+    "group": "動物專家",
+    "stat": "animal:goose",
+    "statIds": [
+     "meat_goose",
+     "down_goose"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收鵝產物個數（羽毛＋出貨肉鵝）"
+   },
+   {
+    "id": "animal_wool_sheep",
+    "name": "毛羊專家",
+    "group": "動物專家",
+    "stat": "animal:wool_sheep",
+    "statIds": [
+     "wool_sheep"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收羊毛個數"
+   },
+   {
+    "id": "animal_dairy_goat",
+    "name": "乳羊專家",
+    "group": "動物專家",
+    "stat": "animal:dairy_goat",
+    "statIds": [
+     "dairy_goat"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收羊奶個數"
+   },
+   {
+    "id": "animal_meat_sheep",
+    "name": "草飼羊專家",
+    "group": "動物專家",
+    "stat": "animal:meat_sheep",
+    "statIds": [
+     "meat_sheep"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉羊隻數"
+   },
+   {
+    "id": "animal_dairy_cow",
+    "name": "乳牛專家",
+    "group": "動物專家",
+    "stat": "animal:dairy_cow",
+    "statIds": [
+     "dairy_cow"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收牛奶個數"
+   },
+   {
+    "id": "animal_beef_cattle",
+    "name": "草飼牛專家",
+    "group": "動物專家",
+    "stat": "animal:beef_cattle",
+    "statIds": [
+     "beef_cattle"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉牛隻數"
+   },
+   {
+    "id": "animal_pig",
+    "name": "豬專家",
+    "group": "動物專家",
+    "stat": "animal:pig",
+    "statIds": [
+     "pig"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉豬隻數"
+   },
+   {
+    "id": "bee_honey",
+    "name": "蜜蜂專家",
+    "group": "昆蟲",
+    "stat": "hive:beehive",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "蜜蜂蜂箱累計產蜜罐數"
+   },
+   {
+    "id": "bee_bumble",
+    "name": "熊蜂專家",
+    "group": "昆蟲",
+    "stat": "hive:bumble_hive",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "熊蜂箱累計產蜜罐數"
+   },
+   {
+    "id": "flower_lavender",
+    "name": "薰衣草專家",
+    "group": "昆蟲",
+    "stat": "honey:honey_lavender",
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計採到薰衣草蜜罐數"
    }
-  ]
+  ],
+  "badgeSources227": {
+   "art/src_ui/v227/7_badges_crops_30.png": {
+    "cols": 5,
+    "rows": 6,
+    "ids": [
+     "crop_alfalfa",
+     "crop_timothy",
+     "crop_oats",
+     "crop_barley",
+     "crop_rye",
+     "crop_millet",
+     "crop_sorghum",
+     "crop_red_bean",
+     "crop_mung_bean",
+     "crop_pea",
+     "crop_green_bean",
+     "crop_carrot",
+     "crop_sweet_potato",
+     "crop_daikon",
+     "crop_beet",
+     "crop_taro",
+     "crop_lettuce",
+     "crop_spinach",
+     "crop_bok_choy",
+     "crop_napa_cabbage",
+     null,
+     "crop_eggplant",
+     "crop_cucumber",
+     "crop_bell_pepper",
+     "crop_chili",
+     "crop_okra",
+     "crop_honeydew",
+     "crop_muskmelon",
+     "crop_sugarcane",
+     "crop_cotton"
+    ]
+   },
+   "art/src_ui/v227/8_badges_herbs_fish_animals_30.png": {
+    "cols": 5,
+    "rows": 6,
+    "ids": [
+     "crop_tea",
+     "crop_coffee",
+     "crop_mint",
+     "crop_basil",
+     "crop_rosemary",
+     "crop_thyme",
+     "flower_lavender",
+     "fish_tilapia",
+     "fish_milkfish",
+     "fish_seabass",
+     "fish_goldfish",
+     "fish_shrimp",
+     "fish_carp",
+     "fish_crab",
+     "fish_piranha",
+     "fish_cat_shark",
+     "fish_bamboo_shark",
+     "fish_blacktip_shark",
+     "fish_hammerhead",
+     null,
+     "animal_duck",
+     "animal_goose",
+     "animal_wool_sheep",
+     "animal_dairy_goat",
+     "animal_meat_sheep",
+     "animal_dairy_cow",
+     "animal_beef_cattle",
+     "animal_pig",
+     "bee_honey",
+     "bee_bumble"
+    ]
+   },
+   "art/src_ui/v227/9_badges_hen_broiler_soybean_sage_4.png": {
+    "cols": 4,
+    "rows": 1,
+    "ids": [
+     "animal_egg_hen",
+     "animal_broiler",
+     "crop_soybean",
+     "crop_sage"
+    ]
+   },
+   "note": "裁成 art/batch37/ui_badge_<成就 id>.png（160×160），灰色版 _off；第 7 張的南瓜不用（v2.19 已有）、第 8 張的「雞」不用（改用第 9 張的蛋雞、肉雞）"
+  }
  },
  "pwa": {
   "serviceWorker": "sw.js",
@@ -6927,7 +8991,9 @@ window.GAME_CONFIG = {
   "soilCrop": 60,
   "treeRate": 0.3,
   "treeMin": 50,
-  "note": "田和果樹本來不能搬；要搬時付移墾費（田 30、有作物 60）或移植費（樹苗價 30%，最少 50），先跳確認，放好才扣"
+  "note": "田和果樹本來不能搬；要搬時付移墾費（田 30、有作物 60）或移植費（樹苗價 30%，最少 50）；魚池每格遷移費空池 30、有魚 60；先跳確認，放好才扣",
+  "pool": 30,
+  "poolFish": 60
  },
  "utilityLog": {
   "bucketMinutes": 60,
@@ -6956,5 +9022,53 @@ window.GAME_CONFIG = {
    "wellWater": false
   },
   "note": "植物生長燈、路燈、灑水器、電池、太陽能板、發電機、手搖發電、融雪機、水井、加工機、空的蜂箱都能用「收回」或長按拖到倉庫；收回後放在建設倉庫（S.buildStore），之後用建設或裝飾 → 建築放回，免費"
- }
+ },
+ "machineUpgrade": {
+  "maxLevel": 5,
+  "batchesPerLevel": 1,
+  "speedPerLevel": 0.15,
+  "costMultOfBuild": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "appliesTo": [
+   "fish_feed_machine",
+   "corn_cake_machine",
+   "compost_bin",
+   "biomass_gen",
+   "snow_melter"
+  ],
+  "note": "Lv1→Lv5：每升一級一次多放 1 批、速度快 15%（每批時間 ÷ (1+0.15×(Lv-1))）；升到 Lv2～Lv5 的費用是蓋機器價 ×1～4",
+  "perKind": {
+   "biomass_gen": {
+    "menu": [
+     "load",
+     "collect",
+     "stats",
+     "upgrade"
+    ],
+    "collectOff": "電直接送進電網",
+    "speedAffects": "kwhPerHour",
+    "fuelSlotsPerLevel": 10,
+    "buildCost": 1500
+   },
+   "snow_melter": {
+    "menu": [
+     "load",
+     "collect",
+     "stats",
+     "upgrade"
+    ],
+    "loadOff": "雪桶是空的：先用「鏟雪」鏟雪",
+    "loadIs": "dumpBucket",
+    "collectOff": "寶特瓶自動加進水塔",
+    "speedAffects": "secondsPerTile",
+    "buildCost": 1200
+   },
+   "note": "速度每級 +15%（發電量 ×、融雪每格秒數 ÷ (1+0.15×(Lv-1))），耗電不變；生質發電機燃料格每級 +10（50→90）；費用同 costMultOfBuild"
+  }
+ },
+ "animals_note227": "productQty：生產型每次收幾個（沒寫＝1）；羽鵝一次 2 根羽毛。肉／羽共用一個徽章（badge）"
 };

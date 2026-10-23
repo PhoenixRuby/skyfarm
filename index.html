@@ -960,7 +960,7 @@ function feedAnimal(T,A){
   return r;
 }
 function stepPlant(T, dt, b, wetAll, env = 1){
-  const wu = T.t === 'tree' ? 1 : (T.crop ? CFG.crops[T.crop.id].waterUse : 1);
+  const wu = T.t === 'tree' ? 1 : (T.crop ? CFG.crops[T.crop.id].waterUse : (T.flower && CFG.flowers && CFG.flowers[T.flower.id] && CFG.flowers[T.flower.id].waterUse) || 1);   // v2.24.3: flowers use their own waterUse
   const levelSec = R.moistLevelSeconds / wu * (1 + (b ? b.m : 0));
   if (wetAll){ T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false; }
   const wet = T.m > 0;
@@ -2003,7 +2003,7 @@ function openBook(tab, focusId){
     } else if (k === 'weather') renderWeather(el);
     else if (k === 'rules'){
       el.innerHTML = `<h3>水塔</h3><p>農舍旁的水塔存著澆水用的水，容量 = 等級雨水儲量 + 儲水裝飾。下雨免費補滿；接了自來水，水塔低於補水線（預設 50%）時每秒注入 ${TOWER.tapFlowPerSecond} 滴，水錶轉的時候才計費，當天有注水才收水費基本費。</p>
-        <h3>澆水</h3><p>每格田的濕度分 0～${R.moistMaxLevel} 級。普通水桶澆一次 +1 級，Lv ${UNLOCK.big_bucket} 起自動升級成大水桶，一次就全濕。每級維持 ${fmtDur(R.moistLevelSeconds)}（除以作物耗水倍率）。每次澆水用 ${R.waterPerTap} 滴，先用存下來的雨水，用完了才用自來水（要先接水，會計費）。雨水儲量照等級，加上雨水桶、石井、水塔；石井還會慢慢冒地下水。</p>
+        <h3>澆水</h3><p>每格田的濕度分 0～${R.moistMaxLevel} 級。普通水桶澆一次 +1 級，Lv ${UNLOCK.big_bucket} 起自動升級成大水桶，一次就全濕。每級維持 ${fmtDur(R.moistLevelSeconds)}（除以作物或花的耗水倍率；空田和果樹算 1，全濕可撐 ${fmtDur(R.moistLevelSeconds * R.moistMaxLevel)}，各作物見「田作物」、各種花見「花」）。下雨時田一直保持全濕；積雪蓋著時濕度凍住不變；${(CFG.decos.pond && CFG.decos.pond.name) || '小池塘'}周圍 ${(CFG.decos.pond && CFG.decos.pond.effect && CFG.decos.pond.effect.range) || 2} 格的田，濕度維持時間變成 ${1 + ((CFG.decos.pond && CFG.decos.pond.effect && CFG.decos.pond.effect.value) || .5)} 倍。天氣、季節、氣溫不影響乾的速度。每次澆水用 ${R.waterPerTap} 滴，先用存下來的雨水，用完了才用自來水（要先接水，會計費）。雨水儲量照等級，加上雨水桶、石井、水塔；石井還會慢慢冒地下水。</p>
         <h3>白天、黑夜與陰天</h3><p>照你設定的地點算日出日落。晚上作物長 ${Math.round(DN.nightGrowthRate*100)}%，陰天白天長 ${Math.round(DN.cloudyDayGrowthRate*100)}%；生長燈照到的格子恢復 100%。</p>
         <h3>水電費</h3><p>一開始沒接自來水也沒接市電。接了之後才開始計費，電費分時段、水費分級距。帳單照你選的週期結算，越早繳折扣越多，逾期會自動扣款並加收滯納金。金幣可以因帳單變成負數，負數時不能買或蓋東西，自來水和市電暫停；雨水、電池、發電機和手搖發電照常可用，收成、賣東西、拔雜草也可以。</p>
         <h3>雜草</h3><p>每塊地每 ${Math.round(CFG.weeds.minutesPerWeedPerBlock)} 分鐘長出一株雜草，最多 ${CFG.weeds.maxPerBlock} 株。草地上的雜草要先拔掉才能開墾；拔下來進倉庫，可以賣 ${CFG.items.weed ? CFG.items.weed.sellPrice : 1} 金幣或當發電燃料。</p>
@@ -9127,9 +9127,9 @@ const flAfter = D => D.blooms > 1 ? `等再開，第 ${D.blooms} 次採完花謝
 function bookFlowers(el){
   const icon = id => { const [n, f] = itemSprite('flower', id); return n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : ''; };
   el.innerHTML = `<p>花種在開墾過的田，要澆水；花不能收成、不能賣，專門給蜂箱 9×9 範圍內的蜜蜂採。蜜蜂採一份花蜜＝蜂箱多 1 罐這種花的蜂蜜，用「收成」點蜂箱或採蜜機器人收進倉庫。一次性的花採完就謝，田變回空田（仍是開墾過的），只能重種花苗；多次的花採完一輪進「等再開」，次數用完才謝。乾的時候長得慢；開花後乾超過 1 小時，花蜜只剩一半。花不長蟲、不分有機。不想要的花用「剷除」，田變空田，不退費。</p>` +
-    tbl([H(''), H('花苗'), H('解鎖'), H('花苗價', 1), H('開花'), H('每次花蜜', 1), H('可採次數', 1), H('再開花'), H('一生產蜜', 1), H('蜂蜜'), H('蜜價', 1), H('一生蜜值', 1), H('採完後')],
+    tbl([H(''), H('花苗'), H('解鎖'), H('花苗價', 1), H('開花'), H('每次花蜜', 1), H('可採次數', 1), H('再開花'), H('一生產蜜', 1), H('蜂蜜'), H('蜜價', 1), H('一生蜜值', 1), H('耗水倍率', 1), H('全濕可撐'), H('採完後')],
       Object.entries(FL).map(([id, D]) => ({ cls: (isUnlocked(id) ? '' : 'locked') + (id === RT.bookFocus ? ' cur' : ''),
-        cells: [icon(id), D.name, lockCell(id), D.seedCost, fmtDur(D.growSeconds), D.nectar, D.blooms, D.regrowSeconds ? fmtDur(D.regrowSeconds) : '—', flLife(D), itemName(D.honey), flPrice(D), fmtN(flLife(D) * flPrice(D)), flAfter(D)] }))); paintIcons(el); }
+        cells: [icon(id), D.name, lockCell(id), D.seedCost, fmtDur(D.growSeconds), D.nectar, D.blooms, D.regrowSeconds ? fmtDur(D.regrowSeconds) : '—', flLife(D), itemName(D.honey), flPrice(D), fmtN(flLife(D) * flPrice(D)), D.waterUse || 1, wetHours(D.waterUse || 1), flAfter(D)] }))); paintIcons(el); }
 // flower cards: honey lines + 「i」
 { const _ut38 = UIbuildTray; UIbuildTray = function(){ _ut38(); if (!S || S.sel.tool !== 'seed') return;
   $('tray').querySelectorAll('.item').forEach(el => { const D = FL[el.dataset.id]; if (!D) return; const sm = el.querySelectorAll('small');
@@ -12323,6 +12323,636 @@ function menuTitle58(){ const h = $('modalTitle'); if (!h) return; h.dataset.rea
 $('modalTabs').addEventListener('click', e => { const b = e.target.closest('button[data-k]'), h = $('modalTitle'); if (!b || !h || h.dataset.real !== '選單') return;
   if (b.dataset.k === 'slots') RT.pickFromMenu = true; else RT.menuTab = b.dataset.k; setTimeout(() => { try { setHd54('選單', b.dataset.k); } catch(err){} menuTitle58(); }, 0); }, true);
 if (typeof PAGE === 'object' && PAGE['選單']) PAGE[MENU58] = PAGE['選單'];
+
+/* ===== 59. v2.25: the poop robot and the snow robot really walk (no more shovelling from afar, no more vanishing halfway) =====
+   Both leave from their own charger slot (rented ones from the house door), walk along the tiles (never through fields),
+   do one job, pick the next; they check the battery for the way back before leaving, and walk home when there is
+   nothing to do, the storage is full or the battery only covers the way back. They only work the map their charger is on. */
+const WALK59 = { poop: (RB.kinds.poop && RB.kinds.poop.walk) || { tilesPerSecond: 1, shovelSeconds: 3 }, snow: (RB.kinds.snow && RB.kinds.snow.walk) || { tilesPerSecond: 1, clearSeconds: 5 } };
+const MINE59 = ['poop', 'snow'].filter(k => RB.kinds[k]);
+const workT59 = kind => kind === 'poop' ? (WALK59.poop.shovelSeconds || 3) : (WALK59.snow.clearSeconds || 5);
+const stepT59 = kind => 1 / (WALK59[kind].tilesPerSecond || 1);
+
+// nearest job by walking distance (one BFS). Poop: step onto its tile. Snow: stand on a snowy walkable tile, or next to a snowy field / building.
+function job59(kind, W, M, key){
+  if (kind === 'poop' && invFree() < 1) return null;
+  if (kind === 'snow' && !S.snow.cover) return null;
+  const cl = walkerClaims(kind, key), mi = W.mi, start = tkey(W.x, W.y), prev = new Map([[start, null]]), q = [start]; let qi = 0;
+  const isJob = k => !cl.has(k) && (kind === 'poop' ? !!(M.tiles[k] && M.tiles[k].t === 'poop') : snowyAt(mi, k));
+  const path = k => swPathTo(prev, k);
+  while (qi < q.length){ const c = q[qi++], [x, y] = pkey(c);
+    if (kind === 'snow' && c !== start && isJob(c)) return { path: path(c), target: c };          // snowy walkable tile: stand on it
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx = x + dx, ny = y + dy, n = tkey(nx, ny); if (prev.has(n) || !inMap(M, nx, ny)) continue;
+      if (!swPass(M, n)){ if (isJob(n)){ const p = path(c); if (kind === 'poop') p.push(n); return { path: p, target: n }; } continue; }   // poop: step onto it; snowy field / building: clear it from beside
+      prev.set(n, c); q.push(n); } }
+  return null;
+}
+function wants59(kind){ return (key, u) => { const home = workerHome(kind, u); if (!home) return false; const W = WS[key]; if (walkAway(W, home)) return true; if (lowAtHome(kind, u)) return false;
+  return !!job59(kind, W || { mi: home.mi, x: home.x, y: home.y }, S.maps[home.mi], key); }; }
+for (const kind of MINE59) workerWants[kind] = wants59(kind);
+
+function doJob59(kind, W, M, t){
+  const k = W.target, live = Math.abs(Date.now() - t) < 5000 && W.mi === S.cur;
+  if (kind === 'poop'){ const T = M.tiles[k]; if (!(T && T.t === 'poop') || invFree() < 1) return;
+    const [x, y] = pkey(k), c = center(x, y); RT.inPoop53 = true; try { shovelPoop(M, k, live ? c.cx : undefined, c.cy); } finally { RT.inPoop53 = false; } RT.regionsAt = 0; }
+  else if (snowyAt(W.mi, k)){ (S.snow.cleared[W.mi] = S.snow.cleared[W.mi] || {})[k] = 1; RT.snowBot = null; }
+}
+function worker59(kind, key, u, dt, t){
+  const home = workerHome(kind, u); if (!home) return; const W = walkState(key, home), M = S.maps[W.mi], stepT = stepT59(kind), wt = workT59(kind);
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 2000){
+    if (W.phase === 'home' || W.phase === 'pick'){
+      let plan = job59(kind, W, M, key);
+      if (plan && u){ const [tx, ty] = pkey(plan.path[plan.path.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length; if (u.batt < (plan.path.length + back) * stepT + wt + 2) plan = null; }
+      if (!plan){ if (W.phase === 'pick' && walkAway(W, home)) walkGoHome(W, M, home); else { W.phase = 'home'; W.target = null; } if (W.phase === 'home') return; continue; }
+      W.path = plan.path; W.i = 0; W.el = 0; W.goal = kind; W.target = plan.target; W.phase = 'walk'; continue;
+    }
+    if (W.phase === 'walk'){
+      if (W.goal !== 'home' && W.target && !(kind === 'poop' ? (M.tiles[W.target] && M.tiles[W.target].t === 'poop') : snowyAt(W.mi, W.target))){ W.phase = 'pick'; W.target = null; continue; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; W.target = null; return; } W.phase = 'fill'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1], last = W.i + 1 === W.path.length - 1;
+      if (!swPass(M, nk) && !(last && (W.goal === 'home' || (W.goal === 'poop' && nk === W.target)))){ if (W.goal === 'home') walkGoHome(W, M, home); else W.phase = 'pick'; continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; }
+      budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue;
+    }
+    if (W.phase === 'fill'){ const left = wt - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; doJob59(kind, W, M, t); W.target = null; W.phase = 'pick'; continue; }
+    W.phase = 'pick';
+  }
+}
+// the old «from afar» steps do nothing now; the walkers do the work
+poopStep = function(){};
+snowbotStep = function(){};
+{ const _sr59 = stepRobots; stepRobots = function(dt, t, rainNow){ const res = _sr59(dt, t, rainNow);
+  for (const kind of MINE59){ if (!res[kind]) continue;
+    for (const u of fleet(kind)) if (u.state === 'work') worker59(kind, wKey(kind, u), u, dt, t);
+    if (RT.rw[kind]) worker59(kind, wKey(kind, null), null, dt, t); }
+  return res; }; }
+// out walking: keep walking home on its wheels (never jump to the charger)
+{ const _su59 = stepUnit; stepUnit = function(kind, u, dt, t, want, occ){
+  if (MINE59.includes(kind) && u && unitTier(kind, u) && walkAway(WS[wKey(kind, u)], workerHome(kind, u))){ u.state = 'work'; u.batt = Math.max(0, u.batt - dt); return true; }
+  return _su59(kind, u, dt, t, want, occ); }; }
+
+/* ---------- drawing: depth-sorted walkers (same pass as the trash robots) ---------- */
+{ const _mw59 = myWalkers; myWalkers = function(now){ const out = _mw59(now);
+  for (const kind of MINE59){
+    if (rentActive(kind, now)){ const key = wKey(kind, null), W = WS[key]; if (W && walkAway(W, workerHome(kind, null))) out.push({ kind, key, W, carry: false, rent: true }); }
+    for (const u of fleet(kind)){ if (!unitTier(kind, u) || u.on === false || u.state !== 'work') continue; const key = wKey(kind, u), W = WS[key]; if (W && walkAway(W, workerHome(kind, u))) out.push({ kind, key, W, carry: false }); } }
+  return out; }; }
+// the old gliding figure is gone (the walker pass draws them)
+{ const _ut59 = unitTarget; unitTarget = function(kind, ...a){ if (MINE59.includes(kind)) return null; return _ut59(kind, ...a); }; }
+// rented one at home: still rests on the house roof like before
+KIND_DESC.poop = `從自己的充電站位子出發，沿格子走到糞便那裡鏟進倉庫（鏟一坨 ${WALK59.poop.shovelSeconds || 3} 秒），不會穿過田；倉庫滿了、沒糞便或電只夠回程就走回充電站。只管充電站所在的那張地圖。`;
+KIND_DESC.snow = `從自己的充電站位子出發，沿格子走到有雪的地方清雪（每格 ${WALK59.snow.clearSeconds || 5} 秒），田和建物上的雪站在旁邊清；清完或電只夠回程就走回充電站。只管充電站所在的那張地圖。`;
+
+window.__farm225 = { job59, worker59, doJob59, WALK59, WS };
+
+/* ===== 60. v2.25.1: walking robots never glide straight across fields / trees / fences =====
+   After the tab was in the background, the simulation catches up in big steps and a walker's real tile jumps far ahead;
+   the old smoothing then slid the figure there in a straight line. Now a walker only glides between neighbouring tiles —
+   if its real position is more than about one tile away from where it is drawn, it is drawn there right away. */
+const SNAP60 = (CFG.ui && CFG.ui.walkerSnapTiles) || 1.25;
+const tps60 = kind => kind === 'sweep' ? (SWK.tilesPerSecond || 1) : kind === 'wellbot' ? ((WB && WB.tilesPerSecond) || 1)
+  : (typeof WALK59 === 'object' && WALK59[kind]) ? (WALK59[kind].tilesPerSecond || 1) : ((RK(kind) && RK(kind).tilesPerSecond) || 1);
+function walkerScreenSmooth(e){
+  const stepT = 1 / tps60(e.kind), s = walkScreenOf(e.W, stepT); if (!s) return null;
+  let p = RT.unitPos[e.key]; if (!p) p = RT.unitPos[e.key] = { x: s.x, y: s.y, fx: false };
+  if (s.fx !== null) p.fx = s.fx;
+  const dx = s.x - p.x, dy = s.y - p.y, d = Math.hypot(dx, dy), maxd = Math.max(2, 70 * (1 / stepT) * Math.min(.1, RT.frameDt || .016) * 1.6);
+  if (d > HW * SNAP60 || RT.snap60) { p.x = s.x; p.y = s.y; }          // caught up while away: appear where it really is, never cut across
+  else if (d > maxd){ p.x += dx / d * maxd; p.y += dy / d * maxd; } else { p.x = s.x; p.y = s.y; }
+  let cx = e.W.x, cy = e.W.y; if (e.W.phase === 'walk' && e.W.path && e.W.i < e.W.path.length - 1){ const [nx, ny] = pkey(e.W.path[e.W.i + 1]); if (nx + ny > cx + cy){ cx = nx; cy = ny; } }
+  return { p, s, k: tkey(cx, cy) };
+}
+// coming back to the tab: every walker is drawn where it really is on the first frames
+document.addEventListener('visibilitychange', () => { if (document.hidden) return; RT.snap60 = true; setTimeout(() => { RT.snap60 = false; }, 600); });
+window.__farm2251 = { walkerScreenSmooth, tps60, get unitPos(){ return RT.unitPos; }, walkScreenOf };
+// drawUnits drops positions it did not draw itself; keep the ones of walkers drawn in the depth pass (so they glide tile to tile)
+{ const _du60 = drawUnits; drawUnits = function(M, t, now){ const keep = {}; for (const e of myWalkers(now)){ const p = RT.unitPos[e.key]; if (p) keep[e.key] = p; }
+  const r = _du60(M, t, now); Object.assign(RT.unitPos, keep); return r; }; }
+
+/* ===== 61. v2.26: coin log newest first, pool info panel, machine menu + 5 levels (queued batches), containers for products,
+   PET bottles from the snow melter, bees spread over the flowers ===== */
+const MU61 = CFG.machineUpgrade || { maxLevel: 5, batchesPerLevel: 1, speedPerLevel: .15, costMultOfBuild: [1, 2, 3, 4], appliesTo: [] };
+const BOT61 = (CFG.snow && CFG.snow.melter && CFG.snow.melter.bottles) || { maxRow: 6, rollSeconds: 1.5 };
+const FOR61 = (CFG.bees && CFG.bees.forage) || { mode: 'spread', showFlowers: 4 };
+IMGSRC.ui_hd_pool61 = IMGSRC.ui_mn_pool_info; IMGSRC.ui_hd_stats61 = IMGSRC.ui_mn_stats;
+if (typeof HD54 === 'object'){ HD54['查看魚池'] = 'pool61'; HD54['產出效能'] = 'stats61'; }
+
+/* ---------- 1. 金幣歷程：日期、原因、每一筆都是新的在上 ---------- */
+function coinDays55(){ const L = (S.coinLog || []).slice().sort((a, b) => b[0] - a[0]), days = new Map();
+  for (const e of L){ const dk = dayKey55(e[0]); let D = days.get(dk);
+    if (!D){ D = { key: dk, t: e[0], in: 0, out: 0, n: 0, reasons: new Map() }; days.set(dk, D); }
+    D.n++; if (e[1] > 0) D.in += e[1]; else D.out -= e[1];
+    const rk = (e[1] > 0 ? '+' : '-') + reasonKey55(e[3]); let R = D.reasons.get(rk);
+    if (!R){ R = { key: rk, label: reasonKey55(e[3]), sum: 0, n: 0, list: [], last: e[0] }; D.reasons.set(rk, R); }
+    R.sum += e[1]; R.n++; R.list.push(e); }
+  return [...days.values()]; }
+const reasons61 = D => [...D.reasons.values()].sort((a, b) => b.last - a.last);
+function dayBody55(D){ return reasons61(D).map((R, i) => `<details data-r55="${i}"><summary><span class="lb">${escapeHTML(R.label)}</span><span class="n">${fmtN(R.n)} 筆</span><span class="v ${R.sum > 0 ? 'cin' : 'cout'}">${signN55(R.sum)}</span></summary><div class="rows"></div></details>`).join(''); }
+function openCoinLog(){
+  openModal('金幣歷程', null, (kk, el) => {
+    const days = coinDays55();
+    let h = `<p class="small">金幣的每一筆變動，保留最近 ${CLOG.keepDays} 天、最多 ${fmtN(CLOG.maxEntries)} 筆，新的在上面。目前 ${fmtN(Math.floor(S.player.coins))} 金幣。點日期展開，依原因合併；再點原因看每一筆。</p>`;
+    if (!days.length) h += '<p>還沒有紀錄。</p>';
+    h += '<div class="cl55">' + days.map((D, i) => `<details data-d55="${i}"><summary><span class="lb">${dayLabel(D.t)}</span><span class="ds">收入 <i class="cin">+${fmtN(Math.round(D.in))}</i>　支出 <i class="cout">−${fmtN(Math.round(D.out))}</i></span><span class="v ${D.in - D.out >= 0 ? 'cin' : 'cout'}">${signN55(D.in - D.out)}</span></summary><div class="rows"></div></details>`).join('') + '</div>';
+    el.innerHTML = h;
+    el.querySelectorAll('details[data-d55]').forEach(dd => dd.addEventListener('toggle', () => { const box = dd.querySelector(':scope > .rows'); if (!dd.open || box.dataset.f) return; box.dataset.f = 1;
+      const D = days[+dd.dataset.d55], rs = reasons61(D); box.innerHTML = dayBody55(D);
+      box.querySelectorAll('details[data-r55]').forEach(rd => rd.addEventListener('toggle', () => { const rb = rd.querySelector(':scope > .rows'); if (!rd.open || rb.dataset.f) return; rb.dataset.f = 1; rb.innerHTML = reasonRows55(rs[+rd.dataset.r55]); })); }));
+    el.onclick = e => { const b = e.target.closest('[data-bill55]'); if (!b) return; e.preventDefault(); e.stopPropagation(); openBillDetail55(b.dataset.bill55); };
+    const first = el.querySelector('details[data-d55]'); if (first) first.open = true;
+  }); }
+
+/* ---------- 2. 查看魚池 ---------- */
+function poolInfo61(M, k){
+  const pk = poolOf(M, k), P = pk && M.pools[pk]; if (!P) return;
+  const mi = S.maps.indexOf(M), lit = litTiles[mi], night = dayPhase(Date.now()).phase === 'night', nr = (CFG.fishPool || {}).nightGrowthRate ?? .5;
+  const cells = P.tiles.map(kk => [kk, M.tiles[kk]]).filter(([, T]) => T), withFish = cells.filter(([, T]) => T.fish && CFG.fish[T.fish]);
+  const left = T => { const F = CFG.fish[T.fish]; if (T.stage >= F.stages) return 0; if (!(T.timer > 0)) return null; return T.timer + (F.stages - T.stage - 1) * F.stageSeconds; };
+  const groups = new Map(); for (const [kk, T] of withFish){ const g = groups.get(T.fish) || { id: T.fish, F: CFG.fish[T.fish], list: [] }; g.list.push([kk, T]); groups.set(T.fish, g); }
+  const hungry = withFish.filter(([, T]) => !(T.timer > 0) && T.stage < CFG.fish[T.fish].stages).length, litN = cells.filter(([kk]) => M.pll && M.pll[kk]).length ? cells.filter(([kk]) => lit && lit.has(kk)).length : 0;
+  const pir = withFish.find(([, T]) => T.fish === 'piranha'), prey = withFish.filter(([, T]) => T.fish !== 'piranha').length, PIR = (CFG.fish.piranha || {}).eats;
+  const stName = (T, F) => T.stage >= F.stages ? '可以收了' : ['魚苗', '小魚', '中魚', '大魚', '成魚'][Math.min(4, T.stage)] || `第 ${T.stage + 1} 階段`;
+  openModal('查看魚池', null, (kk, el) => {
+    let h = `<p class="small">這個魚池 ${P.tiles.length} 格 · 空格 ${P.tiles.length - withFish.length} · 餓了 ${hungry} 格 · 有燈照 ${litN} 格${night ? ' · 現在是晚上，沒燈照的格子長得慢（' + Math.round(nr * 100) + '%）' : ''}</p>`;
+    if (pir && prey && PIR) h += `<p class="warn61">⚠ 混養食人魚：約 ${fmtDur(Math.max(0, PIR.everySeconds - (pir[1].eat56 || 0)))}後會吃掉一格別的魚</p>`;
+    if (!withFish.length) h += '<p>魚池是空的：用「魚」工具選魚苗，點空格放進去（一格一種）。</p>';
+    h += '<div class="pi61">' + [...groups.values()].map(g => { const ts = g.list.map(([, T]) => left(T)), ready = ts.filter(v => v === 0).length, wait = ts.filter(v => v > 0), hun = ts.filter(v => v === null).length;
+      const parts = []; if (ready) parts.push(`可以收了 ${ready} 格`); if (wait.length) parts.push(wait.length > 1 && Math.max(...wait) - Math.min(...wait) > 60 ? `最快 ${fmtDur(Math.min(...wait))}、最慢 ${fmtDur(Math.max(...wait))}後可收` : `${fmtDur(Math.min(...wait))}後可收`); if (hun) parts.push(`餓了 ${hun} 格（要餵）`);
+      const dark = night ? g.list.filter(([kk]) => !(lit && lit.has(kk))).length : 0; if (dark) parts.push(`${dark} 格晚上沒燈照`);
+      return `<details><summary><img src="${IMGSRC['ui_fish_' + g.id] || ''}" alt=""><b>${g.F.name}</b><span>× ${g.list.length} 格</span><i>${parts.join(' · ')}</i></summary><div class="rows">${g.list.map(([kk2, T], i) => { const v = left(T);
+        return `<div class="r"><span>第 ${i + 1} 格</span><span>${stName(T, g.F)}</span><span>${v === 0 ? '可以收' : v === null ? '餓了' : fmtDur(v) + '後'}</span><span>${lit && lit.has(kk2) ? '有燈' : ''}</span></div>`; }).join('')}</div></details>`; }).join('') + '</div>';
+    h += '<p class="small">剩下的時間是照「每階段都準時餵」估算；晚上沒燈照會變慢。</p>';
+    el.innerHTML = h; const d = el.querySelector('details'); if (d) d.open = true; }); }
+
+/* ---------- 3. 機器：等級、排隊的批次、小選單、產出效能 ---------- */
+const isUp61 = T => T && T.t === 'machine' && (MU61.appliesTo || []).includes(T.id) && CFG.machines[T.id];
+const lvl61 = T => Math.max(1, Math.min(MU61.maxLevel || 5, T.lvl || 1));
+const cap61 = T => 1 + (lvl61(T) - 1) * (MU61.batchesPerLevel || 1);
+const secs61 = (T, lv = lvl61(T)) => CFG.machines[T.id].seconds / (1 + (MU61.speedPerLevel || .15) * (lv - 1));
+const upCost61 = T => { const lv = lvl61(T); if (lv >= (MU61.maxLevel || 5)) return 0; return Math.round((CFG.machines[T.id].buildCost || 500) * ((MU61.costMultOfBuild || [])[lv - 1] || lv)); };
+function fix61(T){ if (T.v61) return; T.v61 = 1; if (T.state === 'working'){ T.run = true; T.q = T.q || 0; } if (T.state === 'done'){ T.out = Math.max(1, T.out || 0); T.run = false; } T.q = T.q || 0; T.out = T.out || 0; }
+const inUse61 = T => (T.run ? 1 : 0) + (T.q || 0) + (T.out || 0);
+const outQty61 = T => Object.values(CFG.machines[T.id].output).reduce((a, b) => a + b, 0);
+function stepMachines61(t){
+  for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (!isUp61(T)) continue; fix61(T);
+    let guard = 0;
+    while (T.run && t >= T.until && guard++ < 500){ T.out = (T.out || 0) + 1; T.run = false;
+      const dk = dayKeyLocal(T.until); if (T.day61 !== dk){ T.day61 = dk; T.today61 = 0; } T.today61 = (T.today61 || 0) + outQty61(T); T.made61 = (T.made61 || 0) + outQty61(T);
+      if (T.q > 0){ T.q--; T.until += secs61(T) * 1000; T.run = true; } }
+    T.state = T.run ? 'working' : T.out > 0 ? 'done' : 'idle'; T.batches = Math.min(3, T.out || 0); } }
+{ const _sa61 = stepAll; stepAll = function(dt, t){ const r = _sa61(dt, t); try { stepMachines61(t); } catch(e){ console.warn(e); } return r; }; }
+function loadMachine61(M, k, T){ const D = CFG.machines[T.id], free = cap61(T) - inUse61(T), [x, y] = pkey(k), { cx, cy } = center(x, y);
+  if (free <= 0){ toast(`${D.name}已經放滿 ${cap61(T)} 批了`); return; }
+  let n = free; for (const [id, q] of Object.entries(D.input)) n = Math.min(n, Math.floor(invHave(id) / q));
+  if (n <= 0){ toast(`${D.name}需要 ${Object.entries(D.input).map(([id, q]) => `${itemName(id)} ${q} 個`).join('、')}，倉庫裡不夠`); return; }
+  for (const [id, q] of Object.entries(D.input)) invTake(id, q * n);
+  const now = Date.now(); let left = n; if (!T.run){ T.run = true; T.until = now + secs61(T) * 1000; left--; } T.q = (T.q || 0) + left;
+  T.state = 'working'; floatText(cx, cy - 34, `投入 ${n} 批：${Object.entries(D.input).map(([id, q]) => `${itemName(id)} ${q * n}`).join('、')}`, '#8a5d36', 11); sfx('place'); afterAction(); }
+function collectMachine61(M, k, T){ const D = CFG.machines[T.id], [x, y] = pkey(k), { cx, cy } = center(x, y), n = T.out || 0;
+  if (!n){ toast(T.run ? `${D.name}還在做，還要 ${fmtDur((T.until - Date.now()) / 1000)}` : `${D.name}沒有成品`); return; }
+  const goods = Object.entries(D.output).map(([id, q]) => ({ id, qty: q * n }));
+  deliver(goods, cx, cy, () => { T.out = 0; T.batches = 0; T.state = T.run ? 'working' : 'idle'; try { addTrash('r', n * (((CFG.trash || {}).sources || {}).machineBatchRecycleBags ?? .2)); } catch(e){} afterAction(); }); }
+function upgradeMachine61(M, k, T){ const D = CFG.machines[T.id], lv = lvl61(T), cost = upCost61(T); if (!cost){ toast('已經是最高級了'); return; }
+  const go = () => { if (!spend(cost)) return; T.lvl = lv + 1; logCoinReason61(`升級${D.name}到 Lv${lv + 1}`); const [x, y] = pkey(k), { cx, cy } = center(x, y);
+    floatText(cx, cy - 46, `${D.name} Lv${lv + 1}！`, '#2f8a3a', 12); sfx('coin'); toast(`${D.name}升到 Lv${lv + 1}：一次最多 ${cap61(T)} 批、每批 ${fmtDur(secs61(T))}`, true, 3600); afterAction(); };
+  if (typeof buyAsk47 === 'function' && !window.__noAsk47) buyAsk47({ cat: 'machine', title: `升級${D.name}`, q: `升到 Lv${lv + 1}：一次最多 ${cap61({ ...T, lvl: lv + 1 })} 批、每批 ${fmtDur(secs61(T, lv + 1))}`, spr: ['machine_' + T.id + '_idle', 0], price: cost, okText: '升級' }, go); else go(); }
+function logCoinReason61(w){ try { const L = S.coinLog; if (L && L.length){ const e = L[L.length - 1]; if (Date.now() - e[0] < 2000 && e[1] < 0) e[3] = w; } } catch(e){} }
+function statsMachine61(M, k, T){ const D = CFG.machines[T.id], lv = lvl61(T), per = Object.entries(D.output).map(([id, q]) => `${itemName(id)} ${q}`).join('、'), q1 = outQty61(T), unit = itemName(Object.keys(D.output)[0]);
+  const ph = lv2 => Math.round(q1 * 3600 / secs61(T, lv2) * 10) / 10, dk = dayKeyLocal(Date.now());
+  openModal('產出效能', null, (kk, el) => {
+    el.innerHTML = `<div class="kv61"><span>機器</span><b>${D.name} Lv${lv}</b>
+      <span>每批</span><b>${Object.entries(D.input).map(([id, q]) => `${itemName(id)} ${q}`).join('、')} → ${per}</b>
+      <span>每批時間</span><b>${fmtDur(secs61(T))}${lv > 1 ? `（Lv1 ${fmtDur(D.seconds)}）` : ''}</b>
+      <span>一次最多</span><b>${cap61(T)} 批（排隊做，一批做完接下一批）</b>
+      <span>現在</span><b>${T.run ? `做第 1 批，剩 ${fmtDur((T.until - Date.now()) / 1000)}` : '沒在做'}${T.q ? `，後面排 ${T.q} 批` : ''}${T.out ? `，做好 ${T.out} 批等收` : ''}</b>
+      <span>每小時產量</span><b>約 ${ph(lv)} 個${unit}</b>
+      <span>今天做了</span><b>${T.day61 === dk ? fmtN(T.today61 || 0) : 0} 個</b>
+      <span>累計</span><b>${fmtN(T.made61 || 0)} 個</b>
+      ${lv < (MU61.maxLevel || 5) ? `<span>升到 Lv${lv + 1}</span><b>${fmtN(upCost61(T))} 金幣：一次 ${cap61({ ...T, lvl: lv + 1 })} 批、每批 ${fmtDur(secs61(T, lv + 1))}、每小時約 ${ph(lv + 1)} 個</b>` : '<span>等級</span><b>已經是最高級 Lv' + lv + '</b>'}</div>`; }); }
+function machineMenu61(M, k, T){ fix61(T); const D = CFG.machines[T.id], [x, y] = pkey(k), { cx, cy } = center(x, y), lv = lvl61(T), free = cap61(T) - inUse61(T);
+  let canN = free; for (const [id, q] of Object.entries(D.input)) canN = Math.min(canN, Math.floor(invHave(id) / q));
+  const inTxt = Object.entries(D.input).map(([id, q]) => `${itemName(id)} ${q}`).join('、'), cost = upCost61(T);
+  const rows = [
+    ['load', '投放材料', free <= 0 ? `滿了（${cap61(T)} 批）` : canN <= 0 ? `材料不夠（每批 ${inTxt}）` : `放 ${canN} 批（每批 ${inTxt}）`, free > 0 && canN > 0, () => loadMachine61(M, k, T)],
+    ['collect', '收成', T.out ? `${T.out} 批做好了` : T.run ? `還在做，剩 ${fmtDur((T.until - Date.now()) / 1000)}` : '沒有成品', !!T.out, () => collectMachine61(M, k, T)],
+    ['stats', '產出效能', `Lv${lv} · 每批 ${fmtDur(secs61(T))}`, true, () => statsMachine61(M, k, T)],
+    ['upgrade', cost ? `升級到 Lv${lv + 1}` : '已是最高級', cost ? `${fmtN(cost)} 金幣` : `Lv${lv}`, !!cost, () => upgradeMachine61(M, k, T)] ];
+  RT.pick53 = { mi: S.cur, k, hl: 'obj' };
+  showPop53(cx, cy - 30, `<h5>${D.name} Lv${lv} · 一次最多 ${cap61(T)} 批</h5>` + rows.map(([id, a, s, on]) => `<button data-m61="${id}" class="${on ? '' : 'off61'}"><img src="${IMGSRC['ui_mn_' + id] || ''}" alt=""><span class="t61"><b>${a}</b><small>${s}</small></span></button>`).join(''));
+  POP53.querySelectorAll('[data-m61]').forEach(b => { b.onclick = () => { const r = rows.find(q => q[0] === b.dataset.m61); if (!r) return; closePop53(); if (!r[3] && r[0] !== 'collect') { toast(r[2]); return; } r[4](); }; }); }
+function tapMachine(M, k, T, cx, cy){ if (isUp61(T)) return machineMenu61(M, k, T);
+  const D = CFG.machines[T.id]; if (T.state === 'done'){ const goods = Object.entries(D.output).map(([id, qty]) => ({ id, qty })); deliver(goods, cx, cy, () => { T.state = 'idle'; T.until = 0; }); return; }
+  if (T.state === 'working'){ toast(`${D.name} · 還要 ${fmtDur((T.until - Date.now()) / 1000)}`); return; }
+  const lack = Object.entries(D.input).filter(([id, q]) => invHave(id) < q); if (lack.length){ toast(`${D.name}需要 ${Object.entries(D.input).map(([id, q]) => `${itemName(id)} ${q} 個`).join('、')}，倉庫裡不夠`); return; }
+  for (const [id, q] of Object.entries(D.input)) invTake(id, q); T.state = 'working'; T.until = Date.now() + D.seconds * 1000; }
+// level kept when stored back and put out again
+{ const _sd61 = storeDev56; storeDev56 = function(M, k, T){ const lv = T && T.t === 'machine' ? lvl61(T) : 1, id = T && T.id; const r = _sd61(M, k, T);
+  if (r && lv > 1 && !M.tiles[k]){ const L = (S.mlvl61 = S.mlvl61 || {}); (L[id] = L[id] || []).push(lv); } return r; }; }
+{ const _ps61 = placeStoredDev56; placeStoredDev56 = function(M, x, y, id, inner){ const k = tkey(x, y), before = M.tiles[k]; const r = _ps61(M, x, y, id, inner); const T = M.tiles[k];
+  if (T && T !== before && T.id === id && T.t === 'machine' && S.mlvl61 && S.mlvl61[id] && S.mlvl61[id].length){ T.lvl = Math.max(...S.mlvl61[id]); S.mlvl61[id].splice(S.mlvl61[id].indexOf(T.lvl), 1); } return r; }; }
+
+/* ---------- 4. 畫面：成品容器、等級徽章、寶特瓶水、蜜蜂分散 ---------- */
+const snowy61 = k => !!(S.snow && S.snow.cover && !(typeof glassAt === 'function' && glassAt(S.cur, k)));
+{ const _dte61 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte61(M, k, T, x, y, t, now);
+  if (!T) return;
+  if (isUp61(T)){ const { cx, cy } = center(x, y), D = CFG.machines[T.id], cont = D.outputShow && D.outputShow.container, n = Math.min(3, T.out || 0);
+    if (cont && n > 0 && !(T.id === 'corn_cake_machine' && T.state === 'done')){ spr(cont, n - 1, cx + 20, cy + 6); }
+    if (cont && n > 0 && cont !== 'fx_cake_plate' && snowy61(k) && ATLAS['snow_' + cont]) spr('snow_' + cont, n - 1, cx + 20, cy + 6);
+    const lv = lvl61(T); if (lv > 1 && ATLAS['ui_lv_badge_' + lv]) spr('ui_lv_badge_' + lv, 0, cx - 20, cy - 4); }
+  if (T.t === 'device' && DEV[T.id] && DEV[T.id].kind === 'melter'){ const { cx, cy } = center(x, y), n = Math.ceil((T.bw61 || 0) / (ML.dropsPerTile || 10) - 1e-9);
+    for (let i = Math.min(n, BOT61.maxRow || 6) - 1; i >= 0; i--){ const bx = cx - 24 - i * 7, by = cy + 4 + i * 3.5; spr('fx_pet_bottle', 0, bx, by); if (snowy61(k)) spr('snow_fx_pet_bottle', 0, bx, by); }
+    if (T.run && motion){ const a = Math.min(1, (T.prog || 0) / (ML.secondsPerTile || 20)); if (a > .6){ const s = (a - .6) / .4; spr('fx_pet_bottle', 1, cx - 18 - s * 6, cy + 2 + s * 2); } } } }; }
+
+/* ---------- 5. 融雪機：一瓶瓶寶特瓶水排在旁邊，再自動加進水塔 ---------- */
+function stepMelters(dt, t){
+  const per = ML.dropsPerTile || 10, rowMax = (BOT61.maxRow || 6) * per, pourRate = per / (BOT61.rollSeconds || 1.5);
+  for (const d of allDevices()){ const T = d.T; if (DEV[T.id].kind !== 'melter') continue;
+    // bottles waiting beside the machine roll into the tower
+    if (T.bw61 > 0){ const room = Math.max(0, rainCapC() - S.player.water), n = Math.min(T.bw61, pourRate * dt, room); if (n > 0){ T.bw61 -= n; S.player.water += n; if (T.bw61 < 1e-6) T.bw61 = 0; } }
+    T.run = false; if (!(T.snow > 0)){ T.prog = 0; T.wait = T.bw61 > 0 && rainCapC() - S.player.water < 1e-6 ? 'full' : null; continue; }
+    if ((T.bw61 || 0) + per > rowMax + 1e-6){ T.wait = 'full'; continue; }   // the row of bottles is full (tower full): pause
+    if (!drawFarmPower(DEV[T.id].kwhPerHour * dt / 3600, t)){ T.wait = 'power'; continue; }
+    T.wait = null; T.run = true; T.prog = (T.prog || 0) + dt;
+    while (T.prog >= ML.secondsPerTile && T.snow > 0 && (T.bw61 || 0) + per <= rowMax + 1e-6){ T.prog -= ML.secondsPerTile; T.snow--; T.bw61 = (T.bw61 || 0) + per; }
+    if (!(T.snow > 0)) T.prog = 0; } }
+
+/* ---------- 6. 蜜蜂、熊蜂分散採：每罐挑最久沒被這個蜂箱採的花（一樣久挑近的） ---------- */
+{ const _hf61 = hiveFlowers; hiveFlowers = function(M, k){ const out = _hf61(M, k), T = M.tiles[k];
+  if (FOR61.mode !== 'spread' || !T || !out.length) return out;
+  const tot = T.total || 0; T.ft61 = T.ft61 || {};
+  if (T.target && T.tot61 !== tot){ T.fc61 = (T.fc61 || 0) + 1; T.ft61[T.target] = T.fc61; T.tot61 = tot; }
+  if (Object.keys(T.ft61).length > 120){ const keep = new Set(out.map(f => f[1])); for (const kk in T.ft61) if (!keep.has(kk)) delete T.ft61[kk]; }
+  return out.slice().sort((a, b) => ((T.ft61[a[1]] || 0) - (T.ft61[b[1]] || 0)) || a[0] - b[0]); }; }
+{ const _dd61 = drawDevice; drawDevice = function(T, k, cx, cy, t){ _dd61(T, k, cx, cy, t);
+  if (FOR61.mode !== 'spread' || !motion || !T || !T.queen || !T.ft61 || !(isHive(T) || (typeof isBumbleHive === 'function' && isBumbleHive(T))) || !beesFly(Date.now())) return;
+  const M = curMap(), keys = Object.entries(T.ft61).sort((a, b) => b[1] - a[1]).map(e => e[0]).filter(kk => kk !== T.target && M.tiles[kk] && M.tiles[kk].flower).slice(0, Math.max(0, (FOR61.showFlowers || 4) - 1));
+  keys.forEach((kk, j) => { const [fx, fy] = pkey(kk), f = center(fx, fy), ph = ((t * .3 + j * .41) % 1), go = ph < .5, k2 = go ? ph * 2 : 2 - ph * 2;
+    const x = cx + (f.cx - cx) * k2 + Math.sin(t * 5 + j) * 3, y = cy - 18 + (f.cy - 12 - (cy - 18)) * k2 - Math.sin(k2 * Math.PI) * 14;
+    spr('fx_bee', frameOf('fx_bee', t, j + 2), x, y, f.cx < cx ? !go : go); }); }; }
+
+/* ---------- 7. 點魚池（收成工具／魚工具）：小選單多「查看魚池」 ---------- */
+{ const _act61 = act; act = function(x, y){
+  const M = curMap(); if (UI.expand || !inMap(M, x, y)) return _act61(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool;
+  if (T && T.t === 'pool' && (tool === 'hand' || (tool === 'fish' && (!S.sel.fish || S.sel.fish === 'pool'))) && !RT.plmv56){ const { cx, cy } = center(x, y), pk = poolOf(M, k);
+    const opts = [['pool', '收成／餵食', 'ui_tool_fishpool', () => tapPool(M, pk, cx, cy)], ['info', '查看魚池', 'ui_mn_pool_info', () => poolInfo61(M, k)]];
+    if (M.pll && M.pll[k]) opts.push(['lamp', `${PLD56.name}設定`, 'ui_lamp', () => openDevice(M, k, M.pll[k])]);
+    poolMenu56(M, k, x, y, opts); return; }
+  return _act61(x, y); }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns61 = normalizeState; normalizeState = function(d){ const r = _ns61(d); const s = r || d; if (s && !s.v226){ s.v226 = 1; } return r; }; }
+
+const css61 = document.createElement('style'); css61.textContent = `
+#pick53 button.off61{opacity:.55}#pick53 .t61{display:flex;flex-direction:column;line-height:1.25}#pick53 .t61 small{font-size:12px;color:#5b6f82}body.night #pick53 .t61 small{color:#a9bbd8}
+.pi61 details{border:1px solid var(--gline,#d6e2ee);border-radius:12px;margin:8px 0;background:rgba(255,255,255,.55)}.pi61 summary{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;flex-wrap:wrap}
+.pi61 summary img{width:32px;height:32px;object-fit:contain}.pi61 summary i{flex-basis:100%;font-style:normal;font-size:13px;color:#2f6a3a}.pi61 .rows .r{display:grid;grid-template-columns:70px 1fr 1fr 50px;gap:6px;padding:4px 12px;font-size:13px;border-top:1px dashed rgba(0,0,0,.08)}
+.warn61{color:#a0522d;font-weight:700}body.night .pi61 details{background:rgba(255,255,255,.06)}body.night .pi61 summary i{color:#9fd8a8}
+.kv61{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;font-size:14px}.kv61 span{color:#5b6f82}body.night .kv61 span{color:#a9bbd8}`;
+document.head.appendChild(css61);
+window.__farm226 = { coinDays55, poolInfo61, machineMenu61, loadMachine61, collectMachine61, upgradeMachine61, statsMachine61, stepMachines61, lvl61, cap61, secs61, upCost61, stepMelters, reasons61 };
+
+/* ===== 62. v2.27: hive bubble only with honey, panel header icons, coin log one-day page, new badges + stats, crop groups in the seed tray,
+   alfalfa / timothy as pasture, ducks & geese (feathers), biomass generator + snow melter as levelled machines, sweeper-dock panel layout,
+   pool move (one cell / multi-select, moving fee), snow overlays for crops and machines ===== */
+const CG62 = (CFG.ui && CFG.ui.cropGroups) || { groups: [], ungrouped: [] };
+const MU62 = CFG.machineUpgrade || {}, MK62 = MU62.perKind || {};
+const DEVUP62 = ['biomass_gen', 'snow_melter'].filter(id => DEV[id] && (MU62.appliesTo || []).includes(id));
+const MF62 = CFG.moveFees || {};
+const PMOVE62 = (CFG.fishPool && CFG.fishPool.move) || { modes: ['one', 'multi'] };
+const CL62 = CFG.coinLog || {};
+
+/* ---------- 1. 蜂箱：沒有蜜就不顯示泡泡（和熊蜂箱一樣只剩進度條） ---------- */
+{ const _dd62 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  const empty = BEE && BEE.bubbleOnlyWithHoney && S && isHive(T) && !isBumbleHive(T) && T.queen && honeyStored(T) <= 0;
+  if (!empty) return _dd62(T, k, cx, cy, t);
+  const q = RT.bq53, n0 = q ? q.length : 0, rr = ctx.roundRect; ctx.roundRect = function(){};   // g36 draws the wide bar right away: skip it
+  let r; try { r = _dd62(T, k, cx, cy, t); } finally { ctx.roundRect = rr; }
+  if (q){ const txt = `${T.frames}框 · 蜜 0`; for (let i = q.length - 1; i >= n0; i--){ const e = q[i]; if ((e.a && e.a[2] === txt) || (e.fn && !e.a)) q.splice(i, 1); }
+    const p = hiveRate(curMap(), k, T).prog;
+    q.push({ tf: ctx.getTransform(), al: ctx.globalAlpha, fn: () => { const x0 = cx - 12, y = cy - 51, bw = 24;
+      ctx.fillStyle = 'rgba(30,58,42,.18)'; ctx.beginPath(); ctx.roundRect(x0, y, bw, 2, 1); ctx.fill();
+      if (p > 0){ ctx.fillStyle = '#e0a21b'; ctx.beginPath(); ctx.roundRect(x0, y, Math.max(2, bw * p), 2, 1); ctx.fill(); } } }); }
+  return r; }; }
+
+/* ---------- 2. 面板抬頭圖示：查看魚池、各台機器的產出效能 ---------- */
+if (typeof HD54 === 'object' && IMGSRC.ui_hd_pool_info) HD54['查看魚池'] = 'pool_info';
+const hdStats62 = id => { if (typeof HD54 === 'object') HD54['產出效能'] = IMGSRC['ui_hd_mc_' + id] ? 'mc_' + id : 'stats61'; };
+{ const _sm62 = statsMachine61; statsMachine61 = function(M, k, T){ hdStats62(T.id); return _sm62(M, k, T); }; }
+
+/* ---------- 3. 金幣歷程：一次一天，左右切換；上方日曆／收入／支出／淨變動；每列圖示 ---------- */
+const CLKIND62 = [['bill', /帳單|水電|電費|水費/], ['checkin', /簽到/], ['fish', /魚/], ['robot', /機器人|無人機|租用|基座|充電站|停機坪/], ['feed', /飼料|玉米餅/],
+  ['ranch', /牧場|動物|收取|出貨|雞|鴨|鵝|羊|牛|豬|蛋|奶|羽毛/], ['store', /倉庫|賣|出售|售出/], ['build', /建設|蓋|升級|擴充|擴地|拆|搬移|遷移|移墾|移植|裝飾|購買|買/]];
+const CROPNAMES62 = Object.entries(CFG.crops).map(([id, C]) => [id, C.name]).sort((a, b) => b[1].length - a[1].length);
+function clIcon62(label){ const s = String(label || '');
+  if (/播種|種子|收成|有機/.test(s)){ const c = CROPNAMES62.find(([, n]) => s.includes(n)); if (c && ATLAS['crop_' + c[0] + '_mature_sway']) return `<canvas data-spr="crop_${c[0]}_mature_sway" data-f="0" class="ic62"></canvas>`; }
+  for (const [k, re] of CLKIND62) if (re.test(s)) return `<img class="ic62" src="${IMGSRC['ui_cl_' + k] || ''}" alt="">`;
+  const c = CROPNAMES62.find(([, n]) => s.includes(n)); if (c && ATLAS['crop_' + c[0] + '_mature_sway']) return `<canvas data-spr="crop_${c[0]}_mature_sway" data-f="0" class="ic62"></canvas>`;
+  return `<img class="ic62" src="${IMGSRC.ui_cl_other || ''}" alt="">`; }
+const ymd62 = ms => { const d = new Date(ms); return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`; };
+RT.clDay62 = 0;
+function openCoinLog(){
+  const days = coinDays55(); let di = Math.max(0, Math.min(RT.clDay62 || 0, days.length - 1));
+  openModal('金幣歷程', null, (kk, el) => {
+    const draw = () => { const D = days[di];
+      let h = `<p class="small">金幣的每一筆變動，保留最近 ${CLOG.keepDays} 天、最多 ${fmtN(CLOG.maxEntries)} 筆，新的在上面。目前 ${fmtN(Math.floor(S.player.coins))} 金幣。用日曆兩旁的箭頭換日期；點一列看每一筆。</p>`;
+      if (!D){ el.innerHTML = h + '<p>還沒有紀錄。</p>'; return; }
+      const net = D.in - D.out, lbl = dayLabel(D.t);
+      h += `<div class="sum62"><div class="cal62"><button class="nav62" data-nav62="1" ${di >= days.length - 1 ? 'disabled' : ''} aria-label="前一天">‹</button><img src="${IMGSRC.ui_cl_calendar || ''}" alt=""><div><b>${/^\d/.test(lbl) ? '' : lbl}</b><span>${ymd62(D.t)}</span></div><button class="nav62" data-nav62="-1" ${di <= 0 ? 'disabled' : ''} aria-label="後一天">›</button></div>
+        <div class="it62"><img src="${IMGSRC.ui_cl_income || ''}" alt=""><div><span>收入</span><b class="cin">+${fmtN(Math.round(D.in))}</b></div></div>
+        <div class="it62"><img src="${IMGSRC.ui_cl_expense || ''}" alt=""><div><span>支出</span><b class="cout">−${fmtN(Math.round(D.out))}</b></div></div>
+        <div class="it62"><img src="${IMGSRC.ui_cl_net || ''}" alt=""><div><span>淨變動</span><b class="${net >= 0 ? 'cin' : 'cout'}">${signN55(net)}</b></div></div></div>`;
+      const rs = reasons61(D);
+      h += `<div class="tb62"><div class="th62"><span>時間</span><span></span><span>內容</span><span class="n">數量</span><span class="v">金幣變動</span><span class="b">結餘</span><span></span></div>` +
+        rs.map((R, i) => { const top = R.list[0], sub = top && top[3] && top[3] !== R.label ? top[3] : `${R.n} 筆合計`;
+          return `<details data-r62="${i}"><summary><span class="t">${fmtHM(R.last)}</span>${clIcon62(R.label)}<span class="w"><b>${escapeHTML(R.label)}</b><small>${escapeHTML(sub)}</small></span><span class="n">${fmtN(R.n)} 筆</span><span class="v ${R.sum > 0 ? 'cin' : 'cout'}">${signN55(R.sum)}</span><span class="b">${fmtN(Math.floor(top ? top[2] : 0))}</span><i class="ar62"></i></summary><div class="rows"></div></details>`; }).join('') + '</div>';
+      el.innerHTML = h; paintIcons(el); el.querySelectorAll('canvas.ic62').forEach(c => { const n = iconCanvas(c.dataset.spr, 0, 40); c.width = n.width; c.height = n.height; c.getContext('2d').drawImage(n, 0, 0); });
+      el.querySelectorAll('details[data-r62]').forEach(rd => rd.addEventListener('toggle', () => { const rb = rd.querySelector(':scope > .rows'); if (!rd.open || rb.dataset.f) return; rb.dataset.f = 1;
+        rb.innerHTML = `<div class="r hd"><span>時間</span><span>內容</span><span>金幣變動</span><span>結餘</span></div>` + reasonRows55(rs[+rd.dataset.r62]); })); };
+    el.onclick = e => { const nv = e.target.closest('[data-nav62]'); if (nv){ e.preventDefault(); e.stopPropagation(); di = Math.max(0, Math.min(days.length - 1, di + +nv.dataset.nav62)); RT.clDay62 = di; draw(); return; }
+      const b = e.target.closest('[data-bill55]'); if (!b) return; e.preventDefault(); e.stopPropagation(); openBillDetail55(b.dataset.bill55); };
+    RT.clDay62 = 0; draw(); }); }
+
+/* ---------- 4. 徽章：每種作物／魚／動物／蜜蜂熊蜂各一個（累計收成數） ---------- */
+const ANIBADGE62 = id => (CFG.animals[id] && CFG.animals[id].badge) || id;
+{ const _av62 = achValue; achValue = function(a){ const st = a.stat || '', A = ach39(), s = A.s;
+  if (st.startsWith('fish:') || st.startsWith('animal:')) return Math.floor(s[st] || 0);
+  if (st.startsWith('hive:') || st.startsWith('honey:')){ let tot = 0; const id = st.slice(st.indexOf(':') + 1);
+    for (const M of S.maps) for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'device') continue;
+      if (st.startsWith('hive:') && T.id === id) tot += T.total || 0;
+      if (st.startsWith('honey:') && T.made && T.made[id]) tot += T.made[id]; }
+    const v = Math.max(s[st] || 0, Math.floor(tot)); s[st] = v; return v; }
+  return _av62(a); }; }
+RT.ani62 = null;
+{ const _ta62 = tapAnimal; tapAnimal = function(M, k, T, ...a){ const pv = RT.ani62; RT.ani62 = T && T.id; try { return _ta62(M, k, T, ...a); } finally { RT.ani62 = pv; } }; }
+{ const _dl62 = deliver; deliver = function(goods, x, y, finalize, ...a){ const ani = RT.ani62, g = (goods || []).filter(q => q && q.qty > 0).map(q => ({ id: q.id, qty: q.qty }));
+  const fin = () => { try { for (const q of g){ const I = CFG.items[q.id] || {};
+      if (I.category === 'fish' && CFG.fish[q.id]) stat('fish:' + q.id, q.qty);
+      else if (ani && CFG.animals[ani] && (I.category === 'product' || I.category === 'meat')) stat('animal:' + ANIBADGE62(ani), q.qty); } } catch(e){}
+    return finalize && finalize(); };
+  return _dl62(goods, x, y, fin, ...a); }; }
+
+/* ---------- 5. 播種 · 作物：9 類小分頁（向日葵暫放「其他」） ---------- */
+const CGOF62 = {}; for (const g of CG62.groups || []) for (const id of g.ids) CGOF62[id] = g.id;
+const CGLIST62 = [...(CG62.groups || []).map(g => ({ id: g.id, label: g.label, icon: g.icon, ids: g.ids }))];
+{ const other = Object.keys(CFG.crops).filter(id => !CGOF62[id]); if (other.length){ CGLIST62.push({ id: 'other', label: '其他', icon: 'ui_tab_flowers', ids: other }); for (const id of other) CGOF62[id] = 'other'; } }
+const CGB62 = document.createElement('div'); CGB62.id = 'cgrp62'; CGB62.hidden = true; document.body.appendChild(CGB62);
+function cropTabOn62(){ if (!S || S.sel.tool !== 'seed' || TTAB.hidden) return false; const on = TTAB.querySelector('button.on'); return !!on && on.dataset.tab === 'crops'; }
+function curGroup62(){ const sd = S.sel.seed; if (!S.sel.none49 && CFG.crops[sd] && CGOF62[sd]) return CGOF62[sd]; return CGLIST62.some(g => g.id === S.sel.cropGrp62) ? S.sel.cropGrp62 : (CGLIST62[0] || {}).id; }
+function applyCropGroups62(){ if (!CGLIST62.length || !cropTabOn62()){ CGB62.hidden = true; return; }
+  const tray = $('tray'), g = curGroup62(), L = CGLIST62.find(x => x.id === g); S.sel.cropGrp62 = g;
+  const items = [...tray.querySelectorAll('.item')].filter(el => CFG.crops[el.dataset.id] && !CFG.trees[el.dataset.id]);
+  for (const el of items) el.hidden = CGOF62[el.dataset.id] !== g;
+  if (L) [...items].sort((a, b) => L.ids.indexOf(a.dataset.id) - L.ids.indexOf(b.dataset.id)).forEach(el => { if (!el.hidden) tray.appendChild(el); });
+  CGB62.innerHTML = CGLIST62.map(c => `<button data-cg62="${c.id}" class="${c.id === g ? 'on' : ''}"><img src="${IMGSRC[c.icon] || ''}" alt="">${c.label}</button>`).join('');
+  CGB62.hidden = false; placeCg62(); }
+CGB62.addEventListener('click', e => { const b = e.target.closest('[data-cg62]'); if (!b || !S) return; e.stopPropagation();
+  const g = b.dataset.cg62; if (g === curGroup62()) return; S.sel.cropGrp62 = g;
+  const L = CGLIST62.find(x => x.id === g), keep = CFG.crops[S.sel.seed] && CGOF62[S.sel.seed] === g;
+  if (!keep){ S.sel.none49 = true; if (L && L.ids.length) S.lastCrop = L.ids.find(isUnlocked) || S.lastCrop; }
+  try { if (window.__farm220 && window.__farm220.user) window.__farm220.user(); } catch(err){}
+  UIbuildTray(); updateHint(); });
+function placeCg62(){ if (CGB62.hidden) return; const r = TTAB.getBoundingClientRect(), vis = TTAB.style.visibility !== 'hidden' && r.width > 0;
+  CGB62.style.visibility = vis ? '' : 'hidden'; if (!vis) return;
+  const left = Math.max(8, r.left), bottom = Math.round(innerHeight - r.top + 4); let mw = Math.max(160, Math.min(innerWidth - left - 8, r.width + 400));
+  CGB62.style.left = left + 'px'; CGB62.style.bottom = bottom + 'px';
+  const z = $('zoomCtl'), h = CGB62.offsetHeight || 34, top = innerHeight - bottom - h;   // keep clear of the zoom buttons
+  if (z && z.offsetParent !== null){ const q = z.getBoundingClientRect(); if (q.height && q.bottom > top && q.top < top + h && q.left > left) mw = Math.max(160, Math.min(mw, q.left - left - 8)); }
+  CGB62.style.maxWidth = mw + 'px'; }
+(function cgLoop62(){ try { if (!CGB62.hidden && !cropTabOn62()) CGB62.hidden = true; placeCg62(); } catch(e){} requestAnimationFrame(cgLoop62); })();
+{ const _ut62 = UIbuildTray; UIbuildTray = function(...a){ const r = _ut62(...a); try { applyCropGroups62(); } catch(e){ console.warn(e); } return r; }; }
+
+/* ---------- 6. 苜蓿草、提摩西草可以當牧草餵（1 份抵 feedValue 份），先用牧草 ---------- */
+const ALT62 = Object.entries(CFG.crops).filter(([id, C]) => C.feedAs && C.feedValue > 0).map(([id, C]) => [id, C.feedAs, C.feedValue]).sort((a, b) => a[2] - b[2]);
+{ const _pf62 = payFeed; payFeed = function(item, qty, dry){
+  const alts = ALT62.filter(a => a[1] === item); if (!alts.length) return _pf62(item, qty, dry);
+  let miss = Math.max(0, qty - (S.inv[item] || 0)), cover = 0; const take = [];
+  for (const [id, , fv] of alts){ if (miss <= 0) break; const n = Math.min(S.inv[id] || 0, Math.ceil(miss / fv)); if (n > 0){ take.push([id, n]); miss -= n * fv; cover += n * fv; } }
+  if (!take.length) return _pf62(item, qty, dry);
+  const rest = Math.max(0, qty - cover), r = rest > 0 ? _pf62(item, rest, dry) : { ok: true, used: 0, bought: 0, cost: 0, item, qty: 0 };
+  if (r && r.ok && !dry) for (const [id, n] of take) invTake(id, n);
+  if (r){ r.qty = rest; r.alt62 = take; } return r; }; }
+{ const _fm62 = feedMsg; feedMsg = function(r, cx, cy){ if (r && r.ok && r.alt62 && r.alt62.length){ const t = r.alt62.map(([id, n]) => `${itemName(id)} -${n}`).join('、');
+    floatText(cx, cy - 44, t, '#6a7a3a', 10); if (!r.qty) return true; } return _fm62(r, cx, cy); }; }
+
+/* ---------- 7. 鴨、鵝：一次產幾個（羽鵝 2 根羽毛） ---------- */
+if (typeof ITEM_ICON === 'object'){ for (const id of ['feather', 'duck_meat', 'goose_meat']) if (IMGSRC['ui_product_' + id]) ITEM_ICON[id] = 'ui_product_' + id; }
+{ const _sa62 = stepAnimal; stepAnimal = function(M, k, T, ...a){ const s0 = T && T.stack || 0; const r = _sa62(M, k, T, ...a);
+  const A = T && CFG.animals[T.id]; if (A && A.productQty > 1 && (T.stack || 0) > s0) T.stack += (T.stack - s0) * (A.productQty - 1); return r; }; }
+
+/* ---------- 8. 生質發電機、融雪機：機器小選單＋5 級升級 ---------- */
+const isDevUp62 = T => !!(T && T.t === 'device' && DEVUP62.includes(T.id));
+const dlvl62 = T => Math.max(1, Math.min(MU62.maxLevel || 5, T.lvl || 1));
+const dmult62 = (T, lv = dlvl62(T)) => 1 + (MU62.speedPerLevel || .15) * (lv - 1);
+const fuelSlots62 = (T, lv = dlvl62(T)) => (DEV[T.id].fuelSlots || 50) + ((MK62[T.id] || {}).fuelSlotsPerLevel || 0) * (lv - 1);
+const dUpCost62 = T => { const lv = dlvl62(T); if (lv >= (MU62.maxLevel || 5)) return 0; return Math.round((DEV[T.id].buildCost || 1000) * ((MU62.costMultOfBuild || [])[lv - 1] || lv)); };
+// a levelled generator is stepped / shown as a virtual DEV entry (more kWh per hour, more fuel slots); only while the call runs
+function swapGen62(list){ const done = [];
+  for (const d of list){ const T = d.T || d; if (!T || T.t !== 'device' || T.id !== 'biomass_gen' || dlvl62(T) <= 1) continue;
+    const lv = dlvl62(T), vid = 'biomass_gen@' + lv; if (!DEV[vid]) DEV[vid] = { ...DEV.biomass_gen, kwhPerHour: DEV.biomass_gen.kwhPerHour * dmult62(T, lv), fuelSlots: fuelSlots62(T, lv), v62: true };
+    T.id = vid; done.push(T); }
+  return done; }
+function unswapGen62(done){ for (const T of done) T.id = 'biomass_gen'; for (const id of Object.keys(DEV)) if (DEV[id].v62) delete DEV[id]; }
+{ const _sp62 = stepPower; stepPower = function(dt, t){ let gens = []; try { gens = allDevices().filter(d => d.T.id === 'biomass_gen'); } catch(e){}
+  const f0 = gens.map(d => d.T.fuel || 0), sw = swapGen62(gens);
+  try { return _sp62(dt, t); } finally { unswapGen62(sw);
+    gens.forEach((d, i) => { const used = f0[i] - (d.T.fuel || 0); if (used > 1e-9){ const T = d.T, dk = dayKeyLocal(t); if (T.day62 !== dk){ T.day62 = dk; T.today62 = 0; } T.today62 = (T.today62 || 0) + used; T.made62 = (T.made62 || 0) + used; } }); } }; }
+// snow melter: same as v2.26 but each level melts faster; count the water made
+function stepMelters(dt, t){
+  const per = ML.dropsPerTile || 10, rowMax = (BOT61.maxRow || 6) * per, pourRate = per / (BOT61.rollSeconds || 1.5);
+  for (const d of allDevices()){ const T = d.T; if (DEV[T.id].kind !== 'melter') continue; const spt = (ML.secondsPerTile || 20) / dmult62(T);
+    if (T.bw61 > 0){ const room = Math.max(0, rainCapC() - S.player.water), n = Math.min(T.bw61, pourRate * dt, room); if (n > 0){ T.bw61 -= n; S.player.water += n; if (T.bw61 < 1e-6) T.bw61 = 0; } }
+    T.run = false; if (!(T.snow > 0)){ T.prog = 0; T.wait = T.bw61 > 0 && rainCapC() - S.player.water < 1e-6 ? 'full' : null; continue; }
+    if ((T.bw61 || 0) + per > rowMax + 1e-6){ T.wait = 'full'; continue; }
+    if (!drawFarmPower(DEV[T.id].kwhPerHour * dt / 3600, t)){ T.wait = 'power'; continue; }
+    T.wait = null; T.run = true; T.prog = (T.prog || 0) + dt;
+    while (T.prog >= spt && T.snow > 0 && (T.bw61 || 0) + per <= rowMax + 1e-6){ T.prog -= spt; T.snow--; T.bw61 = (T.bw61 || 0) + per;
+      const dk = dayKeyLocal(t); if (T.day62 !== dk){ T.day62 = dk; T.today62 = 0; } T.today62 = (T.today62 || 0) + per; T.made62 = (T.made62 || 0) + per; }
+    if (!(T.snow > 0)) T.prog = 0; } }
+RT.devPanel62 = false;
+{ const _od62 = openDevice; openDevice = function(M, k, T){
+  if (isDevUp62(T) && !RT.devPanel62 && M === curMap() && S.maps.indexOf(M) === S.cur) return devMenu62(M, k, T);
+  const sw = swapGen62([T]); try { return _od62(M, k, T); } finally { unswapGen62(sw); } }; }
+{ const _om62 = openMelter; openMelter = function(M, k, T){ if (isDevUp62(T) && !RT.devPanel62 && M === curMap()) return devMenu62(M, k, T); return _om62(M, k, T); }; }
+function devPanel62(M, k, T){ RT.devPanel62 = true; try { openDevice(M, k, T); } finally { RT.devPanel62 = false; } }
+function devMenu62(M, k, T){ const D = DEV[T.id], P = MK62[T.id] || {}, lv = dlvl62(T), cost = dUpCost62(T), [x, y] = pkey(k), { cx, cy } = center(x, y), gen = D.kind === 'generator';
+  const fuelCap = fuelSlots62(T) * Math.max(...Object.values(POW.fuels || { x: 1 }));
+  const rows = [
+    gen ? ['load', '投放燃料', `燃料 ${(T.fuel || 0).toFixed(1)} / ${fmtN(fuelCap)} 度`, true, () => devPanel62(M, k, T)]
+        : ['load', '倒雪進去', S.snow && S.snow.bucket > 0 ? `雪桶裡有 ${S.snow.bucket} 格雪` : (P.loadOff || '雪桶是空的：先用「鏟雪」鏟雪'), !!(S.snow && S.snow.bucket > 0), () => { dumpMelter(T, cx, cy); afterAction(); }],
+    ['collect', '收成', P.collectOff || (gen ? '電直接送進電網' : '寶特瓶自動加進水塔'), false, null],
+    ['stats', '產出效能', `Lv${lv} · ${gen ? `每小時 ${Math.round(D.kwhPerHour * dmult62(T) * 100) / 100} 度` : `每格雪 ${fmtDur((ML.secondsPerTile || 20) / dmult62(T))}`}`, true, () => devStats62(M, k, T)],
+    ['upgrade', cost ? `升級到 Lv${lv + 1}` : '已是最高級', cost ? `${fmtN(cost)} 金幣` : `Lv${lv}`, !!cost, () => devUpgrade62(M, k, T)] ];
+  RT.pick53 = { mi: S.cur, k, hl: 'obj' };
+  showPop53(cx, cy - 30, `<h5>${D.name} Lv${lv}</h5>` + rows.map(([id, a, s, on]) => `<button data-m62="${id}" class="${on ? '' : 'off61'}"><img src="${IMGSRC['ui_mn_' + id] || ''}" alt=""><span class="t61"><b>${a}</b><small>${s}</small></span></button>`).join(''));
+  POP53.querySelectorAll('[data-m62]').forEach(b => { b.onclick = () => { const r = rows.find(q => q[0] === b.dataset.m62); if (!r) return; closePop53(); if (!r[3]){ toast(r[2]); return; } r[4](); }; }); }
+function devUpgrade62(M, k, T){ const D = DEV[T.id], lv = dlvl62(T), cost = dUpCost62(T); if (!cost){ toast('已經是最高級了'); return; }
+  const gen = D.kind === 'generator', what = lv2 => gen ? `每小時 ${Math.round(D.kwhPerHour * dmult62(T, lv2) * 100) / 100} 度、燃料 ${fuelSlots62(T, lv2)} 格` : `每格雪 ${fmtDur((ML.secondsPerTile || 20) / dmult62(T, lv2))}`;
+  const go = () => { if (!withWhy(`升級${D.name}到 Lv${lv + 1}`, () => spend(cost), [])) return; T.lvl = lv + 1; const [x, y] = pkey(k), { cx, cy } = center(x, y);
+    floatText(cx, cy - 46, `${D.name} Lv${lv + 1}！`, '#2f8a3a', 12); sfx('coin'); toast(`${D.name}升到 Lv${lv + 1}：${what(lv + 1)}`, true, 3600); afterAction(); };
+  if (typeof buyAsk47 === 'function' && !window.__noAsk47) buyAsk47({ cat: 'machine', title: `升級${D.name}`, q: `升到 Lv${lv + 1}：${what(lv + 1)}`, spr: [`device_${T.id}_idle`, 0], price: cost, okText: '升級' }, go); else go(); }
+function devStats62(M, k, T){ const D = DEV[T.id], lv = dlvl62(T), gen = D.kind === 'generator', dk = dayKeyLocal(Date.now()), today = T.day62 === dk ? T.today62 || 0 : 0, nx = lv < (MU62.maxLevel || 5);
+  hdStats62(T.id);
+  openModal('產出效能', null, (kk, el) => {
+    const fc = Math.max(...Object.values(POW.fuels || { x: 1 }));
+    el.innerHTML = `<div class="kv61"><span>設備</span><b>${D.name} Lv${lv}</b>` + (gen ?
+      `<span>燃料</span><b>${(T.fuel || 0).toFixed(1)} / ${fmtN(fuelSlots62(T) * fc)} 度（${fuelSlots62(T)} 格；${Object.entries(POW.fuels || {}).map(([i, v]) => `${itemName(i)} ${v} 度`).join('、')}）</b>
+       <span>每小時發電</span><b>${Math.round(D.kwhPerHour * dmult62(T) * 100) / 100} 度${lv > 1 ? `（Lv1 ${D.kwhPerHour} 度）` : ''}</b>
+       <span>現在</span><b>${T.running ? `發電中，燃料還能發 ${fmtDur((T.fuel || 0) / (D.kwhPerHour * dmult62(T)) * 3600)}` : (T.fuel > 0 ? '待命' : '沒有燃料')}</b>
+       <span>今天發電</span><b>${today.toFixed(2)} 度</b><span>累計</span><b>${(T.made62 || 0).toFixed(2)} 度</b>
+       ${nx ? `<span>升到 Lv${lv + 1}</span><b>${fmtN(dUpCost62(T))} 金幣：每小時 ${Math.round(D.kwhPerHour * dmult62(T, lv + 1) * 100) / 100} 度、燃料 ${fuelSlots62(T, lv + 1)} 格</b>` : `<span>等級</span><b>已經是最高級 Lv${lv}</b>`}` :
+      `<span>每格雪</span><b>${fmtDur((ML.secondsPerTile || 20) / dmult62(T))}${lv > 1 ? `（Lv1 ${fmtDur(ML.secondsPerTile || 20)}）` : ''}，融成 ${ML.dropsPerTile || 10} 滴（一瓶）</b>
+       <span>耗電</span><b>每小時 ${D.kwhPerHour} 度（只在融雪時）</b>
+       <span>每小時融水</span><b>約 ${fmtN(Math.round(3600 / ((ML.secondsPerTile || 20) / dmult62(T)) * (ML.dropsPerTile || 10)))} 滴</b>
+       <span>現在</span><b>${T.run ? `融雪中，還有 ${T.snow || 0} 格雪` : T.wait === 'power' ? '沒電' : T.wait === 'full' ? '水塔滿了，瓶子停著' : (T.snow > 0 ? `有 ${T.snow} 格雪` : '沒有雪')}${T.bw61 > 0 ? `，${Math.ceil(T.bw61 / (ML.dropsPerTile || 10))} 瓶等著進水塔` : ''}</b>
+       <span>今天融水</span><b>${fmtN(Math.round(today))} 滴</b><span>累計</span><b>${fmtN(Math.round(T.made62 || 0))} 滴</b>
+       ${nx ? `<span>升到 Lv${lv + 1}</span><b>${fmtN(dUpCost62(T))} 金幣：每格雪 ${fmtDur((ML.secondsPerTile || 20) / dmult62(T, lv + 1))}</b>` : `<span>等級</span><b>已經是最高級 Lv${lv}</b>`}`) +
+      `</div><div class="row" style="margin-top:12px"><button class="btn ghost" id="dev62">${gen ? '投放燃料' : '設備資訊'}</button></div>`;
+    $('dev62').onclick = () => { closeModal(); devPanel62(M, k, T); }; }); }
+// level kept when stored back and put out again (same list as machines)
+{ const _sd62 = storeDev56; storeDev56 = function(M, k, T){ const lv = isDevUp62(T) ? dlvl62(T) : 1, id = T && T.id; const r = _sd62(M, k, T);
+  if (r && lv > 1 && !M.tiles[k]){ const L = (S.mlvl61 = S.mlvl61 || {}); (L[id] = L[id] || []).push(lv); } return r; }; }
+{ const _ps62 = placeStoredDev56; placeStoredDev56 = function(M, x, y, id, inner){ const k = tkey(x, y), before = M.tiles[k]; const r = _ps62(M, x, y, id, inner); const T = M.tiles[k];
+  if (T && T !== before && T.id === id && isDevUp62(T) && S.mlvl61 && S.mlvl61[id] && S.mlvl61[id].length){ T.lvl = Math.max(...S.mlvl61[id]); S.mlvl61[id].splice(S.mlvl61[id].indexOf(T.lvl), 1); } return r; }; }
+{ const _dte62 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte62(M, k, T, x, y, t, now);
+  if (isDevUp62(T)){ const lv = dlvl62(T); if (lv > 1 && ATLAS['ui_lv_badge_' + lv]){ const { cx, cy } = center(x, y); spr('ui_lv_badge_' + lv, 0, cx - 20, cy - 4); } } }; }
+
+/* ---------- 9. 掃地基座面板：左「水箱」、右上下疊「充電來源」「掃地報告」 ---------- */
+{ const _oup62 = openUnitPanel; openUnitPanel = function(kind){ const r = _oup62(kind);
+  try { const el = $('modalBody'), baseId = BASE_OF[kind] || RK(kind).base; if (!el || baseId !== 'sweeper_dock') return r;
+    const grid = el.querySelector('.pgrid'), cards = grid ? [...grid.children] : [], h4 = c => (c.querySelector(':scope > h4') || {}).textContent || '';
+    const water = cards.find(c => c.classList.contains('pcard') && h4(c).includes('水箱')), src = cards.find(c => c.querySelector('#srcSel')), rep = cards.find(c => h4(c).includes('掃地報告'));
+    if (water && (src || rep) && !grid.querySelector('.split62')){ const sp = document.createElement('div'); sp.className = 'split62'; water.before(sp);
+      const col = document.createElement('div'); col.className = 'col62'; sp.append(water, col); if (src) col.append(src); if (rep) col.append(rep); } } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 10. 魚池搬移：搬移這一格／多選搬移，遷移費（空池 30、有魚 60／格），放好才扣 ---------- */
+const poolFee62 = T => T && T.fish ? (MF62.poolFish ?? 60) : (MF62.pool ?? 30);
+const poolCellsFee62 = (M, cells) => cells.reduce((a, c) => a + poolFee62(M.tiles[c]), 0);
+const PSB62 = document.createElement('div'); PSB62.id = 'psel62'; PSB62.hidden = true; document.body.appendChild(PSB62);
+RT.psel62 = null; RT.pmv62 = null;
+function poolMoveOpts62(M, k, x, y){ const o = [['p62one', '搬移這一格', 'ui_tool_move', () => poolPick62(M, k, x, y, 'one')]];
+  if ((PMOVE62.modes || []).includes('multi')) o.push(['p62multi', '多選搬移', 'ui_tool_fishpool', () => poolPick62(M, k, x, y, 'multi')]); return o; }
+function poolPick62(M, k, x, y, w){ if (w === 'multi'){ RT.psel62 = { mi: S.cur, first: k, cells: new Set([k]) }; renderPsel62(); toast('多選搬移：點其他魚池格加選，再點一次取消', false, 2800); return; }
+  liftPool62(M, [k], k); }
+function liftPool62(M, cells, first){ const fee = poolCellsFee62(M, cells), [fx, fy] = pkey(first), nf = cells.filter(c => M.tiles[c] && M.tiles[c].fish).length;
+  const go = () => { if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); }
+    RT.pmv62 = { cells, fee }; const ok = startMove(M, first, fx, fy, 'tool'); RT.pmv62 = null; if (!ok) return;
+    toast(`拿起魚池（${cells.length} 格），點要放的位置：放好才收遷移費 ${fmtN(fee)} 金幣（Esc 取消）`, false, 3600); };
+  if (window.__noAsk47 || (S.settings.noAsk || {}).move) return go();
+  buyAsk47({ cat: 'move', title: `搬移魚池（${cells.length} 格）`, q: '魚和水底燈跟著格子一起搬，生長進度不變。放好之後才扣錢，取消不收。', spr: ['ui_tool_fishpool', 0], price: fee, priceLabel: '遷移費', okText: '確定搬移',
+    rows: [['格數', `${cells.length} 格（有魚 ${nf} 格 × ${MF62.poolFish ?? 60}、空池 ${cells.length - nf} 格 × ${MF62.pool ?? 30}）`]] }, go); }
+function renderPsel62(){ const G = RT.psel62; if (!G){ PSB62.hidden = true; PSB62.innerHTML = ''; return; }
+  const M = S.maps[G.mi], fee = poolCellsFee62(M, [...G.cells]);
+  PSB62.innerHTML = `<span>多選魚池</span><b>已選 ${G.cells.size} 格 · 遷移費 ${fmtN(fee)}</b><button class="go" data-q62="lift" ${G.cells.size ? '' : 'disabled'}>拿起</button><button data-q62="all">整池全選</button><button data-q62="cancel">取消</button>`;
+  PSB62.hidden = false; placePsel62(); }
+function endPsel62(){ RT.psel62 = null; renderPsel62(); }
+function placePsel62(){ if (PSB62.hidden) return; let top = innerHeight;
+  for (const sel of ['#tidySub', '.hint', '#tray', '.dock', '#toolBtn', '#moveBar']){ for (const el of document.querySelectorAll(sel)){ if (el.hidden || !el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue; const r = el.getBoundingClientRect(); if (r.height && r.top > innerHeight * .5 && r.top < top) top = r.top; } }
+  PSB62.style.bottom = Math.round(innerHeight - top + 8) + 'px'; }
+setInterval(placePsel62, 500); addEventListener('resize', placePsel62);
+PSB62.addEventListener('click', e => { const b = e.target.closest('[data-q62]'); if (!b) return; e.stopPropagation(); const G = RT.psel62; if (!G) return; const M = S.maps[G.mi];
+  if (b.dataset.q62 === 'cancel'){ endPsel62(); toast('已取消多選'); return; }
+  if (b.dataset.q62 === 'all'){ const base = G.cells.has(G.first) ? G.first : [...G.cells][0]; if (base) for (const c of compOf(M, base, isPool)) G.cells.add(c); renderPsel62(); return; }
+  if (b.dataset.q62 === 'lift'){ if (!G.cells.size) return; const first = G.cells.has(G.first) ? G.first : [...G.cells][0], cells = [...G.cells]; endPsel62(); liftPool62(M, cells, first); } });
+function pselTap62(M, x, y){ const G = RT.psel62; if (G.mi !== S.cur){ endPsel62(); return; }
+  const k = tkey(x, y); if (!(inMap(M, x, y) && isPool(M.tiles[k]))){ toast('只能選魚池格'); return; }
+  if (G.cells.has(k)){ G.cells.delete(k); if (G.first === k) G.first = [...G.cells][0] || null; } else { G.cells.add(k); if (!G.first) G.first = k; }
+  sfx('click'); renderPsel62(); }
+{ const _st62 = setTool; setTool = function(id){ if (RT.psel62 && id !== S.sel.tool) endPsel62(); return _st62(id); }; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && RT.psel62){ endPsel62(); toast('已取消多選'); } });
+{ const _cm62 = cancelMove; cancelMove = function(...a){ if (RT.psel62){ endPsel62(); return; } const was = RT.mv && RT.mv.fee62; const r = _cm62(...a); if (was) setTimeout(backTool53, 0); return r; }; }
+// startMove on a pool: only the chosen cells (menu) or the pressed cell (long press, fee asked after dropping)
+{ const _sm62 = startMove; startMove = function(M, k, gx, gy, via){ const T = M.tiles[k];
+  if (!isPool(T)) return _sm62(M, k, gx, gy, via);
+  const want = RT.pmv62, ok = _sm62(M, k, gx, gy, via); if (!ok || !RT.mv) return ok;
+  const cells = want ? want.cells.filter(c => isPool(M.tiles[c])) : [k], xs = cells.map(c => pkey(c)[0]), ys = cells.map(c => pkey(c)[1]);
+  RT.mv.o = { kind: 'pool', bid: null, cells, ax: Math.min(...xs), ay: Math.min(...ys) };
+  RT.mv.fee62 = want ? want.fee : poolCellsFee62(M, cells); RT.mv.defer62 = !want; RT.mv.name = cells.length > 1 ? `魚池（${cells.length} 格）` : '魚池';
+  return ok; }; }
+{ const _dm62 = dropMove; dropMove = function(...a){ const m = RT.mv; if (!m || !m.fee62) return _dm62(...a);
+  const { dx, dy } = moveOffset(), fee = m.fee62, mi = m.mi, M = S.maps[mi], moved = (dx || dy) && moveCheck().ok;
+  if (!moved){ const r = _dm62(...a); if (!RT.mv) backTool53(); return r; }
+  const from = m.o.cells.slice(), objs = from.map(c => M.tiles[c]);
+  if (!m.defer62){ if (!withWhy('魚池遷移費', () => spend(fee), [])){ toast(`金幣不夠付遷移費，${m.name}放回原位`); RT.mv = null; updateHint(); backTool53(); return; }
+    const r = _dm62(...a); if (!RT.mv){ toast(`${m.name}搬好了，付遷移費 ${fmtN(fee)} 金幣`); backTool53(); } return r; }
+  const r = _dm62(...a); if (RT.mv) return r;
+  const to = from.map(c => { const [x, y] = pkey(c); return tkey(x + dx, y + dy); });
+  if (!to.every((c, i) => M.tiles[c] === objs[i])) return r;   // did not land
+  const undo = () => { const L = M.pll || {}, lamps = to.map(c => L[c]); to.forEach(c => { delete M.tiles[c]; if (L[c]) delete L[c]; });
+    from.forEach((c, i) => { M.tiles[c] = objs[i]; if (lamps[i]) L[c] = lamps[i]; }); reconcilePools(M); RT.decoVer++; RT.regionsAt = 0; toast('魚池放回原位'); afterAction(); };
+  const pay = () => { if (!withWhy('魚池遷移費', () => spend(fee), [])){ toast('金幣不夠付遷移費'); undo(); return; } toast(`魚池搬好了，付遷移費 ${fmtN(fee)} 金幣`); afterAction(); };
+  if (window.__noAsk47 || (S.settings.noAsk || {}).move){ pay(); return r; }
+  buyAsk47({ cat: 'move', title: '搬移魚池', q: '已經先放到新位置。付遷移費就搬好了；取消的話放回原位。', spr: ['ui_tool_fishpool', 0], price: fee, priceLabel: '遷移費', okText: '確定付費', onCancel: undo }, pay);
+  return r; }; }
+// the tap: move tool → choose; hand / fish tool menu gets the two choices too
+{ const _act62 = act; act = function(x, y){
+  if (!S || UI.expand) return _act62(x, y);
+  const M = curMap(), on = inMap(M, x, y), k = tkey(x, y), T = on ? M.tiles[k] : null, tool = S.sel.tool;
+  if (RT.psel62){ pselTap62(M, x, y); return; }
+  if (on && isPool(T) && tool === 'move' && !RT.mv && !RT.gmv && !RT.plmv56){ const opts = poolMoveOpts62(M, k, x, y);
+    if (M.pll && M.pll[k]) opts.push(['lamp', `搬移${PLD56.name}`, 'ui_lamp', () => { RT.plmv56 = { mi: S.cur, k }; toast(`拿起${PLD56.name}，點要裝的魚池格`, false, 3200); }]);
+    poolMenu56(M, k, x, y, opts); return; }
+  return _act62(x, y); }; }
+{ const _pm62 = poolMenu56; poolMenu56 = function(M, k, x, y, opts){
+  if (S.sel.tool !== 'move' && Array.isArray(opts) && !opts.some(o => String(o[0]).startsWith('p62'))) opts = [...opts, ...poolMoveOpts62(M, k, x, y)];
+  return _pm62(M, k, x, y, opts); }; }
+{ const _dte62b = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte62b(M, k, T, x, y, t, now);
+  const G = RT.psel62; if (G && G.mi === S.cur && G.cells.has(k)){ const { cx, cy } = center(x, y); ctx.save(); ctx.strokeStyle = k === G.first ? 'rgba(255,170,40,.98)' : 'rgba(255,214,90,.95)'; ctx.lineWidth = k === G.first ? 3 : 2.5; diamondPath(cx, cy, .96); ctx.stroke(); ctx.restore(); } }; }
+
+/* ---------- 11. 積雪疊圖：作物、機器、生質發電機、融雪機（溫室裡不畫） ---------- */
+const SNOWPFX62 = ['crop_', 'machine_', 'device_biomass_gen_', 'device_snow_melter_'];
+{ const _spr62 = spr; spr = function(name, frame, x, y, flip, alpha){ const r = _spr62(name, frame, x, y, flip, alpha);
+  if (RT.inWorld && S && S.snow && S.snow.cover && typeof name === 'string' && SNOWPFX62.some(p => name.startsWith(p)) && ATLAS['snow_' + name] && IMG['snow_' + name]){
+    let g = false; try { g = glassAt(S.cur, tileUnder53(x, y)); } catch(e){}
+    if (!g) _spr62('snow_' + name, Math.min(frame || 0, (ATLAS['snow_' + name].frames || 1) - 1), x, y, flip, alpha); }
+  return r; }; }
+
+/* ---------- save upgrade ---------- */
+{ const _ns62 = normalizeState; normalizeState = function(d){ const r = _ns62(d); const s = r || d; if (s && !s.v227){ s.v227 = 1; } return r; }; }
+
+const css62 = document.createElement('style'); css62.textContent = `
+#cgrp62{position:fixed;z-index:21;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:2px}#cgrp62::-webkit-scrollbar{display:none}
+#cgrp62 button{flex:none;display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:11px;border:1px solid var(--glb,rgba(255,255,255,.8));background:var(--gsheet,rgba(255,255,255,.85));-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:var(--gtx);font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(20,40,70,.12)}
+#cgrp62 button img{width:20px;height:20px;object-fit:contain}#cgrp62 button.on{background:#3f8a4a;color:#fff;border-color:transparent}
+body.m #cgrp62 button{padding:3px 8px;font-size:12px}body.m #cgrp62 button img{width:16px;height:16px}
+body.ov-open #cgrp62,body.ui-hide #cgrp62,body.ui-col #cgrp62{visibility:hidden!important;pointer-events:none}
+.sum62{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:10px;align-items:center;padding:10px 12px;margin:8px 0 12px;border-radius:16px;background:rgba(255,255,255,.6);border:1px solid rgba(120,160,200,.25)}
+.sum62>div{display:flex;align-items:center;gap:8px;min-width:0}.sum62 img{width:52px;height:52px;object-fit:contain;flex:none}
+.sum62 div>div{display:flex;flex-direction:column;min-width:0}.sum62 span{font-size:13px;opacity:.75}.sum62 b{font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sum62 .cal62 b{font-size:18px}.sum62 .cal62 span{font-size:15px;opacity:.85}
+.sum62 .cin{color:#2f8a3a}.sum62 .cout{color:#c5452f}
+.nav62{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(120,160,200,.45);background:#fff;font-size:20px;line-height:1;cursor:pointer;color:#2c5f86;padding:0}.nav62:disabled{opacity:.3;cursor:default}
+.tb62 .th62,.tb62 summary{display:grid;grid-template-columns:52px 40px minmax(0,1fr) 64px 92px 84px 18px;gap:8px;align-items:center}
+.tb62 .th62{padding:6px 12px;font-size:13px;font-weight:700;opacity:.7}
+.tb62 details{border-radius:12px;margin:6px 0;background:rgba(255,255,255,.6);border:1px solid rgba(120,160,200,.25)}
+.tb62 summary{list-style:none;cursor:pointer;padding:8px 12px;user-select:none}.tb62 summary::-webkit-details-marker{display:none}
+.tb62 .ic62{width:40px;height:40px;object-fit:contain}.tb62 .t{font-variant-numeric:tabular-nums;opacity:.75}
+.tb62 .w{display:flex;flex-direction:column;min-width:0}.tb62 .w b,.tb62 .w small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tb62 .w small{font-size:12px;opacity:.7}
+.tb62 .n{text-align:right;font-size:13px;opacity:.75;white-space:nowrap}.tb62 .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}.tb62 .b{text-align:right;font-size:13px;opacity:.7;font-variant-numeric:tabular-nums}
+.tb62 .cin{color:#2f8a3a}.tb62 .cout{color:#c5452f}
+.tb62 .ar62::before{content:"";display:block;width:8px;height:8px;border-right:2px solid #5b6f82;border-bottom:2px solid #5b6f82;transform:rotate(45deg);margin:-4px auto 0;transition:transform .15s}
+.tb62 details[open] .ar62::before{transform:rotate(-135deg);margin-top:4px}
+.tb62 .rows{padding:2px 12px 10px}.tb62 .r{display:grid;grid-template-columns:52px 1fr auto auto;gap:8px;align-items:center;padding:5px 0;border-top:1px dashed rgba(120,150,180,.25);font-variant-numeric:tabular-nums;font-size:13px}
+.tb62 .r.hd{font-weight:700;opacity:.65;border-top:0}.tb62 .r .w{opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tb62 .r .b{opacity:.6;min-width:64px;text-align:right}
+.tb62 .r .cin{color:#2f8a3a;font-weight:700}.tb62 .r .cout{color:#c5452f;font-weight:700}
+.tb62 .bl55{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #8ab8e0;background:#e9f3fc;color:#1f5f8a;cursor:pointer;margin-left:6px}
+body.night .sum62,body.night .tb62 details{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.22)}body.night .nav62{background:rgba(255,255,255,.1);color:#cfe0ff}
+body.night .sum62 .cin,body.night .tb62 .cin{color:#8fe0a0}body.night .sum62 .cout,body.night .tb62 .cout{color:#ff9f8a}
+@media (max-width:760px){.sum62{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 6px}.sum62 .cal62{grid-column:1/-1;justify-content:center}.sum62 .it62{flex-direction:column;align-items:flex-start;gap:2px}.sum62 img{width:36px;height:36px}.sum62 b{font-size:16px}
+  .tb62 .th62{display:none}.tb62 summary{grid-template-columns:40px 34px minmax(0,1fr) auto 14px;grid-template-areas:"t i w v a" "t i w b a";row-gap:0}
+  .tb62 summary .t{grid-area:t;font-size:12px}.tb62 summary .ic62{grid-area:i;width:34px;height:34px}.tb62 summary .w{grid-area:w}.tb62 summary .n{display:none}.tb62 summary .v{grid-area:v}.tb62 summary .b{grid-area:b;font-size:12px}.tb62 summary .ar62{grid-area:a}}
+.split62{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}.split62>.pcard{margin:0}.col62{display:flex;flex-direction:column;gap:12px}.col62>.pcard{margin:0}
+@media (max-width:640px){.split62{grid-template-columns:1fr}}
+#psel62{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;
+  padding:8px 10px;border-radius:16px;background:rgba(255,255,255,.95);box-shadow:0 8px 26px rgba(20,40,70,.28);border:1px solid rgba(120,160,200,.35);font-size:14px;max-width:calc(100% - 24px)}
+#psel62 b{padding:0 6px}#psel62 button{border:1px solid #d6e2ee;background:#f5f9fd;border-radius:10px;padding:7px 12px;font:inherit;cursor:pointer;color:#22384e}
+#psel62 button.go{background:#2c7fc0;border-color:#2c7fc0;color:#fff;font-weight:700}#psel62 button:disabled{opacity:.45}
+body.night #psel62{background:rgba(20,34,64,.96);border-color:rgba(150,185,255,.3);color:#eef3fb}body.night #psel62 button{background:rgba(255,255,255,.07);border-color:rgba(150,185,255,.25);color:#eef3fb}body.night #psel62 button.go{background:#2c6fb0;border-color:#6fb4ff}`;
+document.head.appendChild(css62);
+window.__farm227 = { openCoinLog, clIcon62, CGLIST62, CGOF62, curGroup62, applyCropGroups62, devMenu62, devStats62, devUpgrade62, dlvl62, dmult62, fuelSlots62, dUpCost62, stepMelters,
+  poolPick62, liftPool62, pselTap62, endPsel62, poolCellsFee62, get psel(){ return RT.psel62; }, act: (x, y) => act(x, y) };
 
   })(CFG, ATLAS_JSON);
 })();
