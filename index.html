@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36-4c06332c58'), getJSON('sprites/atlas.json?v=2.36-4c06332c58')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36-d1f6dc3c52'), getJSON('sprites/atlas.json?v=2.36-d1f6dc3c52')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.36-4c06332c58';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.36-d1f6dc3c52';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15094,6 +15094,37 @@ body.night .side72 button,body.night .main72,body.night .r72{background:rgba(255
 
 { const _ns72 = normalizeState; normalizeState = function(d){ const r = _ns72(d); const s = r || d; try { if (s && !s.v236) s.v236 = 1; } catch(e){} return r; }; }
 window.__farm236 = { fieldInfo: (M, k) => fieldInfo72(M, k), poolInfo: (M, k) => poolInfo61(M, k), idleWhy: idleWhy72, truckLook: truckLook72, get peck(){ return RT.peck72; }, unitText: (k, u) => unitText(k, u), openUnitPanel: k => openUnitPanel(k), act: (x, y) => act(x, y), poolMoveOpts: (M, k, x, y) => poolMoveOpts62(M, k, x, y) };
+
+/* ===== 73. v2.36.1: 拍照面板的夜晚版（選項卡片跟著玻璃主題）· 浮島切換面板的白天版 ===== */
+{ const st73 = document.createElement('style'); st73.textContent = `
+/* 拍照：兩張選項卡片改用頁面主題變數（白天淺色、夜晚深藍玻璃） */
+.sheet .sc68{background:var(--gcard);border:2px solid var(--gline);color:var(--gtx);cursor:pointer;transition:background-color .8s,color .8s,border-color .8s}
+body:not(.night) .sheet .sc68{background:rgba(255,255,255,.75)}
+.sheet .sc68 b{color:var(--gtx)}
+.sheet .sc68 small{color:var(--gsub);opacity:1}
+.sheet .sc68:hover{background:rgba(120,190,255,.12)}
+.sheet .sc68.on{border-color:#3a8fd8;box-shadow:0 0 0 3px rgba(58,143,216,.22);background:rgba(58,143,216,.10)}
+body.night .sheet .sc68:hover{background:rgba(255,255,255,.10)}
+body.night .sheet .sc68.on{border-color:#7fdcff;box-shadow:0 0 12px rgba(110,210,255,.55);background:rgba(120,200,255,.14)}
+body.night .sheet .ill68{border-color:rgba(150,185,255,.28)}
+body.night .sheet .full68{background:linear-gradient(#1b2b58,#2c3f62 60%,#2f4a3a)}
+body.night .sheet .full68 i{background:rgba(190,210,255,.55)}
+body.night .sheet .isl68{background:repeating-conic-gradient(#2a3556 0 25%,#1f2945 0 50%) 0 0/12px 12px}
+body.night .sheet .isl68 i{filter:brightness(.85)}
+
+/* 浮島切換：白天版（淺色玻璃、深色字），夜晚維持原本深藍 */
+body:not(.night) #isp67{background:rgba(247,251,255,.9);color:var(--gtx);border-color:rgba(255,255,255,.85);box-shadow:0 10px 30px rgba(20,60,90,.22)}
+body:not(.night) #isp67::before{border-bottom-color:rgba(247,251,255,.9)}
+body:not(.night) #isp67 .h67 .n67{background:rgba(23,56,74,.08)}
+body:not(.night) #isp67 .h67 button{color:var(--gtx)}
+body:not(.night) #isp67 .c67{background:rgba(255,255,255,.75);border-color:rgba(23,56,74,.12);color:var(--gtx)}
+body:not(.night) #isp67 .c67:hover{background:#fff}
+body:not(.night) #isp67 .c67.on{border-color:#3a8fd8;box-shadow:0 0 10px rgba(58,143,216,.35);background:rgba(58,143,216,.10)}
+body:not(.night) #isp67 .c67.on b::before{background:#2f86d6;box-shadow:0 0 6px rgba(47,134,214,.6)}
+body:not(.night) #isp67 .c67 .tr67{box-shadow:0 1px 3px rgba(0,0,0,.15)}
+body:not(.night) #isp67 .tip67{color:var(--gsub);opacity:1}
+#isp67{transition:background-color .8s,color .8s,border-color .8s}
+`; document.head.appendChild(st73); }
 
   })(CFG, ATLAS_JSON);
 })();
