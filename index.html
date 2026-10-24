@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json'), getJSON('sprites/atlas.json')]);
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.34-7a12ab6d2c'), getJSON('sprites/atlas.json?v=2.34-7a12ab6d2c')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -9749,7 +9749,8 @@ function swUpdateBar(reg){ if (document.getElementById('swBar')) return;
   document.body.appendChild(b); }
 if (PWA40.serviceWorker && 'serviceWorker' in navigator && location.protocol !== 'file:' && !/^(null|about:)/.test(location.origin)){
   let reloading = false; const hadCtl40 = !!navigator.serviceWorker.controller;
-  navigator.serviceWorker.addEventListener('controllerchange', () => { if (reloading || !hadCtl40) return; reloading = true; location.reload(); });
+  navigator.serviceWorker.addEventListener('controllerchange', () => { if (reloading || !hadCtl40 || RT.noReload69) return;   // v2.33.1: g69 switches workers quietly when this page is already the newest
+    reloading = true; location.reload(); });
   const reg40 = () => {
     navigator.serviceWorker.register(PWA40.serviceWorker).then(reg => { RT.swReg = reg;
       if (reg.waiting && navigator.serviceWorker.controller) swUpdateBar(reg);
@@ -14345,6 +14346,331 @@ body:not(.m) .zoomctl{display:flex}
 @keyframes flash68{0%{opacity:.9}100%{opacity:0}}
 #busy68{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);padding:10px 18px;border-radius:14px;background:rgba(20,30,40,.78);color:#fff;font-weight:700;z-index:9998}
 `; document.head.appendChild(css68);
+
+/* ===== 69. v2.33.1 手機修正：
+   一、畫布跟著實際大小重算（ResizeObserver），橫拿不再被拉長；解析度看設定
+   二、橫拿時左右安全區（動態島）：左邊的圓鈕、狀態小圖示往右讓，右邊的選項列讓出 ☰／浮島切換鈕那一欄
+   三、新版本：問網站 version.json，跳「有新版本」＋「更新」「稍後」，按了才換（取代 v2.24.1 的自動換版）
+   四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
+       沒操作時降速、動態效果）
+   五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
+var BUILD69 = '2.34-7a12ab6d2c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
+const okBuild69 = () => !/^__/.test(BUILD69);
+const shortVer69 = v => String(v || '').split('-')[0];
+
+/* ---------- 四、手機與效能設定（每台裝置各自記） ---------- */
+function perfCfg69(){ if (!PS69){ try { PS69 = (CFG.performance && CFG.performance.settings) || {}; } catch(e){ return {}; } } return PS69; }
+function isPhone69(){ try { return matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < ((CFG.performance || {}).phoneMaxShortSide || 820); } catch(e){ return false; } }
+function perfDefaults69(){ const c = perfCfg69(); return Object.assign({ res: 1.5, fps: 30, idleFps: 15, idleSec: 10, effects: 'all' }, isPhone69() ? c.phone : c.desktop); }
+function perf69(){ if (PK69) return PK69;
+  const key = perfCfg69().storageKey || 'skyfarm-perf'; let st = null;
+  try { st = JSON.parse(localStorage.getItem(key) || 'null'); } catch(e){}
+  if (!st){ // 舊的「省電模式」換算
+    let old = null; try { old = localStorage.getItem('skyfarm-power'); } catch(e){}
+    if (old === 'on') st = Object.assign({}, perfCfg69().phone || {});
+    else if (old === 'off') st = { res: 'screen', fps: 60, idleFps: 0 }; }
+  PK69 = Object.assign(perfDefaults69(), st || {}); return PK69; }
+function setPerf69(k, v){ const key = perfCfg69().storageKey || 'skyfarm-perf', cur = perf69(); cur[k] = v; PK69 = cur;
+  const d = perfDefaults69(), diff = {}; for (const x in cur) if (cur[x] !== d[x]) diff[x] = cur[x];
+  try { if (Object.keys(diff).length) localStorage.setItem(key, JSON.stringify(diff)); else localStorage.removeItem(key); localStorage.removeItem('skyfarm-power'); } catch(e){}
+  if (k === 'res') syncCanvas69(true); }
+function resetPerf69(){ const key = perfCfg69().storageKey || 'skyfarm-perf'; try { localStorage.removeItem(key); localStorage.removeItem('skyfarm-power'); } catch(e){} PK69 = null; syncCanvas69(true); }
+function dprWant69(){ const d = window.devicePixelRatio || 1;
+  try { const p = perf69(), mx = perfCfg69().screenMax || 3; return p.res === 'screen' ? Math.min(mx, d) : Math.max(.5, Math.min(+p.res || 1.5, d)); }
+  catch(e){ return Math.min(2, d); } }
+
+/* ---------- 一、畫布 ---------- */
+// replaces g2: the resolution comes from 設定
+function resize(){
+  const r = cv.getBoundingClientRect();
+  dpr = dprWant69(); VW = r.width; VH = r.height;
+  cv.width = Math.round(VW*dpr); cv.height = Math.round(VH*dpr);
+}
+function syncCanvas69(force){ const r = cv.getBoundingClientRect(); if (!r.width || !r.height) return;
+  const want = dprWant69(), same = Math.abs(r.width - VW) < .5 && Math.abs(r.height - VH) < .5 && Math.abs(want - dpr) < .001;
+  if (same && !force) return;
+  const ow = VW, oh = VH; resize(); if (!S) return;
+  if (!ow || !oh || Math.abs(VW - ow) / ow > .25 || Math.abs(VH - oh) / oh > .25) fitCamera();   // turned the phone: fit again
+  else { cam.x += (VW - ow) / 2; cam.y += (VH - oh) / 2; } }                                       // small change: keep the view
+if (window.ResizeObserver) new ResizeObserver(() => syncCanvas69(false)).observe(cv);
+for (const ev of ['pageshow', 'orientationchange']) addEventListener(ev, () => setTimeout(() => syncCanvas69(false), 300));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(() => syncCanvas69(false), 200); });
+
+/* ---------- 四、畫面張數：上限、沒操作時降速 ---------- */
+RT.f69 = { last: 0, act: performance.now(), n: 0, t0: performance.now(), fps: 0 };
+for (const ev of ['pointerdown', 'pointermove', 'pointerup', 'wheel', 'keydown', 'touchstart', 'touchmove'])
+  addEventListener(ev, () => { RT.f69.act = performance.now(); }, { capture: true, passive: true });
+document.addEventListener('visibilitychange', () => { RT.f69.act = performance.now(); });
+function capFps69(now){ const p = perf69(); let cap = +p.fps || 60;
+  if (+p.idleFps > 0 && now - RT.f69.act > (+p.idleSec || 10) * 1000) cap = Math.min(cap, +p.idleFps);
+  return cap; }
+{ const _fr69 = frame; frame = function(...a){
+  if (RT.snap68) return _fr69(...a);                       // 拍照時同步畫一張，不擋
+  const now = performance.now(), iv = 1000 / capFps69(now), F = RT.f69;
+  if (now - F.last < iv - 4){ const wait = iv - (now - F.last) - 20;   // leave room for the rAF after the timer
+    if (wait > 24) setTimeout(() => requestAnimationFrame(frame), wait); else requestAnimationFrame(frame); return; }
+  F.last = now; F.n++; if (now - F.t0 >= 1000){ F.fps = Math.round(F.n * 1000 / (now - F.t0)); F.n = 0; F.t0 = now; }
+  if (RT.fps64) RT.fps64.last = 0;                          // g64 的舊上限交給這裡
+  return _fr69(...a); }; }
+// 動態效果「減少」：不畫雲影、下雨下雪的落下動畫
+const less69 = () => perf69().effects === 'less';
+{ const _a = drawCloudShadows; drawCloudShadows = function(...a){ if (less69()) return; return _a(...a); }; }
+{ const _a = drawRain; drawRain = function(...a){ if (less69()) return; return _a(...a); }; }
+{ const _a = drawSnowFall; drawSnowFall = function(...a){ if (less69()) return; return _a(...a); }; }
+
+/* ---------- 四、定位迴圈：每秒 4 次 ---------- */
+{ const raf = window.requestAnimationFrame.bind(window), ms = () => perfCfg69().layoutLoopMs || 250;
+  window.requestAnimationFrame = cb => (cb && (cb.name === 'tabLoop' || cb.name === 'cgLoop62')) ? setTimeout(() => raf(cb), ms()) : raf(cb); }
+function place69(){ try { placeTrayTabs(); } catch(e){} try { if (!CGB62.hidden && !cropTabOn62()) CGB62.hidden = true; placeCg62(); } catch(e){} }
+{ const _ut69 = UIbuildTray; UIbuildTray = function(...a){ const r = _ut69(...a); queueMicrotask(place69); return r; }; }
+addEventListener('resize', () => setTimeout(place69, 0));
+
+/* ---------- 五、replaces g32: work the width out first, set it once (setting a wider width and then a narrower one in the
+   same frame made the browser cut the scroll position, so the last tab could never be reached) ---------- */
+function placeTrayTabs(){
+  const tray = $('tray'), show = S && !TTAB.hidden && tray && !tray.hidden && (S.sel.tool === TTAB.dataset.tool) && !document.body.classList.contains('ui-col') && !document.body.classList.contains('ui-hide');
+  const put = (k, v) => { if (TTAB.style[k] !== v) TTAB.style[k] = v; };
+  if (!show){ put('visibility', 'hidden'); return; }
+  const r = tray.getBoundingClientRect(); if (!r.width){ put('visibility', 'hidden'); return; }
+  let top = r.top; const tg = $('trayTog'); if (tg && tg.offsetParent !== null){ const q = tg.getBoundingClientRect(); if (q.height && q.bottom > r.top - 40 && q.top < r.top) top = Math.min(top, q.top); }
+  const left = Math.max(8, r.left + 10), bottom = innerHeight - top + 6; let mw = Math.max(160, Math.min(innerWidth - 16, r.width - 20));
+  const z = $('zoomCtl'); if (z && z.offsetParent !== null){ const q = z.getBoundingClientRect(), tb = innerHeight - bottom - 44; if (q.height && q.bottom > tb && q.left > r.left) mw = Math.max(160, q.left - left - 8); }
+  put('visibility', ''); put('left', left + 'px'); put('bottom', bottom + 'px'); put('maxWidth', mw + 'px');
+  // a newly picked tab: fully in view, clear of the ‹ › arrows (only when the pick changes, so it never fights your scrolling;
+  // runs after g34 / g67 have done their own scrolling)
+  const on = TTAB.querySelector('button.on'), key = on ? on.dataset.tab + '|' + TTAB.childElementCount : '';
+  if (on && TTAB.dataset.on69 !== key && TTAB.scrollWidth > TTAB.clientWidth + 2){ TTAB.dataset.on69 = key; const go = () => tabInView69(); requestAnimationFrame(() => requestAnimationFrame(go)); setTimeout(go, 350); } }
+function tabInView69(){ const on = TTAB.querySelector('button.on'); if (!on || !on.offsetWidth) return; const a = on.offsetLeft, b = a + on.offsetWidth, cw = TTAB.clientWidth, gap = 32;
+  if (TTAB.scrollWidth <= cw + 2) return; if (b > TTAB.scrollLeft + cw - gap) TTAB.scrollLeft = b - cw + gap; else if (a < TTAB.scrollLeft + gap) TTAB.scrollLeft = Math.max(0, a - gap); }
+{ const st = document.createElement('style'); st.textContent = `.hs67::after{content:'';flex:0 0 26px}`; document.head.appendChild(st); }
+
+/* ---------- 二、橫拿：左右安全區 ---------- */
+const SA69 = document.createElement('div'); SA69.setAttribute('aria-hidden', 'true');
+SA69.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)';
+document.body.appendChild(SA69);
+const insets69 = () => { const cs = getComputedStyle(SA69); return { l: parseFloat(cs.paddingLeft) || 0, r: parseFloat(cs.paddingRight) || 0 }; };
+RT.land69 = null;   // { l, r, rc }: insets and the width of the ☰ column on the right
+function rightCol69(){ const hb = $('hamb'); if (!hb || hb.offsetParent === null) return null; const q = hb.getBoundingClientRect(); return q.width ? Math.round(innerWidth - q.left + 8) : null; }
+{ const _lh69 = layoutHUD; layoutHUD = function(...a){ const r = _lh69(...a);
+  try { const land = document.body.classList.contains('m-land'), set = (el, k, v) => { if (el && el.style[k] !== v) el.style[k] = v; };
+    if (land){ const I = insets69(), rc = S ? rightCol69() : null; RT.land69 = { l: I.l, r: I.r, rc };
+      set($('zoomCtl'), 'left', Math.round(I.l + 10) + 'px');
+      const st = $('status'); if (st && st.style.left === '8px') set(st, 'left', Math.round(I.l + 8) + 'px');
+      if (rc){ set($('tray'), 'right', rc + 'px');
+        // 收起／選項 goes into the ☰ column, under the island name (it used to sit on top of the island button)
+        const hb = $('hamb').getBoundingClientRect(), nm = $('iswn67'), sw = $('isw67'), tg = $('trayTog');
+        const below = nm && !nm.hidden && nm.getBoundingClientRect().height ? nm.getBoundingClientRect().bottom : sw && !sw.hidden ? sw.getBoundingClientRect().bottom : hb.bottom;
+        if (tg){ tg.classList.add('rc69'); set(tg, 'right', Math.round(innerWidth - hb.right) + 'px'); set(tg, 'top', Math.round(below + 6) + 'px'); set(tg, 'width', Math.round(hb.width) + 'px'); } }
+    } else if (RT.land69){ RT.land69 = null; set($('tray'), 'right', ''); const tg = $('trayTog'); if (tg){ tg.classList.remove('rc69'); set(tg, 'width', ''); } }
+  } catch(e){}
+  return r; }; }
+{ const _pc69 = placeCg62; placeCg62 = function(...a){ const r = _pc69(...a);
+  try { const L = RT.land69; if (L && L.rc && !CGB62.hidden){ const left = parseFloat(CGB62.style.left) || 0, mw = parseFloat(CGB62.style.maxWidth) || 9999, cap = Math.max(120, innerWidth - L.rc - left - 4);
+      if (mw > cap) CGB62.style.maxWidth = cap + 'px'; } } catch(e){}
+  return r; }; }
+// the free area for the camera: between the left buttons and the tray
+{ const _fc69 = fitCamera; fitCamera = function(...a){ const r = _fc69(...a);
+  try { if (MOB.mode === 'land' && !document.body.classList.contains('ui-hide')){ const I = insets69(), rc = rightCol69();
+      const oL = 56, oR = VW - 186, nL = I.l + 56, nR = VW - (rc || 8) - 178;
+      if (nR - nL > 120 && (nL !== oL || nR !== oR)){ const oc = (oL + oR) / 2, nc = (nL + nR) / 2, cy = VH / 2, k = Math.min(1, (nR - nL) / (oR - oL));
+        const wx = (oc - cam.x) / cam.z, wy = (cy - cam.y) / cam.z; cam.z = Math.max(.45, cam.z * k); cam.x = nc - wx * cam.z; cam.y = cy - wy * cam.z; } } } catch(e){}
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+body.m-land .gpanel{padding-left:max(16px,env(safe-area-inset-left,0px))!important;padding-right:max(16px,env(safe-area-inset-right,0px))!important}
+body.m-land #trayTog.rc69{padding:3px 0;font-size:11px;text-align:center;white-space:nowrap}
+body.m-land #toolSheet .tsp{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}`; document.head.appendChild(st); }
+
+/* ---------- 三、新版本：version.json → 提示 → 按「更新」才換 ---------- */
+const UPD69 = (CFG.pwa && CFG.pwa.update) || {};
+RT.up69 = { latest: null, later: false, applying: false, busy: false };
+const webOn69 = () => location.protocol === 'http:' || location.protocol === 'https:';
+async function fetchVer69(){ try { const r = await fetch((UPD69.versionFile || 'version.json') + '?t=' + Date.now(), { cache: 'no-store' }); if (!r.ok) return null; const j = await r.json(); return j && j.version || null; } catch(e){ return null; } }
+async function checkVer69(manual){
+  if (!webOn69() || !okBuild69()){ if (manual) toast(location.protocol === 'file:' ? '直接打開的檔案沒有自動更新；重新下載成品包就是新版' : `目前版本 ${CFG.meta.configVersion}`); return; }
+  if (RT.up69.busy) return; RT.up69.busy = true;
+  try { const v = await fetchVer69();
+    if (!v){ if (manual) toast('連不上網站，稍後再試'); return; }
+    RT.up69.latest = v;
+    if (v !== BUILD69){ RT.swReady57 = true; try { renderAttention(); } catch(e){} if (manual || !RT.up69.later) showBar69(v); }
+    else { RT.swReady57 = false; hideBar69(); if (manual) toast(`已經是最新版本（${CFG.meta.configVersion}）`); quietSwitch69(); }
+  } finally { RT.up69.busy = false; } }
+// this page is already the newest: let a waiting worker take over without reloading
+function quietSwitch69(){ const reg = RT.swReg; if (!reg || !reg.waiting || !navigator.serviceWorker || !navigator.serviceWorker.controller) return;
+  RT.noReload69 = true; try { reg.waiting.postMessage('skipWaiting'); } catch(e){} setTimeout(() => { RT.noReload69 = false; }, 5000); }
+function hideBar69(){ const b = document.getElementById('swBar'); if (b) b.remove(); }
+function showBar69(v){ hideBar69(); const b = document.createElement('div'); b.id = 'swBar'; b.className = 'up69';
+  b.innerHTML = `<span>有新版本 ${shortVer69(v)}</span><button data-a="go">更新</button><button data-a="later" class="later69">稍後</button>`;
+  b.addEventListener('click', e => { const t = e.target.closest('button'); if (!t) return; e.stopPropagation();
+    if (t.dataset.a === 'go') doUpdate69(); else { RT.up69.later = true; hideBar69(); } });
+  for (const ev of ['pointerdown', 'pointerup']) b.addEventListener(ev, e => e.stopPropagation());
+  document.body.appendChild(b); }
+async function doUpdate69(){ if (RT.up69.applying) return; RT.up69.applying = true; hideBar69();
+  toast('存檔後換成新版本…', true, 4000);
+  try { if (S) save(); } catch(e){}
+  try { sessionStorage.setItem('upd57', 'manual'); } catch(e){}
+  RT.noReload69 = false;
+  try { if (window.caches){ const ks = await caches.keys(); await Promise.all(ks.filter(k => k.startsWith('skyfarm-')).map(k => caches.delete(k))); } } catch(e){}
+  let waiting = false; const reg = RT.swReg;
+  if (reg){ try { await Promise.race([reg.update(), new Promise(r => setTimeout(r, 3000))]); } catch(e){}
+    if (reg.waiting){ waiting = true; try { reg.waiting.postMessage('skipWaiting'); } catch(e){} } }
+  // g40 reloads on controllerchange; without a waiting worker (or if that never comes) reload ourselves
+  setTimeout(() => location.reload(), waiting ? 2500 : 60); }
+// replaces g40 / g57: no more automatic switching or the old 「重新整理」 bar
+function swUpdateBar(){}
+function markReady57(){}
+function applyUpdate57(why){ if (why === 'manual'){ doUpdate69(); return true; } return false; }
+function checkUpdate57(manual){ return checkVer69(!!manual); }
+if (webOn69() && okBuild69()){
+  setTimeout(() => checkVer69(false), 2500);
+  setInterval(() => { if (!document.hidden) checkVer69(false); }, (UPD69.checkMinutes || 30) * 60e3);
+  // the rest of the offline files: fetched slowly in the background a while after opening
+  setTimeout(() => { try { const c = navigator.serviceWorker && navigator.serviceWorker.controller; if (c && RT.up69.latest === BUILD69 && !(navigator.connection && navigator.connection.saveData)) c.postMessage('warm'); } catch(e){} }, (UPD69.warmAfterSec || 20) * 1000); }
+{ const st = document.createElement('style'); st.textContent = `#swBar.up69{gap:8px}#swBar.up69 .later69{background:rgba(255,255,255,.16);color:#fff;font-weight:600}`; document.head.appendChild(st); }
+
+/* ---------- versioned picture URLs (a new page never gets an old picture from the offline copy) ---------- */
+// replaces g68 (keeps the file:// data: pictures)
+function lzStart64(e){
+  if (e.loading || e.ok) return; e.loading = true; const im = new Image();
+  im.onload = () => { e.im = im; e.ok = true; e.loading = false; e.used = performance.now(); lzLoaded64(); };
+  im.onerror = () => { e.loading = false; e.failed = (e.failed || 0) + 1; };
+  if (isFile68 && !SNAPD68.noSnap) snapData68(e.src).then(u => { im.src = u || e.src; if (u) delete SNAPD68.data[e.src]; });
+  else im.src = (webOn69() && okBuild69() && !/^data:|^blob:/.test(e.src)) ? e.src + (e.src.indexOf('?') < 0 ? '?' : '&') + 'v=' + encodeURIComponent(BUILD69) : e.src; }
+
+/* ---------- 設定：「手機與效能」卡片（取代 g64 的「省電模式」）、「版本與更新」說明 ---------- */
+const PFL69 = { res: v => v === 'screen' ? '跟螢幕' : v + ' 倍', fps: v => '每秒 ' + v + ' 張', idleFps: v => +v ? '每秒 ' + v + ' 張' : '關', idleSec: v => v + ' 秒', effects: v => v === 'less' ? '減少' : '全部' };
+function perfCard69(){ const p = perf69(), o = perfCfg69().options || {}, d = perfDefaults69();
+  const sel = (k, label, sub) => `<label class="pf69"><span>${label}${sub ? `<small>${sub}</small>` : ''}</span><select data-k="${k}">${(o[k] || [p[k]]).map(v => `<option value="${v}" ${String(v) === String(p[k]) ? 'selected' : ''}>${PFL69[k](v)}${String(v) === String(d[k]) ? '（建議）' : ''}</option>`).join('')}</select></label>`;
+  return `<div class="pcard" id="perf69"><h4><span class="hic">⚡</span>手機與效能</h4>
+    <p class="small">這台是${isPhone69() ? '手機' : '電腦／平板'}。數字越小越省電、越不燙，畫面會比較不細或比較不滑順。只存在這台裝置，換裝置要重設。現在每秒畫 <b id="fpsNow69">${RT.f69.fps || '—'}</b> 張。</p>
+    ${sel('res', '畫面解析度', '')}${sel('fps', '每秒畫面張數', '')}${sel('idleFps', '沒操作時降速', '一碰畫面就恢復')}${sel('idleSec', '降速前等幾秒', '')}${sel('effects', '動態效果', '雲影、下雨下雪的落下動畫')}
+    <p class="small">切到背景時一律暫停畫面。</p><div class="row"><button class="btn ghost" id="pfReset69">恢復建議值</button></div></div>`; }
+function bindPerf69(card){ if (!card) return;
+  card.querySelectorAll('select[data-k]').forEach(s => s.onchange = () => { const k = s.dataset.k, v = s.value; setPerf69(k, k === 'effects' || v === 'screen' ? v : +v); toast('已套用：' + PFL69[k](v)); });
+  card.querySelector('#pfReset69').onclick = () => { resetPerf69(); const n = document.createElement('div'); n.innerHTML = perfCard69(); const c2 = n.firstElementChild; card.replaceWith(c2); bindPerf69(c2); toast('已恢復建議值'); }; }
+{ const _rs69 = renderSettings; renderSettings = function(el, ...a){ const r = _rs69(el, ...a);
+  try { const pw = el.querySelector('#pw64');
+    if (pw){ const p1 = pw.previousElementSibling, h = p1 && p1.previousElementSibling; if (h && h.tagName === 'H3') h.remove(); if (p1 && p1.tagName === 'P') p1.remove(); pw.insertAdjacentHTML('beforebegin', perfCard69()); pw.remove(); }
+    else el.insertAdjacentHTML('beforeend', perfCard69());
+    bindPerf69(el.querySelector('#perf69'));
+    clearInterval(RT.fpsT69); RT.fpsT69 = setInterval(() => { const b = document.getElementById('fpsNow69'); if (!b){ clearInterval(RT.fpsT69); return; } b.textContent = RT.f69.fps || '—'; }, 1000);
+    const up = el.querySelector('#upd57'), pc = up && up.closest('.pcard'), ps = pc && pc.querySelector('p.small');
+    if (ps) ps.textContent = `目前版本 ${CFG.meta.configVersion}。打開遊戲、回到前景和每 ${UPD69.checkMinutes || 30} 分鐘會檢查一次；有新版本時畫面下方會跳提示，按「更新」才換（會先存檔）。`;
+  } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+#perf69 .pf69{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0}
+#perf69 .pf69 span{display:flex;flex-direction:column}#perf69 .pf69 small{opacity:.7;font-size:11px}
+#perf69 .pf69 select{min-width:120px}`; document.head.appendChild(st); }
+
+{ const _ns69 = normalizeState; normalizeState = function(d){ const r = _ns69(d); const s = r || d; try { if (s && !s.v2331) s.v2331 = 1; } catch(e){} return r; }; }
+
+window.__farm2331 = { perf69, setPerf69, resetPerf69, perfDefaults69, dprWant69, syncCanvas69, checkVer69, doUpdate69, showBar69, insets69,
+  get build(){ return BUILD69; }, get fps(){ return RT.f69.fps; }, get up(){ return RT.up69; }, placeTrayTabs };
+
+/* ===== 70. v2.34 垃圾車停車場：每座島 1 座（每座都 1,500、Lv 4）、可以收回倉庫（拿出來免費，放到任何一座還沒有停車場的島）
+   存檔：S.pads234 = { 島編號: { mi, side, x0, y0 } }；舊的 S.truckPad 變成「看得到的那座島（或 RT.padCtx234 指定的島）的停車場」
+   （不可列舉的存取器，不會存進存檔），所以 g34／g65 的舊程式照樣能用 ===== */
+const PADLIM70 = (TPAD && TPAD.limitPerIsland) || 1;
+const padSell70 = () => Math.floor(TPAD.cost * (TPAD.sellRate ?? .5));
+const padCtx70 = () => (RT.padCtx234 != null ? RT.padCtx234 : S.cur);
+// every state object: move the old single pad into S.pads234 and put the accessor on
+function ensurePads70(s){ s = s || S; if (!s) return null;
+  const d = Object.getOwnPropertyDescriptor(s, 'truckPad');
+  if (d && d.get) return s.pads234;
+  const old = d ? d.value : null; if (d) delete s.truckPad;
+  if (!s.pads234 || typeof s.pads234 !== 'object') s.pads234 = {};
+  if (old && s.maps && s.maps[old.mi] && !s.pads234[old.mi]) s.pads234[old.mi] = old;
+  Object.defineProperty(s, 'truckPad', { configurable: true, enumerable: false,
+    get(){ const mi = s === S ? padCtx70() : s.cur; return (s.pads234 && s.pads234[mi]) || null; },
+    set(v){ if (!s.pads234) s.pads234 = {}; if (v){ s.pads234[v.mi] = v; } else delete s.pads234[s === S ? padCtx70() : s.cur]; } });
+  return s.pads234; }
+const padOf70 = mi => { ensurePads70(); return (S && S.pads234 && S.pads234[mi]) || null; };
+const padStock70 = () => (S && S.buildStore && S.buildStore.truck_pad) || 0;
+function withPad70(mi, fn){ const was = RT.padCtx234; RT.padCtx234 = mi; try { return fn(); } finally { RT.padCtx234 = was; } }
+
+{ const _ns70 = normalizeState; normalizeState = function(d){ const r = _ns70(d); const s = r || d;
+  try { if (s && s.maps){ ensurePads70(s); if (!s.v234){ s.v234 = 1; s.buildStore = s.buildStore || {}; if (!(s.buildStore.truck_pad > 0)) s.buildStore.truck_pad = 0; } } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _ng70 = newGame; newGame = function(...a){ const r = _ng70(...a); try { ensurePads70(); } catch(e){} return r; }; }
+
+/* ---------- replaces g34: every island ---------- */
+function padAt(mi, x, y){ const P = padOf70(mi); if (!P) return null; return padCells(P).some(([a, b]) => a === x && b === y) ? P : null; }
+function pads(){ if (!S) return []; ensurePads70(); return Object.values(S.pads234).filter(P => P && S.maps[P.mi]).map(P => ({ mi: P.mi, M: S.maps[P.mi], P, T: null })); }
+function fixPad(){
+  if (!S) return; ensurePads70(); const pend = S.truckPadPending;
+  if (pend){ const mi = S.maps[pend.mi] ? pend.mi : 0, M = S.maps[mi]; const c = M && nearestRim(M, pend.x, pend.y, Infinity); delete S.truckPadPending; if (c && !S.pads234[mi]) S.pads234[mi] = { mi, ...c }; }
+  for (const key of Object.keys(S.pads234)){ const P = S.pads234[key], M = P && S.maps[P.mi];
+    if (!M || String(P.mi) !== String(key)){ delete S.pads234[key]; if (P && M && !S.pads234[P.mi]) S.pads234[P.mi] = P; continue; }
+    if (!padValid(M, P)){ const m = padMid(P), c = nearestRim(M, m.x, m.y, Infinity); if (c){ Object.assign(P, c); if (P.mi === S.cur) toast(`${TPAD.name}被新的土地推到島邊了`, false, 2600); } } } }
+// the outline of island M includes its own parking land
+function islandCells66(M){ const set = new Set(mapTiles(M).map(([x, y]) => tkey(x, y))), P = padOf70(S.maps.indexOf(M));
+  if (P) for (const [x, y] of padCells(P)) set.add(tkey(x, y)); return set; }
+// the trucks / robots of island mi use island mi's parking lot
+{ const _ts70 = truckStop; truckStop = function(mi, ...a){ return withPad70(mi, () => _ts70(mi, ...a)); }; }
+{ const _dp70 = drawPad; drawPad = function(P, ...a){ return withPad70(P && P.mi != null ? P.mi : S.cur, () => _dp70(P, ...a)); }; }
+
+// build / move: one per island; the one in the warehouse first (free)
+function placePad(x, y){
+  ensurePads70(); const M = curMap(), mi = S.cur, P = S.pads234[mi];
+  if (!isUnlocked('truck_pad')){ toast(lockedMsg('truck_pad')); return; }
+  const c = nearestRim(M, x, y); if (!c){ toast(`點島的邊緣外側放${TPAD.name}（島外一圈看不到的格子，不佔島上的地）`); return; }
+  const m = padMid(c), at = center(m.x, m.y);
+  if (P){ Object.assign(P, c); RT.padMove = false; sfx('place'); floatText(at.cx, at.cy - 20, `${TPAD.name}搬好了`, '#2f6f8f', 11); afterAction(); UIbuildTray(); return; }
+  if (padStock70() > 0){ S.buildStore.truck_pad--; S.pads234[mi] = { mi, ...c }; sfx('place'); floatText(at.cx, at.cy - 20, '從倉庫拿出來', '#2f7fa8', 11);
+    toast(`${TPAD.name}放好了（倉庫的，免費）。垃圾車到這座島時會停在這裡`, true, 2800); afterAction(); UIbuildTray(); return; }
+  if (!spend(TPAD.cost)) return;
+  S.pads234[mi] = { mi, ...c }; sfx('place'); floatText(at.cx, at.cy - 20, `-${fmtN(TPAD.cost)}`, '#8a5d36', 11);
+  toast(`${TPAD.name}蓋好了！垃圾車和資源回收車到${islName63(mi)}時會降落在這裡`, true, 3000); afterAction(); UIbuildTray(); }
+// 「收回」: into the 建設 warehouse
+function storePad70(mi){ ensurePads70(); const P = S.pads234[mi]; if (!P) return false; const m = padMid(P), at = center(m.x, m.y);
+  delete S.pads234[mi]; S.buildStore.truck_pad = padStock70() + 1; RT.padMove = false; RT.decoVer++;
+  floatText(at.cx, at.cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('place');
+  toast(`${TPAD.name}收進倉庫了，之後可以免費放到任何一座還沒有停車場的島${truckWindow(Date.now()) ? '；停在這裡的垃圾車改停到島邊' : ''}`, false, 3000);
+  afterAction(); UIbuildTray(); return true; }
+{ const _a70 = act; act = function(x, y){
+  if (S && !UI.expand){ ensurePads70();
+    if (S.sel.tool === 'store' && padAt(S.cur, x, y)){ storePad70(S.cur); return; } }
+  return _a70(x, y); }; }
+// buying asks only when it really costs money
+{ const _sp70 = selPrice47; selPrice47 = function(...a){ const s = S && S.sel;
+  if (s && s.tool === 'build' && s.build === 'truck_pad') return (S.truckPad || padStock70() > 0) ? null : { cat: 'build', price: TPAD.cost };
+  return _sp70(...a); }; }
+// 建設 tray card: 「這座島 0／1 座 · 倉庫還有 n」
+{ const _ut70 = UIbuildTray; UIbuildTray = function(...a){ const r = _ut70(...a);
+  try { if (S && S.sel.tool === 'build'){ const el = $('tray').querySelector('.item[data-id="truck_pad"]');
+      if (el){ const here = S.truckPad ? 1 : 0, st = padStock70(), sm = el.querySelectorAll('small');
+        if (sm[1]) sm[1].textContent = `這座島 ${here}／${PADLIM70} 座` + (st ? ` · 倉庫還有 ${st}` : '');
+        if (sm[0] && st && !here) sm[0].innerHTML = '倉庫的 · 免費';
+        el.classList.toggle('full70', !!here); } } } catch(e){}
+  return r; }; }
+{ const tb = TOOLS.find(t => t.id === 'build'); if (tb){ const _h70 = tb.hint; tb.hint = () => { const id = S && S.sel.build;
+  if (id === 'truck_pad'){ if (S.truckPad) return `這座島已經有${TPAD.name}了 · 用「搬移」沿著島邊換位置、「收回」放進倉庫、「剷除」退 ${fmtN(padSell70())}`;
+    if (padStock70() > 0) return `點島的邊緣外側放${TPAD.name}（用倉庫的，免費）· 每座島 ${PADLIM70} 座`;
+    return `點島的邊緣外側蓋${TPAD.name} · ${fmtN(TPAD.cost)} 金幣 · 每座島 ${PADLIM70} 座，貼在島外，不佔島上的格子`; }
+  return typeof _h70 === 'function' ? _h70() : _h70; }; } }
+{ const st = document.createElement('style'); st.textContent = `#tray .item.full70{opacity:.72}`; document.head.appendChild(st); }
+
+window.__farm234 = { pads, padOf: padOf70, storePad: storePad70, placePad, ensurePads: ensurePads70, get stock(){ return padStock70(); } };
+
+/* ---------- 停車場的小圖示用玩家的停車場圖（左下那張） ---------- */
+{ const _is70 = itemSprite; itemSprite = function(kind, id){ if (kind === 'building' && id === 'truck_pad' && ATLAS.bg_parking_pad_sw) return ['bg_parking_pad_sw', 0]; return _is70(kind, id); }; }
+
+/* ---------- 子選單（分頁列、作物分類列）按 ‹ › 之後，被切到的那個選項整個露出來 ---------- */
+function rowOfArrow70(btn){ const q = btn.getBoundingClientRect(), y = q.top + q.height / 2;
+  for (const el of [TTAB, CGB62]){ if (!el || el.hidden) continue; const r = el.getBoundingClientRect(); if (r.width && y >= r.top - 2 && y <= r.bottom + 2 && q.right >= r.left - 8 && q.left <= r.right + 8) return el; }
+  return null; }
+function pageRow70(el, dir){ const gap = 32, sl = el.scrollLeft, cw = el.clientWidth, max = el.scrollWidth - cw, bs = [...el.children].filter(c => c.offsetWidth);
+  let to = sl;
+  if (dir > 0){ const b = bs.find(c => c.offsetLeft + c.offsetWidth > sl + cw - gap + 1);   // the first one cut by (or under) the › arrow
+    to = b ? b.offsetLeft - gap : max; }
+  else { const b = [...bs].reverse().find(c => c.offsetLeft < sl + gap - 1);                // the last one cut by (or under) the ‹ arrow
+    to = b ? b.offsetLeft + b.offsetWidth - cw + gap : 0; }
+  to = Math.max(0, Math.min(max, Math.round(to))); if (to < gap) to = 0; if (max - to < 4) to = max;
+  if (to === sl) to = dir > 0 ? Math.min(max, sl + Math.round(cw * .7)) : Math.max(0, sl - Math.round(cw * .7));
+  el.scrollTo({ left: to, behavior: 'smooth' }); }
+document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('.hsa67'); if (!a) return; const el = rowOfArrow70(a); if (!el) return;
+  e.stopImmediatePropagation(); e.preventDefault(); pageRow70(el, a.textContent.trim() === '›' ? 1 : -1); }, true);
 
   })(CFG, ATLAS_JSON);
 })();

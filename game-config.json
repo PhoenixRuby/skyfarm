@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.33",
+  "configVersion": "2.34",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4329,7 +4329,10 @@
     "recycle": "truck_recycle_{dir}",
     "source": "art/src_truckpad/truckpad.json → node art/render25.js",
     "truckRearFaces": "island"
-   }
+   },
+   "limitPerIsland": 1,
+   "storable": true,
+   "note234": "v2.34：每座島最多 limitPerIsland 座（limit 只給舊程式看）；每座都 cost 金幣；「收回」放進建設倉庫，拿出來免費、放到任何一座還沒有停車場的島；剷除退 sellRate；垃圾車到哪座島就停那座島的停車場，沒有就停在島邊空中"
   }
  },
  "weatherDolls": {
@@ -10255,7 +10258,14 @@
    "checkOnForeground": true,
    "applyWhenHidden": true,
    "applyOnLaunch": true,
-   "note": "iPhone 主畫面 App 沒有重新整理鈕：回到前景就檢查新版；下載好之後在切到背景或下次打開時自動存檔並換新版；☰ 選單與設定有「檢查更新」，有新版時 ☰ 亮紅點"
+   "note": "（v2.33.1 起不用，改看 pwa.update）iPhone 主畫面 App 沒有重新整理鈕：回到前景就檢查新版；下載好之後在切到背景或下次打開時自動存檔並換新版；☰ 選單與設定有「檢查更新」，有新版時 ☰ 亮紅點"
+  },
+  "update": {
+   "versionFile": "version.json",
+   "checkMinutes": 30,
+   "navigateTimeoutMs": 4000,
+   "warmAfterSec": 20,
+   "note": "v2.33.1：打開、回到前景、每 checkMinutes 分鐘向網站問 version.json（不經快取）；版本不同就在下方跳「有新版本」＋「更新」「稍後」。按更新：存檔、清掉離線快取、重新載入。頁面有網路時一律先拿最新（navigateTimeoutMs 內拿不到才用快取），圖片和定義檔網址帶版本號；整包離線檔改在打開 warmAfterSec 秒後於背景慢慢補。取代 autoUpdate"
   }
  },
  "checkin": {
@@ -10495,6 +10505,54 @@
    "road_",
    "island"
   ],
-  "note": "省電模式（手機預設開，設定可改，存在這台裝置 localStorage skyfarm-power）：畫面每秒最多 powerSaveFps 張；normalFps 0＝不限。圖片用到才載入，imageUnloadMinutes 分鐘沒畫到的圖檔會放掉；精靈圖依種類拼成 1024×1024 的小張（game/sheetpack.py）"
+  "note": "省電模式（手機預設開，設定可改，存在這台裝置 localStorage skyfarm-power）：畫面每秒最多 powerSaveFps 張；normalFps 0＝不限。圖片用到才載入，imageUnloadMinutes 分鐘沒畫到的圖檔會放掉；精靈圖依種類拼成 1024×1024 的小張（game/sheetpack.py）",
+  "settings": {
+   "storageKey": "skyfarm-perf",
+   "options": {
+    "res": [
+     1,
+     1.25,
+     1.5,
+     2,
+     "screen"
+    ],
+    "fps": [
+     24,
+     30,
+     60
+    ],
+    "idleFps": [
+     0,
+     15,
+     10
+    ],
+    "idleSec": [
+     5,
+     10,
+     30
+    ],
+    "effects": [
+     "all",
+     "less"
+    ]
+   },
+   "phone": {
+    "res": 1.5,
+    "fps": 30,
+    "idleFps": 15,
+    "idleSec": 10,
+    "effects": "all"
+   },
+   "desktop": {
+    "res": "screen",
+    "fps": 60,
+    "idleFps": 0,
+    "idleSec": 10,
+    "effects": "all"
+   },
+   "screenMax": 3,
+   "layoutLoopMs": 250,
+   "note": "v2.33.1：設定「手機與效能」，每台裝置各自記（localStorage storageKey，不跟存檔）。res＝畫布解析度倍率（screen＝跟螢幕，最多 screenMax）；fps＝每秒最多畫幾張；idleFps＝idleSec 秒沒操作時降到每秒幾張（0＝不降）；effects less＝不畫雲影和下雨下雪的落下動畫。舊的 skyfarm-power：on → phone、off → 跟螢幕／60／不降、auto → 依裝置。選項列分頁、作物分類列的定位每 layoutLoopMs 毫秒算一次（原本每個畫面更新都算）"
+  }
  }
 }
