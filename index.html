@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-fd6f19d5db'), getJSON('sprites/atlas.json?v=2.36.2-fd6f19d5db')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-6232adaa7c'), getJSON('sprites/atlas.json?v=2.36.2-6232adaa7c')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.36.2-fd6f19d5db';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.36.2-6232adaa7c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15204,6 +15204,24 @@ function drawThrow74(key, W, tt){
 if (KIND_DESC && (CFG.robots.kinds || {}).feed) KIND_DESC.feed = `從自己的充電站位子出發，背著飼料桶（${BUCKET65} 份）沿格子走到肚子餓的動物旁邊，把飼料倒進小飼料盆；魚池只要走到任何一格旁邊，就把整池餓的格子一起撒飼料（一池用 1 份）。桶子空了、電只夠回程或沒工作就走回充電站補料。只管充電站所在的那座島。`;
 
 window.__farm2362 = { feedTarget65: (M, k) => feedTarget65(M, k), feedPool74, poolHungry74, get skip(){ return RT.skip74; }, get scat(){ return RT.scat74; }, FP74 };
+
+/* ===== 75. v2.36.3: 倉庫樣式修正 =====
+   1. g72 的 查看田地／魚池 階段小標籤用了全域的 .c-g／.c-b／.c-y／.c-r，把倉庫分類區塊（.stsec.c-g…）整塊塗成實色 → 倉庫區塊不吃這些底色
+   2. 面板裡的小圖示（paintIcons、paint72）是把 iconCanvas 畫好的圖「複製」到畫面上的 canvas；圖片還沒載入時複製到的是空白，
+      g64 之後只重畫 iconCanvas 自己那張、畫面上那張不會更新 → 畫面上的 canvas 也登記到 g64 的重畫清單 ===== */
+{ const st75 = document.createElement('style'); st75.textContent = `
+.stsec.c-g,.stsec.c-b,.stsec.c-y,.stsec.c-r,.stsec.c-x{background:transparent}
+`; document.head.appendChild(st75); }
+
+// copy an icon into a DOM canvas; if its picture is not loaded yet, g64 redraws this canvas when it arrives
+function paintInto75(c, name, frame, size){
+  LZ64.missed = false; const n = _ic64(name, frame, size);
+  c.width = n.width; c.height = n.height; c.getContext('2d').drawImage(n, 0, 0);
+  if (LZ64.missed) LZ64.reg.push({ ref: typeof WeakRef === 'function' ? new WeakRef(c) : c, args: [name, frame, size] }); }
+function paintIcons(root){ root.querySelectorAll('canvas[data-spr]').forEach(c => paintInto75(c, c.dataset.spr, +c.dataset.f || 0, 28)); }
+function paint72(root){ root.querySelectorAll('canvas.ic72[data-spr]').forEach(c => paintInto75(c, c.dataset.spr, +c.dataset.f || 0, 80)); }
+
+window.__farm2363 = { paintInto75 };
 
   })(CFG, ATLAS_JSON);
 })();
