@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.34-7a12ab6d2c'), getJSON('sprites/atlas.json?v=2.34-7a12ab6d2c')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36-4c06332c58'), getJSON('sprites/atlas.json?v=2.36-4c06332c58')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.34-7a12ab6d2c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.36-4c06332c58';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -14671,6 +14671,429 @@ function pageRow70(el, dir){ const gap = 32, sl = el.scrollLeft, cw = el.clientW
   el.scrollTo({ left: to, behavior: 'smooth' }); }
 document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('.hsa67'); if (!a) return; const el = rowOfArrow70(a); if (!el) return;
   e.stopImmediatePropagation(); e.preventDefault(); pageRow70(el, a.textContent.trim() === '›' ? 1 : -1); }, true);
+
+/* ===== 71. v2.35 每台機器人自己的報告：掃地（掃地基座）、無人機澆水（停機坪）、鏟屎官（機器人充電站）
+   上方切換 #1／#2…／租用／合併；熱區圖＋今天／累計數字跟著切換；選過記住（S.settings.rep71）
+   紀錄：S.rep71['<kind>:<unit id|r>'] = { kind, day, ta, tb, a, b, heat: { mi: { k: [值, 時間] } } }
+     掃地 a＝雜草、b＝垃圾；澆水 a＝格、b＝滴；鏟屎 a＝坨
+   另外：service worker 一律向網站拿 sw.js（updateViaCache: 'none'） ===== */
+const DAY71 = 86400e3;
+RT.wk71 = null;
+const rep71 = () => (S.rep71 = S.rep71 || {});
+function repOf71(key, kind, t){ const R = rep71(); let E = R[key]; if (!E) E = R[key] = { kind, day: dayKeyLocal(t), ta: 0, tb: 0, a: 0, b: 0, heat: {} };
+  const d = dayKeyLocal(t); if (E.day !== d){ E.day = d; E.ta = 0; E.tb = 0; } E.last = Math.round(t); return E; }
+function heatAdd71(E, mi, k, t){ const h = E.heat[mi] || (E.heat[mi] = {}), e = h[k], v = e ? e[0] * Math.exp(-(t - e[1]) / DAY71) : 0; h[k] = [Math.round((v + 1) * 100) / 100, Math.round(t)];
+  if (Math.random() < .02) for (const m in E.heat){ const H = E.heat[m]; for (const kk in H) if (t - H[kk][1] > DAY71) delete H[kk]; } }
+function rec71(kind, key, mi, k, a, b, t){ if (!key || !S) return; const E = repOf71(key, kind, t);
+  if (mi != null && k != null && mi >= 0) heatAdd71(E, mi, k, t);
+  if (a){ E.ta += a; E.a += a; } if (b){ E.tb += b; E.b += b; } }
+function withWorker71(key, fn){ const was = RT.wk71; RT.wk71 = key; try { return fn(); } finally { RT.wk71 = was; } }
+
+/* ---------- 掃地 ---------- */
+{ const _sw71 = sweepWorker; sweepWorker = function(key, ...a){ return withWorker71(key, () => _sw71(key, ...a)); }; }
+{ const _sh71 = swHeat; swHeat = function(mi, k, t){ const r = _sh71(mi, k, t); if (RT.wk71 && RT.wk71.startsWith('sweep:')) rec71('sweep', RT.wk71, mi, k, 0, 0, t); return r; }; }
+{ const _sc71 = swClean; swClean = function(M, mi, k, t){ const T = M.tiles[k], typ = T && T.t, n = typ === 'weedball' ? (T.n || 1) : 0; const r = _sc71(M, mi, k, t);
+  if (RT.wk71 && RT.wk71.startsWith('sweep:') && typ && !(M.tiles[k] && M.tiles[k].t === typ)){
+    if (typ === 'weed') rec71('sweep', RT.wk71, null, null, 1, 0, t); else if (typ === 'weedball') rec71('sweep', RT.wk71, null, null, n, 1, t); else if (isTrash({ t: typ })) rec71('sweep', RT.wk71, null, null, 0, 1, t); }
+  return r; }; }
+
+/* ---------- 無人機澆水：replaces g53 (same steps; each watering is written down for this drone) ---------- */
+function droneStep(key, u, dt, t){
+  const home = workerHome('water', u), D = droneState(key, home);
+  let budget = dt, guard = 0;
+  while (budget > 0 && guard++ < 600){
+    if (!D.tgt || !dwNeeds(S.maps[D.tgt.mi].tiles[D.tgt.k])){
+      const n = dronePick(D, key); if (!n){ D.tgt = null; D.el = 0; return; }
+      if (u && u.tank < dwNeed(S.maps[n.mi].tiles[n.k]) - 1e-6){ u.tankLow = true; D.tgt = null; D.el = 0; return; }
+      D.tgt = n; D.ax = D.x; D.ay = D.y; D.el = 0; D.ft = (n.mi === D.mi ? Math.hypot(n.x - D.x, n.y - D.y) : 6) / (DW.tilesPerSecond || 3);
+    }
+    const total = D.ft + (DW.spraySeconds || 2), left = total - D.el;
+    if (budget < left){ D.el += budget; D.simAt = t; return; }
+    budget -= left; D.el = total;
+    const T = S.maps[D.tgt.mi].tiles[D.tgt.k], need = dwNeed(T);
+    if (!u){ if (!useWater(need, false, t)){ D.wait = true; return; } }
+    else { if (u.tank < need - 1e-6){ u.tankLow = true; return; } u.tank -= need; }
+    D.wait = false; D.simAt = t; T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false; log53('water', 'tiles');
+    rec71('water', key, D.tgt.mi, D.tgt.k, 1, need, t);
+    D.mi = D.tgt.mi; D.x = D.tgt.x; D.y = D.tgt.y; D.ax = D.x; D.ay = D.y; D.tgt = null; D.el = 0; D.ft = 0;
+  }
+}
+
+/* ---------- 鏟屎官 ---------- */
+{ const _w71 = worker59; worker59 = function(kind, key, ...a){ return withWorker71(key, () => _w71(kind, key, ...a)); }; }
+{ const _dj71 = doJob59; doJob59 = function(kind, W, M, t){ const k = W.target, was = kind === 'poop' && M.tiles[k] && M.tiles[k].t === 'poop'; const r = _dj71(kind, W, M, t);
+  if (was && !(M.tiles[k] && M.tiles[k].t === 'poop') && RT.wk71) rec71('poop', RT.wk71, S.maps.indexOf(M), k, 1, 0, t); return r; }; }
+
+/* ---------- 收回機器人倉庫／放回農場：紀錄跟著走 ---------- */
+{ const _sr71 = storeRobot49; storeRobot49 = function(kind, id){ const u = fleet(kind).find(x => x.id === id), key = u ? wKey(kind, u) : null, E = key && S.rep71 && S.rep71[key];
+  const r = _sr71(kind, id); if (r && E){ const R = robotStore(), last = R[R.length - 1]; if (last && last.kind === kind){ last.rep71 = E; delete S.rep71[key]; } } return r; }; }
+{ const _pb71 = placeBackRobot49; placeBackRobot49 = function(sid){ const r0 = robotStore().find(x => x.sid === sid), E = r0 && r0.rep71, kind = r0 && r0.kind;
+  const r = _pb71(sid); if (r && E){ const f = fleet(kind), u = f[f.length - 1]; if (u) rep71()[wKey(kind, u)] = E; } return r; }; }
+
+/* ---------- 報告卡 ---------- */
+const REP71 = {
+  sweep: { title: '掃地報告', ic: '🧹', verb: '掃過的地方：越紅掃得越多', a: '根雜草', b: '件垃圾', col: v => `rgba(255,${Math.round(200 - 170 * v)},${Math.round(70 - 50 * v)},${.35 + .65 * v})`, hot: ['#ffbe3c', '#ff2814'], words: ['掃過', '常掃'] },
+  water: { title: '澆水報告', ic: '💧', verb: '澆過的田：越藍澆得越多', a: '格', b: '滴水', col: v => `rgba(${Math.round(150 - 120 * v)},${Math.round(200 - 90 * v)},255,${.4 + .6 * v})`, hot: ['#96c8ff', '#1e6eff'], words: ['澆過', '常澆'] },
+  poop:  { title: '鏟屎報告', ic: '💩', verb: '鏟到大便的地方：越深鏟得越多', a: '坨', b: null, col: v => `rgba(${Math.round(200 - 90 * v)},${Math.round(150 - 90 * v)},${Math.round(90 - 60 * v)},${.4 + .6 * v})`, hot: ['#c8966a', '#6e3c1e'], words: ['鏟過', '常鏟'] } };
+const homeSlot71 = u => { const s = u && slotByKey(u.home); return s ? { mi: s.mi, k: s.k, i: +String(u.home).split('|')[2] || 0 } : null; };
+function repUnits71(kind){ const now = Date.now(), K = RK(kind), out = fleet(kind).map((u, i) => { const tr = unitTier(kind, u); return { key: wKey(kind, u), label: `#${i + 1}${tr ? ' ' + tr.name : ''}`, u, home: homeSlot71(u) }; });
+  const rk = wKey(kind, null), E = S.rep71 && S.rep71[rk]; if (rentActive(kind, now) || (E && now - (E.last || 0) < DAY71)) out.push({ key: rk, label: '租用', u: null, home: null });
+  return out; }
+function repPick71(kind, units){ const st = (S.settings.rep71 = S.settings.rep71 || {}), saved = st[kind], tb = RT.tapBase;
+  if (saved === 'merge') return 'merge';
+  const atBase = tb ? units.filter(x => x.home && x.home.mi === tb.mi && x.home.k === tb.k).sort((a, b) => a.home.i - b.home.i) : [];
+  if (saved && units.some(x => x.key === saved) && (!atBase.length || atBase.some(x => x.key === saved))) return saved;
+  return (atBase[0] || units[0] || {}).key || 'merge'; }
+function repHeat71(kind, sel, mi){ const now = Date.now();
+  if (sel === 'merge' && kind === 'sweep') return (S.sweep.heat || {})[mi] || {};
+  const R = S.rep71 || {}, out = {};
+  for (const key in R){ const E = R[key]; if (E.kind !== kind || (sel !== 'merge' && key !== sel)) continue; const H = (E.heat || {})[mi] || {};
+    for (const k in H){ const v = H[k][0] * Math.exp(-(now - H[k][1]) / DAY71); if (now - H[k][1] < DAY71) out[k] = out[k] ? [out[k][0] + v, now] : [v, now]; } }
+  return out; }
+function repNums71(kind, sel){ const today = dayKeyLocal(Date.now());
+  if (sel === 'merge' && kind === 'sweep'){ const SW = S.sweep; return { ta: SW.todayWeeds || 0, tb: SW.todayTrash || 0, a: SW.totalWeeds || 0, b: SW.totalTrash || 0 }; }
+  const o = { ta: 0, tb: 0, a: 0, b: 0 }, R = S.rep71 || {};
+  for (const key in R){ const E = R[key]; if (E.kind !== kind || (sel !== 'merge' && key !== sel)) continue; if (E.day === today){ o.ta += E.ta; o.tb += E.tb; } o.a += E.a; o.b += E.b; }
+  return o; }
+function repMap71(kind, sel, units){ if (sel !== 'merge'){ const x = units.find(q => q.key === sel); if (x && x.home) return x.home.mi; if (x && !x.u) return kind === 'water' ? houseMapIndex() : (typeof sweepMapIndex === 'function' && kind === 'sweep' ? sweepMapIndex() : S.cur); }
+  return S.cur; }
+// like g15's heatmapCanvas, for any heat table; dots = this robot's base (or every base when merged)
+function heatCanvas71(kind, mi, h, dots){
+  const M = S.maps[mi], tl = mapTiles(M), now = Date.now(), s = 8, C = REP71[kind];
+  const xs = tl.map(([x, y]) => (x - y)), ys = tl.map(([x, y]) => (x + y)), x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const c = document.createElement('canvas'), W2 = (x1 - x0 + 2) * s * 2, H2 = (y1 - y0 + 2) * s, r = 2; c.width = W2 * r; c.height = H2 * r; c.style.width = W2 + 'px'; c.style.maxWidth = '100%';
+  const g = c.getContext('2d'); g.scale(r, r);
+  const val = k => { const e = h[k]; return e && now - e[1] < DAY71 ? e[0] * Math.exp(-(now - e[1]) / DAY71) : 0; }; let vmax = 0; for (const [x, y] of tl) vmax = Math.max(vmax, val(tkey(x, y)));
+  for (const [x, y] of tl){ const k = tkey(x, y), T = M.tiles[k], cx = (x - y - x0 + 1) * s * 2, cy = (x + y - y0 + 1) * s, v = vmax ? val(k) / vmax : 0;
+    let col = sweepable(T) ? '#cfe3b8' : T && T.t === 'soil' ? '#c9a77e' : T && T.t === 'tree' ? '#a8c890' : isPool(T) || isPond(T) ? '#9cc8e0' : '#b9c4b0';
+    if (v > 0) col = C.col(v);
+    g.fillStyle = col; g.beginPath(); g.moveTo(cx, cy - s); g.lineTo(cx + s * 2, cy); g.lineTo(cx, cy + s); g.lineTo(cx - s * 2, cy); g.closePath(); g.fill();
+    if (dots.some(d => d.mi === mi && d.k === k)){ g.fillStyle = '#1e3a2a'; g.beginPath(); g.arc(cx, cy, 3, 0, Math.PI * 2); g.fill(); } }
+  return c; }
+function repCard71(kind, el){ const C = REP71[kind], units = repUnits71(kind); let sel = repPick71(kind, units);
+  const card = document.createElement('div'); card.className = 'pcard rep71'; card.dataset.kind = kind;
+  const draw = () => { const mi = repMap71(kind, sel, units), N = repNums71(kind, sel), x = units.find(q => q.key === sel);
+    const dots = sel === 'merge' ? slotsOf(RK(kind).base).map(s => ({ mi: s.mi, k: s.k })) : x && x.home ? [x.home] : [];
+    const nums = (a, b) => `<b>${fmtN(Math.round(a))}</b> ${C.a}${C.b ? ` · <b>${fmtN(Math.round(b))}</b> ${C.b}` : ''}`;
+    card.innerHTML = `<h4><span class="hic">${C.ic}</span>${C.title}</h4>
+      <div class="seg71">${units.map(q => `<button data-r71="${q.key}" class="${q.key === sel ? 'on' : ''}">${q.label}</button>`).join('')}<button data-r71="merge" class="${sel === 'merge' ? 'on' : ''}">合併</button></div>
+      <div class="kv"><span>今天</span><span>${nums(N.ta, N.tb)}</span><span>累計</span><span>${nums(N.a, N.b)}</span></div>
+      <p class="small">${islName63(mi)}最近 24 小時，${sel === 'merge' ? '全部' + RK(kind).name : (x ? x.label : '')}${C.verb}，黑點是${sel === 'merge' ? '每座' : '它的'}${BLD[RK(kind).base].name}。${sel !== 'merge' && kind === 'sweep' ? '（v2.35 以前的紀錄只在「合併」裡）' : ''}</p>
+      <div class="heatbox"></div>
+      <p class="small legend"><span class="lg" style="background:${C.hot[0]}"></span>${C.words[0]}　<span class="lg" style="background:${C.hot[1]}"></span>${C.words[1]}</p>`;
+    card.querySelector('.heatbox').appendChild(heatCanvas71(kind, mi, repHeat71(kind, sel, mi), dots));
+    card.querySelectorAll('[data-r71]').forEach(b => b.onclick = e => { e.stopPropagation(); sel = b.dataset.r71; (S.settings.rep71 = S.settings.rep71 || {})[kind] = sel; save(); draw(); }); };
+  draw(); return card; }
+{ const _oup71 = openUnitPanel; openUnitPanel = function(kind){ const r = _oup71(kind);
+  try { const el = $('modalBody'), baseId = BASE_OF[kind] || RK(kind).base; if (!el) return r; const grid = el.querySelector('.pgrid') || el;
+    const h4 = c => (c.querySelector(':scope > h4') || {}).textContent || '';
+    if (baseId === 'sweeper_dock'){ const old = [...el.querySelectorAll('.pcard')].find(c => h4(c).includes('掃地報告')), hb = el.querySelector('#heatBox'), hbc = hb && hb.closest('.pcard');
+      const card = repCard71('sweep'); if (hbc) hbc.remove(); if (old) old.replaceWith(card); else grid.appendChild(card); }
+    else if (baseId === 'drone_pad'){ const card = repCard71('water'); card.classList.add('span2'); grid.appendChild(card); }
+    else if (baseId === RK('poop').base && (fleet('poop').length || rentActive('poop', Date.now()))){ const tb = RT.tapBase, here = fleet('poop').some(u => { const h = homeSlot71(u); return !tb || (h && h.mi === tb.mi && h.k === tb.k); });
+      if (here || rentActive('poop', Date.now())){ const card = repCard71('poop'); card.classList.add('span2');
+        // right under the 鏟屎官 row (the charger panel lists every robot that shares it)
+        const nm = RK('poop').name, row = [...grid.children].find(c => c !== card && (c.querySelector('h3,h4,b,strong,.t47,.nm47') || c).textContent.includes(nm) && c.textContent.includes(nm));
+        if (row) row.after(card); else grid.appendChild(card); } }
+  } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+.seg71{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}.seg71 button{border:1px solid var(--glb,rgba(0,0,0,.15));background:rgba(255,255,255,.55);color:inherit;border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer}
+.seg71 button.on{background:#2f6f4f;color:#fff;border-color:#2f6f4f;font-weight:700}
+body.night .seg71 button{background:rgba(255,255,255,.08)}body.night .seg71 button.on{background:#5aa06e;border-color:#5aa06e}
+.rep71 .heatbox{display:flex;justify-content:center}`; document.head.appendChild(st); }
+
+{ const _ns71 = normalizeState; normalizeState = function(d){ const r = _ns71(d); const s = r || d; try { if (s && !s.v235){ s.v235 = 1; s.rep71 = s.rep71 || {}; s.settings = s.settings || {}; s.settings.rep71 = s.settings.rep71 || {}; } } catch(e){} return r; }; }
+
+/* ---------- sw.js：每次檢查新版都直接向網站拿 ---------- */
+if (PWA40.serviceWorker && 'serviceWorker' in navigator && location.protocol !== 'file:' && !/^(null|about:)/.test(location.origin)){
+  const re71 = () => navigator.serviceWorker.register(PWA40.serviceWorker, { updateViaCache: 'none' }).then(reg => { RT.swReg = reg; }).catch(() => {});
+  if (document.readyState === 'complete') setTimeout(re71, 500); else addEventListener('load', () => setTimeout(re71, 500)); }
+
+window.__farm235 = { storeRobot: (k, id) => storeRobot49(k, id), placeBack: sid => placeBackRobot49(sid), openUnitPanel: k => openUnitPanel(k), rec71, repUnits71, repPick71, repNums71, repHeat71, get rep(){ return S.rep71; } };
+
+/* ===== 72. v2.36: reports right under their robot row · robot status (why it is idle, worked time) · idle robots stop hogging the charger,
+   robots without a charger slot stand around it · feed-robot icon · pool move menu with the lamp (pool + lamp / lamp only / lamp to storage)
+   and a picture in the drag bubble · 查看田地 and the new 查看魚池 layout · chickens walk over and peck the bugs · citrus tree menu
+   (查看果樹 / 查看蝴蝶) · trucks leave nose-out, back hatch open while collecting · storage pictures (fruit / fish / honey) ===== */
+const ST236 = (CFG.robots || {}).status236 || {}, CW236 = (CFG.chickenPest || {}).walk236 || {}, TL236 = ((CFG.trash || {}).route || {}).look236 || {}, FI236 = (CFG.ui || {}).fieldInfo236 || {};
+
+/* ---------- 9. feed robot icon ---------- */
+if (IMGSRC.ui_feedbot) R_ICON.feed = 'ui_feedbot';
+
+/* ---------- 8. storage pictures: fish gets its own (fruit / honey are replaced by file) ---------- */
+{ const f = ST_CAT.find(c => c[0] === 'fish'), a = ((CFG.ui || {}).storageArt236 || {}).fish || 'st_fish'; if (f && IMGSRC['ui_pg_' + a]) f[2] = a; }
+
+/* ---------- 1. 澆水報告 / 鏟屎報告 right under their own robot row ---------- */
+function rowOf72(grid, kind){ const nm = RK(kind).name;
+  return [...grid.querySelectorAll(':scope > .ar47')].find(c => c.textContent.trim().startsWith(nm)) || [...grid.querySelectorAll(':scope > .ar47')].find(c => c.textContent.includes(nm)); }
+{ const _oup72 = openUnitPanel; openUnitPanel = function(kind){ const r = _oup72(kind);
+  try { const el = $('modalBody'); if (!el) return r; const grid = el.querySelector('.pgrid') || el;
+    for (const [kk, rk] of [['water', 'water'], ['poop', 'poop']]){ const card = grid.querySelector(`:scope > .rep71[data-kind="${rk}"]`); if (!card) continue;
+      const row = rowOf72(grid, kk); if (row && row.nextElementSibling !== card) row.after(card); }
+  } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 4. robot status: worked time, why it is idle ---------- */
+const dk72 = t => dayKeyLocal(t);
+{ const _su72 = stepUnit; stepUnit = function(kind, u, dt, t, want, occ){
+  if (!u || !unitTier(kind, u)) return _su72(kind, u, dt, t, want, occ);
+  const full = unitFull(kind, u), pct = ST236.idleTopUpPct ?? .95;
+  let r;
+  // an idle robot that is (almost) full does not take a charger slot (it used to sit there "charging" all night)
+  if (!want && !u.mustFull && u.batt >= full * pct && u.batt < full){ const b = u.batt; u.batt = full; r = _su72(kind, u, dt, t, want, occ); if (u.batt === full) u.batt = b; }
+  else r = _su72(kind, u, dt, t, want, occ);
+  if (r){ const d = dk72(t); if (!u.wd72 || u.wd72.d !== d) u.wd72 = { d, s: 0 }; u.wd72.s += dt; }
+  return r; }; }
+// what a walking robot could do on its own island right now
+function jobScan72(kind, u){
+  const home = workerHome(kind, u); if (!home) return null; const M = S.maps[home.mi]; if (!M) return null;
+  const isJob = (M2, k) => kind === 'feed' ? !!feedTarget65(M2, k) : kind === 'poop' ? !!(M2.tiles[k] && M2.tiles[k].t === 'poop') : false;
+  let here = 0, away = 0; S.maps.forEach((M2, mi) => { for (const k in M2.tiles) if (isJob(M2, k)){ if (mi === home.mi) here++; else away++; } });
+  const W = WS[wKey(kind, u)] || { mi: home.mi, x: home.x, y: home.y }; let reach = false;
+  if (here){ try { reach = !!job59(kind, { ...W, mi: home.mi, x: W.mi === home.mi ? W.x : home.x, y: W.mi === home.mi ? W.y : home.y }, M, wKey(kind, u)); } catch(e){} }
+  return { here, away, reach, W: WS[wKey(kind, u)] }; }
+function idleWhy72(kind, u){
+  const what = { feed: '餓的動物和魚', poop: '大便' }[kind];
+  if (kind === 'feed' || kind === 'poop'){ const j = jobScan72(kind, u); if (!j) return '';
+    if (kind === 'feed' && j.W && j.W.nofeed65 && Date.now() - j.W.nofeed65 < 120e3) return '沒飼料（倉庫不夠，可勾「自動用金幣買飼料」）';
+    if (!j.here && j.away) return `待命：${what}在別座島（只管充電站那座島）`;
+    if (j.here && !j.reach) return `走不到：${kind === 'feed' ? '動物或魚池旁邊' : '大便那格'}沒有可以走的路`;
+    if (!j.here) return `待命：沒有${what}`;
+    return ''; }
+  if (kind === 'trashbot' || kind === 'recyclebot') return '待命：等垃圾車來的時候搬';
+  return '待命：現在沒有工作'; }
+function workLine72(kind, u){
+  const tr = unitTier(kind, u); if (!tr) return ''; const full = tr.workHours * 3600, used = Math.max(0, full - u.batt), d = u.wd72 && u.wd72.d === dk72(Date.now()) ? u.wd72.s : 0;
+  return `<span class="wk72">這次充電後已工作 ${fmtDur(used)}／${fmtHours(tr.workHours)} · 今天累計 ${fmtDur(d)}</span>`; }
+{ const _ut72 = unitText; unitText = function(kind, u){ let s = _ut72(kind, u);
+  try { if (!u || u.on === false || !unitTier(kind, u)) return s;
+    const night = isNightAt(Date.now()), sl = slotByKey(u.park) || slotByKey(u.home), solar = sl && (sl.T.src || 'solar') === 'solar';
+    if (u.state === 'charge' && u.mustFull && solar && night) s = '沒電，等天亮充電（太陽能晚上不充，可在充電站改用農場電力）';
+    else if (u.state === 'idle' || u.state === 'rest' && false){ const w = idleWhy72(kind, u); if (w) s = w; }
+    else if (u.state === 'charge'){ const tr = unitTier(kind, u); s += `（${Math.round(u.batt / (tr.workHours * 3600) * 100)}%）`; }
+    return s + '<br>' + workLine72(kind, u);
+  } catch(e){ return s; } }; }
+
+/* ---------- 4. robots without a slot stand around the charger (not on top of the parked ones) ---------- */
+{ const _db72 = drawBase; drawBase = function(T, x, y, t){
+  const k = tkey(x, y), key = S.cur + '|' + k, list = RT.beside && RT.beside[key];
+  if (!list || !list.length) return _db72(T, x, y, t);
+  RT.beside[key] = []; try { _db72(T, x, y, t); } finally { RT.beside[key] = list; }
+  const { cx, cy } = center(x, y), OFF = ST236.besideOffsets || [[-46, 14], [44, 14], [-12, 28], [28, 28]];
+  list.forEach((e, j) => { if (RT.awayKeys && RT.awayKeys.has(wKey(e.kind, e.u))) return; const o = OFF[j % OFF.length]; drawParked(e, cx + o[0], cy + o[1], t); }); }; }
+
+/* ---------- 2. pool move menu: pool + lamp / lamp only / lamp to storage; the drag bubble shows the cell ---------- */
+{ const _pmo72 = poolMoveOpts62; poolMoveOpts62 = function(M, k, x, y){ const o = _pmo72(M, k, x, y);
+  if (!(M.pll && M.pll[k])) return o;
+  const one = o.find(q => q[0] === 'p62one'); if (one){ one[1] = '魚池＋燈一起移'; }
+  o.splice(one ? o.indexOf(one) + 1 : 0, 0,
+    ['p62lamp', '只移燈', 'ui_it_pool_lamp', () => { if (S.sel.tool !== 'move'){ RT.prevTool53 = S.sel.tool; setTool('move'); } RT.plmv56 = { mi: S.cur, k }; toast(`拿起${PLD56.name}，點要裝的魚池格（魚池不動）`, false, 3200); }],
+    ['p62store', '把燈收回倉庫', 'ui_tool_store', () => { storePoolLamp56(M, k); }]);
+  return o; }; }
+{ const _pm72 = poolMenu56; poolMenu56 = function(M, k, x, y, opts){
+  // the move tool's own 「搬移水底燈」 is now 「只移水底燈」
+  if (Array.isArray(opts) && M.pll && M.pll[k]) opts = opts.filter(o => !(o[0] === 'lamp' && String(o[1]).startsWith('搬移')));
+  return _pm72(M, k, x, y, opts); }; }
+{ const _os72 = objSprite; objSprite = function(M, k){ const T = M && M.tiles[k], m = RT.mv;
+  if (m && T && isPool(T) && m.o && m.o.cells && m.o.cells[0] === k){ if (T.fish && IMGSRC['ui_fish_' + T.fish]) return ['ui_fish_' + T.fish, 0]; return ['ui_tool_fishpool', 0]; }
+  return _os72(M, k); }; }
+
+/* ---------- 3. 查看田地 / 查看魚池 (new layout) ---------- */
+const STG72 = FI236.stages || [[.25, '幼苗', 'g'], [.6, '成長中', 'b'], [1, '成熟中', 'y']];
+function cropStage72(T){ const C = CFG.crops[T.crop.id]; if (T.crop.wither) return (FI236.wither || ['枯萎', 'x']);
+  const p = T.crop.prog / C.growSeconds; if (p >= 1) return FI236.ready || ['可收成', 'r']; const s = STG72.find(q => p < q[0]) || STG72[STG72.length - 1]; return [s[1], s[2]]; }
+function cellsMap72(M, cells, here){   // a tiny isometric map of the region with this cell lit
+  const ks = cells.map(pkey), xs = ks.map(([x, y]) => x - y), ys = ks.map(([x, y]) => x + y), mnX = Math.min(...xs), mxX = Math.max(...xs), mnY = Math.min(...ys), mxY = Math.max(...ys);
+  const W = 84, H = 40, sx = Math.min(10, (W - 6) / (mxX - mnX + 2)), s = Math.min(sx, (H - 4) / (mxY - mnY + 2) * 2);
+  const ox = W / 2 - (mnX + mxX) / 2 * s, oy = H / 2 - (mnY + mxY) / 2 * s / 2;
+  const poly = (x, y) => { const cx = ox + (x - y) * s, cy = oy + (x + y) * s / 2; return `${cx},${cy - s / 2} ${cx + s},${cy} ${cx},${cy + s / 2} ${cx - s},${cy}`; };
+  return `<svg class="mm72" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${ks.map(([x, y], i) => `<polygon points="${poly(x, y)}" class="${cells[i] === here ? 'on' : ''}"/>`).join('')}</svg>`; }
+function drops72(m){ const n = Math.max(0, Math.min(R.moistMaxLevel, Math.ceil((m || 0) - 1e-6))); let h = ''; for (let i = 0; i < R.moistMaxLevel; i++) h += `<i class="${i < n ? 'on' : ''}"></i>`; return `<span class="dr72" title="濕度 ${n}/${R.moistMaxLevel}">${h}</span>`; }
+// shared layout: left list of kinds, right one row per cell
+function infoPanel72(title, el, head, groups, sel, onPick){
+  const g = groups.find(q => q.id === sel) || groups[0];
+  el.innerHTML = `<p class="hd72">${head}</p>${groups.length ? `<div class="fi72"><div class="side72">${groups.map(q => `<button data-g72="${q.id}" class="${q === g ? 'on' : ''}">${q.icon}<b>${q.name}</b><small>${q.rows.length} 格</small></button>`).join('')}</div>
+    <div class="main72"><div class="top72">${g.icon}<b>${g.name}</b>${g.pill ? `<span class="pl72">${g.pill}</span>` : ''}<small>${g.desc || ''}</small></div>${g.note || ''}<div class="rows72">${g.rows.join('')}</div></div></div>` : (groups.empty || '')}`;
+  el.querySelectorAll('[data-g72]').forEach(b => b.onclick = () => onPick(b.dataset.g72));
+  paint72(el); }
+function paint72(root){ root.querySelectorAll('canvas.ic72[data-spr]').forEach(c => { const n = iconCanvas(c.dataset.spr, +c.dataset.f || 0, 80); c.width = n.width; c.height = n.height; c.getContext('2d').drawImage(n, 0, 0); }); }
+function fieldInfo72(M, k){
+  const comp = compOf(M, k, U => U && U.t === 'soil'); if (!comp.length) return;
+  const T0 = M.tiles[k], first = T0 && T0.crop ? T0.crop.id : null; let sel = first;
+  const grp = id => ((CFG.ui.cropGroups || {}).groups || []).find(g => (g.ids || []).includes(id));
+  const render = el => {
+    const crops = comp.filter(c => M.tiles[c].crop), empty = comp.filter(c => !M.tiles[c].crop && !M.tiles[c].flower).length, ready = crops.filter(c => { const T = M.tiles[c]; return !T.crop.wither && T.crop.prog >= CFG.crops[T.crop.id].growSeconds; }).length;
+    const by = new Map(); for (const c of crops){ const id = M.tiles[c].crop.id; if (!by.has(id)) by.set(id, []); by.get(id).push(c); }
+    const groups = [...by.entries()].map(([id, cells]) => { const C = CFG.crops[id], G = grp(id), ic = `<canvas data-spr="crop_${id}_mature_sway" data-f="0" class="ico ic72"></canvas>`;
+      return { id, name: C.name, icon: ic, pill: G ? G.label : '', desc: `生長 ${fmtDur(C.growSeconds)} · 售價 ${fmtN(C.sellPrice)} · 耗水 ×${C.waterUse ?? 1}`,
+        rows: cells.map((c, i) => { const T = M.tiles[c], [st, col] = cropStage72(T), C2 = CFG.crops[T.crop.id], left = T.crop.wither ? '枯萎了，用「澆水」救回來' : T.crop.prog >= C2.growSeconds ? '可以收成了' : fmtDur(cropLeft(T)) + '後';
+          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (T.crop.org ? '<span class="tg72 org">有機</span>' : '');
+          return `<div class="r72${c === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, comp, c)}<canvas data-spr="${cropSprite(T)}" data-f="0" class="ico ic72"></canvas>
+            <span class="nm72">${C2.name}<span class="st72 c-${col}">${st}</span>${tags}</span><span class="tm72">🕒 ${left}</span>${drops72(T.m)}</div>`; }) }; });
+    infoPanel72('查看田地', el, `這塊田 共有 ${comp.length} 格 · 空格 ${empty} · 種植中 ${crops.length} 格${ready ? ` · 可收成 ${ready} 格` : ''}`, groups, sel, id => { sel = id; render(el); });
+    if (!groups.length) el.insertAdjacentHTML('beforeend', '<p>這塊田還沒種東西：用「播種」選種子，點田種下去。</p>'); };
+  openModal('查看田地', null, (kk, el) => render(el)); }
+// replaces g61: same facts, the new two-column layout (picture 2)
+function poolInfo61(M, k){
+  const pk = poolOf(M, k), P = pk && M.pools[pk]; if (!P) return;
+  const mi = S.maps.indexOf(M), nr = (CFG.fishPool || {}).nightGrowthRate ?? .5, FS = FI236.fishStages || ['魚苗', '小魚', '中魚', '大魚', '成魚'];
+  const T0 = M.tiles[k]; let sel = T0 && T0.fish;
+  const render = el => {
+    const lit = litTiles[mi], night = dayPhase(Date.now()).phase === 'night';
+    const cells = P.tiles.filter(kk => M.tiles[kk]), withFish = cells.filter(kk => M.tiles[kk].fish && CFG.fish[M.tiles[kk].fish]);
+    const left = T => { const F = CFG.fish[T.fish]; if (T.stage >= F.stages) return 0; if (!(T.timer > 0)) return null; return T.timer + (F.stages - T.stage - 1) * F.stageSeconds; };
+    const hungry = withFish.filter(kk => left(M.tiles[kk]) === null).length, litN = cells.filter(kk => lit && lit.has(kk) && M.pll && M.pll[kk]).length;
+    const by = new Map(); for (const kk of withFish){ const id = M.tiles[kk].fish; if (!by.has(id)) by.set(id, []); by.get(id).push(kk); }
+    const pir = withFish.find(kk => M.tiles[kk].fish === 'piranha'), prey = withFish.filter(kk => M.tiles[kk].fish !== 'piranha').length, PIR = (CFG.fish.piranha || {}).eats;
+    const feeder = fleet('feed').length || rentActive('feed', Date.now());
+    const groups = [...by.entries()].map(([id, list]) => { const F = CFG.fish[id], ic = `<img class="ic72" src="${IMGSRC['ui_fish_' + id] || ''}" alt="">`;
+      return { id, name: F.name, icon: ic, pill: '', desc: `每階段 ${fmtDur(F.stageSeconds)} · ${F.stages} 階段 · 每格收 ${fmtN(F.harvestPerTile)}`,
+        rows: list.map((kk, i) => { const T = M.tiles[kk], v = left(T), st = T.stage >= F.stages ? '可收成' : FS[Math.min(FS.length - 1, T.stage)] || `第 ${T.stage + 1} 階段`;
+          const fed = v === null ? '<span class="fd72 no">餓了</span>' : v === 0 ? '<span class="fd72 rd">可收成</span>' : '<span class="fd72">有餵</span>';
+          const lamp = M.pll && M.pll[kk] ? `<span class="tg72 lamp">${lit && lit.has(kk) ? '燈亮' : '有燈'}</span>` : (night ? '<span class="tg72 dark">沒燈</span>' : '');
+          return `<div class="r72${kk === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, P.tiles, kk)}${ic}<span class="nm72">${F.name}<span class="st72 c-${T.stage >= F.stages ? 'r' : T.stage ? 'b' : 'g'}">${st}</span>${lamp}</span>
+            <span class="tm72">🕒 ${v === 0 ? '可以收了' : v === null ? '要餵才會長' : fmtDur(v) + '後'}</span>${fed}</div>`; }) }; });
+    let note = '';
+    if (pir && prey && PIR) note += `<p class="warn61">⚠ 混養食人魚：約 ${fmtDur(Math.max(0, PIR.everySeconds - (M.tiles[pir].eat56 || 0)))}後會吃掉一格別的魚</p>`;
+    if (night) note += `<p class="small">現在是晚上，沒燈照的格子長得慢（${Math.round(nr * 100)}%）</p>`;
+    if (hungry && feeder){ const u = fleet('feed')[0]; const w = u ? unitText('feed', u).split('<br>')[0] : ''; note += `<p class="small">餓了 ${hungry} 格 · 餵食機器人：${w}</p>`; }
+    groups.forEach(g => g.note = note);
+    groups.empty = '<p>魚池是空的：用「魚」工具選魚苗，點空格放進去（一格一種）。</p>';
+    infoPanel72('查看魚池', el, `這個魚池 共有 ${P.tiles.length} 格 · 空格 ${P.tiles.length - withFish.length} · 餓了 ${hungry} 格 · 有燈照 ${litN} 格`, groups, sel, id => { sel = id; render(el); }); };
+  openModal('查看魚池', null, (kk, el) => render(el)); }
+if (typeof HD54 === 'object'){ if (IMGSRC.ui_tab_crops && !IMGSRC.ui_hd_field72) IMGSRC.ui_hd_field72 = IMGSRC.ui_tab_crops; HD54['查看田地'] = 'field72'; }
+// open it: 收成 on a crop that is not ready yet; and from the long-press menu of a field
+{ const _act72 = act; act = function(x, y){
+  if (!S || UI.expand || RT.pass72) return _act72(x, y);
+  const M = curMap(); if (!inMap(M, x, y) || RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act72(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool;
+  if (tool === 'hand' && T && T.t === 'soil' && T.crop && !T.crop.pest && (T.crop.wither || T.crop.prog < CFG.crops[T.crop.id].growSeconds)){ fieldInfo72(M, k); return; }
+  // 6. a citrus tree with butterflies: little menu
+  if (tool === 'hand' && T && T.t === 'tree' && T.bf && T.bf.length && !treeReady(T)){ const { cx, cy } = center(x, y);
+    showPop53(cx, cy - 30, `<button data-t72="tree"><img src="${IMGSRC.ui_tab_trees || ''}" alt="">查看果樹</button><button data-t72="bf"><img src="${IMGSRC.ui_butterfly_egg || ''}" alt="">查看蝴蝶</button>`);
+    POP53.querySelectorAll('[data-t72]').forEach(b => b.onclick = () => { const w = b.dataset.t72; closePop53(); RT.pass72 = true;
+      try { if (w === 'tree'){ const bf = T.bf; T.bf = []; try { _act72(x, y); } finally { T.bf = bf; } } else _act72(x, y); } finally { RT.pass72 = false; } });
+    return; }
+  return _act72(x, y); }; }
+{ const _lp72 = lpMenu53; lpMenu53 = function(M, k, x, y, T){ const r = _lp72(M, k, x, y, T);
+  if (r && T && T.t === 'soil'){ const b = document.createElement('button'); b.innerHTML = `<img src="${IMGSRC.ui_tab_crops || ''}" alt="">查看田地`; b.onclick = () => { closePop53(); fieldInfo72(M, k); };
+    const h = POP53.querySelector('h5:last-of-type'); POP53.appendChild(b); }
+  return r; }; }
+
+/* ---------- 5. chickens walk to the field edge and peck the bugs (only on the island you are looking at) ---------- */
+RT.peck72 = {};
+// replaces g19: same rules; live on this island the bug only goes once the chicken has walked there and pecked
+function stepChickens(dt, t){
+  if (!PE || (S.player.level < (PE.startLevel || 3))) return;
+  const every = (CP.minutesPerTile || 10) * 60, night = CP.noNight !== false && isNightAt(t), live = Date.now() - t < 5000;
+  S.maps.forEach((M, mi) => {
+    let reg = null;
+    for (const k in M.tiles){ const T = M.tiles[k]; if (T.t !== 'animal' || !CP.animals.includes(T.id)) continue;
+      T.peckT = Math.min((T.peckT || 0) + dt, every * 6);
+      const key = mi + ':' + k, job = RT.peck72[key];
+      if (job && !(live && mi === S.cur && motion)){ delete RT.peck72[key]; }
+      if (T.peckT < every || night){ if (job && night) delete RT.peck72[key]; continue; }
+      if (!reg) reg = regionsFor(mi);
+      const list = chickenRegionTargets(M, mi, k, reg);
+      if (!list.length){ T.peckT = Math.min(T.peckT, every); continue; }
+      if (live && mi === S.cur && motion){   // walk there first (updateAnimals moves the chicken, then eatPeck72 finishes it)
+        if (!RT.peck72[key]){ const taken = new Set(Object.values(RT.peck72).map(j => j.kk)); const g = list.find(q => !taken.has(q.kk)) || null; if (g) RT.peck72[key] = { mi, k, kk: g.kk, t0: performance.now(), st: 'go' }; }
+        continue; }
+      let n = Math.floor(T.peckT / every); T.peckT -= n * every;
+      for (const g of list){ if (n <= 0) break; if (!g.H.pest) continue; g.H.pest = false; g.H.pestTaps = 0; n--; RT.notices.push({ kind: 'chickPest' }); }
+    }
+  });
+}
+function eatPeck72(key, J){ const M = S.maps[J.mi], T = M && M.tiles[J.k], U = M && M.tiles[J.kk], H = U && hostOf(U); delete RT.peck72[key];
+  if (!T || T.t !== 'animal') return; const every = (CP.minutesPerTile || 10) * 60; T.peckT = Math.max(0, (T.peckT || 0) - every);
+  if (H && H.pest){ H.pest = false; H.pestTaps = 0; const [x, y] = pkey(J.kk), { cx, cy } = center(x, y); floatText(cx, cy - 30, '雞把蟲吃掉了', '#2f6a3a', 10); afterAction(); } }
+function standFor72(M, reg, home, kk, from){   // nearest cell of the chicken's area that touches the field, and the path to it
+  const [fx, fy] = pkey(kk), goals = new Set([[1,0],[-1,0],[0,1],[0,-1]].map(([dx, dy]) => tkey(fx + dx, fy + dy)).filter(n => reg.get(n) === home));
+  if (!goals.size) return null; const prev = new Map([[from, null]]), q = [from];
+  for (let i = 0; i < q.length; i++){ const c = q[i]; if (goals.has(c)){ const p = []; for (let z = c; z; z = prev.get(z)) p.unshift(z); return p; }
+    const [x, y] = pkey(c); for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const n = tkey(x + dx, y + dy); if (prev.has(n) || reg.get(n) !== home) continue; prev.set(n, c); q.push(n); } }
+  return null; }
+{ const _ua72 = updateAnimals; updateAnimals = function(M, t){
+  const mi = S.cur, now = performance.now(), dt = Math.min(.1, RT.frameDt || .016), sp = CW236.tilesPerSecond || 1, peck = (CW236.peckSeconds || 2) * 1000, max = (CW236.maxSeconds || 40) * 1000;
+  for (const key in RT.peck72){ const J = RT.peck72[key]; if (J.mi !== mi) continue; const ag = RT.agents[key], T = M.tiles[J.k];
+    if (!T || !ag){ if (!T) delete RT.peck72[key]; continue; }
+    if (now - J.t0 > max){ eatPeck72(key, J); continue; }
+    const reg = regionsFor(mi), home = reg.get(J.k);
+    if (J.st === 'go'){ const at = tkey(Math.round(ag.cx), Math.round(ag.cy));
+      if (!J.path){ J.path = standFor72(M, reg, home, J.kk, at); J.i = 0; if (!J.path){ eatPeck72(key, J); continue; } }
+      const nx = J.path[Math.min(J.i + 1, J.path.length - 1)], [tx, ty] = pkey(nx);
+      if (J.i >= J.path.length - 1 && Math.hypot(ag.x - tx, ag.y - ty) < .02){ J.st = 'peck'; J.p0 = now; const [fx, fy] = pkey(J.kk); ag.flip = (fx - fy) < (ag.x - ag.y); }
+      else { const dx = tx - ag.x, dy = ty - ag.y, d = Math.hypot(dx, dy), s = sp * dt; ag.tx = null; ag.wait = 9;
+        if (d <= s){ ag.x = tx; ag.y = ty; ag.cx = tx; ag.cy = ty; J.i++; } else { ag.x += dx / d * s; ag.y += dy / d * s; ag.flip = (tx - ty) < (ag.cx - ag.cy); } } }
+    if (J.st === 'peck'){ ag.tx = null; ag.wait = 9; if (now - J.p0 >= peck){ eatPeck72(key, J); ag.wait = 1; } } }
+  return _ua72(M, t); }; }
+{ const _dan72 = drawAnimal; drawAnimal = function(T, cx, cy, t, ag){
+  const J = ag && ag.k != null && RT.peck72[S.cur + ':' + ag.k];
+  if (J && J.st === 'peck'){ const ph = (performance.now() - J.p0) / 1000, bob = Math.max(0, Math.sin(ph * 14)) * 2.2; _dan72(T, cx, cy + bob, t, ag);
+    const [x, y] = pkey(J.kk), c = center(x, y), mx = (cx + c.cx) / 2, my = (cy + c.cy) / 2; ctx.save(); ctx.fillStyle = 'rgba(120,90,40,.85)';
+    for (let i = 0; i < 4; i++){ const a = ph * 6 + i * 1.7; ctx.beginPath(); ctx.arc(mx + Math.cos(a) * 5, my - 3 - Math.abs(Math.sin(a)) * 5, 1, 0, 7); ctx.fill(); } ctx.restore(); return; }
+  return _dan72(T, cx, cy, t, ag); }; }
+
+/* ---------- 7. trucks: back hatch open while collecting, closed when landing / leaving; leave nose-out ---------- */
+const OPEN72 = (TL236.openAfterLandSeconds ?? 2) * 1000, CLOSE72 = (TL236.closeBeforeLeaveSeconds ?? 3) * 1000;
+function truckLook72(mi, t){ const R = routeState65(); if (!R || R.day !== dayKeyLocal(t)) return null;
+  if (R.phase === 'stay' && R.mi === mi){ const el = t - R.at; if (el < ARR65) return { k: 1 - el / ARR65, fly: true, open: false, out: false }; return { k: 0, fly: false, open: el >= ARR65 + OPEN72, out: false }; }
+  if ((R.phase === 'fly' || R.phase === 'out') && R.from === mi){ const el = t - R.at; if (el < CLOSE72) return { k: 0, fly: false, open: false, out: false };
+    if (el - CLOSE72 > ARR65) return null; return { k: (el - CLOSE72) / ARR65, fly: true, open: false, out: true }; }
+  return null; }
+const TRK72 = (kind, side, v) => v.open && ATLAS[`truck_${kind}_open_${side}`] ? `truck_${kind}_open_${side}` : TRK65(kind, side, v.fly);
+// replaces g65 (g66 / g70 still wrap it)
+function drawPad(P, t, now, ghost){
+  const m = padMid(P), c = center(m.x, m.y);
+  if (ghost){ ctx.save(); ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = 'rgba(120,200,255,.18)';
+    for (const [x, y] of padCells(P)){ const q = center(x, y); diamondPath(q.cx, q.cy, .96); ctx.fill(); ctx.stroke(); } ctx.restore(); }
+  drawPadBase65(P, c, ghost);
+  if (ghost) return; const v = truckLook72(P.mi, now); if (!v) return;
+  const k = v.k, [ox, oy] = OUTV34[P.side], bob = motion ? Math.sin(t * 2) * k * 1.5 : 0;
+  const bays = padBays(P).map((b, i) => ({ ...b, kind: i ? 'recycle' : 'garbage' })).sort((a, b) => (a.x + a.y) - (b.x + b.y));
+  for (const b of bays){ const q = center(b.x, b.y), fly = k * 300; spr(TRK72(b.kind, P.side, v), 0, q.cx + ox * fly * .9, q.cy + oy * fly * .45 - k * 150 + bob, v.out); }
+  if ((trashState().collectUntil || 0) > now){ const ts = truckStop(P.mi); if (ts){ const q = center(ts.x, ts.y); spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, q.cx, q.cy - 4); } }
+}
+drawTrucks = function(M, now, t){
+  const P = S.truckPad; if (P && P.mi === S.cur) return; const v = truckLook72(S.cur, now); if (!v) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), off = v.k * 420, bob = motion ? Math.sin(t * 2) * 1.5 : 0, X = RTE65.besideOffsets || [[96, -4], [76, 46]];
+  spr(TRK72('garbage', 'se', v), 0, c.cx + X[0][0] + off, c.cy + X[0][1] - off * .3 + bob, v.out);
+  spr(TRK72('recycle', 'se', v), 0, c.cx + X[1][0] + off, c.cy + X[1][1] - off * .3 - bob, v.out);
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6); };
+
+/* ---------- styles ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+.wk72{display:block;font-size:11px;opacity:.75;margin-top:1px;white-space:normal;overflow:visible;text-overflow:clip}.un47 small:has(.wk72){white-space:normal;overflow:visible;text-overflow:clip}
+.hd72{margin:0 0 8px;font-size:14px;opacity:.85}
+.fi72{display:grid;grid-template-columns:200px 1fr;gap:10px;align-items:start}
+.side72{display:flex;flex-direction:column;gap:6px}
+.side72 button{display:grid;grid-template-columns:44px 1fr;grid-template-rows:auto auto;align-items:center;column-gap:8px;text-align:left;padding:6px 8px;border-radius:12px;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.55);color:inherit;font:inherit;cursor:pointer}
+.side72 button .ic72{grid-row:1/3;width:44px;height:44px;object-fit:contain}
+.side72 button small{opacity:.7}
+.side72 button.on{border:2px solid #3a8fd8;background:rgba(80,160,240,.18)}
+.main72{border-radius:14px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.35);padding:8px;min-width:0}
+.top72{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}.top72 .ic72{width:40px;height:40px;object-fit:contain}.top72 b{font-size:17px}.top72 small{opacity:.75}
+.pl72{background:#8a5a1e;color:#fff;border-radius:999px;padding:1px 10px;font-size:12px}
+.rows72{display:flex;flex-direction:column;gap:5px}
+.r72{display:grid;grid-template-columns:28px 84px 40px minmax(90px,1fr) minmax(90px,auto) auto;align-items:center;gap:8px;padding:4px 8px;border-radius:10px;background:rgba(255,255,255,.5);border:1px solid rgba(0,0,0,.06)}
+.r72.me{outline:2px solid #f2b51c}
+.n72{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(40,80,140,.15)}
+.r72 .ic72{width:40px;height:40px;object-fit:contain}
+.mm72 polygon{fill:rgba(140,110,70,.35);stroke:rgba(80,60,30,.5);stroke-width:.6}.mm72 polygon.on{fill:#4fc3ff;stroke:#1a7fc0}
+.nm72{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.st72{border-radius:999px;padding:0 8px;font-size:11px;color:#fff}.c-g{background:#4caf50}.c-b{background:#2f8fe0}.c-y{background:#e8a317}.c-r{background:#e2456a}.c-x{background:#8a8a8a}
+.tg72{border-radius:6px;padding:0 5px;font-size:11px;background:rgba(0,0,0,.08);color:#2a2f38}.tg72.bug{background:#ffd9c2}.tg72.org{background:#d6f5c8}.tg72.lamp{background:#fff2b0}.tg72.dark{background:#d9dde6}
+.tm72{white-space:nowrap;font-variant-numeric:tabular-nums}
+.dr72{display:inline-flex;gap:2px}.dr72 i{width:10px;height:13px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#b8c4cf}.dr72 i.on{background:#3aa7f0}
+.fd72{border-radius:10px;padding:2px 10px;background:#3e9b46;color:#fff;font-size:12px;white-space:nowrap}.fd72.no{background:#d9534f}.fd72.rd{background:#e2456a}
+body.night .side72 button,body.night .main72,body.night .r72{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}
+@media (max-width:${FI236.mobileWidth || 720}px){.fi72{grid-template-columns:1fr}.side72{flex-direction:row;overflow-x:auto}.side72 button{min-width:130px}
+  .r72{grid-template-columns:24px 40px 1fr auto;grid-template-areas:"n i nm f" "n i tm f";row-gap:2px}.r72 .mm72{display:none}.r72 .n72{grid-area:n}.r72 .ic72{grid-area:i}.r72 .nm72{grid-area:nm}.r72 .tm72{grid-area:tm;font-size:12px}.r72 .dr72,.r72 .fd72{grid-area:f}}`;
+  document.head.appendChild(st); }
+
+{ const _ns72 = normalizeState; normalizeState = function(d){ const r = _ns72(d); const s = r || d; try { if (s && !s.v236) s.v236 = 1; } catch(e){} return r; }; }
+window.__farm236 = { fieldInfo: (M, k) => fieldInfo72(M, k), poolInfo: (M, k) => poolInfo61(M, k), idleWhy: idleWhy72, truckLook: truckLook72, get peck(){ return RT.peck72; }, unitText: (k, u) => unitText(k, u), openUnitPanel: k => openUnitPanel(k), act: (x, y) => act(x, y), poolMoveOpts: (M, k, x, y) => poolMoveOpts62(M, k, x, y) };
 
   })(CFG, ATLAS_JSON);
 })();
