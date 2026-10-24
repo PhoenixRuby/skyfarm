@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.31",
+  "configVersion": "2.33",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -1731,7 +1731,18 @@
     "fence_bamboo",
     "goldfish",
     "barley",
-    "spinach"
+    "spinach",
+    "flower_white",
+    "flower_yellow",
+    "anemone",
+    "tulip",
+    "lily_of_valley",
+    "bellflower",
+    "cosmos",
+    "thistle",
+    "marigold",
+    "narcissus",
+    "blue_eyed_daisy"
    ],
    "animalCap": 6,
    "fishPoolTileCap": 4,
@@ -1756,7 +1767,6 @@
     "water_tower_extra",
     "snowbot",
     "poopbot",
-    "wildflower",
     "buckwheat",
     "wellbot",
     "doll_snow",
@@ -1765,7 +1775,13 @@
     "oak",
     "street_lamp_garden",
     "shrimp",
-    "pea"
+    "pea",
+    "flower_red",
+    "flower_blue",
+    "hyacinth",
+    "forget_me_not",
+    "cyclamen",
+    "snowdrop"
    ],
    "animalCap": 8,
    "fishPoolTileCap": 4,
@@ -1815,7 +1831,14 @@
     "pool_lamp",
     "timothy",
     "mung_bean",
-    "bok_choy"
+    "bok_choy",
+    "sweet_pea",
+    "parrot_tulip",
+    "carnation",
+    "night_cereus",
+    "canna",
+    "dianthus",
+    "freesia"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1842,7 +1865,13 @@
     "rent_honey_1",
     "carp",
     "green_bean",
-    "cucumber"
+    "cucumber",
+    "calla_lily",
+    "lily",
+    "gentian",
+    "schisandra",
+    "poinsettia",
+    "hellebore"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -1871,7 +1900,9 @@
     "fence_hedge",
     "rye",
     "sweet_potato",
-    "meat_duck"
+    "meat_duck",
+    "cherry_blossom",
+    "dahlia"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1904,7 +1935,11 @@
     "crab",
     "red_bean",
     "eggplant",
-    "down_duck"
+    "down_duck",
+    "hydrangea",
+    "hibiscus",
+    "chrysanthemum",
+    "camellia"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -1928,7 +1963,10 @@
     "fence_iron",
     "street_lamp_modern",
     "daikon",
-    "mint"
+    "mint",
+    "plumeria",
+    "clematis",
+    "plum_blossom"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -1960,7 +1998,8 @@
     "street_lamp_double",
     "beet",
     "bell_pepper",
-    "meat_goose"
+    "meat_goose",
+    "moth_orchid"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -3340,6 +3379,26 @@
    "name": "鵝肉",
    "category": "meat",
    "sellPrice": 1050
+  },
+  "honey_spring": {
+   "name": "春花蜜",
+   "category": "honey",
+   "sellPrice": 60
+  },
+  "honey_summer": {
+   "name": "夏花蜜",
+   "category": "honey",
+   "sellPrice": 65
+  },
+  "honey_autumn": {
+   "name": "秋花蜜",
+   "category": "honey",
+   "sellPrice": 70
+  },
+  "honey_winter": {
+   "name": "冬花蜜",
+   "category": "honey",
+   "sellPrice": 80
   }
  },
  "feedShop": {
@@ -5720,7 +5779,12 @@
    "blooms": 1,
    "regrowSeconds": null,
    "honey": "honey_rapeseed",
-   "waterUse": 1.0
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    5
+   ],
+   "season": "spring"
   },
   "milk_vetch": {
    "name": "紫雲英",
@@ -5730,7 +5794,12 @@
    "blooms": 1,
    "regrowSeconds": null,
    "honey": "honey_vetch",
-   "waterUse": 1.0
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    4
+   ],
+   "season": "spring"
   },
   "wildflower": {
    "name": "野花",
@@ -5740,7 +5809,10 @@
    "blooms": 4,
    "regrowSeconds": 1800,
    "honey": "honey_hundred",
-   "waterUse": 1.0
+   "waterUse": 1.0,
+   "hidden": true,
+   "migrateTo": "flower_white",
+   "note": "v2.32：野花拆成白／紅／黃／藍花；不再出現在選項列，舊存檔田裡的野花變白花（進度、剩餘次數不變）"
   },
   "buckwheat": {
    "name": "蕎麥花",
@@ -5750,7 +5822,12 @@
    "blooms": 1,
    "regrowSeconds": null,
    "honey": "honey_buckwheat",
-   "waterUse": 1.0
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    9
+   ],
+   "season": "autumn"
   },
   "lavender": {
    "name": "薰衣草",
@@ -5760,7 +5837,12 @@
    "blooms": 6,
    "regrowSeconds": 3600,
    "honey": "honey_lavender",
-   "waterUse": 0.75
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    4
+   ],
+   "season": "spring"
   },
   "rose": {
    "name": "玫瑰",
@@ -5770,7 +5852,604 @@
    "blooms": 8,
    "regrowSeconds": 7200,
    "honey": "honey_rose",
-   "waterUse": 1.0
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    5
+   ],
+   "season": "spring"
+  },
+  "flower_white": {
+   "name": "白花",
+   "seedCost": 20,
+   "growSeconds": 1800,
+   "nectar": 3,
+   "blooms": 4,
+   "regrowSeconds": 1800,
+   "honey": "honey_hundred",
+   "waterUse": 1.0,
+   "group": "allYear",
+   "order": 0,
+   "color": "#ffffff"
+  },
+  "flower_yellow": {
+   "name": "黃花",
+   "seedCost": 20,
+   "growSeconds": 1800,
+   "nectar": 3,
+   "blooms": 4,
+   "regrowSeconds": 1800,
+   "honey": "honey_hundred",
+   "waterUse": 1.0,
+   "group": "allYear",
+   "order": 1,
+   "color": "#ffd23a"
+  },
+  "flower_red": {
+   "name": "紅花",
+   "seedCost": 20,
+   "growSeconds": 1800,
+   "nectar": 3,
+   "blooms": 4,
+   "regrowSeconds": 1800,
+   "honey": "honey_hundred",
+   "waterUse": 1.0,
+   "group": "allYear",
+   "order": 2,
+   "color": "#e2483d"
+  },
+  "flower_blue": {
+   "name": "藍花",
+   "seedCost": 20,
+   "growSeconds": 1800,
+   "nectar": 3,
+   "blooms": 4,
+   "regrowSeconds": 1800,
+   "honey": "honey_hundred",
+   "waterUse": 1.0,
+   "group": "allYear",
+   "order": 3,
+   "color": "#4f7fd6"
+  },
+  "cherry_blossom": {
+   "name": "櫻花",
+   "seedCost": 150,
+   "growSeconds": 14400,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    3
+   ],
+   "season": "spring"
+  },
+  "anemone": {
+   "name": "銀蓮花",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    3
+   ],
+   "season": "spring"
+  },
+  "hyacinth": {
+   "name": "風信子",
+   "seedCost": 25,
+   "growSeconds": 1800,
+   "nectar": 6,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    3
+   ],
+   "season": "spring"
+  },
+  "tulip": {
+   "name": "鬱金香",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    4
+   ],
+   "season": "spring"
+  },
+  "sweet_pea": {
+   "name": "香豌豆",
+   "seedCost": 50,
+   "growSeconds": 3600,
+   "nectar": 3,
+   "blooms": 5,
+   "regrowSeconds": 2700,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    4
+   ],
+   "season": "spring"
+  },
+  "parrot_tulip": {
+   "name": "鸚鵡鬱金香",
+   "seedCost": 35,
+   "growSeconds": 2400,
+   "nectar": 7,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    4
+   ],
+   "season": "spring"
+  },
+  "carnation": {
+   "name": "康乃馨",
+   "seedCost": 60,
+   "growSeconds": 5400,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    5
+   ],
+   "season": "spring"
+  },
+  "lily_of_valley": {
+   "name": "鈴蘭",
+   "seedCost": 12,
+   "growSeconds": 600,
+   "nectar": 4,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    5
+   ],
+   "season": "spring"
+  },
+  "forget_me_not": {
+   "name": "勿忘我",
+   "seedCost": 20,
+   "growSeconds": 1200,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_spring",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    5
+   ],
+   "season": "spring"
+  },
+  "hydrangea": {
+   "name": "繡球花",
+   "seedCost": 160,
+   "growSeconds": 14400,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_summer",
+   "waterUse": 1.25,
+   "group": "month",
+   "months": [
+    6
+   ],
+   "season": "summer"
+  },
+  "calla_lily": {
+   "name": "海芋",
+   "seedCost": 70,
+   "growSeconds": 7200,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_summer",
+   "waterUse": 1.25,
+   "group": "month",
+   "months": [
+    6
+   ],
+   "season": "summer"
+  },
+  "bellflower": {
+   "name": "風鈴草",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_summer",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    6
+   ],
+   "season": "summer"
+  },
+  "lily": {
+   "name": "百合",
+   "seedCost": 80,
+   "growSeconds": 7200,
+   "nectar": 4,
+   "blooms": 6,
+   "regrowSeconds": 3600,
+   "honey": "honey_summer",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    7
+   ],
+   "season": "summer"
+  },
+  "plumeria": {
+   "name": "雞蛋花",
+   "seedCost": 180,
+   "growSeconds": 18000,
+   "nectar": 5,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_summer",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    7
+   ],
+   "season": "summer"
+  },
+  "night_cereus": {
+   "name": "曇花",
+   "seedCost": 40,
+   "growSeconds": 3600,
+   "nectar": 10,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_summer",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    7
+   ],
+   "season": "summer"
+  },
+  "hibiscus": {
+   "name": "扶桑花",
+   "seedCost": 150,
+   "growSeconds": 14400,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_summer",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    8
+   ],
+   "season": "summer"
+  },
+  "canna": {
+   "name": "美人蕉",
+   "seedCost": 50,
+   "growSeconds": 3600,
+   "nectar": 3,
+   "blooms": 5,
+   "regrowSeconds": 2700,
+   "honey": "honey_summer",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    8
+   ],
+   "season": "summer"
+  },
+  "cosmos": {
+   "name": "大波斯菊",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_autumn",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    9
+   ],
+   "season": "autumn"
+  },
+  "dianthus": {
+   "name": "石竹",
+   "seedCost": 50,
+   "growSeconds": 3600,
+   "nectar": 3,
+   "blooms": 5,
+   "regrowSeconds": 2700,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    9
+   ],
+   "season": "autumn"
+  },
+  "dahlia": {
+   "name": "大麗花",
+   "seedCost": 90,
+   "growSeconds": 7200,
+   "nectar": 4,
+   "blooms": 6,
+   "regrowSeconds": 3600,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    9
+   ],
+   "season": "autumn"
+  },
+  "gentian": {
+   "name": "龍膽",
+   "seedCost": 70,
+   "growSeconds": 5400,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    10
+   ],
+   "season": "autumn"
+  },
+  "chrysanthemum": {
+   "name": "菊花",
+   "seedCost": 140,
+   "growSeconds": 10800,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 5400,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    10
+   ],
+   "season": "autumn"
+  },
+  "thistle": {
+   "name": "薊花",
+   "seedCost": 12,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_autumn",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    10
+   ],
+   "season": "autumn"
+  },
+  "clematis": {
+   "name": "鐵線蓮",
+   "seedCost": 180,
+   "growSeconds": 18000,
+   "nectar": 5,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    11
+   ],
+   "season": "autumn"
+  },
+  "marigold": {
+   "name": "萬壽菊",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_autumn",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    11
+   ],
+   "season": "autumn"
+  },
+  "schisandra": {
+   "name": "五味子",
+   "seedCost": 70,
+   "growSeconds": 5400,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_autumn",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    11
+   ],
+   "season": "autumn"
+  },
+  "poinsettia": {
+   "name": "一品紅",
+   "seedCost": 80,
+   "growSeconds": 7200,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_winter",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    12
+   ],
+   "season": "winter"
+  },
+  "cyclamen": {
+   "name": "仙客來",
+   "seedCost": 25,
+   "growSeconds": 1800,
+   "nectar": 6,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_winter",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    12
+   ],
+   "season": "winter"
+  },
+  "moth_orchid": {
+   "name": "蝴蝶蘭",
+   "seedCost": 220,
+   "growSeconds": 21600,
+   "nectar": 5,
+   "blooms": 10,
+   "regrowSeconds": 10800,
+   "honey": "honey_winter",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    12
+   ],
+   "season": "winter"
+  },
+  "camellia": {
+   "name": "山茶花",
+   "seedCost": 160,
+   "growSeconds": 14400,
+   "nectar": 4,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    1
+   ],
+   "season": "winter"
+  },
+  "narcissus": {
+   "name": "水仙花",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    1
+   ],
+   "season": "winter"
+  },
+  "snowdrop": {
+   "name": "雪花蓮",
+   "seedCost": 20,
+   "growSeconds": 1200,
+   "nectar": 6,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    1
+   ],
+   "season": "winter"
+  },
+  "hellebore": {
+   "name": "聖誕玫瑰",
+   "seedCost": 70,
+   "growSeconds": 5400,
+   "nectar": 4,
+   "blooms": 5,
+   "regrowSeconds": 3600,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    1
+   ],
+   "season": "winter"
+  },
+  "plum_blossom": {
+   "name": "梅花",
+   "seedCost": 170,
+   "growSeconds": 18000,
+   "nectar": 5,
+   "blooms": 8,
+   "regrowSeconds": 7200,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    2
+   ],
+   "season": "winter"
+  },
+  "blue_eyed_daisy": {
+   "name": "藍眼菊",
+   "seedCost": 15,
+   "growSeconds": 900,
+   "nectar": 5,
+   "blooms": 1,
+   "regrowSeconds": null,
+   "honey": "honey_winter",
+   "waterUse": 0.75,
+   "group": "month",
+   "months": [
+    2
+   ],
+   "season": "winter"
+  },
+  "freesia": {
+   "name": "小蒼蘭",
+   "seedCost": 50,
+   "growSeconds": 3600,
+   "nectar": 3,
+   "blooms": 5,
+   "regrowSeconds": 2700,
+   "honey": "honey_winter",
+   "waterUse": 1.0,
+   "group": "month",
+   "months": [
+    2
+   ],
+   "season": "winter"
   }
  },
  "flowerRules": {
@@ -5784,7 +6463,33 @@
   "seedTabs": [
    "crops",
    "flowers"
-  ]
+  ],
+  "season": {
+   "monthSource": "farmLocal",
+   "southShiftMonths": 6,
+   "keepAfterMonth": true,
+   "snow": "sameAsCrops",
+   "note": "v2.32：group=month 的花只有 months 裡的月份能種（農場當地日期；南半球月份 +6）；種下後跨月照常長、開、採完才謝。下雪照一般戶外作物（長 30%）"
+  },
+  "tray": {
+   "order": [
+    "facilities",
+    "allYear",
+    "month",
+    "nextMonth"
+   ],
+   "showNextMonth": true,
+   "nextLabel": "{m} 月開放",
+   "allYearLabel": "全年",
+   "monthLabel": "{m} 月限定",
+   "leftLabel": "本月還剩 {n} 天",
+   "expiredToast": "{name} 是 {m} 月的花，這個月不能種了",
+   "note": "v2.32：花苗分頁＝設施 → 全年 4 色 → 本月的花（依解鎖等級）→ 下個月的花（灰色、寫「4 月開放」、不能選）"
+  },
+  "codex": {
+   "groupBy": "month",
+   "note": "v2.32：圖鑑花苗分頁依月份分組（全年、1 月…12 月），本月那組標「本月」"
+  }
  },
  "bees": {
   "hive": "beehive",
@@ -6740,7 +7445,8 @@
       "sugarcane",
       "cotton",
       "tea",
-      "coffee"
+      "coffee",
+      "sunflower"
      ]
     },
     {
@@ -6756,10 +7462,8 @@
      ]
     }
    ],
-   "ungrouped": [
-    "sunflower"
-   ],
-   "note": "播種 → 作物分頁裡再分 9 類（照 ids 順序排）；向日葵暫時放在最後一類之外的「其他」，下一階段移到花苗"
+   "ungrouped": [],
+   "note": "播種 → 作物分頁裡再分 9 類（照 ids 順序排）；v2.32 向日葵併入經濟作物，沒有「其他」分類"
   },
   "worldClocks": {
    "cities": [
@@ -6783,6 +7487,21 @@
    "fill": "#7ee36a",
    "track": "#2f6e33",
    "note": "v2.31：抬頭等級圓圈外的經驗環，從正上方順時針，亮綠＝這一級已得的經驗比例"
+  },
+  "snapshot": {
+   "buttonPos": "aboveZoomIn",
+   "lib": "lib/html-to-image.min.js",
+   "libVersion": "1.11.13",
+   "fileSnapDir": "snap/",
+   "pixelRatioMax": 2,
+   "islandPad": 24,
+   "alphaCut": 64,
+   "flashMs": 200,
+   "fileName": "浮島農場_{island}_{date}-{time}",
+   "fullSuffix": "_全畫面",
+   "defaultMode": "island",
+   "defaultBg": "transparent",
+   "note": "v2.33：拍照。全畫面＝html-to-image 把整頁轉 PNG（倍率最多 pixelRatioMax）；只拍浮島＝遊戲另外畫一張目前畫面（不畫天空、提示泡泡、游標框、拿著的東西、流星），只留浮島的像素（alpha < alphaCut 的當背景），四周留 islandPad；背景選「天空」時同一範圍保留天空。雙擊版（file://）的圖從 fileSnapDir 的 data: 網址載入，畫面才能輸出"
   }
  },
  "droneWatering": {
@@ -8489,7 +9208,8 @@
     "group": "昆蟲",
     "stat": "honeyAll",
     "tiers": null,
-    "desc": "收過全部 7 種蜂蜜"
+    "desc": "收過全部 11 種蜂蜜",
+    "keepIfEarned": true
    },
    {
     "id": "butterfly",
@@ -9756,7 +10476,8 @@
    "longPressMs": 500,
    "note": "v2.31：浮島切換鈕和 ☰ 一樣大、放在 ☰ 正下方（gap＝間距像素），下面一行小字是目前這座島的名字（nameGap）；點開是兩欄卡片（只列已有的島），點卡片換島、長按或右鍵改名；取代 v2.28 的小地圖",
    "gap": 8,
-   "nameGap": 3
+   "nameGap": 3,
+   "showWithOneIsland": true
   }
  },
  "performance": {

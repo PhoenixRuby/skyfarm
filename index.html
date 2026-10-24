@@ -14103,6 +14103,249 @@ hscroll67(document.getElementById('cgrp62')); hscroll67(document.getElementById(
 window.__farm231 = { farmTZ67, locHM67, locMidnight67, tzParts67, wmLonLat67, openSwitcher67, closeSwitcher67, affine67, islandEdge67, drawPadBase65: (...a) => drawPadBase65(...a), drawUnderside: M => drawUnderside(M), worldClockList67 };
 { const _ns67 = normalizeState; normalizeState = function(d){ const r = _ns67(d); const s = r || d; if (s) s.v231 = 1; return r; }; }
 
+/* ===== 68. v2.32: flowers by month (全年 4 色＋當月花、下個月預告), 四季花蜜, sunflower is a 經濟作物 (config only)
+   v2.33: 遊戲畫面快照 (全畫面 via html-to-image / 只拍浮島 drawn by the game), 📷 above ＋, zoom column on desktop too,
+          island switcher with one island, file:// sprites through data: URLs (sprites stay exportable) ===== */
+const FR68 = CFG.flowerRules || {}, FSE68 = FR68.season || {}, FTR68 = FR68.tray || {}, SNAPC68 = (CFG.ui && CFG.ui.snapshot) || {};
+const fmt68 = (s, o) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => o[k] != null ? o[k] : m);
+
+/* ---------- 1. the farm's month (local date; southern hemisphere shifted) ---------- */
+function farmParts68(ms){ let p = null; try { p = tzParts67(ms || Date.now(), farmTZ67()); } catch(e){}
+  if (!p || !p.mo){ const d = new Date(ms || Date.now()); p = { y: d.getFullYear(), mo: d.getMonth() + 1, d: d.getDate(), h: d.getHours(), mi: d.getMinutes() }; } return p; }
+const south68 = () => { try { return getLatLon().lat < 0; } catch(e){ return false; } };
+const shift68 = () => south68() ? (FSE68.southShiftMonths ?? 6) : 0;
+const wrapM68 = m => ((m - 1) % 12 + 12) % 12 + 1;
+// "north" month: the month the flower table is written in
+const farmMonth68 = ms => wrapM68(farmParts68(ms).mo + shift68());
+// what the player sees: the table month moved into the farm's own calendar
+const localMonthOf68 = mN => wrapM68(mN - shift68());
+function daysLeft68(ms){ const p = farmParts68(ms); return new Date(Date.UTC(p.y, p.mo, 0)).getUTCDate() - p.d + 1; }
+// 'now' | 'next' | 'off' | 'hidden'
+function flowerAvail68(id, ms){ const D = FL[id]; if (!D || D.hidden) return 'hidden'; if (D.group !== 'month' || !D.months) return 'now';
+  const m = farmMonth68(ms); if (D.months.includes(m)) return 'now'; if (D.months.includes(wrapM68(m + 1))) return 'next'; return 'off'; }
+const flMonthLabel68 = id => { const D = FL[id]; return D && D.months ? localMonthOf68(D.months[0]) : null; };
+window.__farm232 = Object.assign(window.__farm232 || {}, { farmMonth68, flowerAvail68, localMonthOf68, daysLeft68 });
+
+/* ---------- 2. honey: 四季花蜜 ---------- */
+for (const id of Object.keys(CFG.items)) if (CFG.items[id].category === 'honey' && !(id in HONEY_KEY)){ HONEY_KEY[id] = id.replace(/^honey_/, ''); ITEM_ICON[id] = 'ui_' + id; if (!HONEY_ORDER.includes(id)) HONEY_ORDER.push(id); }
+
+/* ---------- 3. snow on flowers (batch40 snow_flower_*) ---------- */
+if (!SNOWPFX62.includes('flower_')) SNOWPFX62.push('flower_');
+
+/* ---------- 4. planting: only flowers of this month ---------- */
+{ const _pf68 = plantFlower; plantFlower = function(T, cx, cy){ const id = S.sel.seed, a = flowerAvail68(id);
+  if (a !== 'now'){ const D = FL[id]; toast(a === 'hidden' ? '這種花已經沒有在賣了' : fmt68(FTR68.expiredToast || '{name} 是 {m} 月的花，這個月不能種了', { name: D ? D.name : id, m: flMonthLabel68(id) })); return; }
+  return _pf68(T, cx, cy); }; }
+
+/* ---------- 5. seed tray · 花苗: 全年 → 本月 → 下個月 ---------- */
+function flowerTray68(){
+  const tray = $('tray'); if (!tray) return;
+  const items = [...tray.querySelectorAll('.item')].filter(el => FL[el.dataset.id]); if (!items.length) return;
+  tray.querySelectorAll('.grp68').forEach(n => n.remove());
+  const m = farmMonth68(), lm = localMonthOf68(m), left = daysLeft68();
+  const groups = { allYear: [], now: [], next: [] };
+  for (const el of items){ const id = el.dataset.id, D = FL[id], a = flowerAvail68(id);
+    if (a === 'hidden' || a === 'off' || (a === 'next' && FTR68.showNextMonth === false)){ el.remove(); continue; }
+    el.querySelectorAll('.mo68').forEach(n => n.remove());
+    const tag = document.createElement('span'); tag.className = 'mo68';   // a span, so the cards' <small> lines keep their order
+    if (D.group !== 'month'){ tag.textContent = FTR68.allYearLabel || '全年'; groups.allYear.push(el); }
+    else if (a === 'now'){ tag.textContent = fmt68(FTR68.monthLabel || '{m} 月限定', { m: lm }); groups.now.push(el); }
+    else { tag.textContent = fmt68(FTR68.nextLabel || '{m} 月開放', { m: wrapM68(lm + 1) }); el.classList.add('soon68'); el.classList.remove('sel'); groups.next.push(el);
+      if (!el.dataset.soon68){ el.dataset.soon68 = 1; el.addEventListener('click', ev => { ev.stopImmediatePropagation(); ev.preventDefault(); toast(`${D.name}：${fmt68(FTR68.nextLabel || '{m} 月開放', { m: wrapM68(lm + 1) })}，現在還不能種`); }, true); } }
+    el.insertBefore(tag, el.querySelector('b')); }
+  const lv = el => UNLOCK[el.dataset.id] || 1, ord = el => FL[el.dataset.id].order ?? 0;
+  groups.allYear.sort((a, b) => ord(a) - ord(b)); groups.now.sort((a, b) => lv(a) - lv(b)); groups.next.sort((a, b) => lv(a) - lv(b));
+  const head = (icon, text, sub) => { const d = document.createElement('div'); d.className = 'grp68'; d.innerHTML = `${icon ? `<img src="${IMGSRC[icon] || ''}" alt="">` : ''}<b>${text}</b>${sub ? `<small>${sub}</small>` : ''}`; return d; };
+  if (groups.allYear.length){ tray.appendChild(head('ui_tab_flowers_all', FTR68.allYearLabel || '全年')); groups.allYear.forEach(el => tray.appendChild(el)); }
+  if (groups.now.length){ tray.appendChild(head('ui_tab_flowers_month', `${lm} 月`, fmt68(FTR68.leftLabel || '本月還剩 {n} 天', { n: left }))); groups.now.forEach(el => tray.appendChild(el)); }
+  if (groups.next.length){ tray.appendChild(head('ui_tab_flowers_month', `${wrapM68(lm + 1)} 月`, '預告')); groups.next.forEach(el => tray.appendChild(el)); }
+}
+{ const _ut68 = UIbuildTray; UIbuildTray = function(...a){
+  // a flower that is not on sale this month can't stay selected
+  if (S && S.sel && S.sel.tool === 'seed' && FL[S.sel.seed] && flowerAvail68(S.sel.seed) !== 'now'){ const old = S.sel.seed, D = FL[old];
+    const next = Object.keys(FL).find(id => flowerAvail68(id) === 'now' && isUnlocked(id)); S.sel.seed = next || 'wheat'; if (!next) S.sel.seedTab = 'crops';
+    if (D && !D.hidden && RT.exp68 !== old){ RT.exp68 = old; setTimeout(() => toast(fmt68(FTR68.expiredToast || '{name} 是 {m} 月的花，這個月不能種了', { name: D.name, m: flMonthLabel68(old) })), 0); } }
+  const r = _ut68(...a);
+  try { if (S && S.sel.tool === 'seed') flowerTray68(); } catch(e){ console.warn(e); }
+  return r; }; }
+// a new month while the flower tab is open: redraw once
+RT.mon68 = 0; setInterval(() => { try { if (!S) return; const m = farmMonth68(); if (RT.mon68 && RT.mon68 !== m && S.sel.tool === 'seed') UIbuildTray(); RT.mon68 = m; } catch(e){} }, 30e3);
+{ const ts = TOOLS.find(t => t.id === 'seed'), _hs68 = ts.hint; ts.hint = () => { const h = _hs68(), D = FL[S.sel.seed];
+  if (D && D.group === 'month' && S.sel.seedTab !== 'facility' && flowerAvail68(S.sel.seed) === 'now') return `${h} · ${fmt68(FTR68.monthLabel || '{m} 月限定', { m: flMonthLabel68(S.sel.seed) })} · ${fmt68(FTR68.leftLabel || '本月還剩 {n} 天', { n: daysLeft68() })}`;
+  return h; }; }
+
+/* ---------- 6. 圖鑑 · 花苗 by month (replaces g38) ---------- */
+function bookFlowers(el){
+  const icon = id => { const [n, f] = itemSprite('flower', id); return n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : ''; };
+  const m = farmMonth68(), lm = localMonthOf68(m), ids = Object.keys(FL).filter(id => !FL[id].hidden);
+  const row = id => { const D = FL[id]; return { cls: (isUnlocked(id) ? '' : 'locked') + (id === RT.bookFocus ? ' cur' : ''),
+    cells: [icon(id), D.name, lockCell(id), D.seedCost, fmtDur(D.growSeconds), D.nectar, D.blooms, D.regrowSeconds ? fmtDur(D.regrowSeconds) : '—', flLife(D), itemName(D.honey), flPrice(D), fmtN(flLife(D) * flPrice(D)), D.waterUse || 1, wetHours(D.waterUse || 1), flAfter(D)] }; };
+  const head = [H(''), H('花苗'), H('解鎖'), H('花苗價', 1), H('開花'), H('每次花蜜', 1), H('可採次數', 1), H('再開花'), H('一生產蜜', 1), H('蜂蜜'), H('蜜價', 1), H('一生蜜值', 1), H('耗水倍率', 1), H('全濕可撐'), H('採完後')];
+  let html = `<p>花種在開墾過的田，要澆水；花不能收成、不能賣，專門給蜂箱範圍內的蜜蜂採。蜜蜂採一份花蜜＝蜂箱多 1 罐這種花的蜂蜜，用「收成」點蜂箱或採蜜機器人收進倉庫。一次性的花採完就謝，田變回空田（仍是開墾過的），只能重種花苗；多次的花採完一輪進「等再開」，次數用完才謝。乾的時候長得慢；開花後乾超過 1 小時，花蜜只剩一半。花不長蟲、不分有機。不想要的花用「剷除」，田變空田，不退費。</p>
+    <p><b>全年</b>的花隨時能種；<b>當月</b>的花只有那個月能種（照農場所在地的日期${south68() ? '，南半球月份錯開 6 個月' : ''}），種下去之後跨月也會照常開、採完才謝。新的花依季節產春、夏、秋、冬花蜜。</p>`;
+  const all = ids.filter(id => FL[id].group !== 'month'); if (all.length) html += `<h3>全年</h3>` + tbl(head, all.map(row));
+  for (let i = 0; i < 12; i++){ const mm = wrapM68(lm + i), mN = wrapM68(mm + shift68()), l = ids.filter(id => FL[id].months && FL[id].months.includes(mN)); if (!l.length) continue;
+    html += `<h3>${mm} 月${i === 0 ? ' <span class="pill ok">本月</span>' : i === 1 ? ' <span class="pill">下個月</span>' : ''}</h3>` + tbl(head, l.sort((a, b) => (UNLOCK[a] || 1) - (UNLOCK[b] || 1)).map(row)); }
+  el.innerHTML = html; paintIcons(el); }
+
+/* ---------- 7. save upgrade: 野花 → 白花 ---------- */
+{ const _ns68 = normalizeState; normalizeState = function(d){ const r = _ns68(d); const s = r || d;
+  try { if (s && !s.v232){ s.v232 = 1; const to = (FL.wildflower && FL.wildflower.migrateTo) || 'flower_white';
+      for (const M of s.maps || []) for (const k in M.tiles || {}){ const T = M.tiles[k]; if (T && T.flower && T.flower.id === 'wildflower' && FL[to]) T.flower.id = to; }
+      if (s.sel && s.sel.seed === 'wildflower') s.sel.seed = to; }
+    if (s && !s.v233){ s.v233 = 1; s.settings = s.settings || {}; s.settings.snap = Object.assign({ mode: SNAPC68.defaultMode || 'island', bg: SNAPC68.defaultBg || 'transparent' }, s.settings.snap || {}); } } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 8. island switcher also with one island (replaces g67) ---------- */
+function drawMini63(force){
+  MINI63.hidden = true; MINIB63.hidden = true;
+  const show = !!S; ISW67.hidden = !show; ISWN67.hidden = !show; if (!show){ ISP67.hidden = true; return; }
+  const hb = $('hamb'), ar = APP.getBoundingClientRect(), hr = hb && hb.offsetParent ? hb.getBoundingClientRect() : null, B = Math.round(hr ? hr.width : (SWC67.button || 44));
+  if (hr){ ISW67.style.top = Math.round(hr.bottom - ar.top + (SWC67.gap ?? 8)) + 'px'; ISW67.style.right = Math.round(ar.right - hr.right) + 'px'; } else miniPlace63(ISW67, B);
+  ISW67.style.width = B + 'px'; ISW67.style.height = B + 'px';
+  { const nm = islName63(S.cur); if (ISWN67.textContent !== nm) ISWN67.textContent = nm; const top = parseFloat(ISW67.style.top) || 0, right = parseFloat(ISW67.style.right) || 12;
+    ISWN67.style.top = (top + B + (SWC67.nameGap ?? 3)) + 'px'; ISWN67.style.left = ((APP.clientWidth || innerWidth) - right - B / 2) + 'px'; }
+  fixStatus67();
+  const snow = !!(S.snow && S.snow.cover), sig = JSON.stringify([S.cur, B, snow, curMap().blocks, Object.keys(curMap().tiles).length, Math.floor(Date.now() / 5000)]);
+  if (force || sig !== RT.isw67.sig){ RT.isw67.sig = sig; const c = ISW67.querySelector('canvas'), dp = 2, w = B - 6, h = B - 6;
+    c.width = w * dp; c.height = h * dp; c.style.width = w + 'px'; c.style.height = h + 'px'; const g = c.getContext('2d'); g.setTransform(dp, 0, 0, dp, 0, 0); g.clearRect(0, 0, w, h);
+    drawFit67(g, islThumbCv63(S.cur, w * 2, h * 2), w, h, .86); }
+  if (!ISP67.hidden) placePanel67();
+}
+
+/* ---------- 9. file://: sprites come in as data: URLs, so the canvas can still be exported (replaces g64) ---------- */
+const SNAPD68 = { data: {}, wait: {} }, isFile68 = location.protocol === 'file:';
+window.__snap72 = (k, u) => { SNAPD68.data[k] = u; const w = SNAPD68.wait[k]; if (w){ delete SNAPD68.wait[k]; w.forEach(f => f(u)); } };
+function snapData68(src){ return new Promise(res => { if (SNAPD68.data[src]) return res(SNAPD68.data[src]);
+  if (SNAPD68.wait[src]){ SNAPD68.wait[src].push(res); return; } SNAPD68.wait[src] = [res];
+  const el = document.createElement('script'); el.src = (SNAPC68.fileSnapDir || 'snap/') + src + '.js';
+  el.onload = () => { el.remove(); if (SNAPD68.wait[src]){ const w = SNAPD68.wait[src]; delete SNAPD68.wait[src]; w.forEach(f => f(null)); } };
+  el.onerror = () => { el.remove(); SNAPD68.noSnap = true; const w = SNAPD68.wait[src] || []; delete SNAPD68.wait[src]; w.forEach(f => f(null)); };
+  document.head.appendChild(el); }); }
+function lzStart64(e){
+  if (e.loading || e.ok) return; e.loading = true; const im = new Image();
+  im.onload = () => { e.im = im; e.ok = true; e.loading = false; e.used = performance.now(); lzLoaded64(); };
+  im.onerror = () => { e.loading = false; e.failed = (e.failed || 0) + 1; };
+  if (isFile68 && !SNAPD68.noSnap) snapData68(e.src).then(u => { im.src = u || e.src; if (u) delete SNAPD68.data[e.src]; });
+  else im.src = e.src; }
+
+/* ---------- 10. 📷 above ＋ ; the zoom column on the computer too ; ☰ 拍照 ---------- */
+const CAM68 = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 8.5h3l1.6-2.3h6.8L17 8.5h3a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="13.5" r="3.4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+{ const z = $('zoomCtl'); if (z && !$('zSnap')){ const b = document.createElement('button'); b.id = 'zSnap'; b.setAttribute('aria-label', '拍照'); b.title = '拍照'; b.innerHTML = CAM68; z.insertBefore(b, z.firstChild); b.onclick = e => { e.stopPropagation(); openSnap68(); }; } }
+{ const _mh68 = moreHTML; moreHTML = function(){ const h = _mh68();
+  const it = `<button class="mi" data-m="snap"><b class="sym cam68">${CAM68}</b><span>拍照</span></button>`;
+  return /data-m="hide"/.test(h) ? h.replace(/(<button class="mi" data-m="hide")/, it + '$1') : h + it; }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="snap"]'); if (b) setTimeout(openSnap68, 0); });
+HD54['拍照'] = 'snap'; HD54['照片'] = 'snap';
+
+/* ---------- 11. snapshot ---------- */
+const snapSet68 = () => { const s = S.settings.snap = Object.assign({ mode: SNAPC68.defaultMode || 'island', bg: SNAPC68.defaultBg || 'transparent' }, S.settings.snap || {}); return s; };
+function openSnap68(){
+  if (!S) return; const s = snapSet68();
+  openModal('拍照', null, (k, el) => {
+    el.innerHTML = `<div class="snap68">
+      <button class="sc68 ${s.mode === 'full' ? 'on' : ''}" data-mode="full"><span class="ill68 full68"><i></i><i></i><i></i></span><b>全畫面</b><small>現在看到的整個畫面，包含抬頭、選項列等所有選單</small></button>
+      <button class="sc68 ${s.mode === 'island' ? 'on' : ''}" data-mode="island"><span class="ill68 isl68"><i></i></span><b>只拍浮島</b><small>畫面上看得到的浮島，不含選單、提示泡泡</small></button></div>
+      <div class="bg68" ${s.mode === 'island' ? '' : 'hidden'}><span>背景</span><label><input type="radio" name="bg68" value="transparent" ${s.bg !== 'sky' ? 'checked' : ''}> 透明</label><label><input type="radio" name="bg68" value="sky" ${s.bg === 'sky' ? 'checked' : ''}> 天空</label></div>
+      <div class="row"><button class="btn" id="go68">${CAM68} 拍照</button></div>
+      ${isFile68 ? '<p class="small">離線雙擊版：第一次拍照要準備圖片，請稍等幾秒。</p>' : ''}`;
+    el.querySelectorAll('.sc68').forEach(b => b.onclick = () => { s.mode = b.dataset.mode; el.querySelectorAll('.sc68').forEach(x => x.classList.toggle('on', x === b)); el.querySelector('.bg68').hidden = s.mode !== 'island'; });
+    el.querySelectorAll('input[name=bg68]').forEach(i => i.onchange = () => { s.bg = i.value; });
+    $('go68').onclick = () => { save(); closeModal(); takeSnap68(s.mode, s.bg); }; }); }
+const nextFrame68 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+function flash68(){ const f = document.createElement('div'); f.className = 'flash68'; APP.appendChild(f); requestAnimationFrame(() => f.classList.add('go')); setTimeout(() => f.remove(), (SNAPC68.flashMs || 200) + 260); }
+function busy68(on, text){ let b = $('busy68'); if (on){ if (!b){ b = document.createElement('div'); b.id = 'busy68'; APP.appendChild(b); } b.textContent = text || '拍照中…'; b.hidden = false; } else if (b) b.hidden = true; }
+async function takeSnap68(mode, bg){
+  if (RT.snapBusy68) return; RT.snapBusy68 = true;
+  try { await nextFrame68(); busy68(true, isFile68 ? '準備中…' : '拍照中…');
+    const url = mode === 'full' ? await snapFull68() : await snapIsland68(bg === 'sky');
+    busy68(false); flash68(); if (url) showSnap68(url, mode); else toast('拍照失敗，請再試一次'); }
+  catch(e){ console.warn('snapshot', e); busy68(false); toast('拍照失敗：' + (e && e.message ? e.message : e)); }
+  finally { RT.snapBusy68 = false; } }
+// 只拍浮島: draw one frame without the sky (and without bubbles, hover, carry, meteors), keep only the island's pixels
+function renderFrame68(opts){ const raf = window.requestAnimationFrame, hv = hover; RT.snap68 = opts; hover = null;
+  window.requestAnimationFrame = () => 0; try { if (RT.fps64) RT.fps64.last = 0; frame(); } finally { window.requestAnimationFrame = raf; RT.snap68 = null; hover = hv; } }
+{ const _db68 = drawBackground; drawBackground = function(t, raining){ if (RT.snap68 && !RT.snap68.sky){ ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.restore(); return; } return _db68(t, raining); }; }
+{ const _bb68 = bubble; bubble = function(...a){ if (RT.snap68) return; return _bb68(...a); }; }
+{ const _dc68 = drawCarry; drawCarry = function(...a){ if (RT.snap68) return; return _dc68(...a); }; }
+{ const _dm68 = drawMeteors; drawMeteors = function(...a){ if (RT.snap68) return; return _dm68(...a); }; }
+async function snapIsland68(sky){
+  renderFrame68({ sky: false });
+  const W = cv.width, Hh = cv.height, g = cv.getContext('2d'); let img;
+  try { img = g.getImageData(0, 0, W, Hh); } catch(e){ throw new Error(isFile68 ? '離線雙擊版的圖片還沒準備好' : '瀏覽器不讓這張畫面輸出'); }
+  const d = img.data, th = SNAPC68.alphaCut ?? 64; let x0 = W, y0 = Hh, x1 = -1, y1 = -1;
+  for (let y = 0; y < Hh; y++){ const o = y * W * 4; for (let x = 0; x < W; x++){ const i = o + x * 4 + 3; if (d[i] < th){ d[i] = 0; continue; } if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+  if (x1 < 0) return null;
+  const pad = Math.round((SNAPC68.islandPad ?? 24) * dpr); x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad); x1 = Math.min(W - 1, x1 + pad); y1 = Math.min(Hh - 1, y1 + pad);
+  const out = document.createElement('canvas'); out.width = x1 - x0 + 1; out.height = y1 - y0 + 1; const o = out.getContext('2d');
+  if (sky){ renderFrame68({ sky: true }); o.drawImage(cv, x0, y0, out.width, out.height, 0, 0, out.width, out.height); }
+  else o.putImageData(img, -x0, -y0, x0, y0, out.width, out.height);
+  return out.toDataURL('image/png'); }
+// 全畫面: html-to-image on the whole page (the game canvas goes in as it is)
+function loadLib68(){ if (window.htmlToImage) return Promise.resolve(window.htmlToImage);
+  return new Promise((ok, no) => { const el = document.createElement('script'); el.src = SNAPC68.lib || 'lib/html-to-image.min.js'; el.onload = () => window.htmlToImage ? ok(window.htmlToImage) : no(new Error('html-to-image')); el.onerror = () => no(new Error('讀不到 ' + el.src)); document.head.appendChild(el); }); }
+async function snapFull68(){
+  const H2I = await loadLib68(); const swapped = [];
+  if (isFile68 && !SNAPD68.noSnap){ // DOM pictures: same data: URLs for the copy
+    const imgs = [...document.querySelectorAll('img')].filter(i => i.offsetParent !== null && i.getAttribute('src') && !/^data:|^blob:|^https?:/.test(i.getAttribute('src')));
+    await Promise.all(imgs.map(async i => { const s = i.getAttribute('src'), u = await snapData68(s); if (u){ swapped.push([i, s]); i.src = u; } }));
+    await Promise.all(swapped.map(([i]) => i.decode ? i.decode().catch(() => {}) : 0)); }
+  try { await nextFrame68();
+    // leave out: this dialog, the flash, and pictures that can't be copied (an <img> without a loaded src, an empty canvas) — html-to-image stops on them
+    const skip = n => { if (!n || n.nodeType !== 1) return true; if (n.id && /^(modal|busy68|sheetBack|swBar|toast)$/.test(n.id)) return false; if (n.classList && n.classList.contains('flash68')) return false;
+      if (n.tagName === 'IMG' && (!n.getAttribute('src') || !n.complete || !n.naturalWidth)) return false; if (n.tagName === 'CANVAS' && (!n.width || !n.height)) return false; return true; };
+    return await H2I.toPng(document.body, { pixelRatio: Math.min(SNAPC68.pixelRatioMax || 2, window.devicePixelRatio || 1), skipFonts: true, cacheBust: false, filter: skip,
+      imagePlaceholder: 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==', width: innerWidth, height: innerHeight, backgroundColor: getComputedStyle(document.body).backgroundColor }); }
+  finally { for (const [i, s] of swapped) i.src = s; for (const [, s] of swapped) delete SNAPD68.data[s]; } }
+function snapName68(mode){ const p = farmParts68(), z = n => String(n).padStart(2, '0');
+  return fmt68(SNAPC68.fileName || '浮島農場_{island}_{date}-{time}', { island: islName63(S.cur), date: `${p.y}${z(p.mo)}${z(p.d)}`, time: `${z(p.h)}${z(p.mi)}` }) + (mode === 'full' ? (SNAPC68.fullSuffix || '_全畫面') : '') + '.png'; }
+async function urlToFile68(url, name){ const b = await (await fetch(url)).blob(); return new File([b], name, { type: 'image/png' }); }
+const iosApp68 = () => document.body.classList.contains('ios55') || !!navigator.standalone;
+function showSnap68(url, mode){
+  const name = snapName68(mode);
+  openModal('照片', null, (k, el) => {
+    el.innerHTML = `<div class="pv68"><img id="pvimg68" alt="快照" src="${url}"></div><p class="small" id="pvinfo68">${name}</p>
+      <div class="row pvb68">${iosApp68() ? '' : '<button class="btn" id="dl68">下載</button>'}<button class="btn ghost" id="sh68" hidden>分享</button><button class="btn ghost" id="re68">重拍</button><button class="btn ghost" id="cl68">關閉</button></div>
+      ${iosApp68() ? '<p class="small">iPhone 主畫面 App 不能直接下載：按「分享」存到相簿，也可以長按圖片儲存。</p>' : ''}`;
+    const im = $('pvimg68'); im.onload = () => { $('pvinfo68').textContent = `${name} · ${im.naturalWidth}×${im.naturalHeight}`; };
+    const dl = $('dl68'); if (dl) dl.onclick = async () => { try { const f = await urlToFile68(url, name), u = URL.createObjectURL(f), a = document.createElement('a'); a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); }
+      catch(e){ const a = document.createElement('a'); a.href = url; a.download = name; a.click(); } };
+    const sh = $('sh68'); (async () => { try { const f = await urlToFile68(url, name); if (navigator.canShare && navigator.canShare({ files: [f] })){ sh.hidden = false; sh.onclick = () => navigator.share({ files: [f], title: '浮島農場' }).catch(() => {}); } } catch(e){} })();
+    $('re68').onclick = () => { closeModal(); openSnap68(); }; $('cl68').onclick = () => closeModal(); }); }
+window.__farm233 = { openSnap68, takeSnap68, snapIsland68, snapFull68, snapName68, renderFrame68, snapData68, SNAPD68 };
+
+const css68 = document.createElement('style'); css68.textContent = `
+body:not(.m) .zoomctl{display:flex}
+#zSnap{display:flex;align-items:center;justify-content:center}
+#zSnap svg,.cam68 svg{display:block}
+.mi .cam68{display:inline-flex;align-items:center;justify-content:center}
+#tray .grp68{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:54px;padding:4px 6px;border-radius:12px;background:rgba(255,255,255,.35);border:1px dashed rgba(120,150,110,.55);color:var(--gtx,#234);font-size:12px;line-height:1.15;text-align:center}
+#tray .grp68 img{width:28px;height:28px}
+#tray .grp68 small{font-size:10px;opacity:.8;white-space:nowrap}
+#tray .item .mo68{display:block;font-size:10px;font-weight:700;color:#7a4fb0;line-height:1.1}
+#tray .item.soon68{filter:grayscale(1);opacity:.55}
+#tray .item.soon68 .mo68{color:#666}
+.snap68{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 10px}
+.sc68{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 10px;border-radius:14px;border:2px solid var(--line,#cfd8c8);background:var(--panel,#fff);color:inherit;text-align:center}
+.sc68.on{border-color:#3a8fd8;box-shadow:0 0 0 3px rgba(58,143,216,.2)}
+.sc68 small{opacity:.75;font-size:11px;line-height:1.3}
+.ill68{position:relative;display:block;width:96px;height:62px;border-radius:8px;background:linear-gradient(#bfe6ff,#e6f6d8);overflow:hidden;border:1px solid rgba(0,0,0,.12)}
+.full68 i{position:absolute;background:rgba(255,255,255,.85);border-radius:3px}
+.full68 i:nth-child(1){left:4px;right:4px;top:4px;height:9px}.full68 i:nth-child(2){left:4px;right:4px;bottom:4px;height:12px}.full68 i:nth-child(3){right:4px;top:18px;width:9px;height:24px}
+.isl68{background:repeating-conic-gradient(#eee 0 25%,#fff 0 50%) 0 0/12px 12px}
+.isl68 i{position:absolute;left:18px;right:18px;top:16px;bottom:12px;background:linear-gradient(#7cc95a 0 45%,#a7703f 45% 70%,#7a5a3a 70%);clip-path:polygon(50% 0,100% 38%,70% 100%,30% 100%,0 38%)}
+.bg68{display:flex;gap:14px;align-items:center;margin:0 0 10px;font-size:14px}
+.bg68 span{font-weight:700}
+#go68{display:inline-flex;align-items:center;gap:6px}
+.pv68{max-height:58vh;overflow:auto;border-radius:12px;background:repeating-conic-gradient(#e9e9e9 0 25%,#fff 0 50%) 0 0/16px 16px;text-align:center}
+.pv68 img{max-width:100%;height:auto;display:block;margin:0 auto}
+.pvb68{flex-wrap:wrap;gap:8px}
+.flash68{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9999;transition:opacity ${(SNAPC68.flashMs || 200)}ms ease-out}
+.flash68.go{animation:flash68 ${(SNAPC68.flashMs || 200) + 200}ms ease-out forwards}
+@keyframes flash68{0%{opacity:.9}100%{opacity:0}}
+#busy68{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);padding:10px 18px;border-radius:14px;background:rgba(20,30,40,.78);color:#fff;font-weight:700;z-index:9998}
+`; document.head.appendChild(css68);
+
   })(CFG, ATLAS_JSON);
 })();
 </script>

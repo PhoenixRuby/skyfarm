@@ -31857,6 +31857,6122 @@
         0,
         0
       ]
+    },
+    "ui_snap": {
+      "file": "ui_snap.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_honey_spring": {
+      "file": "ui_honey_spring.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_honey_summer": {
+      "file": "ui_honey_summer.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_honey_autumn": {
+      "file": "ui_honey_autumn.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_honey_winter": {
+      "file": "ui_honey_winter.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_tab_flowers_all": {
+      "file": "ui_tab_flowers_all.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_tab_flowers_month": {
+      "file": "ui_tab_flowers_month.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hd_snap": {
+      "file": "ui_hd_snap.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "flower_flower_white_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "flower_flower_white_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "flower_flower_white_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "flower_flower_white_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "flower_flower_white_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_flower_yellow_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 128
+    },
+    "flower_flower_yellow_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "flower_flower_yellow_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 128
+    },
+    "flower_flower_yellow_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "flower_flower_yellow_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "flower_flower_red_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 896
+    },
+    "flower_flower_red_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "flower_flower_red_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 896
+    },
+    "flower_flower_red_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_flower_red_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_flower_blue_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 768
+    },
+    "flower_flower_blue_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 768
+    },
+    "flower_flower_blue_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 768
+    },
+    "flower_flower_blue_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "flower_flower_blue_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_cherry_blossom_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 896
+    },
+    "flower_cherry_blossom_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "flower_cherry_blossom_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 896
+    },
+    "flower_cherry_blossom_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_cherry_blossom_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_anemone_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "flower_anemone_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "flower_anemone_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "flower_anemone_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "flower_anemone_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_hyacinth_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 896
+    },
+    "flower_hyacinth_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "flower_hyacinth_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 896
+    },
+    "flower_hyacinth_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_hyacinth_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_tulip_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "flower_tulip_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_tulip_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_tulip_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "flower_tulip_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "flower_sweet_pea_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "flower_sweet_pea_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "flower_sweet_pea_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_sweet_pea_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "flower_sweet_pea_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "flower_parrot_tulip_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "flower_parrot_tulip_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_parrot_tulip_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_parrot_tulip_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "flower_parrot_tulip_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "flower_carnation_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 768
+    },
+    "flower_carnation_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 768
+    },
+    "flower_carnation_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 768
+    },
+    "flower_carnation_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "flower_carnation_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_lily_of_valley_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 256
+    },
+    "flower_lily_of_valley_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "flower_lily_of_valley_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 256
+    },
+    "flower_lily_of_valley_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_lily_of_valley_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_forget_me_not_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 256
+    },
+    "flower_forget_me_not_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "flower_forget_me_not_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 256
+    },
+    "flower_forget_me_not_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_forget_me_not_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_hydrangea_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "flower_hydrangea_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "flower_hydrangea_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "flower_hydrangea_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "flower_hydrangea_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_calla_lily_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 384
+    },
+    "flower_calla_lily_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "flower_calla_lily_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 384
+    },
+    "flower_calla_lily_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_calla_lily_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "flower_bellflower_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 128
+    },
+    "flower_bellflower_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "flower_bellflower_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 128
+    },
+    "flower_bellflower_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "flower_bellflower_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "flower_lily_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "flower_lily_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "flower_lily_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "flower_lily_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "flower_lily_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "flower_plumeria_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "flower_plumeria_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "flower_plumeria_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_plumeria_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "flower_plumeria_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "flower_night_cereus_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "flower_night_cereus_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "flower_night_cereus_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_night_cereus_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "flower_night_cereus_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "flower_hibiscus_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 768
+    },
+    "flower_hibiscus_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 768
+    },
+    "flower_hibiscus_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 768
+    },
+    "flower_hibiscus_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "flower_hibiscus_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_canna_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 640
+    },
+    "flower_canna_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 640
+    },
+    "flower_canna_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 640
+    },
+    "flower_canna_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "flower_canna_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_cosmos_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 256
+    },
+    "flower_cosmos_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "flower_cosmos_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 256
+    },
+    "flower_cosmos_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_cosmos_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_dianthus_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 640
+    },
+    "flower_dianthus_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 640
+    },
+    "flower_dianthus_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 640
+    },
+    "flower_dianthus_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "flower_dianthus_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_dahlia_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "flower_dahlia_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 512
+    },
+    "flower_dahlia_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 512
+    },
+    "flower_dahlia_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_dahlia_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "flower_gentian_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "flower_gentian_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 512
+    },
+    "flower_gentian_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 512
+    },
+    "flower_gentian_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_gentian_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "flower_chrysanthemum_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "flower_chrysanthemum_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "flower_chrysanthemum_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "flower_chrysanthemum_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "flower_chrysanthemum_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "flower_thistle_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "flower_thistle_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "flower_thistle_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_thistle_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "flower_thistle_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "flower_clematis_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 128
+    },
+    "flower_clematis_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "flower_clematis_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 128
+    },
+    "flower_clematis_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "flower_clematis_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "flower_marigold_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "flower_marigold_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_marigold_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "flower_marigold_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "flower_marigold_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "flower_schisandra_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "flower_schisandra_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_schisandra_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "flower_schisandra_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "flower_schisandra_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "flower_poinsettia_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "flower_poinsettia_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_poinsettia_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "flower_poinsettia_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "flower_poinsettia_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "flower_cyclamen_seed": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 384
+    },
+    "flower_cyclamen_bud": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "flower_cyclamen_rest": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 384
+    },
+    "flower_cyclamen_spent": {
+      "file": "sheet40_001.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_cyclamen_bloom": {
+      "file": "sheet40_001.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "flower_moth_orchid_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "flower_moth_orchid_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_moth_orchid_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_moth_orchid_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "flower_moth_orchid_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "flower_camellia_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "flower_camellia_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 512
+    },
+    "flower_camellia_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 512
+    },
+    "flower_camellia_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_camellia_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "flower_narcissus_seed": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "flower_narcissus_bud": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "flower_narcissus_rest": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_narcissus_spent": {
+      "file": "sheet40_003.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "flower_narcissus_bloom": {
+      "file": "sheet40_003.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "flower_snowdrop_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "flower_snowdrop_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_snowdrop_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_snowdrop_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "flower_snowdrop_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "flower_hellebore_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 640
+    },
+    "flower_hellebore_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 640
+    },
+    "flower_hellebore_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 640
+    },
+    "flower_hellebore_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "flower_hellebore_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_plum_blossom_seed": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "flower_plum_blossom_bud": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "flower_plum_blossom_rest": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "flower_plum_blossom_spent": {
+      "file": "sheet40_004.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "flower_plum_blossom_bloom": {
+      "file": "sheet40_004.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "flower_blue_eyed_daisy_seed": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 256
+    },
+    "flower_blue_eyed_daisy_bud": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "flower_blue_eyed_daisy_rest": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 256
+    },
+    "flower_blue_eyed_daisy_spent": {
+      "file": "sheet40_000.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_blue_eyed_daisy_bloom": {
+      "file": "sheet40_000.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_freesia_seed": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 384
+    },
+    "flower_freesia_bud": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "flower_freesia_rest": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 384
+    },
+    "flower_freesia_spent": {
+      "file": "sheet40_002.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_freesia_bloom": {
+      "file": "sheet40_002.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_anemone_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_anemone_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_anemone_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_anemone_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_anemone_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_bellflower_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_bellflower_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_bellflower_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_bellflower_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_bellflower_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_blue_eyed_daisy_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_blue_eyed_daisy_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_blue_eyed_daisy_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_blue_eyed_daisy_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_blue_eyed_daisy_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_calla_lily_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "snow_flower_calla_lily_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_calla_lily_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_calla_lily_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_calla_lily_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_camellia_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_camellia_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_camellia_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_camellia_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_camellia_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "snow_flower_canna_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "snow_flower_canna_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "snow_flower_canna_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "snow_flower_canna_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "snow_flower_canna_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "snow_flower_carnation_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "snow_flower_carnation_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "snow_flower_carnation_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_flower_carnation_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "snow_flower_carnation_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_flower_cherry_blossom_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_cherry_blossom_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_cherry_blossom_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_cherry_blossom_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_cherry_blossom_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_chrysanthemum_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_chrysanthemum_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_chrysanthemum_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_chrysanthemum_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_chrysanthemum_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_clematis_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_clematis_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_clematis_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_clematis_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_clematis_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_cosmos_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_cosmos_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_cosmos_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_cosmos_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "snow_flower_cosmos_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "snow_flower_cyclamen_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "snow_flower_cyclamen_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_cyclamen_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_cyclamen_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_cyclamen_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_dahlia_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_dahlia_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_dahlia_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_dahlia_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_dahlia_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "snow_flower_dianthus_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "snow_flower_dianthus_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "snow_flower_dianthus_rest": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "snow_flower_dianthus_seed": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "snow_flower_dianthus_spent": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "snow_flower_flower_blue_bloom": {
+      "file": "sheet40_006.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "snow_flower_flower_blue_bud": {
+      "file": "sheet40_006.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "snow_flower_flower_blue_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_flower_flower_blue_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "snow_flower_flower_blue_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_flower_flower_red_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_flower_red_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_flower_red_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_flower_red_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_flower_red_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_flower_white_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_flower_white_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_flower_white_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_flower_white_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_flower_white_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_flower_yellow_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_flower_yellow_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_flower_yellow_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_flower_yellow_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_flower_yellow_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_forget_me_not_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_forget_me_not_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_forget_me_not_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_forget_me_not_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "snow_flower_forget_me_not_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "snow_flower_freesia_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "snow_flower_freesia_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_freesia_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_freesia_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_freesia_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_gentian_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_gentian_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_gentian_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_gentian_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_gentian_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "snow_flower_hellebore_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "snow_flower_hellebore_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "snow_flower_hellebore_rest": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "snow_flower_hellebore_seed": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "snow_flower_hellebore_spent": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "snow_flower_hibiscus_bloom": {
+      "file": "sheet40_007.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "snow_flower_hibiscus_bud": {
+      "file": "sheet40_007.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "snow_flower_hibiscus_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_flower_hibiscus_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "snow_flower_hibiscus_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_flower_hyacinth_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_hyacinth_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_hyacinth_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_hyacinth_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_hyacinth_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_hydrangea_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_hydrangea_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_hydrangea_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_hydrangea_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_hydrangea_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_lily_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_lily_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_lily_of_valley_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_lily_of_valley_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 512
+    },
+    "snow_flower_lily_of_valley_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 512
+    },
+    "snow_flower_lily_of_valley_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "snow_flower_lily_of_valley_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_lily_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_lily_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_lily_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_marigold_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_marigold_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_marigold_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_marigold_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_marigold_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "snow_flower_moth_orchid_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "snow_flower_moth_orchid_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "snow_flower_moth_orchid_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_flower_moth_orchid_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "snow_flower_moth_orchid_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_flower_narcissus_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_narcissus_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_narcissus_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_narcissus_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_narcissus_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_night_cereus_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_night_cereus_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_night_cereus_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_night_cereus_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_night_cereus_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_parrot_tulip_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_parrot_tulip_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_parrot_tulip_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_parrot_tulip_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_parrot_tulip_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_plum_blossom_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_plum_blossom_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_plum_blossom_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_plum_blossom_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "snow_flower_plum_blossom_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "snow_flower_plumeria_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "snow_flower_plumeria_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_plumeria_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_plumeria_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_plumeria_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_poinsettia_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_poinsettia_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_poinsettia_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_poinsettia_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_poinsettia_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
+    },
+    "snow_flower_schisandra_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "snow_flower_schisandra_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "snow_flower_schisandra_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "snow_flower_schisandra_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "snow_flower_schisandra_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "snow_flower_snowdrop_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "snow_flower_snowdrop_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "snow_flower_snowdrop_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "snow_flower_snowdrop_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "snow_flower_snowdrop_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "snow_flower_sweet_pea_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_sweet_pea_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_sweet_pea_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_sweet_pea_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_sweet_pea_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_thistle_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_thistle_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_thistle_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_thistle_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "snow_flower_thistle_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "snow_flower_tulip_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "snow_flower_tulip_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "snow_flower_tulip_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "snow_flower_tulip_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "snow_flower_tulip_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "snow_flower_buckwheat_bloom": {
+      "file": "sheet40_005.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 384
+    },
+    "snow_flower_buckwheat_bud": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "snow_flower_buckwheat_rest": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "snow_flower_buckwheat_seed": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 512
+    },
+    "snow_flower_buckwheat_spent": {
+      "file": "sheet40_005.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "snow_flower_lavender_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "snow_flower_lavender_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "snow_flower_lavender_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "snow_flower_lavender_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "snow_flower_lavender_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "snow_flower_milk_vetch_bloom": {
+      "file": "sheet40_008.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "snow_flower_milk_vetch_bud": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "snow_flower_milk_vetch_rest": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "snow_flower_milk_vetch_seed": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "snow_flower_milk_vetch_spent": {
+      "file": "sheet40_008.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "snow_flower_rapeseed_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "snow_flower_rapeseed_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 768
+    },
+    "snow_flower_rapeseed_rest": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "snow_flower_rapeseed_seed": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 896
+    },
+    "snow_flower_rapeseed_spent": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 896
+    },
+    "snow_flower_rose_bloom": {
+      "file": "sheet40_009.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 896
+    },
+    "snow_flower_rose_bud": {
+      "file": "sheet40_009.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "snow_flower_rose_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_flower_rose_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "snow_flower_rose_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_flower_wildflower_bloom": {
+      "file": "sheet40_010.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "snow_flower_wildflower_bud": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "snow_flower_wildflower_rest": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "snow_flower_wildflower_seed": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "snow_flower_wildflower_spent": {
+      "file": "sheet40_010.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 768
     }
   }
 }
