@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36-d1f6dc3c52'), getJSON('sprites/atlas.json?v=2.36-d1f6dc3c52')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-fd6f19d5db'), getJSON('sprites/atlas.json?v=2.36.2-fd6f19d5db')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.36-d1f6dc3c52';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.36.2-fd6f19d5db';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15125,6 +15125,85 @@ body:not(.night) #isp67 .c67 .tr67{box-shadow:0 1px 3px rgba(0,0,0,.15)}
 body:not(.night) #isp67 .tip67{color:var(--gsub);opacity:1}
 #isp67{transition:background-color .8s,color .8s,border-color .8s}
 `; document.head.appendChild(st73); }
+
+/* ===== 74. v2.36.2: the feed robot feeds a whole fish pool from any cell it can stand next to =====
+   Before: it only fed the pool cells that had a walkable tile beside them, so cells in the middle of a big pool
+   (or walled in by the island edge, benches, lamps, the water tower) stayed hungry forever.
+   Now: standing next to any cell of a pool, it scatters feed for every hungry cell of that pool (feed per cell,
+   one bucket serving per pool), with a throwing animation and a splash on every cell it fed. ===== */
+const FP74 = Object.assign({ scatterSeconds: 2.5, bucketPerPool: 1, noFeedRetrySeconds: 60, throwsPerSecond: 1.6, grains: 9, splashStaggerMs: 90 },
+  ((CFG.robots || {}).kinds || {}).feed ? (CFG.robots.kinds.feed.pool2362 || {}) : {});
+RT.skip74 = RT.skip74 || {}; RT.scat74 = [];
+
+const hungryCell74 = T => { if (!T || T.t !== 'pool' || !T.fish) return false; const F = CFG.fish[T.fish]; return !!F && T.timer === 0 && T.stage < F.stages; };
+function poolCells74(M, k){ const pk = poolOf(M, k), P = pk && M.pools[pk]; return { pk, cells: P ? P.tiles : [k] }; }
+function poolHungry74(M, k){ return poolCells74(M, k).cells.filter(c => hungryCell74(M.tiles[c])); }
+
+// replaces g65: a pool cell is a job while any cell of its pool is hungry (so the robot can feed it from any side)
+function feedTarget65(M, k){ const T = M.tiles[k]; if (!T) return null;
+  if (T.t === 'animal'){ const A = CFG.animals[T.id]; if (!A || T.hurt > Date.now() || T.scared > Date.now()) return null; return T.timer === 0 && canFeed(T, A) ? 'animal' : null; }
+  if (T.t === 'pool'){ const { pk, cells } = poolCells74(M, k), sk = S.maps.indexOf(M) + '|' + pk;
+    if (RT.skip74[sk] && RT.skip74[sk] > Date.now()) return null;
+    return cells.some(c => hungryCell74(M.tiles[c])) ? 'pool' : null; }
+  return null; }
+
+// feed every hungry cell of the pool; returns the cells that got fed
+function feedPool74(W, M, t){
+  const k = W.target, { pk, cells } = poolCells74(M, k), mi = S.maps.indexOf(M), fed = []; let miss = 0;
+  for (const c of cells){ const T = M.tiles[c]; if (!hungryCell74(T)) continue; const F = CFG.fish[T.fish];
+    const r = payFeed(F.feedItem, F.stageFeedQtyPerTile); if (r && r.ok){ T.timer = F.stageSeconds; fed.push(c); try { log53('feed', 'n'); } catch(e){} } else miss++; }
+  if (fed.length) W.bucket65 = (W.bucket65 ?? BUCKET65) - (FP74.bucketPerPool || 1);
+  W.nofeed65 = miss ? t : 0;
+  if (!fed.length && miss) RT.skip74[mi + '|' + pk] = Date.now() + (FP74.noFeedRetrySeconds || 60) * 1e3;   // nothing could be paid: go do something else for a while
+  const live = Math.abs(Date.now() - t) < 5000 && W.mi === S.cur;
+  if (live && fed.length){ const [sx, sy] = [W.x, W.y], now = performance.now();
+    fed.map(c => pkey(c)).sort((a, b) => Math.hypot(a[0] - sx, a[1] - sy) - Math.hypot(b[0] - sx, b[1] - sy))
+      .forEach(([x, y], i) => RT.scat74.push({ x, y, t0: now + i * (FP74.splashStaggerMs || 90) })); }
+  return fed; }
+
+{ const _dj74 = doJob59; doJob59 = function(kind, W, M, t){
+  if (kind === 'feed' && W && W.target && M.tiles[W.target] && M.tiles[W.target].t === 'pool'){ feedPool74(W, M, t); return; }
+  return _dj74(kind, W, M, t); }; }
+
+// scattering a pool takes scatterSeconds (animals keep walk.feedSeconds)
+const atPool74 = W => !!(W && W.phase === 'fill' && W.target && S.maps[W.mi] && S.maps[W.mi].tiles[W.target] && S.maps[W.mi].tiles[W.target].t === 'pool');
+{ const _w74 = worker59; worker59 = function(kind, key, u, dt, t){
+  if (kind === 'feed'){ const W = WS[key];
+    if (atPool74(W)){ const need = FP74.scatterSeconds || 2.5, left = need - (W.el || 0);
+      if (dt < left){ W.el = (W.el || 0) + dt; W.simAt = t; return; }
+      dt -= left; W.el = 0; withWorker71(key, () => doJob59(kind, W, S.maps[W.mi], t)); W.target = null; W.phase = 'pick';
+      if (dt <= 0) return; } }
+  return _w74(kind, key, u, dt, t); }; }
+
+/* ---------- drawing: grains thrown from the bucket onto the pool while scattering, then a splash on every fed cell ---------- */
+function grain74(x, y, a){ ctx.fillStyle = `rgba(222,176,82,${a})`; ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = `rgba(150,105,40,${a * .8})`; ctx.beginPath(); ctx.arc(x + .5, y + .5, .8, 0, Math.PI * 2); ctx.fill(); }
+function ripple74(x, y, a){ ctx.strokeStyle = `rgba(235,250,255,${(1 - a) * .85})`; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(x, y, 3 + a * 9, (3 + a * 9) * .45, 0, 0, Math.PI * 2); ctx.stroke(); }
+function drawThrow74(key, W, tt){
+  const p = RT.unitPos && RT.unitPos[key]; if (!p) return; const M = S.maps[W.mi];
+  let cells = poolHungry74(M, W.target); if (!cells.length) cells = poolCells74(M, W.target).cells;
+  const dir = p.fx ? 1 : -1, hx = p.x + dir * 9, hy = p.y - 28, n = cells.length, G = FP74.grains || 9, rate = FP74.throwsPerSecond || 1.6;
+  for (let j = 0; j < G; j++){ const v = tt * rate + j / G, ph = v % 1, round = Math.floor(v);
+    const [cx0, cy0] = pkey(cells[(round * 7 + j * 3) % n]), c = center(cx0, cy0), jx = Math.sin(j * 12.9 + round * 3.1) * 9, jy = Math.cos(j * 7.3 + round * 1.7) * 4;
+    const tx = c.cx + jx, ty = c.cy - 4 + jy;
+    if (ph < .8){ const a = ph / .8; grain74(hx + (tx - hx) * a, hy + (ty - hy) * a - Math.sin(a * Math.PI) * 22, 1); }
+    else ripple74(tx, ty, (ph - .8) / .2); } }
+{ const _dw74 = drawWorld; drawWorld = function(t, now){ const r = _dw74(t, now);
+  if (!S || RT.snap68) return r;
+  try {
+    const tt = performance.now() / 1000;
+    for (const key in WS){ if (!key.startsWith('feed:')) continue; const W = WS[key]; if (W && W.mi === S.cur && atPool74(W)) drawThrow74(key, W, tt); }
+    const pn = performance.now();
+    for (let i = RT.scat74.length - 1; i >= 0; i--){ const s = RT.scat74[i], a = (pn - s.t0) / 1000; if (a < 0) continue; if (a >= 1){ RT.scat74.splice(i, 1); continue; }
+      const c = center(s.x, s.y);
+      for (let j = 0; j < 7; j++){ const ang = j * .9, d = 3 + a * 11; grain74(c.cx + Math.cos(ang) * d, c.cy - 6 + Math.sin(ang) * d * .5 + a * 5, 1 - a); }
+      ripple74(c.cx, c.cy - 3, a); }
+  } catch(e){ console.warn(e); }
+  return r; }; }
+
+if (KIND_DESC && (CFG.robots.kinds || {}).feed) KIND_DESC.feed = `從自己的充電站位子出發，背著飼料桶（${BUCKET65} 份）沿格子走到肚子餓的動物旁邊，把飼料倒進小飼料盆；魚池只要走到任何一格旁邊，就把整池餓的格子一起撒飼料（一池用 1 份）。桶子空了、電只夠回程或沒工作就走回充電站補料。只管充電站所在的那座島。`;
+
+window.__farm2362 = { feedTarget65: (M, k) => feedTarget65(M, k), feedPool74, poolHungry74, get skip(){ return RT.skip74; }, get scat(){ return RT.scat74; }, FP74 };
 
   })(CFG, ATLAS_JSON);
 })();

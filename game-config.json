@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.36",
+  "configVersion": "2.36.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -5203,6 +5203,15 @@
     "walk": {
      "tilesPerSecond": 1.2,
      "feedSeconds": 1.2
+    },
+    "pool2362": {
+     "scatterSeconds": 2.5,
+     "bucketPerPool": 1,
+     "noFeedRetrySeconds": 60,
+     "throwsPerSecond": 1.6,
+     "grains": 9,
+     "splashStaggerMs": 90,
+     "note": "v2.36.2：餵食機器人走到魚池任何一格旁邊（站得到的那格）就把同一池所有餓的格子一起撒飼料，撒 scatterSeconds 秒（動物照舊 walk.feedSeconds）；飼料照每格扣，扣不到的格子跳過；飼料桶一池用 bucketPerPool 份；整池都扣不到飼料時 noFeedRetrySeconds 秒內先去做別的；畫面：每秒丟 throwsPerSecond 把、每把 grains 粒，餵完每一格依序濺起水花（間隔 splashStaggerMs）"
     }
    },
    "snow": {
