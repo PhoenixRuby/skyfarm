@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-80a2813c57'), getJSON('sprites/atlas.json?v=2.36.2-80a2813c57')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.37-789a8d0db2'), getJSON('sprites/atlas.json?v=2.37-789a8d0db2')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.36.2-80a2813c57';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.37-789a8d0db2';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15235,6 +15235,154 @@ window.__farm2363 = { paintInto75 };
     el.onclick = () => { S.sel.build = 'trash_station'; UIbuildTray(); updateHint(); }; } }; }
 
 window.__farm2364 = { act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray() };
+
+/* ===== 77. v2.37 機器人綁定在自己的島（規則見 docs/game-rules.md v2.37）
+   原因：assignHomes 每次都把全農場同類機座照島的順序重排、機器人依序重新分配，收回／放回一台，別台就換島；
+   充電時會搶別座島的空位、沒位子的排在第 1 島機座旁；無人機會澆別座島的田（優先畫面上那座）。
+   新：每台記 u.isl77（哪座島），買新的／從倉庫放回＝目前畫面這座島，之後固定；
+     · assignHomes 重新宣告：還有效的位子保留，不見了改用同一座島的其他空位，沒有就 home = null（state 'nohome'，不工作）
+     · stepUnit 包裝：工作期間 RT.isl77 讓 slotsOf／capacityOf 只看自己的島，occ 也依島分開
+     · parkUnits 重新宣告：充電、排隊、沒位子的都在自己那座島
+     · dronePick／droneWants 重新宣告：只澆自己停機坪那座島（租的：農舍那座島）
+     · dispatch53 包裝：輪流出勤依島分開算
+     · buyRobot／placeBackRobot49 包裝：這座島沒有這種機座就擋（掃地機器人要有空位；其他種類可以比位子多，排隊充電），購買不扣錢
+     · 建設 · 機器人 分頁接倉庫裡的機器人（同種同級一格）；機器人倉庫按鈕寫「放回「島名」」
+   存檔：normalizeState 旗標 v237（有位子的照位子那座島；沒位子的 any77＝第一次排到有空位的島） ===== */
+RT.isl77 = null; RT.fl77 = null; RT.d77 = {}; RT.newIsl77 = null;
+const isl77Ok = mi => Number.isInteger(mi) && mi >= 0 && S && mi < S.maps.length;
+const kindsOfBase77 = id => KINDS.filter(k => RK(k).base === id);
+const islLabel77 = mi => S.maps.length > 1 ? `「${islName63(mi)}」` : '這座島';
+// every slot of a base type on the whole farm (ignores RT.isl77)
+function slotsAll77(id){ const out = []; for (const b of basesOf(id)) for (let i = 0; i < slotsOfT(b.T); i++) out.push({ key: `${b.mi}|${b.k}|${i}`, mi: b.mi, k: b.k, x: b.x, y: b.y, i, T: b.T }); return out; }
+{ const _so77 = slotsOf; slotsOf = function(id){ const a = _so77(id); return RT.isl77 != null ? a.filter(s => s.mi === RT.isl77) : a; }; }
+// while one robot's dispatch is decided, fleet(kind) only lists the robots on its island
+{ const _fl77 = fleet; fleet = function(kind){ const a = _fl77(kind), F = RT.fl77; return F && F.kind === kind ? a.filter(v => v.isl77 === F.mi) : a; }; }
+
+/* ---------- 位子：固定，不重排 ---------- */
+function assignHomes(){
+  for (const id of BASE_TYPES){ const all = slotsAll77(id), taken = new Set(), list = [];
+    for (const kind of kindsOfBase77(id)) for (const u of fleet(kind)){ if (!unitTier(kind, u)) continue;
+      if (!isl77Ok(u.isl77)){ const s = slotByKey(u.home); u.isl77 = s ? s.mi : isl77Ok(RT.newIsl77) ? RT.newIsl77 : isl77Ok(S.cur) ? S.cur : 0; }
+      list.push(u); }
+    for (const u of list){ const s = u.home && all.find(x => x.key === u.home);
+      if (s && s.mi === u.isl77 && !taken.has(s.key)){ taken.add(s.key); u.home = s.key; } else u.home = null; }
+    for (const u of list){ if (u.home) continue;
+      let s = all.find(x => x.mi === u.isl77 && !taken.has(x.key));
+      if (!s && u.any77) s = all.find(x => !taken.has(x.key));
+      if (s){ taken.add(s.key); u.home = s.key; u.isl77 = s.mi; delete u.any77; } } }
+}
+// free places for one more robot of this kind on island mi (robots waiting there without a slot count too)
+function room77(kind, mi){ const id = RK(kind).base, slots = slotsAll77(id).filter(s => s.mi === mi).length; let used = 0;
+  for (const k of kindsOfBase77(id)) for (const u of fleet(k)) if (unitTier(k, u) && u.isl77 === mi) used++;
+  return { slots, free: slots - used, id }; }
+// 掃地機器人要有自己的空位；其他種類可以比位子多（排隊充電），這座島有這種機座就可以
+const blocked77 = (kind, mi) => { const r = room77(kind, mi); return kind === 'sweep' ? r.free <= 0 : r.slots === 0; };
+function noRoomMsg77(kind, mi){ const r = room77(kind, mi), B = BLD[r.id] || { name: '機座' };
+  return r.slots ? `${islLabel77(mi)}的${B.name}沒有空位，先蓋一座或擴充成 2 個位子` : `${islLabel77(mi)}還沒有${B.name}，先用「建設」蓋一座${(S.buildStore[r.id] || 0) > 0 ? '（倉庫裡有，可以拿出來擺）' : ''}`; }
+
+/* ---------- 只在自己的島工作、充電 ---------- */
+{ const _su77 = stepUnit; stepUnit = function(kind, u, dt, t, want, occ){
+  if (!u || !unitTier(kind, u) || !isl77Ok(u.isl77)) return _su77(kind, u, dt, t, want, occ);
+  // 掃地機器人要有自己的位子；其他種類跟以前一樣可以比位子多（排隊充電、站在旁邊），但自己那座島至少要有一座機座
+  if (!u.home && (kind === 'sweep' || room77(kind, u.isl77).slots === 0)){ u.state = 'nohome'; return false; }
+  const mi = u.isl77, was = RT.isl77, o = occ || {};
+  const occ77 = new Proxy(o, { get: (q, p) => q[p + '@' + mi], set: (q, p, v) => { q[p + '@' + mi] = v; return true; } });
+  RT.isl77 = mi; try { return _su77(kind, u, dt, t, want, occ77); } finally { RT.isl77 = was; } }; }
+{ const _wh77 = workerHome; workerHome = function(kind, u){ if (!u || !isl77Ok(u.isl77)) return _wh77(kind, u);
+  const was = RT.isl77; RT.isl77 = u.isl77; try { return _wh77(kind, u); } finally { RT.isl77 = was; } }; }
+function parkUnits(){
+  const park = {}, beside = {};
+  for (const id of BASE_TYPES){ const all = slotsAll77(id), byIsl = {};
+    for (const kind of kindsOfBase77(id)) for (const u of fleet(kind)) if (unitTier(kind, u) && u.state !== 'work' && u.state !== 'none'){
+      const mi = isl77Ok(u.isl77) ? u.isl77 : (slotByKey(u.home) || {}).mi; if (mi == null) continue; (byIsl[mi] = byIsl[mi] || []).push({ kind, u }); }
+    for (const m in byIsl){ const mi = +m, sl = all.filter(s => s.mi === mi), free = new Set(sl.map(s => s.key)), list = byIsl[m];
+      list.sort((a, b) => (b.u.state === 'charge') - (a.u.state === 'charge'));
+      for (const e of list){ let s = null;
+        if (e.u.state === 'charge' && e.u.park && free.has(e.u.park)) s = e.u.park;
+        else if (e.u.home && free.has(e.u.home)) s = e.u.home;
+        else if (e.u.state === 'charge' || e.u.state === 'refill') s = [...free][0] || null;
+        if (s){ free.delete(s); park[s] = e; e.u.park = s; }
+        else { e.u.park = null; const b = sl[0]; if (b){ const bk = b.mi + '|' + b.k; (beside[bk] = beside[bk] || []).push(e); } } } } }
+  RT.park = park; RT.beside = beside;
+}
+// 無人機：只澆自己停機坪那座島；租的只澆農舍那座島
+function droneIsl77(key){ const id = String(key).slice(6); if (id === 'r') return houseMapIndex();
+  const u = fleet('water').find(v => v.id === id); return u && isl77Ok(u.isl77) ? u.isl77 : (slotByKey(u && u.home) || {}).mi ?? houseMapIndex(); }
+function dronePick(D, key){ const cl = droneClaims(key), mi = droneIsl77(key), M = S.maps[mi]; let best = null, bd = Infinity; if (!M) return null;
+  for (const k in M.tiles){ if (!dwNeeds(M.tiles[k]) || cl.has(mi + '|' + k)) continue; const [x, y] = pkey(k), d = (D && D.mi === mi ? 0 : 1e6) + Math.hypot(x - (D ? D.x : 0), y - (D ? D.y : 0)); if (d < bd){ bd = d; best = { mi, k, x, y }; } }
+  return best; }
+function droneWants(key, u){ const D = WS[key]; if (D && D.tgt && D.tgt.mi === droneIsl77(key)) return true;
+  if (D && D.tgt) D.tgt = null;
+  const h = workerHome('water', u); return !!dronePick(D || { mi: h.mi, x: h.x, y: h.y }, key); }
+// 輪流出勤：同一座島的同種機器人之間輪流，工作量也只算那座島
+{ const _d77 = dispatch53; dispatch53 = function(kind, key, u, f){ if (!u || !isl77Ok(u.isl77) || RT.fl77) return _d77(kind, key, u, f);
+  const mi = u.isl77, dk = kind + '@' + mi, was = RT.d53[kind]; RT.d53[kind] = RT.d77[dk]; RT.fl77 = { kind, mi };
+  try { return _d77(kind, key, u, f); } finally { RT.fl77 = null; RT.d77[dk] = RT.d53[kind]; RT.d53[kind] = was; } }; }
+{ const _l77 = load53; load53 = function(kind){ const F = RT.fl77; if (!F || F.kind !== kind) return _l77(kind); const M = S.maps[F.mi]; if (!M) return 0;
+  if (kind === 'water'){ let n = 0; for (const k in M.tiles) if (dwNeeds(M.tiles[k])) n++; return n; }
+  if (kind === 'sweep') return trashOn53(F.mi);
+  if (kind === 'wellbot'){ let n = 0; for (const k in M.tiles){ const T = M.tiles[k]; if (isWell(T) && (T.water || 0) >= wbMin()) n++; } return n; }
+  return _l77(kind); }; }
+
+/* ---------- 買新的、從倉庫放回：目前這座島，沒空位就擋 ---------- */
+{ const _br77 = buyRobot; buyRobot = function(kind, ti, ...a){
+  const mi = S.cur, gift = kind === 'sweep' && baseCount('sweeper_dock') === 0;
+  if (!gift && fleet(kind).length < maxUnits(kind) && blocked77(kind, mi)){ toast(noRoomMsg77(kind, mi), false, 3600); return false; }
+  const n0 = fleet(kind).length, was = RT.newIsl77; RT.newIsl77 = mi;
+  try { const r = _br77(kind, ti, ...a);
+    if (r && gift){ const u = fleet(kind)[fleet(kind).length - 1]; if (u && fleet(kind).length > n0 && !u.home){ u.any77 = true; } }
+    return r; } finally { RT.newIsl77 = was; } }; }
+{ const _pb77 = placeBackRobot49; placeBackRobot49 = function(sid){
+  const r0 = robotStore().find(x => x.sid === sid), mi = S.cur; if (!r0) return _pb77(sid);
+  if (fleet(r0.kind).length < maxUnits(r0.kind) && blocked77(r0.kind, mi)){ toast(noRoomMsg77(r0.kind, mi), false, 3600); return false; }
+  const was = RT.newIsl77; RT.newIsl77 = mi;
+  try { const r = _pb77(sid); if (r) toast(`${RK(r0.kind).name}放回${islLabel77(mi)}了`, true); return r; } finally { RT.newIsl77 = was; } }; }
+
+/* ---------- 自動化每台那一列：在哪座島、沒位子的原因 ---------- */
+{ const _ut77 = unitText; unitText = function(kind, u){ let s = _ut77(kind, u);
+  try { if (!u || !unitTier(kind, u) || !isl77Ok(u.isl77)) return s;
+    if (u.state === 'nohome'){ const B = BLD[RK(kind).base] || { name: '機座' }; s = room77(kind, u.isl77).slots ? `等位子：${islLabel77(u.isl77)}沒有空的${B.name}位子（再蓋一座或擴充）` : `等機座：${islLabel77(u.isl77)}還沒有${B.name}（蓋一座才會工作）`; }
+    if (S.maps.length > 1) s = `<span class="isl77">【${islName63(u.isl77)}】</span>` + s;
+  } catch(e){}
+  return s; }; }
+
+/* ---------- 倉庫 · 機器人倉庫：放回「目前島名」 ---------- */
+{ const _rs77 = robotStoreHTML; robotStoreHTML = function(){ const h = _rs77(), L = islLabel77(S.cur);
+  return h.replace(/>放回農場</g, `>放回${L}<`).replace('放回農場要有空位和機座', `放回目前畫面這座島（${L}），那座島要有空的機座位子`); }; }
+
+/* ---------- 建設 · 機器人 分頁：機座後面接倉庫裡的機器人 ---------- */
+function storeGroups77(){ const G = new Map();
+  for (const r of robotStore()){ const k = r.kind + ':' + r.tier; if (!RK(r.kind) || !RK(r.kind).tiers[r.tier]) continue; G.set(k, (G.get(k) || 0) + 1); }
+  return [...G.entries()].map(([k, n]) => { const [kind, ti] = k.split(':'); return { kind, ti: +ti, n }; }); }
+{ const _ut77b = UIbuildTray; UIbuildTray = function(...a){ const res = _ut77b(...a);
+  try { if (!S || RT.borrow34 || S.sel.tool !== 'build') return res; const tray = $('tray'); if (!tray) return res;
+    tray.querySelectorAll('.item.rb77').forEach(e => e.remove());
+    const show = S.sel.buildTab === 'robots', G = storeGroups77();
+    for (const g of G){ const K = RK(g.kind), tr = K.tiers[g.ti] || {}, b = document.createElement('button');
+      b.className = 'item rb77'; b.dataset.id = `rb77:${g.kind}:${g.ti}`; b.hidden = !show; b.setAttribute('aria-pressed', 'false');
+      b.appendChild(iconCanvas(REST_SPR[g.kind] || R_ICON[g.kind]));
+      const nb = document.createElement('b'); nb.textContent = `${tr.name || ''}${K.name}`; b.appendChild(nb);
+      for (const l of [`放回${islLabel77(S.cur)}`, `倉庫還有 ${g.n}`]){ const s = document.createElement('small'); s.textContent = l; b.appendChild(s); }
+      const c = document.createElement('span'); c.className = 'count'; c.textContent = `倉庫 ${g.n}`; b.appendChild(c);
+      b.onclick = () => { if (RT.buildTabPick) return; const r = storedRobots51(g.kind, g.ti)[0]; if (r) placeBackRobot49(r.sid); UIbuildTray(); updateHint(); };
+      tray.appendChild(b); }
+    if (show && G.length) tray.querySelectorAll(':scope > .trayempty').forEach(s => s.remove());
+    if (G.length && typeof fitTrayText === 'function') fitTrayText();
+  } catch(e){ console.warn(e); }
+  return res; }; }
+// a robot placed back / bought from the 自動化 panel refreshes the 建設 tray too
+{ const _pb77b = placeBackRobot49; placeBackRobot49 = function(sid){ const r = _pb77b(sid); if (r && S.sel.tool === 'build') try { UIbuildTray(); } catch(e){} return r; }; }
+{ const _sr77 = storeRobot49; storeRobot49 = function(kind, id){ const r = _sr77(kind, id); if (r && S.sel.tool === 'build') try { UIbuildTray(); } catch(e){} return r; }; }
+
+/* ---------- 舊存檔：照現在的位子決定是哪座島 ---------- */
+{ const _ns77 = normalizeState; normalizeState = function(d){ const r = _ns77(d); if (!r) return r;
+  if (!r.v237){ const n = (r.maps || []).length;
+    if (r.fleet) for (const kind in r.fleet) for (const u of r.fleet[kind] || []){ if (!u) continue; const mi = u.home ? +String(u.home).split('|')[0] : NaN;
+      if (Number.isInteger(mi) && mi >= 0 && mi < n) u.isl77 = mi; else { u.isl77 = 0; u.any77 = true; } }
+    r.v237 = true; }
+  return r; }; }
+
+window.__farm237 = { assignHomes: () => assignHomes(), room77, dronePick: (D, k) => dronePick(D, k), buyRobot: (k, i) => buyRobot(k, i), placeBack: sid => placeBackRobot49(sid), storeRobot: (k, id) => storeRobot49(k, id), robotStoreHTML: () => robotStoreHTML(), unitText: (k, u) => unitText(k, u), act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray() };
 
   })(CFG, ATLAS_JSON);
 })();
