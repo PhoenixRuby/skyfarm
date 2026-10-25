@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.37-789a8d0db2'), getJSON('sprites/atlas.json?v=2.37-789a8d0db2')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.38-1412cd54d0'), getJSON('sprites/atlas.json?v=2.38-1412cd54d0')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.37-789a8d0db2';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.38-1412cd54d0';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15383,6 +15383,97 @@ function storeGroups77(){ const G = new Map();
   return r; }; }
 
 window.__farm237 = { assignHomes: () => assignHomes(), room77, dronePick: (D, k) => dronePick(D, k), buyRobot: (k, i) => buyRobot(k, i), placeBack: sid => placeBackRobot49(sid), storeRobot: (k, id) => storeRobot49(k, id), robotStoreHTML: () => robotStoreHTML(), unitText: (k, u) => unitText(k, u), act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray() };
+
+/* ===== 78. v2.38: 查看田地 also lists flowers, with how the bees took their nectar =====
+   1. every portion a bee takes is written on the flower: F.tk78 (total), F.bt78 / F.bu78 (this bloom), F.lt78 (time), F.lh78 ('bee' | 'bumble')
+   2. fieldInfo72 re-declared: crops first, then one group per flower kind
+   3. 收成 on a flower opens 查看田地 (was a one-line toast) ===== */
+const FI238 = (CFG.ui || {}).fieldInfo238 || {};
+const FST238 = FI238.flowerStages || { seed: ['幼苗', 'g'], bud: ['含苞', 'b'], bloom: ['盛開', 'y'], rest: ['休息中', 'b'], spent: ['謝了', 'x'] };
+
+/* ---------- 1. who took the nectar ---------- */
+{ const _sh78 = stepHive; stepHive = function(M, mi, k, T, dt, t, live){ const pv = RT.h78;
+  RT.h78 = { t, kind: (typeof isBumbleHive === 'function' && isBumbleHive(T)) ? 'bumble' : 'bee' };
+  try { return _sh78(M, mi, k, T, dt, t, live); } finally { RT.h78 = pv; } }; }
+{ const _tn78 = takeNectar; takeNectar = function(U){ const F = U && U.flower;
+  if (F){ if (F.bu78 !== F.used){ F.bu78 = F.used; F.bt78 = 0; } F.bt78 = (F.bt78 || 0) + 1; F.tk78 = (F.tk78 || 0) + 1;
+    const h = RT.h78; F.lt78 = h ? h.t : Date.now(); F.lh78 = h ? h.kind : 'bee'; }
+  return _tn78(U); }; }
+
+/* ---------- 2. 查看田地 with flowers ---------- */
+function hivesFor78(M, k){ const [x0, y0] = pkey(k), out = [];
+  for (const kk in M.tiles){ const H = M.tiles[kk]; if (!H || !H.queen || !(isHive(H) || (typeof isBumbleHive === 'function' && isBumbleHive(H)))) continue;
+    const [x, y] = pkey(kk), r = typeof hiveRange === 'function' ? hiveRange(H) : (BEE.range || 4);
+    if (Math.max(Math.abs(x - x0), Math.abs(y - y0)) <= r) out.push(H); }
+  return out; }
+function nectar78(n, max){ let h = ''; for (let i = 0; i < max; i++) h += `<i class="${i < n ? 'on' : ''}"></i>`; return `<span class="nc78" title="花蜜 ${n}/${max}">${h}</span>`; }
+function flowerRow78(M, comp, c, i, k){
+  const T = M.tiles[c], F = T.flower, D = FL[F.id], st = flowerStage(F), [sn, col] = FST238[st] || [st, 'x'];
+  const left = F.stage === 'grow' ? `${fmtDur(Math.max(0, D.growSeconds - F.prog))}後開花` : F.stage === 'bloom' ? '盛開中' : F.stage === 'rest' ? `${fmtDur(Math.max(0, F.rest))}後再開` : '會自己清掉';
+  const hv = hivesFor78(M, c);
+  const tags = (F.stage === 'bloom' && F.halved ? '<span class="tg72 dry78">花蜜減半</span>' : '') + (F.stage === 'bloom' && F.nectar > 0 && !hv.length ? '<span class="tg72 nohv78">附近沒蜂箱</span>' : '');
+  const max = F.halved ? Math.max(F.nectar, Math.ceil(D.nectar * (FR.dryNectarMult || .5))) : D.nectar;
+  const now = F.stage === 'bloom' && F.bu78 === F.used ? (F.bt78 || 0) : 0, blLeft = Math.max(0, (D.blooms || 1) - (F.used || 0));
+  const bits = [];
+  if (F.stage === 'bloom') bits.push(`花蜜 ${nectar78(F.nectar, max)} ${F.nectar}／${max} 份`, `這次被採 ${now} 份`);
+  else if (F.stage === 'grow') bits.push(`開花後有花蜜 ${D.nectar} 份`);
+  bits.push(`累計被採 ${F.tk78 || 0} 份`);
+  if (F.lt78) bits.push(`上次 ${fmtDur(Math.max(0, (Date.now() - F.lt78) / 1000))}前 · ${F.lh78 === 'bumble' ? '熊蜂' : '蜜蜂'}`);
+  else bits.push('還沒被採過');
+  if (F.stage !== 'done') bits.push(`還能開 ${blLeft} 次`);
+  return `<div class="r72 fl78${c === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, comp, c)}<canvas data-spr="flower_${F.id}_${st}" data-f="0" class="ico ic72"></canvas>
+    <span class="nm72">${D.name}<span class="st72 c-${col}">${sn}</span>${tags}<span class="bx78">${bits.join('<i class="sp78">·</i>')}</span></span><span class="tm72">🕒 ${left}</span>${drops72(T.m)}</div>`; }
+function flowerGroups78(M, comp, k){
+  const cells = comp.filter(c => M.tiles[c].flower && FL[M.tiles[c].flower.id] && !M.tiles[c].crop), by = new Map();
+  for (const c of cells){ const id = M.tiles[c].flower.id; if (!by.has(id)) by.set(id, []); by.get(id).push(c); }
+  const fly = beesFly(Date.now()), anyHive = cells.some(c => hivesFor78(M, c).length);
+  return [...by.entries()].map(([id, list]) => { const D = FL[id];
+    let note = '';
+    if (!anyHive) note += `<p class="warn61">⚠ 這塊田的花沒有蜂箱採得到：在花旁邊蓋蜂箱並放進蜂王</p>`;
+    else if (!fly) note += `<p class="small">現在${isNightAt(Date.now()) ? '是晚上' : '天氣不好'}，蜜蜂不出門採蜜</p>`;
+    return { id: 'fl:' + id, name: D.name, icon: `<canvas data-spr="flower_${id}_bloom" data-f="0" class="ico ic72"></canvas>`, pill: FI238.pill || '花', note,
+      desc: `開花 ${fmtDur(D.growSeconds)} · 每次花蜜 ${D.nectar} 份 · 開 ${D.blooms || 1} 次${D.regrowSeconds ? `（間隔 ${fmtDur(D.regrowSeconds)}）` : ''} · 產${itemName(D.honey)}`,
+      rows: list.map((c, i) => flowerRow78(M, comp, c, i, k)) }; }); }
+// replaces g72: same crop part, plus flowers
+function fieldInfo72(M, k){
+  const comp = compOf(M, k, U => U && U.t === 'soil'); if (!comp.length) return;
+  const T0 = M.tiles[k]; let sel = T0 && T0.crop ? T0.crop.id : T0 && T0.flower ? 'fl:' + T0.flower.id : null;
+  const grp = id => ((CFG.ui.cropGroups || {}).groups || []).find(g => (g.ids || []).includes(id));
+  const render = el => {
+    const crops = comp.filter(c => M.tiles[c].crop), flowers = comp.filter(c => M.tiles[c].flower && !M.tiles[c].crop), empty = comp.filter(c => !M.tiles[c].crop && !M.tiles[c].flower).length;
+    const ready = crops.filter(c => { const T = M.tiles[c]; return !T.crop.wither && T.crop.prog >= CFG.crops[T.crop.id].growSeconds; }).length;
+    const bloom = flowers.filter(c => M.tiles[c].flower.stage === 'bloom').length;
+    const by = new Map(); for (const c of crops){ const id = M.tiles[c].crop.id; if (!by.has(id)) by.set(id, []); by.get(id).push(c); }
+    const groups = [...by.entries()].map(([id, cells]) => { const C = CFG.crops[id], G = grp(id), ic = `<canvas data-spr="crop_${id}_mature_sway" data-f="0" class="ico ic72"></canvas>`;
+      return { id, name: C.name, icon: ic, pill: G ? G.label : '', desc: `生長 ${fmtDur(C.growSeconds)} · 售價 ${fmtN(C.sellPrice)} · 耗水 ×${C.waterUse ?? 1}`,
+        rows: cells.map((c, i) => { const T = M.tiles[c], [st, col] = cropStage72(T), C2 = CFG.crops[T.crop.id], left = T.crop.wither ? '枯萎了，用「澆水」救回來' : T.crop.prog >= C2.growSeconds ? '可以收成了' : fmtDur(cropLeft(T)) + '後';
+          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (T.crop.org ? '<span class="tg72 org">有機</span>' : '');
+          return `<div class="r72${c === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, comp, c)}<canvas data-spr="${cropSprite(T)}" data-f="0" class="ico ic72"></canvas>
+            <span class="nm72">${C2.name}<span class="st72 c-${col}">${st}</span>${tags}</span><span class="tm72">🕒 ${left}</span>${drops72(T.m)}</div>`; }) }; });
+    groups.push(...flowerGroups78(M, comp, k));
+    const head = `這塊田 共有 ${comp.length} 格 · 空格 ${empty} · 種植中 ${crops.length} 格${ready ? ` · 可收成 ${ready} 格` : ''}${flowers.length ? ` · 花 ${flowers.length} 格${bloom ? `（盛開 ${bloom}）` : ''}` : ''}`;
+    infoPanel72('查看田地', el, head, groups, sel, id => { sel = id; render(el); });
+    if (!groups.length) el.insertAdjacentHTML('beforeend', '<p>這塊田還沒種東西：用「播種」選種子或花苗，點田種下去。</p>'); };
+  openModal('查看田地', null, (kk, el) => render(el)); }
+
+/* ---------- 3. 收成 on a flower = 查看田地 ---------- */
+{ const _act78 = act; act = function(x, y){
+  if (!S || UI.expand || RT.pass72) return _act78(x, y);
+  const M = curMap(); if (!inMap(M, x, y) || RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act78(x, y);
+  const k = tkey(x, y), T = M.tiles[k];
+  if (S.sel.tool === 'hand' && T && T.t === 'soil' && T.flower && !T.crop && FL[T.flower.id]){ fieldInfo72(M, k); return; }
+  return _act78(x, y); }; }
+
+{ const st = document.createElement('style'); st.textContent = `
+.bx78{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;font-size:12px;opacity:.85}
+.sp78{font-style:normal;opacity:.5}
+.nc78{display:inline-flex;gap:2px;vertical-align:middle}.nc78 i{width:9px;height:9px;border-radius:50%;background:#d8cfb8}.nc78 i.on{background:#f0b429;box-shadow:inset 0 -2px 0 rgba(160,100,0,.35)}
+.tg72.dry78{background:#ffe1a8}.tg72.nohv78{background:#f6d0d0}
+body.night .nc78 i{background:rgba(255,255,255,.18)}body.night .nc78 i.on{background:#f0b429}`;
+  document.head.appendChild(st); }
+
+{ const _ns78 = normalizeState; normalizeState = function(d){ const r = _ns78(d); const s = r || d; try { if (s && !s.v238) s.v238 = 1; } catch(e){} return r; }; }
+window.__farm238 = { fieldInfo: (M, k) => fieldInfo72(M, k), act: (x, y) => act(x, y), takeNectar: U => takeNectar(U), stepHive: (...a) => stepHive(...a), hivesFor: hivesFor78 };
 
   })(CFG, ATLAS_JSON);
 })();

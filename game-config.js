@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.37",
+  "configVersion": "2.38",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -7600,6 +7600,32 @@ window.GAME_CONFIG = {
   "storageArt236": {
    "fish": "st_fish",
    "note": "v2.36：倉庫「魚」分類的大圖（batch41 ui_pg_st_fish）；水果、蜂蜜換成新圖（同名覆蓋）"
+  },
+  "fieldInfo238": {
+   "flowerStages": {
+    "seed": [
+     "幼苗",
+     "g"
+    ],
+    "bud": [
+     "含苞",
+     "b"
+    ],
+    "bloom": [
+     "盛開",
+     "y"
+    ],
+    "rest": [
+     "休息中",
+     "b"
+    ],
+    "spent": [
+     "謝了",
+     "x"
+    ]
+   },
+   "pill": "花",
+   "note": "v2.38：查看田地也列出花（收成工具點花＝開面板，長按田的小選單照舊）。左側作物後面接花種；右側每格：階段、開花倒數／再開倒數、花蜜剩餘／滿額、這次開花被採幾份、累計被採幾份、上次被誰採（蜜蜂／熊蜂、多久前）、還能開幾次、濕度。開花中但沒有蜂箱的範圍蓋到時標「附近沒蜂箱」"
   }
  },
  "droneWatering": {
