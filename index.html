@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-6232adaa7c'), getJSON('sprites/atlas.json?v=2.36.2-6232adaa7c')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.36.2-80a2813c57'), getJSON('sprites/atlas.json?v=2.36.2-80a2813c57')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.36.2-6232adaa7c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.36.2-80a2813c57';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15222,6 +15222,19 @@ function paintIcons(root){ root.querySelectorAll('canvas[data-spr]').forEach(c =
 function paint72(root){ root.querySelectorAll('canvas.ic72[data-spr]').forEach(c => paintInto75(c, c.dataset.spr, +c.dataset.f || 0, 80)); }
 
 window.__farm2363 = { paintInto75 };
+
+
+/* ===== 76. v2.36.4: 垃圾站 3／3 座而且倉庫裡還有 1 座時，「建設」選單可以選它拿出來放 =====
+   g32 的建設選單垃圾站按鈕用 stationCount()（地圖上的＋倉庫裡的）判斷上限，滿 3 座就在 onclick 擋掉並跳「垃圾站最多 3 座」。
+   g51「倉庫優先取用」只拿掉 locked 樣式、沒改 onclick，所以按鈕寫著「倉庫還有 1」卻選不起來。
+   倉庫裡有的時候改成可以選；選好之後 g51 的 placeStored51 會放倉庫那座（免費、哪座島都可以）。 ===== */
+{ const _ut76 = UIbuildTray; UIbuildTray = function(){ _ut76();
+  const tray = S && S.sel.tool === 'build' ? $('tray') : null, el = tray ? tray.querySelector('.item[data-id="trash_station"]') : null;
+  if (el && (S.buildStore.trash_station || 0) > 0){
+    el.classList.remove('locked');
+    el.onclick = () => { S.sel.build = 'trash_station'; UIbuildTray(); updateHint(); }; } }; }
+
+window.__farm2364 = { act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray() };
 
   })(CFG, ATLAS_JSON);
 })();
