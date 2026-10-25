@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.38-1412cd54d0'), getJSON('sprites/atlas.json?v=2.38-1412cd54d0')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.38-90ad7260fc'), getJSON('sprites/atlas.json?v=2.38-90ad7260fc')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.38-1412cd54d0';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.38-90ad7260fc';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15474,6 +15474,67 @@ body.night .nc78 i{background:rgba(255,255,255,.18)}body.night .nc78 i.on{backgr
 
 { const _ns78 = normalizeState; normalizeState = function(d){ const r = _ns78(d); const s = r || d; try { if (s && !s.v238) s.v238 = 1; } catch(e){} return r; }; }
 window.__farm238 = { fieldInfo: (M, k) => fieldInfo72(M, k), act: (x, y) => act(x, y), takeNectar: U => takeNectar(U), stepHive: (...a) => stepHive(...a), hivesFor: hivesFor78 };
+
+/* ===== 79. v2.38.1: 回到農場時，升級過場和農場新聞不再漏掉
+   1. 升級過場只排在記憶體（RT.lvQ）：收成升級後如果過場還沒播（350ms 延遲、有面板開著、切到背景時都在等），
+      App 就被切走、被系統關掉或關掉分頁，等級已經存進存檔，過場卻永遠不會再出現。
+      → 存檔記住「已經播過過場的等級」S.lvSeen79；進入農場、換用另一份進度（雲端「用雲端的」、匯入、復原備份）、
+        回到前景時，等級比它高就補播（金幣與特殊裝飾當時已經給過，過場只是顯示）。
+   2. 頁面在背景（document.hidden）時，g4 每秒的計時器還是會跑（瀏覽器節流成每秒～每分鐘一次）：每次只補算一小段，
+      期間的事件被 flushNotices(false) 當成看不到的即時提示吃掉，回來時 flushNotices(true) 已經沒東西排進農場新聞；
+      機器人離線紀錄（g53，一次補算要 ≥2 分鐘）也湊不到。
+      → 背景時不補算、也不清提示，回到前景（visibilitychange）一次補算，整段離開期間進農場新聞。
+   3. 手機從背景回來時，計時器可能比 visibilitychange 先跑（document.hidden 已經是 false）：一次補算很久卻用 flushNotices(false)。
+      → 這次補算的時間差 ≥ news.robotLogMinOfflineSeconds（預設 120 秒）就改成農場新聞。
+   4. adoptState 換成另一份進度時，被換掉那份的農場新聞（RT.newsQ54）清掉，只顯示換上來那份的離開期間。
+   存檔新欄位：lvSeen79（旗標 v2381；舊存檔＝目前等級，不會重播以前的過場）。 ===== */
+
+/* ---------- 1. 升級過場：記在存檔裡，漏掉的補播 ---------- */
+function levelsBetween79(from, to){ const ups = []; for (let lv = from + 1; lv <= to; lv++){ const L = lvInfo(lv); if (L) ups.push(L); } return ups; }
+{ const _ns79 = normalizeState; normalizeState = function(d){ const r = _ns79(d); if (!r) return r;
+  if (!r.v2381){ r.v2381 = 1; r.lvSeen79 = r.player.level; }
+  if (!(r.lvSeen79 >= 0) || r.lvSeen79 > r.player.level) r.lvSeen79 = r.player.level;   // 復原較舊的備份：等級變低
+  return r; }; }
+{ const _ng79 = newGame; newGame = function(...a){ const r = _ng79(...a); if (S){ S.v2381 = 1; S.lvSeen79 = S.player.level; } return r; }; }
+// 已經在排的（RT.lvQ）或已播過的（lvSeen79）之後，才是這次要排的；中間漏掉的等級一起併進同一張過場
+{ const _ql79 = queueLevelUps; queueLevelUps = function(from, ups, ...a){
+  if (S && S.lvSeen79 != null && ups && ups.length){ const base = RT.lvQ ? RT.lvQ.to : S.lvSeen79;
+    if (base < from){ ups = levelsBetween79(base, from).concat(ups); from = base; } }
+  return _ql79(from, ups, ...a); }; }
+// 過場真的出現了才算播過
+{ const _sl79 = showLevelUp; showLevelUp = function(...a){ const Q = RT.lvQ; const r = _sl79(...a);
+  try { if (S && Q && RT.lvQ !== Q && document.getElementById('lvup')){ S.lvSeen79 = Math.max(S.lvSeen79 || 0, Q.to); save(); } } catch(e){ console.error(e); }
+  return r; }; }
+function missedLv79(){ try {
+  if (!S || S.lvSeen79 == null) return;
+  if (S.lvSeen79 > S.player.level){ S.lvSeen79 = S.player.level; return; }
+  const base = RT.lvQ ? RT.lvQ.to : S.lvSeen79;
+  if (S.player.level > base && !RT.pendingLv) queueLevelUps(base, levelsBetween79(base, S.player.level));
+} catch(e){ console.error(e); } }
+{ const _es79 = enterSlot; enterSlot = function(...a){ const r = _es79(...a); setTimeout(missedLv79, 450); return r; }; }
+document.addEventListener('visibilitychange', () => { if (!document.hidden && S) setTimeout(missedLv79, 350); });
+
+/* ---------- 2～4. 農場新聞：背景時不補算，回來一次補算 ---------- */
+RT.gap79 = 0;
+const minGap79 = () => ((CFG.news || {}).robotLogMinOfflineSeconds || 120);
+{ const _st79 = simulateTo; simulateTo = function(toMs, ...a){
+  if (S && document.hidden) return;   // 回到前景時（visibilitychange）一次補算
+  const gap = S && S.lastSim ? (toMs - S.lastSim) / 1000 : 0;
+  if (gap > RT.gap79) RT.gap79 = gap;
+  return _st79(toMs, ...a); }; }
+{ const _fn79 = flushNotices; flushNotices = function(summary, ...a){
+  if (!summary){
+    if (S && document.hidden) return;                 // 先留著，回來時進農場新聞
+    if (RT.gap79 >= minGap79()) summary = true; }      // 這次補算的是一段離開期間
+  RT.gap79 = 0;
+  return _fn79(summary, ...a); }; }
+{ const _as79 = adoptState; adoptState = function(...a){
+  RT.newsQ54 = null;
+  const r = _as79(...a);
+  setTimeout(missedLv79, 450);
+  return r; }; }
+
+window.__farm2381 = { get gap(){ return RT.gap79; }, levelsBetween79, missedLv79, minGap79 };
 
   })(CFG, ATLAS_JSON);
 })();
