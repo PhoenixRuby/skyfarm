@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.38",
+  "configVersion": "2.39",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -53,7 +53,7 @@ window.GAME_CONFIG = {
    "moisture": "max",
    "storage": "sum"
   },
-  "animalStackMax": 3,
+  "animalStackMax": 0,
   "animalOldWarningRatio": 0.2,
   "meatAdultLifespanSeconds": 172800,
   "autoScope": "allMaps",
@@ -7626,6 +7626,10 @@ window.GAME_CONFIG = {
    },
    "pill": "花",
    "note": "v2.38：查看田地也列出花（收成工具點花＝開面板，長按田的小選單照舊）。左側作物後面接花種；右側每格：階段、開花倒數／再開倒數、花蜜剩餘／滿額、這次開花被採幾份、累計被採幾份、上次被誰採（蜜蜂／熊蜂、多久前）、還能開幾次、濕度。開花中但沒有蜂箱的範圍蓋到時標「附近沒蜂箱」"
+  },
+  "fieldInfo239": {
+   "mobileMapWidth": 72,
+   "note": "v2.39：rules.animalStackMax = 0 表示不設上限（生產型動物沒收產物也照吃飼料、照生產，直到壽命輪數用完；黃鼠狼一次偷光那隻雞堆著的蛋）。手機版（寬度 ≤ ui.fieldInfo236.mobileWidth）查看田地、花、查看魚池：每列拿掉作物／花／魚的小圖，改放位置小圖（寬 mobileMapWidth px）"
   }
  },
  "droneWatering": {

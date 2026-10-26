@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.38-90ad7260fc'), getJSON('sprites/atlas.json?v=2.38-90ad7260fc')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.39-cca5dc87ca'), getJSON('sprites/atlas.json?v=2.39-cca5dc87ca')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -2074,7 +2074,7 @@ function openAuto(){
     const status = (until, label) => now < until ? `<span class="pill ok">${label}中 · 剩 ${fmtDur((until - now)/1000)}</span>` : `<span class="pill">未啟用</span>`;
     el.innerHTML = `<p>效果同時作用在所有地圖，重複購買會累加，最長 ${R.autoMaxHours} 小時。</p>
       <div class="cards">${['water','feed'].map(kind => `<div class="card"><h4>${kind === 'water' ? '澆水無人機' : '餵食機器人'} ${status(kind === 'water' ? A.waterUntil : A.feedUntil, kind === 'water' ? '澆水' : '餵食')}</h4>
-        <p class="small">${kind === 'water' ? '效期內所有田和果樹保持全濕，枯萎的作物會復活，不用水桶的水。' : '效期內自動餵所有動物和魚，飼料費照扣；產物最多堆 3 份。'}</p>
+        <p class="small">${kind === 'water' ? '效期內所有田和果樹保持全濕，枯萎的作物會復活，不用水桶的水。' : '效期內自動餵所有動物和魚，飼料費照扣；' + (R.animalStackMax > 0 ? `產物最多堆 ${R.animalStackMax} 份。` : '產物沒收也會一直生產。')}</p>
         ${baseOwned(BASE_OF[kind]) ? (findBase(BASE_OF[kind]) ? '' : `<p class="small" style="color:var(--warn)">${BLD[BASE_OF[kind]].name}在倉庫裡，沒放出來的話${UNIT_NAME[kind]}沒電就會躺著。</p>`) : `<p class="small" style="color:var(--warn)">要先用「建設」蓋${BLD[BASE_OF[kind]].name}（Lv ${UNLOCK[BASE_OF[kind]]}、${fmtN(BLD[BASE_OF[kind]].cost)} 金幣）才能買。</p>`}
         ${Object.entries(CFG.automation).filter(([,a]) => a.kind === kind).map(([id,a]) => `<div class="row"><button class="btn${isUnlocked(id) ? '' : ' ghost'}" data-buy="${id}" ${isUnlocked(id) && baseOwned(BASE_OF[kind]) ? '' : 'disabled'}>${a.name} · ${a.hours} 小時 · ${fmtN(a.cost)} 金幣</button>${isUnlocked(id) ? '' : `<span class="pill lock">Lv ${UNLOCK[id]}</span>`}</div>`).join('')}</div>`).join('')}</div>`;
     el.onclick = e => { const b = e.target.closest('button[data-buy]'); if (!b) return; const a = CFG.automation[b.dataset.buy];
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.38-90ad7260fc';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.39-cca5dc87ca';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -14928,7 +14928,7 @@ function fieldInfo72(M, k){
     const groups = [...by.entries()].map(([id, cells]) => { const C = CFG.crops[id], G = grp(id), ic = `<canvas data-spr="crop_${id}_mature_sway" data-f="0" class="ico ic72"></canvas>`;
       return { id, name: C.name, icon: ic, pill: G ? G.label : '', desc: `生長 ${fmtDur(C.growSeconds)} · 售價 ${fmtN(C.sellPrice)} · 耗水 ×${C.waterUse ?? 1}`,
         rows: cells.map((c, i) => { const T = M.tiles[c], [st, col] = cropStage72(T), C2 = CFG.crops[T.crop.id], left = T.crop.wither ? '枯萎了，用「澆水」救回來' : T.crop.prog >= C2.growSeconds ? '可以收成了' : fmtDur(cropLeft(T)) + '後';
-          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (T.crop.org ? '<span class="tg72 org">有機</span>' : '');
+          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (isOrganic(T.crop) ? '<span class="tg72 org">有機</span>' : '');
           return `<div class="r72${c === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, comp, c)}<canvas data-spr="${cropSprite(T)}" data-f="0" class="ico ic72"></canvas>
             <span class="nm72">${C2.name}<span class="st72 c-${col}">${st}</span>${tags}</span><span class="tm72">🕒 ${left}</span>${drops72(T.m)}</div>`; }) }; });
     infoPanel72('查看田地', el, `這塊田 共有 ${comp.length} 格 · 空格 ${empty} · 種植中 ${crops.length} 格${ready ? ` · 可收成 ${ready} 格` : ''}`, groups, sel, id => { sel = id; render(el); });
@@ -15447,7 +15447,7 @@ function fieldInfo72(M, k){
     const groups = [...by.entries()].map(([id, cells]) => { const C = CFG.crops[id], G = grp(id), ic = `<canvas data-spr="crop_${id}_mature_sway" data-f="0" class="ico ic72"></canvas>`;
       return { id, name: C.name, icon: ic, pill: G ? G.label : '', desc: `生長 ${fmtDur(C.growSeconds)} · 售價 ${fmtN(C.sellPrice)} · 耗水 ×${C.waterUse ?? 1}`,
         rows: cells.map((c, i) => { const T = M.tiles[c], [st, col] = cropStage72(T), C2 = CFG.crops[T.crop.id], left = T.crop.wither ? '枯萎了，用「澆水」救回來' : T.crop.prog >= C2.growSeconds ? '可以收成了' : fmtDur(cropLeft(T)) + '後';
-          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (T.crop.org ? '<span class="tg72 org">有機</span>' : '');
+          const tags = (T.crop.pest ? '<span class="tg72 bug">蟲</span>' : '') + (isOrganic(T.crop) ? '<span class="tg72 org">有機</span>' : '');
           return `<div class="r72${c === k ? ' me' : ''}"><b class="n72">${i + 1}</b>${cellsMap72(M, comp, c)}<canvas data-spr="${cropSprite(T)}" data-f="0" class="ico ic72"></canvas>
             <span class="nm72">${C2.name}<span class="st72 c-${col}">${st}</span>${tags}</span><span class="tm72">🕒 ${left}</span>${drops72(T.m)}</div>`; }) }; });
     groups.push(...flowerGroups78(M, comp, k));
@@ -15535,6 +15535,29 @@ const minGap79 = () => ((CFG.news || {}).robotLogMinOfflineSeconds || 120);
   return r; }; }
 
 window.__farm2381 = { get gap(){ return RT.gap79; }, levelsBetween79, missedLv79, minGap79 };
+
+/* ===== 80. v2.39: animal products stack without a cap (rules.animalStackMax 0 = no cap); phone 查看田地／魚池 rows show the position map instead of the crop/fish icon ===== */
+const FI239 = (CFG.ui || {}).fieldInfo239 || {};
+const stackCap80 = () => { const mx = R.animalStackMax; return mx > 0 ? mx : Infinity; };
+
+/* ---------- 1. canFeed: same as g1, the stack cap comes from stackCap80 ---------- */
+function canFeed(T, A){
+  let ok = false;
+  if (T.timer > 0) ok = false;
+  else if (!isAdult(T, A)) ok = true;
+  else if (A.type === 'meat') ok = false;
+  else ok = T.cycles > 0 && (T.stack || 0) < stackCap80();
+  return ok; }
+
+/* ---------- 2. phone layout: position map takes the icon's place in each row ---------- */
+{ const st = document.createElement('style'), w = FI239.mobileMapWidth || 72; st.textContent = `
+@media (max-width:${FI236.mobileWidth || 720}px){
+  .r72{grid-template-columns:24px ${w}px 1fr auto;grid-template-areas:"n m nm f" "n m tm f"}
+  .r72 .mm72{display:block;grid-area:m;width:${w}px;height:auto}
+  .r72 > .ic72{display:none}}`;
+  document.head.appendChild(st); }
+
+window.__farm239 = { canFeed, stackCap80 };
 
   })(CFG, ATLAS_JSON);
 })();
