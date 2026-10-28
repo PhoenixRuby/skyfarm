@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.39-cca5dc87ca'), getJSON('sprites/atlas.json?v=2.39-cca5dc87ca')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.40.2-1b9769d6b7'), getJSON('sprites/atlas.json?v=2.40.2-1b9769d6b7')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.39-cca5dc87ca';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.40.2-1b9769d6b7';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -15558,6 +15558,521 @@ function canFeed(T, A){
   document.head.appendChild(st); }
 
 window.__farm239 = { canFeed, stackCap80 };
+
+/* ===== 81. v2.40: 賣出視窗夜晚配色、升級視窗（只有按「太好了」才收起、全部列出、電腦版寬／手機版 RWD）、雷神娃娃（雷雨＋充電）、
+   27 種蝴蝶依寄主植物（13 種新寄主植物、野生產卵、蝴蝶面板與圖鑑、死後撿起來、40% 做成標本）、昆蟲分頁 設施｜蜜蜂｜蝴蝶、
+   寵物鳥 11 種與鳥屋（抓果樹上的蟲）、播種經驗、金幣歷程明細、新徽章 ===== */
+const TD40 = (CFG.weatherDolls.types || {}).thunder || null;
+const BFS40 = (BF && BF.species) || {}, BFV40 = (BF && BF.v240) || {}, BFR40 = (BF && BF.rarity) || {}, BFF40 = (BF && BF.families) || {};
+const BR40 = CFG.birds240 || { species: {}, house: {}, food: {}, skills: {} }, BSK40 = BR40.skills || {};
+const HW40 = CFG.hostWeeds240 || { ids: [] };
+const DEADMS40 = (BFV40.deadHours || 24) * 3600e3;
+const BFHOSTS40 = {}; for (const [sp, D] of Object.entries(BFS40)) BFHOSTS40[sp] = new Set(D.hosts || []);
+const HOSTIDX40 = {}; for (const [sp, D] of Object.entries(BFS40)) for (const h of D.hosts || []) (HOSTIDX40[h] = HOSTIDX40[h] || []).push(sp);
+const isHostDeco40 = id => !!(CFG.decos[id] && CFG.decos[id].butterflyHost);
+for (const id in CFG.decos) if (isHostDeco40(id)) DECO_SPR[id] = `deco_${id}_idle`;
+DECO_SPR.bird_house = '__den';
+if (typeof ITEM_ICON === 'object') ITEM_ICON.bird_food = 'ui_bird_food';
+const rnd40 = a => a[Math.floor(Math.random() * a.length)];
+const bfName40 = sp => (BFS40[sp] || {}).name || '蝴蝶';
+const hostName40 = h => h === 'avocado' || CFG.trees[h] ? (CFG.trees[h] || {}).name : CFG.decos[h] ? CFG.decos[h].name : CFG.crops[h] ? CFG.crops[h].name : h;
+const hostNames40 = sp => [...(BFHOSTS40[sp] || [])].map(hostName40).filter(Boolean).join('、');
+const eggCost40 = sp => ((BFR40[(BFS40[sp] || {}).rarity] || {}).eggCost) || (BF && BF.egg.cost) || 80;
+const specPrice40 = sp => ((BFR40[(BFS40[sp] || {}).rarity] || {}).specimenPrice) || 100;
+const dayNo40 = t => Math.floor((t + 8 * 3600e3) / DAYMS);
+
+/* ---------- 0. CSS ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+body.night .sell49 .sh49{background:linear-gradient(#22375f,#18284a)}
+body.night .sell49 h3{color:#fff}
+body.night .qm49 button{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.3);color:#dfe8f8}
+body.night .qm49 button.on{background:#24467a;border-color:#6fa8ff;color:#fff}
+body.night .cus49 button,body.night .cus49 input[type=number]{background:rgba(255,255,255,.08);border-color:rgba(150,185,255,.3);color:#eaf2ff}
+#lvup.lv40 .lvbox{max-width:none;width:min(${(CFG.ui.levelUp240 || {}).desktopCardWidth || 680}px,calc(100vw - 24px));max-height:calc(100vh - 16px);max-height:calc(100dvh - 16px);padding:0;gap:8px}
+#lvup.lv40 .lvhead40{display:flex;flex-direction:column;align-items:center;gap:6px}
+#lvup.lv40 .lvmedal{width:150px;height:150px}
+#lvup.lv40 .lvcard{display:flex;flex-direction:column;min-height:0;max-height:calc(100dvh - 250px);padding:14px 18px}
+#lvup.lv40 .lvscroll40{overflow:auto;min-height:0;overscroll-behavior:contain}
+#lvup.lv40 .lvitems{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
+#lvup.lv40 .lvfoot{flex:none;padding-top:10px;border-top:1px solid rgba(120,140,170,.2)}
+#lvup.lv40 #lvOk{min-width:140px;font-size:17px;padding:10px 22px}
+@media (max-width:600px){
+  #lvup.lv40 .lvbox{width:calc(100vw - 24px)}
+  #lvup.lv40 .lvmedal{width:104px;height:104px}#lvup.lv40 .lvmedal b{font-size:30px}
+  #lvup.lv40 h2{font-size:22px}
+  #lvup.lv40 .lvcard{max-height:70vh;max-height:70dvh;padding:12px}
+  #lvup.lv40 .lvitems{grid-template-columns:repeat(4,1fr)}
+  #lvup.lv40 .lvfoot{flex-direction:column;align-items:stretch}#lvup.lv40 #lvOk{width:100%}}
+@media (max-height:520px) and (min-width:560px){
+  #lvup.lv40 .lvbox{flex-direction:row;align-items:center;width:min(860px,calc(100vw - 24px))}
+  #lvup.lv40 .lvhead40{flex:0 0 34%}#lvup.lv40 .lvmedal{width:96px;height:96px}#lvup.lv40 .lvmedal b{font-size:28px}#lvup.lv40 h2{font-size:20px}
+  #lvup.lv40 .lvcard{flex:1;max-height:calc(100dvh - 24px)}#lvup.lv40 .lvitems{grid-template-columns:repeat(5,1fr)}}
+#flash40{position:fixed;inset:0;background:#eef4ff;opacity:0;pointer-events:none;z-index:5;transition:opacity .35s ease-out}
+.bf40 .card40{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start;padding:10px;border-radius:14px;background:rgba(120,150,190,.08);margin:8px 0}
+.bf40 .card40 img{width:96px;height:96px;object-fit:contain}
+.bf40 .card40 h4{margin:0 0 4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.bf40 .pl40{font-size:11px;padding:2px 8px;border-radius:10px;background:#e8f2fd;color:#1f5fa8}
+.bf40 .tl40{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:6px 0}.bf40 .tl40 span{font-size:11.5px;text-align:center;padding:3px 0;border-radius:8px;background:rgba(120,140,170,.15);color:#6a7a8a}
+.bf40 .tl40 span{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 4px}.bf40 .tl40 span img{width:46px;height:46px;object-fit:contain}.bf40 .tl40 span:not(.on):not(.done) img{opacity:.55}.bf40 .tl40 img.unk40{filter:brightness(0);opacity:.35!important}
+@media (max-width:600px){.bf40 .card40{grid-template-columns:64px 1fr}.bf40 .card40 > img{width:64px;height:64px}.bf40 .tl40 span img{width:34px;height:34px}}
+.bf40 .tl40 span.done{background:#d9efd2;color:#2f6a2a}.bf40 .tl40 span.on{background:#2f7fd0;color:#fff;font-weight:700}
+.bf40 .pb40{height:6px;border-radius:3px;background:rgba(0,0,0,.08);overflow:hidden}.bf40 .pb40 i{display:block;height:100%;background:#2f7fd0}
+.bf40 .sm40{font-size:12.5px;color:#5a6a7a;margin:4px 0 0}
+.bf40 .bk40{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.bf40 .bk40 div{padding:8px;border-radius:12px;background:rgba(120,150,190,.08);text-align:center;font-size:12px}.bf40 .bk40 img{width:72px;height:72px;object-fit:contain}
+.bf40 .bk40 div.no img{filter:brightness(0);opacity:.28}.bf40 .bk40 b{display:block;font-size:13px}
+.bf40 .dead40{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:#fff4e5;color:#7a4a12;margin:8px 0}
+body.night .bf40 .card40,body.night .bf40 .bk40 div{background:rgba(255,255,255,.06)}body.night .bf40 .sm40{color:#b9c8e0}body.night .bf40 .dead40{background:rgba(255,200,120,.12);color:#ffd9a8}
+.bh40 .bird40{display:grid;grid-template-columns:72px 1fr;gap:10px;padding:10px;border-radius:14px;background:rgba(120,150,190,.08);margin:8px 0}
+.bh40 .bird40 img{width:72px;height:72px;object-fit:contain}.bh40 .bird40 h4{margin:0 0 4px}.bh40 .row{gap:6px;flex-wrap:wrap}
+body.night .bh40 .bird40{background:rgba(255,255,255,.06)}
+.sp40 h3 img{height:42px;vertical-align:middle;margin-right:6px}
+.cl40{display:block;font-size:11.5px;color:#6a7a8a}body.night .cl40{color:#a9b9d2}
+`; document.head.appendChild(st); }
+
+/* ---------- 1. 升級視窗：只有按「太好了」才收起，全部列出 ---------- */
+function showLevelUp(){
+  if (!RT.lvQ) return;
+  if ((typeof drag !== 'undefined' && drag) || (!$('modal').hidden && $('modalTitle').textContent === '選擇農場') || document.querySelector('#lvup.met53')){ RT.lvT = setTimeout(showLevelUp, 600); return; }
+  const Q = RT.lvQ; RT.lvQ = null; const old = $('lvup'); if (old) old.remove();
+  const ov = document.createElement('div'); ov.id = 'lvup'; ov.className = 'lv40'; if (!motion) ov.classList.add('still');
+  const all = [...Q.unlocks.map(u => ({ u, n: nameOf(u) })).filter(x => x.n), ...Q.decos.map(d => ({ u: d, n: nameOf(d) }))];
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvhead40"><div class="lvmedal"><img src="${IMGSRC.ui_levelup_medal}" alt=""><b>${motion ? Q.from : Q.to}</b></div>
+    <h2>升級了！${Q.from + 1 < Q.to ? `Lv ${Q.from} → Lv ${Q.to}` : `Lv ${Q.to}`}</h2></div>
+    <div class="lvcard"><div class="lvscroll40">${all.length || Q.notes.length ? `<h4>新解鎖${all.length ? `（${all.length}）` : ''}</h4><div class="lvitems"></div>${Q.notes.length ? `<p class="small">${Q.notes.join('、')}</p>` : ''}` : ''}
+      ${Q.decos.length ? `<p class="lvdeco">特殊裝飾：${Q.decos.map(d => d === 'golden_farmhouse' ? '金色農舍（農舍已換成金色，設定裡可以切換）' : `${nameOf(d)}（已放進飾品倉庫）`).join('、')}</p>` : ''}</div>
+      <div class="lvfoot"><span class="lvcoin">金幣 +${fmtN(Q.coins)}${Q.to - Q.from > 1 ? `（${Q.to - Q.from} 級合計）` : ''}</span><button class="btn" id="lvOk">太好了</button></div></div></div>`;
+  document.body.appendChild(ov);
+  const box = ov.querySelector('.lvitems');
+  if (box) for (const x of all){ const sp = document.createElement('span'), [n, f] = unlockIcon38(x.u); const ui = IMGSRC['ui_' + x.u] || IMGSRC['ui_' + String(x.u).replace(/_\d+$/, '')];
+    if (n) sp.appendChild(iconCanvas(n, f)); else if (ui){ const im = document.createElement('img'); im.src = ui; im.alt = ''; im.style.cssText = 'width:44px;height:44px;object-fit:contain'; sp.appendChild(im); } else { const i = document.createElement('i'); i.className = 'ph53'; sp.appendChild(i); }
+    sp.appendChild(document.createTextNode(x.n.replace('（花苗）', ''))); box.appendChild(sp); }
+  sfx('levelup');
+  if (motion){ const b = ov.querySelector('.lvmedal b'), steps = Q.to - Q.from, dt = Math.max(70, Math.min(160, 800 / Math.max(1, steps))); let v = Q.from;
+    setTimeout(function tick(){ if (!ov.isConnected) return; v++; b.textContent = v; b.classList.remove('flip53'); void b.offsetWidth; b.classList.add('flip53'); if (v < Q.to) setTimeout(tick, dt); }, 450); }
+  let done = false; const stopC = confetti53(ov, 'confetti');
+  const close = () => { if (done) return; done = true; stopC(); ov.remove(); UIbuildTray(); updateHint(); renderHUD(); if (RT.lvQ){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 200); } };
+  setTimeout(() => { try { if (ov.isConnected) flyCoins(ov.querySelector('.lvcoin'), Q.coins); } catch(e){} }, 900);
+  ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
+function showMeteor53(rw, msg, n, max){
+  if (document.getElementById('lvup')){ toast(`流星許願成功！${msg}（今晚 ${n}/${max}）`, true, 3000); return; }
+  const ov = document.createElement('div'); ov.id = 'lvup'; ov.className = 'met53 lv40' + (motion ? '' : ' still');
+  const cls = rw.type === 'xp' ? 'xp' : rw.type === 'coins' ? '' : 'seed', img = meteorMedal53();
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvhead40"><div class="lvmedal"><img src="${img}" alt=""></div><h2>抓到流星，許願成功！</h2></div>
+    <div class="lvcard"><div class="lvscroll40"><div class="rw53 ${cls}">${msg}</div><p class="small">今晚已許 ${n} / ${max} 個願望${n >= max ? '，明晚再來' : ''}</p></div>
+      <div class="lvfoot" style="justify-content:center"><button class="btn" id="lvOk">太好了</button></div></div></div>`;
+  document.body.appendChild(ov); sfx('levelup');
+  let done = false; const stopC = confetti53(ov, 'star');
+  const close = () => { if (done) return; done = true; stopC(); ov.remove(); renderHUD(); if (RT.lvQ){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 200); } };
+  ov.querySelector('#lvOk').addEventListener('click', e => { e.stopPropagation(); close(); }); }
+
+/* ---------- 2. 播種經驗：作物、花苗每格 +1，果樹每棵 +1 ---------- */
+const PLANTXP40 = R.plantXp ?? 1; // 經驗字畫在「-金幣」下面 20px（gain 會把經驗字放在 x+16、y-12）
+{ const _pc40 = plantCrop; plantCrop = function(T, cx, cy){ const had = T.crop; const r = _pc40(T, cx, cy); if (!had && T.crop && PLANTXP40) gain(0, PLANTXP40, cx - 16, cy + 16); return r; }; }
+{ const _pt40 = plantTree; plantTree = function(M, k, cx, cy){ const was = M.tiles[k] && M.tiles[k].t; const r = _pt40(M, k, cx, cy); const T = M.tiles[k]; if (was !== 'tree' && T && T.t === 'tree' && PLANTXP40) gain(0, PLANTXP40, cx - 16, cy + 16); return r; }; }
+{ const _pf40 = plantFlower; plantFlower = function(T, cx, cy){ const had = T.flower; const r = _pf40(T, cx, cy); if (!had && T.flower && PLANTXP40) gain(0, PLANTXP40, cx - 16, cy + 16); return r; }; }
+
+/* ---------- 3. 雷神娃娃：雷雨（同雨天娃娃）＋整段時間慢慢充電池 ---------- */
+const isThunder40 = d => !!d && d.type === 'thunder';
+const thunderNow40 = () => isThunder40(activeDoll());
+const TSIZE40 = s => (TD40 && TD40.sizeNames && TD40.sizeNames[s]) || SIZE_NAME[s] || '';
+{ const _fr40 = farmRain; farmRain = function(t){ if (S && thunderNow40()) return true; return _fr40(t); }; }
+{ const _fc40 = farmCloudy; farmCloudy = function(t){ if (S && thunderNow40()) return true; return _fc40(t); }; }
+{ const _du40 = dollUsable; dollUsable = function(type, t = Date.now()){ if (type === 'thunder') return farmRain(t) ? '現在正在下雨，雷神娃娃要在沒下雨的時候用' : null; return _du40(type, t); }; }
+{ const _dn40 = dollName; dollName = function(d){ if (isThunder40(d)) return `${DOLL.types.thunder.name}（${TSIZE40(d.size)}）`; return _dn40(d); }; }
+{ const _nd40 = newDoll; newDoll = function(type, size){ const d = _nd40(type, size); if (type === 'thunder' && TD40) d.left = (TD40.minutes[size] || 10) * 60; return d; }; }
+function thunderCharge40(d){ if (!d.chg){ const cap = batteryCap(); d.chg = { target: cap * ((TD40.charge || {})[d.size] || 0), done: 0, total: d.left }; } return d.chg; }
+{ const _put40 = putDoll; putDoll = function(M, k, d, cx, cy){
+  if (!isThunder40(d) || !(d.left > 0)) return _put40(M, k, d, cx, cy);
+  M.tiles[k] = { t: 'doll', did: d.id }; S.activeDoll = d.id; RT.dollStart = performance.now(); RT.bolt40 = { next: performance.now() + 600 };
+  S.player.water = Math.max(S.player.water, rainCapC());
+  for (const MM of S.maps) for (const kk in MM.tiles){ const T = MM.tiles[kk]; if (T.t === 'soil' || T.t === 'tree'){ T.m = R.moistMaxLevel; T.dry = 0; if (T.crop) T.crop.wither = false; } }
+  const C = thunderCharge40(d), left = Math.max(0, C.target - C.done);
+  toast(`${dollName(d)}開始打雷下雨了，田都濕了、水塔補滿${batteryCap() > 0 ? `，雷雨會慢慢把電池充 ${left.toFixed(1)} 度` : '。沒有電池，這場雷雨不會充電'}（${fmtLeft(d.left)}）`, true, 3600); }; }
+{ const _sd40 = stepDoll; stepDoll = function(dt){
+  const d = activeDoll();
+  if (isThunder40(d) && d.left > 0){ const C = thunderCharge40(d), use = Math.min(dt, d.left), add = C.total > 0 ? C.target * use / C.total : 0;
+    if (add > 0 && C.done < C.target){ const a = Math.min(add, C.target - C.done); C.done += a; const room = Math.max(0, batteryCap() - S.power.battery); S.power.battery += Math.min(a, room); C.got = (C.got || 0) + Math.min(a, room); } }
+  return _sd40(dt); }; }
+{ const _ti40 = trayItem; trayItem = function(kind, id, name, lines, ...rest){
+  if (kind === 'doll' && typeof id === 'string' && id.startsWith('thunder:') && TD40){ const s = id.split(':')[1];
+    if (s !== 'spent'){ name = `${TD40.name}（${TSIZE40(s)}）`; lines = lines.slice(); if (/^效果/.test(lines[1] || '')) lines[1] = `效果 ${fmtDur((TD40.minutes[s] || 10) * 60)} · 充電 ${Math.round((TD40.charge[s] || 0) * 100)}%`; else if (lines[1] && /剩/.test(lines[1])) {} } }
+  return _ti40(kind, id, name, lines, ...rest); }; }
+{ const td = TOOLS.find(t => t.id === 'deco'), _hd40 = td.hint; td.hint = () => { const sd = String(S.sel.deco);
+  if (sd.startsWith('dollbuy:thunder:') && TD40){ const s = sd.split(':')[2]; return `點草地放${TD40.name}（${TSIZE40(s)}）· ${DOLL.prices.thunder[s]} 金幣 · 沒下雨時才能用 · 打雷下雨 ${fmtDur(TD40.minutes[s] * 60)}，電池充 ${Math.round(TD40.charge[s] * 100)}%`; }
+  if (isHostDeco40(S.sel.deco)){ const D = CFG.decos[S.sel.deco], sps = HOSTIDX40[S.sel.deco] || [], n = S.storage[S.sel.deco] || 0;
+    return `點草地種${D.name} · ${n ? `倉庫還有 ${n} 株，免費` : `${fmtN(D.cost)} 金幣`} · 蝴蝶寄主：${sps.map(bfName40).join('、')}`; }
+  return _hd40(); }; }
+{ const _tap40 = tapDoll; tapDoll = function(T){ const d = dollById(T.did); if (isThunder40(d) && d.left > 0 && S.activeDoll === d.id){ const C = thunderCharge40(d);
+  toast(`${dollName(d)}作用中 · ${fmtLeft(d.left)} · ${C.target > 0 ? `電池已充 ${(C.got || 0).toFixed(2)}／${C.target.toFixed(2)} 度` : '沒有電池，不充電'}`); return; } return _tap40(T); }; }
+// forecast card: 雷神娃娃 is a thunderstorm
+{ const _fh40 = forecastHTML; forecastHTML = function(...a){ let h = _fh40(...a); if (S && thunderNow40()) h = String(h).replace('是晴天（晚上只有不下雨）', '一直打雷下雨，電池會慢慢充電'); return h; }; }
+// snow on the thunder doll
+{ const _spr40 = spr; spr = function(name, frame, x, y, flip, alpha){ const r = _spr40(name, frame, x, y, flip, alpha);
+  if (RT.inWorld && S && S.snow && S.snow.cover && typeof name === 'string' && name.startsWith('doll_thunder_') && ATLAS['snow_' + name] && IMG['snow_' + name]) _spr40('snow_' + name, Math.min(frame || 0, (ATLAS['snow_' + name].frames || 1) - 1), x, y, flip, alpha);
+  return r; }; }
+// lightning: a bolt somewhere on the island, a white flash, a rumble
+let AC40 = null;
+function rumble40(){ try { if (!S.settings.sfx) return; AC40 = AC40 || new (window.AudioContext || window.webkitAudioContext)(); const ac = AC40, dur = 2.2, n = Math.floor(ac.sampleRate * dur), buf = ac.createBuffer(1, n, ac.sampleRate), d = buf.getChannelData(0);
+  let v = 0; for (let i = 0; i < n; i++){ v = v * .985 + (Math.random() * 2 - 1) * .15; d[i] = v * Math.pow(1 - i / n, 1.6) * (i < ac.sampleRate * .05 ? i / (ac.sampleRate * .05) : 1); }
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'lowpass'; f.frequency.value = 260; g.gain.value = Math.min(1, (S.settings.sfxVolume ?? .7) * 1.6);
+  s.buffer = buf; s.connect(f); f.connect(g); g.connect(ac.destination); s.start(); } catch(e){} }
+function flash40(){ if (!motion || (typeof perfVal69 === 'function' && 0)) return; let el = $('flash40'); if (!el){ el = document.createElement('div'); el.id = 'flash40'; document.body.appendChild(el); }
+  el.style.transition = 'none'; el.style.opacity = '.55'; void el.offsetWidth; el.style.transition = ''; el.style.opacity = '0'; }
+{ const _dw40 = drawWorld; drawWorld = function(t, now){ const r = _dw40(t, now);
+  if (!S || RT.snap68) return r;
+  try {
+    if (thunderNow40()){ const pn = performance.now(), B = RT.bolt40 = RT.bolt40 || { next: pn + 1500 }, L = TD40.lightning || {};
+      if (pn >= B.next && !document.hidden){ const M = curMap(), ks = Object.keys(M.tiles); let x, y;
+        if (ks.length){ [x, y] = pkey(rnd40(ks)); } else { const [bx, by] = M.blocks[0]; x = bx * BS + Math.random() * BS; y = by * BS + Math.random() * BS; }
+        B.at = { x, y, t0: pn, f: Math.floor(Math.random() * 3) }; B.next = pn + ((L.everySecondsMin || 5) + Math.random() * ((L.everySecondsMax || 14) - (L.everySecondsMin || 5))) * 1000;
+        if (L.flash !== false) flash40(); setTimeout(rumble40, 250 + Math.random() * 600); }
+      if (B.at && pn - B.at.t0 < 260){ const c = center(B.at.x, B.at.y); spr('fx_lightning', B.at.f, c.cx, c.cy); } }
+    drawBirds40(now);
+  } catch(e){ if (!RT.err40){ RT.err40 = 1; console.warn(e); } }
+  return r; }; }
+
+/* ---------- 4. 蝴蝶：依寄主植物 ---------- */
+function hostIdOf40(T){ if (!T) return null; if (T.t === 'tree' || T.t === 'deco') return T.id; if (T.t === 'soil' && T.crop && !T.crop.wither) return T.crop.id; return null; }
+const hostOk40 = (T, sp) => { const h = hostIdOf40(T); return !!h && !!BFHOSTS40[sp] && BFHOSTS40[sp].has(h); };
+const hostAny40 = T => { const h = hostIdOf40(T); return !!h && !!HOSTIDX40[h]; };
+const maxPer40 = () => (BF && BF.maxPerTree) || 2;
+function hostsWithRoom40(sp){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (hostOk40(T, sp) && (T.bf || []).length < maxPer40()) out.push({ M, mi, k, T }); } }); return out; }
+function bfBook40(){ return (S.bfBook40 = S.bfBook40 || {}); }
+function specInv40(){ return (S.spec40 = S.spec40 || {}); }
+function stepButterflies(t){
+  if (!BF) return; const born = [], dead = DEADMS40;
+  S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T) continue;
+    if (T.bfd){ T.bfd = T.bfd.filter(d => t - d.t < dead); if (!T.bfd.length) delete T.bfd; }
+    if (!T.bf) continue; if (!T.bf.length){ delete T.bf; continue; }
+    for (const b of T.bf) if (!b.sp){ b.sp = rnd40(BFV40.oldEggsBecome || ['papilio_demoleus']); b.known = b.st === 'adult'; }
+    T.bf = T.bf.filter(b => b.st === 'adult' || hostOk40(T, b.sp));   // 寄主沒了（收成、剷除、換掉）→ 卵、幼蟲、蛹一起沒了；成蝶照常飛、活完（v2.40.3）
+    T.bf = T.bf.filter(b => { for (let g = 0; g < 5; g++){ const d = (BFS[b.st] || 1) * DAYMS; if (t - b.t0 < d) return true;
+        const i = BF_ORDER.indexOf(b.st); if (i >= 3){ born.push({ mi, k, sp: b.sp, t: b.t0 + d }); return false; } b.t0 += d; b.st = BF_ORDER[i + 1]; if (b.st === 'adult') b.known = true; } return true; });
+    if (!T.bf.length) delete T.bf; } });
+  for (const b of born){ const own = S.maps[b.mi].tiles[b.k];
+    if (own){ (own.bfd = own.bfd || []).push({ sp: b.sp, t: b.t }); if (liveT(t) && b.mi === S.cur && Date.now() - (RT.bfDeadToast40 || 0) > 60e3){ RT.bfDeadToast40 = Date.now(); toast(`一隻${bfName40(b.sp)}走完了一生，掉在${hostName40(hostIdOf40(own)) || '樹'}下面，用「收成」點那一格撿起來（24 小時內）`, true, 4200); } }
+    let host = own && hostOk40(own, b.sp) && (own.bf || []).length < maxPer40() ? own : null;
+    if (!host){ const c = hostsWithRoom40(b.sp); host = c.length ? rnd40(c).T : null; }
+    if (host) (host.bf = host.bf || []).push({ st: 'egg', t0: b.t, sp: b.sp, known: true }); }
+  wildDaily40(t);
+  RT.bfBoost = new WeakSet(); RT.bfSlow = new WeakMap(); const r = BF.adultRange ?? 2;
+  S.maps.forEach(M => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T || !T.bf) continue; const n = T.bf.filter(b => b.st === 'larva').length; if (n && (T.t === 'tree' || T.t === 'soil')) RT.bfSlow.set(T, n);
+    if (T.bf.some(b => b.st === 'adult')){ const [x0, y0] = pkey(k); for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(x0 + dx, y0 + dy)]; if (U && (U.t === 'soil' || U.t === 'tree')) RT.bfBoost.add(U); } } } }); }
+// once per farm day: wild butterflies lay on host plants, host weeds sprout
+function wildDaily40(t){
+  const today = dayNo40(t); if (S.bfw40 == null){ S.bfw40 = today; return; } if (today <= S.bfw40) return;
+  const from = Math.max(S.bfw40 + 1, today - (BFV40.wildCatchUpDays || 7) + 1); S.bfw40 = today;
+  for (let day = from; day <= today; day++){
+    // host weeds (酢漿草、羊蹄)
+    S.maps.forEach(M => { if (Math.random() >= (HW40.dailyChancePerMap || 0)) return; const ids = (HW40.ids || []).filter(id => isUnlocked(id)); if (!ids.length) return;
+      let n = 0; const free = []; for (const [bx, by] of M.blocks) for (let y = by * BS; y < by * BS + BS; y++) for (let x = bx * BS; x < bx * BS + BS; x++){ const T = M.tiles[tkey(x, y)]; if (T && T.t === 'deco' && T.wild40) n++; else if (!T) free.push(tkey(x, y)); }
+      if (n < (HW40.maxPerMap || 4) && free.length) M.tiles[rnd40(free)] = { t: 'deco', id: rnd40(ids), wild40: 1 }; RT.decoVer = (RT.decoVer || 0) + 1; });
+    // wild eggs: each host plant kind on the farm rolls once
+    const byHost = {}; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k], h = hostIdOf40(T); if (h && HOSTIDX40[h] && (T.bf || []).length < maxPer40()) (byHost[h] = byHost[h] || []).push(T); } });
+    for (const [h, list] of Object.entries(byHost)){ if (Math.random() >= (BFV40.wildDailyChancePerHost ?? .15)) continue;
+      const sps = HOSTIDX40[h], ws = sps.map(sp => ((BFR40[BFS40[sp].rarity] || {}).wildWeight) || 1), tot = ws.reduce((a, b) => a + b, 0); let r = Math.random() * tot, sp = sps[0];
+      for (let i = 0; i < sps.length; i++){ r -= ws[i]; if (r <= 0){ sp = sps[i]; break; } }
+      const T = rnd40(list); (T.bf = T.bf || []).push({ st: 'egg', t0: Math.min(t, (day - 0) * DAYMS - 8 * 3600e3 + 9 * 3600e3), sp, wild: 1, known: false }); } } }
+// pesticide also reaches eggs on any host (g33 hurtBeesNear already filters U.bf)
+// drawing: eggs / larvae / pupae / adults on every kind of host, dead butterflies on the ground
+const BFY40 = { tree: [-40, -36, -26, -50], herb: [-8, -7, -6, -22], shrub: [-18, -16, -12, -32], vine: [-24, -22, -18, -36], soil: [-10, -9, -8, -26] };
+function bfPlace40(T){ if (T.t === 'tree') return BFY40.tree; if (T.t === 'soil') return BFY40.soil; const D = CFG.decos[T.id] || {}; if (D.plantKind === 'tree' || ['banyan', 'bamboo', 'palm'].includes(T.id)) return BFY40.tree; return BFY40[D.plantKind] || BFY40.shrub; }
+function drawBf40(T, x, y, t){
+  const { cx, cy } = center(x, y), Y = bfPlace40(T);
+  if (T.bf) T.bf.forEach((b, i) => { const ox = i ? -9 : 8, fam = (BFS40[b.sp] || {}).family || 'papilio';
+    if (b.st === 'egg') spr('fx_bf_egg', 0, cx + ox, cy + Y[0] + i * 6);
+    else if (b.st === 'larva'){ const n = ATLAS['fx_larva_' + fam] ? 'fx_larva_' + fam : 'fx_bf_larva'; spr(n, motion ? frameOf(n, t, i) : 0, cx + ox, cy + Y[1] + i * 5); }
+    else if (b.st === 'pupa'){ const n = ATLAS['fx_pupa_' + fam] ? 'fx_pupa_' + fam : 'fx_bf_pupa'; spr(n, motion ? frameOf(n, t, i) : 0, cx + ox * .6, cy + Y[2]); }
+    else { const n = ATLAS[`bf_${b.sp}_fly`] ? `bf_${b.sp}_fly` : 'fx_butterfly', ph = t * .6 + i * 2.4 + x, fx = cx + Math.sin(ph) * 22, fy = cy + Y[3] + Math.sin(ph * 1.7) * 9; spr(n, motion ? frameOf(n, t, i) : 0, fx, fy); } });
+  if (T.bfd) T.bfd.forEach((d, i) => { const n = `bf_${d.sp}_dead`; if (ATLAS[n]) spr(n, 0, cx - 10 + i * 9, cy + 4 + (i % 2) * 3); }); }
+{ const _dte40 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
+  const bf = T && T.bf; if (bf) T.bf = undefined;
+  try { _dte40(M, k, T, x, y, t, now); } finally { if (bf) T.bf = bf; }
+  if (!T) return;
+  if (T.t === 'deco' && T.id === 'bird_house'){ const c = center(x, y); spr(`building_bird_house_${Math.min(3, houseSlots40(T))}`, 0, c.cx, c.cy); }
+  if (T.bf || T.bfd) drawBf40(T, x, y, t); }; }
+// placing an egg of a chosen species on its host plant
+function placeEgg40(M, k, T, sp, cx, cy){
+  const D = BFS40[sp]; if (!D) return; const id = 'bf:' + sp;
+  if (!isUnlocked(id)){ toast(`${D.name}的卵要到第 ${UNLOCK[id]} 級才解鎖`); return; }
+  if (!hostOk40(T, sp)){ toast(`${D.name}要放在${hostNames40(sp)}上`); return; }
+  T.bf = T.bf || []; if (T.bf.length >= maxPer40()){ toast(`這株已經有 ${maxPer40()} 隻了`); return; }
+  const cost = eggCost40(sp); if (!spend(cost)) return; T.bf.push({ st: 'egg', t0: Date.now(), sp, known: true });
+  floatText(cx, cy - 50, `放${D.name}的卵 -${cost}`, '#8a5d36', 11); toast(`卵 ${BFS.egg} 天孵化，幼蟲 ${BFS.larva} 天、蛹 ${BFS.pupa} 天後變成${D.name}`, true, 3200); sfx('place'); }
+function collectDead40(M, k, T, cx, cy){
+  const list = T.bfd || []; if (!list.length) return false; delete T.bfd;
+  const Bk = bfBook40(), inv = specInv40(); let spec = 0; const names = [];
+  for (const d of list){ const e = Bk[d.sp] = Bk[d.sp] || { got: 0, spec: 0 }; e.got++; stat('bfGot40');
+    if (Math.random() < (BFV40.specimenChance ?? .4)){ e.spec++; inv[d.sp] = (inv[d.sp] || 0) + 1; spec++; } names.push(bfName40(d.sp)); }
+  floatText(cx, cy - 30, spec ? `做成 ${spec} 個標本` : '記進圖鑑', '#2f7fa8', 11); sfx('harvest');
+  toast(`撿起${names.join('、')}，記進蝴蝶圖鑑。${spec ? `${spec} 隻翅膀完整，做成標本放進倉庫「標本」` : '翅膀破了，做不成標本'}`, true, 4000); afterAction(); return true; }
+// the butterfly panel
+const STN40 = { egg: '卵', larva: '幼蟲', pupa: '蛹', adult: '成蝶' };
+function bfPic40(b){ const fam = (BFS40[b.sp] || {}).family || 'papilio';
+  if (b.st === 'adult') return IMGSRC['ui_pg_bf_' + b.sp] || IMGSRC['ui_bf_' + b.sp]; if (b.st === 'egg') return IMGSRC.ui_butterfly_egg; return IMGSRC[`ui_${b.st}_${fam}`] || IMGSRC.ui_butterfly_egg; }
+function openBf40(M, k, tab){
+  const now = Date.now(), T = M.tiles[k];
+  openModal('蝴蝶', [['here', '這裡的蝴蝶'], ['book', '蝴蝶圖鑑']], (kk, el) => { el.classList.add('bf40');
+    if (kk === 'book'){ el.innerHTML = bookHTML40(); return; }
+    const Tn = M.tiles[k]; if (!Tn){ el.innerHTML = '<p>這一格已經沒有東西了。</p>'; return; }
+    const hn = hostName40(hostIdOf40(Tn)) || '這株植物', list = Tn.bf || [], r = BF.adultRange ?? 2, [x0, y0] = pkey(k), cells = [];
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const kk2 = tkey(x0 + dx, y0 + dy); if (inMap(M, x0 + dx, y0 + dy)) cells.push(kk2); }
+    let h = `<p class="sm40">會在${hn}產卵的蝴蝶：${(HOSTIDX40[hostIdOf40(Tn)] || []).map(bfName40).join('、') || '—'}</p><p class="sm40">${hn}上有 ${list.length} 隻（一株最多 ${maxPer40()} 隻）。成蝶在附近 ${2 * r + 1}×${2 * r + 1} 格幫忙授粉：作物、花、果樹生長 +${Math.round((BF.adultGrowthBoost || .1) * 100)}%。</p>`;
+    for (const b of list){ const D = BFS40[b.sp] || {}, known = b.known !== false, i = BF_ORDER.indexOf(b.st), dur = (BFS[b.st] || 1) * DAYMS, el2 = now - b.t0, pct = Math.max(0, Math.min(100, el2 / dur * 100)), left = Math.max(0, (dur - el2) / 1000);
+      h += `<div class="card40"><img src="${known || b.st !== 'adult' ? bfPic40(b) : ''}" alt=""><div><h4>${known ? D.name : '還不知道是哪一種'}<span class="pl40">${STN40[b.st]}</span>${known ? `<span class="pl40">${BFF40[D.family] || ''} · ${(BFR40[D.rarity] || {}).name || ''}</span>` : ''}${b.wild ? '<span class="pl40">野生</span>' : ''}</h4>
+        <div class="tl40">${BF_ORDER.map((s, j) => `<span class="${j < i ? 'done' : j === i ? 'on' : ''}"><img class="${s === 'adult' && !known ? 'unk40' : ''}" src="${bfPic40({ st: s, sp: b.sp }) || ''}" alt="">${STN40[s]}${s === 'adult' ? '' : ` ${BFS[s]} 天`}</span>`).join('')}</div>
+        <div class="pb40"><i style="width:${pct.toFixed(1)}%"></i></div>
+        <p class="sm40">${b.st === 'adult' ? `還能飛 ${fmtDur(left)}，走完一生前會在${hostNames40(b.sp)}上再產 1 顆卵` : `再 ${fmtDur(left)}變成${STN40[BF_ORDER[i + 1]]}`}${b.st === 'larva' && (Tn.t === 'tree' || Tn.t === 'soil') ? '。正在吃葉子，這株長得慢 10%' : ''}${!known ? (b.wild ? '。野生飛來產的卵，羽化才知道是哪一種' : '。羽化才知道是哪一種') : ''}</p></div></div>`; }
+    if (!list.length) h += '<p>現在沒有蝴蝶在這裡。</p>';
+    if (Tn.bfd && Tn.bfd.length){ const oldest = Math.min(...Tn.bfd.map(d => d.t)); h += `<div class="dead40"><span>下面有 ${Tn.bfd.length} 隻走完一生的蝴蝶（${Tn.bfd.map(d => bfName40(d.sp)).join('、')}），${fmtDur(Math.max(0, (oldest + DEADMS40 - now) / 1000))}內沒撿就不見</span><button class="btn" id="bfGet40">撿起來</button></div>`; }
+    if (list.some(b => b.st === 'adult')) h += `<p class="sm40">授粉範圍：</p>${cellsMap72(M, cells, k)}`;
+    el.innerHTML = h;
+    const g = el.querySelector('#bfGet40'); if (g) g.onclick = () => { const [x, y] = pkey(k), c = center(x, y); collectDead40(M, k, Tn, c.cx, c.cy); openBf40(M, k); }; }, tab || 'here'); }
+function bookHTML40(){ const Bk = bfBook40(), inv = specInv40(); const got = Object.values(Bk).filter(e => e.got > 0).length;
+  let h = `<p class="sm40">撿過 ${got} / ${Object.keys(BFS40).length} 種。撿過的會變成彩色；做成的標本放在倉庫「標本」，可以賣。</p>`;
+  for (const [fam, fname] of Object.entries(BFF40)){ const sps = Object.entries(BFS40).filter(([, D]) => D.family === fam); if (!sps.length) continue;
+    h += `<h3>${fname}</h3><div class="bk40">` + sps.map(([sp, D]) => { const e = Bk[sp] || { got: 0, spec: 0 };
+      return `<div class="${e.got ? '' : 'no'}"><img src="${IMGSRC['ui_pg_bf_' + sp] || ''}" alt=""><b>${D.name}</b>${(BFR40[D.rarity] || {}).name || ''} · 卵 ${fmtN(eggCost40(sp))}<br>寄主：${hostNames40(sp)}<br>撿到 ${e.got} 隻 · 標本 ${e.spec} 個${inv[sp] ? `（倉庫 ${inv[sp]}）` : ''}</div>`; }).join('') + '</div>'; }
+  return h; }
+// insect tool: 設施｜蜜蜂｜蝴蝶; the 蝴蝶 tab lists every species (picture = the butterfly)
+{ const _is40 = itemSprite; itemSprite = function(kind, id){
+  if (kind === 'insect' && typeof id === 'string' && id.startsWith('bf:')) return ['ui_bf_' + id.slice(3), 0];
+  if (kind === 'bird') return ['ui_bird_' + birdSprId40(id), 0];
+  if (kind === 'deco' && id === 'bird_house') return ['building_bird_house_1', 0];
+  if (kind === 'deco' && isHostDeco40(id)) return ['deco_' + id + '_idle', 0];
+  return _is40(kind, id); }; }
+{ const _bit40 = buildInsectTray; buildInsectTray = function(tray){ _bit40(tray);
+  tray.querySelectorAll('.item[data-id="butterfly_egg"]').forEach(el => el.remove());
+  const sel = S.sel.insect || 'beehive';
+  // v2.40.1: unlocked first, then by level; long host lists are shortened (the full list is in the hint)
+  const order = Object.entries(BFS40).sort(([a, A], [b, Bb]) => (isUnlocked('bf:' + a) ? 0 : 1) - (isUnlocked('bf:' + b) ? 0 : 1) || (UNLOCK['bf:' + a] || 0) - (UNLOCK['bf:' + b] || 0));
+  for (const [sp, D] of order){ const id = 'bf:' + sp, lk = !isUnlocked(id), hs = [...(BFHOSTS40[sp] || [])].map(hostName40).filter(Boolean);
+    const el = trayItem('insect', id, D.name.replace(/（.*）/, ''), [`${coinImg()}${fmtN(eggCost40(sp))} · ${(BFR40[D.rarity] || {}).name || ''}`, hs.length > 1 ? `${hs[0]}等 ${hs.length} 種` : `放在${hs[0] || ''}`], sel === id, lk, { lockLv: UNLOCK[id] });
+    el.onclick = () => { if (lk){ toast(`${D.name}的卵要到第 ${UNLOCK[id]} 級才解鎖`); return; } S.sel.insect = id; UIbuildTray(); updateHint(); }; tray.appendChild(el); } }; }
+{ const ti = TOOLS.find(t => t.id === 'insect'), _hi40 = ti.hint; ti.hint = () => { const id = String(S.sel.insect || ''); if (id.startsWith('bf:')){ const sp = id.slice(3), D = BFS40[sp];
+  return `點${hostNames40(sp)}放${D.name}的卵 · ${fmtN(eggCost40(sp))} 金幣 · 一株最多 ${maxPer40()} 隻；蝴蝶會自己在同種寄主上再產卵`; } return _hi40(); }; }
+{ const _no40 = nameOf; nameOf = function(id){ if (typeof id === 'string'){ if (id.startsWith('bf:') && BFS40[id.slice(3)]) return BFS40[id.slice(3)].name.replace(/（.*）/, '') + '（蝴蝶卵）';
+    if (id === 'bird_cockatiel_white') return (BR40.species.cockatiel || {}).name + '（白）'; if (id.startsWith('bird_') && BR40.species[id.slice(5)]) return BR40.species[id.slice(5)].name;
+    if (id === 'doll_thunder' && TD40) return TD40.name; } return _no40(id); }; }
+{ const _ui40 = unlockIcon38; unlockIcon38 = function(u){ if (typeof u === 'string'){ if (u.startsWith('bf:')) return ['ui_bf_' + u.slice(3), 0]; if (u.startsWith('bird_') && u !== 'bird_house' && u !== 'bird_food') return ['ui_bird_' + u.slice(5), 0]; if (u === 'bird_house') return ['building_bird_house_1', 0]; if (u === 'doll_thunder') return ['doll_thunder_m_sway', 0]; if (isHostDeco40(u)) return ['deco_' + u + '_idle', 0]; } return _ui40(u); }; }
+
+/* ---------- 5. 寵物鳥與鳥屋 ---------- */
+const birds40 = () => (S.birds40 = S.birds40 || []);
+const birdSprId40 = id => { const s = String(id).replace(/^bird_/, ''); return s; };
+const birdSp40 = B => BR40.species[B.sp] || {};
+const birdSpr40 = B => B.sp === 'cockatiel' && B.color === 'white' ? 'cockatiel_white' : B.sp;
+const isBirdHouse40 = T => !!T && T.t === 'deco' && T.id === 'bird_house';
+function houseList40(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!isBirdHouse40(T)) continue; if (!T.uid) T.uid = 'h' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); const [x, y] = pkey(k); out.push({ M, mi, k, x, y, T }); } }); return out; }
+const houseByUid40 = uid => houseList40().find(h => h.T.uid === uid) || null;
+const houseBirds40 = T => birds40().filter(B => B.house === T.uid);
+function houseSlots40(T){ return Math.max(1, Math.min((BR40.house || {}).maxSlots || 3, T.n || 1)); }
+function houseCap40(T){ const base = houseSlots40(T), nest = houseBirds40(T).some(B => birdSp40(B).skill === 'nest'); return Math.min((BR40.house || {}).nestMax || 4, base + (nest ? 1 : 0)); }
+function birdRange40(B){ const h = houseByUid40(B.house); if (!h) return null; const D = birdSp40(B); let rg = D.range || 5;
+  if (D.skill === 'pair' && houseBirds40(h.T).filter(Q => Q !== B && Q.sp === B.sp).length) rg += BSK40.pairRangeBonus || 2;
+  const r = Math.floor(rg / 2); return { mi: h.mi, h, x0: h.x - r, y0: h.y - r, x1: h.x + r, y1: h.y + r }; }
+const inRg40 = (rg, mi, x, y) => !!rg && rg.mi === mi && x >= rg.x0 && x <= rg.x1 && y >= rg.y0 && y <= rg.y1;
+function birdOut40(B, t){ if (B.hungry) return false; if (farmRain(t) || farmSnow(t)) return false;
+  if (!isNightAt(t)) return true; const D = birdSp40(B); return D.skill === 'early' && !isNightAt(t + (BSK40.earlyHours || 1) * 3600e3); }
+function birdEat40(){ const it = (BR40.food || {}).item || 'bird_food'; if (invTake(it, 1)) return true;
+  const cost = CFG.feedShop[it] || 0; if ((S.settings.autoBuyFeed || feederOn()) && S.player.coins >= cost){ S.player.coins -= cost; return true; } return false; }
+function pestTrees40(rg){ const M = S.maps[rg.mi], out = []; for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const k = tkey(x, y), T = M.tiles[k]; if (T && T.t === 'tree' && T.pest) out.push({ k, T, x, y, d: Math.abs(x - rg.h.x) + Math.abs(y - rg.h.y) }); } return out.sort((a, b) => a.d - b.d); }
+function stepBirds40(dt, t){
+  const L = birds40(); if (!L.length) return; const every = ((BR40.food || {}).everyHours || 8) * 3600;
+  RT.birdLucky40 = new WeakSet();
+  for (const B of L){ const D = birdSp40(B), rg = birdRange40(B); if (!rg) continue;
+    // food
+    B.food = (B.food ?? every) - dt; if (B.food <= 0){ if (birdEat40()){ B.food += every; B.hungry = false; } else { B.food = 0; if (!B.hungry){ B.hungry = true; if (liveT(t)) toast(`${B.name}餓了：倉庫沒有${itemName((BR40.food || {}).item || 'bird_food')}，鳥不出門抓蟲`, false, 3600); } } }
+    if (D.skill === 'lucky'){ const M = S.maps[rg.mi]; for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const T = M.tiles[tkey(x, y)]; if (T && T.t === 'tree') RT.birdLucky40.add(T); } }
+    if (!birdOut40(B, t)){ B.work = 0; B.tgt = null; continue; }
+    if (D.skill === 'song'){ const M = S.maps[rg.mi]; for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const T = M.tiles[tkey(x, y)];
+      if (T && T.t === 'animal' && T.scared > t && T.sc40 !== T.scared){ T.scared = t + (T.scared - t) * (BSK40.songRecoverMult || .7); T.sc40 = T.scared; } } }
+    let need = D.catchSeconds || 60; if (D.skill === 'flock' && houseBirds40(rg.h.T).filter(Q => Q.sp === 'budgie').length >= 2) need *= BSK40.flockMult || .8;
+    let left = dt;
+    for (let g = 0; g < 50 && left > 0; g++){ const tg = pestTrees40(rg); if (!tg.length){ B.work = 0; B.tgt = null; break; }
+      B.tgt = tg[0].k; const use = Math.min(left, need - (B.work || 0)); B.work = (B.work || 0) + use; left -= use; if (B.work < need) break;
+      B.work = 0; const hit = D.skill === 'double' ? tg.slice(0, 2) : D.skill === 'extra' ? tg.slice(0, 2) : tg.slice(0, 1);
+      for (const h of hit){ h.T.pest = false; h.T.pestTaps = 0; B.caught = (B.caught || 0) + 1; const day = dayNo40(t); if (B.dayN !== day){ B.dayN = day; B.today = 0; } B.today++; stat('birdBugs');
+        if (liveT(t) && rg.mi === S.cur){ const c = center(h.x, h.y); floatText(c.cx, c.cy - 40, `${B.name}抓到蟲了`, '#2f7fa8', 10); } } } } }
+{ const _sa40 = stepAll; stepAll = function(dt, t){ _sa40(dt, t); try { stepBirds40(dt, t); } catch(e){ if (!RT.err40b){ RT.err40b = 1; console.warn(e); } } }; }
+// skills reaching other systems
+const birdsWith40 = sk => birds40().filter(B => birdSp40(B).skill === sk);
+{ const _pr40 = pestRate; pestRate = function(mi, k, t){ let r = _pr40(mi, k, t); const M = S.maps[mi], T = M && M.tiles[k];
+  if (T && T.t === 'tree'){ const [x, y] = pkey(k); if (birdsWith40('prevent').some(B => inRg40(birdRange40(B), mi, x, y))) r *= BSK40.preventPestMult || .8; } return r; }; }
+{ const _sp40 = stepPlant; stepPlant = function(T, dt, b, wetAll, env = 1){ if (RT.birdLucky40 && RT.birdLucky40.has(T)) env *= 1 + (BSK40.luckyFruitBoost || .05); return _sp40(T, dt, b, wetAll, env); }; }
+{ const _sr40 = stepRats; stepRats = function(dt, t){ const loud = birdsWith40('loud'); if (!loud.length) return _sr40(dt, t);
+  const before = new Map(ratSpots().map(sp => [sp.key, sp.n])); _sr40(dt, t);
+  for (const sp of ratSpots()){ const b = before.get(sp.key) || 0; if (sp.n > b && loud.some(B => { const rg = birdRange40(B); for (let dx = 0; dx < sp.w; dx++) for (let dy = 0; dy < sp.w; dy++) if (inRg40(rg, sp.mi, sp.x + dx, sp.y + dy)) return true; return false; }) && Math.random() < 1 - (BSK40.loudRatMult || .7)){
+    sp.n = b; const i = RT.notices.map(n => n.kind).lastIndexOf('ratIn'); if (i >= 0) RT.notices.splice(i, 1); } } }; }
+{ const _spd40 = spawnPred; spawnPred = function(kind, mi, M, k, t){ const n0 = predList().length, r = _spd40(kind, mi, M, k, t); const L = predList();
+  if (L.length > n0){ const P = L[L.length - 1], [x, y] = pkey(P.k), g = birdsWith40('talk').find(B => inRg40(birdRange40(B), P.mi, x, y));
+    if (g){ P.until += (BSK40.talkExtraSeconds || 120) * 1000; if (liveT(t)) toast(`${g.name}大叫：「有${PREDC[kind].name}！」快點牠 3 下趕走`, true, 3600); else RT.notices.push({ kind: 'predWarn40', t }); } } return r; }; }
+// buying birds
+function buyBird40(sel){ const color = sel === 'bird_cockatiel_white' ? 'white' : sel === 'bird_cockatiel' ? 'grey' : null, sp = sel === 'bird_cockatiel_white' ? 'cockatiel' : sel.slice(5), D = BR40.species[sp]; if (!D) return;
+  if (!isUnlocked(sel)){ toast(lockedMsg(sel)); return; }
+  const hs = houseList40().sort((a, b) => (a.mi === S.cur ? 0 : 1) - (b.mi === S.cur ? 0 : 1)), h = hs.find(x => houseBirds40(x.T).length < houseCap40(x.T));
+  if (!h){ toast(houseList40().length ? '鳥屋都住滿了：點鳥屋可以擴充' : '先在「動物 · 設施」蓋鳥屋'); return; }
+  if (!spend(D.price)) return;
+  const B = { id: 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), sp, color, name: (D.name.replace(/（.*）/, '') + (color === 'white' ? '（白）' : '')).slice(0, BR40.nameMaxChars || 8), house: h.T.uid, born: Date.now(), food: ((BR40.food || {}).everyHours || 8) * 3600, caught: 0 };
+  birds40().push(B); const K = (S.birdKinds40 = S.birdKinds40 || {}); K[sp] = 1;
+  sfx('place'); toast(`${B.name}住進鳥屋了！白天會在 ${D.range}×${D.range} 範圍的果樹間巡邏抓蟲，晚上和下雨下雪時待在鳥屋。記得準備${itemName((BR40.food || {}).item || 'bird_food')}`, true, 4200); afterAction(); UIbuildTray(); }
+function birdState40(B){ const t = Date.now(); if (B.hungry) return '餓了，待在鳥屋'; if (isNightAt(t) && !birdOut40(B, t)) return '睡覺'; if (farmRain(t)) return '下雨，待在鳥屋'; if (farmSnow(t)) return '下雪，待在鳥屋'; return B.tgt ? '抓蟲中' : '巡邏中'; }
+function openBirdHouse40(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isBirdHouse40(T)) return; if (!T.uid) houseList40();
+  const H = BR40.house || {}, n = houseSlots40(T), cap = houseCap40(T), res = houseBirds40(T), cost = (H.expandCost || [])[n - 1], back = Math.floor(((H.expandCost || [])[n - 2] || 0) * (H.shrinkRefundRate ?? .5));
+  const fi = (BR40.food || {}).item || 'bird_food';
+  openModal('鳥屋', null, (kk, el) => { el.classList.add('bh40');
+    let h = `<div class="kv"><span>住了</span><span>${res.length} / ${cap} 隻${cap > n ? '（和尚鸚鵡多築了 1 個巢）' : ''}</span><span>${itemName(fi)}</span><span>倉庫 ${S.inv[fi] || 0} 份（每隻 ${(BR40.food || {}).everyHours || 8} 小時吃 1 份）</span></div>
+      <div class="row">${n < (H.maxSlots || 3) ? `<button class="btn" id="bhUp">擴充 1 位 · ${fmtN(cost)}</button>` : ''}${n > 1 && res.length < cap ? `<button class="btn ghost" id="bhDown">縮減 1 位（退 ${fmtN(back)}）</button>` : ''}<button class="btn ghost" id="bhFood">買${itemName(fi)}</button></div>`;
+    for (const B of res){ const D = birdSp40(B), rg = birdRange40(B), sz = rg ? rg.x1 - rg.x0 + 1 : D.range;
+      h += `<div class="bird40" data-b="${B.id}"><img src="${IMGSRC['ui_pg_bird_' + birdSpr40(B)] || ''}" alt=""><div><h4>${escapeHTML(B.name)} <small>${D.name}${B.sp === 'cockatiel' ? `（${B.color === 'white' ? '白' : '灰'}）` : ''}</small></h4>
+        <div class="kv"><span>現在</span><span>${birdState40(B)}</span><span>範圍</span><span>${sz}×${sz}（以鳥屋為中心的果樹）</span><span>抓一棵</span><span>${D.catchSeconds} 秒</span><span>專長</span><span>${D.skillText || '—'}</span><span>戰績</span><span>今天 ${B.dayN === dayNo40(Date.now()) ? B.today || 0 : 0} 棵 · 累計 ${B.caught || 0} 棵</span></div>
+        <div class="row"><input type="text" maxlength="${BR40.nameMaxChars || 8}" value="${escapeHTML(B.name)}" style="font-size:16px;max-width:9em"><button class="btn ghost" data-ren>改名</button><button class="btn warn" data-give>送養（退 ${fmtN(Math.floor(D.price * (BR40.sellRate ?? .5)))}）</button></div></div></div>`; }
+    if (!res.length) h += '<p>還沒有鳥住進來。到「動物 · 寵物鳥」選一隻，點農場任一處就會住進有空位的鳥屋。</p>';
+    el.innerHTML = h;
+    const up = el.querySelector('#bhUp'); if (up) up.onclick = () => { if (!spend(cost)) return; T.n = n + 1; sfx('place'); afterAction(); openBirdHouse40(mi, k); };
+    const dn = el.querySelector('#bhDown'); if (dn) dn.onclick = () => { T.n = n - 1; S.player.coins += back; sfx('coin'); afterAction(); openBirdHouse40(mi, k); };
+    el.querySelector('#bhFood').onclick = () => openStorage('shop');
+    el.querySelectorAll('.bird40').forEach(row => { const B = birds40().find(q => q.id === row.dataset.b); if (!B) return;
+      row.querySelector('[data-ren]').onclick = () => { const v = row.querySelector('input').value.trim().slice(0, BR40.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } B.name = v; save(); toast(`改好了：${v}`); openBirdHouse40(mi, k); };
+      const gv = row.querySelector('[data-give]'); gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+        const p = Math.floor(birdSp40(B).price * (BR40.sellRate ?? .5)); S.birds40 = birds40().filter(q => q !== B); delete (RT.bAg40 || {})[B.id]; S.player.coins += p; toast(`${B.name}找到新家了，退回 ${fmtN(p)} 金幣`); afterAction(); openBirdHouse40(mi, k); }; }); }); }
+// tray: 動物 · 設施 gets 鳥屋, 動物 · 寵物鳥 lists the birds
+{ const _ut40 = UIbuildTray; UIbuildTray = function(){ _ut40(); if (!S || S.sel.tool !== 'animal' || RT.borrow34) return;
+  const tray = $('tray'); if (!tray) return; const sel = S.sel.animal, pick = (id, tab) => () => { S.sel.animal = id; S.sel.animalTab = tab; UIbuildTray(); updateHint(); };
+  if (!tray.querySelector('.item[data-id="bird_house"]')){ const D = CFG.decos.bird_house, lk = !isUnlocked('bird_house'), st = S.storage.bird_house || 0;
+    const el = trayItem('deco', 'bird_house', D.name, [st ? `倉庫 ×${st}` : `${coinImg()}${fmtN(D.cost)}`, `住 1 隻鳥 · 可擴充到 ${(BR40.house || {}).maxSlots || 3} 位`], sel === 'bird_house', lk, {});
+    el.onclick = lk ? () => toast(lockedMsg('bird_house')) : pick('bird_house', 'facility'); tray.appendChild(el); }
+  for (const [sp, D] of Object.entries(BR40.species)){ for (const id of sp === 'cockatiel' ? ['bird_cockatiel', 'bird_cockatiel_white'] : ['bird_' + sp]){ if (tray.querySelector(`.item[data-id="${id}"]`)) continue;
+    const lk = !isUnlocked(id), nm = sp === 'cockatiel' ? `${D.name}（${id.endsWith('white') ? '白' : '灰'}）` : D.name;
+    const el = trayItem('bird', id, nm, [`${coinImg()}${fmtN(D.price)}`, `${D.range}×${D.range} · 抓一棵 ${D.catchSeconds} 秒`], sel === id, lk, { lockLv: UNLOCK[id] }); el.onclick = lk ? () => toast(lockedMsg(id)) : pick(id, 'pet_bird'); tray.appendChild(el); } }
+  // v2.40.1: do not call applyTabs33 again here (g49 already decided the tab with its own flags; a second call jumped back to the selected item's tab): only show/hide what was added
+  const tab = S.sel.animalTab; tray.querySelectorAll('.item').forEach(el => { const id = el.dataset.id; if (id === 'bird_house' || /^bird_/.test(id)) el.hidden = tabOf('animal', id) !== tab; });
+  if ([...tray.querySelectorAll('.item')].some(x => !x.hidden)) tray.querySelectorAll('.trayempty').forEach(e => e.remove()); }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha40 = ta.hint; ta.hint = () => { const id = String(S.sel.animal || '');
+  if (id === 'bird_house'){ const D = CFG.decos.bird_house; return `點草地蓋${D.name} · ${(S.storage.bird_house || 0) ? '從倉庫拿出' : fmtN(D.cost) + ' 金幣'} · 點它可以擴充到 ${(BR40.house || {}).maxSlots || 3} 位、看住在裡面的鳥`; }
+  if (id.startsWith('bird_') && (BR40.species[id.slice(5)] || id === 'bird_cockatiel_white')){ const D = BR40.species[id === 'bird_cockatiel_white' ? 'cockatiel' : id.slice(5)];
+    return `點農場任一處買「${D.name}」· ${fmtN(D.price)} 金幣 · 住進有空位的鳥屋 · ${D.skillText}`; }
+  return _ha40(); }; }
+// bird animation (only on the island you are looking at)
+function drawBirds40(now){
+  const L = birds40(); if (!L.length) return; RT.bAg40 = RT.bAg40 || {}; const dt = Math.min(.1, RT.frameDt || .016), t = performance.now() / 1000;
+  for (const B of L){ const rg = birdRange40(B); if (!rg || rg.mi !== S.cur){ delete RT.bAg40[B.id]; continue; }
+    if (!birdOut40(B, now)){ delete RT.bAg40[B.id]; continue; }
+    const hx = rg.h.x, hy = rg.h.y; let A = RT.bAg40[B.id]; if (!A) A = RT.bAg40[B.id] = { x: hx, y: hy, h: 36, tx: hx, ty: hy, th: 36, mode: 'perch', wait: 1 + Math.random() * 2 };
+    const M = S.maps[rg.mi];
+    if (B.tgt && M.tiles[B.tgt] && M.tiles[B.tgt].pest){ const [tx, ty] = pkey(B.tgt); A.tx = tx; A.ty = ty; A.th = 34; A.peck = true; }
+    else { A.peck = false; A.wait -= dt; if (A.wait <= 0 && Math.hypot(A.tx - A.x, A.ty - A.y) < .05){ const trees = []; for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const T = M.tiles[tkey(x, y)]; if (T && T.t === 'tree') trees.push([x, y]); }
+        const p = trees.length && Math.random() < .8 ? rnd40(trees) : [hx, hy]; A.tx = p[0]; A.ty = p[1]; A.th = p[0] === hx && p[1] === hy ? 36 : 34; A.wait = 3 + Math.random() * 5; } }
+    const dx = A.tx - A.x, dy = A.ty - A.y, d = Math.hypot(dx, dy), sp = 2.4 * dt;
+    if (d > .02){ const s = Math.min(1, sp / d); A.x += dx * s; A.y += dy * s; A.mode = 'fly'; const c0 = center(0, 0), c1 = center(dx, dy); A.flip = c1.cx - c0.cx < 0; } else { A.x = A.tx; A.y = A.ty; A.mode = A.peck ? 'peck' : 'perch'; }
+    const c = center(A.x, A.y), lift = A.mode === 'fly' ? 44 + Math.sin(t * 6 + B.born % 7) * 3 : A.th, n = `bird_${birdSpr40(B)}_${A.mode}`;
+    if (ATLAS[n]) spr(n, motion ? frameOf(n, t, (B.born % 97) * .1) : 0, c.cx + (A.mode === 'fly' ? 0 : (B.born % 3 - 1) * 6), c.cy - lift, A.flip); } }
+// act: 鳥屋 / buying birds / butterflies / host weeds (outermost)
+{ const _act40 = act; act = function(x, y){
+  if (!S || UI.expand) return _act40(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act40(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act40(x, y);
+  // birds
+  if (tool === 'animal' && typeof S.sel.animal === 'string' && S.sel.animal.startsWith('bird_') && S.sel.animal !== 'bird_house'){ buyBird40(S.sel.animal); return; }
+  if (tool === 'animal' && S.sel.animal === 'bird_house'){ if (isBirdHouse40(T)){ openBirdHouse40(S.cur, k); return; } return withTool('deco', { deco: 'bird_house' }, () => act(x, y)); }
+  if (isBirdHouse40(T)){ if (tool === 'remove' || tool === 'store'){ if (!T.uid) houseList40(); if (houseBirds40(T).length){ toast('鳥屋裡還住著鳥：先幫牠們搬到別的鳥屋或送養'); return; } return _act40(x, y); }
+    if (tool !== 'move'){ openBirdHouse40(S.cur, k); return; } }
+  // butterflies: placing eggs
+  if (tool === 'insect' && String(S.sel.insect || '').startsWith('bf:')){ placeEgg40(M, k, T, S.sel.insect.slice(3), cx, cy); afterAction(); return; }
+  if (tool === 'hand' && T){
+    const ripeTree = T.t === 'tree' && treeReady(T), ripeCrop = T.t === 'soil' && T.crop && !T.crop.wither && T.crop.prog >= CFG.crops[T.crop.id].growSeconds;
+    if (T.bfd && T.bfd.length && !ripeTree && !ripeCrop){ collectDead40(M, k, T, cx, cy); return; }
+    const young = (T.bf || []).filter(b => b.st !== 'adult').length;
+    if (ripeCrop && young && RT.bfWarn40 !== k){ RT.bfWarn40 = k; toast(`這格的${CFG.crops[T.crop.id].name}上有 ${young} 個蝴蝶卵／幼蟲／蛹，收成會一起沒了。再點一次收成`, true, 3600); return; }
+    RT.bfWarn40 = null;
+    if (T.bf && T.bf.length && !ripeTree && !ripeCrop){
+      const hasD = T.bfd && T.bfd.length, btn = (w, ic, tx) => `<button data-t40="${w}"><img src="${ic || ''}" alt="">${tx}</button>`;
+      if (T.t === 'tree' || T.t === 'soil'){
+        showPop53(cx, cy - 30, (T.t === 'tree' ? btn('tree', IMGSRC.ui_tab_trees, '查看果樹') : btn('field', IMGSRC.ui_tab_crops, '查看田地')) + btn('bf', IMGSRC.ui_tab_bf || IMGSRC.ui_butterfly_egg, '查看蝴蝶'));
+        POP53.querySelectorAll('[data-t40]').forEach(b => b.onclick = () => { const w = b.dataset.t40; closePop53();
+          if (w === 'bf') openBf40(M, k); else if (w === 'field') fieldInfo72(M, k); else { const bf = T.bf; T.bf = []; RT.pass72 = true; try { _act40(x, y); } finally { T.bf = bf; RT.pass72 = false; } } });
+        return; }
+      openBf40(M, k); return; }
+    if (T.t === 'deco' && T.wild40 && !(T.bf && T.bf.length)){ delete M.tiles[k]; RT.decoVer = (RT.decoVer || 0) + 1; floatText(cx, cy - 20, `拔掉${CFG.decos[T.id].name}`, '#5a7a3a', 11); sfx('click'); afterAction(); return; }
+    if (T.t === 'deco' && isHostDeco40(T.id)){ openBf40(M, k); return; } }
+  // 非果樹格（作物收成、其他工具）帶著 T.bf 往內傳時，舊的 g33 只認果樹會出錯 → 暫時藏起來（v2.40.3）
+  if (T && T.t !== 'tree' && T.bf && T.bf.length){ const bf = T.bf; T.bf = undefined; try { return _act40(x, y); } finally { if (M.tiles[k] === T) T.bf = bf; } }
+  return _act40(x, y); }; }
+
+/* ---------- 6. 倉庫「標本」 ---------- */
+{ const _om40 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '倉庫' && Array.isArray(tabs) && typeof render === 'function' && !tabs.some(t => t[0] === 'specimen')){
+    tabs = [...tabs, ['specimen', '標本']]; const r0 = render;
+    render = (k, el) => { if (k !== 'specimen') return r0(k, el); el.classList.add('sp40'); const inv = specInv40(), ids = Object.keys(inv).filter(sp => inv[sp] > 0 && BFS40[sp]);
+      el.innerHTML = `<h3><img src="${IMGSRC.ui_pg_st_specimen || ''}" alt="">蝴蝶標本</h3><p class="small">蝴蝶走完一生掉在寄主植物下面，用「收成」撿起來，翅膀完整的（${Math.round((BFV40.specimenChance ?? .4) * 100)}%）會做成標本放在這裡。</p>` +
+        (ids.length ? tbl([H(''), H('標本'), H('數量', 1), H('售價', 1), H('')], ids.map(sp => ({ cells: [`<img src="${IMGSRC['ui_spec_' + sp] || ''}" alt="" style="width:40px;height:40px">`, `${bfName40(sp)}<br><small>${(BFR40[BFS40[sp].rarity] || {}).name || ''}</small>`, fmtN(inv[sp]), fmtN(specPrice40(sp)), `<button class="btn" data-spsell="${sp}">賣出</button>`] }))) : '<p>還沒有標本。</p>') +
+        `<div class="row"><button class="btn ghost" id="spBook40">看蝴蝶圖鑑</button></div>`;
+      el.querySelectorAll('[data-spsell]').forEach(b => b.onclick = () => { const sp = b.dataset.spsell, price = specPrice40(sp);
+        sellAsk49({ title: bfName40(sp) + '標本', img: IMGSRC['ui_spec_' + sp], price, max: inv[sp] || 1, onSell: q => { q = Math.min(q, inv[sp] || 0); if (!q) return; inv[sp] -= q; const c = q * price; S.player.coins += c; flyCoins(b, c); toast(`賣掉${bfName40(sp)}標本 ${q} 個，+${fmtN(c)} 金幣`); afterAction(); openStorage('specimen'); } }); });
+      const bk = el.querySelector('#spBook40'); if (bk) bk.onclick = () => openModal('蝴蝶', [['book', '蝴蝶圖鑑']], (kk, e2) => { e2.classList.add('bf40'); e2.innerHTML = bookHTML40(); }); }; }
+  return _om40(title, tabs, render, initial); }; }
+
+// 面板抬頭小圖示（g54）：倉庫「標本」、蝴蝶面板、鳥屋
+HDTAB54.specimen = 'st_specimen'; HD54['蝴蝶'] = 'bf'; HD54['鳥屋'] = 'bird_house';
+
+/* ---------- 7. 金幣歷程：每筆多一行明細 ---------- */
+RT.det40 = null;
+{ const _lc40 = logCoin; logCoin = function(st, d, b){ const L = st && st.coinLog, n0 = L ? L.length : 0; const r = _lc40(st, d, b);
+  const L2 = st && st.coinLog; const det = RT.inXP40 && S ? `升到 Lv ${S.player.level}` : RT.det40;
+  if (det && d && L2 && L2.length){ const e = L2[L2.length - 1]; if (e && e.length >= 4 && (L2.length > n0 || e[0] >= Date.now() - 50)){ while (e.length < 5) e.push(null); e[5] = det; } } return r; }; }
+function reasonRows55(R){ return R.list.map(([t, d, b, w, m, x]) => `<div class="r"><span>${fmtHM(t)}</span><span class="w">${escapeHTML(w || '')}${x ? `<small class="cl40">${escapeHTML(x)}</small>` : ''}${m && String(m).startsWith('bill:') ? `<button class="bl55" data-bill55="${escapeHTML(String(m).slice(5))}">帳單明細</button>` : ''}</span><span class="${d > 0 ? 'cin' : 'cout'}">${signN55(d)}</span><span class="b">${fmtN(Math.floor(b))}</span></div>`).join(''); }
+const withDet40 = (det, fn) => { const pv = RT.det40; RT.det40 = det; try { return fn(); } finally { RT.det40 = pv; } };
+{ const _sa49 = sellAsk49; sellAsk49 = function(I){ const on = I.onSell; I = Object.assign({}, I, { onSell: q => withDet40(`賣出 ${I.title} ×${fmtN(q)}（每個 ${fmtN(I.price)}）`, () => on(q)) }); return _sa49(I); }; }
+{ const _pl40 = payLoad; payLoad = function(L, overdue, ...a){ const p = []; if (L){ if (L.g >= .01) p.push(`一般垃圾 ${Math.round(L.g * 10) / 10} 袋`); if (L.r >= .01) p.push(`資源回收 ${Math.round(L.r * 10) / 10} 袋`); if (L.s >= 1) p.push(`汙水 ${fmtN(Math.round(L.s))} 滴`); }
+  return withDet40(`${overdue ? '逾期代收：' : '收走：'}${p.join('、') || '沒有東西'}`, () => _pl40(L, overdue, ...a)); }; }
+{ const _ax40 = addXP; addXP = function(...a){ const pv = RT.inXP40, pd = RT.det40; RT.inXP40 = true; try { return _ax40(...a); } finally { RT.inXP40 = pv; RT.det40 = pd; } }; }
+
+/* ---------- 8. 徽章數值 ---------- */
+{ const _av40 = achValue; achValue = function(a){ const st = a.stat || '';
+  if (st === 'butterfly'){ let n = 0; for (const e of Object.values(bfBook40())) n += e.got || 0; return n; }
+  if (st === 'specimenKinds') return Object.values(bfBook40()).filter(e => e.spec > 0).length;
+  if (st === 'birdKinds') return Object.keys(S.birdKinds40 || {}).length;
+  if (st === 'birdBugs') return Math.floor(ach39().s.birdBugs || 0);
+  return _av40(a); }; }
+
+/* ---------- 9. 舊存檔 ---------- */
+{ const _ns40 = normalizeState; normalizeState = function(d){ const r = _ns40(d); const s = r || d;
+  try { if (s && !s.v240){ s.v240 = 1; s.birds40 = s.birds40 || []; s.bfBook40 = s.bfBook40 || {}; s.spec40 = s.spec40 || {};
+      for (const M of s.maps || []) for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.bf) for (const b of T.bf) if (!b.sp){ b.sp = rnd40(BFV40.oldEggsBecome || ['papilio_demoleus']); b.known = true; } } } } catch(e){}
+  return r; }; }
+
+
+/* ---------- 10. v2.40.2：「蝴蝶園」在「播種」的花苗右邊（寄主植物用裝飾的放法） ---------- */
+const BFG40 = (((CFG.ui.trayTabs || {}).seed || []).find(t => t.id === 'bfgarden') || {}).ids || [];
+function seedTabPick40(k){ S.sel.seedTab = k;
+  if (k === 'flowers'){ if (!(FL && FL[S.sel.seed])) S.sel.seed = Object.keys(FL).find(isUnlocked) || Object.keys(FL)[0]; }
+  else if (k === 'trees'){ if (!CFG.trees[S.sel.seed]) S.sel.seed = S.lastTree && CFG.trees[S.lastTree] ? S.lastTree : (Object.keys(CFG.trees).find(isUnlocked) || Object.keys(CFG.trees)[0]); }
+  else if (k === 'crops'){ if (!CFG.crops[S.sel.seed]) S.sel.seed = S.lastCrop && CFG.crops[S.lastCrop] ? S.lastCrop : 'wheat'; }
+  UIbuildTray(); updateHint(); }
+function bfGardenTray40(){
+  const tray = $('tray'); if (!tray) return; tray.innerHTML = ''; tray.hidden = false; const wrap = $('trayWrap'); if (wrap) wrap.hidden = false;
+  const cg = $('cgrp62'); if (cg) cg.hidden = true;
+  if (!BFG40.includes(S.sel.seedHost40)) S.sel.seedHost40 = BFG40.find(isUnlocked) || BFG40[0];
+  const ids = BFG40.slice().sort((a, b) => (isUnlocked(a) ? 0 : 1) - (isUnlocked(b) ? 0 : 1) || (UNLOCK[a] || 0) - (UNLOCK[b] || 0));
+  for (const id of ids){ const D = CFG.decos[id], lk = !isUnlocked(id), st = S.storage[id] || 0, sps = HOSTIDX40[id] || [];
+    const el = trayItem('deco', id, D.name, [st ? `倉庫 ×${st}` : `${coinImg()}${fmtN(D.cost)}`, sps.length > 1 ? `${bfName40(sps[0]).replace(/（.*）/, '')}等 ${sps.length} 種` : sps.length ? bfName40(sps[0]).replace(/（.*）/, '') : '寄主植物'], !S.sel.none49 && S.sel.seedHost40 === id, lk, { lockLv: UNLOCK[id] });
+    el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } S.sel.seedHost40 = id; S.sel.none49 = false; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
+  tabsBar(TT.seed, 'bfgarden', seedTabPick40);
+  if (isM() && UI.trayCol) tray.hidden = true; }
+{ const _ut40b = UIbuildTray; UIbuildTray = function(){
+  if (S && S.sel.tool === 'seed' && S.sel.seedTab === 'bfgarden' && !RT.borrow34){ bfGardenTray40(); return; }
+  const cg = $('cgrp62'); if (cg && cg.hidden && S && S.sel.tool === 'seed') cg.hidden = false;
+  const r = _ut40b();
+  if (S && S.sel.tool === 'deco'){ const tray = $('tray'); if (tray) tray.querySelectorAll('.item').forEach(el => { const id = el.dataset.id; if (isHostDeco40(id) || id === 'bird_house') el.remove(); }); }   // 寄主植物在「播種 · 蝴蝶園」、鳥屋在「動物 · 設施」
+  return r; }; }
+{ const ts = TOOLS.find(t => t.id === 'seed'), _hs40 = ts.hint; ts.hint = () => { if (S.sel.seedTab === 'bfgarden'){ const id = S.sel.seedHost40; if (!id || S.sel.none49) return '先從下面選一株寄主植物，再點草地'; return withTool('deco', { deco: id }, () => TOOLS.find(t => t.id === 'deco').hint()); } return _hs40(); }; }
+{ const _act40b = act; act = function(x, y){ if (S && !UI.expand && S.sel.tool === 'seed' && S.sel.seedTab === 'bfgarden'){ const id = S.sel.seedHost40; const M = curMap(), T = inMap(M, x, y) && M.tiles[tkey(x, y)];
+    if (T && T.t === 'deco' && isHostDeco40(T.id)){ openBf40(M, tkey(x, y)); return; }
+    if (!id || S.sel.none49){ toast('先從下面選一株寄主植物'); return; } return withTool('deco', { deco: id }, () => act(x, y)); } return _act40b(x, y); }; }
+
+window.__farm240 = { sellAsk49: (...a) => sellAsk49(...a), stepDoll: dt => stepDoll(dt), useDollSel: (...a) => useDollSel(...a), stepButterflies, wildDaily40, placeEgg40, collectDead40, openBf40, buyBird40, stepBirds40, openBirdHouse40, houseList40, birds: () => birds40(), hostOk40, hostIdOf40,
+  thunderCharge40, act: (x, y) => act(x, y), showLevelUp: () => showLevelUp(), reasonRows55, bookHTML40 };
 
   })(CFG, ATLAS_JSON);
 })();

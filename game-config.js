@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.39",
+  "configVersion": "2.40.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -72,7 +72,8 @@ window.GAME_CONFIG = {
   "xpOnHarvest": true,
   "autoBuyFeedDefault": true,
   "machineSellRate": 0.5,
-  "machineStorable": false
+  "machineStorable": false,
+  "plantXp": 1
  },
  "weather": {
   "slotSeconds": 3600,
@@ -1539,6 +1540,117 @@ window.GAME_CONFIG = {
    "turnable": true,
    "snowArt": true,
    "note": "再點一下轉向（左右翻轉）"
+  },
+  "oxalis": {
+   "name": "酢漿草",
+   "source": "shop",
+   "cost": 80,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "herb"
+  },
+  "rumex": {
+   "name": "羊蹄",
+   "source": "shop",
+   "cost": 80,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "herb"
+  },
+  "senna": {
+   "name": "鐵刀木",
+   "source": "shop",
+   "cost": 200,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "tree"
+  },
+  "asclepias": {
+   "name": "馬利筋",
+   "source": "shop",
+   "cost": 120,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "shrub"
+  },
+  "alpinia": {
+   "name": "月桃",
+   "source": "shop",
+   "cost": 150,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "shrub"
+  },
+  "cinnamomum": {
+   "name": "樟樹",
+   "source": "shop",
+   "cost": 300,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "tree"
+  },
+  "acacia": {
+   "name": "相思樹",
+   "source": "shop",
+   "cost": 300,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "tree"
+  },
+  "aristolochia": {
+   "name": "馬兜鈴",
+   "source": "shop",
+   "cost": 180,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "vine"
+  },
+  "heterostemma": {
+   "name": "布朗藤",
+   "source": "shop",
+   "cost": 180,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "vine"
+  },
+  "crateva": {
+   "name": "魚木",
+   "source": "shop",
+   "cost": 300,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "tree"
+  },
+  "parsonsia": {
+   "name": "爬森藤",
+   "source": "shop",
+   "cost": 200,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "vine"
+  },
+  "mallotus": {
+   "name": "白匏子",
+   "source": "shop",
+   "cost": 350,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "tree"
+  },
+  "strobilanthes": {
+   "name": "馬藍",
+   "source": "shop",
+   "cost": 220,
+   "sellable": true,
+   "butterflyHost": true,
+   "plantKind": "shrub"
+  },
+  "bird_house": {
+   "name": "鳥屋",
+   "source": "shop",
+   "cost": 700,
+   "sellable": true,
+   "via": "animal"
   }
  },
  "expansion": {
@@ -1839,7 +1951,9 @@ window.GAME_CONFIG = {
     "night_cereus",
     "canna",
     "dianthus",
-    "freesia"
+    "freesia",
+    "oxalis",
+    "bf:papilio_demoleus"
    ],
    "animalCap": 9,
    "fishPoolTileCap": 8,
@@ -1872,7 +1986,11 @@ window.GAME_CONFIG = {
     "gentian",
     "schisandra",
     "poinsettia",
-    "hellebore"
+    "hellebore",
+    "doll_thunder",
+    "rumex",
+    "senna",
+    "bf:pieris_rapae"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -1903,7 +2021,11 @@ window.GAME_CONFIG = {
     "sweet_potato",
     "meat_duck",
     "cherry_blossom",
-    "dahlia"
+    "dahlia",
+    "asclepias",
+    "alpinia",
+    "cinnamomum",
+    "bf:zizeeria_maha"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -1940,7 +2062,12 @@ window.GAME_CONFIG = {
     "hydrangea",
     "hibiscus",
     "chrysanthemum",
-    "camellia"
+    "camellia",
+    "acacia",
+    "bird_budgie",
+    "bird_house",
+    "bird_food",
+    "bf:papilio_polytes"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -1967,7 +2094,11 @@ window.GAME_CONFIG = {
     "mint",
     "plumeria",
     "clematis",
-    "plum_blossom"
+    "plum_blossom",
+    "aristolochia",
+    "heterostemma",
+    "bird_java_white",
+    "bf:ypthima_multistriata"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -1982,7 +2113,11 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_maltese",
     "millet",
-    "okra"
+    "okra",
+    "crateva",
+    "parsonsia",
+    "bird_java_black",
+    "bf:danaus_chrysippus"
    ],
    "animalCap": 17,
    "fishPoolTileCap": 17,
@@ -2000,7 +2135,11 @@ window.GAME_CONFIG = {
     "beet",
     "bell_pepper",
     "meat_goose",
-    "moth_orchid"
+    "moth_orchid",
+    "mallotus",
+    "strobilanthes",
+    "bird_canary",
+    "bf:eurema_blanda"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -2016,7 +2155,8 @@ window.GAME_CONFIG = {
     "dog_pomeranian",
     "piranha",
     "napa_cabbage",
-    "basil"
+    "basil",
+    "bf:suastus_gremius"
    ],
    "animalCap": 19,
    "fishPoolTileCap": 19,
@@ -2031,7 +2171,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "sorghum",
     "muskmelon",
-    "down_goose"
+    "down_goose",
+    "bird_gouldian",
+    "bf:papilio_protenor"
    ],
    "animalCap": 20,
    "fishPoolTileCap": 20,
@@ -2046,7 +2188,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_corgi",
     "cat_shark",
-    "chili"
+    "chili",
+    "bird_lovebird",
+    "bf:catopsilia_pomona"
    ],
    "animalCap": 21,
    "fishPoolTileCap": 21,
@@ -2060,7 +2204,8 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "taro",
-    "rosemary"
+    "rosemary",
+    "bf:pieris_canidia"
    ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
@@ -2075,7 +2220,10 @@ window.GAME_CONFIG = {
    "unlocks": [
     "cat_black",
     "bamboo_shark",
-    "thyme"
+    "thyme",
+    "bird_cockatiel",
+    "bird_cockatiel_white",
+    "bf:erionota_torus"
    ],
    "animalCap": 23,
    "fishPoolTileCap": 23,
@@ -2089,7 +2237,8 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "dog_border",
-    "honeydew"
+    "honeydew",
+    "bf:graphium_sarpedon"
    ],
    "animalCap": 24,
    "fishPoolTileCap": 24,
@@ -2116,7 +2265,9 @@ window.GAME_CONFIG = {
    "specialDeco": "cat_tree_gold",
    "unlocks": [
     "blacktip_shark",
-    "sugarcane"
+    "sugarcane",
+    "bird_sun_conure",
+    "bf:papilio_memnon"
    ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
@@ -2129,7 +2280,8 @@ window.GAME_CONFIG = {
    "coinReward": 16000,
    "specialDeco": null,
    "unlocks": [
-    "dog_dachshund"
+    "dog_dachshund",
+    "bf:cyrestis_thyodamas"
    ],
    "animalCap": 27,
    "fishPoolTileCap": 27,
@@ -2142,7 +2294,8 @@ window.GAME_CONFIG = {
    "coinReward": 17000,
    "specialDeco": null,
    "unlocks": [
-    "cotton"
+    "cotton",
+    "bf:heliophorus_ila"
    ],
    "animalCap": 28,
    "fishPoolTileCap": 28,
@@ -2155,7 +2308,9 @@ window.GAME_CONFIG = {
    "coinReward": 18000,
    "specialDeco": null,
    "unlocks": [
-    "cat_ragdoll"
+    "cat_ragdoll",
+    "bird_quaker",
+    "bf:jamides_alecto"
    ],
    "animalCap": 29,
    "fishPoolTileCap": 29,
@@ -2168,7 +2323,8 @@ window.GAME_CONFIG = {
    "coinReward": 19000,
    "specialDeco": null,
    "unlocks": [
-    "dog_poodle"
+    "dog_poodle",
+    "bf:prosotas_nora"
    ],
    "animalCap": 30,
    "fishPoolTileCap": 30,
@@ -2182,7 +2338,8 @@ window.GAME_CONFIG = {
    "specialDeco": "fountain",
    "unlocks": [
     "hammerhead",
-    "tea"
+    "tea",
+    "bf:bamboo_skipper"
    ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
@@ -2194,7 +2351,9 @@ window.GAME_CONFIG = {
    "xpToReach": 1221600,
    "coinReward": 21000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "bf:ideopsis_similis"
+   ],
    "animalCap": 32,
    "fishPoolTileCap": 32,
    "produceCapacity": 6200,
@@ -2206,7 +2365,9 @@ window.GAME_CONFIG = {
    "coinReward": 22000,
    "specialDeco": null,
    "unlocks": [
-    "dog_labrador"
+    "dog_labrador",
+    "bird_african_grey",
+    "bf:appias_lyncida"
    ],
    "animalCap": 33,
    "fishPoolTileCap": 33,
@@ -2219,7 +2380,8 @@ window.GAME_CONFIG = {
    "coinReward": 23000,
    "specialDeco": null,
    "unlocks": [
-    "coffee"
+    "coffee",
+    "bf:tagiades_dagai"
    ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
@@ -2232,7 +2394,8 @@ window.GAME_CONFIG = {
    "coinReward": 24000,
    "specialDeco": null,
    "unlocks": [
-    "cat_persian"
+    "cat_persian",
+    "bf:danaus_genutia"
    ],
    "animalCap": 35,
    "fishPoolTileCap": 35,
@@ -2269,7 +2432,9 @@ window.GAME_CONFIG = {
    "coinReward": 27000,
    "specialDeco": null,
    "unlocks": [
-    "dog_husky"
+    "dog_husky",
+    "bird_white_cockatoo",
+    "bf:pachliopta_aristolochiae"
    ],
    "animalCap": 38,
    "fishPoolTileCap": 38,
@@ -2305,7 +2470,9 @@ window.GAME_CONFIG = {
    "xpToReach": 1875000,
    "coinReward": 60000,
    "specialDeco": "hot_air_balloon",
-   "unlocks": [],
+   "unlocks": [
+    "bf:kallima_inachus"
+   ],
    "animalCap": 41,
    "fishPoolTileCap": 41,
    "produceCapacity": 8450,
@@ -2338,7 +2505,9 @@ window.GAME_CONFIG = {
    "xpToReach": 2103600,
    "coinReward": 33000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "bf:spindasis_lohita"
+   ],
    "animalCap": 44,
    "fishPoolTileCap": 44,
    "produceCapacity": 9200,
@@ -2360,7 +2529,9 @@ window.GAME_CONFIG = {
    "xpToReach": 2259000,
    "coinReward": 70000,
    "specialDeco": "lighthouse",
-   "unlocks": [],
+   "unlocks": [
+    "bf:seseria_formosana"
+   ],
    "animalCap": 46,
    "fishPoolTileCap": 46,
    "produceCapacity": 9700,
@@ -3400,6 +3571,12 @@ window.GAME_CONFIG = {
    "name": "冬花蜜",
    "category": "honey",
    "sellPrice": 80
+  },
+  "bird_food": {
+   "name": "鳥飼料",
+   "category": "feed",
+   "sellPrice": 3,
+   "shopOnly": true
   }
  },
  "feedShop": {
@@ -3407,7 +3584,8 @@ window.GAME_CONFIG = {
   "corn_cake": 6,
   "fish_feed": 5,
   "dog_food": 8,
-  "cat_food": 6
+  "cat_food": 6,
+  "bird_food": 6
  },
  "machines": {
   "corn_cake_machine": {
@@ -4366,6 +4544,40 @@ window.GAME_CONFIG = {
     "anyClimate": true,
     "dayAndNight": true,
     "sameAsNaturalSnow": true
+   },
+   "thunder": {
+    "name": "雷神娃娃",
+    "unlockLevel": 7,
+    "usableWhen": "notRainingNow",
+    "effect": "rain",
+    "rainEffects": [
+     "moistFull",
+     "reviveWithered",
+     "fillTowerFree",
+     "dronePause",
+     "countsAsCloudy"
+    ],
+    "minutes": {
+     "s": 10,
+     "m": 15,
+     "l": 20
+    },
+    "sizeNames": {
+     "s": "小雷雨",
+     "m": "雷雨",
+     "l": "強烈雷暴"
+    },
+    "charge": {
+     "s": 0.2,
+     "m": 0.5,
+     "l": 1
+    },
+    "lightning": {
+     "everySecondsMin": 5,
+     "everySecondsMax": 14,
+     "flash": true
+    },
+    "note": "v2.40：補水同雨天娃娃；充電＝放下時全部電池合計容量 × charge，在娃娃時間內隨每道雷慢慢充進電池（免費、不算電費、滿了就浪費）；中途收回就停，下次放出來接著充。沒有電池也照樣打雷下雨，只是不充電"
    }
   },
   "sizes": {
@@ -4397,6 +4609,11 @@ window.GAME_CONFIG = {
     "s": 50,
     "m": 180,
     "l": 300
+   },
+   "thunder": {
+    "s": 90,
+    "m": 280,
+    "l": 480
    }
   },
   "rules": {
@@ -6749,6 +6966,27 @@ window.GAME_CONFIG = {
      "id": "flowers",
      "label": "花苗",
      "icon": "ui_tab_flowers"
+    },
+    {
+     "id": "bfgarden",
+     "label": "蝴蝶園",
+     "icon": "ui_tab_bf_garden",
+     "ids": [
+      "oxalis",
+      "rumex",
+      "senna",
+      "asclepias",
+      "alpinia",
+      "cinnamomum",
+      "acacia",
+      "aristolochia",
+      "heterostemma",
+      "crateva",
+      "parsonsia",
+      "mallotus",
+      "strobilanthes"
+     ],
+     "via": "deco"
     }
    ],
    "deco": [
@@ -6862,7 +7100,8 @@ window.GAME_CONFIG = {
       "fence_iron",
       "compost_bin",
       "dog_house",
-      "cat_tree"
+      "cat_tree",
+      "bird_house"
      ],
      "via": {
       "compost_bin": "build"
@@ -6923,6 +7162,25 @@ window.GAME_CONFIG = {
       "cat_ragdoll",
       "cat_persian"
      ]
+    },
+    {
+     "id": "pet_bird",
+     "label": "寵物鳥",
+     "icon": "ui_tab_pet_bird",
+     "ids": [
+      "bird_budgie",
+      "bird_java_white",
+      "bird_java_black",
+      "bird_canary",
+      "bird_gouldian",
+      "bird_lovebird",
+      "bird_cockatiel",
+      "bird_cockatiel_white",
+      "bird_sun_conure",
+      "bird_quaker",
+      "bird_african_grey",
+      "bird_white_cockatoo"
+     ]
     }
    ],
    "fish": [
@@ -6971,13 +7229,46 @@ window.GAME_CONFIG = {
      ]
     },
     {
-     "id": "insects",
-     "label": "昆蟲",
-     "icon": "ui_tab_insects",
+     "id": "bees",
+     "label": "蜜蜂",
+     "icon": "ui_tab_bees",
      "ids": [
       "queen_bee",
-      "bumble_colony",
-      "butterfly_egg"
+      "bumble_colony"
+     ]
+    },
+    {
+     "id": "butterflies",
+     "label": "蝴蝶",
+     "icon": "ui_tab_bf",
+     "ids": [
+      "bf:graphium_sarpedon",
+      "bf:papilio_demoleus",
+      "bf:papilio_memnon",
+      "bf:pachliopta_aristolochiae",
+      "bf:papilio_protenor",
+      "bf:papilio_polytes",
+      "bf:pieris_rapae",
+      "bf:pieris_canidia",
+      "bf:eurema_blanda",
+      "bf:appias_lyncida",
+      "bf:catopsilia_pomona",
+      "bf:kallima_inachus",
+      "bf:cyrestis_thyodamas",
+      "bf:danaus_chrysippus",
+      "bf:ideopsis_similis",
+      "bf:ypthima_multistriata",
+      "bf:danaus_genutia",
+      "bf:zizeeria_maha",
+      "bf:heliophorus_ila",
+      "bf:spindasis_lohita",
+      "bf:prosotas_nora",
+      "bf:jamides_alecto",
+      "bf:suastus_gremius",
+      "bf:tagiades_dagai",
+      "bf:erionota_torus",
+      "bf:bamboo_skipper",
+      "bf:seseria_formosana"
      ]
     }
    ],
@@ -7630,6 +7921,11 @@ window.GAME_CONFIG = {
   "fieldInfo239": {
    "mobileMapWidth": 72,
    "note": "v2.39：rules.animalStackMax = 0 表示不設上限（生產型動物沒收產物也照吃飼料、照生產，直到壽命輪數用完；黃鼠狼一次偷光那隻雞堆著的蛋）。手機版（寬度 ≤ ui.fieldInfo236.mobileWidth）查看田地、花、查看魚池：每列拿掉作物／花／魚的小圖，改放位置小圖（寬 mobileMapWidth px）"
+  },
+  "levelUp240": {
+   "desktopMinWidth": 900,
+   "desktopCardWidth": 680,
+   "note": "升級視窗只有按「太好了」才收起；新解鎖全部列出（卡片內捲動）；電腦版寬、手機直拿一列 4 個、橫拿左右兩欄。流星許願視窗相同"
   }
  },
  "droneWatering": {
@@ -8537,6 +8833,9 @@ window.GAME_CONFIG = {
   },
   "unlockLevel": 6,
   "hostTrees": [
+   "avocado",
+   "banana",
+   "coconut",
    "lemon",
    "orange"
   ],
@@ -8555,7 +8854,312 @@ window.GAME_CONFIG = {
   "pesticideKills": [
    "egg",
    "larva"
-  ]
+  ],
+  "families": {
+   "papilio": "鳳蝶科",
+   "pieris": "粉蝶科",
+   "nymph": "蛺蝶科",
+   "lycaena": "灰蝶科",
+   "hesper": "弄蝶科"
+  },
+  "rarity": {
+   "common": {
+    "name": "常見",
+    "eggCost": 80,
+    "specimenPrice": 120,
+    "wildWeight": 6
+   },
+   "uncommon": {
+    "name": "少見",
+    "eggCost": 150,
+    "specimenPrice": 300,
+    "wildWeight": 3
+   },
+   "rare": {
+    "name": "稀有",
+    "eggCost": 300,
+    "specimenPrice": 800,
+    "wildWeight": 1
+   }
+  },
+  "species": {
+   "graphium_sarpedon": {
+    "name": "青帶鳳蝶",
+    "family": "papilio",
+    "rarity": "common",
+    "hosts": [
+     "avocado",
+     "cinnamomum"
+    ],
+    "level": 18
+   },
+   "papilio_demoleus": {
+    "name": "無尾鳳蝶",
+    "family": "papilio",
+    "rarity": "common",
+    "hosts": [
+     "lemon",
+     "orange"
+    ],
+    "level": 6
+   },
+   "papilio_memnon": {
+    "name": "大鳳蝶",
+    "family": "papilio",
+    "rarity": "uncommon",
+    "hosts": [
+     "lemon",
+     "orange"
+    ],
+    "level": 20
+   },
+   "pachliopta_aristolochiae": {
+    "name": "紅紋鳳蝶",
+    "family": "papilio",
+    "rarity": "rare",
+    "hosts": [
+     "aristolochia"
+    ],
+    "level": 32
+   },
+   "papilio_protenor": {
+    "name": "黑鳳蝶",
+    "family": "papilio",
+    "rarity": "common",
+    "hosts": [
+     "lemon",
+     "orange"
+    ],
+    "level": 14
+   },
+   "papilio_polytes": {
+    "name": "玉帶鳳蝶",
+    "family": "papilio",
+    "rarity": "common",
+    "hosts": [
+     "lemon",
+     "orange"
+    ],
+    "level": 9
+   },
+   "pieris_rapae": {
+    "name": "紋白蝶",
+    "family": "pieris",
+    "rarity": "common",
+    "hosts": [
+     "cabbage",
+     "napa_cabbage",
+     "bok_choy",
+     "daikon"
+    ],
+    "level": 7
+   },
+   "pieris_canidia": {
+    "name": "臺灣紋白蝶",
+    "family": "pieris",
+    "rarity": "common",
+    "hosts": [
+     "cabbage",
+     "napa_cabbage",
+     "bok_choy",
+     "daikon"
+    ],
+    "level": 16
+   },
+   "eurema_blanda": {
+    "name": "臺灣黃蝶",
+    "family": "pieris",
+    "rarity": "common",
+    "hosts": [
+     "senna"
+    ],
+    "level": 12
+   },
+   "appias_lyncida": {
+    "name": "異色尖粉蝶",
+    "family": "pieris",
+    "rarity": "uncommon",
+    "hosts": [
+     "crateva"
+    ],
+    "level": 27
+   },
+   "catopsilia_pomona": {
+    "name": "遷粉蝶（淡黃蝶）",
+    "family": "pieris",
+    "rarity": "common",
+    "hosts": [
+     "senna"
+    ],
+    "level": 15
+   },
+   "kallima_inachus": {
+    "name": "枯葉蝶",
+    "family": "nymph",
+    "rarity": "rare",
+    "hosts": [
+     "strobilanthes"
+    ],
+    "level": 35
+   },
+   "cyrestis_thyodamas": {
+    "name": "石牆蝶",
+    "family": "nymph",
+    "rarity": "uncommon",
+    "hosts": [
+     "banyan"
+    ],
+    "level": 21
+   },
+   "danaus_chrysippus": {
+    "name": "樺斑蝶",
+    "family": "nymph",
+    "rarity": "common",
+    "hosts": [
+     "asclepias"
+    ],
+    "level": 11
+   },
+   "ideopsis_similis": {
+    "name": "琉球青斑蝶",
+    "family": "nymph",
+    "rarity": "uncommon",
+    "hosts": [
+     "heterostemma"
+    ],
+    "level": 26
+   },
+   "ypthima_multistriata": {
+    "name": "臺灣波紋蛇目蝶",
+    "family": "nymph",
+    "rarity": "common",
+    "hosts": [
+     "pasture",
+     "rice",
+     "wheat",
+     "oats",
+     "barley",
+     "timothy"
+    ],
+    "level": 10
+   },
+   "danaus_genutia": {
+    "name": "黑脈樺斑蝶",
+    "family": "nymph",
+    "rarity": "uncommon",
+    "hosts": [
+     "parsonsia"
+    ],
+    "level": 29
+   },
+   "zizeeria_maha": {
+    "name": "藍灰蝶（沖繩小灰蝶）",
+    "family": "lycaena",
+    "rarity": "common",
+    "hosts": [
+     "oxalis"
+    ],
+    "level": 8
+   },
+   "heliophorus_ila": {
+    "name": "紅邊黃小灰蝶",
+    "family": "lycaena",
+    "rarity": "uncommon",
+    "hosts": [
+     "rumex"
+    ],
+    "level": 22
+   },
+   "spindasis_lohita": {
+    "name": "雙尾燕蝶",
+    "family": "lycaena",
+    "rarity": "rare",
+    "hosts": [
+     "mallotus"
+    ],
+    "level": 38
+   },
+   "prosotas_nora": {
+    "name": "波灰蝶",
+    "family": "lycaena",
+    "rarity": "uncommon",
+    "hosts": [
+     "acacia"
+    ],
+    "level": 24
+   },
+   "jamides_alecto": {
+    "name": "淡青雅波灰蝶",
+    "family": "lycaena",
+    "rarity": "uncommon",
+    "hosts": [
+     "alpinia"
+    ],
+    "level": 23
+   },
+   "suastus_gremius": {
+    "name": "黑星弄蝶",
+    "family": "hesper",
+    "rarity": "common",
+    "hosts": [
+     "palm",
+     "coconut"
+    ],
+    "level": 13
+   },
+   "tagiades_dagai": {
+    "name": "大蓋弄蝶",
+    "family": "hesper",
+    "rarity": "uncommon",
+    "hosts": [
+     "avocado",
+     "cinnamomum"
+    ],
+    "level": 28
+   },
+   "erionota_torus": {
+    "name": "香蕉弄蝶",
+    "family": "hesper",
+    "rarity": "common",
+    "hosts": [
+     "banana"
+    ],
+    "level": 17
+   },
+   "bamboo_skipper": {
+    "name": "竹弄蝶",
+    "family": "hesper",
+    "rarity": "uncommon",
+    "hosts": [
+     "bamboo"
+    ],
+    "level": 25
+   },
+   "seseria_formosana": {
+    "name": "臺灣瑟弄蝶",
+    "family": "hesper",
+    "rarity": "rare",
+    "hosts": [
+     "avocado",
+     "cinnamomum"
+    ],
+    "level": 40
+   }
+  },
+  "v240": {
+   "wildDailyChancePerHost": 0.15,
+   "wildCatchUpDays": 7,
+   "deadHours": 24,
+   "specimenChance": 0.4,
+   "oldEggsBecome": [
+    "papilio_demoleus",
+    "papilio_memnon",
+    "papilio_protenor",
+    "papilio_polytes"
+   ],
+   "note": "v2.40：蝴蝶依寄主植物；自己放的卵知道品種，野生的羽化才揭曉；成蝶死前產 1 顆同種卵在同種寄主上，死後掉在寄主下面 24 小時，用「收成」撿起來記進圖鑑，40% 做成標本（倉庫「標本」可賣）",
+   "levelNote": "v2.40.1：常見 Lv 6～18、少見 Lv 20～29、稀有 Lv 32～40，大約一級一種；選項列已解鎖的排左邊、依等級排序"
+  }
  },
  "coinLog": {
   "keepDays": 7,
@@ -8603,7 +9207,8 @@ window.GAME_CONFIG = {
    "checkin": "ui_cl_checkin",
    "other": "ui_cl_other",
    "note": "每一列的圖示照原因分類；作物的那列用作物本身的圖示"
-  }
+  },
+  "detail240": "每筆可多一行明細（紀錄第 6 欄）：賣出品項與數量、垃圾車收了什麼、升到哪一級"
  },
  "pets": {
   "unlockLevel": 8,
@@ -9366,7 +9971,20 @@ window.GAME_CONFIG = {
      200,
      1000
     ],
-    "desc": "羽化的蝴蝶隻數"
+    "desc": "撿到的蝴蝶隻數"
+   },
+   {
+    "id": "specimen",
+    "name": "標本收藏家",
+    "group": "昆蟲",
+    "stat": "specimenKinds",
+    "tiers": [
+     5,
+     10,
+     20,
+     27
+    ],
+    "desc": "做成標本的蝴蝶種類"
    },
    {
     "id": "guard",
@@ -10293,6 +10911,32 @@ window.GAME_CONFIG = {
      10000
     ],
     "desc": "累計採到薰衣草蜜罐數"
+   },
+   {
+    "id": "bird_watcher",
+    "name": "賞鳥達人",
+    "group": "寵物鳥",
+    "stat": "birdKinds",
+    "tiers": [
+     2,
+     4,
+     7,
+     11
+    ],
+    "desc": "養過幾種寵物鳥"
+   },
+   {
+    "id": "bug_squad",
+    "name": "除蟲小隊",
+    "group": "寵物鳥",
+    "stat": "birdBugs",
+    "tiers": [
+     10,
+     50,
+     200,
+     1000
+    ],
+    "desc": "寵物鳥累計抓蟲（棵次）"
    }
   ],
   "badgeSources227": {
@@ -10695,6 +11339,156 @@ window.GAME_CONFIG = {
    "screenMax": 3,
    "layoutLoopMs": 250,
    "note": "v2.33.1：設定「手機與效能」，每台裝置各自記（localStorage storageKey，不跟存檔）。res＝畫布解析度倍率（screen＝跟螢幕，最多 screenMax）；fps＝每秒最多畫幾張；idleFps＝idleSec 秒沒操作時降到每秒幾張（0＝不降）；effects less＝不畫雲影和下雨下雪的落下動畫。舊的 skyfarm-power：on → phone、off → 跟螢幕／60／不降、auto → 依裝置。選項列分頁、作物分類列的定位每 layoutLoopMs 毫秒算一次（原本每個畫面更新都算）"
+  }
+ },
+ "hostWeeds240": {
+  "ids": [
+   "oxalis",
+   "rumex"
+  ],
+  "dailyChancePerMap": 0.3,
+  "maxPerMap": 4,
+  "note": "酢漿草、羊蹄偶爾像雜草一樣自己長出來（每座島每天 30%，最多 4 株，有解鎖才長）；用「收成」點會拔掉，上面有卵、幼蟲或蛹時先問"
+ },
+ "birds240": {
+  "house": {
+   "id": "bird_house",
+   "level": 9,
+   "cost": 700,
+   "expandCost": [
+    350,
+    350
+   ],
+   "maxSlots": 3,
+   "nestMax": 4,
+   "shrinkRefundRate": 0.5
+  },
+  "food": {
+   "item": "bird_food",
+   "everyHours": 8
+  },
+  "sellRate": 0.5,
+  "nameMaxChars": 8,
+  "peckSeconds": 1.2,
+  "skills": {
+   "flockMult": 0.8,
+   "earlyHours": 1,
+   "songRecoverMult": 0.7,
+   "luckyFruitBoost": 0.05,
+   "pairRangeBonus": 2,
+   "preventPestMult": 0.8,
+   "loudRatMult": 0.7,
+   "talkExtraSeconds": 120
+  },
+  "stayHomeWhen": [
+   "night",
+   "rain",
+   "snow"
+  ],
+  "species": {
+   "budgie": {
+    "name": "虎皮鸚鵡",
+    "level": 9,
+    "price": 600,
+    "range": 5,
+    "catchSeconds": 60,
+    "skill": "flock",
+    "skillText": "成群：同一間鳥屋有 2 隻以上虎皮鸚鵡時，抓蟲時間 −20%"
+   },
+   "java_white": {
+    "name": "白文鳥",
+    "level": 10,
+    "price": 800,
+    "range": 5,
+    "catchSeconds": 60,
+    "skill": "extra",
+    "skillText": "順便：抓完再清掉範圍內另一棵果樹的蟲"
+   },
+   "java_black": {
+    "name": "黑文鳥",
+    "level": 11,
+    "price": 900,
+    "range": 5,
+    "catchSeconds": 50,
+    "skill": "early",
+    "skillText": "早起：天亮前 1 小時就出門"
+   },
+   "canary": {
+    "name": "金絲雀",
+    "level": 12,
+    "price": 1000,
+    "range": 5,
+    "catchSeconds": 60,
+    "skill": "song",
+    "skillText": "歌聲：範圍內受驚的動物恢復快 30%"
+   },
+   "gouldian": {
+    "name": "七彩文鳥（胡錦鳥）",
+    "level": 14,
+    "price": 1500,
+    "range": 5,
+    "catchSeconds": 50,
+    "skill": "lucky",
+    "skillText": "吉祥：範圍內果樹結果 +5%"
+   },
+   "lovebird": {
+    "name": "牡丹鸚鵡",
+    "level": 15,
+    "price": 1800,
+    "range": 7,
+    "catchSeconds": 50,
+    "skill": "pair",
+    "skillText": "形影不離：同一間鳥屋有另一隻牡丹鸚鵡時範圍 +2"
+   },
+   "cockatiel": {
+    "name": "玄鳳鸚鵡",
+    "level": 17,
+    "price": 2200,
+    "range": 7,
+    "catchSeconds": 45,
+    "skill": "prevent",
+    "skillText": "預防：範圍內果樹長蟲機率 −20%",
+    "colors": {
+     "grey": "灰",
+     "white": "白"
+    }
+   },
+   "sun_conure": {
+    "name": "小太陽鸚鵡",
+    "level": 20,
+    "price": 3000,
+    "range": 7,
+    "catchSeconds": 40,
+    "skill": "loud",
+    "skillText": "大嗓門：範圍內的倉庫、垃圾站老鼠出現機率 −30%"
+   },
+   "quaker": {
+    "name": "和尚鸚鵡",
+    "level": 23,
+    "price": 3800,
+    "range": 9,
+    "catchSeconds": 45,
+    "skill": "nest",
+    "skillText": "築巢高手：住的那間鳥屋多 1 位（最多 4）"
+   },
+   "african_grey": {
+    "name": "非洲灰鸚鵡",
+    "level": 27,
+    "price": 6000,
+    "range": 9,
+    "catchSeconds": 40,
+    "skill": "talk",
+    "skillText": "學說話：範圍內有天敵靠近時大叫，天敵得手時間延長並發通知"
+   },
+   "white_cockatoo": {
+    "name": "白鳳頭鸚鵡",
+    "level": 32,
+    "price": 9000,
+    "range": 11,
+    "catchSeconds": 35,
+    "skill": "double",
+    "skillText": "範圍最大、一次可以同時抓 2 棵"
+   }
   }
  }
 };
