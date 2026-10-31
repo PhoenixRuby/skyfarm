@@ -50030,6 +50030,18 @@ window.GAME_ATLAS = {
       "scale": 4,
       "sx": 160,
       "sy": 682
+    },
+    "ui_hd_cart_info": {
+      "file": "ui_hd_cart_info.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };

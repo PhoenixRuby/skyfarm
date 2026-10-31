@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.49",
+  "configVersion": "2.50",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -12729,7 +12729,7 @@ window.GAME_CONFIG = {
   },
   "inspect": {
    "title": "查看地形",
-   "later": "炸藥、清地形機器人、填平、挖河道、橋會在之後的版本開放。"
+   "later": "炸藥、清地形機器人會在之後的版本開放。"
   }
  },
  "terrain243": {
@@ -13092,5 +13092,37 @@ window.GAME_CONFIG = {
    "note": "會車時：要回小屋的先走，再看種類（鐵、銅、煤、紫水晶、粉晶、黃水晶、茶晶、木材、土），同一種先建立的先走。"
   },
   "note": "v2.49（規則文件「v2.49 礦車資訊面板、休息時讓出主線、會車優先順序、剪刀石頭布彩蛋」）"
+ },
+ "ui250": {
+  "bigTitles": [
+   "建材小屋",
+   "查看地形",
+   "礦車資訊",
+   "鳥屋",
+   "蝴蝶"
+  ],
+  "logMax": 20,
+  "pollenLogMinutes": 60,
+  "mapColors": {
+   "day": {
+    "grass": "#5d9a54",
+    "mine": "#9a948c",
+    "forest": "#2f6b3a",
+    "mound": "#a07a4a",
+    "river": "#3f78b0",
+    "rail": "#6b5a48",
+    "other": "#7d8a92"
+   },
+   "night": {
+    "grass": "#2f5a3c",
+    "mine": "#6f6a64",
+    "forest": "#1f4a2a",
+    "mound": "#6f5636",
+    "river": "#2c5b8c",
+    "rail": "#4b4034",
+    "other": "#4b5560"
+   }
+  },
+  "note": "v2.50：大抬頭的面板、記錄筆數（鳥、寄主植物各自最近 logMax 筆；成蝶授粉每 pollenLogMinutes 分鐘記一筆）、等角小圖顏色"
  }
 };

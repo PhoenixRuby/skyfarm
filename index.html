@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.49-d10cc917c3'), getJSON('sprites/atlas.json?v=2.49-d10cc917c3')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.50-2a689603f7'), getJSON('sprites/atlas.json?v=2.50-2a689603f7')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.49-d10cc917c3';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.50-2a689603f7';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -18654,6 +18654,234 @@ function openCart249(mi, key){ const TR = train246(mi, key), L = TR.load || {}, 
 
 window.__farm249 = { train: (mi, k) => train246(mi, k), rank249, wins249, onMain249, pickRefuge249, aside249, rps249, eta249, openCart249, trips249, mat249,
   stepCarts: (...a) => stepCarts89(...a), railMenu: (...a) => railMenu246(...a), objSprite: (M, k) => objSprite(M, k), worker84: (...a) => worker84(...a), RT };
+
+/* ===== 95. v2.50：面板改版（建材小屋、查看地形、礦車資訊、鳥屋、蝴蝶）、玩家抬頭圖示、等角範圍小圖、升級缺圖、鳥與蝴蝶的記錄（規則文件「v2.50」）=====
+   抬頭：HD54 對照加五個面板（batch60 玩家圖），這幾個面板 #modal .sheet 加 .big250（大圖示＋大標題）。
+   等角小圖 isoMap250（整座島、每格顏色、外加疊圖），重新宣告 cpMap247（採集點範圍）；查看地形右欄同一張。
+   面板：重新宣告 openTerrain83／openBirdHouse40／openBf40／openCart249（舊的包裝照常加東西，g95 最外層包裝再把它們搬進新的欄位）；建材小屋只改排版（CSS＋抬頭）。
+   記錄：鳥 B.log250、寄主植物 T.bfl250（最近 20 筆 [時間, 種類, 格子, 數字/物種]），stepBirds40／stepButterflies 包裝比對前後狀態寫入。
+   升級缺圖：unlockIcon38 包裝（rent_<種類>_n、drone_n、鳥屋）。 */
+const V250 = CFG.ui250 || {}, LOGN250 = V250.logMax || 20;
+const hm250 = t => { try { return locHM67(t); } catch(e){ const d = new Date(t); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; } };
+const xy250 = k => { const [x, y] = pkey(k); return `(${x}, ${y})`; };
+const img250 = (n, cls) => IMGSRC[n] ? `<img src="${IMGSRC[n]}" class="${cls || 'ic250'}" alt="">` : '';
+
+/* ---------- 1. 抬頭圖示、大抬頭 ---------- */
+Object.assign(HD54, { '建材小屋': 'material_shed', '查看地形': 'terrain', '礦車資訊': 'cart_info', '鳥屋': 'bird_house', '蝴蝶': 'bf', '重型充電樁': 'heavy_charger' });
+const BIG250 = new Set(V250.bigTitles || ['建材小屋', '查看地形', '礦車資訊', '鳥屋', '蝴蝶']);
+{ const _om95 = openModal; openModal = function(title, ...a){ const r = _om95(title, ...a); try { const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.toggle('big250', BIG250.has(String(title))); } catch(e){} return r; }; }
+
+/* ---------- 2. 升級視窗缺圖 ---------- */
+{ const _ui95 = unlockIcon38; unlockIcon38 = function(u){ if (typeof u === 'string'){ let m = /^rent_([a-z]+)_\d+$/.exec(u);
+    if (m){ const kd = m[1], n = (R_ICON || {})[kd] || (ATLAS['ui_' + kd] ? 'ui_' + kd : ATLAS['ui_' + kd + 'bot'] ? 'ui_' + kd + 'bot' : null); if (n) return [n, 0]; }
+    if (/^drone_\d+$/.test(u)) return [ATLAS.ui_drone ? 'ui_drone' : 'ui_drone_pad', 0];
+    if (u === 'bird_house' && ATLAS.ui_hd_bird_house) return ['ui_hd_bird_house', 0]; }
+  return _ui95(u); }; }
+
+/* ---------- 3. 等角小圖 ---------- */
+// cell(x, y, U) → 填色或 null（不畫）；over(c, pos, W, H) 畫疊圖。整座島（M.blocks）＝範圍
+function isoMap250(mi, cell, over, maxW = 520){ const M = S.maps[mi], cells = mapTiles(M); if (!cells.length) return null;
+  const xs = cells.map(q => q[0]), ys = cells.map(q => q[1]), x0 = Math.min(...xs), y0 = Math.min(...ys), x1 = Math.max(...xs), y1 = Math.max(...ys);
+  const n = (x1 - x0) + (y1 - y0) + 2, W = Math.max(8, Math.min(30, Math.floor(maxW * 2 / n))), H = W / 2, cw = Math.ceil(n * W / 2) + 8, ch = Math.ceil(n * H / 2) + 16;
+  const cv = document.createElement('canvas'), dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = cw * dpr; cv.height = ch * dpr; cv.style.width = cw + 'px'; cv.style.maxWidth = '100%'; cv.className = 'iso250';
+  const c = cv.getContext('2d'); c.scale(dpr, dpr); const ox = cw / 2 - ((x1 - x0) - (y1 - y0)) * W / 4, oy = 8 + H / 2;
+  const pos = (x, y) => [ox + ((x - x0) - (y - y0)) * W / 2, oy + ((x - x0) + (y - y0)) * H / 2];
+  const P = pal53(); cells.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]));
+  for (const [x, y] of cells){ const col = cell(x, y, M.tiles[tkey(x, y)]); if (!col) continue; const [cx, cy] = pos(x, y);
+    c.beginPath(); c.moveTo(cx, cy - H / 2); c.lineTo(cx + W / 2, cy); c.lineTo(cx, cy + H / 2); c.lineTo(cx - W / 2, cy); c.closePath(); c.fillStyle = col; c.fill(); c.strokeStyle = P.line; c.lineWidth = .8; c.stroke(); }
+  // 島的外框（橘色虛線，跟鳥屋小圖一樣）
+  { const a = pos(x0 - .5, y0 - .5), b = pos(x1 + .5, y0 - .5), d = pos(x1 + .5, y1 + .5), e = pos(x0 - .5, y1 + .5); c.beginPath(); c.moveTo(...a); c.lineTo(...b); c.lineTo(...d); c.lineTo(...e); c.closePath(); c.strokeStyle = '#ff7a59'; c.lineWidth = 1.5; c.setLineDash([5, 3]); c.stroke(); c.setLineDash([]); }
+  if (over) over(c, pos, W, H, M);
+  return cv; }
+const P250 = () => Object.assign({ grass: '#3f7a4a', mine: '#9a948c', forest: '#2f6b3a', mound: '#a07a4a', river: '#3f78b0', rail: '#6b5a48', other: '#5b6470' }, (V250.mapColors || {})[document.body.classList.contains('night') ? 'night' : 'day'] || {});
+function baseCol250(U, C){ if (!U || U.t === 'weed') return C.grass; if (U.t === 'terrain') return C[U.kind] || C.other; if (isRail89(U)) return U.br247 ? C.river : C.rail; if (U.t === 'cp247') return C.grass; return C.other; }
+function cpMap247(M, gid){ const mi = S.maps.indexOf(M), g = M.ter242 && M.ter242.g[gid], own = owners247(M), pts = points247(M), C = P250();
+  return isoMap250(mi, (x, y, U) => { const k = tkey(x, y); if (g && g.cells.includes(k)){ const p = own.get(k), alive = live247(M, k); if (!alive) return 'rgba(127,127,127,.35)'; return p ? CPCOL247[(p.n - 1) % CPCOL247.length] : '#c9b98a'; } return baseCol250(U, C); },
+    (c, pos, W, H) => { for (const p of pts){ const [cx, cy] = pos(...pkey(p.k)), on = p.g === gid; c.globalAlpha = on ? 1 : .45; c.fillStyle = CPCOL247[(p.n - 1) % CPCOL247.length]; c.beginPath(); c.arc(cx, cy, Math.max(5, H * .55), 0, 7); c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1.2; c.stroke();
+        c.fillStyle = '#fff'; c.font = `bold ${Math.max(8, Math.round(H * .7))}px sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(String(p.n), cx, cy + .5); c.globalAlpha = 1; } }); }
+
+/* ---------- 4. 查看地形 ---------- */
+function openTerrain83(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isTer83(T)) return; const g = terG83(M, T) || { cells: [k] }, kind = T.kind, upm = TER83.unitsPerMaterial || 10;
+  openModal((T83.inspect || {}).title || '查看地形', null, (kk, el) => { el.classList.add('ter83', 'v250');
+    let L = `<div class="sub250"><h3>${KN83[kind] || kind}</h3><p>這一片 ${g.cells.length} 格・不能走、不能蓋東西、不能搬</p></div>`;
+    if (kind === 'forest' || kind === 'mound'){ const all = g.cells.reduce((a, c) => a + ((M.tiles[c] || {}).r || 0), 0), all0 = g.cells.reduce((a, c) => a + ((M.tiles[c] || {}).r0 || 0), 0), mat = kind === 'forest' ? 'wood' : 'soil';
+      L += `<div class="card250 row250">${img250('ui_mat_' + mat, 'big250')}<div class="kv"><span>這${kind === 'forest' ? '棵' : '格'}剩下</span><span>${fmtN(T.r)} / ${fmtN(T.r0)} 單位（約 ${fmtN(T.r / upm)} 份${itemName(mat)}）</span><span>整片剩下</span><span>${fmtN(all)} / ${fmtN(all0)} 單位（約 ${fmtN(all / upm)} 份）</span>
+        <span>採完得到</span><span>${itemName(mat)}</span>${kind === 'forest' ? `<span>樹種</span><span>${(g.looks || []).map(l => (((CFG.terrain241 || {}).looksName || {})[l]) || ({ oak: '闊葉樹', pine: '松樹', camphor: '樟樹', birch: '白樺' })[l] || l).filter((v, i, a) => a.indexOf(v) === i).join('、')}</span>` : ''}</div></div>`;
+      L += `<div class="card250"><h4>機器人要做多久</h4><p class="sm83">這${kind === 'forest' ? '棵' : '格'}：</p>${robotTimes83(kind, T.r)}<p class="sm83">整片：</p>${robotTimes83(kind, all)}</div>`; }
+    if (kind === 'mine'){ const comp = mineComp83(g.vein), V = veinDef83(g.vein);
+      L += `<div class="card250 row250">${img250('ui_mat_stone', 'big250')}<div class="kv"><span>整座剩下</span><span>${fmtN(g.r)} / ${fmtN(g.r0)} 單位（約 ${fmtN(g.r / upm)} 份建材）</span><span>礦脈</span><span><i class="vd83" style="background:${vColor83(g.vein)}"></i>${V.name || g.vein}</span>
+        <span>大小</span><span>${g.core ? `${g.core.n}×${g.core.n} 的山` : ''}${g.cells.length > (g.core ? g.core.n * g.core.n : 0) ? `＋旁邊 ${g.cells.length - g.core.n * g.core.n} 格岩石` : ''}・整座一起採</span></div></div>
+        <h4>每份建材的成分</h4><div class="cmp83">${Object.entries(comp).sort((a, b) => b[1] - a[1]).map(([m, p]) => `<span>${img250('ui_mat_' + m, 'ic250')}<b>${itemName(m)}</b>${(p * 100).toFixed(p < .1 ? 1 : 0)}%</span>`).join('')}</div>
+        <div class="card250"><h4>機器人要做多久（整座）</h4>${robotTimes83('mine', g.r)}</div>`; }
+    if (kind === 'river') L += `<div class="card250"><div class="kv"><span>寬</span><span>${g.w || 1} 格</span><span>流向</span><span>${g.axis === 'x' ? (g.dir > 0 ? '往右下' : '往左上') : (g.dir > 0 ? '往左下' : '往右上')}</span><span>說明</span><span>河岸保濕、填平、挖河道、蓋橋在之後的版本開放；機器人不碰河流</span></div></div>`;
+    L += `<p class="sm83">${(T83.inspect || {}).later || ''}</p>`;
+    el.innerHTML = `<div class="g250"><div class="l250">${L}</div><div class="r250"><div class="card250 map250"><h4>位置</h4><div class="mw250"></div></div></div></div>`;
+    const cv = terMap250(mi, T.g); if (cv) el.querySelector('.mw250').appendChild(cv); }); }
+function terMap250(mi, gid){ const M = S.maps[mi], g = M.ter242 && M.ter242.g[gid]; if (!g) return null; if (g.kind !== 'river' && points247(M).some(p => p.g === gid)) return cpMap247(M, gid);
+  const C = P250(), set = new Set(g.cells); return isoMap250(mi, (x, y, U) => { const k = tkey(x, y); if (set.has(k)) return '#f2c230'; return baseCol250(U, C); }); }
+// 舊的包裝加的東西搬進新的欄位
+{ const _ot95 = openTerrain83; openTerrain83 = function(mi, k){ const r = _ot95(mi, k);
+  try { const el = $('modalBody'), L = el && el.querySelector('.l250'), R = el && el.querySelector('.r250'); if (!L || !R) return r;
+    const cp = el.querySelector('.cp247'); if (cp && cp.parentNode !== R){ cp.classList.add('card250'); const map = cp.querySelector('canvas'); if (map){ const mw = R.querySelector('.mw250'); if (mw){ mw.innerHTML = ''; mw.appendChild(map); } } R.appendChild(cp); }
+    el.querySelectorAll('.tr84, .rv248').forEach(p => L.appendChild(p)); } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 5. 建材小屋（排版） ---------- */
+{ const _os95 = openShed84; openShed84 = function(mi){ const r = _os95(mi);
+  try { const el = $('modalBody'); if (!el) return r; el.classList.add('v250'); const hd = el.querySelector('.hd84 img'); if (hd) hd.remove();   // 抬頭已經有大圖示，小屋區塊不再放第二張
+    const row = el.querySelector('#shb84'); if (row && row.parentNode) row.parentNode.classList.add('boost250');
+    const rl = el.querySelector('.rl89'); if (rl) rl.classList.add('card250'); } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 6. 礦車資訊 ---------- */
+// 從第 1 節開始裝，裝滿才換下一節：照建材順序分到每一節
+function cars250(TR){ const cap = cartCap89(), L = TR.load || {}, ids = Object.keys(L).filter(id => L[id] > 0).sort((a, b) => { const i = ORD249.indexOf(a), j = ORD249.indexOf(b); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
+  const out = []; for (let i = 0; i < (TR.n || 1); i++) out.push({ load: {}, n: 0 }); let ci = 0;
+  for (const id of ids){ let q = L[id]; while (q > 0 && ci < out.length){ const room = cap - out[ci].n; if (room <= 0){ ci++; continue; } const put = Math.min(room, q); out[ci].load[id] = (out[ci].load[id] || 0) + put; out[ci].n += put; q -= put; } }
+  return out; }
+function focusTrain250(mi, key){ const TR = train246(mi, key), k = TR.cells[0] || (TR.sl && TR.sl.cells[0]); if (!k) { toast('這列車在小屋或車庫裡'); return; }
+  if (S.cur !== mi){ try { goIsland63(mi); } catch(e){} } const [x, y] = pkey(k), c = center(x, y); cam.x = VW / 2 - c.cx * cam.z; cam.y = VH / 2 - c.cy * cam.z; RT.flash250 = { mi, key, t0: performance.now() }; }
+function openCart249(mi, key){ const TR = train246(mi, key), L = TR.load || {}, ids = Object.keys(L).filter(id => L[id] > 0), have = loadN89(L), cap = capTR246(TR), [td, tot] = trips249(key), E = eta249(mi, TR), mx = maxCars246(), cc = cartCap89();
+  const B = CT89.buy || [800, 1500], price = (S.buildStore.rail_car || 0) ? '倉庫的車廂' : fmtN(B[(TR.n || 1) - 1] ?? B[B.length - 1]), lvNext = ((TN246.carsByLevel || [[3, 1], [10, 2], [20, 3]]).find(([lv, n]) => n > (TR.n || 1) && n > mx) || [])[0];
+  const pct = cap ? Math.round(have / cap * 100) : 0, eta = E.why ? escapeHTML(E.why) : (TR.job && TR.job.leg === 'home' && !TR.job.ref249) ? `${mins249(E.home)}回到小屋` : `${mins249(E.full)}裝滿・${mins249(E.home)}回到小屋`;
+  const pic = n => IMGSRC[n > 0 ? (n >= cc ? 'ui_rail_cart' : 'ui_rail_cart') : 'ui_rail_cart'] || '';
+  openModal(TX249.title || '礦車資訊', null, (k, el) => { el.classList.add('v250', 'ci249');
+    const cars = cars250(TR);
+    let slots = cars.map((C, i) => `<div class="slot250">${img250('ui_rail_cart', 'car250')}<b>第 ${i + 1} 節</b><span>${fmtN(C.n)} / ${fmtN(cc)} 份</span></div>`).join('');
+    for (let i = TR.n || 1; i < 3; i++) slots += i < mx ? `<div class="slot250 add250"><i>＋</i><b>第 ${i + 1} 節</b><button class="btn sm" data-add250>加掛・${price}</button></div>` : `<div class="slot250 off250"><i>＋</i><b>第 ${i + 1} 節</b><span>${lvNext ? `Lv ${lvNext} 解鎖` : '未解鎖'}</span></div>`;
+    const rows = cars.map((C, i) => { const ks = Object.keys(C.load), p = Math.round(C.n / cc * 100);
+      return `<div class="carrow250">${img250('ui_rail_cart', 'car250')}<div><b>第 ${i + 1} 節</b><small>${C.n >= cc ? '裝滿了' : C.n ? '裝填中' : i > 0 && cars[i - 1].n < cc ? '等前一節裝滿' : '空的'}</small></div>
+        <div class="ld250">${ks.length ? ks.map(id => `${img250('ui_mat_' + id)}<span>${escapeHTML(itemName(id))}<b>${fmtN(C.load[id])} 份</b></span>`).join('') : '<span class="dim250">空的</span>'}</div>
+        <div class="pg250"><span>${fmtN(C.n)} / ${fmtN(cc)} 份（${p}%）</span><i class="bar249"><b style="width:${p}%"></b></i></div></div>`; }).join('');
+    el.innerHTML = `<div class="sub250 hdr250"><p>${escapeHTML(trainWho248(key))}的列車</p><button class="btn ghost sm" data-go250>📍 查看位置</button></div>
+      <div class="g250 top250"><div class="card250"><h4>列車狀態</h4><div class="kv"><span>聯掛</span><span>${TR.n || 1} 節（每節 ${fmtN(cc)} 份，最多 ${mx} 節）</span>
+        <span>裝載</span><span>${fmtN(have)} / ${fmtN(cap)} 份（${pct}%）<i class="bar249"><b style="width:${pct}%"></b></i></span>
+        <span>內容</span><span>${ids.length ? ids.map(id => `${img250('ui_mat_' + id)}${escapeHTML(itemName(id))} ${fmtN(L[id])}`).join('　') : '空的'}</span>
+        <span>今天</span><span>${fmtN(td)} 趟（累計 ${fmtN(tot)} 趟，卸貨一次算一趟）</span><span>現在</span><span>${escapeHTML(trainDoing248(TR))}${TR.ref249 ? '（在待避處）' : ''}</span><span>預估</span><span>${eta}</span></div></div>
+        <div class="card250"><h4>聯掛車廂</h4><div class="slots250">${slots}</div></div></div>
+      <h4>車廂明細 <small>（從第 1 節裝起，裝滿才換下一節）</small></h4>${rows}
+      <div class="note250">${img250('ui_rail', 'ic250')}${escapeHTML(TX249.note || '')}</div>`;
+    const go = el.querySelector('[data-go250]'); if (go) go.onclick = () => { closeModal(); focusTrain250(mi, key); };
+    const ad = el.querySelector('[data-add250]'); if (ad) ad.onclick = () => { if (buyCar246(mi, key)) openCart249(mi, key); }; }); }
+{ const _dw95 = drawWorld; drawWorld = function(t, now){ const r = _dw95(t, now); try { const F = RT.flash250; if (F && !RT.snap68){ const a = (performance.now() - F.t0) / 1000; if (a > 2.4){ RT.flash250 = null; } else if (F.mi === S.cur){ const TR = train246(F.mi, F.key);
+    for (const k of TR.cells.concat(TR.sl ? TR.sl.cells : [])){ const [x, y] = pkey(k), c = center(x, y); ctx.save(); ctx.globalAlpha = .55 * Math.abs(Math.sin(a * 5)); ctx.fillStyle = '#ffe27a'; diamondPath(c.cx, c.cy, .95); ctx.fill(); ctx.restore(); } } } } catch(e){} return r; }; }
+
+/* ---------- 7. 鳥：記錄 ---------- */
+const BLOG250 = { look: ['ui_pest', '飛去果樹'], eat: ['ui_pest', '啄食害蟲'], none: ['', '巡邏'], home: ['', '回鳥屋休息'], out: ['', '出門巡邏'], hungry: ['', '餓了'], fed: ['', '吃了鳥飼料'] };
+function blog250(B, t, type, k, n){ const L = B.log250 = B.log250 || []; L.unshift([t, type, k || null, n || 0]); if (L.length > LOGN250) L.length = LOGN250; }
+{ const _sb95 = stepBirds40; stepBirds40 = function(dt, t){ const L = birds40(), before = new Map(L.map(B => [B, { c: B.caught || 0, tg: B.tgt, out: birdOut40(B, t), hu: !!B.hungry }]))
+  ; const r = _sb95(dt, t);
+  try { for (const B of birds40()){ const b = before.get(B); if (!b) continue; const out = birdOut40(B, t);
+      if (!b.hu && B.hungry) blog250(B, t, 'hungry'); else if (b.hu && !B.hungry) blog250(B, t, 'fed');
+      if (b.out && !out && !B.hungry) blog250(B, t, 'home'); else if (!b.out && out) blog250(B, t, 'out');
+      if ((B.caught || 0) > b.c) blog250(B, t, 'eat', b.tg, (B.caught || 0) - b.c);
+      if (B.tgt && B.tgt !== b.tg) blog250(B, t, 'look', B.tgt);
+      if (out && !B.tgt && b.tg && (B.caught || 0) === b.c) blog250(B, t, 'none'); } } catch(e){ if (!RT.err250b){ RT.err250b = 1; console.warn(e); } }
+  return r; }; }
+function birdLogRows250(list){ const rows = []; for (const B of list) for (const [t, ty, k, n] of B.log250 || []) rows.push({ t, B, ty, k, n }); rows.sort((a, b) => b.t - a.t);
+  return rows.slice(0, LOGN250).map(q => { const D = BLOG250[q.ty] || ['', q.ty], res = q.ty === 'eat' ? `<b class="ok250">已清除 ${q.n} 隻害蟲</b>` : q.ty === 'look' ? '果樹有蟲' : q.ty === 'none' ? '範圍內沒有蟲了' : q.ty === 'hungry' ? '倉庫沒有鳥飼料' : '';
+    return `<tr><td>${hm250(q.t)}</td><td>${img250(D[0] || 'ui_bird_' + birdSpr40(q.B))}</td><td>${escapeHTML(q.B.name)}・${D[1]}</td><td>${q.k ? `果樹 ${xy250(q.k)}` : '—'}</td><td>${res}</td></tr>`; }).join(''); }
+function rangeMini250(mi, rg, center0, label){ if (!rg) return null; const M = S.maps[mi], C = P250();
+  return isoMap250(mi, (x, y, U) => { const inR = x >= rg.x0 && x <= rg.x1 && y >= rg.y0 && y <= rg.y1; if (!inR) return U && U.t === 'terrain' ? 'rgba(130,130,130,.22)' : 'rgba(110,170,110,.16)'; if (U && U.t === 'tree') return U.pest ? '#f2c230' : '#6fdc6f'; if (U && (U.t === 'soil')) return '#7bbf5a'; return x === center0[0] && y === center0[1] ? '#f0a35e' : 'rgba(111,220,140,.45)'; },
+    (c, pos, W, H) => { const [cx, cy] = pos(...center0); c.fillStyle = '#fff'; c.font = `bold ${Math.max(9, Math.round(H * .8))}px sans-serif`; c.textAlign = 'center'; c.fillText(label, cx, cy + H * .3); }, 300); }
+
+/* ---------- 8. 鳥屋面板 ---------- */
+function openBirdHouse40(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isBirdHouse40(T)) return; if (!T.uid) houseList40();
+  const H = BR40.house || {}, n = houseSlots40(T), cap = houseCap40(T), res = houseBirds40(T), cost = (H.expandCost || [])[n - 1], back = Math.floor(((H.expandCost || [])[n - 2] || 0) * (H.shrinkRefundRate ?? .5));
+  const fi = (BR40.food || {}).item || 'bird_food', nHouse = Object.values(M.tiles).filter(isBirdHouse40).length;
+  openModal('鳥屋', null, (kk, el) => { el.classList.add('bh40', 'v250');
+    let L = `<div class="sub250"><p>住了 ${res.length} / ${cap} 隻${cap > n ? '（和尚鸚鵡多築了 1 個巢）' : ''}・${itemName(fi)} 倉庫 ${S.inv[fi] || 0} 份（每隻 ${(BR40.food || {}).everyHours || 8} 小時吃 1 份）</p></div>
+      <div class="card250"><div class="row">${n < (H.maxSlots || 3) ? `<button class="btn" id="bhUp">擴充 1 位 · ${fmtN(cost)}</button>` : ''}${n > 1 && res.length < cap ? `<button class="btn ghost" id="bhDown">縮減 1 位（退 ${fmtN(back)}）</button>` : ''}<button class="btn ghost" id="bhFood">買${itemName(fi)}</button></div>
+      <div class="stat250"><div><small>容量</small>${img250('ui_hd_bird_house')}<b>${res.length} / ${cap} 隻</b></div><div><small>${itemName(fi)}</small>${img250('ui_item_' + fi) || img250('ui_' + fi)}<b>倉庫 ${S.inv[fi] || 0} 份</b></div><div><small>這座島的鳥屋</small>${img250('ui_hd_bird_house')}<b>${nHouse} 座</b></div></div></div>
+      <h4>目前的鳥</h4>`;
+    for (const B of res){ const D = birdSp40(B), rg = birdRange40(B), sz = rg ? rg.x1 - rg.x0 + 1 : D.range;
+      L += `<div class="bird40 card250" data-b="${B.id}"><img src="${IMGSRC['ui_pg_bird_' + birdSpr40(B)] || ''}" alt=""><div><h4>${escapeHTML(B.name)} <small>${D.name}${B.sp === 'cockatiel' ? `（${B.color === 'white' ? '白' : '灰'}）` : ''}</small></h4>
+        <div class="kv"><span>現在</span><span>${birdState40(B)}</span><span>範圍</span><span>${sz}×${sz}（以鳥屋為中心的果樹）</span><span>抓一棵</span><span>${D.catchSeconds} 秒</span><span>專長</span><span>${D.skillText || '—'}</span><span>戰績</span><span>今天 ${B.dayN === dayNo40(Date.now()) ? B.today || 0 : 0} 棵 · 累計 ${B.caught || 0} 棵</span></div>
+        <div class="row"><input type="text" maxlength="${BR40.nameMaxChars || 8}" value="${escapeHTML(B.name)}" style="font-size:16px;max-width:9em"><button class="btn ghost" data-ren>改名</button><button class="btn warn" data-give>送養（退 ${fmtN(Math.floor(D.price * (BR40.sellRate ?? .5)))}）</button></div></div></div>`; }
+    if (!res.length) L += '<p>還沒有鳥住進來。到「動物 · 寵物鳥」選一隻，點農場任一處就會住進有空位的鳥屋。</p>';
+    const big = res.map(B => birdRange40(B)).filter(Boolean).sort((a, b) => (b.x1 - b.x0) - (a.x1 - a.x0))[0], [hx, hy] = pkey(k);
+    const R = `<div class="card250 rmap250"></div><div class="card250 rng250"><h4>活動範圍${big ? `（${big.x1 - big.x0 + 1}×${big.y1 - big.y0 + 1}）` : ''}</h4><div class="rg250"><div class="mw250"></div><div class="eff250"><small>範圍效果</small>${res.map(B => `<p><b>${escapeHTML(B.name)}</b>${escapeHTML(birdSp40(B).skillText || '—')}</p>`).join('') || '<p>—</p>'}</div></div></div>`;
+    const logs = birdLogRows250(res);
+    el.innerHTML = `<div class="bird40 ph250" hidden></div><div class="g250"><div class="l250">${L}</div><div class="r250">${R}</div></div><div class="card250 log250"><h4>鳥的狀態記錄</h4>${logs ? `<div class="tw250"><table class="t250"><thead><tr><th>時間</th><th></th><th>動作</th><th>對象</th><th>結果</th></tr></thead><tbody>${logs}</tbody></table></div>` : '<p class="sm40">還沒有記錄（v2.50 之後才開始記）。</p>'}</div>`;
+    if (big){ const cv = rangeMini250(mi, big, [hx, hy], '屋'); if (cv) el.querySelector('.rng250 .mw250').appendChild(cv); }
+    const up = el.querySelector('#bhUp'); if (up) up.onclick = () => { if (!spend(cost)) return; T.n = n + 1; sfx('place'); afterAction(); openBirdHouse40(mi, k); };
+    const dn = el.querySelector('#bhDown'); if (dn) dn.onclick = () => { T.n = n - 1; S.player.coins += back; sfx('coin'); afterAction(); openBirdHouse40(mi, k); };
+    el.querySelector('#bhFood').onclick = () => openStorage('shop');
+    el.querySelectorAll('.bird40').forEach(row => { const B = birds40().find(q => q.id === row.dataset.b); if (!B) return;
+      row.querySelector('[data-ren]').onclick = () => { const v = row.querySelector('input').value.trim().slice(0, BR40.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } B.name = v; save(); toast(`改好了：${v}`); openBirdHouse40(mi, k); };
+      const gv = row.querySelector('[data-give]'); gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+        const p = Math.floor(birdSp40(B).price * (BR40.sellRate ?? .5)); S.birds40 = birds40().filter(q => q !== B); delete (RT.bAg40 || {})[B.id]; S.player.coins += p; toast(`${B.name}找到新家了，退回 ${fmtN(p)} 金幣`); afterAction(); openBirdHouse40(mi, k); }; }); }); }
+{ const _ob95 = openBirdHouse40;   // .ph250：空的 .bird40 放在最前面，讓 g83 的抓蟲範圍圖插得進來，再搬到右欄
+  openBirdHouse40 = function(mi, k){ const r = _ob95(mi, k);
+  try { const el = $('modalBody'), slot = el && el.querySelector('.rmap250'), bm = el && el.querySelector('.bmw83'); if (slot && bm){ slot.appendChild(bm); } else if (slot && !bm) slot.remove(); el && el.querySelectorAll('.ph250').forEach(q => q.remove()); } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 9. 蝴蝶：記錄 ---------- */
+const FLOG250 = { egg: ['ui_butterfly_egg', '產卵'], larva: ['', '孵化成幼蟲'], pupa: ['', '化蛹'], adult: ['', '羽化成蝶'], wild: ['ui_butterfly_egg', '野生蝴蝶來產卵'], gone: ['', '走完一生'], lost: ['', '離開了（寄主沒了）'], pollen: ['', '訪花授粉'] };
+function flog250(T, t, type, sp){ const L = T.bfl250 = T.bfl250 || []; L.unshift([t, type, sp || null]); if (L.length > LOGN250) L.length = LOGN250; }
+{ const _sbf95 = stepButterflies; stepButterflies = function(t){ const snap = new Map();
+  try { S.maps.forEach(M => { for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.bf && T.bf.length) snap.set(T, new Map(T.bf.map(b => [b, b.st]))); } }); } catch(e){}
+  const r = _sbf95(t);
+  try { const dead = new Set(); S.maps.forEach(M => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T) continue; const old = snap.get(T) || new Map(), now = T.bf || [];
+      for (const b of now){ const st0 = old.get(b); if (st0 === undefined) flog250(T, t, b.wild ? 'wild' : 'egg', b.known === false ? null : b.sp); else if (st0 !== b.st) flog250(T, t, b.st, b.sp); }
+      for (const [b, st0] of old) if (!now.includes(b)) flog250(T, t, st0 === 'adult' ? 'gone' : 'lost', b.sp);
+      if (now.some(b => b.st === 'adult')){ const last = (T.bfl250 || []).find(e => e[1] === 'pollen'); if (!last || t - last[0] >= (V250.pollenLogMinutes ?? 60) * 60e3) flog250(T, t, 'pollen', (now.find(b => b.st === 'adult') || {}).sp); } } }); } catch(e){ if (!RT.err250f){ RT.err250f = 1; console.warn(e); } }
+  return r; }; }
+
+/* ---------- 10. 蝴蝶面板 ---------- */
+function openBf40(M, k, tab){
+  const now = Date.now(), mi = S.maps.indexOf(M);
+  openModal('蝴蝶', [['here', '這裡的蝴蝶'], ['book', '蝴蝶圖鑑']], (kk, el) => { el.classList.add('bf40', 'v250');
+    if (kk === 'book'){ el.innerHTML = bookHTML40(); return; }
+    const Tn = M.tiles[k]; if (!Tn){ el.innerHTML = '<p>這一格已經沒有東西了。</p>'; return; }
+    const hid = hostIdOf40(Tn), hn = hostName40(hid) || '這株植物', list = Tn.bf || [], r = BF.adultRange ?? 2, [x0, y0] = pkey(k), boost = Math.round((BF.adultGrowthBoost || .1) * 100), sps = HOSTIDX40[hid] || [];
+    let L = `<div class="sub250"><p>會在${hn}產卵的蝴蝶：${sps.map(bfName40).join('、') || '—'}</p><p>${hn}上有 ${list.length} 隻（一株最多 ${maxPer40()} 隻）。成蝶在附近 ${2 * r + 1}×${2 * r + 1} 格幫忙授粉：作物、花、果樹生長 +${boost}%。</p></div>`;
+    for (const b of list){ const D = BFS40[b.sp] || {}, known = b.known !== false, i = BF_ORDER.indexOf(b.st), dur = (BFS[b.st] || 1) * DAYMS, el2 = now - b.t0, pct = Math.max(0, Math.min(100, el2 / dur * 100)), left = Math.max(0, (dur - el2) / 1000), all = BF_ORDER.length;
+      L += `<div class="card40 card250 st250"><div class="big40"><img src="${known || b.st !== 'adult' ? bfPic40(b) : ''}" alt=""><b>${known ? D.name : '還不知道是哪一種'}</b><span class="pl40">${STN40[b.st]}</span>${b.wild ? '<span class="pl40">野生</span>' : ''}</div><div><h4>成長階段</h4>
+        <div class="tl40 tl250">${BF_ORDER.map((s, j) => `<span class="${j < i ? 'done' : j === i ? 'on' : ''}"><img class="${s === 'adult' && !known ? 'unk40' : ''}" src="${bfPic40({ st: s, sp: b.sp }) || ''}" alt="">${STN40[s]}${s === 'adult' ? '' : `<small>${BFS[s]} 天</small>`}</span>`).join('')}</div>
+        <div class="pb40"><i style="width:${((i + pct / 100) / all * 100).toFixed(1)}%"></i></div>
+        <p class="sm40">${b.st === 'adult' ? `還能飛 ${fmtDur(left)}，走完一生前會在${hostNames40(b.sp)}上再產 1 顆卵` : `再 ${fmtDur(left)}變成${STN40[BF_ORDER[i + 1]]}`}${b.st === 'larva' && (Tn.t === 'tree' || Tn.t === 'soil') ? '。正在吃葉子，這株長得慢 10%' : ''}${!known ? (b.wild ? '。野生飛來產的卵，羽化才知道是哪一種' : '。羽化才知道是哪一種') : ''}</p></div></div>`; }
+    if (!list.length) L += '<div class="card250"><p>現在沒有蝴蝶在這裡。</p></div>';
+    if (Tn.bfd && Tn.bfd.length){ const oldest = Math.min(...Tn.bfd.map(d => d.t)); L += `<div class="dead40"><span>下面有 ${Tn.bfd.length} 隻走完一生的蝴蝶（${Tn.bfd.map(d => bfName40(d.sp)).join('、')}），${fmtDur(Math.max(0, (oldest + DEADMS40 - now) / 1000))}內沒撿就不見</span><button class="btn" id="bfGet40">撿起來</button></div>`; }
+    const logs = (Tn.bfl250 || []).map(([t, ty, sp]) => { const D = FLOG250[ty] || ['', ty]; return `<tr><td>${hm250(t)}</td><td>${img250(D[0] || (sp ? 'ui_bf_' + sp : 'ui_hd_bf'))}</td><td>${D[1]}</td><td>${escapeHTML(sp ? bfName40(sp) : '還不知道')}</td><td>${ty === 'pollen' ? `<b class="ok250">生長 +${boost}%</b>` : ty === 'adult' ? '<b class="ok250">可以授粉了</b>' : xy250(k)}</td></tr>`; }).join('');
+    L += `<div class="card250 log250"><h4>近期觀察記錄</h4>${logs ? `<div class="tw250"><table class="t250"><thead><tr><th>時間</th><th></th><th>動作</th><th>蝴蝶</th><th>結果</th></tr></thead><tbody>${logs}</tbody></table></div>` : '<p class="sm40">還沒有記錄（v2.50 之後才開始記）。</p>'}</div>`;
+    const bk = bfBook40(), here = new Map(list.map(b => [b.sp, b]));
+    const cards = sps.map(sp => { const D = BFS40[sp] || {}, b = here.get(sp), got = (bk[sp] || {}).got > 0, st = b ? STN40[b.st] : got ? '見過' : '未發現';
+      return `<div class="sp250${b || got ? '' : ' no'}"><img src="${IMGSRC['ui_bf_' + sp] || IMGSRC['ui_pg_bf_' + sp] || ''}" alt=""><div><b>${D.name || sp}</b><span class="pl40${b ? ' on' : ''}">${st}</span><small>${hostNames40(sp)}</small></div></div>`; }).join('');
+    const R = `<div class="card250"><h4>授粉範圍（${2 * r + 1}×${2 * r + 1}）</h4><div class="rg250"><div class="mw250"></div><div class="eff250"><small>範圍效果</small><p>範圍內作物、花、果樹生長 +${boost}%${list.some(b => b.st === 'adult') ? '' : '（要有成蝶才有）'}</p></div></div></div>
+      <div class="card250"><h4>附近發現的蝴蝶 <small>共 ${sps.length} 種</small></h4><div class="sps250">${cards || '<p>—</p>'}</div></div>`;
+    el.innerHTML = `<div class="g250"><div class="l250">${L}</div><div class="r250">${R}</div></div>`;
+    const cv = rangeMini250(mi, { x0: x0 - r, y0: y0 - r, x1: x0 + r, y1: y0 + r }, [x0, y0], '🦋'); if (cv) el.querySelector('.mw250').appendChild(cv);
+    const g = el.querySelector('#bfGet40'); if (g) g.onclick = () => { const [x, y] = pkey(k), c = center(x, y); collectDead40(M, k, Tn, c.cx, c.cy); openBf40(M, k); }; }, tab || 'here'); }
+
+/* ---------- 11. 樣式 ---------- */
+{ const st = document.createElement('style'); st.textContent = `
+#modal .sheet.big250 #modalTitle{font-size:26px}#modal .sheet.big250 #modalTitle img.hd54{width:72px;height:72px;margin-right:10px;vertical-align:middle}
+.v250 .sub250{margin:-4px 0 10px}.v250 .sub250 h3{margin:0 0 2px;font-size:20px}.v250 .sub250 p{margin:2px 0;opacity:.85}
+.v250 .hdr250{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.v250 .g250{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}.v250 .l250,.v250 .r250{display:flex;flex-direction:column;gap:10px;min-width:0}
+.v250 .card250{padding:10px 12px;border-radius:14px;background:rgba(127,127,127,.12);border:1px solid rgba(127,127,127,.18)}body.night .v250 .card250{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
+.v250 .card250 h4{margin:0 0 8px}.v250 .row250{display:flex;gap:12px;align-items:center}.v250 .big250{width:64px;height:64px;object-fit:contain;flex:none}.v250 .ic250{width:22px;height:22px;object-fit:contain;vertical-align:-5px;margin-right:3px}
+.v250 .cmp83 span{display:inline-flex;align-items:center;gap:4px}
+.v250 .map250 canvas,.v250 .mw250 canvas{display:block;margin:0 auto}.v250 .rg250{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}.v250 .eff250{padding:8px 10px;border-radius:10px;background:rgba(127,127,127,.12);max-width:180px}.v250 .eff250 p{margin:4px 0;font-size:13px}.v250 .eff250 b{display:block}
+.v250 .stat250{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.v250 .stat250>div{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:6px;align-items:center;padding:6px 8px;border-radius:10px;background:rgba(127,127,127,.1)}.v250 .stat250 small{grid-column:1/3;opacity:.75}.v250 .stat250 img{width:32px;height:32px;object-fit:contain}
+.v250 .bird40{display:flex;gap:10px}.v250 .bird40>img{width:84px;height:84px;object-fit:contain}
+.v250 .t250{width:100%;border-collapse:collapse;font-size:13px}.v250 .t250 th,.v250 .t250 td{padding:5px 6px;text-align:left;border-bottom:1px solid rgba(127,127,127,.2);vertical-align:middle}.v250 .t250 th{opacity:.75;font-weight:600}.v250 .tw250{max-height:220px;overflow:auto}.v250 .ok250{color:#2f9a4c}body.night .v250 .ok250{color:#7be08f}
+.v250 .log250{margin-top:12px}.v250 .st250{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center}.v250 .big40{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}.v250 .big40 img{width:110px;height:90px;object-fit:contain}
+.v250 .tl250{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.v250 .tl250 span{display:flex;flex-direction:column;align-items:center;padding:6px 2px;border-radius:10px;background:rgba(127,127,127,.15);font-size:13px}.v250 .tl250 span.done{background:rgba(120,200,120,.3)}.v250 .tl250 span.on{background:#2d7be0;color:#fff}.v250 .tl250 img{width:34px;height:34px;object-fit:contain}
+.v250 .sps250{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v250 .sp250{display:flex;gap:8px;align-items:center;padding:6px;border-radius:10px;background:rgba(127,127,127,.12)}.v250 .sp250 img{width:54px;height:44px;object-fit:contain}.v250 .sp250 div{display:flex;flex-direction:column;gap:2px}.v250 .sp250.no img{filter:grayscale(1);opacity:.6}.v250 .sp250 small{opacity:.75}.v250 .pl40.on{background:#2d7be0;color:#fff}
+.v250 .top250{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.v250 .slots250{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v250 .slot250{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;background:rgba(127,127,127,.12);text-align:center;font-size:13px}.v250 .slot250 .car250{width:64px;height:52px;object-fit:contain}.v250 .slot250 i{font-style:normal;font-size:30px;line-height:52px;opacity:.6}.v250 .slot250.add250,.v250 .slot250.off250{border:2px dashed rgba(127,127,127,.45);background:none}.v250 .slot250.off250{opacity:.6}
+.v250 .carrow250{display:grid;grid-template-columns:56px 110px minmax(0,1fr) minmax(0,180px);gap:10px;align-items:center;padding:8px 10px;margin:6px 0;border-radius:12px;background:rgba(127,127,127,.12)}.v250 .carrow250 .car250{width:52px;height:42px;object-fit:contain}.v250 .carrow250 small{display:block;opacity:.75}.v250 .ld250{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}.v250 .ld250 span{display:inline-flex;flex-direction:column;font-size:13px}.v250 .dim250{opacity:.6}.v250 .pg250 span{font-size:13px}
+.v250 .note250{margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(127,127,127,.12);font-size:13px}
+.shed84.v250 .mats84{grid-template-columns:repeat(4,minmax(0,1fr))}.shed84.v250 .mr84{padding:10px;border-radius:14px}.shed84.v250 .mr84 img{width:52px;height:52px}.shed84.v250 .mr84 b{font-size:16px}
+.shed84.v250 .boost250{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:14px;background:rgba(127,127,127,.12)}.shed84.v250 .rl89 .tr246{background:rgba(127,127,127,.12);border-radius:12px}.shed84.v250 .rl89 .tr246 img{width:52px;height:52px}
+@media (max-width:760px){.v250 .g250,.v250 .top250{grid-template-columns:minmax(0,1fr)}.shed84.v250 .mats84{grid-template-columns:repeat(2,minmax(0,1fr))}.v250 .carrow250{grid-template-columns:48px minmax(0,1fr)}.v250 .carrow250 .ld250,.v250 .carrow250 .pg250{grid-column:1/3}.v250 .st250{grid-template-columns:minmax(0,1fr)}#modal .sheet.big250 #modalTitle img.hd54{width:48px;height:48px}#modal .sheet.big250 #modalTitle{font-size:21px}.v250 .rg250{grid-template-columns:minmax(0,1fr)}.v250 .eff250{max-width:none}}`; document.head.appendChild(st); }
+
+{ const _ns95 = normalizeState; normalizeState = function(d){ const r = _ns95(d); const s = r || d; try { if (s && !s.v250) s.v250 = 1; } catch(e){} return r; }; }
+window.__farm250 = { isoMap250, cpMap: (M, g) => cpMap247(M, g), cars250, focusTrain250, openCart: (mi, k) => openCart249(mi, k), openTerrain: (mi, k) => openTerrain83(mi, k), openBirdHouse: (mi, k) => openBirdHouse40(mi, k),
+  openBf: (M, k, t) => openBf40(M, k, t), openShed: mi => openShed84(mi), unlockIcon: u => unlockIcon38(u), stepBirds: (dt, t) => stepBirds40(dt, t), stepButterflies: t => stepButterflies(t), blog250, flog250 };
 
   })(CFG, ATLAS_JSON);
 })();
