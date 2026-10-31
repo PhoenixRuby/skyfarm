@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.40.2",
+  "configVersion": "2.49",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -1650,6 +1650,19 @@
    "cost": 700,
    "sellable": true,
    "via": "animal"
+  },
+  "rail": {
+   "name": "軌道",
+   "source": "build",
+   "cost": 30,
+   "autotile": true,
+   "flat": true,
+   "walkable": false,
+   "noWeeds": true,
+   "sellable": false,
+   "kind": "road",
+   "railway": true,
+   "note": "v2.45：1×1，每格 30 金幣＋1 份石材（這座島的建材小屋沒石材就付 40 金幣）；收回倉庫 S.buildStore.rail，拿出來免費。v2.46：機器人、動物不能走上軌道（鋪通行板的格子才能從側面橫越）；新鋪的軌道只接旁邊還沒接滿的末端（每格記自己的接法 T.cm）"
   }
  },
  "expansion": {
@@ -1804,7 +1817,16 @@
     "willow",
     "fence_picket",
     "alfalfa",
-    "soybean"
+    "soybean",
+    "dynamite",
+    "terrain_clear",
+    "river_fill",
+    "river_dig",
+    "bridge_wood",
+    "bridge_stone",
+    "material_shed",
+    "lumberbot",
+    "gradebot"
    ],
    "animalCap": 5,
    "fishPoolTileCap": 0,
@@ -1854,7 +1876,8 @@
     "thistle",
     "marigold",
     "narcissus",
-    "blue_eyed_daisy"
+    "blue_eyed_daisy",
+    "minebot"
    ],
    "animalCap": 6,
    "fishPoolTileCap": 4,
@@ -1989,7 +2012,13 @@
     "doll_thunder",
     "rumex",
     "senna",
-    "bf:pieris_rapae"
+    "bf:pieris_rapae",
+    "lumberbot_2",
+    "rent_lumber_1",
+    "minebot_2",
+    "rent_mine_1",
+    "gradebot_2",
+    "rent_grade_1"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -2097,7 +2126,13 @@
     "aristolochia",
     "heterostemma",
     "bird_java_white",
-    "bf:ypthima_multistriata"
+    "bf:ypthima_multistriata",
+    "lumberbot_3",
+    "rent_lumber_2",
+    "minebot_3",
+    "rent_mine_2",
+    "gradebot_3",
+    "rent_grade_2"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -3576,6 +3611,98 @@
    "category": "feed",
    "sellPrice": 3,
    "shopOnly": true
+  },
+  "wood": {
+   "name": "木材",
+   "category": "buildMat",
+   "sellPrice": 3,
+   "store": "material_shed"
+  },
+  "stone": {
+   "name": "石材",
+   "category": "buildMat",
+   "sellPrice": 3,
+   "store": "material_shed"
+  },
+  "soil": {
+   "name": "土",
+   "category": "buildMat",
+   "sellPrice": 1,
+   "store": "material_shed"
+  },
+  "iron_ore": {
+   "name": "鐵礦",
+   "category": "buildMat",
+   "sellPrice": 15,
+   "store": "material_shed"
+  },
+  "copper_ore": {
+   "name": "銅礦",
+   "category": "buildMat",
+   "sellPrice": 20,
+   "store": "material_shed"
+  },
+  "crystal": {
+   "name": "水晶",
+   "category": "buildMat",
+   "sellPrice": 60,
+   "store": "material_shed",
+   "legacy242": "水晶拆成紫水晶、粉晶、黃水晶（v2.42），這個 id 不再產生"
+  },
+  "dynamite": {
+   "name": "炸藥",
+   "category": "tool",
+   "sellPrice": 0,
+   "shopOnly": true,
+   "buyPrice": 120
+  },
+  "part_saw_chain": {
+   "name": "鋸鏈",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_drill": {
+   "name": "鑽頭",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "part_blade": {
+   "name": "鏟刃",
+   "category": "material",
+   "sellPrice": 0,
+   "part": true
+  },
+  "coal": {
+   "name": "煤礦",
+   "category": "buildMat",
+   "sellPrice": 8,
+   "store": "material_shed"
+  },
+  "amethyst": {
+   "name": "紫水晶",
+   "category": "buildMat",
+   "sellPrice": 60,
+   "store": "material_shed"
+  },
+  "rose_quartz": {
+   "name": "粉晶",
+   "category": "buildMat",
+   "sellPrice": 60,
+   "store": "material_shed"
+  },
+  "citrine": {
+   "name": "黃水晶",
+   "category": "buildMat",
+   "sellPrice": 60,
+   "store": "material_shed"
+  },
+  "smoky_quartz": {
+   "name": "茶晶",
+   "category": "buildMat",
+   "sellPrice": 60,
+   "store": "material_shed"
   }
  },
  "feedShop": {
@@ -4511,6 +4638,53 @@
    "limitPerIsland": 1,
    "storable": true,
    "note234": "v2.34：每座島最多 limitPerIsland 座（limit 只給舊程式看）；每座都 cost 金幣；「收回」放進建設倉庫，拿出來免費、放到任何一座還沒有停車場的島；剷除退 sellRate；垃圾車到哪座島就停那座島的停車場，沒有就停在島邊空中"
+  },
+  "material_shed": {
+   "name": "建材小屋",
+   "size": [
+    2,
+    2
+   ],
+   "limit": 3,
+   "perMapLimit": 1,
+   "cost": 1500,
+   "unlockLevel": 3,
+   "buyWith": "build",
+   "sellable": true,
+   "sellRate": 0.5,
+   "storable": true,
+   "movable": true,
+   "opens": "materials",
+   "perIsland": true,
+   "capacity": {
+    "baseLevel": 3,
+    "base": 200,
+    "perLevel": 40
+   },
+   "noShedSoilToCoins": true,
+   "sellInPanel": true,
+   "note": "每座島最多 1 間，建材只屬於這座島；Lv3 200 份、每升一級 +40；這座島沒小屋時容量 0（清地形機器人不出動，挖河道的土直接換金幣）"
+  },
+  "heavy_charger": {
+   "name": "重型充電樁",
+   "size": [
+    1,
+    1
+   ],
+   "limit": 6,
+   "cost": 1200,
+   "unlockLevel": 3,
+   "buyWith": "build",
+   "sellable": true,
+   "sellRate": 0.5,
+   "storable": true,
+   "movable": true,
+   "serves": "mine",
+   "chargeSourceDefault": "farm",
+   "slots": 1,
+   "slotsMax": 1,
+   "baseMax": 6,
+   "note": "v2.45.1：一座充一台、不能擴充，最多 6 座（跟一般充電站、停機坪、掃地基座的各 3 座分開算）；機器人可以比充電樁多（輪流充電），自己那座島有重型充電樁就會出門；預設用農場電力，耗電是一般機器人的 3 倍"
   }
  },
  "weatherDolls": {
@@ -5795,6 +5969,211 @@
     ],
     "tilesPerSecond": 1,
     "worksWhen": "trucks are here"
+   },
+   "lumber": {
+    "name": "伐木機器人",
+    "base": "heavy_charger",
+    "unlockLevel": 3,
+    "tiers": [
+     {
+      "id": "lumberbot",
+      "name": "初級",
+      "buy": 2500,
+      "workHours": 4,
+      "kwh": 1.2,
+      "chargeHours": 1,
+      "unitsPerHour": 60,
+      "bag": 20,
+      "kwh245": 0.4
+     },
+     {
+      "id": "lumberbot_2",
+      "name": "中級",
+      "buy": 6500,
+      "workHours": 12,
+      "kwh": 3.6,
+      "chargeHours": 2,
+      "unitsPerHour": 100,
+      "bag": 35,
+      "kwh245": 1.2
+     },
+     {
+      "id": "lumberbot_3",
+      "name": "高級",
+      "buy": 14000,
+      "workHours": 24,
+      "kwh": 7.2,
+      "chargeHours": 3,
+      "unitsPerHour": 160,
+      "bag": 60,
+      "kwh245": 2.4
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 250
+     },
+     {
+      "hours": 12,
+      "cost": 800,
+      "unlock": "rent_lumber_1"
+     },
+     {
+      "hours": 24,
+      "cost": 1600,
+      "unlock": "rent_lumber_2"
+     }
+    ],
+    "terrain": true,
+    "part": "saw_chain",
+    "walk": {
+     "tilesPerSecond": 1,
+     "note": "v2.45：沿格子走、站在目標旁邊工作；背袋滿了走到最近一格接到建材小屋的軌道，把建材倒在軌道旁（軌道車來載）；只回重型充電樁充電"
+    },
+    "shedFull": "idle",
+    "ignores": [
+     "river",
+     "bridge"
+    ],
+    "banner": "ui_pg_rb_lumber"
+   },
+   "mine": {
+    "name": "採礦機器人",
+    "base": "heavy_charger",
+    "unlockLevel": 4,
+    "tiers": [
+     {
+      "id": "minebot",
+      "name": "初級",
+      "buy": 3000,
+      "workHours": 4,
+      "kwh": 1.2,
+      "chargeHours": 1,
+      "unitsPerHour": 60,
+      "bag": 20,
+      "kwh245": 0.4
+     },
+     {
+      "id": "minebot_2",
+      "name": "中級",
+      "buy": 7500,
+      "workHours": 12,
+      "kwh": 3.6,
+      "chargeHours": 2,
+      "unitsPerHour": 100,
+      "bag": 35,
+      "kwh245": 1.2
+     },
+     {
+      "id": "minebot_3",
+      "name": "高級",
+      "buy": 16000,
+      "workHours": 24,
+      "kwh": 7.2,
+      "chargeHours": 3,
+      "unitsPerHour": 160,
+      "bag": 60,
+      "kwh245": 2.4
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 300
+     },
+     {
+      "hours": 12,
+      "cost": 900,
+      "unlock": "rent_mine_1"
+     },
+     {
+      "hours": 24,
+      "cost": 1800,
+      "unlock": "rent_mine_2"
+     }
+    ],
+    "terrain": true,
+    "part": "drill",
+    "walk": {
+     "tilesPerSecond": 1,
+     "note": "v2.45：沿格子走、站在目標旁邊工作；背袋滿了走到最近一格接到建材小屋的軌道，把建材倒在軌道旁（軌道車來載）；只回重型充電樁充電"
+    },
+    "shedFull": "idle",
+    "ignores": [
+     "river",
+     "bridge"
+    ],
+    "banner": "ui_pg_rb_mine"
+   },
+   "grade": {
+    "name": "整地機器人",
+    "base": "heavy_charger",
+    "unlockLevel": 3,
+    "tiers": [
+     {
+      "id": "gradebot",
+      "name": "初級",
+      "buy": 2000,
+      "workHours": 4,
+      "kwh": 1.2,
+      "chargeHours": 1,
+      "unitsPerHour": 120,
+      "bag": 20,
+      "kwh245": 0.4
+     },
+     {
+      "id": "gradebot_2",
+      "name": "中級",
+      "buy": 5500,
+      "workHours": 12,
+      "kwh": 3.6,
+      "chargeHours": 2,
+      "unitsPerHour": 200,
+      "bag": 35,
+      "kwh245": 1.2
+     },
+     {
+      "id": "gradebot_3",
+      "name": "高級",
+      "buy": 12000,
+      "workHours": 24,
+      "kwh": 7.2,
+      "chargeHours": 3,
+      "unitsPerHour": 320,
+      "bag": 60,
+      "kwh245": 2.4
+     }
+    ],
+    "rent": [
+     {
+      "hours": 4,
+      "cost": 200
+     },
+     {
+      "hours": 12,
+      "cost": 700,
+      "unlock": "rent_grade_1"
+     },
+     {
+      "hours": 24,
+      "cost": 1400,
+      "unlock": "rent_grade_2"
+     }
+    ],
+    "terrain": true,
+    "part": "blade",
+    "walk": {
+     "tilesPerSecond": 1,
+     "note": "v2.45：沿格子走、站在目標旁邊工作；背袋滿了走到最近一格接到建材小屋的軌道，把建材倒在軌道旁（軌道車來載）；只回重型充電樁充電"
+    },
+    "shedFull": "idle",
+    "ignores": [
+     "river",
+     "bridge"
+    ],
+    "clearsDebris": true,
+    "banner": "ui_pg_rb_grade"
    }
   },
   "solarChargeMultiplier": 2,
@@ -6851,6 +7230,40 @@
    "peckSeconds": 2,
    "maxSeconds": 40,
    "note": "v2.36：畫面上看得到的島，雞要吃蟲時沿活動範圍走到貼著那格田的格子（tilesPerSecond），啄 peckSeconds 秒才吃掉；maxSeconds 內走不到就直接吃掉；離線或別座島照舊直接算"
+  },
+  "info241": {
+   "countPerChicken": true,
+   "reasons": [
+    "night",
+    "noField",
+    "noPest",
+    "resting",
+    "walking"
+   ],
+   "text": {
+    "night": "晚上休息",
+    "noField": "碰不到田：活動範圍沒有貼著任何田或果樹",
+    "noPest": "附近的田沒有蟲",
+    "resting": "休息中，下次可以吃：{mmss}",
+    "walking": "正在走過去吃蟲"
+   },
+   "note": "點雞（查看動物）多兩行：「吃蟲：今天 N 格・累計 N 格」＋現在沒在吃的原因（依序取第一個符合的）；規則本身不變"
+  },
+  "connected242": {
+   "maxWalk": 8,
+   "fieldsOnly": true,
+   "walkOnFields": true,
+   "text": {
+    "tooFar": "有蟲的田太遠（超過 {n} 格）"
+   },
+   "note": "雞碰得到的那塊田，以及跟它上下左右相連的田，都吃得到（只算田，果樹不串連）；雞沿著田走過去啄，啄完走回雞圈；只吃走路距離 8 格內的田"
+  },
+  "bugFeed2462": {
+   "creditPerTile": 1,
+   "speedup": 0.25,
+   "feederSkip": true,
+   "text": "蟲食 {n} 份：先吃蟲再吃飼料，吃蟲那一輪快 {p}%",
+   "note": "雞每吃掉 1 格田的蟲存 creditPerTile 份蟲食；要吃東西時先用 1 份蟲食（不扣飼料），那一輪倒數縮短 speedup；feederSkip：還有蟲食或正走過去啄蟲的雞，餵食機器人先跳過"
   }
  },
  "ui": {
@@ -7279,8 +7692,10 @@
      "ids": [
       "drone_pad",
       "robot_charger",
-      "sweeper_dock"
-     ]
+      "sweeper_dock",
+      "heavy_charger"
+     ],
+     "note241": "伐木／採礦／整地機器人用機器人充電站"
     },
     {
      "id": "process",
@@ -7339,7 +7754,8 @@
      "ids": [
       "trash_station",
       "truck_pad",
-      "snow_melter"
+      "snow_melter",
+      "material_shed"
      ]
     }
    ],
@@ -7436,6 +7852,21 @@
     "c": "#1f6fb2",
     "cl": "#e4f0fb",
     "sub": "自動回收資源，保持環境整潔"
+   },
+   "lumber": {
+    "c": "#3f7d32",
+    "cl": "#e6f2df",
+    "sub": "伐木：把野樹變成木材"
+   },
+   "mine": {
+    "c": "#6b6f78",
+    "cl": "#eceef2",
+    "sub": "採礦：石材、礦石和水晶"
+   },
+   "grade": {
+    "c": "#9a6a33",
+    "cl": "#f5ece0",
+    "sub": "整地：把土丘剷平成土"
    }
   },
   "buyConfirm": {
@@ -8806,9 +9237,43 @@
     "price": 60,
     "waste": "recycle",
     "wasteBags": 0.3
+   },
+   "saw_chain": {
+    "name": "鋸鏈",
+    "for": [
+     "lumber"
+    ],
+    "lifeWorkHours": 20,
+    "price": 150,
+    "waste": "recycle",
+    "wasteBags": 0.3,
+    "manualSwap": true
+   },
+   "drill": {
+    "name": "鑽頭",
+    "for": [
+     "mine"
+    ],
+    "lifeWorkHours": 20,
+    "price": 250,
+    "waste": "recycle",
+    "wasteBags": 0.3,
+    "manualSwap": true
+   },
+   "blade": {
+    "name": "鏟刃",
+    "for": [
+     "grade"
+    ],
+    "lifeWorkHours": 30,
+    "price": 100,
+    "waste": "recycle",
+    "wasteBags": 0.3,
+    "manualSwap": true
    }
   },
-  "later": "mop (抹布) for a wiping function"
+  "later": "mop (抹布) for a wiping function",
+  "manualSwap241": "鋸鏈／鑽頭／鏟刃磨完就停工回充電站、頭上「換耗材」，玩家點機器人按「換耗材」才換（倉庫有備品也不自動換、不自動買）；租用的附耗材"
  },
  "solarDust": {
   "perSunnyDay": 0.05,
@@ -9158,6 +9623,13 @@
    ],
    "note": "v2.40：蝴蝶依寄主植物；自己放的卵知道品種，野生的羽化才揭曉；成蝶死前產 1 顆同種卵在同種寄主上，死後掉在寄主下面 24 小時，用「收成」撿起來記進圖鑑，40% 做成標本（倉庫「標本」可賣）",
    "levelNote": "v2.40.1：常見 Lv 6～18、少見 Lv 20～29、稀有 Lv 32～40，大約一級一種；選項列已解鎖的排左邊、依等級排序"
+  },
+  "harvestAsk242": {
+   "title": "這格有蝴蝶",
+   "harvest": "採收",
+   "cancel": "先不要",
+   "warn": "按「採收」會同時移除這格還沒羽化成蝴蝶的 {list}，共 {n} 隻。",
+   "note": "用收成點到有卵／幼蟲／蛹的成熟作物，先跳蝴蝶面板（生長狀況）＋採收按鈕＋警告，不直接收成"
   }
  },
  "coinLog": {
@@ -9647,6 +10119,16 @@
     "price": 500,
     "mult": 1.5,
     "max": 5
+   },
+   "material": {
+    "name": "建材小屋容量",
+    "add": 100,
+    "unit": "份",
+    "price": 2000,
+    "mult": 1.5,
+    "max": 20,
+    "needs": "material_shed",
+    "perIsland": true
    }
   }
  },
@@ -10047,10 +10529,11 @@
     "tiers": [
      3,
      7,
-     10,
-     13
+     12,
+     16
     ],
-    "desc": "買過的機器人型號數"
+    "desc": "買過的機器人型號數",
+    "note241": "型號 16 種（多了伐木、採礦、整地）"
    },
    {
     "id": "hours",
@@ -10936,6 +11419,230 @@
      1000
     ],
     "desc": "寵物鳥累計抓蟲（棵次）"
+   },
+   {
+    "id": "pioneer_wood",
+    "name": "森林探險家",
+    "group": "開拓",
+    "stat": "mat:wood",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     50000
+    ],
+    "desc": "累計得到木材份數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_crystal",
+    "name": "水晶收藏家",
+    "group": "開拓",
+    "stat": "mat:amethyst+rose_quartz+citrine+smoky_quartz",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "累計得到水晶份數（紫水晶、粉晶、黃水晶、茶晶合計）",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_flatten",
+    "name": "大地改造家",
+    "group": "開拓",
+    "stat": "terrainCleared",
+    "tiers": [
+     20,
+     100,
+     500,
+     2000
+    ],
+    "desc": "地形格變成平地的格數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_iron",
+    "name": "鋼鐵之心",
+    "group": "開拓",
+    "stat": "mat:iron_ore",
+    "tiers": [
+     20,
+     200,
+     2000,
+     10000
+    ],
+    "desc": "累計得到鐵礦份數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_copper",
+    "name": "赤銅之手",
+    "group": "開拓",
+    "stat": "mat:copper_ore",
+    "tiers": [
+     10,
+     100,
+     1000,
+     6000
+    ],
+    "desc": "累計得到銅礦份數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_stone",
+    "name": "鑿石高手",
+    "group": "開拓",
+    "stat": "mat:stone",
+    "tiers": [
+     100,
+     1000,
+     10000,
+     50000
+    ],
+    "desc": "累計得到石材份數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_soil",
+    "name": "掘土高手",
+    "group": "開拓",
+    "stat": "mat:soil",
+    "tiers": [
+     50,
+     500,
+     5000,
+     20000
+    ],
+    "desc": "累計得到土的份數（土丘、挖河道）",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_blast",
+    "name": "爆破專家",
+    "group": "開拓",
+    "stat": "dynamited",
+    "tiers": [
+     10,
+     50,
+     200,
+     1000
+    ],
+    "desc": "用炸藥炸掉的格數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_river",
+    "name": "河道造型師",
+    "group": "開拓",
+    "stat": "riverEdits",
+    "tiers": [
+     20,
+     100,
+     500,
+     2000
+    ],
+    "desc": "填平和挖河道的格數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_bridge",
+    "name": "造橋大師",
+    "group": "開拓",
+    "stat": "bridges",
+    "tiers": [
+     5,
+     20,
+     50,
+     100
+    ],
+    "desc": "放過的橋格數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_rainbow",
+    "name": "彩虹奇遇",
+    "group": "開拓",
+    "stat": "rainbows",
+    "tiers": [
+     1,
+     10,
+     50,
+     200
+    ],
+    "desc": "點到彩虹的次數",
+    "since": "2.41"
+   },
+   {
+    "id": "pioneer_amethyst",
+    "name": "紫晶貴人",
+    "group": "開拓",
+    "stat": "mat:amethyst",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "累計得到紫水晶份數",
+    "since": "2.42"
+   },
+   {
+    "id": "pioneer_rose_quartz",
+    "name": "粉晶桃花",
+    "group": "開拓",
+    "stat": "mat:rose_quartz",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "累計得到粉晶份數",
+    "since": "2.42"
+   },
+   {
+    "id": "pioneer_citrine",
+    "name": "黃晶聚財",
+    "group": "開拓",
+    "stat": "mat:citrine",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "累計得到黃水晶份數",
+    "since": "2.42"
+   },
+   {
+    "id": "pioneer_smoky_quartz",
+    "name": "茶晶辟邪",
+    "group": "開拓",
+    "stat": "mat:smoky_quartz",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "累計得到茶晶份數",
+    "since": "2.44"
+   },
+   {
+    "id": "pioneer_coal",
+    "name": "黑金礦工",
+    "group": "開拓",
+    "stat": "mat:coal",
+    "tiers": [
+     20,
+     200,
+     2000,
+     10000
+    ],
+    "desc": "累計得到煤礦份數",
+    "since": "2.42"
    }
   ],
   "badgeSources227": {
@@ -11022,6 +11729,43 @@
     ]
    },
    "note": "裁成 art/batch37/ui_badge_<成就 id>.png（160×160），灰色版 _off；第 7 張的南瓜不用（v2.19 已有）、第 8 張的「雞」不用（改用第 9 張的蛋雞、肉雞）"
+  },
+  "groupIcons241": {
+   "開拓": "ui_badge_pioneer_wood"
+  },
+  "badgeSources241": {
+   "art/src_ui/v241/badges_terrain_11.png": {
+    "rows": [
+     4,
+     4,
+     3
+    ],
+    "ids": [
+     "pioneer_wood",
+     "pioneer_crystal",
+     "pioneer_flatten",
+     "pioneer_iron",
+     "pioneer_copper",
+     "pioneer_stone",
+     "pioneer_soil",
+     "pioneer_blast",
+     "pioneer_river",
+     "pioneer_bridge",
+     "pioneer_rainbow"
+    ],
+    "note": "透明背景；art/v241_48.py 依透明度找出 11 塊、裁切置中；灰色由彩色轉換"
+   }
+  },
+  "badgeSources242": {
+   "art/src_ui/v242/badges_minerals_4.png": {
+    "ids": [
+     "pioneer_amethyst",
+     "pioneer_rose_quartz",
+     "pioneer_citrine",
+     "pioneer_coal"
+    ],
+    "note": "一列 4 個、緞帶相連；art/v242_50.py 在中間透明最少的欄切開"
+   }
   }
  },
  "pwa": {
@@ -11389,105 +12133,963 @@
     "name": "虎皮鸚鵡",
     "level": 9,
     "price": 600,
-    "range": 5,
+    "range": 9,
     "catchSeconds": 60,
     "skill": "flock",
-    "skillText": "成群：同一間鳥屋有 2 隻以上虎皮鸚鵡時，抓蟲時間 −20%"
+    "skillText": "成群：同一間鳥屋有 2 隻以上虎皮鸚鵡時，抓蟲時間 −20%",
+    "range241": true
    },
    "java_white": {
     "name": "白文鳥",
     "level": 10,
     "price": 800,
-    "range": 5,
+    "range": 9,
     "catchSeconds": 60,
     "skill": "extra",
-    "skillText": "順便：抓完再清掉範圍內另一棵果樹的蟲"
+    "skillText": "順便：抓完再清掉範圍內另一棵果樹的蟲",
+    "range241": true
    },
    "java_black": {
     "name": "黑文鳥",
     "level": 11,
     "price": 900,
-    "range": 5,
+    "range": 9,
     "catchSeconds": 50,
     "skill": "early",
-    "skillText": "早起：天亮前 1 小時就出門"
+    "skillText": "早起：天亮前 1 小時就出門",
+    "range241": true
    },
    "canary": {
     "name": "金絲雀",
     "level": 12,
     "price": 1000,
-    "range": 5,
+    "range": 9,
     "catchSeconds": 60,
     "skill": "song",
-    "skillText": "歌聲：範圍內受驚的動物恢復快 30%"
+    "skillText": "歌聲：範圍內受驚的動物恢復快 30%",
+    "range241": true
    },
    "gouldian": {
     "name": "七彩文鳥（胡錦鳥）",
     "level": 14,
     "price": 1500,
-    "range": 5,
+    "range": 9,
     "catchSeconds": 50,
     "skill": "lucky",
-    "skillText": "吉祥：範圍內果樹結果 +5%"
+    "skillText": "吉祥：範圍內果樹結果 +5%",
+    "range241": true
    },
    "lovebird": {
     "name": "牡丹鸚鵡",
     "level": 15,
     "price": 1800,
-    "range": 7,
+    "range": 11,
     "catchSeconds": 50,
     "skill": "pair",
-    "skillText": "形影不離：同一間鳥屋有另一隻牡丹鸚鵡時範圍 +2"
+    "skillText": "形影不離：同一間鳥屋有另一隻牡丹鸚鵡時範圍 +2",
+    "range241": true
    },
    "cockatiel": {
     "name": "玄鳳鸚鵡",
     "level": 17,
     "price": 2200,
-    "range": 7,
+    "range": 11,
     "catchSeconds": 45,
     "skill": "prevent",
     "skillText": "預防：範圍內果樹長蟲機率 −20%",
     "colors": {
      "grey": "灰",
      "white": "白"
-    }
+    },
+    "range241": true
    },
    "sun_conure": {
     "name": "小太陽鸚鵡",
     "level": 20,
     "price": 3000,
-    "range": 7,
+    "range": 11,
     "catchSeconds": 40,
     "skill": "loud",
-    "skillText": "大嗓門：範圍內的倉庫、垃圾站老鼠出現機率 −30%"
+    "skillText": "大嗓門：範圍內的倉庫、垃圾站老鼠出現機率 −30%",
+    "range241": true
    },
    "quaker": {
     "name": "和尚鸚鵡",
     "level": 23,
     "price": 3800,
-    "range": 9,
+    "range": 13,
     "catchSeconds": 45,
     "skill": "nest",
-    "skillText": "築巢高手：住的那間鳥屋多 1 位（最多 4）"
+    "skillText": "築巢高手：住的那間鳥屋多 1 位（最多 4）",
+    "range241": true
    },
    "african_grey": {
     "name": "非洲灰鸚鵡",
     "level": 27,
     "price": 6000,
-    "range": 9,
+    "range": 13,
     "catchSeconds": 40,
     "skill": "talk",
-    "skillText": "學說話：範圍內有天敵靠近時大叫，天敵得手時間延長並發通知"
+    "skillText": "學說話：範圍內有天敵靠近時大叫，天敵得手時間延長並發通知",
+    "range241": true
    },
    "white_cockatoo": {
     "name": "白鳳頭鸚鵡",
     "level": 32,
     "price": 9000,
-    "range": 11,
+    "range": 15,
     "catchSeconds": 35,
     "skill": "double",
-    "skillText": "範圍最大、一次可以同時抓 2 棵"
+    "skillText": "範圍最大、一次可以同時抓 2 棵",
+    "range241": true
+   }
+  },
+  "rangeIsFlight": true,
+  "status241": {
+   "reasons": [
+    "hungry",
+    "home",
+    "noTree",
+    "patrol",
+    "catching"
+   ],
+   "text": {
+    "hungry": "餓了：倉庫沒有鳥飼料",
+    "home": "{why}，待在鳥屋",
+    "noTree": "範圍內沒有果樹",
+    "patrol": "範圍內的果樹沒有蟲（巡邏中）",
+    "catching": "抓蟲中：{tree}・還要 {sec} 秒"
+   },
+   "rangeOverlay": {
+    "alpha": 0.16,
+    "lineAlpha": 0.55,
+    "bugIcon": "ui_pest",
+    "colors": [
+     "#ff7a59",
+     "#4aa3ff",
+     "#ffc53d",
+     "#7bd16a",
+     "#c17dff",
+     "#ff6fb1",
+     "#3fd0c9",
+     "#a5a5ff"
+    ]
+   },
+   "note": "範圍各 +4（邊長）；飛的範圍＝抓蟲範圍＝小技能的「範圍內」；牡丹鸚鵡 +2 同時加在兩者；打開鳥屋面板時地圖淡色框出每隻鳥的範圍（顏色跟面板名字一樣），範圍內有蟲的果樹標小蟲"
+  },
+  "miniMap242": {
+   "cell": [
+    30,
+    15
+   ],
+   "maxCells": 17,
+   "legend": [
+    "果樹",
+    "有蟲的果樹",
+    "鳥屋"
+   ],
+   "note": "鳥屋面板裡的範圍小圖：畫法跟蜂箱採蜜範圍小圖一樣，每隻鳥一個同色框"
+  }
+ },
+ "terrain241": {
+  "blocks": {
+   "flatFirstBlock": true,
+   "coverage": [
+    0.3,
+    0.6
+   ],
+   "minKinds": 1,
+   "maxRivers": 1,
+   "oldBlocksUnchanged": true,
+   "note": "只有建立農場時的第一塊地全平；之後每一塊（含第 2、3 座島的第一塊）地形格佔 30%～60%；已開的地塊不變"
+  },
+  "dice": {
+   "freePerDay": 3,
+   "perFarm": true,
+   "reset": "localMidnight",
+   "rerollCostRate": 0.05,
+   "askBeforePay": true,
+   "savedInState": true,
+   "note": "選好擴地方向先擲一次看預覽（小圖＋地形 %），按「確定擴地」付擴地費才生效；重擲每天免費 3 次，用完每次付這塊擴地費 × 5%"
+  },
+  "unitsPerMaterial": 10,
+  "stages": [
+   0.6666666666666666,
+   0.3333333333333333
+  ],
+  "regrow": false,
+  "types": {
+   "forest": {
+    "name": "小森林",
+    "cellName": "野樹",
+    "cells": [
+     3,
+     15
+    ],
+    "reserve": [
+     600,
+     900
+    ],
+    "yields": {
+     "wood": 1
+    },
+    "robot": "lumber",
+    "dynamite": 1,
+    "debris": "logs",
+    "looks": [
+     "oak",
+     "pine",
+     "camphor",
+     "birch"
+    ],
+    "seasonal": true
+   },
+   "mine": {
+    "name": "小礦山",
+    "cellName": "岩石",
+    "cells": [
+     2,
+     12
+    ],
+    "reserve": [
+     800,
+     1200
+    ],
+    "yields": {
+     "stone": 0.65,
+     "iron_ore": 0.2,
+     "copper_ore": 0.12,
+     "crystal": 0.03
+    },
+    "veins": [
+     "iron_ore",
+     "copper_ore",
+     "crystal"
+    ],
+    "veinMult": 2,
+    "robot": "mine",
+    "dynamite": 2,
+    "debris": "rubble",
+    "looks": [
+     "granite",
+     "slate",
+     "sandstone"
+    ],
+    "note": "每座礦山（相連的岩石格）開地時抽一種礦脈，那種比例 ×2，其餘依比例縮小"
+   },
+   "mound": {
+    "name": "土丘",
+    "cellName": "土丘",
+    "cells": [
+     3,
+     15
+    ],
+    "contiguous": true,
+    "reserve": [
+     200,
+     300
+    ],
+    "yields": {
+     "soil": 1
+    },
+    "robot": "grade",
+    "dynamite": 1,
+    "debris": "dirt",
+    "draw": "contour"
+   },
+   "river": {
+    "name": "河流",
+    "cellName": "河流",
+    "width": [
+     1,
+     2
+    ],
+    "draw": "contour",
+    "notRobot": true,
+    "notDynamite": true
+   }
+  },
+  "blocking": {
+   "walk": false,
+   "build": false,
+   "weeds": false,
+   "disasterDebris": false,
+   "movable": false,
+   "storable": false
+  },
+  "dynamite": {
+   "item": "dynamite",
+   "price": 120,
+   "unlockLevel": 3,
+   "fuseSeconds": 3,
+   "xp": 0,
+   "keepsReserve": false,
+   "debris": {
+    "logs": "斷木堆",
+    "rubble": "碎石堆",
+    "dirt": "土堆"
+   },
+   "clear": {
+    "manualTaps": 3,
+    "coinCost": 30,
+    "robotUnits": 30,
+    "robot": "grade"
+   }
+  },
+  "river": {
+   "moistRange": 1,
+   "moistBonus": 0.5,
+   "sameAs": "pond",
+   "fillSoil": 2,
+   "soilBuyPrice": 5,
+   "digCost": 20,
+   "digSoil": 2,
+   "digAnyGrass": true,
+   "mergeWithPools": false,
+   "note": "相鄰的河流格連成一條；擲出來的從一邊流到另一邊或島邊；玩家挖的接上就跟著流，沒接上的是靜水小溪"
+  },
+  "bridges": {
+   "bridge_wood": {
+    "name": "木橋",
+    "materials": {
+     "wood": 6
+    },
+    "cost": 30
+   },
+   "bridge_stone": {
+    "name": "石橋",
+    "materials": {
+     "stone": 8
+    },
+    "cost": 60
+   },
+   "storable": true,
+   "autoDirection": "perpendicularToRiver",
+   "robotsIgnore": true
+  },
+  "draw": {
+   "riverDepth": 5,
+   "bankWidth": 0.22,
+   "jitter": 0.12,
+   "cornerRound": 0.35,
+   "flowSpeed": 0.25,
+   "moundHeight": 9,
+   "shoreDecoPerCell": 0.6,
+   "note": "marching squares 外形＋依格子座標固定擾動；河床下降、岸坡、土丘隆起都畫在自己格子裡"
+  },
+  "rainbow": {
+   "waterfall": {
+    "chancePerHour": 0.1,
+    "minutes": 10
+   },
+   "afterRain": {
+    "minutes": [
+     30,
+     60
+    ],
+    "waterfallAlways": true
+   },
+   "fadeSeconds": 20,
+   "notWhen": [
+    "night",
+    "snow",
+    "cloudy",
+    "rain"
+   ],
+   "tapCoins": 10,
+   "tapOnce": true
+  },
+  "inspect": {
+   "tapWithNoTool": true,
+   "title": "查看地形"
+  },
+  "ui": {
+   "toolGroup": "tidy",
+   "tools": [
+    "dynamite",
+    "clear",
+    "fill",
+    "dig",
+    "bridge"
+   ],
+   "note": "炸藥、清理、填平、挖河道、橋併進「整理」工具組，排在搬移、收回、剷除後面（玩家 2026-10-29）；由程式在載入時接到 ui.toolGroups.tidy.tools 後面"
+  },
+  "materials": {
+   "ids": [
+    "wood",
+    "stone",
+    "soil",
+    "iron_ore",
+    "coal",
+    "copper_ore",
+    "amethyst",
+    "rose_quartz",
+    "citrine",
+    "smoky_quartz"
+   ],
+   "groupName": "建材",
+   "storeName": "建材小屋",
+   "phase": 1,
+   "later": {
+    "stone": "鋪路、石橋、圍牆、建築升級",
+    "iron_ore": "工具、加工機器、灑水設備",
+    "copper_ore": "電線、發電設備、自動化設施",
+    "crystal": "水底燈、特殊裝飾、進階設備",
+    "coal": "燃料（發電、煉鐵）",
+    "amethyst": "水底燈、特殊裝飾、進階設備",
+    "rose_quartz": "水底燈、特殊裝飾、進階設備",
+    "citrine": "水底燈、特殊裝飾、進階設備",
+    "smoky_quartz": "水底燈、特殊裝飾、進階設備"
+   }
+  },
+  "renameCategory": {
+   "material": "耗材",
+   "note": "農產倉庫原本的「材料」分類改名「耗材」"
+  }
+ },
+ "terrain242": {
+  "note": "v2.42 地形第一段：生成、擲骰子、畫法、查看地形。數值沿用 terrain241，這裡是新增或改掉的部分。",
+  "gen": {
+   "coverage": [
+    0.3,
+    0.6
+   ],
+   "kindsWeights": {
+    "forest": 1,
+    "mine": 0.8,
+    "mound": 0.8
+   },
+   "riverChance": 0.45,
+   "extraKindChance": 0.55,
+   "forestClusters": [
+    1,
+    3
+   ],
+   "note": "每塊地先決定河流（最多 1 條）、再放礦山、土丘、森林，直到地形格達到 30%～60%；至少 1 種地形"
+  },
+  "mine": {
+   "core": [
+    2,
+    3
+   ],
+   "coreBigChance": 0.5,
+   "extra": [
+    0,
+    0
+   ],
+   "cells": [
+    4,
+    9
+   ],
+   "yields": {
+    "stone": 0.6,
+    "iron_ore": 0.18,
+    "coal": 0.12,
+    "copper_ore": 0.08,
+    "crystal": 0.02
+   },
+   "crystalSplit": [
+    "amethyst",
+    "rose_quartz",
+    "citrine",
+    "smoky_quartz"
+   ],
+   "stoneMin": 0.3,
+   "veins": [
+    {
+     "id": "coal",
+     "name": "煤礦脈",
+     "p": 0.25,
+     "mult": {
+      "coal": 2
+     }
+    },
+    {
+     "id": "iron_ore",
+     "name": "鐵礦脈",
+     "p": 0.25,
+     "mult": {
+      "iron_ore": 2
+     }
+    },
+    {
+     "id": "copper_ore",
+     "name": "銅礦脈",
+     "p": 0.2,
+     "mult": {
+      "copper_ore": 2
+     }
+    },
+    {
+     "id": "amethyst",
+     "name": "紫水晶礦脈",
+     "p": 0.075,
+     "mult": {
+      "amethyst": 3
+     }
+    },
+    {
+     "id": "rose_quartz",
+     "name": "粉晶礦脈",
+     "p": 0.075,
+     "mult": {
+      "rose_quartz": 3
+     }
+    },
+    {
+     "id": "citrine",
+     "name": "黃水晶礦脈",
+     "p": 0.075,
+     "mult": {
+      "citrine": 3
+     }
+    },
+    {
+     "id": "smoky_quartz",
+     "name": "茶晶礦脈",
+     "p": 0.075,
+     "mult": {
+      "smoky_quartz": 3
+     }
+    }
+   ],
+   "sprite": "terrain_mine_{vein}",
+   "wildSuffix": "_wild",
+   "noWild": [],
+   "squash": [
+    1,
+    0.8,
+    0.6
+   ],
+   "note": "正方形核心 2×2 或 3×3 用玩家的礦山圖（v2.44 batch53）蓋滿，核心外不再有小岩石（extra 0）；整座一起採（合計蘊藏量），剩 2/3、1/3 時整張圖往下壓矮；還沒開採是天然版（_wild），開採後換有礦坑的",
+   "drawScale": 0.75,
+   "bigScale": 1.15,
+   "scaleNote": "v2.44.2：礦山圖整張乘 drawScale（2×2 約 1.3～1.5 棵樹高），3×3 核心再乘 bigScale（原本放大 1.5 倍）；之後玩家給多版本的圖再換"
+  },
+  "mound": {
+   "treeH": 69,
+   "heightByCells": [
+    [
+     3,
+     0.65
+    ],
+    [
+     6,
+     0.95
+    ],
+    [
+     8,
+     1.1
+    ],
+    [
+     14,
+     1.45
+    ]
+   ],
+   "renderScale": 1.25,
+   "note": "高度用「幾棵樹高」（一般樹 69 單位）：3 格 0.65、6 格 0.95、8 格 1.1、14 格以上 1.45，中間內插"
+  },
+  "river": {
+   "waterDrop": 6.4,
+   "bedDepth": 9,
+   "renderScale": 2,
+   "shoreDecoChance": 0.35,
+   "waterfall": {
+    "sprite": "terrain_waterfall3w_ab",
+    "skew": 0.162,
+    "note": "v2.44 玩家選第三組只留水 10 格（batch53 terrain_waterfall3w_ab，每秒 8 格）。atlas 的 faces＝圖本來對的邊（se 右下／sw 左下，預設 sw），另一條邊左右翻轉；skew 用 atlas 的（沒有才用這裡的），翻轉時變號；河寬 2 格放大 2 倍"
+   },
+   "note": "水面比草地低 0.2 格（6.4 單位），河床中間再深約 0.3 格；只畫在河流格自己裡面"
+  },
+  "fade": {
+   "alpha": 0.45,
+   "rows": 4,
+   "note": "礦山、土丘後方（畫面上方）幾格內有田、樹、動物、建物，或滑鼠指到那裡時，整座變半透明"
+  },
+  "dice": {
+   "title": "擴地：看看這塊地",
+   "confirm": "確定擴地",
+   "reroll": "重擲",
+   "freeLeft": "今天還能免費重擲 {n} 次",
+   "paid": "今天的免費次數用完了：重擲一次 {cost} 金幣"
+  },
+  "kindNames": {
+   "forest": "小森林",
+   "mine": "小礦山",
+   "mound": "土丘",
+   "river": "河流"
+  },
+  "kindColors": {
+   "forest": "#3f8a3c",
+   "mine": "#8d8a84",
+   "mound": "#9ccc5a",
+   "river": "#4a9ad8",
+   "grass": "#8ccb5c"
+  },
+  "inspect": {
+   "title": "查看地形",
+   "later": "炸藥、清地形機器人、填平、挖河道、橋會在之後的版本開放。"
+  }
+ },
+ "terrain243": {
+  "shed": {
+   "boost": {
+    "add": 100,
+    "price": 2000,
+    "mult": 1.5,
+    "max": 20
+   },
+   "sellRows": [
+    1,
+    10
+   ],
+   "texts": {
+    "noShed": "這座島還沒有建材小屋：在「建設」蓋一間（每座島 1 間），清地形機器人才會出動",
+    "one": "每座島只能蓋 1 間建材小屋",
+    "later": "第一階段建材只能賣錢、算成就；之後會拿來蓋橋、鋪路、做工具和設備。"
+   },
+   "fill": [
+    [
+     0.34,
+     "empty"
+    ],
+    [
+     0.67,
+     "half"
+    ],
+    [
+     9,
+     "full"
+    ]
+   ],
+   "nightLight": true
+  },
+  "robots": {
+   "kinds": {
+    "lumber": "forest",
+    "mine": "mine",
+    "grade": "mound"
+   },
+   "tilesPerSecond": 1,
+   "unloadSeconds": 2,
+   "texts": {
+    "needPart": "{part}磨完了：點「換耗材」",
+    "noShed": "待命：這座島還沒有建材小屋",
+    "shedFull": "待命：建材小屋滿了",
+    "noTerrain": "待命：這座島沒有{what}",
+    "noReach": "走不到：{what}旁邊沒有可以走的路",
+    "noRail": "待命：沒有軌道連到建材小屋"
+   },
+   "what": {
+    "lumber": "野樹",
+    "mine": "礦山",
+    "grade": "土丘"
    }
   }
+ },
+ "terrain2431": {
+  "fade": {
+   "moundRiver": true,
+   "riverRows": 4,
+   "note": "土丘：後面（畫面上方）riverRows 格內有河流就一直半透明（透明度用 terrain242.fade.alpha），滑鼠指到土丘後面的格子也半透明；礦山只在指到後面時半透明；v2.46：森林跟礦山一樣，指到被擋住的後面時整片半透明（forest）",
+   "forest": true
+  }
+ },
+ "terrain244": {
+  "rainbow": {
+   "sprite": "fx_rainbow_fall",
+   "fps": 6,
+   "in": [
+    0,
+    6
+   ],
+   "hold": [
+    6,
+    11
+   ],
+   "out": [
+    11,
+    18
+   ],
+   "chancePerHour": 0.1,
+   "minutes": 10,
+   "coins": 10,
+   "width": 48,
+   "drop": 0.5,
+   "dx": -5,
+   "note": "瀑布彩虹：白天（dayPhase light ≥ .5）、沒下雨、沒有陰天、沒下雪時，每座瀑布每小時 chancePerHour 機率（依島、位置、小時固定）在那小時裡隨機一段出現 minutes 分鐘；淡入 in 格、在 hold 格之間來回、淡出 out 格（fps 每秒格數）。width＝遊戲裡的寬度（單位），drop＝放在瀑布長度的幾成處（水霧），dx＝往水那邊偏移。點一下 +coins 金幣（每道一次），算「彩虹奇遇」徽章"
+  },
+  "note": "v2.44：礦山新圖、水晶四款、瀑布第三組、瀑布彩虹"
+ },
+ "terrain2441": {
+  "river": {
+   "fallBlend": {
+    "color": [
+     104,
+     200,
+     242
+    ],
+    "radius": 2.2,
+    "curve": 1.4,
+    "strength": 0.9,
+    "note": "河流接到島邊的瀑布口（格子邊中點）radius 格內，水面顏色依距離混進 color（瀑布上緣的淺藍）；混合比例＝(1 − 平滑距離)^curve × strength"
+   }
+  }
+ },
+ "terrain245": {
+  "rail": {
+   "cost": 30,
+   "stone": 1,
+   "costNoStone": 40,
+   "exit": [
+    0,
+    2
+   ],
+   "unlockLevel": 3,
+   "refund": 15,
+   "note": "小屋 2×2 四周（上下左右相鄰的 8 格）任何一格有軌道都算從小屋接出去；exit 是建議的出口格（沒鋪時畫黃黑斜紋）；某一片地形任何一格旁邊有接上的軌道，機器人才會去採"
+  },
+  "cart": {
+   "capacity": 40,
+   "tilesPerSecond": 2,
+   "waitSeconds": 60,
+   "free": 1,
+   "buy": [
+    800,
+    1500
+   ],
+   "note": "v2.46 起：礦車不會自己動，每台伐木／採礦／整地機器人各自一列，裝滿時機器人變身車頭拉回小屋（看 terrain246.train）；buy 是第 2、3 節車廂的價格"
+  },
+  "texts": {
+   "noRail": "待命：沒有軌道連到建材小屋",
+   "noCharger": "待命：這座島還沒有重型充電樁",
+   "noExit": "建材小屋前面（出口格）不在島上，鋪不了軌道",
+   "railHint": "點草地鋪軌道 · 每格 30 金幣＋1 份石材（沒石材 40）· 要從建材小屋前面的出口格接出去，連到森林、礦山、土丘旁邊"
+  },
+  "note": "v2.45 地形第 3 段"
+ },
+ "terrain246": {
+  "crossing": {
+   "name": "通行板",
+   "cost": 20,
+   "unlockLevel": 3,
+   "note": "鋪在一格直線軌道上（m05／m10），機器人、動物可以從側面橫越；不立鐵道柵欄；車照常通過；收回倉庫 S.buildStore.rail_cross"
+  },
+  "station": {
+   "name": "待命站",
+   "cost": 200,
+   "unlockLevel": 3,
+   "carBack": 0.2,
+   "note": "放在軌道的盡頭（只接一邊）；一座停一列車；迎面遇到時空車退進待命站讓滿車先過；carBack＝礦車停在站格往軌道開口退幾格；收回倉庫 S.buildStore.rail_station；v2.46.1（玩家選）：夠長的尾軌（只接一邊、支線放得下整列）也能讓路，一樣近時待命站先；沒有待命站也沒有夠長的尾軌，才一次只放一列車出去；v2.46.1：在待命站後面鋪軌道＝把支線加長，待命站跟著移到新的盡頭；可以用「搬移 → 只搬待命站」單獨搬"
+  },
+  "fence": {
+   "name": "鐵道柵欄",
+   "cost": 10,
+   "unlockLevel": 3,
+   "note": "鋪在軌道同一格，沒有接軌的每一邊都立柵欄；可以拆單邊（不退錢）、補回（免費）；造景，軌道本身就擋路"
+  },
+  "train": {
+   "loadSeconds": 2,
+   "unloadSeconds": 3,
+   "carsByLevel": [
+    [
+     3,
+     1
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     20,
+     3
+    ]
+   ],
+   "ghostSeconds": 40,
+   "note": "每台機器人一列：裝滿時機器人變身車頭（loco_<種類>_<方向>）拉回小屋卸貨（一車 3 秒），再拉空車回裝填點、變回機器人；車廂第 1 節免費，第 2、3 節照 terrain245.cart.buy 的價格（倉庫有就免費），每列最多掛的節數看等級；每節容量 terrain245.cart.capacity；一格軌道只停一台車；迎面時滿車優先、空車退進最近的待命站；沒有待命站的線一次只放一列車出去（其他的塞在出口）；ghostSeconds：卡住超過這麼久就直接穿過去（避免永遠卡死）；giveUpSeconds：機器人變身後列車一直出不了小屋（塞在出口）超過這麼久，就先回去挖或充電",
+   "giveUpSeconds": 60
+  },
+  "stops": {
+   "list": [
+    "red",
+    "yellow",
+    "hump"
+   ],
+   "names": {
+    "red": "紅白",
+    "yellow": "黃色鋼構",
+    "hump": "彎軌"
+   },
+   "note": "軌道末端（只接一邊）的車擋造型，免費、每格各自記；新鋪的末端用上次選的造型"
+  },
+  "joinTool": {
+   "id": "railjoin",
+   "label": "接軌",
+   "icon": "ui_tool_railjoin",
+   "note": "整理工具組最後面（由 g90 程式在載入時接上去，不寫進 ui.toolGroups.tidy.tools）；點軌道格選要接上或斷開哪一邊"
+  },
+  "texts": {
+   "blocked": "被軌道擋住：鋪通行板才過得去",
+   "waitCart": "等礦車",
+   "jam": "等礦車：這條線沒有待命站，車塞在出口",
+   "shedFull": "小屋滿了：礦車停在小屋前等",
+   "noStation": "這條線沒有待命站：一次只能放一列車出去，其他的會塞在出口",
+   "joinHint": "點一格軌道，選要接上或斷開哪一邊（做分叉、把兩條雙軌接起來）",
+   "crossHint": "點一格直線軌道鋪通行板 · 每格 20 金幣 · 機器人、動物可以從側面橫越",
+   "stationHint": "點軌道的盡頭（只接一邊的那格）放待命站 · 200 金幣 · 空車在這裡讓滿車先過",
+   "fenceHint": "點軌道鋪鐵道柵欄 · 每格 10 金幣 · 沒接軌的每一邊都會立柵欄",
+   "carMoving": "車在上面，等車開走再搬",
+   "stuck": "卡住了・{s} 秒後自動通過",
+   "yielding": "讓路中・最多再等 {s} 秒",
+   "shortSiding": "這條支線只有 {n} 格，最長的列車要 {need} 格（含車頭），讓路時車尾會擋到主線：把支線再鋪長一點",
+   "shortBubble": "支線太短 {n}/{need} 格",
+   "askJoin": "旁邊是軌道的中段，要接上去嗎？",
+   "askJoin2": "旁邊還有別的軌道，要也接上去嗎？",
+   "blockedHere": "被軌道擋住：走不到地形，要在軌道上鋪通行板才過得去（只能鋪在直線軌道）",
+   "stationWhere": "待命站要放在支線上：軌道的盡頭，或通到盡頭的那段直線軌道（分叉、彎道不行）"
+  },
+  "note": "v2.46 軌道第二段（規則文件「v2.46 軌道第二段」）"
+ },
+ "terrain247": {
+  "point": {
+   "name": "採集點",
+   "cost": 150,
+   "unlockLevel": 3,
+   "refund": 75,
+   "note": "1×1，放在貼著森林／礦山／土丘的草地；機器人站在上面倒建材，從這裡出發採範圍內離它最近的格子；同一片地形照放的順序編號 1、2、3…（小選單可改順序），每格歸最近的採集點"
+  },
+  "garage": {
+   "name": "車庫",
+   "cost": 1200,
+   "unlockLevel": 3,
+   "upgrade": [
+    800,
+    1500,
+    2500,
+    4000
+   ],
+   "maxLevel": 5,
+   "refund": 600,
+   "note": "2×1，dir x（兩格沿 x，門在 +x 那頭）／y（沿 y，門在 +y 那頭）；門口那格軌道接到小屋的線才算接上；一級停一列，最高 5 級；沒事的空列車開進最近有空位的車庫，滿了或沒有就收進建材小屋"
+  },
+  "lamp": {
+   "name": "鐵軌小路燈",
+   "cost": 40,
+   "unlockLevel": 3,
+   "lightRadius": 26,
+   "note": "立在軌道格沒接軌的一邊，一格一盞；天黑自動亮（不耗電）；只是照明造景"
+  },
+  "bridge": {
+   "name": "鐵道橋",
+   "cost": 120,
+   "wood": 2,
+   "costNoWood": 160,
+   "unlockLevel": 3,
+   "note": "簡單版：把軌道鋪在河上就是鐵道橋（木橋圖 bridge_wood_<x|y>_one＋軌道），只有列車過得去（機器人、動物不能走）；收回或剷除後河照舊；之後第 4 段再做正式的橋"
+  },
+  "texts": {
+   "noPoint": "待命：這片地形還沒有採集點（建設 · 環境）",
+   "noPointRail": "待命：採集點旁邊沒有接到建材小屋的軌道",
+   "pointWhere": "採集點要放在貼著森林、礦山、土丘的草地上",
+   "garageWhere": "車庫要放在兩格空草地上",
+   "garageBusy": "車庫裡還有列車，等它開出來再收",
+   "bridgeMove": "橋上的軌道不能搬，可以收回或剷除"
+  },
+  "note": "v2.47（規則文件「v2.47 採集點、車庫、鐵軌小路燈」）"
+ },
+ "terrain248": {
+  "steelBridge": {
+   "name": "鐵軌專用鐵橋",
+   "cost": 150,
+   "stone": 2,
+   "coal": 1,
+   "stonePrice": 15,
+   "coalPrice": 20,
+   "unlockLevel": 3,
+   "note": "拿軌道點河格＝蓋鐵橋（取代 v2.47 的木造鐵道橋，舊存檔直接換圖）；建材不夠的部分照 stonePrice／coalPrice 換算金幣，付錢前跳購買確認；只給礦車走"
+  },
+  "walkBridge": {
+   "unlockLevel": 3,
+   "maxWidth": 2,
+   "wood": {
+    "name": "木橋",
+    "mat": "wood",
+    "qty": 6,
+    "cost": 30
+   },
+   "stone": {
+    "name": "石橋",
+    "mat": "stone",
+    "qty": 8,
+    "cost": 60
+   },
+   "note": "人走的橋：放在河格，方向自動跟河流垂直；河寬 2 格一次放 2 格（費用 ×2），拼成一座；建材要在這座島的建材小屋；可以收回倉庫（再放免費）；上面不能鋪軌道"
+  },
+  "dig": {
+   "name": "挖河道",
+   "cost": 20,
+   "soil": 2,
+   "soilSell": 1,
+   "unlockLevel": 3,
+   "note": "空草地才能挖；挖出的土進建材小屋，滿了照 soilSell 換金幣；碰到河就接上、跟著那條河的流向，沒碰到是獨立的靜水小溪；魚池是建築，要先移走"
+  },
+  "fill": {
+   "name": "填平",
+   "soil": 2,
+   "soilPrice": 5,
+   "unlockLevel": 3,
+   "note": "每格 2 份土，小屋有土先用，不夠的照 soilPrice 買（付錢前跳購買確認）；有橋（人走的橋或鐵橋）的河格不能填"
+  },
+  "moisture": {
+   "value": 0.5,
+   "range": 1,
+   "note": "河岸往外 1 格保濕 +50%（跟小池塘同一種，同一格只取最高）"
+  },
+  "texts": {
+   "steelOnWalk": "這座是人走的橋，上面不能鋪軌道：先把橋收回",
+   "fillSteel": "這格是鐵軌專用鐵橋，先把軌道收回",
+   "fillBridge": "這格有橋，先把橋收回",
+   "digPool": "魚池是建築，先把魚池移走才能挖河道",
+   "digWhere": "挖河道要在空草地上",
+   "tooWide": "這裡的河太寬（超過 2 格），放不了橋",
+   "notRiver": "橋要放在河上",
+   "chickenHungry": "餓了",
+   "feed": "餵食"
+  },
+  "note": "v2.48（規則文件「v2.48 修正與地形第 4 段：河流玩法」）"
+ },
+ "terrain249": {
+  "priority": {
+   "order": [
+    "iron_ore",
+    "copper_ore",
+    "coal",
+    "amethyst",
+    "rose_quartz",
+    "citrine",
+    "smoky_quartz",
+    "wood",
+    "soil"
+   ],
+   "kindMaterial": {
+    "lumber": "wood",
+    "grade": "soil"
+   },
+   "note": "會車誰先走：① 要回小屋的 ② 種類（採礦看採集點那座礦山的礦脈；伐木＝wood、整地＝soil）③ 先建立的列車（機器人收回倉庫再放出來排到最後）"
+  },
+  "rps": {
+   "enabled": true,
+   "seconds": 1.6,
+   "revealAt": 0.45,
+   "cooldownSeconds": 20,
+   "note": "彩蛋：決定讓路時兩車中間猜拳；贏家照優先順序先定，再隨機挑贏的拳；同一對列車 cooldownSeconds 內只猜一次；手勢圖 fx_rps_<rock|paper|scissors>（玩家圖）"
+  },
+  "texts": {
+   "title": "礦車資訊",
+   "button": "礦車資訊",
+   "resting": "機器人回去充電了，充好電才會繼續裝",
+   "note": "會車時：要回小屋的先走，再看種類（鐵、銅、煤、紫水晶、粉晶、黃水晶、茶晶、木材、土），同一種先建立的先走。"
+  },
+  "note": "v2.49（規則文件「v2.49 礦車資訊面板、休息時讓出主線、會車優先順序、剪刀石頭布彩蛋」）"
  }
 }
