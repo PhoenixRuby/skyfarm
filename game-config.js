@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.51",
+  "configVersion": "2.52",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -7779,7 +7779,12 @@ window.GAME_CONFIG = {
     "auto": "bookbg_devices",
     "default": "bookbg_crops",
     "flowers": "bookbg_crops",
-    "pets": "bookbg_animals"
+    "pets": "bookbg_animals",
+    "birds": "bookbg_animals",
+    "insects": "bookbg_animals",
+    "preds": "bookbg_animals",
+    "buildings": "bookbg_devices",
+    "terrain": "bookbg_crops"
    }
   },
   "tools": {
@@ -13220,5 +13225,193 @@ window.GAME_CONFIG = {
    "clearHint": "點碎石堆、斷木堆、土堆敲一下（敲 {n} 下變平地，免費）· 沒選工具點碎屑可以付 {c} 金幣馬上清好 · 整地機器人也會自己去清"
   },
   "note": "v2.51（規則文件「v2.51 地形第 5 段：炸藥＋清理」）；清理工具由 g96 程式接到 ui.toolGroups.tidy 後面，設定檔不放"
+ },
+ "book252": {
+  "note": "圖鑑分頁順序、分組、分頁小圖示（現有圖）；key 是 openBook 的分頁代號",
+  "groups": {
+   "grow": "種植",
+   "animal": "動物",
+   "build": "物品與建設",
+   "ops": "營運",
+   "misc": "其他"
+  },
+  "tabs": [
+   [
+    "crops",
+    "田作物",
+    "ui_tab_crops",
+    "grow"
+   ],
+   [
+    "trees",
+    "果樹",
+    "ui_tab_trees",
+    "grow"
+   ],
+   [
+    "flowers",
+    "花苗",
+    "ui_tab_flowers",
+    "grow"
+   ],
+   [
+    "animals",
+    "動物",
+    "ui_tab_livestock",
+    "animal"
+   ],
+   [
+    "pets",
+    "寵物",
+    "ui_tab_pet_dog",
+    "animal"
+   ],
+   [
+    "birds",
+    "寵物鳥",
+    "ui_tab_pet_bird",
+    "animal"
+   ],
+   [
+    "insects",
+    "昆蟲",
+    "ui_tab_insects",
+    "animal"
+   ],
+   [
+    "fish",
+    "魚池",
+    "ui_tab_fish",
+    "animal"
+   ],
+   [
+    "preds",
+    "天敵與害獸",
+    "ui_pred_fox",
+    "animal"
+   ],
+   [
+    "items",
+    "物品",
+    "ui_hd_st_produce",
+    "build"
+   ],
+   [
+    "machines",
+    "機器與飼料",
+    "ui_hd_mc_corn_cake_machine",
+    "build"
+   ],
+   [
+    "decos",
+    "裝飾",
+    "ui_tab_scenery",
+    "build"
+   ],
+   [
+    "devices",
+    "設備",
+    "ui_hd_lamp",
+    "build"
+   ],
+   [
+    "buildings",
+    "建築",
+    "ui_tab_buildings",
+    "build"
+   ],
+   [
+    "terrain",
+    "地形",
+    "ui_hd_terrain",
+    "build"
+   ],
+   [
+    "bills",
+    "水電費",
+    "ui_hd_bill",
+    "ops"
+   ],
+   [
+    "auto",
+    "自動化",
+    "ui_hd_auto",
+    "ops"
+   ],
+   [
+    "levels",
+    "等級",
+    "ui_hd_level",
+    "misc"
+   ],
+   [
+    "expand",
+    "擴地",
+    "ui_shed",
+    "misc"
+   ],
+   [
+    "weather",
+    "天氣",
+    "ui_hd_forecast",
+    "misc"
+   ],
+   [
+    "rules",
+    "規則",
+    "ui_tool_book",
+    "misc"
+   ],
+   [
+    "plan",
+    "離開多久",
+    "ui_hd_checkin",
+    "misc"
+   ]
+  ],
+  "listTabs": [
+   "birds",
+   "insects",
+   "preds",
+   "buildings",
+   "terrain"
+  ],
+  "catNames": {
+   "crop": "作物",
+   "fruit": "水果",
+   "product": "動物產物",
+   "meat": "肉",
+   "fish": "魚",
+   "feed": "飼料",
+   "material": "材料",
+   "honey": "蜂蜜",
+   "buildMat": "建材",
+   "part": "耗材",
+   "consumable": "危險物品"
+  },
+  "intro": {
+   "birds": "寵物鳥住在鳥屋，白天飛到範圍內的果樹抓蟲，晚上和下雨時待在鳥屋。鳥吃鳥飼料，倉庫有就自己吃。",
+   "insects": "蜜蜂和熊蜂住在蜂箱，採範圍內的花產蜂蜜、幫作物授粉；蝴蝶在寄主植物上產卵，長大後幫附近的作物長快一點，撿起來可以做標本。",
+   "preds": "天敵晚上（野狼陰雨天也會）摸進農場，老鼠一整天都會來。點牠幾下可以趕走；狗會趕天敵、貓會抓老鼠，有些寵物鳥也幫得上忙。",
+   "buildings": "建築用「建設」工具蓋，大多可以收回倉庫或搬移。",
+   "terrain": "擴地後的新地塊會有小森林、小礦山、土丘、河流。森林、礦山、土丘不能走也不能蓋，要靠伐木／採礦／整地機器人慢慢採成建材，或用炸藥炸平再清理。",
+   "auto": "機器人和無人機都住在自己的基座，工作一段時間要回去充電；可以買（初／中／高級）或租用（不用充電、不用基座，時間到就離開）。",
+   "dolls": "天氣娃娃放在草地上，點一下就照效果改變天氣，用完會留下空殼。"
+  },
+  "when": {
+   "night": "晚上",
+   "nightOrRain": "晚上、陰雨天",
+   "allDay": "全天"
+  },
+  "usableWhen": {
+   "rainingOrCloudyNow": "下雨或陰天時",
+   "notRainingNow": "沒下雨時",
+   "notSnowingNow": "沒下雪時"
+  },
+  "effects": {
+   "clearSky": "變晴天（晚上只是停雨）",
+   "rain": "下雨：田全濕、枯萎的救回來、水塔免費補水",
+   "snow": "下雪（任何氣候都可以，白天晚上都行）"
+  }
  }
 };

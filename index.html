@@ -691,6 +691,14 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
 .emptypick .slots.two63,.emptypick .slots:has(.imp63){flex-wrap:wrap;gap:12px;align-items:stretch}
 .emptypick .slot.newcard.imp63{display:flex;width:min(380px,100%);padding:16px 20px}
 .emptypick .slots:has(.imp63) .slot.newcard:not(.imp63){width:min(560px,100%)}
+/* v2.52 圖鑑：分頁分組、分頁小圖示、表格小圖 */
+.sheet.pg.bookpg #modalTabs button{display:flex;align-items:center;gap:6px}
+.sheet.pg.bookpg #modalTabs button img{width:22px;height:22px;object-fit:contain;flex:0 0 22px}
+.bkgrp252{font-size:11px;font-weight:700;opacity:.6;padding:8px 6px 0;letter-spacing:.05em}
+.bkgrp252:first-child{padding-top:0}
+.bookpg h3 .ico252{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:6px}
+.bookpg h3 .small{font-weight:400;margin-left:6px}
+.bookpg td img.ico252{width:32px;height:32px;object-fit:contain}
 </style>
 </head>
 <body>
@@ -761,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.51-e2eb9dc0ea'), getJSON('sprites/atlas.json?v=2.51-e2eb9dc0ea')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.52-4e0db7bd32'), getJSON('sprites/atlas.json?v=2.52-4e0db7bd32')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14362,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.51-e2eb9dc0ea';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.52-4e0db7bd32';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -19190,6 +19198,179 @@ function homeFor251(mi, TR, home){
   const k = doors.slice().sort((a, b) => score(a) - score(b))[0]; TR.home251 = k; return obj(k); }
 { const _st96b = stepTrain246; stepTrain246 = function(mi, TR, dt, home, occ){ let h = home; try { if (TR && SHI251.twoUnload !== false) h = homeFor251(mi, TR, home); } catch(e){ if (!RT.err251h){ RT.err251h = 1; console.warn(e); } } return _st96b(mi, TR, dt, h, occ); }; }
 window.__farm2513 = { homeFor251, unloadDoors251, goingHome251 };
+
+/* ===== 97. v2.52 圖鑑補齊：分頁分組＋小圖示、寵物鳥、昆蟲、天敵與害獸、建築、地形；自動化改成全部機器人；物品分類名稱；天氣加天氣娃娃；選項列「i」接新分頁 ===== */
+const BK252 = CFG.book252 || { tabs: [], groups: {}, catNames: {}, intro: {}, when: {}, usableWhen: {}, effects: {}, listTabs: [] };
+const IN252 = BK252.intro || {};
+const ic252 = (spr, f = 0) => spr ? `<canvas data-spr="${spr}" data-f="${f}" class="ico"></canvas>` : '';
+const im252 = key => IMGSRC[key] ? `<img class="ico252" src="${IMGSRC[key]}" alt="">` : '';
+const lv252 = lv => !lv || lv <= S.player.level ? '<span class="pill ok">已解鎖</span>' : `<span class="pill lock">Lv ${lv}</span>`;
+const row252 = (id, lv, cells, alt) => ({ cls: (lv && lv > S.player.level ? 'locked' : '') + (RT.bookFocus && (RT.bookFocus === id || RT.bookFocus === alt) ? ' cur' : ''), cells });
+const pct252 = v => `${Math.round(v * 100)}%`;
+const hrs252 = h => fmtDur(h * 3600);
+for (const k of BK252.listTabs || []) if (!BOOK_LIST.includes(k)) BOOK_LIST.push(k);
+
+/* ---------- 寵物鳥 ---------- */
+function bookBirds252(el){ const B = CFG.birds240 || {}, Hs = B.house || {}, F = B.food || {};
+  el.innerHTML = `<p>${IN252.birds || ''}</p>` +
+    `<h3>寵物鳥</h3>` + tbl([H(''), H('鳥'), H('解鎖'), H('價格', 1), H('範圍'), H('抓一棵樹的蟲'), H('專長')],
+      Object.entries(B.species || {}).map(([id, D]) => row252(id, D.level || UNLOCK[id], [ic252('ui_bird_' + id), D.name, lv252(D.level || UNLOCK[id]), fmtN(D.price), `${D.range}×${D.range}`, `${D.catchSeconds} 秒`, D.skillText || '—'], 'bird:' + id))) +
+    `<h3>鳥屋與鳥飼料</h3>` + tbl([H(''), H('名稱'), H('解鎖'), H('價格', 1), H('說明')], [
+      row252(Hs.id || 'bird_house', Hs.level, [ic252('ui_bird_house'), (CFG.decos[Hs.id || 'bird_house'] || {}).name || '鳥屋', lv252(Hs.level), fmtN(Hs.cost || 0),
+        `一位住 1 隻鳥，可以擴充到 ${Hs.maxSlots || 3} 位（${(Hs.expandCost || []).map(c => '+' + fmtN(c)).join('、')}）；拆回一位退擴充費 ${pct252(Hs.shrinkRefundRate ?? .5)}`]),
+      row252(F.item || 'bird_food', 0, [ic252('ui_bird_food'), itemName(F.item || 'bird_food'), lv252(Hs.level), fmtN(((CFG.feedShop || {})[F.item || 'bird_food']) || (CFG.items[F.item || 'bird_food'] || {}).buyPrice || 0), `每隻鳥每 ${F.everyHours || 8} 小時吃 1 份；倉庫有就自己吃，沒有就餓著不抓蟲`])]);
+  paintIcons(el); }
+
+/* ---------- 昆蟲：蜜蜂／熊蜂、蝴蝶 ---------- */
+function bookInsects252(el){ const Be = CFG.bees || {}, Bu = Be.bumble || {}, Q = Be.queen || {}, C = Bu.colony || {}, hv = DEV.beehive || {}, bh = DEV.bumble_hive || {};
+  const LV = Be.hiveLevels || [], bm = Be.bumbleLevelCostMult || 1;
+  let h = `<p>${IN252.insects || ''}</p><h3>蜜蜂與熊蜂</h3>` + tbl([H(''), H('名稱'), H('解鎖'), H('價格', 1), H('說明')], [
+    row252('beehive', UNLOCK.beehive, [ic252('ui_beehive'), hv.name || '蜂箱', lockCell('beehive'), fmtN(hv.buildCost || 0), `放蜂王才會有蜜蜂；範圍 ${LV.map(L => `${L.range * 2 + 1}×${L.range * 2 + 1}`).join(' → ')}（3 級）`]),
+    row252(Q.id || 'queen_bee', UNLOCK[Q.id], [ic252('ui_queen_bee'), Q.name || '蜂王', lockCell(Q.id || 'queen_bee'), fmtN(Q.cost || 0), `放進蜂箱，從 ${Be.startFrames || 1} 框開始，每 ${Be.hoursPerFrame || 2} 小時多 1 框，最多 ${Be.maxFrames || 10} 框（每框 ${Be.beesPerFrame || 100} 隻）`]),
+    row252('bumble_hive', UNLOCK.bumble_hive, [ic252('ui_beehive'), bh.name || '熊蜂箱', lockCell('bumble_hive'), fmtN(bh.buildCost || 0), '放熊蜂群；規則和蜂箱一樣']),
+    row252(C.id || 'bumble_colony', UNLOCK[C.id], [ic252('ui_bumble_colony'), C.name || '熊蜂群', lockCell(C.id || 'bumble_colony'), fmtN(C.cost || 0), `產蜜 ×${Bu.honeyMult || 1}，也會授粉`])], { }) +
+    `<h3>蜂箱等級</h3>` + tbl([H('等級'), H('採蜜範圍'), H('解鎖'), H('蜂箱升級費', 1), H('熊蜂箱升級費', 1)],
+      LV.map((L, i) => ({ cells: [`${i + 1} 級`, `${L.range * 2 + 1}×${L.range * 2 + 1}`, L.unlockLevel ? lv252(L.unlockLevel) : '—', L.cost ? fmtN(L.cost) : '—', L.cost ? fmtN(Math.round(L.cost * bm)) : '—'] }))) +
+    `<h3>蜂蜜與授粉</h3>` + tbl([H('項目'), H('數值')], [
+      ['產蜜', `每框每小時 ${Be.jarsPerFramePerHour} 罐（範圍裡沒有花只有 ${pct252(Be.noFlowerMult || .1)}，產的是${itemName(Be.wildHoney || 'honey_wild')}）`],
+      ['蜂箱最多存', `${Be.storeMax || 30} 罐，用「收成」點蜂箱拿`],
+      ['不出門', '晚上、下雨、下雪'],
+      ['授粉', `範圍裡的作物生長 +${pct252(Be.pollinationGrowth || 0)}`],
+      ['農藥', `範圍裡噴農藥會少 ${Be.pesticideFrameLoss || 2} 框（最少留 ${Be.pesticideMinFrames || 1} 框）`],
+      ['餓', `${Be.starveAfterHours || 72} 小時沒採到花蜜就開始吃存的蜜，吃完會少框`],
+      ['蜂蜜種類', '依花的季節產四季花蜜，見「花苗」分頁']].map(r => ({ cells: r })));
+  const Bk = bfBook40(), BF2 = CFG.butterflies || {};
+  h += `<h3>蝴蝶</h3><p class="small">在寄主植物上放卵（或野生產卵），經過幼蟲、蛹變成蝴蝶；用「收成」撿起來記進蝴蝶圖鑑，翅膀完整的做成標本放倉庫。撿過 ${Object.values(Bk).filter(e => e.got > 0).length} / ${Object.keys(BFS40).length} 種。</p>`;
+  for (const [fam, fname] of Object.entries(BFF40)){ const sps = Object.entries(BFS40).filter(([, D]) => D.family === fam); if (!sps.length) continue;
+    h += `<h3>${fname}</h3>` + tbl([H(''), H('蝴蝶'), H('解鎖'), H('稀有度'), H('卵', 1), H('標本', 1), H('寄主植物'), H('撿過', 1), H('標本做了', 1)],
+      sps.map(([sp, D]) => { const e = Bk[sp] || { got: 0, spec: 0 }, R2 = BFR40[D.rarity] || {};
+        return row252(sp, D.level, [ic252('ui_bf_' + sp), D.name, lv252(D.level), R2.name || '', fmtN(eggCost40(sp)), fmtN(R2.specimenPrice || 0), hostNames40(sp), e.got || 0, e.spec || 0], 'bf:' + sp); })); }
+  el.innerHTML = h; paintIcons(el); }
+
+/* ---------- 天敵與害獸 ---------- */
+function bookPreds252(el){ const P = CFG.predators || {}, Rt = CFG.rats || {}, W = BK252.when || {};
+  const dogs = Object.values(DOGS39).filter(B => B.drive).length, cats = Object.values(CATS39).length;
+  const birdHelp = Object.values((CFG.birds240 || {}).species || {}).filter(D => /鼠|天敵|黃鼠狼|狐狸/.test(D.skillText || '')).map(D => D.name);
+  const rows = ['weasel', 'fox', 'wolf'].filter(k => P[k]).map(k => { const D = P[k];
+    const odds = D.chancePerBlockPerHour ? `每塊地每小時 ${pct252(D.chancePerBlockPerHour)}${D.needsEggs ? '（有蛋才來）' : ''}` : `每塊地每晚 ${pct252(D.chancePerBlockPerNight || 0)}`;
+    const tgt = k === 'weasel' ? '蛋雞堆著沒收的蛋、蛋窩裡的蛋' : k === 'fox' ? '家禽' : '羊、牛、豬';
+    const res = k === 'weasel' ? '偷光那隻雞堆著的蛋' : k === 'fox' ? `咬傷 1 隻：停產、停長 ${fmtDur(D.injureSeconds || 3600)}；用「收成」或「照顧」點牠救護就馬上恢復` : `嚇到周圍 ${(D.scareRange || 2) * 2 + 1}×${(D.scareRange || 2) * 2 + 1} 的家畜：停產、停長 ${fmtDur(D.scareSeconds || 14400)}`;
+    return row252(k, D.level, [ic252('ui_pred_' + k), D.name, lv252(D.level), W[D.when] || D.when, tgt, res, odds, `出現後 ${P.approachSeconds || 60} 秒才動手，點 ${P.chaseTaps || 3} 下趕走；狗會趕（${dogs} 種狗，驅趕率見「寵物」）${P.greenhouseSafe ? '；溫室裡的安全' : ''}`]); });
+  const bn = Rt.barn || {}, tr = Rt.trash || {};
+  rows.push(row252('rat', Rt.startLevel, [ic252('ui_rat'), '老鼠', lv252(Rt.startLevel || 9), W.allDay || '全天', '農產倉庫的作物和飼料、垃圾站的垃圾袋',
+    `倉庫：每小時偷吃作物、飼料各 ${(bn.eatsPerHour || {}).crop || 1} 個（最多 ${bn.max || 5} 隻）；垃圾站：每 ${tr.chewHoursPerBag || 2} 小時咬破 1 袋（最多 ${tr.max || 3} 隻）`,
+    `倉庫每小時 ${pct252(bn.chancePerHour || 0)}、垃圾站每小時 ${pct252(tr.chancePerHour || 0)}；冬天 ×${Rt.winterMult || 1}，垃圾放超過 ${tr.overdueDays || 3} 天 ×${tr.overdueMult || 2}`,
+    `點 ${Rt.catchTaps || 3} 下抓 1 隻；貓會抓（${cats} 種貓）${birdHelp.length ? `；${birdHelp.join('、')}也幫得上忙` : ''}`]));
+  el.innerHTML = `<p>${IN252.preds || ''}</p>` + tbl([H(''), H('名稱'), H('開始'), H('時間'), H('目標'), H('得手後'), H('出現機率'), H('怎麼防')], rows); paintIcons(el); }
+
+/* ---------- 建築（含溫室） ---------- */
+const BSPR252 = { barn: 'building_barn_half', shed: 'building_shed_idle', farmhouse: 'building_farmhouse_idle', water_tower: 'building_water_tower_level', drone_pad: 'building_drone_pad_idle', robot_charger: 'building_robot_charger_idle',
+  water_tower_extra: 'building_water_tower2_level', sweeper_dock: 'building_sweeper_dock_idle', trash_station: 'building_trash_station', truck_pad: 'ui_truck_garbage', material_shed: 'ui_material_shed', heavy_charger: 'ui_heavy_charger' };
+const BUSE252 = { barn: '收成的東西都放這裡，可以賣、可以擴充容量', shed: '放收回來的裝飾、建築、設施', farmhouse: '農場的家；接電線桿、晚上亮燈', water_tower: '存水給澆水、無人機用；接水錶', drone_pad: '澆水無人機的基座（停機、充電、補水）',
+  robot_charger: '餵食等機器人的充電站', water_tower_extra: '接在主水塔旁，多存水', sweeper_dock: '掃地機器人的基座（充電、倒垃圾）', trash_station: '放垃圾袋、資源回收袋，等垃圾車來收', truck_pad: '垃圾車停在浮島邊緣',
+  material_shed: '放伐木、採礦、整地採回來的建材，可以賣；每座島 1 間', heavy_charger: '伐木、採礦、整地機器人的充電樁' };
+function bookBuildings252(el){ const G = CFG.greenhouse || {};
+  const rows = Object.entries(BLD).map(([id, B]) => { const lv = B.unlockLevel || UNLOCK[id];
+    const cost = B.builtIn || (B.startIn && !B.cost) ? '一開始就有' : B.freeFirst ? `第 1 座免費，之後 ${fmtN(B.cost)}` : B.comesWith ? `買${(RB && RB.kinds.sweep || {}).name || '掃地機器人'}附 1 座，之後 ${fmtN(B.cost)}` : fmtN(B.cost || 0);
+    const lim = B.perIsland || B.perMapLimit === 1 ? '每座島 1 座' : B.perMapLimit ? `每座島 ${B.perMapLimit} 座` : `最多 ${B.limit || 1} 座`;
+    const ex = [B.slotsMax > 1 ? `可擴充到 ${B.slotsMax} 位` : '', B.storable ? '可收回倉庫' : '', B.movable ? '可搬' : '', B.sellable ? `拆掉退 ${pct252(B.sellRate || .5)}` : ''].filter(Boolean).join('、');
+    return row252(id, lv, [ic252(BSPR252[id]), B.name, lv252(lv), cost, `${(B.size || [1, 1]).join('×')}`, lim, BUSE252[id] || '', ex || '—']); });
+  const cap = G.capByLevel || {}, ks = Object.keys(cap).map(Number).sort((a, b) => a - b), curCap = ks.filter(l => l <= S.player.level).reduce((m, l) => cap[l], 0);
+  el.innerHTML = `<p>${IN252.buildings || ''}</p>` + tbl([H(''), H('建築'), H('解鎖'), H('價格'), H('大小'), H('數量'), H('用途'), H('其他')], rows) +
+    `<h3>溫室</h3>` + tbl([H(''), H('項目'), H('說明')], [
+      row252('greenhouse', G.unlockLevel, [ic252('ui_greenhouse'), G.name || '溫室', `一格 ${fmtN(G.perTileCost || 0)} 金幣，${lv252(G.unlockLevel)}；拖曳一次蓋好幾格，相鄰的連成一座；拆掉退 ${pct252(G.sellRate || .5)}`]),
+      { cells: ['', '上限', `目前最多 ${curCap} 格（Lv ${ks[0]} ${cap[ks[0]]} 格 → Lv ${ks[ks.length - 1]} ${cap[ks[ks.length - 1]]} 格）`] },
+      { cells: ['', '效果', [G.rainBlocked ? '擋雨（要自己澆水）' : '', G.snowFree ? '不積雪' : '', G.tornadoFree ? '龍捲風吹不到' : '', G.pestMult === 0 ? '沒有蟲害' : '', `晚上生長 ${pct252(G.nightGrowthRate ?? .85)}`, G.animalsBlocked ? '動物不能進去' : ''].filter(Boolean).join('、')] }]);
+  paintIcons(el); }
+
+/* ---------- 地形 ---------- */
+function bookTerrain252(el){ const T = CFG.terrain241 || {}, TY = T.types || {}, DY = T.dynamite || {}, CLR = DY.clear || {}, M = T.materials || {}, LT = M.later || {};
+  const RBN = k => ((RB && RB.kinds[k]) || {}).name || k;
+  const mixTxt = Y => Object.entries(Y || {}).map(([i, v]) => `${itemName(i)} ${pct252(v)}`).join('、');
+  const terr = Object.entries(TY).map(([k, D]) => row252('terrain:' + k, 0, [ic252('ui_terrain_' + k), D.name, D.cells ? `${D.cells[0]}～${D.cells[1]} 格` : `寬 ${(D.width || [1, 1]).join('～')} 格`,
+    D.reserve ? `每格 ${D.reserve[0]}～${D.reserve[1]}` : '—', D.yields ? mixTxt(D.yields) + (D.veins ? `；每座抽一種礦脈 ×${D.veinMult || 2}` : '') : '—',
+    D.robot ? RBN(D.robot) : '—', D.dynamite ? `${D.dynamite} 支／格${k === 'mine' ? '（整座一起炸）' : ''}` : '不能炸', D.debris ? ((DY.debris || {})[D.debris] || D.debris) : '—']));
+  const mats = (M.ids || []).map(id => row252(id, 0, [ic252('ui_mat_' + id), itemName(id), fmtN((CFG.items[id] || {}).sellPrice || 0), LT[id] || '—']));
+  const RL = (CFG.terrain245 || {}).rail || {}, CT = (CFG.terrain245 || {}).cart || {}, T6 = CFG.terrain246 || {}, T7 = CFG.terrain247 || {}, T8 = CFG.terrain248 || {}, SB = T8.steelBridge || {}, WB = T8.walkBridge || {};
+  const fac = [
+    ['rail', 'ui_rail', (CFG.decos.rail || {}).name || '軌道', RL.unlockLevel, `${fmtN(RL.cost || 30)}＋石材 ${RL.stone || 1}（沒石材 ${fmtN(RL.costNoStone || 40)}）`, '從建材小屋接到森林、礦山、土丘，礦車才載得回來；收回退 ' + fmtN(RL.refund || 15)],
+    ['rail_cart', 'ui_rail_cart', '礦車車廂', RL.unlockLevel, `第 1 節免費，第 2、3 節 ${(CT.buy || []).map(fmtN).join('、')}`, `每節載 ${CT.capacity || 40} 份建材；機器人裝滿後變身車頭拉回小屋`],
+    ['rail_station', 'ui_rail_station', (T6.station || {}).name || '待命站', (T6.station || {}).unlockLevel, fmtN((T6.station || {}).cost || 0), '放在軌道盡頭，會車時空車退進來讓路'],
+    ['rail_cross', 'ui_rail_cross', (T6.crossing || {}).name || '通行板', (T6.crossing || {}).unlockLevel, fmtN((T6.crossing || {}).cost || 0), '鋪在直線軌道上，機器人和動物才能橫越'],
+    ['rail_fence', 'ui_rail_fence', (T6.fence || {}).name || '鐵道柵欄', (T6.fence || {}).unlockLevel, fmtN((T6.fence || {}).cost || 0), '軌道兩旁的造景柵欄，可拆單邊'],
+    ['collect_point', 'ui_collect_point', (T7.point || {}).name || '採集點', (T7.point || {}).unlockLevel, fmtN((T7.point || {}).cost || 0), '機器人在這裡工作、倒建材；軌道接到採集點才算接上'],
+    ['garage', 'ui_garage', (T7.garage || {}).name || '車庫', (T7.garage || {}).unlockLevel, `${fmtN((T7.garage || {}).cost || 0)}；升級 ${((T7.garage || {}).upgrade || []).map(fmtN).join('、')}`, `2×1，一級停一列，最高 ${(T7.garage || {}).maxLevel || 5} 級`],
+    ['rail_lamp', 'ui_rail_lamp', (T7.lamp || {}).name || '鐵軌小路燈', (T7.lamp || {}).unlockLevel, fmtN((T7.lamp || {}).cost || 0), '天黑自動亮，不耗電'],
+    ['bridge_steel', 'ui_bridge_steel', SB.name || '鐵軌專用鐵橋', SB.unlockLevel, `${fmtN(SB.cost || 0)}＋石材 ${SB.stone || 2}＋煤礦 ${SB.coal || 1}`, '拿軌道點河格就蓋鐵橋，只給礦車走'],
+    ['bridge_wood', 'ui_bridge_wood', (WB.wood || {}).name || '木橋', WB.unlockLevel, `${fmtN((WB.wood || {}).cost || 0)}＋木材 ${(WB.wood || {}).qty || 6}`, '人和動物走的橋，方向自動跟河垂直'],
+    ['bridge_stone', 'ui_bridge_stone', (WB.stone || {}).name || '石橋', WB.unlockLevel, `${fmtN((WB.stone || {}).cost || 0)}＋石材 ${(WB.stone || {}).qty || 8}`, '人和動物走的橋'],
+    ['river_dig', 'ui_terrain_river', (T8.dig || {}).name || '挖河道', (T8.dig || {}).unlockLevel, fmtN((T8.dig || {}).cost || 0), `空草地挖成河，挖出 ${(T8.dig || {}).soil || 2} 份土；河岸 1 格保濕 +${pct252((T8.moisture || {}).value || .5)}`],
+    ['river_fill', 'ui_mat_soil', (T8.fill || {}).name || '填平', (T8.fill || {}).unlockLevel, `土 ${(T8.fill || {}).soil || 2} 份（不夠一份 ${(T8.fill || {}).soilPrice || 5}）`, '把河格填回草地；有橋的不能填'],
+    ['dynamite', 'ui_tool_dynamite', itemName('dynamite'), DY.unlockLevel, `${fmtN(DY.price || 120)}／支`, `引信 ${DY.fuseSeconds || 3} 秒；森林、土丘一格 1 支，礦山整座（格數 × 2）；炸完留下碎屑`],
+    ['clear', 'ui_hd_terrain', '清理碎屑', DY.unlockLevel, `敲 ${CLR.manualTaps || 3} 下，或付 ${fmtN(CLR.coinCost || 30)}`, `${RBN(CLR.robot || 'grade')}也會自己清（不用軌道）`]];
+  el.innerHTML = `<p>${IN252.terrain || ''}</p><h3>四種地形</h3>` + tbl([H(''), H('地形'), H('大小'), H('蘊藏量'), H('產出'), H('誰來採'), H('炸藥'), H('炸完')], terr) +
+    `<h3>建材</h3>` + tbl([H(''), H('建材'), H('售價', 1), H('之後的用途')], mats) +
+    `<h3>軌道、橋與炸藥</h3>` + tbl([H(''), H('名稱'), H('解鎖'), H('價格'), H('說明')], fac.map(([id, spr, nm, lv, p, d]) => row252(id, lv, [ic252(spr), nm, lv252(lv), p, d]))) +
+    `<p class="small">${(((CFG.terrain243 || {}).shed || {}).texts || {}).later || ''}</p>`;
+  paintIcons(el); }
+
+/* ---------- 自動化：全部機器人 ---------- */
+function bookAuto252(el){ const K = (RB && RB.kinds) || {}, CP = ((CFG.consumables || {}).parts) || {};
+  const parts = kind => { const a = Object.values(CP).filter(p => (p.for || []).includes(kind) || (p.for || []).includes(BASE_OF[kind])).map(p => p.name); if (K[kind].part) a.push(itemName('part_' + K[kind].part)); return a.join('、') || '—'; };
+  let h = `<p>${IN252.auto || ''}</p>`;
+  for (const [kind, D] of Object.entries(K)){ const base = (BLD[D.base] || {}).name || '—', lv = D.unlockLevel || UNLOCK[(D.tiers[0] || {}).id];
+    h += `<h3>${im252(R_ICON[kind])}${D.name} <span class="small">${lv252(lv)} · 基座：${base} · 耗材：${parts(kind)}</span></h3>` +
+      tbl([H('等級'), H('買', 1), H('工作'), H('耗電', 1), H('充電')], D.tiers.map(t => ({ cls: RT.bookFocus === t.id ? 'cur' : '', cells: [t.name, fmtN(t.buy), hrs252(t.workHours), `${t.kwh245 ?? t.kwh} 度`, hrs252(t.chargeHours)] }))) +
+      (D.rent && D.rent.length ? `<p class="small">租用（不用充電、不用基座，時間到就離開）：${D.rent.map(r => `${hrs252(r.hours)} ${fmtN(r.cost)} 金幣${r.unlock && UNLOCK[r.unlock] ? `（Lv ${UNLOCK[r.unlock]}）` : ''}`).join('、')}</p>` : ''); }
+  el.innerHTML = h; }
+
+/* ---------- 天氣：天氣娃娃 ---------- */
+function dollsHTML252(){ const TY = DOLL.types || {}, SZ = DOLL.sizes || {}, PR = DOLL.prices || {}, UW = BK252.usableWhen || {}, EF = BK252.effects || {};
+  return `<h3>天氣娃娃</h3><p class="small">${IN252.dolls || ''}</p>` + tbl([H(''), H('娃娃'), H('解鎖'), H('價格（小／中／大）'), H('什麼時候能用'), H('效果')],
+    Object.entries(TY).map(([k, D]) => { const th = k === 'thunder' && D.minutes;
+      const dur = th ? Object.keys(D.minutes).map(s => `${(D.sizeNames || {})[s] || (SZ[s] || {}).name} ${D.minutes[s]} 分、電池充 ${pct252((D.charge || {})[s] || 0)}`).join('；') : Object.keys(SZ).map(s => `${SZ[s].name} ${fmtDur(SZ[s].minutes * 60)}`).join('、');
+      return row252('doll_' + k, D.unlockLevel, [ic252('ui_doll_' + k), D.name, lv252(D.unlockLevel), Object.keys(SZ).map(s => fmtN((PR[k] || {})[s] || 0)).join('／'), UW[D.usableWhen] || D.usableWhen, `${EF[D.effect] || D.effect}${th ? '，還會打雷給電池充電' : ''}；${dur}`]); })); }
+
+/* ---------- 物品：分類名稱 ---------- */
+function itemCats252(el){ const tw = el.querySelector('.tw'); if (!tw) return; const hs = [...tw.querySelectorAll('th')].map(t => t.textContent), ci = hs.indexOf('類別'); if (ci < 0) return;
+  tw.querySelectorAll('tbody tr').forEach(tr => { const td = tr.children[ci]; if (td && BK252.catNames[td.textContent]) td.textContent = BK252.catNames[td.textContent]; }); }
+
+/* ---------- 寵物分頁拿掉天敵（移到「天敵與害獸」） ---------- */
+{ const _bp252 = bookPets; bookPets = function(el){ _bp252(el);
+  const h3 = [...el.querySelectorAll('h3')].find(x => /天敵/.test(x.textContent)); if (h3){ const tw = h3.nextElementSibling; if (tw && tw.classList.contains('tw')) tw.remove();
+    h3.outerHTML = `<p class="small">天敵和老鼠的資料在「<a href="#" data-bk252="preds">天敵與害獸</a>」分頁。</p>`; } }; }
+
+/* ---------- 圖鑑：分頁順序、分組、小圖示；新分頁 ---------- */
+{ const _om252 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑' && Array.isArray(tabs) && typeof render === 'function' && BK252.tabs.length){ const r0 = render;
+    tabs = BK252.tabs.map(t => [t[0], t[1]]);
+    render = (k, el) => {
+      if (k === 'birds') bookBirds252(el); else if (k === 'insects') bookInsects252(el); else if (k === 'preds') bookPreds252(el);
+      else if (k === 'buildings') bookBuildings252(el); else if (k === 'terrain') bookTerrain252(el); else if (k === 'auto') bookAuto252(el);
+      else { r0(k, el); if (k === 'items') itemCats252(el); else if (k === 'weather'){ el.insertAdjacentHTML('beforeend', dollsHTML252()); paintIcons(el); } } };
+    const r = _om252(title, tabs, render, initial); decorTabs252(); return r; }
+  return _om252(title, tabs, render, initial); }; }
+function decorTabs252(){ const te = $('modalTabs'); if (!te || te.dataset.d252) return; te.dataset.d252 = 1; let g0 = null;
+  for (const t of BK252.tabs){ const b = te.querySelector(`button[data-k="${t[0]}"]`); if (!b) continue;
+    if (t[2] && IMGSRC[t[2]] && !b.querySelector('img')) b.insertAdjacentHTML('afterbegin', `<img src="${IMGSRC[t[2]]}" alt="">`);
+    if (t[3] !== g0){ g0 = t[3]; b.insertAdjacentHTML('beforebegin', `<div class="bkgrp252">${(BK252.groups || {})[g0] || ''}</div>`); } } }
+// other panels reuse #modalTabs: drop our decorations when they rebuild it
+{ const _om252b = openModal; openModal = function(title, ...a){ const te = $('modalTabs'); if (te) delete te.dataset.d252; return _om252b(title, ...a); }; }
+$('modalBody').addEventListener('click', e => { const a = e.target.closest('[data-bk252]'); if (!a) return; e.preventDefault(); const b = $('modalTabs').querySelector(`button[data-k="${a.dataset.bk252}"]`); if (b) b.click(); });
+
+/* ---------- 選項列「i」：新分頁 ---------- */
+const TERR_IDS252 = new Set(['rail', 'rail_cart', 'rail_station', 'rail_cross', 'rail_fence', 'collect_point', 'garage', 'rail_lamp', 'bridge_steel', 'bridge_wood', 'bridge_stone', 'river_dig', 'river_fill', 'dynamite', 'clear']);
+function bookTabFor252(kind, id){ const s = String(id);
+  if (kind === 'bird' || s === 'bird_house' || ((CFG.birds240 || {}).species || {})[s]) return 'birds';
+  if (kind === 'insect' || s.startsWith('bf:') || ['beehive', 'bumble_hive', 'queen_bee', 'bumble_colony'].includes(s)) return 'insects';
+  if (TERR_IDS252.has(s)) return 'terrain';
+  if (BLD[s] || s === 'greenhouse') return 'buildings';
+  return null; }
+{ const _ti252 = trayItem; trayItem = function(kind, id, name, lines, selected, locked, extra){
+  extra = extra || {}; if (!extra.book){ const tb = bookTabFor252(kind, id); if (tb) extra = { ...extra, book: tb }; }
+  return _ti252(kind, id, name, lines, selected, locked, extra); }; }
+
+window.__farm252 = { bookTabFor252, BK252 };
 
   })(CFG, ATLAS_JSON);
 })();
