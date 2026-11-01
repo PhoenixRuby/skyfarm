@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.50",
+  "configVersion": "2.51",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -3091,31 +3091,31 @@
   },
   "part_roller": {
    "name": "滾筒",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_brush": {
    "name": "清潔刷",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_dustbag": {
    "name": "集塵袋",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_wheel": {
    "name": "輪子",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_propeller": {
    "name": "螺旋槳",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
@@ -3651,26 +3651,26 @@
   },
   "dynamite": {
    "name": "炸藥",
-   "category": "tool",
+   "category": "consumable",
    "sellPrice": 0,
    "shopOnly": true,
    "buyPrice": 120
   },
   "part_saw_chain": {
    "name": "鋸鏈",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_drill": {
    "name": "鑽頭",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
   "part_blade": {
    "name": "鏟刃",
-   "category": "material",
+   "category": "part",
    "sellPrice": 0,
    "part": true
   },
@@ -12728,7 +12728,7 @@
   },
   "inspect": {
    "title": "查看地形",
-   "later": "炸藥、清地形機器人會在之後的版本開放。"
+   "later": "炸藥在「建設 · 環境」（森林、土丘一格 1 支，礦山整座「格數 × 2」支）；炸完變碎屑，用「整理 · 清理」敲 3 下、付 30 金幣，或讓整地機器人清。"
   }
  },
  "terrain243": {
@@ -12789,7 +12789,7 @@
  },
  "terrain2431": {
   "fade": {
-   "moundRiver": true,
+   "moundRiver": false,
    "riverRows": 4,
    "note": "土丘：後面（畫面上方）riverRows 格內有河流就一直半透明（透明度用 terrain242.fade.alpha），滑鼠指到土丘後面的格子也半透明；礦山只在指到後面時半透明；v2.46：森林跟礦山一樣，指到被擋住的後面時整片半透明（forest）",
    "forest": true
@@ -13110,7 +13110,8 @@
     "mound": "#a07a4a",
     "river": "#3f78b0",
     "rail": "#6b5a48",
-    "other": "#7d8a92"
+    "other": "#7d8a92",
+    "debris": "#8a7c6c"
    },
    "night": {
     "grass": "#2f5a3c",
@@ -13119,9 +13120,104 @@
     "mound": "#6f5636",
     "river": "#2c5b8c",
     "rail": "#4b4034",
-    "other": "#4b5560"
+    "other": "#4b5560",
+    "debris": "#5c5248"
    }
   },
   "note": "v2.50：大抬頭的面板、記錄筆數（鳥、寄主植物各自最近 logMax 筆；成蝶授粉每 pollenLogMinutes 分鐘記一筆）、等角小圖顏色"
+ },
+ "terrain251": {
+  "dynamite": {
+   "tool": "build",
+   "after": "river_fill",
+   "icon": "ui_tool_dynamite",
+   "fuseSprite": "item_dynamite",
+   "boomSprite": "fx_dynamite_boom",
+   "mineWhole": true,
+   "perCell": {
+    "forest": 1,
+    "mound": 1,
+    "mine": 2
+   },
+   "shake": {
+    "seconds": 0.45,
+    "amp": 3
+   },
+   "storeCategory": "consumable",
+   "buyPacks": [
+    1,
+    5,
+    10
+   ],
+   "note": "礦山點任一格整座一起炸（格數 × 2 支），森林、土丘一格 1 支；倉庫有先用倉庫的，不夠的當場照 terrain241.dynamite.price 買（付錢前跳購買確認，礦山一次問合計）；引信 fuseSeconds 秒，離開頁面回來直接算炸完"
+  },
+  "clear": {
+   "tool": "clear",
+   "label": "清理",
+   "icon": "ui_tool_clear",
+   "group": "tidy",
+   "after": "remove",
+   "note": "整理工具組：點碎屑敲一下（3 → 2 → 1 → 平地）；沒選工具點碎屑跳小選單；數字在 terrain241.dynamite.clear"
+  },
+  "robot": {
+   "kind": "grade",
+   "needRail": false,
+   "first": true,
+   "note": "整地機器人走得到碎屑旁邊就清（不用軌道、不用建材小屋），碎屑優先於土丘，每格 terrain241.dynamite.clear.robotUnits 單位"
+  },
+  "storage": {
+   "danger": {
+    "category": "consumable",
+    "label": "危險物品",
+    "art": "st_danger",
+    "color": "r",
+    "note": "炸藥（v2.51.1 玩家圖 batch61 ui_pg_st_danger）"
+   },
+   "part": {
+    "category": "part",
+    "label": "耗材",
+    "art": "st_material",
+    "color": "o",
+    "after": "material",
+    "note": "機器人換用的鋸鏈、鑽頭、鏟刃、滾筒…（原本放在「材料」）；「材料」只剩糞便、有機肥"
+   }
+  },
+  "shed": {
+   "note": "v2.51.1 建材小屋換玩家圖（art/src_ui/v251/material_shed.png → batch61，兩股軌道朝左下＝出口那一邊；空／一半／滿同一張）；門口兩格的軌道 T.sj251 可以接進小屋（新鋪自動接，小選單／接軌工具可斷開）",
+   "inside": {
+    "shade": "rgba(24,14,6,.18)",
+    "cartDepth": 0.3,
+    "cartSlots": [
+     0.62,
+     0.2
+    ],
+    "twoUnload": true,
+    "fullToYard": true,
+    "note": "小屋裡（atlas door 那塊地板）由程式畫兩股軌道、停在小屋的礦車、屋裡陰影"
+   },
+   "texts": {
+    "head": "建材小屋",
+    "linkBtn": "接進建材小屋（門口的軌道）",
+    "cutBtn": "跟建材小屋斷開",
+    "joined": "接進建材小屋了",
+    "cut": "跟建材小屋斷開了"
+   }
+  },
+  "texts": {
+   "pick": "炸藥要點森林、礦山、土丘",
+   "river": "河流不能炸",
+   "lit": "引信已經點燃了",
+   "debrisTap": "清理要點碎石堆、斷木堆、土堆",
+   "lv": "炸藥 Lv {lv} 解鎖",
+   "menuTap": "清理一下",
+   "menuPay": "付 {c} 金幣馬上清好",
+   "menuInfo": "查看",
+   "buyQ": "倉庫有 {have} 支，不夠的 {buy} 支照 {p} 金幣／支買",
+   "robotDoing": "清碎屑中",
+   "robotWalk": "走去清碎屑",
+   "hint": "點森林、土丘炸一格（1 支），點礦山整座一起炸（格數 × 2 支）· 倉庫有先用倉庫的，不夠每支 {p} 金幣 · 引信 {s} 秒 · 炸掉不回收建材",
+   "clearHint": "點碎石堆、斷木堆、土堆敲一下（敲 {n} 下變平地，免費）· 沒選工具點碎屑可以付 {c} 金幣馬上清好 · 整地機器人也會自己去清"
+  },
+  "note": "v2.51（規則文件「v2.51 地形第 5 段：炸藥＋清理」）；清理工具由 g96 程式接到 ui.toolGroups.tidy 後面，設定檔不放"
  }
 }

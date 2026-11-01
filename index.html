@@ -761,7 +761,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.50-2a689603f7'), getJSON('sprites/atlas.json?v=2.50-2a689603f7')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.51-e2eb9dc0ea'), getJSON('sprites/atlas.json?v=2.51-e2eb9dc0ea')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14354,7 +14354,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.50-2a689603f7';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.51-e2eb9dc0ea';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -18882,6 +18882,314 @@ function openBf40(M, k, tab){
 { const _ns95 = normalizeState; normalizeState = function(d){ const r = _ns95(d); const s = r || d; try { if (s && !s.v250) s.v250 = 1; } catch(e){} return r; }; }
 window.__farm250 = { isoMap250, cpMap: (M, g) => cpMap247(M, g), cars250, focusTrain250, openCart: (mi, k) => openCart249(mi, k), openTerrain: (mi, k) => openTerrain83(mi, k), openBirdHouse: (mi, k) => openBirdHouse40(mi, k),
   openBf: (M, k, t) => openBf40(M, k, t), openShed: mi => openShed84(mi), unlockIcon: u => unlockIcon38(u), stepBirds: (dt, t) => stepBirds40(dt, t), stepButterflies: t => stepButterflies(t), blog250, flog250 };
+
+/* ===== 96. v2.51：地形第 5 段——炸藥＋清理（規則文件「v2.51 地形第 5 段：炸藥＋清理」）=====
+   炸藥：建設 · 環境（接在填平後面），點森林、土丘炸一格（1 支），點礦山整座一起炸（格數 × 2 支）；倉庫（農產倉庫「耗材」）有先用，不夠的當場買（購買確認，礦山一次問合計）。
+     引信 S.fuse251 = [{ mi, cells, at, kind }]（存檔，離開頁面回來直接算炸完）→ 每格變碎屑 { t: 'terrain', kind: 'debris', deb: 'rubble'|'logs'|'dirt', d251: 剩幾單位, d0 }；
+     炸掉不回收建材、那格（礦山整座）的蘊藏量沒了；爆炸動畫 fx_dynamite_boom、WebAudio 爆炸聲、RT.shake 微震，不傷害任何東西。
+   清理：「整理」工具組（接在剷除後面）；點碎屑敲一下（30 單位分 3 下：3 → 2 → 1 → 平地）；沒選工具點碎屑跳小選單（清理一下／付 30 金幣馬上清好／查看）。
+   整地機器人：碎屑優先、不用軌道和建材小屋，走得到碎屑旁邊就清（每格 30 單位），清完回重型充電樁（worker84 最外層包裝，W.d251 時自己跑）。
+   碎屑是地形格（不能走、不能蓋、不長雜草、不能搬），積雪 snow_terrain_*；大地改造家在清成平地時才算（S.terClr243），爆破專家 S.dynCnt251。 */
+const T241_96 = CFG.terrain241 || {}, DY251 = T241_96.dynamite || {}, CL251 = DY251.clear || {}, TT251 = T241_96.types || {};
+const T251 = CFG.terrain251 || {}, TX251 = T251.texts || {}, DN251 = DY251.debris || { logs: '斷木堆', rubble: '碎石堆', dirt: '土堆' };
+const UNITS251 = CL251.robotUnits ?? 30, TAPS251 = CL251.manualTaps ?? 3, PERTAP251 = UNITS251 / TAPS251, PRICE251 = DY251.price ?? 120, FUSE251 = DY251.fuseSeconds ?? 3, LV251 = DY251.unlockLevel ?? 3;
+const isDeb251 = T => !!(T && T.t === 'terrain' && T.kind === 'debris');
+const debStage251 = T => Math.max(1, Math.min(TAPS251, Math.ceil((T.d251 ?? UNITS251) / PERTAP251 - 1e-9)));
+const debName251 = T => DN251[T.deb] || '碎屑';
+const perCell251 = kind => (((T251.dynamite || {}).perCell) || {})[kind] ?? ((TT251[kind] || {}).dynamite ?? 1);
+const fuses251 = () => (S.fuse251 = S.fuse251 || []);
+const fuseAt251 = (mi, k) => fuses251().some(f => f.mi === mi && f.cells.includes(k));
+if (typeof ITEM_ICON === 'object' && IMGSRC.ui_item_dynamite) ITEM_ICON.dynamite = 'ui_item_dynamite';
+
+/* ---------- 1. 炸藥 ---------- */
+function dynPlan251(M, k){ const T = M.tiles[k]; if (!isTer83(T) || isDeb251(T) || T.kind === 'river') return null;
+  const g = terG83(M, T), cells = T.kind === 'mine' && g ? g.cells.slice() : [k], n = cells.length * perCell251(T.kind), have = Math.min(n, S.inv.dynamite || 0), buy = n - have;
+  return { T, g, cells, n, have, buy, price: buy * PRICE251 }; }
+function placeDyn251(M, x, y){ const k = tkey(x, y), T = M.tiles[k], mi = S.cur, { cx, cy } = center(x, y);
+  if (S.player.level < LV251){ toast(tx84(TX251.lv || '炸藥 Lv {lv} 解鎖', { lv: LV251 })); return; }
+  if (isDeb251(T)){ toast(TX251.debrisTap ? `這格已經是${debName251(T)}：用「整理 · 清理」` : '這格已經炸過了'); return; }
+  if (isTer83(T) && T.kind === 'river'){ toast(TX251.river || '河流不能炸'); return; }
+  if (!isTer83(T)){ toast(TX251.pick || '炸藥要點森林、礦山、土丘'); return; }
+  if (fuseAt251(mi, k)){ toast(TX251.lit || '引信已經點燃了'); return; }
+  const P = dynPlan251(M, k), nm = (TT251[T.kind] || {}).name || '地形';
+  const go = () => { if (M.tiles[k] !== T || fuseAt251(mi, k)) return;
+    if (P.price){ RT.coinWhy.push('炸藥'); try { if (!spend(P.price)) return; } finally { RT.coinWhy.pop(); } }
+    if (P.have){ S.inv.dynamite -= P.have; if (S.inv.dynamite <= 0) delete S.inv.dynamite; }
+    fuses251().push({ mi, cells: P.cells, at: Date.now() + FUSE251 * 1000, kind: T.kind });
+    sfx('click'); floatText(cx, cy - 24, `炸藥 ×${P.n}` + (P.price ? `（買 ${P.buy} 支 -${fmtN(P.price)}）` : '（倉庫）'), '#c0392b', 11);
+    if (T.kind === 'mine') toast(`${nm}整座一起炸：${P.cells.length} 格 × ${perCell251('mine')} 支`, true);
+    afterAction(); UIbuildTray(); };
+  if (!P.buy) return go();
+  if (noAsk47('build') || typeof buyAsk47 !== 'function') return go();
+  buyAsk47({ cat: 'build', title: `炸藥・${nm}`, q: tx84(TX251.buyQ || '倉庫有 {have} 支，不夠的 {buy} 支照 {p} 金幣／支買', { have: S.inv.dynamite || 0, buy: P.buy, p: PRICE251 }), spr: ['ui_item_dynamite', 0], price: P.price, okText: '點燃引信',
+    rows: [['要炸', T.kind === 'mine' ? `整座 ${P.cells.length} 格（每格 ${perCell251('mine')} 支）` : `1 格（${perCell251(T.kind)} 支）`], ['合計', `${P.n} 支`], ['倉庫', `${P.have} 支`], ['要買', `${P.buy} 支 × ${PRICE251}`], ['注意', '炸掉不回收建材，蘊藏量全部沒了']] }, go); }
+function explode251(f, anim){ const M = S.maps[f.mi]; if (!M) return 0; let n = 0;
+  for (const k of f.cells){ const T = M.tiles[k]; if (!isTer83(T) || isDeb251(T) || T.kind === 'river') continue;
+    const g = terG83(M, T), deb = (TT251[T.kind] || {}).debris || 'rubble';
+    M.tiles[k] = { t: 'terrain', kind: 'debris', deb, d251: UNITS251, d0: UNITS251 };
+    if (g){ g.cells = g.cells.filter(c => c !== k); if (!g.cells.length) delete M.ter242.g[T.g]; }
+    delete RT.ter83[f.mi + '|' + T.g]; n++; }
+  S.dynCnt251 = (S.dynCnt251 || 0) + n; RT.decoVer = (RT.decoVer || 0) + 1; RT.regionsAt = 0;
+  if (anim && n){ (RT.boom251 = RT.boom251 || []).push({ mi: f.mi, cells: f.cells.slice(), t0: performance.now() }); boomSnd251();
+    const SK = (T251.dynamite || {}).shake || {}; if (motion) RT.shake = { t0: performance.now(), dur: (SK.seconds ?? .45) * 1000, amp: SK.amp ?? 3 }; }
+  return n; }
+function checkFuses251(now){ if (!S || !S.fuse251 || !S.fuse251.length) return; const due = S.fuse251.filter(f => f.at <= now); if (!due.length) return;
+  S.fuse251 = S.fuse251.filter(f => f.at > now);
+  for (const f of due){ const live = Date.now() - f.at < 1500 && f.mi === S.cur && !document.hidden; explode251(f, live); } }
+let AC251 = null;
+function boomSnd251(){ try { if (!S.settings.sfx) return; AC251 = AC251 || new (window.AudioContext || window.webkitAudioContext)(); const ac = AC251, dur = 1.1, n = Math.floor(ac.sampleRate * dur), buf = ac.createBuffer(1, n, ac.sampleRate), d = buf.getChannelData(0);
+  let v = 0; for (let i = 0; i < n; i++){ v = v * .9 + (Math.random() * 2 - 1) * .5; d[i] = v * Math.pow(1 - i / n, 3) * (i < ac.sampleRate * .004 ? i / (ac.sampleRate * .004) : 1); }
+  const s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'lowpass'; f.frequency.value = 520; g.gain.value = Math.min(1, (S.settings.sfxVolume ?? .7) * 1.8);
+  s.buffer = buf; s.connect(f); f.connect(g); g.connect(ac.destination); s.start(); } catch(e){} }
+{ const _sa96 = stepAll; stepAll = function(dt, t){ _sa96(dt, t); try { checkFuses251(t); } catch(e){ if (!RT.err251f){ RT.err251f = 1; console.warn(e); } } }; }
+
+/* ---------- 2. 清理 ---------- */
+function flat251(M, mi, k){ if (!isDeb251(M.tiles[k])) return; delete M.tiles[k]; S.terClr243 = (S.terClr243 || 0) + 1; RT.decoVer = (RT.decoVer || 0) + 1; RT.regionsAt = 0; }
+function clearTap251(M, k, x, y){ const T = M.tiles[k], { cx, cy } = center(x, y); if (!isDeb251(T)) return;
+  T.d251 = Math.max(0, (T.d251 ?? UNITS251) - PERTAP251); sfx('plow');
+  if (T.d251 <= 1e-6){ flat251(M, S.cur, k); floatText(cx, cy - 20, '清好了：變回平地', '#4a8a3a', 11); }
+  else floatText(cx, cy - 20, `${debName251(T)}：還要 ${debStage251(T)} 下`, '#8a5d36', 11);
+  afterAction(); }
+function payClear251(M, k, x, y){ const T = M.tiles[k]; if (!isDeb251(T)) return; const c = CL251.coinCost ?? 30, { cx, cy } = center(x, y);
+  const go = () => { if (M.tiles[k] !== T) return; RT.coinWhy.push('清理碎屑'); try { if (!spend(c)) return; } finally { RT.coinWhy.pop(); }
+    flat251(M, S.cur, k); sfx('coin'); floatText(cx, cy - 20, `-${c}・清好了`, '#8a5d36', 11); afterAction(); };
+  if (noAsk47('build') || typeof buyAsk47 !== 'function') return go();
+  buyAsk47({ cat: 'build', title: `清理${debName251(T)}`, q: '付金幣馬上清好，這格變回平地', spr: ['ui_tool_clear', 0], price: c, okText: '馬上清好' }, go); }
+function debMenu251(M, k, x, y){ const T = M.tiles[k], { cx, cy } = center(x, y), c = CL251.coinCost ?? 30;
+  showPop53(cx, cy - 24, `<h5>${escapeHTML(debName251(T))}</h5><p class="db251">還要敲 ${debStage251(T)} 下・整地機器人剩 ${Math.ceil(T.d251 ?? UNITS251)} 單位</p>
+    <button data-db251="tap"><img src="${IMGSRC.ui_tool_clear || ''}" alt="">${TX251.menuTap || '清理一下'}</button>
+    <button data-db251="pay"><img src="${IMGSRC.ui_coin || ''}" alt="">${tx84(TX251.menuPay || '付 {c} 金幣馬上清好', { c })}</button>
+    <button data-db251="info"><img src="${IMGSRC.ui_terrain_mound || IMGSRC.ui_tool_terrain || ''}" alt="">${TX251.menuInfo || '查看'}</button>`);
+  POP53.querySelectorAll('[data-db251]').forEach(b => b.onclick = () => { const a = b.dataset.db251; closePop53(); if (M.tiles[k] !== T) return;
+    if (a === 'tap') clearTap251(M, k, x, y); else if (a === 'pay') payClear251(M, k, x, y); else openDeb251(S.cur, k); }); }
+function openDeb251(mi, k){ const M = S.maps[mi], T = M.tiles[k]; if (!isDeb251(T)) return; const left = Math.ceil(T.d251 ?? UNITS251), K = (CFG.robots.kinds || {}).grade;
+  openModal((T83.inspect || {}).title || '查看地形', null, (kk, el) => { el.classList.add('ter83', 'v250');
+    let L = `<div class="sub250"><h3>${escapeHTML(debName251(T))}</h3><p>用炸藥炸過的地方・不能走、不能蓋東西、不能搬</p></div>`;
+    L += `<div class="card250 row250">${img250('ui_tool_clear', 'big250')}<div class="kv"><span>還要敲</span><span>${debStage251(T)} 下（「整理 · 清理」點一下敲一下，免費）</span>
+      <span>付金幣</span><span>${CL251.coinCost ?? 30} 金幣馬上清好</span><span>剩下</span><span>${left} / ${UNITS251} 單位</span><span>清完</span><span>變回平地，算「大地改造家」</span></div></div>`;
+    L += `<div class="card250"><h4>機器人要做多久</h4>${K ? `<div class="kv"><span>${escapeHTML(K.name)}</span><span>${K.tiers.map(tr => `${tr.name} 約 ${fmtHours83(left / (tr.unitsPerHour || 60))}`).join('・')}</span></div>` : ''}<p class="sm83">不用接軌道，走得到旁邊就會先來清（碎屑比土丘優先）</p></div>`;
+    el.innerHTML = `<div class="g250"><div class="l250">${L}</div><div class="r250"><div class="card250 map250"><h4>位置</h4><div class="mw250"></div></div></div></div>`;
+    try { const C = P250(), cv = isoMap250(mi, (x, y, U) => tkey(x, y) === k ? '#f2c230' : isDeb251(U) ? (C.debris || '#8a7c6c') : baseCol250(U, C)); if (cv) el.querySelector('.mw250').appendChild(cv); } catch(e){ console.warn(e); } }); }
+{ const _ot96 = openTerrain83; openTerrain83 = function(mi, k){ const M = S.maps[mi], T = M && M.tiles[k]; if (isDeb251(T)) return openDeb251(mi, k); const r = _ot96(mi, k);
+  try { if (T && T.kind === 'mine'){ const g = terG83(M, T), n = g && 'ui_mat_' + g.vein, im = $('modalBody') && $('modalBody').querySelector('.row250 img.big250'); if (im && n && IMGSRC[n]) im.src = IMGSRC[n]; } } catch(e){}   // 礦山大圖示：照礦脈（鐵礦脈 → 鐵礦），不再一律石材
+  return r; }; }
+
+/* ---------- 3. 整地機器人清碎屑 ---------- */
+const hasDeb251 = M => !!M && Object.values(M.tiles).some(isDeb251);
+function debJob251(W, M, key){ if (!hasDeb251(M)) return null;
+  const cl = new Set(Object.keys(WS).filter(q => q !== key && q.startsWith('grade:') && WS[q] && WS[q].d251 && WS[q].target).map(q => WS[q].target));
+  const start = tkey(W.x, W.y), prev = new Map([[start, null]]), q = [start]; let qi = 0;
+  while (qi < q.length){ const c = q[qi++], [x, y] = pkey(c);
+    for (const [dx, dy] of N4_84){ const nx = x + dx, ny = y + dy, n = tkey(nx, ny); if (prev.has(n) || !inMap(M, nx, ny)) continue;
+      if (isDeb251(M.tiles[n]) && !cl.has(n)) return { path: swPathTo(prev, c), target: n };
+      if (!swPass(M, n)) continue; prev.set(n, c); q.push(n); } }
+  return null; }
+function debPlan251(kind, W, M, key, u, home){ let plan = debJob251(W, M, key); if (!plan) return null;
+  if (u){ const stepT = 1 / tps60(kind), [tx, ty] = pkey(plan.path[plan.path.length - 1]), hk = tkey(home.x, home.y), back = (swPathTo(swBFS(M, tx, ty, hk), hk) || []).length;
+    if (u.batt < (plan.path.length + back) * stepT + 60) plan = null; }
+  return plan; }
+const debOk251 = u => !(u && (u.needPart || u.batt <= 30));
+function debWork251(kind, key, u, dt, t, W, home){ const M = S.maps[W.mi], stepT = 1 / tps60(kind); let budget = dt, guard = 0;
+  const stop = () => { W.d251 = 0; W.target = null; W.phase = 'pick'; W.acc251 = 0; };
+  while (budget > 0 && guard++ < 3000){
+    if (W.phase === 'walk'){
+      if (W.goal !== 'home' && !isDeb251(M.tiles[W.target])){ stop(); return; }
+      if (W.i >= W.path.length - 1){ if (W.goal === 'home'){ W.phase = 'home'; W.path = null; W.target = null; W.d251 = 0; return; } W.phase = 'fill'; W.el = 0; continue; }
+      const nk = W.path[W.i + 1]; if (!swPass(M, nk) && !(W.goal === 'home' && W.i + 1 === W.path.length - 1)){ if (W.goal === 'home') walkGoHome(W, M, home); else { stop(); return; } continue; }
+      const left = stepT - W.el; if (budget < left){ W.el += budget; W.simAt = t; return; } budget -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); continue; }
+    if (W.phase === 'fill'){
+      if (!debOk251(u)){ walkGoHome(W, M, home); continue; }
+      const T = M.tiles[W.target]; if (!isDeb251(T)){ stop(); return; }
+      const sec = Math.min(budget, 30); budget -= sec; W.simAt = t;
+      W.acc251 = (W.acc251 || 0) + sec * (tier84(kind, u).unitsPerHour || 60) / 3600;
+      const take = Math.min(T.d251, Math.floor(W.acc251)); if (take > 0){ T.d251 -= take; W.acc251 -= take; }
+      if (T.d251 <= 0){ flat251(M, W.mi, W.target); W.acc251 = 0; W.target = null;
+        const p = debOk251(u) && debPlan251(kind, W, M, key, u, home); if (p){ W.path = p.path; W.i = 0; W.el = 0; W.goal = 'debris251'; W.target = p.target; W.phase = 'walk'; continue; }
+        stop(); return; }
+      continue; }
+    stop(); return; } }
+{ const _wk96 = worker84; worker84 = function(kind, key, u, dt, t){
+  if (kind !== 'grade') return _wk96(kind, key, u, dt, t);
+  try { const home = workerHome(kind, u); if (home){ const W = walkState(key, home);
+      if (!W.d251 && (W.phase === 'home' || W.phase === 'pick') && !W.loco246 && debOk251(u)){ const p = debPlan251(kind, W, S.maps[W.mi], key, u, home);
+        if (p){ W.d251 = 1; W.path = p.path; W.i = 0; W.el = 0; W.goal = 'debris251'; W.target = p.target; W.phase = 'walk'; W.wait246 = ''; } }
+      if (W.d251) return debWork251(kind, key, u, dt, t, W, home); } } catch(e){ if (!RT.err251w){ RT.err251w = 1; console.warn(e); } }
+  return _wk96(kind, key, u, dt, t); }; }
+{ const _ww96 = workerWants.grade; if (_ww96) workerWants.grade = (key, u) => { try { const home = workerHome('grade', u), W = WS[key];
+    if (home && !walkAway(W, home) && !lowAtHome('grade', u) && debOk251(u) && hasHC89(u) && debJob251(W || { x: home.x, y: home.y }, S.maps[home.mi], key)) return true; } catch(e){}
+  return _ww96(key, u); }; }
+{ const _w96 = why84; why84 = function(kind, u){ if (kind === 'grade'){ try { const home = workerHome(kind, u); if (home && debOk251(u) && debJob251({ x: home.x, y: home.y }, S.maps[home.mi], wKey(kind, u))) return ''; } catch(e){} } return _w96(kind, u); }; }
+{ const _ut96 = unitText; unitText = function(kind, u){ if (kind === 'grade' && u && u.on !== false && u.state === 'work'){ const W = WS[wKey(kind, u)];
+    if (W && W.d251) return W.phase === 'fill' ? (TX251.robotDoing || '清碎屑中') : W.goal === 'home' ? '清碎屑：電不夠，先回去充電' : (TX251.robotWalk || '走去清碎屑'); }
+  return _ut96(kind, u); }; }
+if (KIND_DESC.grade) KIND_DESC.grade += ' 炸藥炸出來的碎屑優先清，不用接軌道，走得到旁邊就清，清完回充電樁。';
+
+/* ---------- 4. 畫：碎屑、引信、爆炸 ---------- */
+{ const _dte96 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ const r = _dte96(M, k, T, x, y, t, now);
+  try { if (isDeb251(T) && M === S.maps[S.cur]){ const n = `terrain_${T.deb || 'rubble'}_${debStage251(T)}`, { cx, cy } = center(x, y); spr(n, 0, cx, cy); if (S.snow && S.snow.cover) spr('snow_' + n, 0, cx, cy); } }
+  catch(e){ if (!RT.err251d){ RT.err251d = 1; console.warn(e); } }
+  return r; }; }
+{ const _dw96 = drawWorld; drawWorld = function(t, now){ const r = _dw96(t, now); if (!S) return r;
+  try { checkFuses251(Date.now());
+    const fs = (S.fuse251 || []).filter(f => f.mi === S.cur), A = ATLAS[(T251.dynamite || {}).fuseSprite || 'item_dynamite'];
+    for (const f of fs){ const left = Math.max(0, (f.at - Date.now()) / 1000); let top = null;
+      for (const k of f.cells){ const [x, y] = pkey(k), c = center(x, y); if (A) spr('item_dynamite', motion ? Math.floor(t * (A.fps || 8)) % (A.frames || 1) : 0, c.cx, c.cy); if (!top || c.cy < top.cy) top = c; }
+      if (top && !RT.snap68){ ctx.save(); ctx.font = 'bold 14px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.6)'; ctx.fillStyle = '#ffdf6b';
+        const s = String(Math.ceil(left)); ctx.strokeText(s, top.cx, top.cy - 34); ctx.fillText(s, top.cx, top.cy - 34); ctx.restore(); } }
+    const B = ATLAS[(T251.dynamite || {}).boomSprite || 'fx_dynamite_boom'];
+    if (RT.boom251 && RT.boom251.length && B){ const pn = performance.now(), fr = B.frames || 8, fps = B.fps || 12;
+      RT.boom251 = RT.boom251.filter(o => (pn - o.t0) / 1000 * fps < fr);
+      for (const o of RT.boom251){ if (o.mi !== S.cur) continue; const i = Math.floor((pn - o.t0) / 1000 * fps); for (const k of o.cells){ const [x, y] = pkey(k), c = center(x, y); spr('fx_dynamite_boom', i, c.cx, c.cy); } } } }
+  catch(e){ if (!RT.err251b){ RT.err251b = 1; console.warn(e); } }
+  return r; }; }
+
+/* ---------- 5. 工具：建設 · 環境的炸藥、整理的清理 ---------- */
+{ const _is96 = itemSprite; itemSprite = function(kind, id){ if (kind === 'building' && id === 'dynamite') return ['ui_tool_dynamite', 0]; return _is96(kind, id); }; }
+{ const _ut96b = UIbuildTray; UIbuildTray = function(){ _ut96b(); if (!S || S.sel.tool !== 'build' || RT.borrow34) return; const tray = $('tray'); if (!tray) return;
+  const ref = tray.querySelector(`.item[data-id="${(T251.dynamite || {}).after || 'river_fill'}"]`); if (!ref) return;
+  tray.querySelectorAll('.item[data-id="dynamite"]').forEach(e => e.remove());
+  const lk = S.player.level < LV251, st = S.inv.dynamite || 0;
+  const el = trayItem('building', 'dynamite', (CFG.items.dynamite || {}).name || '炸藥', [st ? `倉庫還有 ${st} 支` : `${coinImg()}${PRICE251}／支`, '森林・土丘 1 支／礦山整座'], S.sel.build === 'dynamite', lk, { lockLv: LV251 });
+  if (st){ const sm = el.querySelector('small'); if (sm) sm.classList.add('st51'); }
+  el.onclick = () => { if (lk){ toast(tx84(TX251.lv || '炸藥 Lv {lv} 解鎖', { lv: LV251 })); return; } S.sel.build = 'dynamite'; UIbuildTray(); updateHint(); };
+  el.hidden = ref.hidden; ref.insertAdjacentElement('afterend', el); }; }
+{ const tb = TOOLS.find(q => q.id === 'build'); if (tb){ const h = tb.hint; tb.hint = () => { if (S && S.sel.build === 'dynamite') return tx84(TX251.hint || '點森林、土丘炸一格，點礦山整座一起炸', { p: PRICE251, s: FUSE251 }) + `（倉庫 ${S.inv.dynamite || 0} 支）`; return h(); }; } }
+const CT251 = T251.clear || {};
+if (!TOOLS.some(q => q.id === 'clear')){
+  const def = { id: 'clear', label: CT251.label || '清理', icon: CT251.icon || 'ui_tool_clear', hint: () => tx84(TX251.clearHint || '點碎石堆、斷木堆、土堆敲一下', { n: TAPS251, c: CL251.coinCost ?? 30 }) };
+  const ri = TOOLS.findIndex(q => q.id === (CT251.after || 'remove')); TOOLS.splice(ri < 0 ? TOOLS.length : ri + 1, 0, def); }
+if (!GRP.includes('clear')){ const ri = GRP.indexOf(CT251.after || 'remove'); GRP.splice(ri < 0 ? GRP.length : ri + 1, 0, 'clear');
+  const t = TOOLS.find(q => q.id === 'clear'), b = document.createElement('button'); b.className = 'tool'; b.dataset.g = 'clear'; b.innerHTML = `<img src="${IMGSRC[t.icon] || ''}" alt=""><span>${t.label}</span>`;
+  const after = TIDYSUB.querySelector(`[data-g="${CT251.after || 'remove'}"]`); if (after) after.insertAdjacentElement('afterend', b); else TIDYSUB.appendChild(b); }
+{ const g = TSHEET.querySelector('.tsg'); if (g && !g.querySelector('[data-tool="clear"]')){ const t = TOOLS.find(q => q.id === 'clear'), b = document.createElement('button'); b.className = 'stool'; b.dataset.tool = 'clear'; b.innerHTML = `<img src="${IMGSRC[t.icon] || ''}" alt=""><span>${t.label}</span>`;
+  const after = g.querySelector(`[data-tool="${CT251.after || 'remove'}"]`); if (after) after.insertAdjacentElement('afterend', b); else g.appendChild(b); } }
+{ const _a96 = act; act = function(x, y){
+  if (!S || UI.expand) return _a96(x, y); const M = curMap(); if (!inMap(M, x, y)) return _a96(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool;
+  if (RT.mv || RT.gmv || RT.plmv56) return _a96(x, y);
+  if (tool === 'build' && S.sel.build === 'dynamite'){ placeDyn251(M, x, y); return; }
+  if (tool === 'clear'){ if (isDeb251(T)) clearTap251(M, k, x, y); else toast(TX251.debrisTap || '清理要點碎石堆、斷木堆、土堆'); return; }
+  if (isDeb251(T)){ if (tool === 'hand') debMenu251(M, k, x, y); else openDeb251(S.cur, k); return; }
+  return _a96(x, y); }; }
+
+/* ---------- 6. 農產倉庫「耗材」：炸藥 ---------- */
+const SG251 = T251.storage || {}, DG251 = SG251.danger || { label: '危險物品', art: 'st_danger', color: 'r' }, PT251 = SG251.part || { category: 'part', label: '耗材', art: 'st_material', color: 'o', after: 'material' };
+{ const mat = ST_CAT.find(c => c[0] === 'material'); if (!ST_CAT.some(c => c[0] === PT251.category)){ const i = ST_CAT.findIndex(c => c[0] === (PT251.after || 'material'));
+    ST_CAT.splice(i < 0 ? ST_CAT.length : i + 1, 0, [PT251.category, PT251.label, IMGSRC['ui_pg_' + PT251.art] ? PT251.art : null, PT251.color || 'o']); if (mat && mat[2] === PT251.art) mat[2] = null; } }   // 「材料」的大圖本來就是耗材（螺旋槳、集塵袋、滾筒…），跟著搬過去
+function dynSec251(){ const n = S.inv.dynamite || 0, packs = (T251.dynamite || {}).buyPacks || [1, 5, 10], art = IMGSRC['ui_pg_' + DG251.art];
+  const pic = art ? `<img class="stpic" src="${art}" alt="">` : `<span class="stpic">${itemIconHTML('dynamite').replace('class="ico"', 'class="ico big"')}</span>`;
+  return `<section class="stsec c-${DG251.color || 'r'} dyn251"><div class="stside"><b>${DG251.label || '危險物品'}</b>${pic}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th class="num">價格</th><th></th></tr></thead><tbody>
+    <tr><td>${itemIconHTML('dynamite')}</td><td>${itemName('dynamite')}<br><small>建設 · 環境用；森林、土丘每格 1 支，礦山整座「格數 × 2」支</small></td><td class="num">${fmtN(n)}</td><td class="num">${coinI()}${PRICE251}</td>
+    <td class="acts">${packs.map(q => `<button class="btn${q === 1 ? ' ghost' : ''}" data-dyn251="${q}">買 ${q} 支</button>`).join('')}</td></tr></tbody></table></div></section>`; }
+{ const _sp96 = storageProduceHTML; storageProduceHTML = function(){ const h = _sp96(); try { if (!S || S.player.level < LV251) return h; return h + dynSec251(); } catch(e){ return h; } }; }
+// 面板按鈕：g47 先「乾跑」量價格、跳購買確認，再重放這個 click（所以這裡不自己問），監聽掛在 #modal 冒泡階段
+function buyDyn251(q){ const price = q * PRICE251; RT.coinWhy.push('買炸藥'); try { if (!spend(price)) return false; } finally { RT.coinWhy.pop(); }
+  invAdd('dynamite', q); sfx('coin'); toast(`買了炸藥 ×${q}，${fmtN(price)} 金幣`, true); afterAction(); if (!$('modal').hidden) openStorage('produce'); return true; }
+$('modal').addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-dyn251]'); if (!b) return; e.stopPropagation(); buyDyn251(+b.dataset.dyn251 || 1); });
+
+/* ---------- 7. 徽章、存檔 ---------- */
+{ const _av96 = achValue; achValue = function(a){ if ((a.stat || '') === 'dynamited') return S.dynCnt251 || 0; return _av96(a); }; }
+{ const _ns96 = normalizeState; normalizeState = function(d){ const r = _ns96(d); const s = r || d; try { if (s){ s.fuse251 = Array.isArray(s.fuse251) ? s.fuse251 : []; s.dynCnt251 = s.dynCnt251 || 0; if (!s.v251) s.v251 = 1; } } catch(e){} return r; }; }
+{ const st = document.createElement('style'); st.textContent = `.db251{margin:2px 0 6px;font-size:13px;line-height:1.5}.dyn251 .acts .btn{margin:2px}`; document.head.appendChild(st); }
+
+window.__farm251 = { placeDyn251, explode251, checkFuses251, clearTap251, payClear251, flat251, debJob251, debMenu251, openDeb251, dynPlan251, buyDyn251, isDeb251, debStage251,
+  hint: () => TOOLS.find(q => q.id === 'build').hint(), act: (x, y) => act(x, y), why: (k, u) => why84(k, u), unitText: (k, u) => unitText(k, u), wants: (key, u) => workerWants.grade(key, u), UIbuildTray: () => UIbuildTray(),
+  openTerrain: (mi, k) => openTerrain83(mi, k), storageHTML: () => storageProduceHTML(), achValue: a => achValue(a) };
+
+/* ---------- 8. v2.51.1 建材小屋兩股軌道：門口兩格的軌道可以選擇接進小屋 ----------
+   新小屋（玩家圖 batch61）門開在左下（+y 那一面），裡面有兩股軌道，對著門口 (rx, ry+2)、(rx+1, ry+2) 兩格。
+   那兩格的軌道 T.sj251 = 1 時畫成往右上（bit 1，往小屋）接進門；新鋪在門口、還沒接兩邊的軌道自動接上；點軌道的小選單／接軌工具可以接上或斷開。
+   只影響畫法（v2.45.1 起小屋四周任何一格接出去的軌道本來就算接上）。 */
+const SJT251 = (T251.shed || {}).texts || {};
+function shedDoors251(M){ const mi = S.maps.indexOf(M); if (mi < 0) return []; const sh = shedOf84(mi); if (!sh) return []; const [w, h] = bldSize('material_shed');
+  const out = []; for (let i = 0; i < w; i++) out.push(tkey(sh.T.rx + i, sh.T.ry + h)); return out; }
+const atDoor251 = (M, k) => shedDoors251(M).includes(k);
+{ const _rs96 = roadSprite; roadSprite = function(M, x, y, T){ const r = _rs96(M, x, y, T);
+  try { if (isRail89(T) && T.sj251 && !T.br247 && T.cm !== undefined && atDoor251(M, tkey(x, y))){ let m = (T.cm || 0) | 1; const b = doorMask247(M).get(tkey(x, y)); if (b) m |= b; return `rail_m${String(m).padStart(2, '0')}`; } } catch(e){}
+  return r; }; }
+{ const _pr96 = placeRail89; placeRail89 = function(M, x, y){ const k = tkey(x, y), was = M.tiles[k], r = _pr96(M, x, y);
+  try { const T = M.tiles[k]; if (T !== was && isRail89(T) && !T.br247 && atDoor251(M, k) && pc246(T.cm || 0) <= 1){ T.sj251 = 1; RT.decoVer++; } } catch(e){}
+  return r; }; }
+function shedJoin251(M, k, on){ const T = M.tiles[k]; if (!isRail89(T)) return; if (on) T.sj251 = 1; else delete T.sj251; RT.decoVer++; RT.regionsAt = 0; sfx('click'); afterAction();
+  toast(on ? (SJT251.joined || '接進建材小屋了') : (SJT251.cut || '跟建材小屋斷開了'), true); }
+{ const _rm96 = railMenu246; railMenu246 = function(M, k, x, y, join){ const T = M.tiles[k];
+  if (!isRail89(T) || T.br247 || !atDoor251(M, k)) return _rm96(M, k, x, y, join);
+  const hid0 = POP53.hidden, r = _rm96(M, k, x, y, join);
+  try { const on = !!T.sj251, sp = `rail_m${String(on ? (T.cm || 0) : ((T.cm || 0) | 1)).padStart(2, '0')}`;
+    const html = `<h5 class="sj251">${SJT251.head || '建材小屋'}</h5><button data-sj251="${on ? 'cut' : 'link'}"><img src="${IMGSRC.ui_material_shed || ''}" data-spr="${sp}" alt="">${on ? (SJT251.cutBtn || '跟建材小屋斷開') : (SJT251.linkBtn || '接進建材小屋（門口的軌道）')}</button>`;
+    if (POP53.hidden){ const { cx, cy } = center(x, y); showPop53(cx, cy - 30, html); }
+    else if (!POP53.querySelector('.sj251')){ const d = document.createElement('div'); d.innerHTML = html; POP53.appendChild(d); }
+    void hid0; if (T.sj251) POP53.querySelectorAll('[data-r246^="stop:"]').forEach(b => b.remove());   // 接進小屋的那一端不是盡頭，不用選車擋
+    try { sprIcons246(); } catch(e){}
+    POP53.querySelectorAll('[data-sj251]').forEach(b => b.onclick = () => { const a = b.dataset.sj251; closePop53(); shedJoin251(M, k, a === 'link'); }); } catch(e){ console.warn(e); }
+  return r; }; }
+// 「這格旁邊沒有別的軌道」的提示在門口那兩格不跳（小選單有接進小屋的選項）
+{ const _t96 = toast; toast = function(msg, ...a){ if (RT.sjQuiet251 && /旁邊沒有別的軌道/.test(String(msg))) return; return _t96(msg, ...a); }; }
+{ const _rm96b = railMenu246; railMenu246 = function(M, k, x, y, join){ const door = isRail89(M.tiles[k]) && atDoor251(M, k); if (door) RT.sjQuiet251 = true; try { return _rm96b(M, k, x, y, join); } finally { RT.sjQuiet251 = false; } }; }
+window.__farm2511 = { fade: (...a) => fadeOf83(...a), shedDoors251, atDoor251, shedJoin251, roadSprite: (M, x, y, T) => roadSprite(M, x, y, T), placeRail: (M, x, y) => placeRail89(M, x, y), railMenu: (...a) => railMenu246(...a) };
+
+/* ---------- 9. v2.51.1 小屋裡面的兩股軌道由程式畫（玩家圖的軌道跟格子對不齊，batch61 把屋裡挖掉重畫成後牆＋地板）----------
+   atlas 的 door＝看得到的地板（4 倍圖座標）：在這塊裡面畫兩股軌道：門口那一格的正面邊對齊外面的軌道、往裡面照原圖的縱深（atlas depth）拉到後牆，
+   停在小屋裡的列車（st === 'yard'、不在車庫）畫一節礦車，最後蓋一層屋裡的陰影、晚上再補一點燈光。 */
+const SHI251 = (T251.shed || {}).inside || {};
+function shedInside251(T, cx, cy){ const A = ATLAS['building_material_shed_full']; if (!A || !A.door) return; const sc = A.scale || 2, mi = S.cur;
+  ctx.save(); ctx.beginPath(); A.door.forEach(([X, Y], i) => { const px = cx + (X - A.anchor[0]) / sc, py = cy + (Y - A.anchor[1]) / sc; if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py); }); ctx.closePath(); ctx.clip();
+  const [w, h] = bldSize('material_shed'), D = SHI251.imageDepth && A.depth ? [A.depth[0] / sc, A.depth[1] / sc] : [h * HW, -h * HH];   // 預設照等角格子往裡面走（跟外面的軌道一直線）
+  const lane = i => { const c = center(T.rx + i, T.ry + h - 1); return { a: [c.cx - HW, c.cy], b: [c.cx, c.cy + HH] }; };
+  for (let j = 0; j < h; j++) for (let i = 0; i < w; i++){ const c = center(T.rx + i, T.ry + j); spr('rail_m05', 0, c.cx, c.cy); }   // 照格子畫（跟外面的軌道一直線；右邊那股往裡面走會被右牆擋住）
+  ctx.fillStyle = SHI251.shade || 'rgba(24,14,6,.18)'; ctx.fill();
+  if (isNightAt(Date.now())) spr('building_material_shed_light', 0, cx, cy, false, .6);
+  ctx.restore();
+  // 停在小屋裡的礦車：比地板高，改用整個門洞切（之前用地板切，車身上半被裁掉）
+  const poly = A.open || A.door; ctx.save(); ctx.beginPath(); poly.forEach(([X, Y], i) => { const px = cx + (X - A.anchor[0]) / sc, py = cy + (Y - A.anchor[1]) / sc; if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py); }); ctx.closePath(); ctx.clip();
+  try { const yard = trainsOf246(mi).filter(TR => TR.st === 'yard' && !TR.gk).slice(0, 2), k = SHI251.cartDepth ?? .3, ks = SHI251.cartSlots || [.62, .2];
+    // 右邊那股往裡面會被右牆擋住，停著的礦車都排在左邊那股（第 1 列在裡面、第 2 列靠門口），從裡面往外畫
+    yard.slice().reverse().forEach((TR, ri) => { const i = yard.length - 1 - ri, kk = ks[i] ?? k, { a, b } = lane(0), x = (a[0] + b[0]) / 2 + D[0] * kk, y = (a[1] + b[1]) / 2 + D[1] * kk, L = loadN89(TR.load), f = L >= cartCap89() * .66 ? 'full' : L > 0 ? 'half' : 'empty'; spr(`rail_cart_${f}_s`, 0, x, y); }); } catch(e){}
+  ctx.restore(); }
+{ const _sp96x = spr; spr = function(name, ...a){ if (name === 'rail_exit' && S && !RT.snap68){ try { const mi = S.cur, M = S.maps[mi]; if (shedSides89(mi).some(k => isRail89(M.tiles[k]))) return; } catch(e){} } return _sp96x(name, ...a); }; }   // v2.51.1：建議出口（黃黑斜紋＋號誌）只在小屋旁邊還沒有任何軌道時提示
+{ const _db96 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){ const r = _db96(T, x, y, t);
+  try { if (T && T.id === 'material_shed' && !RT.snapHide251){ const [w, h] = bldSize(T.id); if (x === T.rx + w - 1 && y === T.ry + h - 1){ const { cx, cy } = center(T.rx, T.ry); shedInside251(T, cx, cy + (w - 1) * HH); } } }
+  catch(e){ if (!RT.err251s){ RT.err251s = 1; console.warn(e); } }
+  return r; }; }
+
+/* ---------- 10. v2.51.1 小屋滿了不再堵住門口 ----------
+   v2.46 規則：卸貨時小屋滿了，列車停在小屋前（出口格＝唯一的卸貨格）等；後面回來的列車全部排在後面，被停著的車擋住不是「會車」（不猜拳），只能等 40 秒「卡住」倒數穿過去。
+   改成：卸不完就把列車開進小屋裡（yard，畫在屋裡左邊那股），門口空出來；小屋有空位時 stepCarts89 本來就會把小屋裡列車的貨卸進去，機器人也不用在門口陪等。 */
+{ const _st96 = stepTrain246; stepTrain246 = function(mi, TR, dt, home, occ){ const r = _st96(mi, TR, dt, home, occ);
+  try { if (TR && TR.st === 'unload' && TR.why === 'full' && TR.job && (SHI251.fullToYard !== false)){
+      for (const c of TR.cells) if (occ && occ.get(c) === TR) occ.delete(c);
+      toYard246(TR); TR.why = 'full'; endJob246(TR); RT.decoVer = RT.decoVer || 0; } } catch(e){ if (!RT.err251y){ RT.err251y = 1; console.warn(e); } }
+  return r; }; }
+{ const _td96 = trainDoing248; trainDoing248 = function(TR){ if (TR && TR.st === 'yard' && !TR.gk && loadN89(TR.load || {})) return '小屋滿了：停在小屋裡等空位再卸貨'; return _td96(TR); }; }
+// 小屋裡等卸貨的列車：不管軌道有沒有接著，小屋一有空位就卸（原本要 stepCarts89 跑到才卸）
+{ const _sa96b = stepAll; stepAll = function(dt, t){ _sa96b(dt, t); try { if (S && S.rail246) for (const mi in S.rail246){ const R = S.rail246[mi]; if (!R || !R.tr || !shedOf84(+mi)) continue;
+    for (const TR of Object.values(R.tr)) if (TR.st === 'yard' && !TR.job && TR.load && loadN89(TR.load) && room84(+mi) > 0){ unloadCart89(+mi, TR); if (!loadN89(TR.load) && TR.why === 'full') TR.why = ''; } } } catch(e){} }; }
+// 玩家 2026-11-01：「礦車 n 列在小屋」泡泡會遮住小屋，不再顯示（停在屋裡的礦車直接畫在屋裡，每一列的狀態點小屋看面板）
+{ const _bb96 = bubble; bubble = function(x, y, text, ...a){ if (typeof text === 'string' && /^礦車 \d+ 列在小屋$/.test(text)) return; return _bb96(x, y, text, ...a); }; }
+window.__farm2512 = { stepTrain: (...a) => stepTrain246(...a), trainDoing: TR => trainDoing248(TR) };
+
+/* ---------- 11. v2.51.1 兩股軌道都能卸貨（玩家 2026-11-01）----------
+   小屋門口兩格（shedDoors251）都鋪了軌道、也接到小屋的軌道網時，要回小屋的列車各自挑一格卸貨（TR.home251）：
+   已經挑好的照舊；沒挑的先挑沒人預約、上面沒車的那格，都可以就挑路比較短的。卸完（往外開）就放掉。
+   只換「回小屋卸貨」用的家；從小屋出發、讓路回小屋還是用原本的出口格。 */
+function goingHome251(TR){ const J = TR.job; if (!J) return false;
+  if (TR.st === 'unload' || J.leg === 'home') return true;
+  if (TR.st === 'park' && J.kind === 'home') return true;
+  if (TR.st === 'solo' && J.kind === 'fetch' && loadN89(TR.load || {}) >= capTR246(TR)) return true;
+  return false; }
+function unloadDoors251(mi){ const M = S.maps[mi], net = railNet89(mi); return shedDoors251(M).filter(k => isRail89(M.tiles[k]) && !M.tiles[k].br247 && net.has(k)); }
+function homeFor251(mi, TR, home){
+  if (!goingHome251(TR)){ if (TR.home251) delete TR.home251; return home; }
+  const doors = unloadDoors251(mi); if (doors.length < 2 || !home || !doors.includes(home.k) && !doors.length) return home;
+  const obj = k => { const [x, y] = pkey(k); return { x, y, k }; };
+  if (TR.home251 && doors.includes(TR.home251)) return obj(TR.home251);
+  const others = trainsOf246(mi).filter(o => o !== TR), taken = new Set(others.filter(o => o.home251 && goingHome251(o)).map(o => o.home251)), onIt = new Set(others.flatMap(o => o.cells || []));
+  const from = (TR.cells && TR.cells.length) ? TR.cells : (TR.sl && TR.sl.cells) || [];
+  const len = k => { let best = 1e9; for (const c of [from[0], from[from.length - 1]].filter(Boolean)){ const p = railPath246(mi, c, k); if (p && p.length < best) best = p.length; } return best; };
+  const score = k => (taken.has(k) ? 1000 : 0) + (onIt.has(k) ? 500 : 0) + Math.min(len(k), 999);
+  const k = doors.slice().sort((a, b) => score(a) - score(b))[0]; TR.home251 = k; return obj(k); }
+{ const _st96b = stepTrain246; stepTrain246 = function(mi, TR, dt, home, occ){ let h = home; try { if (TR && SHI251.twoUnload !== false) h = homeFor251(mi, TR, home); } catch(e){ if (!RT.err251h){ RT.err251h = 1; console.warn(e); } } return _st96b(mi, TR, dt, h, occ); }; }
+window.__farm2513 = { homeFor251, unloadDoors251, goingHome251 };
 
   })(CFG, ATLAS_JSON);
 })();
