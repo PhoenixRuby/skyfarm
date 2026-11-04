@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.52.3",
+  "configVersion": "2.53",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8421,6 +8421,18 @@
     "drone_pad"
    ],
    "note": "農舍、倉庫、儲藏屋、建材小屋、水塔、垃圾站、基座、車庫：滑鼠／手指指到它後面 rows 排以內的格子時，整座畫成 alpha 透明度；rows 依佔地 1×1 或 2×2；skip 是平的不用透明"
+  },
+  "v253": {
+   "note": "狗屋／貓跳台與產出效能面板的說明文字；denTip 留空就用預設（會帶入一格最多幾隻）；machineTips 依機器 id，結尾不用加句號",
+   "denTip": "",
+   "pickPet": "",
+   "machineTips": {
+    "corn_cake_machine": "把玉米做成玉米餅，拿來餵動物",
+    "fish_feed_machine": "把小麥磨成魚飼料，拿來餵魚池的魚",
+    "compost_bin": "把動物便便和雜草堆成有機肥料，施在田裡",
+    "biomass_gen": "燒雜草、牧草發電，用不完的電存進電池或賣給電網",
+    "snow_melter": "用電把周圍的積雪融成水，裝瓶後倒進水塔"
+   }
   }
  },
  "droneWatering": {

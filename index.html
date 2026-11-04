@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.52.3-46f888b28f'), getJSON('sprites/atlas.json?v=2.52.3-46f888b28f')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.53-ec89a79950'), getJSON('sprites/atlas.json?v=2.53-ec89a79950')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.52.3-46f888b28f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.53-ec89a79950';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -19625,6 +19625,175 @@ function fixRivers2524(s){ let n = 0;
 { const _ns2524 = normalizeState; normalizeState = function(d){ const r = _ns2524(d), s = r || d; try { if (s && s.maps) fixRivers2524(s); } catch(e){ console.warn(e); } return r; }; }
 
 window.__farm2524 = { pieces246: (mi, TR) => pieces246(mi, TR), fixRivers2524, curveOf2524, startMove: (...a) => startMove(...a) };
+
+/* ===== 102. v2.53 狗屋、貓跳台、產出效能面板改版（規則文件「v2.53 狗屋、貓跳台、產出效能面板改版」）=====
+   重新宣告 openDen（v2.50 的 .v250 版面：位子／住著／效果＋擴充／拆回、說明條、當前配置等角小圖、住在這裡的寵物卡片（空位點下去開動物 · 寵物分頁，
+     買到的寵物住進這個窩：RT.denPref253＋freeDen 包裝）、附近（還沒有窩）的同種寵物點一下搬進來）；
+   重新宣告 statsMachine61（魚飼料機、玉米餅機、堆肥桶）與 devStats62（生質發電機、融雪機）：抬頭大圖示、三塊（機器／產出概要／當前狀態）、
+     兩塊（產能資訊／產出流程）、說明條；小線條圖示是內嵌 SVG（currentColor，白天夜晚自動跟字色），不用新圖。
+   設定 ui.v253（說明文字）。 ===== */
+const V253 = (CFG.ui || {}).v253 || {};
+const SVG253 = {
+  paw: '<circle cx="6" cy="8" r="1.8"/><circle cx="10" cy="5.5" r="1.8"/><circle cx="14" cy="5.5" r="1.8"/><circle cx="18" cy="8" r="1.8"/><path d="M12 11c-3 0-5.5 3.5-5.5 6 0 1.6 1.4 2.3 3 1.8 1.6-.5 3.4-.5 5 0 1.6.5 3-.2 3-1.8 0-2.5-2.5-6-5.5-6z"/>',
+  home: '<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r=".6"/>',
+  gear: '<circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
+  batch: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  play: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',
+  wrench: '<path d="M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-3-1-1-3z"/>',
+  chart: '<path d="M4 20h16"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13" width="3" height="5"/>',
+  cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/>',
+  bolt: '<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>',
+  snow: '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/>',
+  drop: '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',
+  up: '<path d="M12 19V6M6 11l6-6 6 6"/>'
+};
+const ic253 = n => `<svg class="i253" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SVG253[n] || ''}</svg>`;
+const spr253 = (n, f = 0) => n ? `<canvas data-spr="${n}" data-f="${f}"></canvas>` : '';
+const itemIc253 = id => { const s = itemSprite('item', id); return s && s[0] ? spr253(s[0], s[1]) : (IMGSRC['ui_item_' + id] ? `<img src="${IMGSRC['ui_item_' + id]}" alt="">` : ''); };
+{ const st = document.createElement('style'); st.textContent = `
+.v253 .i253{width:18px;height:18px;flex:none;vertical-align:-4px;opacity:.85}
+.v253 .kv253{display:grid;grid-template-columns:auto auto 1fr;gap:8px 8px;align-items:center}.v253 .kv253>span{opacity:.75;white-space:nowrap}.v253 .kv253>b{font-weight:600}
+.v253 .tip253{display:flex;gap:8px;align-items:flex-start;margin:10px 0;padding:8px 12px;border-radius:12px;background:rgba(45,123,224,.12);font-size:13px}body.night .v253 .tip253{background:rgba(120,170,255,.12)}
+.v253 .btns253{display:flex;flex-direction:column;gap:8px;justify-content:center}.v253 .btns253 .btn{width:100%}
+.v253 .pets253{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.v253 .pet253{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:12px;background:rgba(127,127,127,.12);text-align:center;font-size:13px;cursor:pointer;border:none;color:inherit;font:inherit}
+.v253 .pet253 img{width:64px;height:56px;object-fit:contain}.v253 .pet253 small{opacity:.75}
+.v253 .pet253.empty253{border:2px dashed rgba(127,127,127,.45);background:none}.v253 .pet253.empty253 i{font-style:normal;font-size:30px;line-height:56px;opacity:.6}
+.v253 .pet253.full253{opacity:.5;cursor:not-allowed}
+.v253 .near253{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.v253 .none253{display:flex;align-items:center;gap:10px;opacity:.75}.v253 .none253 svg{width:44px;height:44px;opacity:.6}
+.v253 .hdr253{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px}.v253 .hdr253 h4{margin:0}
+.v253 .g3_253{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.v253 .mc253{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}.v253 .mc253>img{width:96px;height:96px;object-fit:contain}.v253 .mc253 .btn{display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.v253 .lv253{display:inline-block;padding:1px 8px;border-radius:999px;background:#2d7be0;color:#fff;font-size:12px;margin-right:4px}
+.v253 .rows253{display:flex;flex-direction:column;gap:8px}.v253 .rows253>div{display:flex;gap:8px;align-items:flex-start}.v253 .rows253 small{display:block;opacity:.7}
+.v253 .cap253{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.v253 .cap253>div{padding:8px 10px;border-radius:10px;background:rgba(127,127,127,.12)}.v253 .cap253 b{display:block;font-size:18px}
+.v253 .flow253{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}.v253 .flow253 .col253{display:flex;flex-direction:column;gap:6px}
+.v253 .flow253 .it253{display:flex;align-items:center;gap:6px}.v253 .flow253 canvas,.v253 .flow253 img{width:32px;height:32px;object-fit:contain}.v253 .arr253{font-size:26px;opacity:.6}
+@media (max-width:760px){.v253 .g3_253{grid-template-columns:minmax(0,1fr)}.v253 .pets253{grid-template-columns:repeat(3,minmax(0,1fr))}}
+`; document.head.appendChild(st); }
+// 抬頭大圖示
+for (const id of ['dog_house', 'cat_tree', 'dog_house_gold', 'cat_tree_gold']){ if (IMGSRC['ui_' + id]){ IMGSRC['ui_hd_den_' + id] = IMGSRC['ui_' + id]; if (CFG.decos[id] && typeof HD54 === 'object') HD54[CFG.decos[id].name] = 'den_' + id; }
+  try { if (CFG.decos[id]) BIG250.add(CFG.decos[id].name); } catch(e){} }
+try { BIG250.add('產出效能'); } catch(e){}
+// 抬頭「機器名 — 產出效能」：大抬頭、圖示跟著機器
+const hdTitle253 = (id, name) => { const t = `${name} — 產出效能`; hdStats62(id); try { BIG250.add(t); if (typeof HD54 === 'object') HD54[t] = HD54['產出效能']; } catch(e){} return t; };
+function upWatch253(getLv, reopen){ const lv0 = getLv(), t0 = Date.now(), iv = setInterval(() => { if (getLv() !== lv0){ clearInterval(iv); if (!$('modal').hidden) reopen(); } else if (Date.now() - t0 > 30000) clearInterval(iv); }, 250); }
+
+/* ---------- 1. 狗屋、貓跳台 ---------- */
+RT.denPref253 = null;
+{ const _fd253 = freeDen; freeDen = function(kind){ const P = RT.denPref253;
+  if (P && Date.now() < P.until){ const d = denByUid(P.uid); if (d && DENS39[d.T.id].for === kind && residents(d.T).length < denSlots(d.T)) return d; }
+  return _fd253(kind); }; }
+{ const _st253 = setTool; setTool = function(id){ if (id !== 'animal') RT.denPref253 = null; return _st253(id); }; }
+const homeless253 = kind => petList().filter(P => P.kind === kind && !denByUid(P.den));
+const petImg253 = P => IMGSRC['ui_pet_' + P.breed] || '';
+function openDen(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isDen(T)) return; if (!T.uid) T.uid = uid39();
+  const D = DENS39[T.id], name = CFG.decos[T.id].name, res = residents(T), n = denSlots(T), max = D.maxSlots || 3, unit = D.for === 'dog' ? '間' : '個', kind = D.for, word = kind === 'dog' ? '狗' : '貓';
+  const cost = denExpandCost(T), back = n > 1 ? Math.round(((D.expandCost || [])[n - 2] || 0) * (PETC.shrinkRefundRate ?? .5)) : 0, near = homeless253(kind), room = n - res.length;
+  openModal(name, null, (kk, el) => { el.classList.add('v250', 'v253');
+    const eff = D.driveBonus ? `驅趕率 +${Math.round(D.driveBonus * 100)}%` : D.rangeBonus ? `巡邏範圍 +${D.rangeBonus} 格` : '';
+    const top = `<div class="g250"><div class="card250"><div class="kv253">
+        ${ic253('paw')}<span>位子</span><b>${n} ${unit}${max > 1 ? `（最多 ${max} ${unit}）` : ''}</b>
+        ${ic253('home')}<span>住著</span><b>${res.length ? res.map(P => escapeHTML(P.name)).join('、') : '還沒有'}</b>
+        ${eff ? `${ic253('gear')}<span>效果</span><b>${eff}</b>` : ''}</div></div>
+      <div class="card250 btns253">${cost && n < max ? `<button class="btn" id="denUp">擴充到 ${n + 1} ${unit} · ${coinImg()}${fmtN(cost)}</button>` : ''}
+        ${n > 1 ? `<button class="btn ghost" id="denDown" ${res.length >= n ? 'disabled' : ''}>拆回 ${n - 1} ${unit} · 退 ${fmtN(back)}</button>` : ''}
+        ${!(cost && n < max) && !(n > 1) ? `<p class="small" style="margin:0">${max === 1 ? `${name}只有 1 ${unit}` : `已經是最多 ${max} ${unit}`}</p>` : ''}</div></div>`;
+    const tip = `<div class="tip253">${ic253('info')}<span>${escapeHTML(V253.denTip || `一格可以並排到 ${max} ${unit}，仍然只佔 1 格。寵物白天在附近巡邏，晚上回來睡覺；有寵物住時不能拆。`)}</span></div>`;
+    let slots = ''; for (let i = 0; i < n; i++){ const P = res[i];
+      slots += P ? `<button class="pet253" data-pet="${P.id}"><img src="${petImg253(P)}" alt=""><b>${escapeHTML(P.name)}</b><small>${breedOf(P).name || ''}${petAdult(P) ? '' : '・幼'}</small></button>`
+        : `<button class="pet253 empty253" data-empty="1"><i>＋</i><small>尚未入住</small></button>`; }
+    const mid = `<div class="g250"><div class="card250"><h4>當前配置</h4><div class="mw250 map253"></div></div>
+      <div class="card250"><h4>住在這裡的寵物（${res.length}／${n}）</h4><div class="pets253">${slots}</div></div></div>`;
+    const face = kind === 'dog' ? '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14l-4 12 6 2M38 14l4 12-6 2"/><circle cx="24" cy="26" r="13"/><circle cx="19" cy="24" r="1.4"/><circle cx="29" cy="24" r="1.4"/><path d="M22 30h4l-2 2z"/></svg>'
+      : '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20l-1-12 9 6M37 20l1-12-9 6"/><circle cx="24" cy="27" r="13"/><circle cx="19" cy="25" r="1.4"/><circle cx="29" cy="25" r="1.4"/><path d="M22 30h4l-2 2zM12 29h7M29 29h7"/></svg>';
+    const nearH = `<div class="card250" style="margin-top:12px"><div class="hdr253"><h4>附近的寵物</h4><small>共 ${near.length} 隻</small></div>` + (near.length
+      ? `<div class="near253">${near.map(P => `<button class="pet253 ${room > 0 ? '' : 'full253'}" data-near="${P.id}"><img src="${petImg253(P)}" alt=""><b>${escapeHTML(P.name)}</b><small>${room > 0 ? '點一下搬進來' : '先擴充'}</small></button>`).join('')}</div>`
+      : `<div class="none253">${face}<span>附近沒有可入住的${word}。</span></div>`) + '</div>';
+    el.innerHTML = top + tip + mid + nearH;
+    // 當前配置：窩在中間、住客的巡邏範圍
+    try { const [hx, hy] = pkey(k), rgs = res.map(petRange).filter(Boolean), inR = (x, y) => rgs.some(r => x >= r.x0 && x <= r.x1 && y >= r.y0 && y <= r.y1);
+      const cv = isoMap250(mi, (x, y, U) => x === hx && y === hy ? '#f0a35e' : inR(x, y) ? 'rgba(111,220,140,.45)' : U && U.t === 'terrain' ? 'rgba(130,130,130,.22)' : 'rgba(110,170,110,.16)',
+        (c, pos, W, H) => { const [cx, cy] = pos(hx, hy); c.fillStyle = '#fff'; c.font = `bold ${Math.max(9, Math.round(H * .8))}px sans-serif`; c.textAlign = 'center'; c.fillText(kind === 'dog' ? '狗' : '貓', cx, cy + H * .3); }, 300);
+      if (cv) el.querySelector('.map253').appendChild(cv); } catch(e){ console.warn(e); }
+    const up = el.querySelector('#denUp'); if (up) up.onclick = () => { if (!spend(cost)) return; T.n = n + 1; sfx('place'); afterAction(); openDen(mi, k); };
+    const dn = el.querySelector('#denDown'); if (dn) dn.onclick = () => { T.n = n - 1; S.player.coins += back; sfx('coin'); afterAction(); openDen(mi, k); };
+    el.querySelectorAll('[data-pet]').forEach(b => b.onclick = () => { const P = petList().find(q => q.id === b.dataset.pet); if (P) openPet(P); });
+    el.querySelectorAll('[data-empty]').forEach(b => b.onclick = () => { RT.denPref253 = { uid: T.uid, until: Date.now() + 10 * 60e3 }; closeModal();
+      setTool('animal'); RT.denPref253 = { uid: T.uid, until: Date.now() + 10 * 60e3 }; S.sel.animalTab = kind === 'dog' ? 'pet_dog' : 'pet_cat'; S.sel.none49 = true; UIbuildTray(); updateHint();
+      toast(V253.pickPet || `選一隻${word}，點農場任一處，買到的${word}會住進這個${name}`, false, 3600); });
+    el.querySelectorAll('[data-near]').forEach(b => b.onclick = () => { if (room <= 0){ toast(`${name}沒有空位，先擴充`); return; } const P = petList().find(q => q.id === b.dataset.near); if (!P) return;
+      P.den = T.uid; delete RT.petAg[P.id]; sfx('place'); toast(`${P.name}搬進${name}了`, true); afterAction(); openDen(mi, k); }); }); }
+
+/* ---------- 2. 產出效能（加工機） ---------- */
+function statsMachine61(M, k, T){ const D = CFG.machines[T.id], lv = lvl61(T), maxLv = MU61.maxLevel || 5, q1 = outQty61(T), outId = Object.keys(D.output)[0], unit = itemName(outId), dk = dayKeyLocal(Date.now());
+  hdStats62(T.id);
+  const ph = lv2 => Math.round(q1 * 3600 / secs61(T, lv2) * 10) / 10, cost = upCost61(T), nb = cap61(T), nb2 = lv < maxLv ? cap61({ ...T, lvl: lv + 1 }) : nb;
+  const ins = Object.entries(D.input), outs = Object.entries(D.output).map(([id, q], i) => [id, i === 0 ? q1 : q]);
+  const inTxt = ins.map(([id, q]) => `${itemName(id)} ${q}`).join('、'), outTxt = outs.map(([id, q]) => `${itemName(id)} ${q}`).join('、');
+  openModal(hdTitle253(T.id, D.name), null, (kk, el) => { el.classList.add('v250', 'v253');
+    const now = T.run ? `做第 1 批，剩 ${fmtDur(Math.max(0, (T.until - Date.now()) / 1000))}` : '沒在做', sub = [T.q ? `後面排 ${T.q} 批` : '', T.out ? `做好 ${T.out} 批等收` : ''].filter(Boolean).join('，');
+    el.innerHTML = `<div class="g3_253">
+      <div class="card250 mc253"><img src="${IMGSRC['ui_hd_mc_' + T.id] || ''}" alt=""><b><span class="lv253">Lv ${lv}</span>${D.name}</b>
+        ${cost ? `<button class="btn" id="mcUp">${ic253('up')} 升到 Lv ${lv + 1} · ${coinImg()}${fmtN(cost)}</button>` : '<span class="small">已經是最高級</span>'}</div>
+      <div class="card250"><h4>產出概要</h4><div class="rows253">
+        <div>${ic253('gear')}<span>機器<small>${D.name}</small></span></div>
+        <div>${ic253('batch')}<span>每批<small>${inTxt} → ${outTxt}</small></span></div>
+        <div>${ic253('clock')}<span>每批時間<small>${fmtDur(secs61(T))}${lv > 1 ? `（Lv1 ${fmtDur(D.seconds)}）` : ''}</small></span></div>
+        <div>${ic253('batch')}<span>一次最多 ${nb} 批<small>${nb > 1 ? '排隊做，一批做完接下一批' : '做完收了才放下一批'}</small></span></div></div></div>
+      <div class="card250"><h4>當前狀態</h4><div class="rows253">
+        <div>${ic253('play')}<span>現在<small>${now}${sub ? `<br>${sub}` : ''}</small></span></div>
+        <div>${ic253('cal')}<span>今天做了<small>${T.day61 === dk ? fmtN(T.today61 || 0) : 0} 個</small></span></div>
+        <div>${ic253('chart')}<span>累計<small>${fmtN(T.made61 || 0)} 個</small></span></div></div></div></div>
+      <div class="g250" style="margin-top:12px"><div class="card250"><h4>產能資訊</h4><div class="cap253">
+        <div><small>每小時產量</small><b>約 ${ph(lv)} 個</b><small>${unit}</small></div>
+        ${lv < maxLv ? `<div><small>升級後產能（Lv ${lv + 1}）</small><b>約 ${ph(lv + 1)} 個／時</b><small>每批 ${fmtDur(secs61(T, lv + 1))}、一次 ${nb2} 批</small></div>` : ''}</div></div>
+      <div class="card250"><h4>產出流程（每批）</h4><div class="flow253"><div class="col253">${ins.map(([id, q]) => `<div class="it253">${itemIc253(id)}<span>${itemName(id)} × ${q}</span></div>`).join('')}</div>
+        <span class="arr253">→</span><div class="col253">${outs.map(([id, q]) => `<div class="it253">${itemIc253(id)}<span>${itemName(id)} × ${q}</span></div>`).join('')}</div></div></div></div>
+      <div class="tip253">${ic253('info')}<span>${escapeHTML((V253.machineTips || {})[T.id] || `${D.name}把${inTxt}做成${outTxt}`)}${nb > 1 ? `；一次最多排 ${nb} 批` : ''}。</span></div>`;
+    paintIcons(el);
+    const up = el.querySelector('#mcUp'); if (up) up.onclick = () => { upWatch253(() => lvl61(T), () => statsMachine61(M, k, T)); upgradeMachine61(M, k, T); }; }); }
+
+/* ---------- 3. 產出效能（生質發電機、融雪機） ---------- */
+function devStats62(M, k, T){ const D = DEV[T.id], lv = dlvl62(T), maxLv = MU62.maxLevel || 5, gen = D.kind === 'generator', dk = dayKeyLocal(Date.now()), today = T.day62 === dk ? T.today62 || 0 : 0, nx = lv < maxLv, cost = dUpCost62(T);
+  hdStats62(T.id);
+  openModal(hdTitle253(T.id, D.name), null, (kk, el) => { el.classList.add('v250', 'v253');
+    const fuels = Object.entries(POW.fuels || {}), fc = Math.max(...fuels.map(f => f[1]), 1), kwh = lv2 => Math.round(D.kwhPerHour * dmult62(T, lv2) * 100) / 100;
+    const sec = lv2 => (ML.secondsPerTile || 20) / dmult62(T, lv2), drops = ML.dropsPerTile || 10, perH = lv2 => Math.round(3600 / sec(lv2) * drops);
+    const sum = gen ? `<div>${ic253('gear')}<span>設備<small>${D.name}</small></span></div>
+        <div>${ic253('batch')}<span>燃料<small>${(T.fuel || 0).toFixed(1)} / ${fmtN(fuelSlots62(T) * fc)} 度（${fuelSlots62(T)} 格）<br>${fuels.map(([i, v]) => `${itemName(i)} ${v} 度`).join('、')}</small></span></div>
+        <div>${ic253('bolt')}<span>每小時發電<small>${kwh(lv)} 度${lv > 1 ? `（Lv1 ${D.kwhPerHour} 度）` : ''}</small></span></div>`
+      : `<div>${ic253('gear')}<span>設備<small>${D.name}</small></span></div>
+        <div>${ic253('clock')}<span>每格雪<small>${fmtDur(sec(lv))}${lv > 1 ? `（Lv1 ${fmtDur(ML.secondsPerTile || 20)}）` : ''}</small></span></div>
+        <div>${ic253('drop')}<span>融成<small>${drops} 滴（一瓶）</small></span></div>
+        <div>${ic253('bolt')}<span>耗電<small>每小時 ${D.kwhPerHour} 度（只在融雪時）</small></span></div>`;
+    const nowTxt = gen ? (T.running ? `發電中，燃料還能發 ${fmtDur((T.fuel || 0) / (D.kwhPerHour * dmult62(T)) * 3600)}` : (T.fuel > 0 ? '待命' : '沒有燃料'))
+      : (T.run ? `融雪中，還有 ${T.snow || 0} 格雪` : T.wait === 'power' ? '沒電' : T.wait === 'full' ? '水塔滿了' : (T.snow > 0 ? `有 ${T.snow} 格雪` : '沒有雪'));
+    const stat = `<div>${ic253('play')}<span>現在<small>${nowTxt}${!gen && T.bw61 > 0 ? `<br>${Math.ceil(T.bw61 / drops)} 瓶等著進水塔` : ''}</small></span></div>
+        <div>${ic253('cal')}<span>${gen ? '今天發電' : '今天融水'}<small>${gen ? `${today.toFixed(2)} 度` : `${fmtN(Math.round(today))} 滴`}</small></span></div>
+        <div>${ic253('chart')}<span>累計<small>${gen ? `${(T.made62 || 0).toFixed(2)} 度` : `${fmtN(Math.round(T.made62 || 0))} 滴`}</small></span></div>`;
+    const capA = gen ? `<div><small>每小時發電</small><b>${kwh(lv)} 度</b></div>${nx ? `<div><small>升級後（Lv ${lv + 1}）</small><b>${kwh(lv + 1)} 度／時</b><small>燃料 ${fuelSlots62(T, lv + 1)} 格</small></div>` : ''}`
+      : `<div><small>每小時融水</small><b>約 ${fmtN(perH(lv))} 滴</b></div>${nx ? `<div><small>升級後（Lv ${lv + 1}）</small><b>約 ${fmtN(perH(lv + 1))} 滴／時</b><small>每格雪 ${fmtDur(sec(lv + 1))}</small></div>` : ''}`;
+    const flow = gen ? `<div class="col253">${fuels.map(([i, v]) => `<div class="it253">${itemIc253(i)}<span>${itemName(i)}（${v} 度）</span></div>`).join('')}</div><span class="arr253">→</span><div class="col253"><div class="it253">${IMGSRC.ui_electric ? `<img src="${IMGSRC.ui_electric}" alt="">` : ic253('bolt')}<span>電</span></div></div>`
+      : `<div class="col253"><div class="it253">${ic253('snow')}<span>雪 × 1 格</span></div></div><span class="arr253">→</span><div class="col253"><div class="it253">${IMGSRC.ui_water_drop ? `<img src="${IMGSRC.ui_water_drop}" alt="">` : ic253('drop')}<span>寶特瓶水 × 1（${drops} 滴）</span></div></div>`;
+    el.innerHTML = `<div class="g3_253">
+      <div class="card250 mc253"><img src="${IMGSRC['ui_hd_mc_' + T.id] || ''}" alt=""><b><span class="lv253">Lv ${lv}</span>${D.name}</b>
+        ${cost ? `<button class="btn" id="dvUp">${ic253('up')} 升到 Lv ${lv + 1} · ${coinImg()}${fmtN(cost)}</button>` : '<span class="small">已經是最高級</span>'}
+        <button class="btn ghost" id="dev62">${gen ? '投放燃料' : '設備資訊'}</button></div>
+      <div class="card250"><h4>產出概要</h4><div class="rows253">${sum}</div></div>
+      <div class="card250"><h4>當前狀態</h4><div class="rows253">${stat}</div></div></div>
+      <div class="g250" style="margin-top:12px"><div class="card250"><h4>產能資訊</h4><div class="cap253">${capA}</div></div>
+      <div class="card250"><h4>產出流程</h4><div class="flow253">${flow}</div></div></div>
+      <div class="tip253">${ic253('info')}<span>${escapeHTML((V253.machineTips || {})[T.id] || (gen ? `${D.name}燒燃料發電，用不完的電存進電池或賣給電網` : `${D.name}把融雪機周圍的積雪融成水，裝瓶後倒進水塔`))}。</span></div>`;
+    paintIcons(el);
+    $('dev62').onclick = () => { closeModal(); devPanel62(M, k, T); };
+    const up = el.querySelector('#dvUp'); if (up) up.onclick = () => { upWatch253(() => dlvl62(T), () => devStats62(M, k, T)); devUpgrade62(M, k, T); }; }); }
+
+window.__farm253 = { openDen: (mi, k) => openDen(mi, k), statsMachine61: (M, k, T) => statsMachine61(M, k, T), devStats62: (M, k, T) => devStats62(M, k, T), homeless253, freeDen: kind => freeDen(kind) };
 
   })(CFG, ATLAS_JSON);
 })();
