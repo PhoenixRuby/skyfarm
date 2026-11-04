@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.53-ec89a79950'), getJSON('sprites/atlas.json?v=2.53-ec89a79950')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.54.2-0f3d954573'), getJSON('sprites/atlas.json?v=2.54.2-0f3d954573')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.53-ec89a79950';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.54.2-0f3d954573';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -19794,6 +19794,364 @@ function devStats62(M, k, T){ const D = DEV[T.id], lv = dlvl62(T), maxLv = MU62.
     const up = el.querySelector('#dvUp'); if (up) up.onclick = () => { upWatch253(() => dlvl62(T), () => devStats62(M, k, T)); devUpgrade62(M, k, T); }; }); }
 
 window.__farm253 = { openDen: (mi, k) => openDen(mi, k), statsMachine61: (M, k, T) => statsMachine61(M, k, T), devStats62: (M, k, T) => devStats62(M, k, T), homeless253, freeDen: kind => freeDen(kind) };
+
+/* ===== 103. v2.54（規則文件「v2.54 建材小屋轉向、沿邊柵欄」）=====
+   1. 建材小屋轉向：T.dir254 = 'x' 時門開在右下（+x 那一面），整張圖左右鏡射（屋裡的兩股軌道、停著的礦車一起）；
+      門口格 shedDoors251、建議出口 exitOf89 照方向換；門口軌道接進門的那一邊 bit 8（往 -x）。小屋面板「轉向」：門口原本接進門的軌道自動斷開。
+   2. 沿邊柵欄：M.ef254['x,y|2'／'x,y|4'] = 款式 id（木柵欄 'fence'）；每條邊只記在「前面那格」（+x 邊、+y 邊），右上／左上的邊記在隔壁格。
+      選項列的柵欄多一個「整格／沿邊」切換（S.sel.fenceEdge254）；沿邊時點格子跳小選單選邊。擋動物（regionsFor、updateAnimals 重新宣告）和寵物（updatePets 包裝），
+      農夫、機器人、礦車照走。搬移／剷除／收回點到有沿邊柵欄的格子，先跳小選單選要動哪一個。設定 ui.v254。 ===== */
+const V254 = (CFG.ui || {}).v254 || {};
+const TX254 = V254.texts || {};
+
+/* ---------- 1. 建材小屋轉向 ---------- */
+const shX254 = mi => { const sh = shedOf84(mi); return !!(sh && sh.T.dir254 === 'x'); };
+function shedDoors251(M){ const mi = S.maps.indexOf(M); if (mi < 0) return []; const sh = shedOf84(mi); if (!sh) return []; const [w, h] = bldSize('material_shed'), out = [];
+  if (sh.T.dir254 === 'x'){ for (let j = 0; j < h; j++) out.push(tkey(sh.T.rx + w, sh.T.ry + j)); }
+  else for (let i = 0; i < w; i++) out.push(tkey(sh.T.rx + i, sh.T.ry + h));
+  return out; }
+function exitOf89(mi){ const sh = shedOf84(mi); if (!sh) return null; const e0 = RL89.exit || [0, 2], e = sh.T.dir254 === 'x' ? [e0[1], e0[0]] : e0, x = sh.T.rx + e[0], y = sh.T.ry + e[1];
+  return inMap(sh.M, x, y) ? { x, y, k: tkey(x, y) } : null; }
+// 門口軌道接進門：門在右下時往 -x（bit 8）
+{ const _rs254 = roadSprite; roadSprite = function(M, x, y, T){
+  try { if (isRail89(T) && T.sj251 && !T.br247 && T.cm !== undefined && shX254(S.maps.indexOf(M)) && atDoor251(M, tkey(x, y))){ let m = (T.cm || 0) | 8; const b = doorMask247(M).get(tkey(x, y)); if (b) m |= b; return `rail_m${String(m).padStart(2, '0')}`; } } catch(e){}
+  return _rs254(M, x, y, T); }; }
+{ const _rm254 = railMenu246; railMenu246 = function(M, k, x, y, join){ const r = _rm254(M, k, x, y, join);
+  try { if (shX254(S.cur) && atDoor251(M, k)){ const T = M.tiles[k], im = POP53.querySelector('[data-sj251] img'); if (im && T && !T.sj251){ im.dataset.spr = `rail_m${String((T.cm || 0) | 8).padStart(2, '0')}`; try { sprIcons246(); } catch(e){} } } } catch(e){}
+  return r; }; }
+// 畫：整座左右鏡射（以小屋中線為軸）；泡泡字不跟著反
+RT.mir254 = null;
+{ const _db254 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (!T || T.id !== 'material_shed' || T.dir254 !== 'x' || T.rx === undefined) return _db254(T, x, y, t);
+  const { cx } = center(T.rx, T.ry); ctx.save(); ctx.translate(2 * cx, 0); ctx.scale(-1, 1); const was = RT.mir254; RT.mir254 = cx;
+  try { return _db254(T, x, y, t); } finally { RT.mir254 = was; ctx.restore(); } }; }
+{ const _bb254 = bubble; bubble = function(x, y, ...a){ if (RT.mir254 == null) return _bb254(x, y, ...a); const cx = RT.mir254;
+  ctx.save(); ctx.translate(2 * cx, 0); ctx.scale(-1, 1); RT.mir254 = null; try { return _bb254(x, y, ...a); } finally { RT.mir254 = cx; ctx.restore(); } }; }
+function rotateShed254(mi){ const sh = shedOf84(mi); if (!sh) return false; const M = sh.M, old = shedDoors251(M), nd = sh.T.dir254 === 'x' ? 'y' : 'x';
+  let cut = 0; for (const k of old){ const T = M.tiles[k]; if (T && T.sj251){ delete T.sj251; cut++; } }
+  for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && T.id === 'material_shed' && T.rx === sh.T.rx && T.ry === sh.T.ry){ if (nd === 'x') T.dir254 = 'x'; else delete T.dir254; } }
+  try { for (const TR of trainsOf246(mi)) delete TR.home251; } catch(e){}
+  RT.net89 = {}; RT.decoVer++; RT.regionsAt = 0; sfx('place'); afterAction();
+  toast(`${TX254.rotated || '轉好了'}：門朝${nd === 'x' ? '右下' : '左下'}${cut ? (TX254.rotCut || '；原本接進門口的軌道已經斷開，到新的門口鋪軌道接進去') : ''}`, true, cut ? 4500 : 2500); return true; }
+{ const _os254 = openShed84; openShed84 = function(mi){ const r = _os254(mi);
+  try { const el = $('modalBody'); if (el && shedOf84(mi) && !el.querySelector('#rot254')){ const x = shX254(mi), d = document.createElement('div'); d.className = 'card250 rot254';
+      d.innerHTML = `<div><b>${TX254.doorHead || '門的方向'}</b><small>${x ? '門開在右下' : '門開在左下'}・${TX254.doorNote || '軌道從門口那兩格接進去'}</small></div><button class="btn" id="rot254">${TX254.rotBtn || '轉向'} → ${x ? '左下' : '右下'}</button>`;
+      el.appendChild(d); d.querySelector('#rot254').onclick = () => { if (rotateShed254(mi)) openShed84(mi); }; } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `.rot254{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}.rot254 small{display:block;opacity:.75}.rot254 .btn{white-space:nowrap}`; document.head.appendChild(st); }
+
+/* ---------- 2. 沿邊柵欄 ---------- */
+const EFB254 = [1, 2, 4, 8], EFD254 = { 1: [0, -1], 2: [1, 0], 4: [0, 1], 8: [-1, 0] }, EFN254 = { 1: '右上', 2: '右下', 4: '左下', 8: '左上' };
+const bitOf254 = (dx, dy) => dx === 1 ? 2 : dx === -1 ? 8 : dy === 1 ? 4 : 1;
+// 每條邊只記在前面那格：+x 邊 |2、+y 邊 |4
+const efCanon254 = (x, y, b) => b === 2 ? [x, y, 2] : b === 4 ? [x, y, 4] : b === 1 ? [x, y - 1, 4] : [x - 1, y, 2];
+const efKey254 = (x, y, b) => { const [a, c, d] = efCanon254(x, y, b); return `${a},${c}|${d}`; };
+const efGet254 = (M, x, y, b) => (M && M.ef254 && M.ef254[efKey254(x, y, b)]) || null;
+const efBetween254 = (M, x, y, nx, ny) => !!(M && M.ef254 && efGet254(M, x, y, bitOf254(nx - x, ny - y)));
+const efOf254 = (M, x, y) => EFB254.filter(b => efGet254(M, x, y, b));
+const fenceSel254 = () => { if (!S || S.sel.none49) return null; const t = S.sel.tool;
+  if (t === 'deco' && isFence51(S.sel.deco)) return S.sel.deco; if (t === 'animal' && isFence51(S.sel.animal)) return S.sel.animal; return null; };
+const efName254 = st => (CFG.decos[st] || CFG.decos.fence).name;
+const efSpr254 = (st, m) => { const n = st && st !== 'fence' ? `deco_${st}_m${m}_idle` : ''; return n && ATLAS[n] ? n : `deco_fence_m${m}_idle`; };
+// 同一個多格物件（2×2 建物、農舍、車庫、魚池、同一片地形）
+function sameObj254(M, k1, k2){ const A = M.tiles[k1], B = M.tiles[k2]; if (!A || !B) return false;
+  if ((A.t === 'building' || A.t === 'house') && A.t === B.t && A.rx !== undefined && A.rx === B.rx && A.ry === B.ry) return true;
+  if (A.t === 'pool' && B.t === 'pool'){ try { const p = poolOf(M, k1); return !!p && p === poolOf(M, k2); } catch(e){ return false; } }
+  if (A.t === 'gar247' && B.t === 'gar247'){ try { return garMain247(M, A) === garMain247(M, B); } catch(e){ return false; } }
+  if (A.t === 'terrain' && B.t === 'terrain' && A.g && A.g === B.g) return true;
+  return false; }
+function efWhy254(M, x, y, b){ const [ox, oy] = efCanon254(x, y, b); if (!inMap(M, ox, oy)) return TX254.efBack || '島的後面邊緣不能放';
+  const [dx, dy] = EFD254[b], nx = x + dx, ny = y + dy; if (inMap(M, nx, ny) && sameObj254(M, tkey(x, y), tkey(nx, ny))) return TX254.efInside || '同一個建物裡面';
+  return ''; }
+function efSet254(M, x, y, b, st){ M.ef254 = M.ef254 || {}; const key = efKey254(x, y, b); if (st) M.ef254[key] = st; else delete M.ef254[key]; RT.regionsAt = 0; RT.decoVer++; }
+// 付錢：倉庫先用
+function efPay254(st, cx, cy){ const D = CFG.decos[st], stock = S.storage[st] || 0;
+  if (stock > 0){ S.storage[st] = stock - 1; floatText(cx, cy - 24, '從倉庫拿出', '#8a5d36', 11); return true; }
+  if (!isUnlocked(st)){ toast(lockedMsg(st)); return false; }
+  if (!spend(D.cost)) return false; floatText(cx, cy - 24, `-${fmtN(D.cost)}`, '#8a5d36', 11); return true; }
+const efBtnImg254 = (st, b) => `<img src="" data-spr="${efSpr254(st, b === 1 || b === 4 ? '10' : '05')}" alt="">`;
+// 放：點格子跳小選單選邊
+function edgeMenu254(M, x, y, st){ const { cx, cy } = center(x, y), have = efOf254(M, x, y);
+  const free = EFB254.filter(b => !efGet254(M, x, y, b) && !efWhy254(M, x, y, b));
+  let h = `<h5>${escapeHTML(efName254(st))}・${TX254.efHead || '放在哪一邊？'}</h5>`;
+  for (const b of EFB254){ const cur = efGet254(M, x, y, b), why = cur ? '' : efWhy254(M, x, y, b);
+    h += `<button data-e254="${b}" ${cur || why ? 'disabled' : ''}>${efBtnImg254(st, b)}${EFN254[b]}邊${cur ? `（已經有${cur === st ? '' : '：' + escapeHTML(efName254(cur))}）` : why ? `（${why}）` : ''}</button>`; }
+  if (free.length >= 2) h += `<button data-e254="all">${efBtnImg254(st, 2)}${TX254.efAll || '四邊都圍'}（${free.length} 段）</button>`;
+  void have; showPop53(cx, cy - 30, h); try { sprIcons246(); } catch(e){}
+  POP53.querySelectorAll('[data-e254]').forEach(btn => btn.onclick = () => { const v = btn.dataset.e254; closePop53();
+    const list = v === 'all' ? free : [+v]; let n = 0;
+    for (const b of list){ if (efGet254(M, x, y, b) || efWhy254(M, x, y, b)) continue; if (!efPay254(st, cx, cy)) break; efSet254(M, x, y, b, st); n++; }
+    if (n){ sfx('place'); afterAction(); if (EFB254.some(b => !efGet254(M, x, y, b) && !efWhy254(M, x, y, b))) setTimeout(() => { if (fenceSel254() === st && S.sel.fenceEdge254) edgeMenu254(M, x, y, st); }, 0); } }); }
+// 搬移／剷除／收回：先選要動哪一個
+function pickMenu254(M, x, y, tool){ const k = tkey(x, y), { cx, cy } = center(x, y), T = M.tiles[k], es = efOf254(M, x, y);
+  const verb = tool === 'move' ? '搬' : tool === 'remove' ? '剷除' : '收回';
+  let h = `<h5>${TX254.pickHead || '要' + verb + '哪一個？'}</h5>`;
+  if (T) h += `<button data-p254="tile"><img src="" alt="">這一格的${escapeHTML(objName(M, k) || '東西')}</button>`;
+  for (const b of es){ const st = efGet254(M, x, y, b), D = CFG.decos[st] || {}, back = Math.floor((D.cost || 0) * (R.decoSellRate || .5));
+    h += `<button data-p254="${b}">${efBtnImg254(st, b)}${EFN254[b]}邊的${escapeHTML(efName254(st))}${tool === 'remove' ? (D.sellable ? `（賣 +${fmtN(back)}）` : '（收進倉庫）') : tool === 'store' ? '（收進倉庫）' : ''}</button>`; }
+  showPop53(cx, cy - 30, h); try { sprIcons246(); } catch(e){}
+  POP53.querySelectorAll('[data-p254]').forEach(btn => btn.onclick = () => { const v = btn.dataset.p254; closePop53();
+    if (v === 'tile'){ RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return; }
+    const b = +v, st = efGet254(M, x, y, b); if (!st) return;
+    if (tool === 'move'){ RT.mv254 = { mi: S.cur, x, y, b, st }; toast(`${TX254.mvHint || '點另一格，柵欄放在同一邊'}（${EFN254[b]}邊）；點原本那格取消`, false, 3500); updateHint(); return; }
+    efSet254(M, x, y, b, null); const D = CFG.decos[st] || {};
+    if (tool === 'remove' && D.sellable){ const back = Math.floor((D.cost || 0) * (R.decoSellRate || .5)); S.player.coins += back; flyCoins(worldToScreen(cx, cy - 20), back); floatText(cx, cy - 24, `+${fmtN(back)}`, '#c98a0c', 12); }
+    else { S.storage[st] = (S.storage[st] || 0) + 1; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); }
+    sfx('click'); afterAction(); }); }
+function placeMoved254(M, x, y){ const V = RT.mv254; RT.mv254 = null; updateHint();
+  if (!V || V.mi !== S.cur){ return; } if (V.x === x && V.y === y){ toast('取消搬移'); return; }
+  const Mo = S.maps[V.mi]; if (efGet254(Mo, V.x, V.y, V.b) !== V.st){ toast('原本的柵欄不見了'); return; }
+  if (efGet254(M, x, y, V.b)){ toast(`這格的${EFN254[V.b]}邊已經有柵欄`); RT.mv254 = V; return; }
+  const why = efWhy254(M, x, y, V.b); if (why){ toast(`${EFN254[V.b]}邊不能放：${why}`); RT.mv254 = V; return; }
+  efSet254(Mo, V.x, V.y, V.b, null); efSet254(M, x, y, V.b, V.st); sfx('place'); afterAction(); }
+{ const _a254 = act; act = function(x, y){ const M = curMap();
+  if (RT.efSkip254 || (typeof UI !== 'undefined' && UI.expand) || !M || !inMap(M, x, y)) return _a254(x, y);
+  try {
+    if (RT.mv254){ placeMoved254(M, x, y); return; }
+    const st = fenceSel254(); if (st && S.sel.fenceEdge254){ edgeMenu254(M, x, y, st); return; }
+    const tool = S.sel.tool; if (['move', 'remove', 'store'].includes(tool) && !RT.mv && !RT.mv246 && !RT.gmv && !RT.mv247 && efOf254(M, x, y).length){ pickMenu254(M, x, y, tool); return; }
+  } catch(e){ console.warn(e); }
+  return _a254(x, y); }; }
+{ const _st254 = setTool; setTool = function(id){ if (S && id !== S.sel.tool) RT.mv254 = null; const r = _st254(id); fe254Sync(); return r; }; }
+// 2×2 建物蓋在邊柵欄上：壓到內部的邊收回倉庫
+function efClean254(){ if (!S || !S.maps) return; let n = 0;
+  for (const M of S.maps){ if (!M || !M.ef254) continue; for (const key of Object.keys(M.ef254)){ const [p, b] = key.split('|'), [x, y] = pkey(p), [dx, dy] = EFD254[+b];
+      if (!inMap(M, x, y) || (inMap(M, x + dx, y + dy) && sameObj254(M, p, tkey(x + dx, y + dy)))){ const st = M.ef254[key]; S.storage[st] = (S.storage[st] || 0) + 1; delete M.ef254[key]; n++; } } }
+  if (n){ RT.regionsAt = 0; RT.decoVer++; toast(`${n} 段沿邊柵欄被蓋住，收進倉庫了`); } }
+{ const _aa254 = afterAction; afterAction = function(...a){ try { efClean254(); } catch(e){} return _aa254(...a); }; }
+
+// 畫：在格子的東西、動物之後畫；2×2 建物的邊等建物畫完（錨點那格）才畫
+function bigOf254(M, T){ if (!T || T.rx === undefined) return null;
+  if (T.t === 'building' && BLD[T.id]){ const [w, h] = bldSize(T.id); if (w * h > 1) return { x0: T.rx, y0: T.ry, w, h }; }
+  if (T.t === 'house') return { x0: T.rx, y0: T.ry, w: 2, h: 2 };
+  return null; }
+function drawEdge254(M, x, y, b){ const st = M.ef254[`${x},${y}|${b}`]; if (!st) return; const { cx, cy } = center(x, y);
+  ctx.save(); ctx.translate(b === 2 ? HW / 2 : -HW / 2, HH / 2); spr(efSpr254(st, b === 2 ? '05' : '10'), 0, cx, cy); ctx.restore(); }
+function drawEdges254(M, k){ if (!M || !M.ef254) return; const [x, y] = pkey(k), big = bigOf254(M, M.tiles[k]);
+  if (!big){ drawEdge254(M, x, y, 2); drawEdge254(M, x, y, 4); return; }
+  if (x !== big.x0 + big.w - 1 || y !== big.y0 + big.h - 1) return;
+  for (let j = 0; j < big.h; j++) for (let i = 0; i < big.w; i++){ drawEdge254(M, big.x0 + i, big.y0 + j, 2); drawEdge254(M, big.x0 + i, big.y0 + j, 4); } }
+{ const _da254 = drawAnimalsAt; drawAnimalsAt = function(k, t){ const r = _da254(k, t); try { drawEdges254(curMap(), k); } catch(e){ if (!RT.err254d){ RT.err254d = 1; console.warn(e); } } return r; }; }
+// 搬移中：要搬的那條邊畫亮
+{ const _dw254 = drawWorld; drawWorld = function(...a){ const r = _dw254(...a);
+  try { const V = RT.mv254; if (V && V.mi === S.cur){ const { cx, cy } = center(V.x, V.y), [dx, dy] = EFD254[V.b], e = center(V.x + dx / 2, V.y + dy / 2), u = dx ? [-HW / 2, HH / 2] : [HW / 2, HH / 2];
+      ctx.save(); ctx.strokeStyle = 'rgba(255,214,90,.95)'; ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(e.cx - u[0], e.cy - u[1]); ctx.lineTo(e.cx + u[0], e.cy + u[1]); ctx.stroke(); ctx.restore(); void cx; void cy; } } catch(e){}
+  return r; }; }
+
+// 擋動物：重新宣告 regionsFor（相鄰兩格中間有邊柵欄就不連通）、updateAnimals 最裡層（不往有柵欄的那邊走）
+function regionsFor(mi){
+  const now = performance.now();
+  if (RT.regions[mi] && now - RT.regionsAt < 1500) return RT.regions[mi];
+  if (now - RT.regionsAt >= 1500){ RT.regions = {}; RT.regionsAt = now; }
+  const M = S.maps[mi], id = new Map(); let rid = 0;
+  for (const [x,y] of mapTiles(M)){ const k = tkey(x,y); if (id.has(k) || !walkK(M, k)) continue; rid++;
+    const st = [k]; id.set(k, rid);
+    while (st.length){ const c = st.pop(), [cx,cy] = pkey(c); for (const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){ const nx = cx+dx, ny = cy+dy, n = tkey(nx,ny); if (!id.has(n) && inMap(M,nx,ny) && walkK(M, n) && !efBetween254(M, cx, cy, nx, ny)){ id.set(n, rid); st.push(n); } } } }
+  return (RT.regions[mi] = id);
+}
+function updateAnimals(M, t){
+  const mi = S.cur, reg = regionsFor(mi), dt = Math.min(.1, RT.frameDt || .016);
+  RT.animAt = new Map(); RT.animHit = [];
+  for (const k in M.tiles){ const T = M.tiles[k]; if (T.t !== 'animal') continue;
+    const [hx,hy] = pkey(k), key = `${mi}:${k}`; let ag = RT.agents[key];
+    if (!ag) ag = RT.agents[key] = { x: hx, y: hy, cx: hx, cy: hy, tx: null, ty: null, wait: 1 + (T.r || 0) % 3, flip: false };
+    const lifted = liftOf(k), home = reg.get(k);
+    if (!motion || lifted){ ag.x = hx; ag.y = hy; ag.cx = hx; ag.cy = hy; ag.tx = null; }
+    else {
+      const ck = tkey(ag.cx, ag.cy); if (ck !== k && (reg.get(ck) !== home || !walkK(M, ck))){ ag.x = hx; ag.y = hy; ag.cx = hx; ag.cy = hy; ag.tx = null; }
+      if (ag.tx === null){
+        if (ag.wait > 0) ag.wait -= dt;
+        else { const opts = [[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy]) => [ag.cx+dx, ag.cy+dy]).filter(([x,y]) => { const n = tkey(x,y); return reg.get(n) === home && !efBetween254(M, ag.cx, ag.cy, x, y) && (n === k || (stepOk(M.tiles[n]) && !(M.glass && M.glass[n]))); });
+          if (opts.length){ const [x,y] = opts[Math.floor(Math.random()*opts.length)]; ag.tx = x; ag.ty = y; ag.flip = (x - y) < (ag.cx - ag.cy); } else ag.wait = 2; }
+      } else {
+        const dx = ag.tx - ag.x, dy = ag.ty - ag.y, d = Math.hypot(dx, dy), sp = (ROAM.tilesPerSecond || .35) * dt;
+        if (d <= sp){ ag.x = ag.tx; ag.y = ag.ty; ag.cx = ag.tx; ag.cy = ag.ty; ag.tx = null; const [a,b] = ROAM.pauseSeconds || [2,6]; ag.wait = Math.random() < .45 ? 0 : a + Math.random()*(b - a); }
+        else { ag.x += dx/d*sp; ag.y += dy/d*sp; }
+      }
+    }
+    const c = center(ag.x, ag.y), dk = tkey(Math.round(ag.x), Math.round(ag.y));
+    const e = { T, k, px: c.cx + (lifted ? lifted.x : 0), py: c.cy + (lifted ? lifted.y : 0), moving: ag.tx !== null || !!lifted, flip: ag.flip };
+    if (!RT.animAt.has(lifted ? k : dk)) RT.animAt.set(lifted ? k : dk, []); RT.animAt.get(lifted ? k : dk).push(e);
+    RT.animHit.push({ k, x: e.px, y: e.py });
+  }
+  for (const key in RT.agents){ const [m, kk] = [key.split(':')[0], key.slice(key.indexOf(':')+1)]; if (+m === mi && !(M.tiles[kk] && M.tiles[kk].t === 'animal')) delete RT.agents[key]; }
+}
+// 擋寵物：直線路線穿過邊柵欄就不走（晚上回窩、追天敵照走）
+function efCross254(M, x0, y0, x1, y1){ if (!M || !M.ef254) return false; let any = false; for (const _ in M.ef254){ any = true; break; } if (!any) return false;
+  const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / .1)); let px = Math.round(x0), py = Math.round(y0);
+  for (let i = 1; i <= n; i++){ const qx = Math.round(x0 + (x1 - x0) * i / n), qy = Math.round(y0 + (y1 - y0) * i / n); if (qx === px && qy === py) continue;
+    if (qx !== px && qy !== py){ if (efBetween254(M, px, py, qx, py) || efBetween254(M, qx, py, qx, qy) || efBetween254(M, px, py, px, qy) || efBetween254(M, px, qy, qx, qy)) return true; }
+    else if (efBetween254(M, px, py, qx, qy)) return true;
+    px = qx; py = qy; }
+  return false; }
+{ const _up254 = updatePets; updatePets = function(M, t){ const r = _up254(M, t);
+  try { if (M && M.ef254 && !isNightAt(Date.now())) for (const id in RT.petAg || {}){ const ag = RT.petAg[id]; if (!ag || ag.tx === null || ag.chase) continue; if (efCross254(M, ag.x, ag.y, ag.tx, ag.ty)){ ag.tx = null; ag.wait = 1; } } } catch(e){}
+  return r; }; }
+
+// 選項列：整格｜沿邊 切換（插在膠囊前面，收成膠囊時也看得到）
+const FE254 = document.createElement('div'); FE254.id = 'fe254';
+FE254.innerHTML = `<span>${TX254.efMode || '柵欄放法'}</span><button type="button" data-fe="0">${TX254.efTile || '整格'}</button><button type="button" data-fe="1">${TX254.efEdge || '沿邊'}</button>`;
+{ const bt = document.querySelector('.bottom'), cap = document.getElementById('cap2522'); if (bt) bt.insertBefore(FE254, cap || bt.firstChild); }
+FE254.onclick = e => { const b = e.target.closest('[data-fe]'); if (!b || !S) return; e.stopPropagation(); S.sel.fenceEdge254 = b.dataset.fe === '1'; RT.mv254 = null; fe254Sync(); updateHint();
+  toast(S.sel.fenceEdge254 ? (TX254.efOn || '沿邊放：點格子選要放在哪一邊') : (TX254.efOff || '整格放：一格一段柵欄'), false, 2200); };
+function fe254Sync(){ const on = !!fenceSel254(); document.body.classList.toggle('fe254', on); if (!on || !S) return; const e = !!S.sel.fenceEdge254;
+  FE254.querySelectorAll('[data-fe]').forEach(b => b.classList.toggle('on', (b.dataset.fe === '1') === e)); }
+{ const _ut254 = UIbuildTray; UIbuildTray = function(...a){ const r = _ut254(...a); try { fe254Sync(); } catch(e){} return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+#fe254{display:none;align-self:center;align-items:center;gap:4px;border:1px solid var(--gline,var(--line));background:var(--gcard,var(--panel));color:var(--gtx,var(--ink));
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:999px;padding:3px;font-size:12px;box-shadow:0 3px 10px rgba(0,0,0,.18);margin-bottom:4px}
+#fe254 span{padding:0 6px 0 8px;opacity:.75;white-space:nowrap}
+#fe254 button{border:none;background:none;color:inherit;font:inherit;padding:4px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+#fe254 button.on{background:#2d7be0;color:#fff;font-weight:700}
+body.fe254 #fe254{display:flex}
+body.m-land #fe254{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(var(--dockh,64px) + 88px);z-index:3}
+body.ui-col #fe254{display:none!important}
+`; document.head.appendChild(st); }
+
+// 存檔：沿邊柵欄 M.ef254（舊存檔沒有）；壞掉的鍵丟掉
+{ const _ns254 = normalizeState; normalizeState = function(d){ const r = _ns254(d), D = r || d;
+  try { if (D && D.maps){ for (const M of D.maps){ if (!M || !M.ef254) continue; if (typeof M.ef254 !== 'object'){ delete M.ef254; continue; }
+        for (const key of Object.keys(M.ef254)) if (!/^-?\d+,-?\d+\|[24]$/.test(key) || typeof M.ef254[key] !== 'string' || !CFG.decos[M.ef254[key]]) delete M.ef254[key]; }
+      D.v254 = 1; } } catch(e){ console.warn(e); }
+  return r; }; }
+
+window.__farm254 = { rotateShed: mi => rotateShed254(mi), shedDoors: M => shedDoors251(M), exitOf: mi => exitOf89(mi), edgeMenu: (M, x, y, st) => edgeMenu254(M, x, y, st), pickMenu: (M, x, y, t) => pickMenu254(M, x, y, t),
+  efGet254, efKey254, efSet254, efWhy254, efCross254, efBetween254, regionsFor: mi => regionsFor(mi), fenceSel254, fe254Sync, efClean254, act: (x, y) => act(x, y), roadSprite: (M, x, y, T) => roadSprite(M, x, y, T) };
+
+/* ===== 104. v2.54.1（規則文件「v2.54.1 圖鑑圖示模式、「離開多久」建議、詳情縮圖」）=====
+   1. 圖鑑分頁清單「☰ 清單｜▦ 圖示」切換（localStorage skyfarm-bookIcons，不進存檔）：圖示模式一排 3 個、圖在上字在下；電腦版左側欄加寬（ui.v2541.iconSideWidth）。
+   2. 「離開多久」：說明寫清楚、「建議種」＋第 2、3 名（`rankCrops2541(hours, n)` 同 bestCropFor 的算法）。
+   3. 詳情卡的大圖：layoutBook 包裝，.bkdet 內容一換就用 paintInto75 重畫並登記到 g64「圖到了就重畫」清單。 ===== */
+const V2541 = (CFG.ui || {}).v2541 || {};
+const BKI_KEY2541 = 'skyfarm-bookIcons';
+const bkIcons2541 = () => { try { return localStorage.getItem(BKI_KEY2541) === '1'; } catch(e){ return false; } };
+function bkMode2541(on){ try { localStorage.setItem(BKI_KEY2541, on ? '1' : '0'); } catch(e){} applyBkMode2541(); }
+function applyBkMode2541(){ const sh = document.querySelector('#modal .sheet'); if (!sh) return; const on = sh.classList.contains('bookpg') && bkIcons2541(); sh.classList.toggle('bkic2541', on);
+  const tg = document.getElementById('bkv2541'); if (tg) tg.querySelectorAll('[data-bkv]').forEach(b => b.classList.toggle('on', (b.dataset.bkv === 'icon') === on)); }
+function bkToggle2541(){ const te = $('modalTabs'), sh = document.querySelector('#modal .sheet'); if (!te || !sh || !sh.classList.contains('bookpg')) return;
+  if (!te.querySelector('#bkv2541')){ const d = document.createElement('div'); d.id = 'bkv2541';
+    d.innerHTML = `<button type="button" data-bkv="list">☰ ${escapeHTML(V2541.listLabel || '清單')}</button><button type="button" data-bkv="icon">▦ ${escapeHTML(V2541.iconLabel || '圖示')}</button>`;
+    d.onclick = e => { const b = e.target.closest('[data-bkv]'); if (!b) return; e.stopPropagation(); bkMode2541(b.dataset.bkv === 'icon'); };
+    te.insertBefore(d, te.firstChild); }
+  applyBkMode2541(); }
+{ const _om2541 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { const r = r0(k, el); if (k === 'plan'){ try { planPanel2541(el); } catch(e){ console.warn(e); } } return r; }; }
+  const r = _om2541(title, tabs, render, initial);
+  try { if (title === '圖鑑') bkToggle2541(); else { const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.remove('bkic2541'); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); const W = V2541.iconSideWidth || 260; st.textContent = `
+#bkv2541{display:flex;gap:4px;padding:3px;margin:0 0 6px;border-radius:12px;background:rgba(127,127,127,.16)}
+#bkv2541 button{flex:1;border:0;background:none;color:inherit;font:inherit;font-size:13px;padding:6px 4px;border-radius:9px;cursor:pointer;white-space:nowrap;text-align:center!important;justify-content:center}
+#bkv2541 button.on{background:var(--gsel,#2f6f8f);color:#fff;font-weight:700}
+.sheet.pg.bookpg.bkic2541{grid-template-columns:${W}px minmax(0,1fr)}
+.sheet.pg.bookpg.bkic2541 #modalTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-content:start;gap:6px}
+.sheet.pg.bookpg.bkic2541 #modalTabs>#bkv2541,.sheet.pg.bookpg.bkic2541 #modalTabs>.bkgrp252{grid-column:1/-1}
+.sheet.pg.bookpg.bkic2541 #modalTabs>button{flex-direction:column;justify-content:flex-start;align-items:center;gap:4px;text-align:center!important;padding:8px 2px 6px;font-size:12px;line-height:1.25;min-height:78px;white-space:normal;word-break:keep-all}
+.sheet.pg.bookpg.bkic2541 #modalTabs>button img{width:44px;height:44px;flex:0 0 44px}
+@media (max-width:900px){.sheet.pg.bookpg.bkic2541{grid-template-columns:minmax(0,1fr)}.sheet.pg.bookpg.bkic2541 #modalTabs{width:min(92%,360px)}}
+`; document.head.appendChild(st); }
+
+/* ---------- 2. 離開多久 ---------- */
+function rankCrops2541(hours, n = 3){ const I = hours * 3600, drone = Date.now() < S.automation.waterUntil, out = [];
+  for (const [id, C] of Object.entries(CFG.crops)){ if (!isUnlocked(id) || C.isFeed) continue;
+    const wet = R.moistLevelSeconds * R.moistMaxLevel / C.waterUse;
+    const ready = drone ? C.growSeconds : (C.growSeconds <= wet ? C.growSeconds : wet + (C.growSeconds - wet) / R.dryGrowthRate);
+    if (ready > I) continue;
+    const wither = !drone && ready > wet ? (I > wet + R.droughtWitherSeconds) : (I > (drone ? 1e12 : wet + R.droughtWitherSeconds));
+    out.push({ id, C, net: C.sellPrice * (C.yield || 1) - C.seedCost, ready, wither, seed: C.seedCost }); }
+  out.sort((a, b) => b.net - a.net || a.ready - b.ready); return { list: out.slice(0, n), drone }; }
+const ic2541 = id => { const [n, f] = itemSprite('crop', id) || []; return n ? `<canvas data-spr="${n}" data-f="${f || 0}" class="ico"></canvas>` : ''; };
+function planPanel2541(el){ const P = el.querySelector('#planOut'), go0 = $('planGo'); if (!P || !go0) return;
+  const intro = el.querySelector(':scope > p'); if (intro) intro.innerHTML = escapeHTML(V2541.planIntro || '離開這段時間，現在種什麼最賺？輸入幾小時後回來，從已解鎖、來得及成熟的作物裡，照每格淨利排出前 3 名。');
+  const go = () => { const h = parseFloat($('planH').value) || 1, { list, drone } = rankCrops2541(h, V2541.planTop || 3);
+    if (!list.length){ P.innerHTML = '<p>這段時間太短，沒有來得及成熟的作物。</p>'; return; }
+    P.innerHTML = (drone ? '' : `<p class="small pl2541n">${escapeHTML(V2541.noDrone || '沒有無人機：照不澆水計算（乾了長得慢，太久會枯萎）')}</p>`) + list.map((b, i) => `<div class="card pl2541${i ? '' : ' top'}">
+      <h4>${i ? `<span class="rk2541">第 ${i + 1} 名</span>` : `<span class="rk2541 best">${escapeHTML(V2541.bestLabel || '建議種')}</span>`}${ic2541(b.id)}${b.C.name}</h4>
+      <div class="kv"><span>每格淨利</span><span>${fmtN(b.net)} 金幣</span><span>成熟時間</span><span>約 ${fmtDur(b.ready)}</span><span>種子錢</span><span>${fmtN(b.seed)} 金幣／格</span>
+        <span>回來時</span><span>${b.wither ? '已枯萎：澆一次水恢復原價，或直接收 8 折' : '正常可收成'}</span></div></div>`).join('');
+    paintIcons(P); };
+  const btn = go0.cloneNode(true); go0.replaceWith(btn); btn.onclick = go; const inp = $('planH'); if (inp) inp.onkeydown = e => { if (e.key === 'Enter') go(); }; go(); }
+{ const st = document.createElement('style'); st.textContent = `
+.pl2541{margin-top:10px}.pl2541 h4{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pl2541 .rk2541{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:rgba(127,127,127,.2)}
+.pl2541 .rk2541.best{background:#2d7be0;color:#fff}.pl2541.top{border:2px solid rgba(45,123,224,.55)}
+.pl2541n{opacity:.8;margin:8px 0 0}
+`; document.head.appendChild(st); }
+
+/* ---------- 3. 詳情卡大圖：圖到了就重畫 ---------- */
+{ const _lb2541 = layoutBook; layoutBook = function(k, el){ const r = _lb2541(k, el);
+  try { const det = el.querySelector('.bkdet'); if (det && !det.dataset.o2541){ det.dataset.o2541 = 1;
+      const paint = () => det.querySelectorAll('canvas.dico[data-spr]').forEach(c => { if (c.dataset.p2541 === c.dataset.spr) return; c.dataset.p2541 = c.dataset.spr; paintInto75(c, c.dataset.spr, +c.dataset.f || 0, 96); });
+      paint(); new MutationObserver(paint).observe(det, { childList: true, subtree: true }); } } catch(e){ console.warn(e); }
+  return r; }; }
+
+window.__farm2541 = { rankCrops2541, bkMode2541, bkIcons2541, applyBkMode2541 };
+
+/* ===== 105. v2.54.2（規則文件「v2.54.2 小屋小選單、接軌小選單示意圖、窗戶燈光」）=====
+   1. 點建材小屋（不是搬移／剷除／收回工具）先跳小選單：查看內容（openShed84）、轉向（rotateShed254）、收回倉庫（借收回工具）。
+   2. 軌道小選單的接上／斷開：圖示改成這一格＋四個鄰格的示意圖 shape2542()（灰＝現在的接法、綠＝要接上、紅虛線＝要斷開；鄰格有軌道畫軌道、
+      建材小屋／車庫畫成方塊並把接進門也算一邊），選項後面寫「→ 變成○○」，第一行寫「現在：○○（接 …）」。
+   3. 窗戶燈光照玻璃的形狀：美術 batch63（art/v2542_63.py），不用改程式。設定 ui.v2542。 ===== */
+const V2542 = (CFG.ui || {}).v2542 || {};
+
+/* ---------- 1. 小屋小選單 ---------- */
+function shedMenu2542(mi, x, y){ const sh = shedOf84(mi); if (!sh) return false; const X = shX254(mi), { cx, cy } = center(sh.T.rx + .5, sh.T.ry + .5);
+  showPop53(cx, cy - 60, `<h5>${escapeHTML(BLD.material_shed ? BLD.material_shed.name : '建材小屋')}</h5>
+    <button data-sh2542="open"><img src="${IMGSRC.ui_material_shed || ''}" alt="">${escapeHTML(V2542.open || '查看內容（建材、擴充、軌道）')}</button>
+    <button data-sh2542="rot"><img src="${IMGSRC.ui_tool_railjoin || ''}" alt="">${escapeHTML(V2542.rot || '轉向')}：門${X ? '右下' : '左下'} → ${X ? '左下' : '右下'}</button>
+    <button data-sh2542="store"><img src="${IMGSRC.ui_tool_store || ''}" alt="">${escapeHTML(V2542.store || '收回倉庫')}</button>`);
+  POP53.querySelectorAll('[data-sh2542]').forEach(b => b.onclick = () => { const a = b.dataset.sh2542; closePop53();
+    if (a === 'open') openShed84(mi);
+    else if (a === 'rot') rotateShed254(mi);
+    else if (a === 'store') withTool('store', {}, () => { RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } }); });
+  return true; }
+{ const _a2542 = act; act = function(x, y){ const M = curMap();
+  try { if (M && inMap(M, x, y) && !RT.efSkip254 && !RT.mv && !RT.mv254 && !RT.mv246 && !RT.gmv && !(typeof UI !== 'undefined' && UI.expand)){ const T = M.tiles[tkey(x, y)], tool = S.sel.tool;
+      if (T && T.t === 'building' && T.id === 'material_shed' && !['remove', 'store', 'move'].includes(tool) && !(tool === 'build' && S.sel.build === 'material_shed')){ if (shedMenu2542(S.cur, x, y)) return; } } } catch(e){ console.warn(e); }
+  return _a2542(x, y); }; }
+
+/* ---------- 2. 接軌示意圖 ---------- */
+const DB2542 = { 1: [1, -1], 2: [1, 1], 4: [-1, 1], 8: [-1, -1] };   // 畫面上的方向（x 往右、y 往下）：右上、右下、左下、左上
+const pcnt2542 = m => ((m & 1) ? 1 : 0) + ((m & 2) ? 1 : 0) + ((m & 4) ? 1 : 0) + ((m & 8) ? 1 : 0);
+function shapeName2542(m){ const n = pcnt2542(m); if (!n) return '單獨一格'; if (n === 1) return '盡頭'; if (n === 4) return '十字'; if (n === 3) return '三通'; return (m === 5 || m === 10) ? '直線' : '彎道'; }
+const dirsTxt2542 = m => [1, 2, 4, 8].filter(b => m & b).map(b => DN246[b]).join('、');
+// 這格接進建物的邊（建材小屋門口、車庫門口）
+function doorBits2542(M, k, T){ let d = 0; try { if (T && T.sj251 && atDoor251(M, k)) d |= shX254(S.maps.indexOf(M)) ? 8 : 1; } catch(e){} try { const b = doorMask247(M).get(k); if (b) d |= b; } catch(e){} return d; }
+function shape2542(M, k, cur, next, door){ const r = Math.min(2, window.devicePixelRatio || 1), W = 104, H = 58, c = document.createElement('canvas'); c.width = W * r; c.height = H * r; c.className = 'sh2542';
+  const g = c.getContext('2d'); g.scale(r, r); const cx = W / 2, cy = H / 2, hw = 21, hh = 10.5, [x, y] = pkey(k);
+  const dia = (px, py, fill, line) => { g.beginPath(); g.moveTo(px, py - hh); g.lineTo(px + hw, py); g.lineTo(px, py + hh); g.lineTo(px - hw, py); g.closePath(); if (fill){ g.fillStyle = fill; g.fill(); } if (line){ g.strokeStyle = line; g.lineWidth = 1; g.stroke(); } };
+  const seg = (px, py, b, col, w, dash) => { const [sx, sy] = DB2542[b]; g.save(); g.lineCap = 'round'; g.lineWidth = w; g.strokeStyle = col; if (dash) g.setLineDash(dash); g.beginPath(); g.moveTo(px, py); g.lineTo(px + sx * hw / 2, py + sy * hh / 2); g.stroke(); g.restore(); };
+  const nb = b => { const d = D246.find(q => q[0] === b); return tkey(x + d[1], y + d[2]); };
+  g.save(); g.beginPath(); g.rect(0, 0, W, H); g.clip();
+  // 鄰格：地面、建物方塊、鄰格自己的軌道（淡）
+  for (const b of [1, 2, 4, 8]){ const [sx, sy] = DB2542[b], px = cx + sx * hw, py = cy + sy * hh, N = M.tiles[nb(b)];
+    const bld = (door & b) || (N && (N.t === 'building' || N.t === 'gar247' || N.t === 'house'));
+    dia(px, py, bld ? 'rgba(176,104,62,.85)' : isRail89(N) ? 'rgba(150,150,150,.30)' : 'rgba(150,150,150,.13)', 'rgba(120,120,120,.4)');
+    if (bld){ g.fillStyle = '#fff'; g.font = 'bold 9px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(N && N.t === 'gar247' ? '庫' : '屋', px + sx * 4, py + sy * 2); }
+    if (isRail89(N)){ const nm = N.cm || 0; for (const q of [1, 2, 4, 8]) if (nm & q) seg(px, py, q, 'rgba(120,88,58,.55)', 2.4);
+      if (!nm){ g.fillStyle = 'rgba(120,88,58,.6)'; g.fillRect(px - 3, py - 1.5, 6, 3); } } }
+  dia(cx, cy, 'rgba(255,255,255,.7)', 'rgba(45,123,224,.95)');
+  // 這一格：保留（深褐）、接上（綠）、斷開（紅虛線）；接進建物的邊算保留
+  for (const b of [1, 2, 4, 8]){ const add = !(cur & b) && (next & b) && !(door & b), del = (cur & b) && !(next & b), keep = (door & b) || ((cur & b) && (next & b));
+    if (keep) seg(cx, cy, b, 'rgba(84,56,30,.95)', 3.4); else if (add) seg(cx, cy, b, '#1fae58', 4.2); else if (del) seg(cx, cy, b, '#e2463d', 4.2, [3, 3]); }
+  if (!pcnt2542(next | door)){ g.fillStyle = 'rgba(84,56,30,.9)'; g.beginPath(); g.arc(cx, cy, 3, 0, 7); g.fill(); }
+  g.restore(); return c; }
+{ const st = document.createElement('style'); st.textContent = `#pick53:has(canvas.sh2542){max-width:340px}#pick53 canvas.sh2542{width:104px;height:58px;flex:0 0 104px}#pick53 .now2542{display:flex;align-items:center;gap:6px}#pick53 .now2542 canvas.sh2542{width:78px;height:44px;flex:0 0 78px}#pick53 .now2542{margin:-2px 4px 6px;font-size:12px;opacity:.8}#pick53 .to2542{opacity:.75;font-size:12px;margin-left:4px;white-space:nowrap}`; document.head.appendChild(st); }
+{ const _rm2542 = railMenu246; railMenu246 = function(M, k, x, y, join){ const r = _rm2542(M, k, x, y, join);
+  try { const T = M.tiles[k]; if (!isRail89(T) || POP53.hidden) return r; const cur = T.cm || 0, door = doorBits2542(M, k, T);
+    const h5 = POP53.querySelector('h5'); if (h5 && !POP53.querySelector('.now2542')){ const all = cur | door;
+      h5.insertAdjacentHTML('afterend', `<p class="now2542"><span>${escapeHTML(V2542.now || '現在')}：${shapeName2542(all)}${all ? `（接 ${dirsTxt2542(all)}${door ? `；含接進${T.sj251 && atDoor251(M, k) ? '建材小屋' : '車庫'}的那邊` : ''}）` : ''}</span></p>`); const np = POP53.querySelector('.now2542'); if (np) np.prepend(shape2542(M, k, cur, cur, door)); }
+    POP53.querySelectorAll('[data-r246]').forEach(btn => { const [a, v] = btn.dataset.r246.split(':'); let next = null;
+      if (a === 'link') next = cur | +v; else if (a === 'cut') next = cur & ~(+v); else if (a === 'linkall') next = v.split('.').reduce((m, b) => m | +b, cur);
+      if (next === null) return; const ic = btn.querySelector('img, canvas'); const cv = shape2542(M, k, cur, next, door); if (ic) ic.replaceWith(cv); else btn.prepend(cv);
+      if (!btn.querySelector('.to2542')) btn.insertAdjacentHTML('beforeend', `<span class="to2542">→ ${shapeName2542(next | door)}</span>`); });
+    const sj = POP53.querySelector('[data-sj251]'); if (sj){ const db = shX254(S.cur) ? 8 : 1, on = sj.dataset.sj251 === 'cut', d0 = door & ~db;
+      const cv = shape2542(M, k, cur | (on ? db : 0), cur | (on ? 0 : db), d0); const ic = sj.querySelector('img, canvas'); if (ic) ic.replaceWith(cv); else sj.prepend(cv);
+      if (!sj.querySelector('.to2542')) sj.insertAdjacentHTML('beforeend', `<span class="to2542">→ ${shapeName2542((on ? cur : cur | db) | d0)}</span>`); }
+  } catch(e){ console.warn(e); }
+  return r; }; }
+
+window.__farm2542 = { shedMenu2542, shape2542, shapeName2542, doorBits2542, act: (x, y) => act(x, y), railMenu: (...a) => railMenu246(...a) };
 
   })(CFG, ATLAS_JSON);
 })();
