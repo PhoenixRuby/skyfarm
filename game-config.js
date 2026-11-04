@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.52",
+  "configVersion": "2.52.3",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4603,7 +4603,8 @@ window.GAME_CONFIG = {
     "general": 5,
     "recycle": 5,
     "sewageDrops": 200
-   }
+   },
+   "limitScope": "island"
   },
   "truck_pad": {
    "name": "垃圾車停車場",
@@ -7705,7 +7706,8 @@ window.GAME_CONFIG = {
      "ids": [
       "corn_cake_machine",
       "fish_feed_machine",
-      "compost_bin"
+      "compost_bin",
+      "snow_melter"
      ]
     },
     {
@@ -7754,9 +7756,41 @@ window.GAME_CONFIG = {
      "icon": "ui_trash_station",
      "ids": [
       "trash_station",
-      "truck_pad",
-      "snow_melter",
-      "material_shed"
+      "truck_pad"
+     ]
+    },
+    {
+     "id": "rail",
+     "label": "鐵道",
+     "icon": "ui_rail",
+     "ids": [
+      "material_shed",
+      "rail",
+      "rail_cross",
+      "rail_station",
+      "rail_fence",
+      "rail_lamp",
+      "collect_point",
+      "garage"
+     ]
+    },
+    {
+     "id": "bridge",
+     "label": "橋",
+     "icon": "ui_bridge_wood",
+     "ids": [
+      "bridge_wood",
+      "bridge_stone"
+     ]
+    },
+    {
+     "id": "terrain",
+     "label": "地形",
+     "icon": "ui_river_dig",
+     "ids": [
+      "river_dig",
+      "river_fill",
+      "dynamite"
      ]
     }
    ],
@@ -8102,7 +8136,7 @@ window.GAME_CONFIG = {
     ]
    }
   },
-  "levelCumulative": true,
+  "levelCumulative": false,
   "animalSellOnTap": true,
   "nightRangeMaps": {
    "pickBanner": "filter",
@@ -8362,6 +8396,32 @@ window.GAME_CONFIG = {
    "desktopMinWidth": 900,
    "desktopCardWidth": 680,
    "note": "升級視窗只有按「太好了」才收起；新解鎖全部列出（卡片內捲動）；電腦版寬、手機直拿一列 4 個、橫拿左右兩欄。流星許願視窗相同"
+  },
+  "trayPick2522": {
+   "enabled": true,
+   "tools": [
+    "seed",
+    "animal",
+    "fish",
+    "insect",
+    "build",
+    "deco",
+    "care"
+   ],
+   "more": "換一個",
+   "note": "玩家點了選項列的品項（選起來）後，分類列、分頁、選項列收起來，改成一條「目前：品項 · 價錢 ▲ 換一個」小膠囊；點膠囊、換工具、換分頁時展開"
+  },
+  "fade2523": {
+   "alpha": 0.45,
+   "rows": {
+    "1": 3,
+    "2": 4
+   },
+   "skip": [
+    "truck_pad",
+    "drone_pad"
+   ],
+   "note": "農舍、倉庫、儲藏屋、建材小屋、水塔、垃圾站、基座、車庫：滑鼠／手指指到它後面 rows 排以內的格子時，整座畫成 alpha 透明度；rows 依佔地 1×1 或 2×2；skip 是平的不用透明"
   }
  },
  "droneWatering": {
@@ -12734,7 +12794,7 @@ window.GAME_CONFIG = {
   },
   "inspect": {
    "title": "查看地形",
-   "later": "炸藥在「建設 · 環境」（森林、土丘一格 1 支，礦山整座「格數 × 2」支）；炸完變碎屑，用「整理 · 清理」敲 3 下、付 30 金幣，或讓整地機器人清。"
+   "later": "炸藥在「建設 · 地形」（森林、土丘一格 1 支，礦山整座「格數 × 2」支）；炸完變碎屑，用「整理 · 清理」敲 3 下、付 30 金幣，或讓整地機器人清。"
   }
  },
  "terrain243": {
@@ -12994,7 +13054,7 @@ window.GAME_CONFIG = {
    "note": "簡單版：把軌道鋪在河上就是鐵道橋（木橋圖 bridge_wood_<x|y>_one＋軌道），只有列車過得去（機器人、動物不能走）；收回或剷除後河照舊；之後第 4 段再做正式的橋"
   },
   "texts": {
-   "noPoint": "待命：這片地形還沒有採集點（建設 · 環境）",
+   "noPoint": "待命：這片地形還沒有採集點（建設 · 鐵道）",
    "noPointRail": "待命：採集點旁邊沒有接到建材小屋的軌道",
    "pointWhere": "採集點要放在貼著森林、礦山、土丘的草地上",
    "garageWhere": "車庫要放在兩格空草地上",

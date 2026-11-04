@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.52-4e0db7bd32'), getJSON('sprites/atlas.json?v=2.52-4e0db7bd32')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.52.3-46f888b28f'), getJSON('sprites/atlas.json?v=2.52.3-46f888b28f')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -8087,7 +8087,7 @@ const stationCount = () => stations().length + (S.buildStore.trash_station || 0)
   const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y);
   if (tool === 'build' && S.sel.build === 'trash_station'){
     if (T && T.t !== 'weed'){ if (isTrashSt(T)) openTrash(S.cur, k); else toast('垃圾站要蓋在空的草地上'); return; }
-    if (stationCount() >= (TRB.limit || 3)){ toast(`垃圾站整個農場最多 ${TRB.limit || 3} 座（含飾品倉庫裡的）`); return; }
+    if (stations().filter(s => s.mi === S.cur).length >= (TRB.limit || 3)){ toast(`每座島的垃圾站最多 ${TRB.limit || 3} 座（這座島已經 ${TRB.limit || 3} 座）`); return; }   // v2.52.1：每座島各自算
     if (!spend(TRB.cost || 300)) return;
     if (!placeAny(M, x, y, 'trash_station', cx, cy, false)){ S.player.coins += TRB.cost || 300; return; }
     afterAction(); return; }
@@ -8096,10 +8096,10 @@ const stationCount = () => stations().length + (S.buildStore.trash_station || 0)
   return _act32(x, y); }; }
 { const _ut32 = UIbuildTray; UIbuildTray = function(){ _ut32(); if (!S) return;
   const tray = $('tray'), tool = S.sel.tool;
-  if (tool === 'build'){ const n = stationCount(), mx = TRB.limit || 3;
+  if (tool === 'build'){ const n = stations().filter(s => s.mi === S.cur).length, mx = TRB.limit || 3;   // v2.52.1：這座島的座數
     const sep = document.createElement('div'); sep.className = 'sep'; tray.appendChild(sep);
-    const el = trayItem('building', 'trash_station', TRB.name || '垃圾站', [`${coinImg()}${fmtN(TRB.cost || 300)}`, `${n} / ${mx} 座 · 分類回收`], S.sel.build === 'trash_station', false, {});
-    if (n >= mx) el.classList.add('locked'); el.onclick = () => { if (n >= mx){ toast(`垃圾站最多 ${mx} 座`); return; } S.sel.build = 'trash_station'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
+    const el = trayItem('building', 'trash_station', TRB.name || '垃圾站', [`${coinImg()}${fmtN(TRB.cost || 300)}`, `這座島 ${n} / ${mx} 座 · 分類回收`], S.sel.build === 'trash_station', false, {});
+    if (n >= mx) el.classList.add('locked'); el.onclick = () => { if (n >= mx){ toast(`每座島的垃圾站最多 ${mx} 座`); return; } S.sel.build = 'trash_station'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
   applyTrayTabs(); }; }
 { const _db32 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
   if (T.id !== 'trash_station') return _db32(T, x, y, t);
@@ -9619,7 +9619,17 @@ function predPos(Pd, now){ const [tx, ty] = pkey(Pd.k);
     out.unshift({ icon: 'ui_pred_fox', text: `天敵來了 ${pr.length} 次${no.length ? `，被趕走 ${no.length} 次（${[...new Set(no.map(n => n.by).filter(Boolean))].join('、')}）` : ''}${ok.length ? `；得手 ${ok.length} 次：${ok.map(n => `${nm(n.pk)}${n.loss}`).join('、')}` : ''}` }); }
   const ri = by('ratIn').length, ate = by('ratAte'), chew = by('ratChew').length, cau = by('ratCaught').length;
   if (ri || ate.length || chew || cau){ const cnt = {}; ate.forEach(n => cnt[n.id] = (cnt[n.id] || 0) + 1);
-    out.unshift({ icon: 'ui_rat', text: `${ri ? `來了 ${ri} 隻老鼠` : '老鼠'}${ate.length ? `，偷吃 ${Object.entries(cnt).map(([id, n]) => `${itemName(id)} ${n} 個`).join('、')}` : ''}${chew ? `，咬破 ${chew} 袋垃圾` : ''}${cau ? `；貓抓到 ${cau} 隻` : ''}` }); }
+    // v2.52.1：分開寫新來、原本就躲著、被誰抓到、現在剩幾隻（只算這些消息所在的島）
+    const ms = [...new Set(list.filter(n => /^rat/.test(n.kind || '')).map(n => n.map).filter(m => m != null))], sp = ratSpots().filter(s => ms.length !== 1 || s.mi === ms[0]);
+    const now = sp.reduce((a, s) => a + (s.n || 0), 0), before = Math.max(0, now + cau - ri), who = {}; by('ratCaught').forEach(n => { if (n.by) who[n.by] = (who[n.by] || 0) + 1; });
+    const p = [];
+    if (ri) p.push(`新來 ${ri} 隻` + (before && cau ? `，加上原本就躲著的 ${before} 隻` : ''));
+    else if (cau) p.push(`原本就躲著 ${Math.max(before, cau)} 隻`);
+    if (ate.length) p.push(`偷吃 ${Object.entries(cnt).map(([id, n]) => `${itemName(id)} ${n} 個`).join('、')}`);
+    if (chew) p.push(`咬破 ${chew} 袋垃圾`);
+    if (cau) p.push(`貓抓到 ${cau} 隻${Object.keys(who).length ? `（${Object.entries(who).map(([n, c]) => `${n} ${c}`).join('、')}）` : ''}`);
+    p.push(now ? `現在還有 ${now} 隻` : '現在沒有老鼠了');
+    out.unshift({ icon: 'ui_rat', text: '老鼠：' + p.join('；') }); }
   for (const n of by('petGrown')) out.unshift({ icon: n.pk === 'dog' ? 'ui_tab_pet_dog' : 'ui_tab_pet_cat', text: `${n.name}長大了！開始幫忙${n.pk === 'dog' ? '守護動物' : '抓老鼠'}` });
   for (const n of by('petGift')) out.push({ icon: 'ui_coin', text: `${n.name}叼回小禮物：${fmtN(n.coins)} 金幣` });
   if (by('v216intro').length) out.unshift({ icon: 'ui_rat', text: '新的危害：倉庫和垃圾站會有老鼠，晚上會有黃鼠狼、狐狸、野狼。24 小時內先不會出現，可以先在「動物」買貓和狗、蓋狗屋和貓跳台' });
@@ -14362,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.52-4e0db7bd32';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.52.3-46f888b28f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -17389,7 +17399,7 @@ function railPath89(mi, from, to){ return railPath246(mi, from, to); }
   return r; }; }
 // 畫：照 T.cm 換圖、末端車擋造型
 { const _rs90 = roadSprite; roadSprite = function(M, x, y, T){ if (!isRail89(T) || T.cm === undefined) return _rs90(M, x, y, T);
-  const m = T.cm, p = String(m).padStart(2, '0'); if (pc246(m) === 1 && !T.st246 && T.stop && T.stop !== 'red' && ATLAS[`rail_end_${T.stop}_m${p}`]) return `rail_end_${T.stop}_m${p}`; return `rail_m${p}`; }; }
+  const m = T.cm, p = String(m).padStart(2, '0'); if (pc246(m) === 1 && T.stop && T.stop !== 'red' && ATLAS[`rail_end_${T.stop}_m${p}`]) return `rail_end_${T.stop}_m${p}`; return `rail_m${p}`; }; }
 // 待命站那條支線有幾格（從待命站往回數到分叉前）；最長的列車要幾格（含車頭）
 function sidingLen246(M, k){ let prev = null, cur = k, n = 0, g = 0;
   while (cur && g++ < 200){ const T = M.tiles[cur]; if (!isRail89(T)) break; const m = T.cm || 0; if (pc246(m) >= 3) break; n++;
@@ -17631,7 +17641,7 @@ function pieces246(mi, TR){ const out = [], st = cartStep89(), kind = kindOfKey2
   return out; }
 { const _dte90 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
   try { if (isRail89(T)){ const { cx, cy } = center(x, y), snow = !!(S.snow && S.snow.cover), m = T.cm || 0;
-      if (snow && pc246(m) === 1 && T.stop && T.stop !== 'red' && !T.st246) spr('snow_rail_m' + String(m).padStart(2, '0'), 0, cx, cy);
+      if (snow && pc246(m) === 1 && T.stop && T.stop !== 'red') spr('snow_rail_m' + String(m).padStart(2, '0'), 0, cx, cy);
       if (T.xp){ const a = m === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, cx, cy); if (snow) spr('snow_rail_cross_' + a, 0, cx, cy); }
       for (const b of bits246(fenceOf246(T)).filter(b => b === 1 || b === 8)){ spr('rail_fence_e' + b, 0, cx, cy); if (snow) spr('snow_rail_fence_e' + b, 0, cx, cy); } } } catch(e){}
   const r = _dte90(M, k, T, x, y, t, now);
@@ -17706,7 +17716,7 @@ function railMenu246(M, k, x, y, join){ const T = M.tiles[k], mi = S.cur; railNe
   if (!join) for (const [b] of D246){ const N = M.tiles[nb246(k, b)]; if (!isRail89(N)) continue; const on = !!(m & b); opts.push({ id: (on ? 'cut:' : 'link:') + b, label: on ? `斷開${DN246[b]}` : `接上${DN246[b]}的軌道（分叉、待避線）`, icon: 'ui_tool_railjoin', spr: mp246(on ? m & ~b : m | b) }); }
   { const free = D246.filter(([b]) => !(m & b) && isRail89(M.tiles[nb246(k, b)])).map(([b]) => b), all = pc246(m) + free.length;   // v2.46.1：旁邊的軌道全部接上（變三通、十字）
     if (free.length >= 2 || (free.length && pc246(m) >= 2)) opts.unshift({ id: 'linkall:' + free.join('.'), label: `旁邊的軌道全部接上（變成${all === 4 ? '十字' : all === 3 ? '三通' : '直線／彎道'}）`, icon: 'ui_tool_railjoin', spr: mp246(free.reduce((a, b) => a | b, m)) }); }
-  if (pc246(m) === 1 && !T.st246) for (const s of STOPS246) opts.push({ id: 'stop:' + s, label: `車擋：${STOPN246[s] || s}${(T.stop || 'red') === s ? '（現在）' : ''}`, icon: 'ui_rail', spr: s === 'red' ? mp246(m) : `rail_end_${s}_m${String(m).padStart(2, '0')}` });
+  if (pc246(m) === 1) for (const s of STOPS246) opts.push({ id: 'stop:' + s, label: `車擋：${STOPN246[s] || s}${(T.stop || 'red') === s ? '（現在）' : ''}`, icon: 'ui_rail', spr: s === 'red' ? mp246(m) : `rail_end_${s}_m${String(m).padStart(2, '0')}` });
   for (const b of bits246(fenceOf246(T))) opts.push({ id: 'fcut:' + b, label: `拆掉${DN246[b]}的柵欄`, icon: 'ui_rail_fence' });
   if (T.fen && (T.feR || 0)) opts.push({ id: 'fback', label: '補回柵欄', icon: 'ui_rail_fence' });
   if (!join) opts.push({ id: 'move', label: '搬移…（這一格、待命站、通行板、柵欄、車擋、多選）', icon: 'ui_tool_move' });
@@ -17790,7 +17800,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && RT.mv246){
   if (isRail89(T)){
     if (tool === 'move' && !RT.mv){ moveMenu246(M, k, x, y); return; }
     if (tool === 'store' || tool === 'remove'){ if (trainOn246(S.cur, k)){ toast(TX246.carMoving || '車在上面'); return; } railNet89(S.cur); unlinkAll246(M, k); stripAtt246(T, tool === 'store'); const r = _a90(x, y);
-      if (tool === 'store') toast(`軌道收回倉庫了：建設 · 環境 的「軌道」寫著倉庫還有 ${S.buildStore.rail || 0}，再鋪先用倉庫的（免費）`); return r; }
+      if (tool === 'store') toast(`軌道收回倉庫了：建設 · 鐵道 的「軌道」寫著倉庫還有 ${S.buildStore.rail || 0}，再鋪先用倉庫的（免費）`); return r; }
     if (tool === 'hand' && railMenu246(M, k, x, y, false)) return; }
   return _a90(x, y); }; }
 
@@ -18189,7 +18199,7 @@ function railMenu246(M, k, x, y, join){ const T = M.tiles[k], mi = S.cur; railNe
     return o; };
   if (join){ const o = linkOpts(false); if (!o.length){ toast('這格旁邊沒有別的軌道'); return true; } secs.push({ h: '接軌／斷開', o }); }
   else {
-    const ro = linkOpts(true); if (pc246(m) === 1 && !T.st246) for (const s of STOPS246) ro.push({ id: 'stop:' + s, label: `車擋：${STOPN246[s] || s}${(T.stop || 'red') === s ? '（現在）' : ''}`, spr: s === 'red' ? mp246(m) : `rail_end_${s}_m${String(m).padStart(2, '0')}` });
+    const ro = linkOpts(true); if (pc246(m) === 1) for (const s of STOPS246) ro.push({ id: 'stop:' + s, label: `車擋：${STOPN246[s] || s}${(T.stop || 'red') === s ? '（現在）' : ''}`, spr: s === 'red' ? mp246(m) : `rail_end_${s}_m${String(m).padStart(2, '0')}` });
     if (!T.br247) ro.push({ id: 'mone', label: '搬這一格（上面的東西一起）', icon: 'ui_tool_move' }, { id: 'mmulti', label: '多選搬移', icon: 'ui_tool_move' });
     ro.push({ id: 'rstore', label: T.br247 ? '收回倉庫（橋拆掉，河照舊）' : '收回倉庫', icon: 'ui_tool_store' });
     secs.push({ h: T.br247 ? '軌道（鐵道橋）' : '軌道', o: ro });
@@ -18229,7 +18239,7 @@ function cpMap247(M, gid, w = 200, h = 120){ const g = M.ter242 && M.ter242.g[gi
 { const _ot92 = openTerrain83; openTerrain83 = function(mi, k){ const r = _ot92(mi, k);
   try { const M = S.maps[mi], T = M.tiles[k], el = $('modalBody'); if (!el || !T || T.kind === 'river' || el.querySelector('.cp247')) return r; const pts = points247(M).filter(p => p.g === T.g).sort((a, b) => a.n - b.n);
     const box = document.createElement('div'); box.className = 'cp247';
-    box.innerHTML = `<h4>採集點與範圍</h4>${pts.length ? `<div class="cpl247">${pts.map(p => `<span><i style="background:${CPCOL247[(p.n - 1) % CPCOL247.length]}">${p.n}</i>剩 ${rangeOf247(M, p.k).filter(c => live247(M, c)).length} 格${lpOf247(mi, p.k) ? '' : '・旁邊沒有接上的軌道'}</span>`).join('')}</div>` : '<p class="sm83">這片還沒有採集點：在旁邊的草地放採集點（建設 · 環境），機器人才會來採。</p>'}`;
+    box.innerHTML = `<h4>採集點與範圍</h4>${pts.length ? `<div class="cpl247">${pts.map(p => `<span><i style="background:${CPCOL247[(p.n - 1) % CPCOL247.length]}">${p.n}</i>剩 ${rangeOf247(M, p.k).filter(c => live247(M, c)).length} 格${lpOf247(mi, p.k) ? '' : '・旁邊沒有接上的軌道'}</span>`).join('')}</div>` : '<p class="sm83">這片還沒有採集點：在旁邊的草地放採集點（建設 · 鐵道），機器人才會來採。</p>'}`;
     if (pts.length) box.appendChild(cpMap247(M, T.g)); el.appendChild(box); RT.cpShow247 = { g: T.g, until: performance.now() + 15000 }; } catch(e){ console.warn(e); }
   return r; }; }
 { const _oup92 = openUnitPanel; openUnitPanel = function(kind){ const r = _oup92(kind);
@@ -18464,7 +18474,7 @@ const NEW248 = {
 /* ---------- 10. 查看河流、徽章、存檔 ---------- */
 { const _ot93 = openTerrain83; openTerrain83 = function(mi, k){ const r = _ot93(mi, k);
   try { const M = S.maps[mi], T = M.tiles[k], g = T && (isRiver248(T) ? terG83(M, T) : isRailBr248(T) ? terG83(M, T.br247) : null), el = $('modalBody'); if (!g || !el) return r;
-    el.querySelectorAll('.kv span').forEach(s => { if (/河岸保濕.*之後的版本開放/.test(s.textContent)) s.textContent = '河岸往外 1 格保濕 +50%；建設 · 環境 可以挖河道、填平、放木橋石橋；軌道鋪在河上是鐵軌專用鐵橋；機器人不碰河流'; });
+    el.querySelectorAll('.kv span').forEach(s => { if (/河岸保濕.*之後的版本開放/.test(s.textContent)) s.textContent = '河岸往外 1 格保濕 +50%；建設 · 地形 可以挖河道、填平，建設 · 橋 放木橋石橋；軌道鋪在河上是鐵軌專用鐵橋；機器人不碰河流'; });
     el.querySelectorAll('p, small, span').forEach(s => { if (s.children.length === 0 && /填平、挖河道、橋會在之後的版本開放/.test(s.textContent)) s.textContent = s.textContent.replace(/、?填平、挖河道、橋/, ''); });
     if (!el.querySelector('.rv248')){ const n = g.cells.filter(c => (M.tiles[c] || {}).bw248).length, rb = g.cells.filter(c => isRailBr248(M.tiles[c])).length, p = document.createElement('p'); p.className = 'sm83 rv248';
       p.textContent = `${g.still ? '靜水小溪（自己挖的，接到會流的河就跟著流）・' : ''}人走的橋 ${n} 格・鐵橋 ${rb} 格`; el.appendChild(p); } } catch(e){ console.warn(e); }
@@ -19087,7 +19097,7 @@ const SG251 = T251.storage || {}, DG251 = SG251.danger || { label: '危險物品
 function dynSec251(){ const n = S.inv.dynamite || 0, packs = (T251.dynamite || {}).buyPacks || [1, 5, 10], art = IMGSRC['ui_pg_' + DG251.art];
   const pic = art ? `<img class="stpic" src="${art}" alt="">` : `<span class="stpic">${itemIconHTML('dynamite').replace('class="ico"', 'class="ico big"')}</span>`;
   return `<section class="stsec c-${DG251.color || 'r'} dyn251"><div class="stside"><b>${DG251.label || '危險物品'}</b>${pic}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th class="num">價格</th><th></th></tr></thead><tbody>
-    <tr><td>${itemIconHTML('dynamite')}</td><td>${itemName('dynamite')}<br><small>建設 · 環境用；森林、土丘每格 1 支，礦山整座「格數 × 2」支</small></td><td class="num">${fmtN(n)}</td><td class="num">${coinI()}${PRICE251}</td>
+    <tr><td>${itemIconHTML('dynamite')}</td><td>${itemName('dynamite')}<br><small>建設 · 地形用；森林、土丘每格 1 支，礦山整座「格數 × 2」支</small></td><td class="num">${fmtN(n)}</td><td class="num">${coinI()}${PRICE251}</td>
     <td class="acts">${packs.map(q => `<button class="btn${q === 1 ? ' ghost' : ''}" data-dyn251="${q}">買 ${q} 支</button>`).join('')}</td></tr></tbody></table></div></section>`; }
 { const _sp96 = storageProduceHTML; storageProduceHTML = function(){ const h = _sp96(); try { if (!S || S.player.level < LV251) return h; return h + dynSec251(); } catch(e){ return h; } }; }
 // 面板按鈕：g47 先「乾跑」量價格、跳購買確認，再重放這個 click（所以這裡不自己問），監聽掛在 #modal 冒泡階段
@@ -19371,6 +19381,250 @@ function bookTabFor252(kind, id){ const s = String(id);
   return _ti252(kind, id, name, lines, selected, locked, extra); }; }
 
 window.__farm252 = { bookTabFor252, BK252 };
+
+/* ===== 98. v2.52.1 修正（規則文件「v2.52.1 修正」）=====
+   1. 倉庫拿出來放（placeStoredDev56 的 RT.free56 期間）不再飄「-600」這種扣錢字
+   2. 經驗顯示這一級的進度（設定 ui.levelCumulative = false 交給 g4／g46）；等級表每格仍寫「累計 n 起」
+   3. 建設選單：鐵道、橋、地形三個新分頁、融雪機到加工（設定 ui.trayTabs.build）；各版本插進來的品項照分頁顯示／排序
+   4. 圖鑑「物品」的建材有小圖（itemSprite：ui_mat_<id>）
+   5. 圖鑑金色狗屋／豪華貓跳台：效果「驅趕率 +5%」「巡邏範圍 +2 格」，範圍「住在這裡的寵物」
+   6. 切換分頁不預選時，後來插進來的品項（待命站…）也不顯示選取
+   7. 農場新聞的老鼠：分開寫新來、原本就躲著、被誰抓到、現在剩幾隻
+   8. 待命站那格也能換車擋造型（直接改 g90／g92 的條件）
+   9. 停著的礦車／車頭方向跟軌道不同軸時照軌道（重新宣告 pieces246）
+  10. 鐵軌橋收回／拆掉後，河格一定回到那條河（cells、群組不見就併進旁邊的河或自成一段），清掉河流快取；讀檔時也修一次
+  12. 垃圾站每座島各自 3 座（直接改 g32） ===== */
+
+/* ---------- 1. 倉庫拿出來放：不飄扣錢字 ---------- */
+{ const _ft98 = floatText; floatText = function(cx, cy, text, ...a){ if (RT.free56 && /^-\s*[\d,]/.test(String(text))) return; return _ft98(cx, cy, text, ...a); }; }
+
+/* ---------- 2. 等級表每格「累計 n 起」 ---------- */
+{ const _li98 = levelInfo46; levelInfo46 = function(el){ const r = _li98(el);
+  try { el.querySelectorAll('.lc46').forEach((c, i) => { const s = c.querySelector('small'), L = LV[i]; if (s && L) s.textContent = L.xpToReach ? `累計 ${fmtN(L.xpToReach)} 起` : '起點'; }); } catch(e){}
+  return r; }; }
+
+/* ---------- 3. 建設選單分頁 ---------- */
+const BT98 = (CFG.ui.trayTabs || {}).build || [], NEWTAB98 = ['rail', 'bridge', 'terrain'];
+const inList98 = id => BT98.some(t => (t.ids || []).includes(id));
+{ const _ut98 = UIbuildTray; UIbuildTray = function(){ const r = _ut98(); try { fixBuildTray98(); } catch(e){ if (!RT.err98){ RT.err98 = 1; console.warn(e); } } return r; }; }
+function fixBuildTray98(){
+  if (!S || S.sel.tool !== 'build' || RT.borrow34) return; const tray = $('tray'); if (!tray) return;
+  const tab = S.sel.buildTab || buildTabOf(S.sel.build);
+  const items = [...tray.querySelectorAll(':scope > .item')];
+  for (const el of items){ const id = el.dataset.id; if (id && inList98(id)) el.hidden = buildTabOf(id) !== tab; }
+  if (NEWTAB98.includes(tab)){ const T = BT98.find(t => t.id === tab), ids = (T && T.ids) || [];
+    items.filter(el => ids.includes(el.dataset.id)).sort((a, b) => ids.indexOf(a.dataset.id) - ids.indexOf(b.dataset.id)).forEach(el => tray.appendChild(el)); }
+  const any = items.some(el => !el.hidden), emp = tray.querySelector(':scope > .trayempty');
+  if (any && emp) emp.remove();
+  if (!any && !emp){ const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = '這一類還沒有東西'; tray.appendChild(e); }
+  // 6. 沒有預選：後面版本插進來的品項也不要顯示選取
+  if (S.sel.none49) tray.querySelectorAll('.item.sel').forEach(el => { el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); }); }
+// 其他工具（就近「設施」借建設品項）也把殘留的選取拿掉
+{ const _ut98b = UIbuildTray; UIbuildTray = function(){ const r = _ut98b(); try { if (S && S.sel.none49 && ITEM_TOOLS49.includes(S.sel.tool)){ const tray = $('tray'); if (tray) tray.querySelectorAll('.item.sel').forEach(el => { el.classList.remove('sel'); el.setAttribute('aria-pressed', 'false'); }); } } catch(e){} return r; }; }
+
+/* ---------- 4. 建材小圖 ---------- */
+{ const _is98 = itemSprite; itemSprite = function(kind, id){ const r = _is98(kind, id);
+  if (kind === 'item' && (!r || !r[0]) && ATLAS['ui_mat_' + id]) return ['ui_mat_' + id, 0]; return r; }; }
+
+/* ---------- 5. 金色狗屋、豪華貓跳台 ---------- */
+const DENTX98 = ((CFG.pets || {}).dens2521) || { range: '住在這裡的寵物' };
+{ const _de98 = decoEffText; decoEffText = function(e){ if (!e || e.type !== 'den') return _de98(e);
+  const a = []; if (e.driveBonus) a.push(`驅趕率 +${Math.round(e.driveBonus * 100)}%`); if (e.rangeBonus) a.push(`巡邏範圍 +${e.rangeBonus} 格`); return a.join('、') || '寵物的窩'; }; }
+function fixUndef98(root){ if (!root) return; root.querySelectorAll('td, span, b, dd, div, p, small').forEach(n => { if (n.children.length !== 0) return; const t = n.textContent.trim(); if (t === 'undefined') n.textContent = DENTX98.range || '—'; else if (t === 'Lv undefined 獎勵') n.textContent = DENTX98.build || '建設選單'; }); }
+{ const _om98 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { r0(k, el); if (k === 'decos'){ fixUndef98(el); setTimeout(() => fixUndef98($('modal')), 0); } }; }
+  return _om98(title, tabs, render, initial); }; }
+document.addEventListener('click', () => { if ($('modal') && !$('modal').hidden && ($('modalTitle') || {}).textContent === '圖鑑') setTimeout(() => fixUndef98($('modal')), 0); }, true);
+
+/* 7. 農場新聞的老鼠：直接改 g39 的 newsItems 包裝（要在 g63 依島分組之前） */
+
+/* ---------- 9. 礦車方向照軌道 ---------- */
+function axisDir98(M, k, dir){ const T = M && M.tiles[k]; if (!isRail89(T)) return dir; const m = T.cm || 0, x = (m & 10) && !(m & 5), y = (m & 5) && !(m & 10);
+  if (x && (dir === 'n' || dir === 's')) return (m & 2) ? 'e' : 'w';
+  if (y && (dir === 'e' || dir === 'w')) return (m & 4) ? 's' : 'n';
+  return dir; }
+function pieces246(mi, TR){ const out = [], st = cartStep89(), kind = kindOfKey246(TR.key), M = S.maps[mi];
+  const add = (V, j, loco) => { const k = V.cells[j]; if (!k) return; const [x, y] = pkey(k); let px = x, py = y, dir = (V.fc && V.fc[j]) || null;
+    const to = j === 0 ? (V.path && V.el > 0 ? V.path[V.i + 1] : null) : (V.el > 0 ? V.cells[j - 1] : null);
+    if (to){ const [tx, ty] = pkey(to), f = Math.min(1, V.el / st); px = x + (tx - x) * f; py = y + (ty - y) * f; dir = tx > x ? 'e' : tx < x ? 'w' : ty > y ? 's' : 'n'; }
+    if (!dir){ const o = V.cells[j - 1] || V.cells[j + 1]; if (o){ const [ox, oy] = pkey(o), s = V.cells[j - 1] ? 1 : -1; dir = (ox - x) * s > 0 ? 'e' : (ox - x) * s < 0 ? 'w' : (oy - y) * s > 0 ? 's' : 'n'; } else dir = 'e'; }
+    if (!to) dir = axisDir98(M, k, dir);   // v2.52.1：停著時跟軌道同軸
+    out.push({ x: px, y: py, k: tkey(Math.round(px), Math.round(py)), cell: k, dir, loco, kind, moving: !!to, j }); };
+  if (TR.sl) add(TR.sl, 0, true);
+  TR.cells.forEach((c, j) => add(TR, j, TR.loco && j === 0));
+  return out; }
+
+/* ---------- 10. 鐵軌橋拆掉：河格回到河裡 ---------- */
+function fixRiverCell98(M, mi, k){ const T = M.tiles[k], R = isRiver248(T) ? T : isRailBr248(T) ? T.br247 : null; if (!R) return false;
+  M.ter242 = M.ter242 || { g: {} }; M.ter242.g = M.ter242.g || {}; let g = M.ter242.g[R.g], ch = false;
+  if (!g || g.kind !== 'river'){ const nb = N4K248(k).map(q => { const U = M.tiles[q]; return isRiver248(U) ? U.g : isRailBr248(U) ? U.br247.g : null; }).find(id => id && M.ter242.g[id] && M.ter242.g[id].kind === 'river');
+    if (nb) R.g = nb; else { R.g = newRiverId248(M); M.ter242.g[R.g] = { kind: 'river', cells: [], axis: 'x', dir: .0001, w: 1, still: 1, dug248: 1 }; }
+    g = M.ter242.g[R.g]; ch = true; }
+  if (!g.cells.includes(k)){ g.cells.push(k); ch = true; }
+  if (ch || mi !== undefined) delete RT.ter83[mi + '|' + R.g];
+  return ch; }
+function fixRivers98(s){ let n = 0; for (const [mi, M] of (s.maps || []).entries()){ if (!M || !M.tiles) continue; for (const k in M.tiles){ const T = M.tiles[k]; if ((isRiver248(T) || isRailBr248(T)) && fixRiverCell98(M, mi, k)) n++; } } return n; }
+{ const _a98 = act; act = function(x, y){ const M = S && curMap(), k = tkey(x, y), T = M && M.tiles[k], br = isRailBr248(T) && (S.sel.tool === 'store' || S.sel.tool === 'remove');
+  const r = _a98(x, y);
+  if (br){ try { if (!M.tiles[k]) M.tiles[k] = T.br247; if (isRiver248(M.tiles[k])){ fixRiverCell98(M, S.cur, k); RT.decoVer++; RT.regionsAt = 0; } } catch(e){ console.warn(e); } }
+  return r; }; }
+{ const _ns98 = normalizeState; normalizeState = function(d){ const r = _ns98(d), s = r || d; try { if (s && s.maps) fixRivers98(s); } catch(e){ console.warn(e); } return r; }; }
+
+
+/* ---------- 13. 會車：回小屋＞有裝貨＞沒裝貨；停著裝貨的列車擋住回小屋的列車，找不到待避處就讓回小屋的直接過 ---------- */
+{ const _rk98 = rank249; rank249 = function(mi, O){ const r = _rk98(mi, O); try { const L = loadN89(O.load || {}); r.splice(1, 0, L > 0 ? 0 : 1); } catch(e){} return r; }; }
+{ const _as98 = aside249; aside249 = function(mi, O, TR, occ){ const r = _as98(mi, O, TR, occ);
+  try { if (O && !O.job && O.st === 'park' && TR && TR !== O){ const home = TR.job && TR.job.leg === 'home', more = loadN89(TR.load || {}) > loadN89(O.load || {});
+      if (home || more){ const V = TR.sl || TR, gs = TN246.ghostSeconds ?? 40; V.blk = Math.max(V.blk || 0, gs); RT.pass98 = (RT.pass98 || 0) + 1; } } } catch(e){ console.warn(e); }
+  return r; }; }
+
+
+/* ---------- 14. 升級畫面：高級餵食機器人（feeder_N）等缺圖 ---------- */
+{ const _ui98 = unlockIcon38; unlockIcon38 = function(u){ const r = _ui98(u);
+  try { if ((!r || !r[0]) && typeof u === 'string'){ const m = /^([a-z]+?)(?:bot)?_\d+$/.exec(u), kd = m && m[1], map = { feeder: 'feed' };
+      const k2 = kd && (map[kd] || kd), n = k2 && ((R_ICON || {})[k2] || ['ui_' + k2 + 'bot', 'ui_' + k2].find(x => ATLAS[x])); if (n) return [n, 0]; } } catch(e){}
+  return r; }; }
+
+window.__farm2521 = { act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), pieces246: (mi, TR) => pieces246(mi, TR), fixRivers98, itemSprite: (k, id) => itemSprite(k, id), decoEffText: e => decoEffText(e), rank249: (mi, O) => rank249(mi, O), unlockIcon: u => unlockIcon38(u), aside249: (...a) => aside249(...a) };
+
+/* ===== 99. v2.52.2 選好品項後選項列收成小膠囊（規則文件「v2.52.2 選好品項後選項列收成小膠囊」）=====
+   玩家真的點了選項列的品項（不是 i、不是鎖住的）而且選起來了 → body.pk2522：藏起分類列 #cgrp62、分頁 #trayTabs、選項列 #trayWrap／#tray、#trayTog，
+   改顯示 #cap2522「目前：圖示 名稱 · 價錢 ▲ 換一個」；點膠囊、換工具、換分頁、沒有選取時展開。設定 ui.trayPick2522（enabled、tools）。 ===== */
+const TP2522 = Object.assign({ enabled: true, tools: ['seed', 'animal', 'fish', 'insect', 'build', 'deco', 'care'], more: '換一個' }, (CFG.ui || {}).trayPick2522 || {});
+const CAP2522 = document.createElement('button'); CAP2522.id = 'cap2522'; CAP2522.type = 'button'; CAP2522.setAttribute('aria-label', '展開選項列');
+{ const bt = document.querySelector('.bottom'), tw = $('trayTog'); if (bt) bt.insertBefore(CAP2522, tw || bt.firstChild); }
+{ const st = document.createElement('style'); st.textContent = `
+#cap2522{display:none;align-self:center;align-items:center;gap:8px;max-width:min(560px,calc(100vw - 32px));border:1px solid var(--gline,var(--line));background:var(--gcard,var(--panel));color:var(--gtx,var(--ink));
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:999px;padding:4px 14px 4px 6px;font:inherit;font-size:13px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.18);margin-bottom:2px}
+#cap2522 canvas{width:30px;height:30px;flex:none}
+#cap2522 .n{font-weight:700;white-space:nowrap}
+#cap2522 .p{color:var(--gsub,var(--muted));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#cap2522 .m{margin-left:4px;padding:2px 10px;border-radius:999px;background:rgba(127,127,127,.18);white-space:nowrap;font-size:12px}
+body.pk2522 #cap2522{display:flex}
+body.pk2522 #trayWrap,body.pk2522 #tray,body.pk2522 #trayTog,body.pk2522 #cgrp62,body.pk2522 .tarr,body.pk2522 .tfade{display:none!important}
+body.pk2522 #trayTabs{visibility:hidden!important;pointer-events:none!important}
+body.m-land #cap2522{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:calc(var(--dockh,64px) + 44px);z-index:3;max-width:46vw}
+body.ui-col #cap2522{display:none!important}
+`; document.head.appendChild(st); }
+
+const pk2522 = () => document.body.classList.contains('pk2522');
+function fold2522(on){ const was = pk2522(); document.body.classList.toggle('pk2522', !!on); if (was !== !!on){ try { if (typeof placeTrayTabs === 'function') placeTrayTabs(); if (typeof layoutHUD === 'function') layoutHUD(); } catch(e){} } }
+function fillCap2522(el){ CAP2522.innerHTML = ''; const spr = el.dataset.spr47;
+  if (spr && typeof iconCanvas === 'function'){ try { CAP2522.appendChild(iconCanvas(spr, +el.dataset.f47 || 0)); } catch(e){} }
+  const b = el.querySelector('b'), s = el.querySelector('small');
+  CAP2522.insertAdjacentHTML('beforeend', `<span class="n">目前：${escapeHTML(b ? b.textContent : '')}</span>${s ? `<span class="p">${s.innerHTML}</span>` : ''}<span class="m">▲ ${escapeHTML(TP2522.more)}</span>`); }
+// 玩家點了品項：等原本的處理（選取、重畫）做完再看有沒有選起來
+window.addEventListener('click', e => {
+  if (!TP2522.enabled || !e.isTrusted || !S) return; const it = e.target.closest && e.target.closest('#tray .item'); if (!it || e.target.closest('.info')) return;
+  if (it.classList.contains('locked') || !TP2522.tools.includes(S.sel.tool)) return; const id = it.dataset.id;
+  setTimeout(() => { const tray = $('tray'); if (!tray || !S) return; const sel = [...tray.querySelectorAll('.item.sel')].find(x => x.dataset.id === id && !x.hidden);
+    if (sel && !S.sel.none49){ fillCap2522(sel); fold2522(true); } }, 0); }, true);
+CAP2522.onclick = e => { e.stopPropagation(); fold2522(false); UIbuildTray(); updateHint(); };
+// 換工具、換分頁、沒有選取 → 展開；重畫時更新膠囊內容（倉庫數量、價錢）
+{ const _st2522 = setTool; setTool = function(id){ if (S && id !== S.sel.tool) fold2522(false); return _st2522(id); }; }
+{ const _tb2522 = tabsBar; tabsBar = function(list, cur, onPick){ return _tb2522(list, cur, k => { fold2522(false); return onPick(k); }); }; }
+{ const _ut2522 = UIbuildTray; UIbuildTray = function(){ const r = _ut2522();
+  try { if (pk2522()){ const tray = $('tray'), sel = tray && [...tray.querySelectorAll('.item.sel')].find(x => !x.hidden);
+      if (!S || !TP2522.tools.includes(S.sel.tool) || S.sel.none49 || !sel) fold2522(false); else fillCap2522(sel); } } catch(e){ console.warn(e); }
+  return r; }; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && pk2522() && $('modal').hidden){ fold2522(false); UIbuildTray(); } });
+
+window.__farm2522 = { fold: on => fold2522(on), folded: pk2522, CAP2522 };
+
+/* ===== 100. v2.52.3（規則文件「v2.52.3 建物半透明、經驗從 0 不動」）=====
+   1. 會擋住後面的建物（農舍、倉庫、儲藏屋、建材小屋、水塔、加掛水塔、垃圾站、各種基座、車庫）：指到它後面幾排的格子時半透明
+      （和森林／礦山／土丘一樣看 hover，設定 ui.fade2523）。畫的時候 RT.fade2523 設成透明度，spr 包裝把自帶 alpha 的圖也乘上去。
+   2. 經驗：等級曲線改過的舊存檔，累計經驗比目前等級的門檻還低，「這一級」一直是 0 → 讀檔與畫 HUD 前把累計經驗補到目前等級的門檻。 ===== */
+const FD2523 = Object.assign({ alpha: .45, rows: { 1: 3, 2: 4 }, skip: ['truck_pad', 'drone_pad'] }, (CFG.ui || {}).fade2523 || {});
+FD2523.rows = Object.assign({ 1: 3, 2: 4 }, FD2523.rows || {});
+
+/* ---------- 1. 半透明 ---------- */
+function behind2523(cells){ if (typeof hover === 'undefined' || !hover || !cells.length) return false; const hk = tkey(hover.x, hover.y);
+  if (cells.includes(hk)) return false; const size = Math.round(Math.sqrt(cells.length)) || 1, rows = FD2523.rows[size] ?? FD2523.rows[2] ?? 4;
+  for (const k of cells){ const [x, y] = pkey(k), a = x - hover.x, b = y - hover.y; if (a >= 0 && b >= 0 && a + b > 0 && a + b <= rows + 1 && a <= rows && b <= rows) return true; }
+  return false; }
+const rect2523 = (x0, y0, w, h) => { const o = []; for (let dy = 0; dy < h; dy++) for (let dx = 0; dx < w; dx++) o.push(tkey(x0 + dx, y0 + dy)); return o; };
+function withFade2523(cells, fn){ if (RT.fade2523 || RT.snap68 || !behind2523(cells)) return fn();
+  const a0 = ctx.globalAlpha, f = FD2523.alpha; RT.fade2523 = f; RT.fadeN2523 = (RT.fadeN2523 || 0) + 1; ctx.globalAlpha = a0 * f;
+  try { return fn(); } finally { RT.fade2523 = 0; ctx.globalAlpha = a0; } }
+{ const _sp2523 = spr; spr = function(n, f, x, y, flip = false, alpha = 1){ const F = RT.fade2523; if (!F || alpha === 1) return _sp2523(n, f, x, y, flip, alpha);
+  const r = _sp2523(n, f, x, y, flip, alpha * F); ctx.globalAlpha = F; return r; }; }
+{ const _db2523 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (!T || !BLD[T.id] || FD2523.skip.includes(T.id) || T.rx === undefined) return _db2523(T, x, y, t);
+  const [w, h] = bldSize(T.id); if (x !== T.rx + w - 1 || y !== T.ry + h - 1) return _db2523(T, x, y, t);
+  return withFade2523(rect2523(T.rx, T.ry, w, h), () => _db2523(T, x, y, t)); }; }
+{ const _dh2523 = drawHouse; drawHouse = function(T, x, y, now){ if (!T || T.rx === undefined || x !== T.rx + 1 || y !== T.ry + 1) return _dh2523(T, x, y, now);
+  return withFade2523(rect2523(T.rx, T.ry, 2, 2), () => _dh2523(T, x, y, now)); }; }
+{ const _dt2523 = drawTower; drawTower = function(cx, cy, t){ const u = cx / HW, v = (cy - HH) / HH, x = Math.round((u + v) / 2), y = Math.round((v - u) / 2);
+  return withFade2523([tkey(x, y)], () => _dt2523(cx, cy, t)); }; }
+{ const _dx2523 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
+  if (!T || T.t !== 'gar247' || typeof garMain247 !== 'function') return _dx2523(M, k, T, x, y, t, now);
+  const G = garMain247(M, T); if (!G) return _dx2523(M, k, T, x, y, t, now);
+  return withFade2523(garCells247(G.rx, G.ry, G.dir), () => _dx2523(M, k, T, x, y, t, now)); }; }
+
+/* ---------- 2. 經驗：累計經驗補到目前等級的門檻（等級不會往下掉，所以補到門檻，這一級從 0 開始算） ---------- */
+function xpFloor2523(s){ try { const P = s && s.player; if (!P) return false; const L = lvInfo(P.level); if (L && P.xp < L.xpToReach){ P.xp = L.xpToReach; return true; } } catch(e){} return false; }
+{ const _ns2523 = normalizeState; normalizeState = function(d){ const r = _ns2523(d); try { xpFloor2523(r || d); } catch(e){} return r; }; }
+{ const _rh2523 = renderHUD; renderHUD = function(...a){ if (S) xpFloor2523(S); return _rh2523(...a); }; }
+
+window.__farm2523 = { renderHUD: () => renderHUD(), xpFloor2523, behind2523, FD2523, setHover: (x, y) => { hover = x == null ? null : { x, y }; } };
+
+/* ===== 101. v2.52.4（規則文件「v2.52.4 彎道上的礦車、車頭用斜向圖」）=====
+   1. 待命站那格（軌道盡頭）的車擋被月台蓋住：月台畫完後再補畫車擋 rail_stop_<red|yellow|hump>_mNN（batch62，只有車擋）。
+   2. 彎道（轉角格 cm＝3、6、12、9）上的礦車／車頭用斜向圖 es／en／ws／wn（batch62），位置往彎道弧線內側挪（重新宣告 pieces246）。
+   3. 鐵軌橋（T.br247）不能長按拖走／拖進倉庫（startMove 包裝擋掉，請用小選單「收回倉庫」，河會留著）；
+      讀檔時修舊存檔：河的格子清單裡、地上卻沒有河的格子補回河；被拖到草地上的鐵軌橋（跟真正的河不相連）拿掉橋、只留軌道。 ===== */
+{ const _dx2524 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ const r = _dx2524(M, k, T, x, y, t, now);
+  try { if (isRail89(T) && T.st246 && M === S.maps[S.cur] && pc246(T.cm || 0) === 1){ const n = `rail_stop_${T.stop || 'red'}_m${String(T.cm).padStart(2, '0')}`;
+      if (ATLAS[n]){ const { cx, cy } = center(x, y); spr(n, 0, cx, cy); } } } catch(e){ if (!RT.err2524){ RT.err2524 = 1; console.warn(e); } }
+  return r; }; }
+
+
+/* ---------- 2. 彎道斜向 ---------- */
+const EV2524 = { 1: [0, -1], 2: [1, 0], 4: [0, 1], 8: [-1, 0] };
+function curveOf2524(M, k){ const T = M && M.tiles[k]; if (!isRail89(T)) return null; const m = T.cm || 0; if (![3, 6, 12, 9].includes(m)) return null;
+  const b = [1, 2, 4, 8].filter(q => m & q); return [EV2524[b[0]], EV2524[b[1]]]; }
+const DN2524 = (dx, dy) => (dx > 0 ? 'e' : 'w') + (dy > 0 ? 's' : 'n');
+function pieces246(mi, TR){ const out = [], st = cartStep89(), kind = kindOfKey246(TR.key), M = S.maps[mi];
+  const add = (V, j, loco) => { const k = V.cells[j]; if (!k) return; const [x, y] = pkey(k); let px = x, py = y, dir = (V.fc && V.fc[j]) || null;
+    const to = j === 0 ? (V.path && V.el > 0 ? V.path[V.i + 1] : null) : (V.el > 0 ? V.cells[j - 1] : null);
+    if (to){ const [tx, ty] = pkey(to), f = Math.min(1, V.el / st); px = x + (tx - x) * f; py = y + (ty - y) * f; dir = tx > x ? 'e' : tx < x ? 'w' : ty > y ? 's' : 'n'; }
+    if (!dir){ const o = V.cells[j - 1] || V.cells[j + 1]; if (o){ const [ox, oy] = pkey(o), s = V.cells[j - 1] ? 1 : -1; dir = (ox - x) * s > 0 ? 'e' : (ox - x) * s < 0 ? 'w' : (oy - y) * s > 0 ? 's' : 'n'; } else dir = 'e'; }
+    if (!to) dir = axisDir98(M, k, dir);
+    // 彎道：靠近轉角格中心時改斜向，位置往弧線挪
+    const rk = tkey(Math.round(px), Math.round(py)), cv = curveOf2524(M, rk);
+    if (cv && dir.length === 1){ const [E1, E2] = cv, D = EV2524[{ n: 1, e: 2, s: 4, w: 8 }[dir]], t1 = E1[0] - E2[0], t2 = E1[1] - E2[1], sg = (D[0] * t1 + D[1] * t2) >= 0 ? 1 : -1;
+      const [cx0, cy0] = pkey(rk), dist = Math.hypot(px - cx0, py - cy0), w = Math.max(0, 1 - 2 * dist), off = .146 * w;
+      if (dist < .3) dir = DN2524(sg * t1, sg * t2);
+      px += (E1[0] + E2[0]) * off; py += (E1[1] + E2[1]) * off; }
+    out.push({ x: px, y: py, k: tkey(Math.round(px), Math.round(py)), cell: k, dir, loco, kind, moving: !!to, j }); };
+  if (TR.sl) add(TR.sl, 0, true);
+  TR.cells.forEach((c, j) => add(TR, j, TR.loco && j === 0));
+  return out; }
+
+/* ---------- 3. 鐵軌橋不能拖；舊存檔修河 ---------- */
+{ const _sm2524 = startMove; startMove = function(M, k, ...a){ const T = M && M.tiles[k];
+  if (isRailBr248(T)){ toast('鐵軌橋不能拖動：點它開小選單「收回倉庫」，橋拆掉、河照舊'); return; }
+  return _sm2524(M, k, ...a); }; }
+function fixRivers2524(s){ let n = 0;
+  for (const [mi, M] of (s.maps || []).entries()){ const G = M && M.ter242 && M.ter242.g; if (!G) continue;
+    for (const [id, g] of Object.entries(G)){ if (!g || g.kind !== 'river' || !Array.isArray(g.cells)) continue;
+      // 清單裡有、地上沒有東西 → 補回河
+      for (const c of g.cells){ const T = M.tiles[c]; if (!T || T.t === 'weed'){ M.tiles[c] = { t: 'terrain', kind: 'river', g: id }; n++; } }
+      // 只有鐵軌橋、沒有真正河格的那一塊（被拖到草地上的橋）→ 拿掉橋、移出清單
+      const own = c => { const T = M.tiles[c]; return isRiver248(T) ? T.g === id : isRailBr248(T) ? T.br247.g === id : false; };
+      const left = new Set(g.cells.filter(own)), drop = [];
+      while (left.size){ const st = [left.values().next().value], comp = []; left.delete(st[0]);
+        while (st.length){ const c = st.pop(); comp.push(c); for (const q of N4K248(c)) if (left.has(q)){ left.delete(q); st.push(q); } }
+        if (!comp.some(c => isRiver248(M.tiles[c]))) drop.push(...comp); }
+      for (const c of drop){ const T = M.tiles[c]; if (isRailBr248(T)){ delete T.br247; n++; } }
+      if (drop.length){ g.cells = g.cells.filter(c => !drop.includes(c)); }
+      g.cells = g.cells.filter(own);
+      try { delete RT.ter83[mi + '|' + id]; } catch(e){} } }
+  return n; }
+{ const _ns2524 = normalizeState; normalizeState = function(d){ const r = _ns2524(d), s = r || d; try { if (s && s.maps) fixRivers2524(s); } catch(e){ console.warn(e); } return r; }; }
+
+window.__farm2524 = { pieces246: (mi, TR) => pieces246(mi, TR), fixRivers2524, curveOf2524, startMove: (...a) => startMove(...a) };
 
   })(CFG, ATLAS_JSON);
 })();
