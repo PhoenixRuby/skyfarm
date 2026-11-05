@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.54.2",
+  "configVersion": "2.54.3",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8470,6 +8470,102 @@
    "rot": "轉向",
    "store": "收回倉庫",
    "now": "現在"
+  },
+  "v2543": {
+   "note": "v2.54.3 修正。markSeconds：「在地圖上標出要過的軌道」閃幾秒；herb.radius：香草驅蟲半徑（1 = 3×3，0 = 只有自己那格，-1 = 關掉附近）；poultry：算「家禽」的動物，其他算家畜",
+   "markSeconds": 12,
+   "herb": {
+    "enabled": true,
+    "radius": 1,
+    "trayLine": true
+   },
+   "poultry": [
+    "egg_hen",
+    "broiler",
+    "meat_duck",
+    "down_duck",
+    "meat_goose",
+    "down_goose"
+   ],
+   "bridgeFlipY": true,
+   "insects": {
+    "note": "昆蟲資訊面板（選項列的 i）。feats＝[圖示精靈, 文字]；hive＝「採蜜相關設定」打開哪一種蜂箱",
+    "queen_bee": {
+     "name": "蜜蜂",
+     "img": "ui_queen_bee",
+     "hive": "beehive",
+     "cat": "昆蟲・採蜜蜂",
+     "trait": "群居、勤勞採蜜",
+     "adv": "採蜂箱範圍內的花釀蜂蜜，不同的花釀出不同口味；同時幫範圍內的作物、花、果樹授粉。",
+     "know": "一個蜂群只有一隻蜂王，負責產卵；採蜜、築巢、照顧幼蜂都是工蜂的工作。蜜蜂會跳「搖擺舞」告訴同伴花在哪個方向、有多遠。",
+     "feats": [
+      [
+       "ui_honey_wild",
+       "放進蜂箱後巢框慢慢變多，巢框越多釀蜜越快"
+      ],
+      [
+       "ui_hv_bees",
+       "範圍內作物、花、果樹生長 +15%"
+      ],
+      [
+       "ui_honey_lavender",
+       "不同的花釀出 11 種口味的蜂蜜"
+      ]
+     ],
+     "button": "採蜜相關設定"
+    },
+    "bumble_colony": {
+     "name": "熊蜂",
+     "img": "ui_bumble_colony",
+     "hive": "bumble_hive",
+     "cat": "昆蟲・採蜜蜂",
+     "trait": "授粉能手、振動授粉",
+     "adv": "住熊蜂箱，規則跟蜜蜂一樣；蜂蜜產量是蜜蜂的 1.5 倍，也一樣幫範圍內的作物授粉。",
+     "know": "熊蜂（Bumblebee）身體大、毛多，冷一點的天氣也能出門。牠們會用翅膀肌肉「振動授粉」，把番茄、茄子這類花裡的花粉抖出來，是很多蔬果和溫室作物的重要授粉昆蟲。",
+     "feats": [
+      [
+       "ui_honey_wild",
+       "蜂蜜產量是蜜蜂的 1.5 倍"
+      ],
+      [
+       "ui_hv_bees",
+       "範圍內作物、花、果樹生長 +15%"
+      ]
+     ],
+     "button": "採蜜相關設定"
+    }
+   },
+   "texts": {
+    "markRail": "在地圖上標出要過的軌道",
+    "notBlocked": "現在沒有被軌道擋住了",
+    "markToast": "閃黃框的 {n} 格軌道擋住了路{where}：在上面鋪通行板（建設 · 鐵道）就過得去",
+    "markCurve": "。其中有彎道或分叉，通行板只能鋪在直線，那段要繞過去或改軌道",
+    "wildTitle": "野生植物",
+    "wildText": "這株{name}是自己長出來的，不用花錢；蝴蝶會來產卵。不想要可以拔掉（不退錢）。",
+    "wildBusy": "上面還有蝴蝶，等牠們離開才能拔",
+    "wildPull": "拔掉",
+    "denCard": "住的窩",
+    "residents": "住客詳細",
+    "moveBtn": "換一個窩…",
+    "pickIntro": "選一個要搬去的{word}：小圖橘色那格就是它的位置。搬過去後守護範圍以新窩為中心。",
+    "animalInfo": "查看資訊",
+    "batTitle": "收回的電池電量",
+    "herbLine": "驅蟲：附近 {n}×{n} 不長蟲",
+    "trashBoost": "擴充這座垃圾站",
+    "trashWhere": "垃圾站容量改成每座各自擴充：點那座垃圾站，在面板裡擴充",
+    "efHint": "藍框是這一格，粗線就是柵欄會放的那一邊",
+    "whole": "整格",
+    "turn": "轉向",
+    "toEdge": "改成沿邊（不用再付錢）：選要放哪一邊",
+    "storeFence": "收回倉庫",
+    "editEdges": "改這格已經有的沿邊柵欄…",
+    "edgeHead": "這格的沿邊柵欄",
+    "swapEdge": "換到這格的另一邊：",
+    "pickTitle": "更換{word}的窩",
+    "noHive": "還沒有{hive}：到「昆蟲 · 設施」蓋一個",
+    "batUseBat": "燈先用電池，電池沒電才用市電；陰天白天開燈、晚上電價貴時，用電池比較省。",
+    "batUseGrid": "燈先用市電，市電停掉或沒接時才用電池。"
+   }
   }
  },
  "droneWatering": {

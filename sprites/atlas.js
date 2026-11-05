@@ -51057,6 +51057,306 @@ window.GAME_ATLAS = {
       ],
       "sx": 640,
       "sy": 128
+    },
+    "ui_pt_battery_battery_l": {
+      "file": "ui_pt_battery_battery_l.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_battery_battery_m": {
+      "file": "ui_pt_battery_battery_m.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_battery_battery_s": {
+      "file": "ui_pt_battery_battery_s.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_den_cat_tree": {
+      "file": "ui_pt_den_cat_tree.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_den_cat_tree_gold": {
+      "file": "ui_pt_den_cat_tree_gold.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_den_dog_house": {
+      "file": "ui_pt_den_dog_house.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_den_dog_house_gold": {
+      "file": "ui_pt_den_dog_house_gold.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_insect_bumble_colony": {
+      "file": "ui_pt_insect_bumble_colony.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_insect_queen_bee": {
+      "file": "ui_pt_insect_queen_bee.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_black": {
+      "file": "ui_pt_pet_black.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_border": {
+      "file": "ui_pt_pet_border.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_bulldog": {
+      "file": "ui_pt_pet_bulldog.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_calico": {
+      "file": "ui_pt_pet_calico.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_corgi": {
+      "file": "ui_pt_pet_corgi.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_dachshund": {
+      "file": "ui_pt_pet_dachshund.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_golden": {
+      "file": "ui_pt_pet_golden.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_husky": {
+      "file": "ui_pt_pet_husky.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_labrador": {
+      "file": "ui_pt_pet_labrador.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_maltese": {
+      "file": "ui_pt_pet_maltese.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_orange": {
+      "file": "ui_pt_pet_orange.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_persian": {
+      "file": "ui_pt_pet_persian.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_pomeranian": {
+      "file": "ui_pt_pet_pomeranian.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_poodle": {
+      "file": "ui_pt_pet_poodle.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_ragdoll": {
+      "file": "ui_pt_pet_ragdoll.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pt_pet_shiba": {
+      "file": "ui_pt_pet_shiba.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };

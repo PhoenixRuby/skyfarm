@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.54.2-0f3d954573'), getJSON('sprites/atlas.json?v=2.54.2-0f3d954573')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.54.3-35adda2d7a'), getJSON('sprites/atlas.json?v=2.54.3-35adda2d7a')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -8008,14 +8008,14 @@ function ensureV29(){
 /* ---------- stations ---------- */
 const isTrashSt = T => !!T && T.t === 'building' && T.id === 'trash_station';
 function stations(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (isTrashSt(T)){ const [x, y] = pkey(k); out.push({ mi, k, T, x, y, M }); } } }); return out; }
-const capOf = kind => kind === 's' ? TRB.capacity.sewageDrops : kind === 'g' ? TRB.capacity.general : TRB.capacity.recycle;
+const capOf = (kind, T) => (kind === 's' ? TRB.capacity.sewageDrops : kind === 'g' ? TRB.capacity.general : TRB.capacity.recycle) + capX2543(kind, T);   // v2.54.3：每座垃圾站各自擴容（g106）
 function addTrash(kind, amt){
   if (!(amt > 0)) return; let left = amt;
-  for (const s of stations()){ const T = s.T, room = capOf(kind) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
+  for (const s of stations()){ const T = s.T, room = capOf(kind, T) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
   if (left > 1e-9){ const P = trashState().pile; P[kind] = (P[kind] || 0) + left; if (!S.trash.fullSince) S.trash.fullSince = Date.now(); }
 }
 const pileTotal = () => { const P = trashState().pile; return (P.g || 0) + (P.r || 0) + (P.s || 0) / 100; };
-function stationFill(T){ let f = 0; for (const k of ['g', 'r', 's']) f = Math.max(f, (T[k] || 0) / capOf(k)); return f; }
+function stationFill(T){ let f = 0; for (const k of ['g', 'r', 's']) f = Math.max(f, (T[k] || 0) / capOf(k, T)); return f; }
 function loadOf(T, kinds, withPile){ let n = 0; for (const k of kinds) n += (T[k] || 0) / (k === 's' ? 100 : 1); if (withPile){ const P = trashState().pile; for (const k of kinds) n += (P[k] || 0) / (k === 's' ? 100 : 1); } return n; }
 const firstStation = () => stations()[0] || null;
 
@@ -8124,9 +8124,9 @@ function openTrash(mi, k){
   openModal(TRB.name || '垃圾站', null, (kk, el) => {
     const bar = (v, cap, cls) => `<div class="tbar tr"><i class="${cls}" style="width:${Math.min(100, v / cap * 100)}%"></i></div>`;
     el.innerHTML = `<div class="pcard"><h4><img src="${IMGSRC.ui_trash_station}" class="ico" alt="">這座垃圾站</h4>
-      <div class="trrow"><img src="${IMGSRC.ui_trash_general}" alt=""><span>一般垃圾</span>${bar(T.g || 0, capOf('g'), 'g')}<b>${(T.g || 0).toFixed(1)} / ${capOf('g')} 袋</b></div>
-      <div class="trrow"><img src="${IMGSRC.ui_trash_recycle}" alt=""><span>資源回收</span>${bar(T.r || 0, capOf('r'), 'r')}<b>${(T.r || 0).toFixed(1)} / ${capOf('r')} 袋</b></div>
-      <div class="trrow"><img src="${IMGSRC.ui_trash_sewage}" alt=""><span>污水桶</span>${bar(T.s || 0, capOf('s'), 's')}<b>${Math.round(T.s || 0)} / ${capOf('s')} 滴</b></div>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_general}" alt=""><span>一般垃圾</span>${bar(T.g || 0, capOf('g', T), 'g')}<b>${(T.g || 0).toFixed(1)} / ${capOf('g', T)} 袋</b></div>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_recycle}" alt=""><span>資源回收</span>${bar(T.r || 0, capOf('r', T), 'r')}<b>${(T.r || 0).toFixed(1)} / ${capOf('r', T)} 袋</b></div>
+      <div class="trrow"><img src="${IMGSRC.ui_trash_sewage}" alt=""><span>污水桶</span>${bar(T.s || 0, capOf('s', T), 's')}<b>${Math.round(T.s || 0)} / ${capOf('s', T)} 滴</b></div>
       ${pileTotal() > .01 ? `<p class="small warn">裝不下、堆在旁邊：垃圾 ${(P.g || 0).toFixed(1)} 袋、回收 ${(P.r || 0).toFixed(1)} 袋、污水 ${Math.round(P.s || 0)} 滴</p>` : ''}
       <div class="row"><button class="btn" id="trDump" ${win ? '' : 'disabled'}>${win ? '現在倒垃圾' : `垃圾車 ${fmtHM(nextTruck(now))} 才來`}</button></div></div>
       <div class="pcard"><h4><img src="${IMGSRC.ui_truck_garbage}" class="ico" alt="">收垃圾</h4><div class="kv">
@@ -12239,7 +12239,7 @@ const KN56 = { g: '垃圾', r: '回收', s: '污水' };
 // bags piled up next to the first station move into any station that still has room for that kind
 function rebalancePile56(){ if (!S || !S.trash || !S.trash.pile) return; const P = S.trash.pile; let moved = false;
   for (const kind of ['g', 'r', 's']){ if (!(P[kind] > 1e-9)) continue;
-    for (const s of stations()){ const room = capOf(kind) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
+    for (const s of stations()){ const room = capOf(kind, s.T) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
   if (moved && pileTotal() <= .01) S.trash.fullSince = null; }
 { const _sa56b = stepAll; stepAll = function(dt, t){ const r = _sa56b(dt, t); try { rebalancePile56(); } catch(e){} return r; }; }
 { const _db56 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
@@ -12249,7 +12249,7 @@ function rebalancePile56(){ if (!S || !S.trash || !S.trash.pile) return; const P
   try { _db56(T, x, y, t); } finally { bubble = _bb; }
   if (!q) return; const { cx, cy } = center(x, y), now = Date.now();
   if (q[1] === '倒垃圾'){ bubble(...q); return; }
-  const full = ['g', 'r', 's'].filter(k => (T[k] || 0) >= capOf(k) - 1e-6);
+  const full = ['g', 'r', 's'].filter(k => (T[k] || 0) >= capOf(k, T) - 1e-6);
   if (full.length) bubble(cx, cy - 46, full.map(k => KN56[k]).join('、') + '滿了', 'ui_trash_general');
   else if (daysSinceDump(now) >= 2 && loadOf(T, ['g', 'r', 's'], false) > .01) bubble(cx, cy - 46, '該倒了', 'ui_trash_general'); }; }
 // drones (and every robot kind that is rationed): the idle unit with the most battery goes first, so they take turns
@@ -13302,7 +13302,7 @@ const anyPile63 = () => S.maps.some((M, mi) => pileOf63(islTrash63(mi)) > .01);
 // replaces g32: new trash only goes into stations on the same island, the rest piles up on that island
 function addTrash(kind, amt){
   if (!(amt > 0)) return; const mi = ctxMi63(), I = islTrash63(mi); let left = amt;
-  for (const s of stationsOn63(mi)){ const T = s.T, room = capOf(kind) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
+  for (const s of stationsOn63(mi)){ const T = s.T, room = capOf(kind, T) - (T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, left); T[kind] = (T[kind] || 0) + n; left -= n; if (left <= 1e-9) break; }
   if (left > 1e-9){ I.pile[kind] = (I.pile[kind] || 0) + left; if (!I.fullSince) I.fullSince = Date.now(); }
 }
 // replaces g32: the pile goes with the first station of the station's own island
@@ -13314,7 +13314,7 @@ function takeLoad(T, kinds){ const mi = ctxMi63(), f = firstOn63(mi), I = islTra
 function rebalancePile56(){ if (!S || !S.trash) return;
   S.maps.forEach((M, mi) => { const I = islTrash63(mi), P = I.pile; let moved = false;
     for (const kind of ['g', 'r', 's']){ if (!(P[kind] > 1e-9)) continue;
-      for (const s of stationsOn63(mi)){ const room = capOf(kind) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
+      for (const s of stationsOn63(mi)){ const room = capOf(kind, s.T) - (s.T[kind] || 0); if (room <= 1e-9) continue; const n = Math.min(room, P[kind]); s.T[kind] = (s.T[kind] || 0) + n; P[kind] -= n; moved = true; if (P[kind] <= 1e-9){ P[kind] = 0; break; } } }
     if (moved && pileOf63(I) <= .01) I.fullSince = null; }); }
 function stepPartsAutoFit(){ for (const kind of KINDS) for (const u of fleet(kind)) if (u.needPart) fitPart(kind, u);
   for (const b of basesOf('sweeper_dock')) if (b.T.needBag && invTake(partItem('dustbag'), 1)){ b.T.needBag = false; b.T.bagUse = 0; withIsl63(b.mi, () => partWaste('dustbag')); } }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.54.2-0f3d954573';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.54.3-35adda2d7a';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -20152,6 +20152,661 @@ function shape2542(M, k, cur, next, door){ const r = Math.min(2, window.devicePi
   return r; }; }
 
 window.__farm2542 = { shedMenu2542, shape2542, shapeName2542, doorBits2542, act: (x, y) => act(x, y), railMenu: (...a) => railMenu246(...a) };
+
+/* ===== 106. v2.54.3 修正（規則文件「v2.54.3 修正」）=====
+   1. 伐木／採礦／整地機器人「被軌道擋住」：自動化列表的狀態字整句換行顯示（不再被「…」截掉），後面多一個「在地圖上標出要過的軌道」，
+      按了關面板、在要鋪通行板的軌道格閃黃框 ui.v2543.markSeconds 秒（RT.mark2543；railBlock246 算出來的格子）。
+   2. 鐵軌橋的橋墩壓到旁邊的軌道：drawBr247 包裝，在橋頭兩端把隔壁軌道格的軌道（＋通行板）補畫在橋墩上面。
+   3. 野生的酢漿草／羊蹄：手點不再直接拔掉，改開蝴蝶面板（跟店裡買的一樣），面板多一張「野生植物」卡，按「拔掉」才拔。
+   4. 寵物：晚上睡在窩裡時點下去先跳小選單（窩裡每隻＋窩本身）；寵物面板多「住的窩」卡（室友、查看窩）；
+      窩面板多「住客詳細」（每隻的完整資訊）；點飛在外面的寵物鳥開鳥屋面板並跳到那隻鳥。
+      「換一個窩」改成列出全部同種的窩（哪座島、位置小圖、住著誰、空位），點「搬到這裡」才搬。
+   5. 家禽、家畜：點動物跳的小選單多「查看資訊」，開動物資訊面板（成長、產出、壽命、飼料、累計收過 T.made2543、賣價）。
+   6. 香草（作物 group herb）：自己不長蟲，附近 ui.v2543.herb.radius 格內也不長新蟲、蟲也爬不過來（stepPest 包裝）。
+   7. 充電電池收回倉庫保留電量：收的時候按容量比例從共用電量 S.power.battery 分出這顆的電（S.batKwh2543[id] = [每顆的度數]），
+      從倉庫拿出來加回去；倉庫頁、建設選項列寫出存的電量。
+   8. 圖鑑「清單｜圖示」：點左邊分頁後切換鈕的選取狀態不見（openModal 的 show() 把 #modalTabs 每顆按鈕的 on 都拿掉）→ 點完再套一次。
+   9. 選項列「倉庫還有 n」統一成綠色小膠囊（「有 43 包」「倉庫 ×2」「倉庫 2」都換成同一個樣子）。
+   normalizeState 旗標 v2543（S.batKwh2543）。設定 ui.v2543（patches/patch_v2_54_3.py）。 ===== */
+const V2543 = (CFG.ui || {}).v2543 || {}, TX2543 = V2543.texts || {}, HERB2543 = V2543.herb || {};
+const isle2543 = mi => (typeof islName63 === 'function' ? islName63(mi) : `第 ${mi + 1} 座島`);
+
+/* ---------- 1. 被軌道擋住：整句顯示＋地圖上標出 ---------- */
+{ const _ut2543 = unitText; unitText = function(kind, u){ const r = _ut2543(kind, u);
+  try { if (TK84.includes(kind) && u && u.id && typeof r === 'string' && /被軌道擋住/.test(r) && !/data-rb2543/.test(r))
+      return `${r}<a class="rb2543" role="button" data-rb2543="${kind}|${u.id}">${escapeHTML(TX2543.markRail || '在地圖上標出要過的軌道')}</a>`; } catch(e){}
+  return r; }; }
+function markRail2543(kind, id){ const u = fleet(kind).find(z => z.id === id); if (!u){ toast('找不到這台機器人'); return null; }
+  if (RT.rb246) delete RT.rb246[wKey(kind, u)]; const b = railBlock246(kind, u);
+  if (!b){ toast(TX2543.notBlocked || '現在沒有被軌道擋住了'); return null; }
+  closeModal(); RT.mark2543 = { mi: b.mi, cells: b.cells.slice(), until: performance.now() + (V2543.markSeconds || 12) * 1000 };
+  const where = b.mi !== S.cur ? `（在${isle2543(b.mi)}）` : '';
+  toast(tx84(TX2543.markToast || '閃黃框的 {n} 格軌道擋住了路{where}：在上面鋪通行板（建設 · 鐵道）就過得去', { n: b.cells.length, where }) + (b.curve ? (TX2543.markCurve || '。其中有彎道或分叉，通行板只能鋪在直線，那段要繞過去或改軌道') : ''), true, 6000);
+  return b; }
+document.addEventListener('click', e => { const a = e.target && e.target.closest && e.target.closest('[data-rb2543]'); if (!a) return;
+  e.preventDefault(); e.stopPropagation(); const [kind, id] = a.dataset.rb2543.split('|'); try { markRail2543(kind, id); } catch(err){ console.warn(err); } }, true);
+{ const _dte2543 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ const r = _dte2543(M, k, T, x, y, t, now);
+  try { const G = RT.mark2543; if (G){ const pn = performance.now(); if (pn > G.until) RT.mark2543 = null;
+      else if (G.mi === S.cur && M === S.maps[G.mi] && G.cells.includes(k)){ const { cx, cy } = center(x, y), a = .55 + .45 * Math.sin(pn / 160);
+        ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = `rgba(255,214,40,${a.toFixed(2)})`; ctx.fillStyle = `rgba(255,214,40,${(a * .25).toFixed(2)})`; diamondPath(cx, cy, .92); ctx.fill(); ctx.stroke(); ctx.restore(); } } } catch(e){}
+  return r; }; }
+
+/* ---------- 2. 鐵軌橋：橋墩不要壓到旁邊的軌道 ---------- */
+{ const _db2543 = drawBr247; drawBr247 = function(M, mi, k, T, x, y, t, now, snow, cx, cy){ const r = _db2543(M, mi, k, T, x, y, t, now, snow, cx, cy);
+  try { const m = T.cm || 0, ax = (m & 10) ? 'x' : 'y', d = ax === 'x' ? [1, 0] : [0, 1], rn = run248(M, x, y, ax, isRailBr248, 8), f = rn[0], l = rn[rn.length - 1], ends = [];
+    if (f[0] === x && f[1] === y) ends.push([x - d[0], y - d[1]]); if (l[0] === x && l[1] === y) ends.push([x + d[0], y + d[1]]);
+    for (const [nx, ny] of ends){ const nk = tkey(nx, ny), N = M.tiles[nk]; if (!isRail89(N) || N.br247) continue; const c = center(nx, ny), nm = N.cm || 0;
+      spr(roadSprite(M, nx, ny, N), 0, c.cx, c.cy);
+      if (N.xp){ const a = nm === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); if (snow) spr('snow_rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){}
+  return r; }; }
+
+/* ---------- 3. 野生寄主植物：點了開面板，不直接拔 ---------- */
+{ const _ob2543 = openBf40; openBf40 = function(M, k, tab){ RT.bfOpen2543 = { M, k }; return _ob2543(M, k, tab); }; }
+{ const _om2543 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '蝴蝶' && typeof render === 'function'){ const r0 = render; render = (kk, el) => { const r = r0(kk, el);
+    try { const o = RT.bfOpen2543, T = o && o.M.tiles[o.k]; if (kk === 'here' && T && T.t === 'deco' && T.wild40){ const nm = (CFG.decos[T.id] || {}).name || '這株植物', busy = T.bf && T.bf.length;
+        el.insertAdjacentHTML('beforeend', `<div class="card250 wild2543"><h4>${escapeHTML(TX2543.wildTitle || '野生植物')}</h4><p>${escapeHTML(tx84(TX2543.wildText || '這株{name}是自己長出來的，不用花錢；蝴蝶會來產卵。不想要可以拔掉（不退錢）。', { name: nm }))}${busy ? `<br><b>${escapeHTML(TX2543.wildBusy || '上面還有蝴蝶，等牠們離開才能拔')}</b>` : ''}</p>
+          <button class="btn ghost" id="wild2543" ${busy ? 'disabled' : ''}>${escapeHTML(TX2543.wildPull || '拔掉')}</button></div>`);
+        const b = el.querySelector('#wild2543'); if (b) b.onclick = () => { const U = o.M.tiles[o.k]; if (U !== T || (U.bf && U.bf.length)) return; delete o.M.tiles[o.k]; RT.decoVer = (RT.decoVer || 0) + 1;
+          const [x, y] = pkey(o.k), c = center(x, y); floatText(c.cx, c.cy - 20, `拔掉${nm}`, '#5a7a3a', 11); sfx('click'); closeModal(); afterAction(); }; } } catch(e){ console.warn(e); }
+    return r; }; }
+  return _om2543(title, tabs, render, initial); }; }
+{ const _act2543 = act; act = function(x, y){
+  try { if (S && !UI.expand && S.sel.tool === 'hand' && !(RT.mv || RT.gmv || RT.plmv56 || RT.psel62 || RT.mv254)){ const M = curMap();
+      if (inMap(M, x, y)){ const k = tkey(x, y), T = M.tiles[k];
+        if (T && T.t === 'deco' && T.wild40 && !(T.bf && T.bf.length) && !(T.bfd && T.bfd.length)){ openBf40(M, k); return; } } } } catch(e){ console.warn(e); }
+  return _act2543(x, y); }; }
+
+/* ---------- 4. 寵物：窩的資訊、晚上點窩、換窩 ---------- */
+const petNow2543 = P => { const ag = RT.petAg && RT.petAg[P.id], d = denByUid(P.den);
+  if (!d) return '沒有窩'; if (P.hungry) return '餓了（倉庫沒有飼料）'; if (ag && ag.chase) return '正在趕天敵';
+  if (ag && ag.sleep) return `在${(CFG.decos[d.T.id] || {}).name || '窩'}裡睡覺`; if (isNightAt(Date.now())) return '回窩睡覺中';
+  return d.mi === S.cur ? (P.kind === 'dog' ? '在附近巡邏' : '在附近散步') : `在${isle2543(d.mi)}`; };
+function petKV2543(P){ const B = breedOf(P), adult = petAdult(P), left = (PETC.youngDays || 2) * 86400e3 - (P.grow || 0), rg = petRange(P), fi = P.kind === 'dog' ? 'dog_food' : 'cat_food';
+  const rows = [['現在', petNow2543(P)], ['品種', `${B.name || ''}${P.kind === 'dog' ? `（${{ S: '小型', M: '中型', L: '大型' }[B.size] || ''}）` : ''}`],
+    ['年紀', adult ? `成${P.kind === 'dog' ? '犬' : '貓'}` : `${petWord(P)}・還有 ${fmtDur(Math.max(0, left / 1000))}長大`], ['專長', `${B.skillText || '—'}${adult ? '' : '（長大才有）'}`],
+    [P.kind === 'dog' ? '守護範圍' : '巡邏範圍', rg ? `${rg.x1 - rg.x0 + 1}×${rg.y1 - rg.y0 + 1}，以窩為中心` : '沒有窩']];
+  if (P.kind === 'dog'){ const dv = B.drive || {}; rows.push(['驅趕率', `黃鼠狼 ${Math.round((dv.weasel || 0) * 100)}%／狐狸 ${Math.round((dv.fox || 0) * 100)}%／野狼 ${Math.round((dv.wolf || 0) * 100)}%`]); }
+  rows.push(['飼料', P.hungry ? `餓了，倉庫沒有${itemName(fi)}` : `吃飽了，約 ${fmtDur(P.food || 0)}後再吃`]);
+  rows.push(['戰績', P.kind === 'dog' ? `趕走天敵 ${P.guard || 0} 次${P.rats ? `・抓老鼠 ${P.rats} 隻` : ''}` : `抓老鼠 ${P.rats || 0} 隻`]);
+  return `<div class="kv">${rows.map(([a, b]) => `<span>${a}</span><span>${escapeHTML(String(b))}</span>`).join('')}</div>`; }
+const denName2543 = d => (CFG.decos[d.T.id] || {}).name || '窩';
+// v2.54.3 寵物面板改版（玩家參考圖：左邊大頭像、名字＋膠囊、圖示表格；下面「名字」「住的窩」兩張卡；最下面一排按鈕）
+const denImg2543 = d => pt2543('den_' + d.T.id) || IMGSRC['ui_' + d.T.id + (DENS39[d.T.id] && DENS39[d.T.id].maxSlots === 1 ? '_gold' : '')] || IMGSRC['ui_' + d.T.id] || IMGSRC[d.T.id.startsWith('dog') ? 'ui_dog_house' : 'ui_cat_tree'] || '';
+openPet = function(P){
+  RT.showRange = P.id; const B = breedOf(P), adult = petAdult(P), left = (PETC.youngDays || 2) * 86400e3 - (P.grow || 0), dog = P.kind === 'dog';
+  const fi = dog ? 'dog_food' : 'cat_food', price = Math.floor(B.price * (PETC.sellRate ?? .5));
+  openModal(P.name, null, (kk, el) => { const rg = petRange(P), d = denByUid(P.den), dv = B.drive || {};
+    const rows = [['paw', '品種', `${escapeHTML(B.name || '')}${dog ? `（${{ S: '小型', M: '中型', L: '大型' }[B.size] || ''}）` : ''}`],
+      ['cal', '年紀', adult ? `成${dog ? '犬' : '貓'}` : `${petWord(P)}・還有 ${fmtDur(Math.max(0, left / 1000))}長大${P.hungry ? '（餓著時不會長）' : ''}`],
+      ['medal', '專長', `${escapeHTML(B.skillText || '—')}${adult ? '' : '（長大才有）'}`],
+      ['pin', dog ? '守護範圍' : '巡邏範圍', rg ? `${rg.x1 - rg.x0 + 1}×${rg.y1 - rg.y0 + 1}，以窩為中心（地上淡色範圍）` : '沒有窩'],
+      dog ? ['target', '驅趕率', `黃鼠狼 ${Math.round((dv.weasel || 0) * 100)}%／狐狸 ${Math.round((dv.fox || 0) * 100)}%／野狼 ${Math.round((dv.wolf || 0) * 100)}%`]
+          : ['target', '抓鼠', B.catchMinutesNight && B.catchMinutesNight !== B.catchMinutes ? `白天每 ${B.catchMinutes} 分、晚上每 ${B.catchMinutesNight} 分 1 隻` : `每 ${B.catchMinutes} 分 1 隻`],
+      ['bowl', '飼料', P.hungry ? `<b class="warn2543">餓了</b>，倉庫沒有${itemName(fi)}（倉庫 ${S.inv[fi] || 0} 份）` : `吃飽了，約 ${fmtDur(P.food || 0)}後再吃（倉庫 ${S.inv[fi] || 0} 份）`],
+      ['chart', '戰績', dog ? `趕走天敵 ${P.guard || 0} 次${P.rats ? `・抓老鼠 ${P.rats} 隻` : ''}` : `抓老鼠 ${P.rats || 0} 隻`],
+      ['clock', '現在', escapeHTML(petNow2543(P))]];
+    const mates = d ? residents(d.T).filter(q => q.id !== P.id) : [];
+    const den = d ? `<div class="ipden2543"><img src="${denImg2543(d)}" alt=""><div><p>${ic2543('pin')}${escapeHTML(denName2543(d))}・${escapeHTML(isle2543(d.mi))}（${d.x}, ${d.y}）・住 ${residents(d.T).length}／${denSlots(d.T)} 位</p>
+        ${mates.length ? `<p class="sm2543">室友：</p><div class="mates2543">${mates.map(q => `<button class="mate2543" data-mate2543="${q.id}"><img src="${petImg253(q)}" alt="">${escapeHTML(q.name)}</button>`).join('')}</div>` : '<p class="sm2543">沒有室友</p>'}
+        <button class="btn ghost" id="toDen2543">查看${escapeHTML(denName2543(d))}</button></div></div>`
+      : `<p class="sm2543">還沒有窩：先蓋${dog ? '狗屋' : '貓跳台'}，再按「換一個窩」搬進去。</p>`;
+    el.innerHTML = ipHead2543({ img: pt2543('pet_' + P.breed, petImg253(P)), title: P.name, pill: `<span class="pill ok">${adult ? `成${dog ? '犬' : '貓'}` : petWord(P)}</span>`, kv: rows }) +
+      `<div class="ipg2543"><div class="ipc2543"><h4>${ic2543('edit')}名字</h4><div class="row"><input type="text" id="petName" maxlength="${PETC.nameMaxChars || 8}" value="${escapeHTML(P.name)}" style="font-size:16px"><button class="btn" id="petRen">改名</button></div></div>
+        <div class="ipc2543 den2543"><h4>${ic2543('home')}${escapeHTML(TX2543.denCard || '住的窩')}</h4>${den}</div></div>
+      <div class="ipb2543"><button class="btn ghost" id="petFood"><img src="${IMGSRC['ui_item_' + fi] || ''}" alt="">買${itemName(fi)}</button><button class="btn ghost" id="petMove">${ic2543('home')}${escapeHTML(TX2543.moveBtn || '換一個窩')}</button><button class="btn warn" id="petGive">${ic2543('back')}送養（退 ${fmtN(price)}）</button></div>`;
+    el.querySelector('#petRen').onclick = () => { const v = el.querySelector('#petName').value.trim().slice(0, PETC.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } P.name = v; save(); toast(`改好了：${v}`); openPet(P); };
+    el.querySelector('#petFood').onclick = () => openStorage('shop');
+    el.querySelector('#petMove').onclick = () => openDenPick2543(P);
+    el.querySelectorAll('[data-mate2543]').forEach(b => b.onclick = () => { const q = petList().find(z => z.id === b.dataset.mate2543); if (q) openPet(q); });
+    const td = el.querySelector('#toDen2543'); if (td && d) td.onclick = () => openDen(d.mi, d.k);
+    const gv = el.querySelector('#petGive'); gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+      S.pets = petList().filter(q => q !== P); S.player.coins += price; delete RT.petAg[P.id]; RT.showRange = null; toast(`${P.name}找到新家了，退回 ${fmtN(price)} 金幣`); closeModal(); afterAction(); UIbuildTray(); }; });
+  ipSheet2543(); };
+{ const _od2543 = openDen; openDen = function(mi, k){ const r = _od2543(mi, k);
+  try { const el = $('modalBody'), T = S.maps[mi] && S.maps[mi].tiles[k]; if (!el || !isDen(T)) return r; const res = residents(T); if (!res.length) return r;
+    el.insertAdjacentHTML('beforeend', `<div class="card250 res2543" style="margin-top:12px"><h4>${escapeHTML(TX2543.residents || '住客詳細')}（${res.length}）</h4>${res.map(P => `<div class="pr2543"><div class="ph2543"><img src="${petImg253(P)}" alt=""><b>${escapeHTML(P.name)}</b><button class="btn ghost sm" data-pet2543="${P.id}">開${escapeHTML(P.name)}的面板</button></div>${petKV2543(P)}</div>`).join('')}</div>`);
+    el.querySelectorAll('[data-pet2543]').forEach(b => b.onclick = () => { const P = petList().find(q => q.id === b.dataset.pet2543); if (P) openPet(P); }); } catch(e){ console.warn(e); }
+  return r; }; }
+// 換窩（玩家參考圖）：上面「目前居住」，下面每個同種的窩一張卡（目前的窩、已住滿灰掉），點一張選起來，再按「確認搬家」
+function openDenPick2543(P, selUid){ const word = P.kind === 'dog' ? '狗' : '貓咪', dw = P.kind === 'dog' ? '狗屋' : '貓跳台';
+  openModal(tx84(TX2543.pickTitle || '更換{word}的窩', { word }), null, (kk, el) => { const list = denList(P.kind), cur = list.find(d => d.T.uid === P.den);
+    const cnt = {}; list.forEach(d => { const n = denName2543(d); cnt[n] = (cnt[n] || 0) + 1; }); const seen = {};
+    const lab = d => { const n = denName2543(d); if (cnt[n] < 2) return n; seen[n] = (seen[n] || 0) + 1; return `${n} ${String.fromCharCode(64 + seen[n])}`; };
+    const cards = list.map(d => ({ d, name: lab(d) })).sort((a, b) => (b.d === cur) - (a.d === cur));
+    el.innerHTML = `<div class="dp2543"><div class="dph2543"><span class="pill">${escapeHTML(P.name)}</span></div>
+      <div class="dpcur2543"><small>目前居住</small><b>${ic2543('pin')}${cur ? `${escapeHTML(isle2543(cur.mi))} · ${escapeHTML(denName2543(cur))}（${cur.x}, ${cur.y}）` : '還沒有窩'}</b></div>
+      <p class="dpt2543">選擇要搬去的窩</p>
+      ${cards.length ? cards.map(({ d, name }, i) => { const res = residents(d.T), n = denSlots(d.T), isCur = d === cur, full = !isCur && res.length >= n, sel = d.T.uid === selUid;
+        return `<button class="dpo2543${isCur ? ' cur' : ''}${full ? ' full' : ''}${sel ? ' on' : ''}" data-dp2543="${d.T.uid}" ${isCur || full ? 'disabled' : ''}><span class="dpi2543"><img src="${denImg2543(d)}" alt=""></span>
+          <span class="dpx2543"><b>${isCur ? '目前的窩' : escapeHTML(name)}${isCur ? ' <i class="pill ok">目前居住</i>' : full ? ' <i class="pill">已住滿</i>' : ''}</b><small>${escapeHTML(isle2543(d.mi))}（${d.x}, ${d.y}）</small><small>入住 ${res.length} / ${n} 位${res.length ? `：${res.map(q => escapeHTML(q.name)).join('、')}` : ''}</small></span>
+          ${sel ? `<span class="dpk2543">${ic2543('check')}</span>` : ''}</button>`; }).join('') : `<p>還沒有${dw}。</p>`}
+      <div class="dpf2543"><button class="btn ghost" id="dpCancel2543">${selUid ? '取消選擇' : `回到${escapeHTML(P.name)}`}</button><button class="btn" id="dpOk2543" ${selUid ? '' : 'disabled'}>${ic2543('check')}確認搬家</button></div></div>`;
+    el.querySelectorAll('[data-dp2543]').forEach(b => b.onclick = () => openDenPick2543(P, b.dataset.dp2543));
+    el.querySelector('#dpCancel2543').onclick = () => selUid ? openDenPick2543(P) : openPet(P);
+    el.querySelector('#dpOk2543').onclick = () => { const d = list.find(q => q.T.uid === selUid); if (!d || residents(d.T).length >= denSlots(d.T)) return;
+      P.den = d.T.uid; delete RT.petAg[P.id]; save(); sfx('place'); toast(`${P.name}搬到${isle2543(d.mi)}的${denName2543(d)}了`); afterAction(); openPet(P); }; }); }
+// 晚上睡在窩裡：點下去先跳小選單（窩裡每一隻＋窩）
+function denPop2543(d, x, y){ const res = residents(d.T), nm = denName2543(d);
+  showPop53(x, y, `<h5>${escapeHTML(nm)}</h5>${res.map(P => `<button data-pp2543="${P.id}"><img src="${petImg253(P)}" alt="">${escapeHTML(P.name)}</button>`).join('')}<button data-pp2543="den"><img src="${IMGSRC['ui_deco_' + d.T.id] || IMGSRC.ui_tab_pet_dog || ''}" alt="">${escapeHTML(TX2543.viewDen || `查看${nm}`)}</button>`);
+  POP53.querySelectorAll('[data-pp2543]').forEach(b => b.onclick = () => { closePop53(); const v = b.dataset.pp2543; if (v === 'den') openDen(d.mi, d.k); else { const P = petList().find(q => q.id === v); if (P){ RT.heartFx = { id: P.id, t0: performance.now() }; openPet(P); } } }); }
+// 寵物鳥：飛在外面時也可以點
+{ const _dbd2543 = drawBirds40; drawBirds40 = function(now){ const r = _dbd2543(now);
+  try { const ag = RT.bAg40 || {}; for (const B of birds40()){ const A = ag[B.id]; if (!A) continue; const c = center(A.x, A.y), lift = A.mode === 'fly' ? 44 : A.th;
+      RT.critHit.push({ x: c.cx + (A.mode === 'fly' ? 0 : (B.born % 3 - 1) * 6), y: c.cy - lift - 4, r: 13, kind: 'bird2543', B }); } } catch(e){}
+  return r; }; }
+function openBird2543(B){ const rg = birdRange40(B); if (!rg || !rg.h){ toast('這隻鳥還沒有鳥屋'); return; } const hk = rg.h.k || tkey(rg.h.x, rg.h.y);
+  openBirdHouse40(rg.mi, hk);
+  setTimeout(() => { try { const c = document.querySelector(`#modalBody .bird40[data-b="${B.id}"]`); if (c){ c.classList.add('hl2543'); c.scrollIntoView({ block: 'center', behavior: 'smooth' }); } } catch(e){} }, 60); }
+{ const _mt2543 = meteorTap; meteorTap = function(sx, sy, ...a){
+  try { if (S && !UI.expand && !RT.mv && RT.critHit && RT.critHit.length){ const tool = S.sel.tool;
+      if (!['remove', 'store', 'move'].includes(tool) && !(tool === 'animal' && (isPetSel(S.sel.animal) || String(S.sel.animal || '').startsWith('bird_')))){
+        const { wx, wy } = toWorld(sx, sy); let best = null, bd = 1e9; for (const h of RT.critHit){ const dd = Math.hypot(wx - h.x, wy - h.y); if (dd < h.r && dd < bd){ bd = dd; best = h; } }
+        if (best && best.kind === 'pet'){ const ag = RT.petAg && RT.petAg[best.P.id], d = denByUid(best.P.den);
+          if (ag && ag.sleep && d && d.mi === S.cur){ sfx('click'); const c = center(d.x, d.y); denPop2543(d, c.cx, c.cy - 24); return true; } }
+        if (best && best.kind === 'bird2543'){ sfx('click'); openBird2543(best.B); return true; } } } } catch(e){ console.warn(e); }
+  return _mt2543(sx, sy, ...a); }; }
+
+/* ---------- 5. 家禽、家畜：資訊面板 ---------- */
+const POULTRY2543 = V2543.poultry || ['egg_hen', 'broiler', 'meat_duck', 'down_duck', 'meat_goose', 'down_goose'];
+{ const _ta2543 = tapAnimal; tapAnimal = function(M, k, T, cx, cy){ const A = T && CFG.animals[T.id], st0 = T ? (T.stack || 0) : 0, r = _ta2543(M, k, T, cx, cy);
+  try { if (A && st0 > 0 && (T.stack || 0) < st0) T.made2543 = (T.made2543 || 0) + (st0 - (T.stack || 0)) * (A.productQty || 1);
+    if (A && !POP53.hidden && M.tiles[k] === T && !POP53.querySelector('[data-ai2543]')){
+      POP53.insertAdjacentHTML('beforeend', `<button data-ai2543="1"><img src="${IMGSRC.ui_tool_hand || ''}" alt="">${escapeHTML(TX2543.animalInfo || '查看資訊')}</button>`);
+      POP53.querySelector('[data-ai2543]').onclick = () => { closePop53(); openAnimal2543(M, k); }; } } catch(e){ console.warn(e); }
+  return r; }; }
+function openAnimal2543(M, k){ const T0 = M.tiles[k]; if (!T0 || T0.t !== 'animal') return; const A = CFG.animals[T0.id]; if (!A) return;
+  openModal(A.name, null, (kk, el) => { const T = M.tiles[k]; if (T !== T0){ el.innerHTML = '<p>這隻動物已經不在了。</p>'; return; } el.classList.add('v250');
+    const adult = isAdult(T, A), poultry = POULTRY2543.includes(T.id), q = A.productQty || 1, rows = [];
+    rows.push(['種類', `${poultry ? '家禽' : '家畜'}・${A.type === 'meat' ? '肉用（長大後收成一次）' : `產${A.product}`}`]);
+    rows.push(['成長', adult ? '成年' : `第 ${T.stage + 1}／${A.growStages} 階（每階 ${fmtDur(A.stageSeconds)}）`]);
+    if (T.timer > 0) rows.push(['現在', adult ? (A.type === 'meat' ? '可以收成' : `${fmtDur(T.timer)}後產出 ${q} 個${A.product}`) : `${fmtDur(T.timer)}後長大一階`]);
+    else rows.push(['現在', A.type === 'meat' && adult ? '可以收成' : (T.stack > 0 ? `有 ${T.stack * q} 個${A.product}可以收` : canFeed(T, A) ? '餓了，等著餵' : '休息中')]);
+    if (A.type === 'producer'){ const ph = 3600 / A.cycleSeconds * q;
+      rows.push(['產出', `每 ${fmtDur(A.cycleSeconds)} 產 ${q} 個${A.product}（約每小時 ${Math.round(ph * 10) / 10} 個）・每個 ${fmtN(A.productPrice)} 金幣`]);
+      rows.push(['待收', `${(T.stack || 0) * q} 個${R.animalStackMax > 0 ? `（最多存 ${R.animalStackMax} 輪）` : '（不限，會一直存著）'}`]);
+      rows.push(['壽命', `還能生產 ${T.cycles} 輪／共 ${A.lifespanCycles} 輪${T.cycles / A.lifespanCycles < R.animalOldWarningRatio ? '（年老，生完會老死）' : ''}`]);
+      rows.push(['還能賺', `約 ${fmtN(T.cycles * q * A.productPrice)} 金幣（${T.cycles * q} 個）`]); }
+    else rows.push(['收成', `長大後得 1 份${A.product}・${fmtN(A.salePrice || 0)} 金幣`]);
+    rows.push(['飼料', `${itemName(A.feedItem)}：長大每階 ${A.stageFeedQty} 份${A.type === 'producer' ? `、每輪 ${A.cycleFeedQty} 份` : ''}・倉庫 ${fmtN(S.inv[A.feedItem] || 0)} 份`]);
+    if (T.made2543) rows.push(['累計收過', `${fmtN(T.made2543)} 個${A.product}`]);
+    try { if (CP.animals.includes(T.id)){ const [n, tot] = ckToday41(T); rows.push(['吃蟲', `今天 ${fmtN(n)} 格・累計 ${fmtN(tot)} 格`]); } } catch(e){}
+    rows.push(['賣掉', `退 ${fmtN(animalBack53(T))} 金幣（買價 ${fmtN(A.youngCost)}）`]);
+    el.innerHTML = `<div class="card250"><div class="kv">${rows.map(([a, b]) => `<span>${a}</span><span>${escapeHTML(String(b))}</span>`).join('')}</div></div>`; }); }
+
+/* ---------- 6. 香草：自己和附近不長蟲 ---------- */
+const isHerb2543 = T => !!(T && T.t === 'soil' && T.crop && !T.crop.wither && CFG.crops[T.crop.id] && CFG.crops[T.crop.id].group === 'herb');
+function herbGuard2543(M, k){ const rr = HERB2543.radius ?? 1; if (rr < 0) return false; const [x, y] = pkey(k);
+  for (let dy = -rr; dy <= rr; dy++) for (let dx = -rr; dx <= rr; dx++){ if (isHerb2543(M.tiles[tkey(x + dx, y + dy)])) return true; } return false; }
+{ const _sp2543 = stepPest; stepPest = function(M, mi, k, T, dt, t, live){
+  if (HERB2543.enabled === false) return _sp2543(M, mi, k, T, dt, t, live);
+  const H = hostOf(T); if (!H) return _sp2543(M, mi, k, T, dt, t, live);
+  if (isHerb2543(T)){ if (H.pest){ H.pest = false; H.pestTaps = 0; } return; }
+  if (!H.pest && herbGuard2543(M, k)) return;   // 不會自己長
+  const [x, y] = pkey(k), keep = [];
+  if (H.pest) for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]){ const nk = tkey(x + dx, y + dy), NH = hostOf(M.tiles[nk]); if (NH && !NH.pest && herbGuard2543(M, nk)) keep.push(NH); }
+  const r = _sp2543(M, mi, k, T, dt, t, live);
+  for (const NH of keep) if (NH.pest){ NH.pest = false; NH.pestTaps = 0; }   // 蟲爬不過去
+  return r; }; }
+
+/* ---------- 7. 電池收回倉庫保留電量 ---------- */
+const batKwh2543 = () => (S.batKwh2543 = S.batKwh2543 || {});
+const isBat2543 = id => !!(DEV[id] && DEV[id].kind === 'battery');
+{ const _sd2543 = storeDev56; storeDev56 = function(M, k, T){
+  if (!T || T.t !== 'device' || !isBat2543(T.id)) return _sd2543(M, k, T);
+  const id = T.id, cap0 = batteryCap(), pool = S.power.battery || 0, st0 = S.buildStore[id] || 0, share = cap0 > 0 ? pool * DEV[id].capacityKwh / cap0 : 0;
+  const r = _sd2543(M, k, T);
+  try { if ((S.buildStore[id] || 0) > st0 && !M.tiles[k]){ S.power.battery = Math.max(0, Math.min(batteryCap(), pool - share)); const L = batKwh2543()[id] = batKwh2543()[id] || []; L.push(Math.round(share * 1000) / 1000); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _ps2543 = placeStoredDev56; placeStoredDev56 = function(M, x, y, id, inner){ const st0 = S.buildStore[id] || 0, r = _ps2543(M, x, y, id, inner);
+  try { if (isBat2543(id) && (S.buildStore[id] || 0) < st0){ const L = batKwh2543()[id] || []; L.sort((a, b) => b - a); const kwh = L.shift() || 0; if (!L.length) delete batKwh2543()[id];
+      if (kwh > 0){ S.power.battery = Math.min(batteryCap(), (S.power.battery || 0) + kwh); const { cx, cy } = center(x, y); floatText(cx, cy - 54, `電量 +${kwh.toFixed(2)} 度`, '#2f7fa8', 10); } } } catch(e){ console.warn(e); }
+  return r; }; }
+const batLine2543 = id => { const n = S.buildStore[id] || 0; if (!n) return ''; const L = (batKwh2543()[id] || []).slice(0, n); while (L.length < n) L.push(0);
+  return L.map(v => `${(+v).toFixed(2)}`).join('、') + ` / ${DEV[id].capacityKwh} 度`; };
+{ const _sdh2543 = storageDecoHTML; storageDecoHTML = function(){ const h = _sdh2543();
+  try { const ids = Object.keys(S.buildStore || {}).filter(id => S.buildStore[id] > 0 && isBat2543(id)); if (!ids.length) return h;
+    const rows = ids.map(id => `<tr><td>${DEV[id].name}${S.buildStore[id] > 1 ? ` ×${S.buildStore[id]}` : ''}</td><td>${batLine2543(id)}</td></tr>`);
+    return h + stBlock45(TX2543.batTitle || '收回的電池電量', 'st_buildings', 'o', stTable45([['電池'], ['存的電（每顆）']], rows)); } catch(e){ console.warn(e); return h; } }; }
+
+/* ---------- 8. 圖鑑：清單｜圖示 的選取狀態 ---------- */
+{ const te = $('modalTabs'); if (te) te.addEventListener('click', () => setTimeout(() => { try { applyBkMode2541(); } catch(e){} }, 0)); }
+
+/* ---------- 9. 選項列：倉庫數量統一成綠色膠囊 ---------- */
+const STOCK_RE2543 = /^(?:倉庫(?:還有|裡有)?\s*[×x]?\s*|有\s+)([\d,]+)\s*([^\s\d（(・·,，]{0,2})(.*)$/;
+{ const _ti2543 = trayItem; trayItem = function(kind, id, name, lines, selected, locked, extra){ const b = _ti2543(kind, id, name, lines, selected, locked, extra);
+  try { for (const s of b.querySelectorAll('small')){ if (s.classList.contains('st51') || s.children.length) continue; const m = s.textContent.trim().match(STOCK_RE2543); if (!m) continue;
+      const n = +m[1].replace(/,/g, ''), unit = m[2] || '', rest = (m[3] || '').trim();
+      if (!n){ if (rest) s.textContent = rest.replace(/^[・·]\s*/, ''); else s.remove(); continue; }   // 倉庫沒有就不顯示
+      s.textContent = `倉庫還有 ${fmtN(n)}${unit ? ' ' + unit : ''}`; s.classList.add('st51');
+      if (rest){ const r2 = document.createElement('small'); r2.textContent = rest.replace(/^[・·]\s*/, ''); s.insertAdjacentElement('afterend', r2); } }
+    const c = b.querySelector(':scope > span.count'); if (c){ const m = c.textContent.match(/([\d,]+)/); if (m){ const s = document.createElement('small'); s.className = 'st51'; s.textContent = `倉庫還有 ${m[1]}`;
+        const nb = b.querySelector(':scope > b'); if (nb && !b.querySelector('small.st51')) nb.insertAdjacentElement('afterend', s); c.remove(); } }
+    if (kind === 'device' && isBat2543(id) && (S.buildStore[id] || 0) > 0){ const s = document.createElement('small'); s.textContent = `存電 ${batLine2543(id)}`; b.appendChild(s); }
+    if (kind === 'crop' && CFG.crops[id] && CFG.crops[id].group === 'herb' && HERB2543.enabled !== false && HERB2543.trayLine !== false){ const rr = HERB2543.radius ?? 1, s = document.createElement('small');
+      s.textContent = tx84(TX2543.herbLine || '驅蟲：附近 {n}×{n} 不長蟲', { n: 2 * rr + 1 }); b.appendChild(s); } } catch(e){ console.warn(e); }
+  return b; }; }
+
+/* ---------- 10. 垃圾站各自擴容（玩家 2026-11-05：要個別獨立擴容）----------
+   每座垃圾站 T.bx2543 = 擴了幾次，容量 capOf(kind, T) 加這座自己的（g32／g56／g63 的 capOf 呼叫都改成帶這座 T）。
+   舊存檔 S.boost.trash（全部一起加）讀檔時搬到每座現有的垃圾站，然後歸 0。等級 · 擴充表不再列垃圾站容量。 */
+function capX2543(kind, T){ const B = (typeof BK38 !== 'undefined' && BK38.trash) || null; if (!B || !T || !T.bx2543) return 0;
+  const f = kind === 's' ? 'sewageDrops' : kind === 'g' ? 'general' : 'recycle'; return T.bx2543 * (((B.add || {})[f]) || 0); }
+const tbxMax2543 = () => (BK38.trash || {}).max || 5;
+const tbxPrice2543 = T => boostPrice('trash', (T && T.bx2543) || 0);
+function tbxBuy2543(T){ const B = BK38.trash; if (!B || !T) return false; const n = T.bx2543 || 0;
+  if (n >= tbxMax2543()){ toast(`這座垃圾站已經擴充到最多 ${tbxMax2543()} 次`); return false; }
+  const p = tbxPrice2543(T); RT.coinWhy = RT.coinWhy || []; RT.coinWhy.push('垃圾站擴容'); try { if (!spend(p)) return false; } finally { RT.coinWhy.pop(); }
+  T.bx2543 = n + 1; RT.decoVer++; sfx('coin'); toast(`這座垃圾站擴充了（第 ${n + 1} 次）`, true); afterAction(); return true; }
+function tbxCard2543(T){ const B = BK38.trash, n = T.bx2543 || 0, mx = tbxMax2543(), a = B.add || {};
+  return `<div class="pcard boostcard tbx2543"><h4><span class="hic">＋</span>${escapeHTML(TX2543.trashBoost || '擴充這座垃圾站')}<span class="pill">已加 ${n} / ${mx} 次</span></h4>
+    <p class="small">每次一般、回收 +${a.general || 0} 袋、污水 +${fmtN(a.sewageDrops || 0)} 滴（只加這一座，每座各自擴充）。這座現在 ${capOf('g', T)}／${capOf('r', T)} 袋、${fmtN(capOf('s', T))} 滴。</p>
+    <div class="row">${n >= mx ? '<span class="pill ok">已擴充到最多</span>' : `<button class="btn" data-tbx2543="1">擴充這座 · ${coinI()}${fmtN(tbxPrice2543(T))}</button>`}</div></div>`; }
+{ const _om2543t = openModal; openModal = function(title, tabs, render, initial){
+  if (title === (TRB.name || '垃圾站') && typeof render === 'function'){ const r0 = render; render = (k, el) => { const r = r0(k, el);
+    queueMicrotask(() => { try { const a = RT.trash42, T = a && S.maps[a[0]] && S.maps[a[0]].tiles[a[1]]; if (!el.isConnected || !isTrashSt(T)) return;
+      const old = el.querySelector('.boostcard:not(.tbx2543)'), box = document.createElement('div'); box.innerHTML = tbxCard2543(T); const card = box.firstElementChild;
+      if (old) old.replaceWith(card); else { const an = el.querySelectorAll(':scope > .pcard')[0]; if (an) an.insertAdjacentElement('afterend', card); else el.appendChild(card); }
+      const b = card.querySelector('[data-tbx2543]'); if (b) b.onclick = e => { e.stopPropagation(); if (tbxBuy2543(T)) openTrash(a[0], a[1]); }; } catch(e){ console.warn(e); } });
+    return r; }; }
+  return _om2543t(title, tabs, render, initial); }; }
+{ const _bb2543 = buyBoost; buyBoost = function(k){ if (k !== 'trash') return _bb2543(k);
+  const a = RT.trash42, T = a && S.maps[a[0]] && S.maps[a[0]].tiles[a[1]]; if (isTrashSt(T) && !$('modal').hidden) return tbxBuy2543(T);
+  toast(TX2543.trashWhere || '垃圾站容量改成每座各自擴充：點那座垃圾站，在面板裡擴充'); return false; }; }
+{ const _rb2543 = renderBoost; renderBoost = function(el){ const B = BK38.trash; if (B) delete BK38.trash;
+  try { _rb2543(el); } finally { if (B) BK38.trash = B; }
+  if (B) el.insertAdjacentHTML('beforeend', `<p class="small">${escapeHTML(TX2543.trashWhere || '垃圾站容量改成每座各自擴充：點那座垃圾站，在面板裡擴充')}</p>`); }; }
+function tbxMigrate2543(s){ if (!s || s.tbx2543) return; const n = (s.boost && s.boost.trash) || 0;
+  if (n > 0) for (const M of s.maps || []) for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'building' && T.id === 'trash_station') T.bx2543 = Math.max(T.bx2543 || 0, n); }
+  if (s.boost) s.boost.trash = 0; s.tbx2543 = 1; }
+
+/* ---------- 11. 柵欄：方向示意圖、點已經蓋好的柵欄可以改成沿邊 ---------- */
+// 示意圖：中間這一格（藍框）＋四周鄰格；已經有的沿邊柵欄淡褐、這個選項的邊深褐粗線＋柱子
+function efDia2543(M, x, y, bits, only){ const r = Math.min(2, window.devicePixelRatio || 1), W = 84, H = 48, c = document.createElement('canvas'); c.width = W * r; c.height = H * r; c.className = 'ef2543';
+  const g = c.getContext('2d'); g.scale(r, r); const cx = W / 2, cy = H / 2, hw = 20, hh = 10;
+  const dia = (px, py, fill, line) => { g.beginPath(); g.moveTo(px, py - hh); g.lineTo(px + hw, py); g.lineTo(px, py + hh); g.lineTo(px - hw, py); g.closePath(); g.fillStyle = fill; g.fill(); if (line){ g.strokeStyle = line; g.lineWidth = 1.2; g.stroke(); } };
+  const OFF = { 1: [.5, -.5], 2: [.5, .5], 4: [-.5, .5], 8: [-.5, -.5] };
+  for (const b of EFB254){ const [sx, sy] = OFF[b]; dia(cx + sx * hw * 2, cy + sy * hh * 2, 'rgba(150,150,150,.14)', 'rgba(120,120,120,.35)'); }
+  dia(cx, cy, 'rgba(255,255,255,.75)', 'rgba(45,123,224,.95)');
+  const V = { T: [cx, cy - hh], R: [cx + hw, cy], B: [cx, cy + hh], L: [cx - hw, cy] }, E = { 1: ['T', 'R'], 2: ['R', 'B'], 4: ['B', 'L'], 8: ['L', 'T'] };
+  const edge = (b, col, w, posts) => { const [a, d] = E[b].map(q => V[q]); g.save(); g.lineCap = 'round'; g.strokeStyle = col; g.lineWidth = w; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(d[0], d[1]); g.stroke();
+    if (posts) for (const f of [.12, .5, .88]){ g.fillStyle = col; g.fillRect(a[0] + (d[0] - a[0]) * f - 1.5, a[1] + (d[1] - a[1]) * f - 6, 3, 7); } g.restore(); };
+  if (!only) for (const b of EFB254) if (efGet254(M, x, y, b) && !bits.includes(b)) edge(b, 'rgba(140,100,60,.55)', 2.4, false);
+  for (const b of bits) edge(b, '#7a4a22', 4, true);
+  return c; }
+function efPrevOn2543(x, y, bits){ RT.efPrev2543 = { mi: S.cur, x, y, bits }; }
+{ const _cp2543 = closePop53; closePop53 = function(...a){ RT.efPrev2543 = null; return _cp2543(...a); }; }
+function efDecorate2543(M, x, y, attr, freeFn){ POP53.querySelectorAll(`[${attr}]`).forEach(btn => { const v = btn.getAttribute(attr); if (v === 'tile') return;
+    const bits = v === 'all' ? freeFn() : [+v]; if (!bits.length || bits.some(b => !EFB254.includes(b))) return;
+    const im = btn.querySelector('img'); const cv = efDia2543(M, x, y, bits); if (im) im.replaceWith(cv); else btn.insertBefore(cv, btn.firstChild);
+    btn.addEventListener('pointerenter', () => efPrevOn2543(x, y, bits)); btn.addEventListener('focus', () => efPrevOn2543(x, y, bits));
+    btn.addEventListener('pointerleave', () => { RT.efPrev2543 = null; }); }); }
+{ const _em2543 = edgeMenu254; edgeMenu254 = function(M, x, y, st){ const r = _em2543(M, x, y, st);
+  try { if (!POP53.hidden){ efDecorate2543(M, x, y, 'data-e254', () => EFB254.filter(b => !efGet254(M, x, y, b) && !efWhy254(M, x, y, b)));
+      const h5 = POP53.querySelector('h5'); if (h5 && !POP53.querySelector('.efh2543')) h5.insertAdjacentHTML('afterend', `<p class="efh2543">${escapeHTML(TX2543.efHint || '藍框是這一格，粗線就是柵欄會放的那一邊')}</p>`); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _pm2543 = pickMenu254; pickMenu254 = function(M, x, y, tool){ const r = _pm2543(M, x, y, tool); try { if (!POP53.hidden) efDecorate2543(M, x, y, 'data-p254', () => []); } catch(e){} return r; }; }
+// 點已經蓋好的整格柵欄：小選單（轉向／改成沿邊（選方向）／收回倉庫）
+function fenceMenu2543(M, x, y){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y); if (!T) return;
+  const nm = efName254(T.id), turn = T.id === 'fence' && maskAt(M, x, y, isFence) === '00';
+  let h = `<h5>${escapeHTML(nm)}（${escapeHTML(TX2543.whole || '整格')}）</h5>`;
+  if (turn) h += `<button data-fm2543="turn"><img src="${IMGSRC.ui_tool_move || ''}" alt="">${escapeHTML(TX2543.turn || '轉向')}</button>`;
+  h += `<p class="efh2543">${escapeHTML(TX2543.toEdge || '改成沿邊（不用再付錢）：選要放哪一邊')}</p>`;
+  for (const b of EFB254){ const cur = efGet254(M, x, y, b), why = cur ? '' : efWhy254(M, x, y, b);
+    h += `<button data-fm2543="${b}" ${cur || why ? 'disabled' : ''}><img src="" alt="">${EFN254[b]}邊${cur ? '（已經有）' : why ? `（${escapeHTML(why)}）` : ''}</button>`; }
+  h += `<button data-fm2543="store"><img src="${IMGSRC.ui_tool_store || ''}" alt="">${escapeHTML(TX2543.storeFence || '收回倉庫')}</button>`;
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-fm2543', () => []);
+  POP53.querySelectorAll('[data-fm2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.fm2543; closePop53(); if (M.tiles[k] !== T) return;
+    if (v === 'turn'){ fenceTurn53(M, x, y, T); return; }
+    if (v === 'store'){ S.storage[T.id] = (S.storage[T.id] || 0) + 1; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('click'); afterAction(); return; }
+    const b = +v; if (efGet254(M, x, y, b) || efWhy254(M, x, y, b)) return;
+    delete M.tiles[k]; efSet254(M, x, y, b, T.id); sfx('place'); floatText(cx, cy - 24, `改到${EFN254[b]}邊`, '#8a5d36', 11); afterAction(); }); }
+{ const _act2543f = act; act = function(x, y){
+  try { if (S && !UI.expand && !(RT.mv || RT.gmv || RT.mv254 || RT.mv246 || RT.efSkip254)){ const M = curMap();
+      if (inMap(M, x, y)){ const T = M.tiles[tkey(x, y)], tool = S.sel.tool;
+        if (T && T.t === 'deco' && isFence51(T.id) && !T.fallen && (tool === 'hand' || fenceSel254())){ fenceMenu2543(M, x, y); return; } } } } catch(e){ console.warn(e); }
+  return _act2543f(x, y); }; }
+{ const _dw2543 = drawWorld; drawWorld = function(...a){ const r = _dw2543(...a);
+  try { const P = RT.efPrev2543; if (P && P.mi === S.cur && !POP53.hidden){ const { cx, cy } = center(P.x, P.y), V = { T: [cx, cy - HH], R: [cx + HW, cy], B: [cx, cy + HH], L: [cx - HW, cy] }, E = { 1: ['T', 'R'], 2: ['R', 'B'], 4: ['B', 'L'], 8: ['L', 'T'] };
+      ctx.save(); ctx.lineCap = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = `rgba(255,214,40,${(.6 + .4 * Math.sin(performance.now() / 150)).toFixed(2)})`;
+      for (const b of P.bits){ const [p1, p2] = E[b].map(q => V[q]); ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke(); } ctx.restore(); } } catch(e){}
+  return r; }; }
+
+/* ---------- 12. 新版資訊面板（玩家參考圖：寵物、昆蟲、電池）----------
+   共用：左邊圓形大頭像、右邊名字＋膠囊＋圖示表格（ipHead2543），下面卡片（.ipc2543）、最下面一排按鈕（.ipb2543）；
+   面板用到時 #modal .sheet 加 .ip2543s（抬頭的字藏起來，名字改寫在大頭像旁邊）。大頭像先用現有的小圖示放大，之後可換玩家大圖。 */
+const IC2543 = {
+  paw: '<circle cx="6" cy="10" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14" cy="6" r="1.8"/><circle cx="18" cy="10" r="1.8"/><path d="M8 17c0-3 2-5 4-5s4 2 4 5c0 2-2 2-4 1-2 1-4 1-4-1z"/>',
+  cal: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/>', medal: '<circle cx="12" cy="14" r="5"/><path d="M9 3l3 6 3-6M12 12l.9 1.8 2 .3-1.4 1.4.3 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3z"/>',
+  pin: '<path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>', target: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>',
+  bowl: '<path d="M3 12h18a9 6 0 0 1-18 0z"/><path d="M7 12c0-2 2-3.5 5-3.5s5 1.5 5 3.5"/>', chart: '<path d="M4 20h16"/><rect x="6" y="11" width="3" height="7"/><rect x="11" y="7" width="3" height="11"/><rect x="16" y="13" width="3" height="5"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', home: '<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>',
+  gift: '<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11M12 9c-2-4-6-4-6-1.5S10 9 12 9zm0 0c2-4 6-4 6-1.5S14 9 12 9z"/>',
+  bolt: '<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>', cycle: '<path d="M20 12a8 8 0 0 1-14 5.3M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/>',
+  layers: '<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>', moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  gear: '<circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>', leaf: '<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l8-8"/>',
+  horn: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9.5a3.5 3.5 0 0 1 0 5"/>', tag: '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.4"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7"/>', back: '<path d="M9 7L4 12l5 5"/><path d="M4 12h11a5 5 0 0 1 0 10h-2"/>', bug: '<ellipse cx="12" cy="13" rx="5" ry="6.5"/><path d="M12 6.5V20M7 9L4 7M17 9l3-2M7 14H3M17 14h4M7.5 18l-3 2M16.5 18l3 2"/>'
+};
+const pt2543 = (key, fb) => IMGSRC['ui_pt_' + key] || fb || '';   // 玩家大頭像（art/v2543_64.py → batch64），沒有就用舊的小圖
+const ic2543 = n => `<svg class="i2543" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC2543[n] || ''}</svg>`;
+function ipHead2543(o){ const kv = o.kv ? `<div class="ipkv2543">${o.kv.map(([i, l, v]) => `<div class="r"><span class="k">${ic2543(i)}${l}</span><span class="v">${v}</span></div>`).join('')}</div>` : '';
+  return `<div class="iph2543"><div class="ipp2543">${o.img ? `<img src="${o.img}" alt="">` : ''}</div><div class="ipm2543"><div class="ipt2543"><b>${escapeHTML(o.title)}</b>${o.pill || ''}</div>${o.sub ? `<p class="ips2543">${o.sub}</p>` : ''}${kv}${o.extra || ''}</div></div>`; }
+function ipSheet2543(){ const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.add('ip2543s'); }
+{ const _om2543s = openModal; openModal = function(...a){ const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.remove('ip2543s'); return _om2543s(...a); }; }
+const lockPill2543 = id => (!UNLOCK[id] || isUnlocked(id)) ? '<span class="pill ok">已解鎖</span>' : `<span class="pill lock">Lv ${UNLOCK[id]}</span>`;
+
+// 昆蟲：蜂王（蜜蜂）、熊蜂群、蝴蝶
+const INS2543 = V2543.insects || {};
+function openInsect2543(id){ id = String(id);
+  if (id.startsWith('bf:')){ const sp = id.slice(3), D = (CFG.butterflies.species || {})[sp]; if (!D) return false; const BF = CFG.butterflies, fam = (BF.families || {})[D.family] || '', rar = ((BF.rarity || {})[D.rarity] || {}).name || '';
+    const hosts = (D.hosts || []).map(h => (CFG.decos[h] || CFG.trees[h] || CFG.crops[h] || {}).name || h), bk = (typeof bfBook40 === 'function' ? bfBook40() : {})[sp] || {}, I = INS2543.butterfly || {};
+    openModal(D.name, null, (kk, el) => { el.innerHTML = ipHead2543({ img: pt2543('insect_bf_' + sp, IMGSRC['ui_pg_bf_' + sp] || IMGSRC['ui_bf_' + sp]), title: D.name, pill: lockPill2543(id),
+        kv: [['paw', '分類', `昆蟲・蝴蝶（${escapeHTML(fam)}）`], ['home', '寄主植物', escapeHTML(hosts.join('、') || '—')], ['tag', '稀有度', `${escapeHTML(rar)}・蝴蝶卵 ${fmtN(((BF.rarity || {})[D.rarity] || {}).eggCost || 0)} 金幣`], ['chart', '圖鑑', bk.got ? `撿過 ${bk.got} 隻` : '還沒撿到過']] }) +
+        `<div class="ipc2543 two2543"><div><h4>${ic2543('horn')}小知識</h4><p>${escapeHTML(tx84(I.know || '蝴蝶只在自己的寄主植物上產卵，卵 → 幼蟲 → 蛹 → 成蝶。{name}的幼蟲吃{hosts}的葉子。', { name: D.name, hosts: hosts.join('、') }))}</p></div>
+          <div><h4>${ic2543('leaf')}遊戲特色</h4>${(I.feats || [['ui_butterfly_egg', '在寄主植物上放蝴蝶卵，或等野生蝴蝶來產卵'], ['ui_tab_bf_garden', `成蝶在附近 ${2 * (BF.adultRange ?? 2) + 1}×${2 * (BF.adultRange ?? 2) + 1} 幫作物、花、果樹授粉 +${Math.round((BF.adultGrowthBoost || .1) * 100)}%`], ['ui_pg_st_specimen', '走完一生撿起來，翅膀完整的做成標本賣']]).map(([im, t]) => `<div class="ft2543"><img src="${IMGSRC[im] || ''}" alt=""><span>${escapeHTML(t)}</span></div>`).join('')}</div></div>
+        <div class="ipb2543"><button class="btn ghost" id="ins2543">${ic2543('gear')}${escapeHTML(I.button || '看蝴蝶圖鑑')}</button></div>`;
+      el.querySelector('#ins2543').onclick = () => { RT.insBook2543 = true; try { openBook('insects', id); } finally { RT.insBook2543 = false; } }; });
+    ipSheet2543(); return true; }
+  const I = INS2543[id]; if (!I) return false; const nm = I.name || nameOf(id) || id;
+  openModal(nm, null, (kk, el) => { el.innerHTML = ipHead2543({ img: pt2543('insect_' + id, IMGSRC[I.img] || IMGSRC['ui_' + id]), title: nm, pill: lockPill2543(id), kv: [['paw', '分類', escapeHTML(I.cat || '昆蟲')], ['home', '特性', escapeHTML(I.trait || '')], ['gift', '優勢', escapeHTML(I.adv || '')]] }) +
+      `<div class="ipc2543 two2543"><div><h4>${ic2543('horn')}小知識</h4><p>${escapeHTML(I.know || '')}</p></div><div><h4>${ic2543('leaf')}遊戲特色</h4>${(I.feats || []).map(([im, t]) => `<div class="ft2543"><img src="${IMGSRC[im] || ''}" alt=""><span>${escapeHTML(t)}</span></div>`).join('')}</div></div>
+      <div class="ipb2543"><button class="btn ghost" id="ins2543"><img src="${IMGSRC.ui_hv_bees || IMGSRC.ui_beehive || ''}" alt="">${escapeHTML(I.button || '採蜜相關設定')}</button></div>`;
+    el.querySelector('#ins2543').onclick = () => { const want = I.hive || 'beehive'; let hit = null;
+      S.maps.forEach((M, mi) => { if (hit) return; for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'device' && T.id === want){ hit = { M, mi, k, T }; break; } } });
+      if (!hit){ toast(tx84(TX2543.noHive || '還沒有{hive}：到「昆蟲 · 設施」蓋一個', { hive: (DEV[want] || {}).name || '蜂箱' })); return; }
+      if (hit.mi !== S.cur && typeof goIsland63 === 'function') goIsland63(hit.mi); openDevice(hit.M, hit.k, hit.T); }; });
+  ipSheet2543(); return true; }
+{ const _ob2543 = openBook; openBook = function(tab, focusId){
+  try { if (!RT.insBook2543 && focusId != null){ const s = String(focusId);
+      if ((s.startsWith('bf:') || INS2543[s]) && openInsect2543(s)) return;
+      if (DEV[s] && DEV[s].kind === 'battery'){ openBattery2543(s); return; } } } catch(e){ console.warn(e); }
+  return _ob2543(tab, focusId); }; }
+
+// 電池
+function openBattery2543(id){ const D = DEV[id]; if (!D) return; const nB = allDevices().filter(d => d.T.id === id).length, st = S.buildStore[id] || 0;
+  openModal(D.name, null, (kk, el) => { const cap = batteryCap(), pool = S.power.battery || 0, pct = cap ? Math.min(100, pool / cap * 100) : 0, pr = S.settings.powerPriority === 'grid' ? 'grid' : 'battery', gc = S.settings.batteryGridCharge || 'off';
+    const pool2 = `<div class="bat2543"><div class="bp2543"><img src="${IMGSRC.ui_battery || ''}" alt=""><div><small>電量池（全部電池）</small><b><em>${pool.toFixed(2)}</em> / ${fmtN(cap)} 度</b></div><div class="bb2543"><i style="width:${pct.toFixed(1)}%"></i></div></div>
+      <div class="bk2543"><div class="r"><span class="k">${ic2543('bolt')}容量</span><span class="v">${D.capacityKwh} 度</span></div><div class="r"><span class="k">${ic2543('cycle')}充放速度</span><span class="v">每小時 ${D.maxRateKwhPerHour} 度（最大）</span></div><div class="r"><span class="k">${ic2543('layers')}合成規則</span><span class="v">所有電池合成一個電量池</span></div></div></div>`;
+    el.innerHTML = ipHead2543({ img: pt2543('battery_' + id, IMGSRC.ui_pg_battery || IMGSRC.ui_battery), title: D.name, pill: lockPill2543(id),
+        sub: `${escapeHTML(D.name)}：容量 ${D.capacityKwh} 度，最快每小時充放 ${D.maxRateKwhPerHour} 度，效率 ${Math.round((POW.batteryEfficiency || .9) * 100)}%。所有電池合成一個電量池。農場上 ${nB} 座${st ? `、倉庫 ${st} 座（存電 ${batLine2543(id)}）` : ''}。`, extra: pool2 }) +
+      `<div class="ipc2543 two2543"><div><h4>${ic2543('moon')}使用時段</h4><p>${escapeHTML(pr === 'grid' ? (TX2543.batUseGrid || '燈先用市電，市電停掉或沒接時才用電池。') : (TX2543.batUseBat || '燈先用電池，電池沒電才用市電；陰天白天開燈、晚上電價貴時，用電池比較省。'))}</p></div>
+        <div><h4>${ic2543('gear')}充電規則</h4><p>${escapeHTML({ off: '太陽能板、發電機、雷神娃娃多出來的電先充進電池；不從市電充。', night: '除了太陽能、發電機，也在夜間用比較便宜的市電充。', always: '除了太陽能、發電機，也隨時用市電充。' }[gc] || '')}<br>設定在「水電 → 水電設定」。</p></div></div>
+      <div class="ipb2543"><button class="btn ghost" id="bat2543">${ic2543('gear')}打開水電設定</button></div>`;
+    el.querySelector('#bat2543').onclick = () => openUtilities('setup'); });
+  ipSheet2543(); }
+{ const _od2543b = openDevice; openDevice = function(M, k, T){ if (T && DEV[T.id] && DEV[T.id].kind === 'battery'){ openBattery2543(T.id); return; } return _od2543b(M, k, T); }; }
+
+/* ---------- 13. 選好品項的小膠囊：圖示大一點、不要金幣符號、照選單寫的資訊＋倉庫數量（重新宣告 g99 的 fillCap2522）---------- */
+function fillCap2522(el){ CAP2522.innerHTML = ''; const spr = el.dataset.spr47;
+  if (spr && typeof iconCanvas === 'function'){ try { CAP2522.appendChild(iconCanvas(spr, +el.dataset.f47 || 0)); } catch(e){} }
+  const b = el.querySelector('b'), ss = [...el.querySelectorAll(':scope > small')], stock = ss.filter(s => s.classList.contains('st51')), info = ss.filter(s => !s.classList.contains('st51')).map(s => s.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  CAP2522.insertAdjacentHTML('beforeend', `<span class="n">${escapeHTML(b ? b.textContent : '')}</span>${info.length ? `<span class="p">${escapeHTML(info.join(' · '))}</span>` : ''}${stock.map(s => `<span class="st2543">${escapeHTML(s.textContent.trim())}</span>`).join('')}<span class="m">▲ ${escapeHTML(TP2522.more)}</span>`); }
+
+/* ---------- 14. 鐵軌橋：左下↗右上（沿 y）那個方向的橋墩畫錯 → 改用沿 x 的圖左右翻轉 ---------- */
+{ const _db2543y = drawBr247; drawBr247 = function(M, mi, k, T, x, y, t, now, snow, cx, cy){ const m = T.cm || 0, ax = (m & 10) ? 'x' : 'y';
+  if (ax !== 'y' || V2543.bridgeFlipY === false || !ATLAS.bridge_steel_x_one) return _db2543y(M, mi, k, T, x, y, t, now, snow, cx, cy);
+  try { drawTerrain83(M, mi, k, T.br247, x, y, t, now); const rn = run248(M, x, y, 'y', isRailBr248, 8), i = rn.findIndex(([a, b]) => a === x && b === y), n = 'bridge_steel_x_' + part248(i, rn.length);
+    spr(n, 0, cx, cy, true); if (snow && ATLAS['snow_' + n]) spr('snow_' + n, 0, cx, cy, true); if (m !== 5 && m !== 10) spr(roadSprite(M, x, y, T), 0, cx, cy);
+    // 橋頭兩端：隔壁軌道補畫在橋墩上面（同 2.）
+    const f = rn[0], l = rn[rn.length - 1], ends = []; if (f[0] === x && f[1] === y) ends.push([x, y - 1]); if (l[0] === x && l[1] === y) ends.push([x, y + 1]);
+    for (const [nx, ny] of ends){ const N = M.tiles[tkey(nx, ny)]; if (!isRail89(N) || N.br247) continue; const c = center(nx, ny); spr(roadSprite(M, nx, ny, N), 0, c.cx, c.cy);
+      if (N.xp){ const a = (N.cm || 0) === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){ return _db2543y(M, mi, k, T, x, y, t, now, snow, cx, cy); } }; }
+
+/* ---------- 15. 柵欄：角落兩邊一起、已經放好的沿邊柵欄點得到 ---------- */
+const CORNER2543 = [[1, 2, '右角'], [2, 4, '下角'], [4, 8, '左角'], [8, 1, '上角']];
+{ const _em2543c = edgeMenu254; edgeMenu254 = function(M, x, y, st){ const r = _em2543c(M, x, y, st);
+  try { if (POP53.hidden) return r; const { cx, cy } = center(x, y), ok = b => !efGet254(M, x, y, b) && !efWhy254(M, x, y, b);
+    const all = POP53.querySelector('[data-e254="all"]'); let h = '';
+    for (const [a, b, nm] of CORNER2543) if (ok(a) && ok(b)) h += `<button data-ec2543="${a},${b}"><img src="" alt="">${nm}（${EFN254[a]}＋${EFN254[b]}）</button>`;
+    if (h){ if (all) all.insertAdjacentHTML('beforebegin', h); else POP53.insertAdjacentHTML('beforeend', h); }
+    if (efOf254(M, x, y).length) POP53.insertAdjacentHTML('beforeend', `<button data-ee2543="1" class="wide2543">${escapeHTML(TX2543.editEdges || '改這格已經有的沿邊柵欄…')}</button>`);
+    POP53.querySelectorAll('[data-ec2543]').forEach(btn => { const bits = btn.dataset.ec2543.split(',').map(Number), im = btn.querySelector('img'); im.replaceWith(efDia2543(M, x, y, bits));
+      btn.addEventListener('pointerenter', () => efPrevOn2543(x, y, bits)); btn.addEventListener('pointerleave', () => { RT.efPrev2543 = null; });
+      btn.onclick = () => { closePop53(); let n = 0; for (const b of bits){ if (!ok(b)) continue; if (!efPay254(st, cx, cy)) break; efSet254(M, x, y, b, st); n++; }
+        if (n){ sfx('place'); afterAction(); if (EFB254.some(ok)) setTimeout(() => { if (fenceSel254() === st && S.sel.fenceEdge254) edgeMenu254(M, x, y, st); }, 0); } }; });
+    const ee = POP53.querySelector('[data-ee2543]'); if (ee) ee.onclick = () => { closePop53(); edgeEditMenu2543(M, x, y); };
+    POP53.classList.add('efg2543'); } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _cp2543b = closePop53; closePop53 = function(...a){ POP53.classList.remove('efg2543'); return _cp2543b(...a); }; }
+{ const _sp2543 = showPop53; showPop53 = function(...a){ POP53.classList.remove('efg2543'); return _sp2543(...a); }; }
+function edgeEditMenu2543(M, x, y){ const es = efOf254(M, x, y), { cx, cy } = center(x, y); if (!es.length) return;
+  let h = `<h5>${escapeHTML(TX2543.edgeHead || '這格的沿邊柵欄')}</h5>`;
+  for (const b of es){ const st = efGet254(M, x, y, b); h += `<button data-xe2543="${b}"><img src="" alt="">${EFN254[b]}邊・${escapeHTML(efName254(st))}</button>`; }
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-xe2543', () => []); POP53.classList.add('efg2543');
+  POP53.querySelectorAll('[data-xe2543]').forEach(btn => btn.onclick = () => { closePop53(); edgeOne2543(M, x, y, +btn.dataset.xe2543); }); }
+function edgeOne2543(M, x, y, b){ const st = efGet254(M, x, y, b), { cx, cy } = center(x, y); if (!st) return; const D = CFG.decos[st] || {}, back = Math.floor((D.cost || 0) * (R.decoSellRate || .5));
+  const free = EFB254.filter(q => q !== b && !efGet254(M, x, y, q) && !efWhy254(M, x, y, q));
+  let h = `<h5>${EFN254[b]}邊的${escapeHTML(efName254(st))}</h5>`;
+  if (free.length) h += `<p class="efh2543">${escapeHTML(TX2543.swapEdge || '換到這格的另一邊：')}</p>` + free.map(q => `<button data-sw2543="${q}"><img src="" alt="">換到${EFN254[q]}邊</button>`).join('');
+  h += `<button data-eo2543="move" class="wide2543"><img src="${IMGSRC.ui_tool_move || ''}" alt="">搬到別格（同一邊）</button><button data-eo2543="store" class="wide2543"><img src="${IMGSRC.ui_tool_store || ''}" alt="">收回倉庫</button>
+    <button data-eo2543="remove" class="wide2543"><img src="${IMGSRC.ui_tool_remove || ''}" alt="">剷除${D.sellable ? `（賣 +${fmtN(back)}）` : '（收進倉庫）'}</button>`;
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-sw2543', () => []); POP53.classList.add('efg2543');
+  POP53.querySelectorAll('[data-sw2543]').forEach(btn => btn.onclick = () => { closePop53(); const q = +btn.dataset.sw2543; if (efGet254(M, x, y, b) !== st || efGet254(M, x, y, q)) return;
+    efSet254(M, x, y, b, null); efSet254(M, x, y, q, st); sfx('place'); floatText(cx, cy - 24, `換到${EFN254[q]}邊`, '#8a5d36', 11); afterAction(); });
+  POP53.querySelectorAll('[data-eo2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.eo2543; closePop53(); if (efGet254(M, x, y, b) !== st) return;
+    if (v === 'move'){ RT.mv254 = { mi: S.cur, x, y, b, st }; toast(`${TX254.mvHint || '點另一格，柵欄放在同一邊'}（${EFN254[b]}邊）；點原本那格取消`, false, 3500); updateHint(); return; }
+    efSet254(M, x, y, b, null);
+    if (v === 'remove' && D.sellable){ S.player.coins += back; flyCoins(worldToScreen(cx, cy - 20), back); floatText(cx, cy - 24, `+${fmtN(back)}`, '#c98a0c', 12); }
+    else { S.storage[st] = (S.storage[st] || 0) + 1; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); }
+    sfx('click'); afterAction(); }); }
+{ const _fm2543 = fenceMenu2543; fenceMenu2543 = function(M, x, y){ const r = _fm2543(M, x, y);
+  try { if (!POP53.hidden && efOf254(M, x, y).length){ POP53.insertAdjacentHTML('beforeend', `<button data-ee2543="1" class="wide2543">${escapeHTML(TX2543.editEdges || '改這格已經有的沿邊柵欄…')}</button>`);
+      POP53.querySelector('[data-ee2543]').onclick = () => { closePop53(); edgeEditMenu2543(M, x, y); }; } POP53.classList.add('efg2543'); } catch(e){}
+  return r; }; }
+{ const _act2543e = act; act = function(x, y){
+  try { if (S && !UI.expand && S.sel.tool === 'hand' && !(RT.mv || RT.gmv || RT.mv254 || RT.mv246 || RT.efSkip254)){ const M = curMap();
+      if (inMap(M, x, y)){ const T = M.tiles[tkey(x, y)]; if ((!T || T.t === 'weed') && efOf254(M, x, y).length){ edgeEditMenu2543(M, x, y); return; } } } } catch(e){ console.warn(e); }
+  return _act2543e(x, y); }; }
+
+
+// 同一格有東西（狗屋、動物、田…）又有沿邊柵欄：收成工具點下去先跳小選單選要動哪一個（玩家 2026-11-05）
+function objEdgeMenu2543(M, x, y){ const k = tkey(x, y), T = M.tiles[k], es = efOf254(M, x, y), { cx, cy } = center(x, y); if (!T || !es.length) return false;
+  let h = `<h5>${escapeHTML(TX2543.objHead || '這一格有：')}</h5><button data-oe2543="tile" class="wide2543"><img src="${IMGSRC.ui_tool_hand || ''}" alt="">${escapeHTML(objName53(T))}</button>`;
+  for (const b of es) h += `<button data-oe2543="${b}"><img src="" alt="">${EFN254[b]}邊・${escapeHTML(efName254(efGet254(M, x, y, b)))}</button>`;
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-oe2543', () => []); POP53.classList.add('efg2543');
+  POP53.querySelectorAll('[data-oe2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.oe2543; closePop53();
+    if (v === 'tile'){ if (M.tiles[k] !== T) return; RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return; }
+    edgeOne2543(M, x, y, +v); });
+  return true; }
+{ const _act2543o = act; act = function(x, y){
+  try { if (S && !UI.expand && S.sel.tool === 'hand' && !(RT.mv || RT.gmv || RT.mv254 || RT.mv246 || RT.efSkip254)){ const M = curMap();
+      if (inMap(M, x, y)){ const T = M.tiles[tkey(x, y)];
+        if (T && T.t !== 'weed' && !(T.t === 'deco' && isFence51(T.id)) && efOf254(M, x, y).length && objEdgeMenu2543(M, x, y)) return; } } } catch(e){ console.warn(e); }
+  return _act2543o(x, y); }; }
+// 晚上點睡在窩裡的寵物跳的小選單：窩那格有沿邊柵欄也列出來
+{ const _dp2543 = denPop2543; denPop2543 = function(d, x, y){ const r = _dp2543(d, x, y);
+  try { const M = S.maps[d.mi], es = efOf254(M, d.x, d.y); if (!POP53.hidden && es.length){
+      POP53.insertAdjacentHTML('beforeend', es.map(b => `<button data-pe2543="${b}"><img src="" alt="">${EFN254[b]}邊・${escapeHTML(efName254(efGet254(M, d.x, d.y, b)))}</button>`).join(''));
+      efDecorate2543(M, d.x, d.y, 'data-pe2543', () => []);
+      POP53.querySelectorAll('[data-pe2543]').forEach(btn => btn.onclick = () => { closePop53(); edgeOne2543(M, d.x, d.y, +btn.dataset.pe2543); }); } } catch(e){ console.warn(e); }
+  return r; }; }
+
+
+/* ---------- 16. 柵欄一格只有 8 種樣子（玩家 2026-11-05）----------
+   左下、右下、左上、右上（單邊）和 左上＋右上、右上＋右下、右下＋左下、左下＋左上（角落）。
+   對邊（左下＋右上、右下＋左上）、三邊、四邊都不行；「四邊都圍」拿掉。放、換、搬、整格改沿邊都照這 8 種。
+   選單一律列 8 種樣子（示意圖只畫那個樣子），點了把這格改成那樣：多的邊付錢（倉庫先用）、少的邊收回倉庫。 */
+const SHAPES2543 = [[4], [2], [8], [1], [8, 1], [1, 2], [2, 4], [4, 8]];
+const shapeName2543 = bits => bits.length === 1 ? `${EFN254[bits[0]]}邊` : `${EFN254[bits[0]]}＋${EFN254[bits[1]]}`;
+const shapeOk2543 = bits => SHAPES2543.some(q => q.length === bits.length && q.every(b => bits.includes(b)));
+const sameSet2543 = (a, b) => a.length === b.length && a.every(q => b.includes(q));
+// 這格改成 target 要做的事；不行就回傳原因
+function shapePlan2543(M, x, y, target, keepFree){ const cur = efOf254(M, x, y), add = target.filter(b => !cur.includes(b)), del = cur.filter(b => !target.includes(b));
+  for (const b of add){ const why = efWhy254(M, x, y, b); if (why) return { why: `${EFN254[b]}邊：${why}` }; }
+  return { add, del, pay: Math.max(0, add.length - (keepFree || 0)) }; }
+function shapeApply2543(M, x, y, target, st, freeN){ const { cx, cy } = center(x, y), P = shapePlan2543(M, x, y, target, freeN); if (P.why){ toast(P.why); return false; }
+  let free = freeN || 0; const same = P.del.filter(b => efGet254(M, x, y, b) === st).length, D = CFG.decos[st] || {};
+  const coinNeed = Math.max(0, P.pay - (S.storage[st] || 0) - same) * (D.cost || 0);
+  if (coinNeed > 0 && S.player.coins < coinNeed){ toast(`金幣不夠：還要 ${fmtN(coinNeed)} 金幣`); return false; }
+  for (const b of P.del){ const s2 = efGet254(M, x, y, b); if (!s2) continue; efSet254(M, x, y, b, null); S.storage[s2] = (S.storage[s2] || 0) + 1; }   // 先收回，換邊時直接用收回的那段
+  for (const b of P.add){ if (free > 0) free--; else if (!efPay254(st, cx, cy)) return false; efSet254(M, x, y, b, st); }
+  const net = P.del.length - P.add.length + (freeN || 0); if (net > 0) floatText(cx, cy - 36, `${net} 段收進倉庫`, '#2f7fa8', 10);
+  sfx('place'); afterAction(); return true; }
+// 8 種樣子的按鈕（cur＝這格現在的樣子；need⊆target 才能選：放新柵欄時不會把已經有的拿掉）
+function shapeBtns2543(M, x, y, attr, opt){ const cur = efOf254(M, x, y);
+  return SHAPES2543.map((sh, i) => { const same = sameSet2543(sh, cur), sub = opt.mustKeep && !cur.every(b => sh.includes(b)), P = shapePlan2543(M, x, y, sh, opt.free || 0), dis = same || sub || !!P.why;
+    const more = P.why ? 0 : P.add.length - (opt.free || 0) - P.del.length, tail = same ? '（現在）' : sub ? '' : P.why ? `（${escapeHTML(P.why.replace(/^.*：/, ''))}）` : more > 0 ? `（多 ${more} 段）` : more < 0 ? `（收回 ${-more} 段）` : '';
+    return `<button ${attr}="${i}" ${dis ? 'disabled' : ''}><img src="" alt="">${shapeName2543(sh)}${tail}</button>`; }).join(''); }
+function shapeDecorate2543(M, x, y, attr){ POP53.querySelectorAll(`[${attr}]`).forEach(btn => { const sh = SHAPES2543[+btn.getAttribute(attr)]; if (!sh) return; const im = btn.querySelector('img'), cv = efDia2543(M, x, y, sh, true);
+    if (im) im.replaceWith(cv); else btn.insertBefore(cv, btn.firstChild); btn.addEventListener('pointerenter', () => efPrevOn2543(x, y, sh)); btn.addEventListener('pointerleave', () => { RT.efPrev2543 = null; }); }); POP53.classList.add('efg2543'); }
+// 放沿邊柵欄（取代 g103 和前面包裝的 edgeMenu254）：只列 8 種樣子，而且要包含這格已經有的邊
+edgeMenu254 = function(M, x, y, st){ const { cx, cy } = center(x, y), cur = efOf254(M, x, y);
+  let h = `<h5>${escapeHTML(efName254(st))}・${escapeHTML(TX254.efHead || '放在哪一邊？')}</h5><p class="efh2543">${escapeHTML(cur.length ? (TX2543.shapeHintHas || '這格已經有柵欄：選要加成哪一種樣子') : (TX2543.efHint || '藍框是這一格，粗線就是柵欄會放的那一邊'))}</p>`;
+  h += shapeBtns2543(M, x, y, 'data-sh2543', { mustKeep: true });
+  if (cur.length) h += `<button data-ee2543="1" class="wide2543">${escapeHTML(TX2543.editEdges || '改這格已經有的沿邊柵欄…')}</button>`;
+  showPop53(cx, cy - 30, h); shapeDecorate2543(M, x, y, 'data-sh2543');
+  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); if (shapeApply2543(M, x, y, SHAPES2543[+btn.dataset.sh2543], st)){
+      const left = SHAPES2543.some(sh => !sameSet2543(sh, efOf254(M, x, y)) && efOf254(M, x, y).every(b => sh.includes(b)) && !shapePlan2543(M, x, y, sh).why);
+      if (left) setTimeout(() => { if (fenceSel254() === st && S.sel.fenceEdge254) edgeMenu254(M, x, y, st); }, 0); } });
+  const ee = POP53.querySelector('[data-ee2543]'); if (ee) ee.onclick = () => { closePop53(); edgeEditMenu2543(M, x, y); }; };
+// 點已經放好的一段：「這格改成」8 種樣子＋搬／收回／剷除
+edgeOne2543 = function(M, x, y, b){ const st = efGet254(M, x, y, b), { cx, cy } = center(x, y); if (!st) return; const D = CFG.decos[st] || {}, back = Math.floor((D.cost || 0) * (R.decoSellRate || .5));
+  let h = `<h5>${EFN254[b]}邊的${escapeHTML(efName254(st))}</h5><p class="efh2543">${escapeHTML(TX2543.shapeTo || '這格改成：（多的付錢、倉庫先用；少的收回倉庫）')}</p>` + shapeBtns2543(M, x, y, 'data-sh2543', {});
+  h += `<button data-eo2543="move" class="wide2543"><img src="${IMGSRC.ui_tool_move || ''}" alt="">搬到別格（同一邊）</button><button data-eo2543="store" class="wide2543"><img src="${IMGSRC.ui_tool_store || ''}" alt="">收回倉庫</button>
+    <button data-eo2543="remove" class="wide2543"><img src="${IMGSRC.ui_tool_remove || ''}" alt="">剷除${D.sellable ? `（賣 +${fmtN(back)}）` : '（收進倉庫）'}</button>`;
+  showPop53(cx, cy - 30, h); shapeDecorate2543(M, x, y, 'data-sh2543');
+  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); shapeApply2543(M, x, y, SHAPES2543[+btn.dataset.sh2543], st); });
+  POP53.querySelectorAll('[data-eo2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.eo2543; closePop53(); if (efGet254(M, x, y, b) !== st) return;
+    if (v === 'move'){ RT.mv254 = { mi: S.cur, x, y, b, st }; toast(`${TX254.mvHint || '點另一格，柵欄放在同一邊'}（${EFN254[b]}邊）；點原本那格取消`, false, 3500); updateHint(); return; }
+    efSet254(M, x, y, b, null);
+    if (v === 'remove' && D.sellable){ S.player.coins += back; flyCoins(worldToScreen(cx, cy - 20), back); floatText(cx, cy - 24, `+${fmtN(back)}`, '#c98a0c', 12); }
+    else { S.storage[st] = (S.storage[st] || 0) + 1; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); }
+    sfx('click'); afterAction(); }); };
+// 整格柵欄改成沿邊：8 種樣子，這格原本那 1 段免費，角落多 1 段要付
+fenceMenu2543 = function(M, x, y){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y); if (!T) return;
+  const nm = efName254(T.id), turn = T.id === 'fence' && maskAt(M, x, y, isFence) === '00', cur = efOf254(M, x, y);
+  let h = `<h5>${escapeHTML(nm)}（${escapeHTML(TX2543.whole || '整格')}）</h5>`;
+  if (turn) h += `<button data-fm2543="turn" class="wide2543"><img src="${IMGSRC.ui_tool_move || ''}" alt="">${escapeHTML(TX2543.turn || '轉向')}</button>`;
+  h += `<p class="efh2543">${escapeHTML(TX2543.toEdge || '改成沿邊（這一段不用再付錢）：選樣子')}</p>` + shapeBtns2543(M, x, y, 'data-sh2543', { mustKeep: true, free: 1 });
+  h += `<button data-fm2543="store" class="wide2543"><img src="${IMGSRC.ui_tool_store || ''}" alt="">${escapeHTML(TX2543.storeFence || '收回倉庫')}</button>`;
+  if (cur.length) h += `<button data-ee2543="1" class="wide2543">${escapeHTML(TX2543.editEdges || '改這格已經有的沿邊柵欄…')}</button>`;
+  showPop53(cx, cy - 30, h); shapeDecorate2543(M, x, y, 'data-sh2543');
+  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); if (M.tiles[k] !== T) return; const id = T.id; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0;
+    if (!shapeApply2543(M, x, y, SHAPES2543[+btn.dataset.sh2543], id, 1)){ M.tiles[k] = T; RT.decoVer++; RT.regionsAt = 0; return; } floatText(cx, cy - 24, '改成沿邊', '#8a5d36', 11); });
+  POP53.querySelectorAll('[data-fm2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.fm2543; closePop53(); if (M.tiles[k] !== T) return;
+    if (v === 'turn'){ fenceTurn53(M, x, y, T); return; }
+    S.storage[T.id] = (S.storage[T.id] || 0) + 1; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('click'); afterAction(); });
+  const ee = POP53.querySelector('[data-ee2543]'); if (ee) ee.onclick = () => { closePop53(); edgeEditMenu2543(M, x, y); }; };
+// 搬到別格（同一邊）：放下去那格要還是 8 種之一
+{ const _pm2543 = placeMoved254; placeMoved254 = function(M, x, y){ const V = RT.mv254;
+  try { if (V && V.mi === S.cur && !(V.x === x && V.y === y)){ const after = [...new Set([...efOf254(M, x, y), V.b])];
+      if (!shapeOk2543(after)){ toast(tx84(TX2543.shapeBad || '那格放了會變成「{s}」：一格只能是單邊或角落兩邊', { s: after.map(b => EFN254[b]).join('＋') })); return; } } } catch(e){}
+  return _pm2543(M, x, y); }; }
+
+
+/* ---------- 17. 柵欄小選單看得懂（玩家 2026-11-05 第三次）----------
+   1. 那格是大便、雜草、碎石、草球：照原本點了就清掉，不跳「這一格有」；別的東西用 objName 寫名字（之前大便被寫成別的名字）。
+   2. 列出柵欄的按鈕寫清楚「木柵欄（左下邊）」＋小字「改方向・搬移・收回」；點一段柵欄後先看到動作，「改方向／改樣子」按了才展開 8 種。
+   3. 「剷除（賣 +2）」改成「賣掉（退 2 金幣）」。 */
+const CLEAN2543 = new Set(['weed', 'debris', 'weedball', 'poop']);
+const tileName2543 = (M, k, T) => { let n = ''; try { n = objName(M, k); } catch(e){} if (!n || /undefined/.test(n)) n = objName53(T); return n || '這格的東西'; };
+const edgeBtn2543 = (attr, b, st) => `<button ${attr}="${b}" class="wide2543 eb2543"><img src="" alt=""><span><b>${escapeHTML(efName254(st))}（${EFN254[b]}邊）</b><small>${escapeHTML(TX2543.edgeActs || '改方向・搬移・收回')}</small></span></button>`;
+objEdgeMenu2543 = function(M, x, y){ const k = tkey(x, y), T = M.tiles[k], es = efOf254(M, x, y), { cx, cy } = center(x, y); if (!T || !es.length) return false;
+  let h = `<h5>${escapeHTML(TX2543.objHead || '這一格有：')}</h5><button data-oe2543="tile" class="wide2543"><img src="${IMGSRC.ui_tool_hand || ''}" alt="">${escapeHTML(tileName2543(M, k, T))}</button>`;
+  for (const b of es) h += edgeBtn2543('data-oe2543', b, efGet254(M, x, y, b));
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-oe2543', () => []);
+  POP53.querySelectorAll('[data-oe2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.oe2543; closePop53();
+    if (v === 'tile'){ if (M.tiles[k] !== T) return; RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return; }
+    edgeOne2543(M, x, y, +v); });
+  return true; };
+{ const _act2543c = act; act = function(x, y){   // 大便、雜草等：點了照舊清掉，不跳小選單
+  try { if (S && !UI.expand && S.sel.tool === 'hand' && !RT.efSkip254){ const M = curMap(); if (inMap(M, x, y)){ const T = M.tiles[tkey(x, y)];
+        if (T && CLEAN2543.has(T.t) && efOf254(M, x, y).length){ RT.efSkip254 = true; try { return _act2543c(x, y); } finally { RT.efSkip254 = false; } } } } } catch(e){ console.warn(e); }
+  return _act2543c(x, y); }; }
+edgeEditMenu2543 = function(M, x, y){ const es = efOf254(M, x, y), { cx, cy } = center(x, y); if (!es.length) return;
+  let h = `<h5>${escapeHTML(TX2543.edgeHead || '這格的沿邊柵欄')}</h5>` + es.map(b => edgeBtn2543('data-xe2543', b, efGet254(M, x, y, b))).join('');
+  showPop53(cx, cy - 30, h); efDecorate2543(M, x, y, 'data-xe2543', () => []);
+  POP53.querySelectorAll('[data-xe2543]').forEach(btn => btn.onclick = () => { closePop53(); edgeOne2543(M, x, y, +btn.dataset.xe2543); }); };
+edgeOne2543 = function(M, x, y, b, open){ const st = efGet254(M, x, y, b), { cx, cy } = center(x, y); if (!st) return; const D = CFG.decos[st] || {}, back = Math.floor((D.cost || 0) * (R.decoSellRate || .5));
+  let h = `<h5>${escapeHTML(efName254(st))}（${EFN254[b]}邊）</h5>
+    <button data-eo2543="shape" class="wide2543"><img src="" alt="">${escapeHTML(TX2543.shapeBtn || '改方向／改樣子')} ${open ? '▴' : '▾'}</button>`;
+  if (open) h += `<p class="efh2543">${escapeHTML(TX2543.shapeTo || '這格改成：（多的付錢、倉庫先用；少的收回倉庫）')}</p><div class="shg2543">${shapeBtns2543(M, x, y, 'data-sh2543', {})}</div>`;
+  h += `<button data-eo2543="move" class="wide2543"><img src="${IMGSRC.ui_tool_move || ''}" alt="">搬到別格（同一邊）</button><button data-eo2543="store" class="wide2543"><img src="${IMGSRC.ui_tool_store || ''}" alt="">收回倉庫</button>
+    <button data-eo2543="remove" class="wide2543"><img src="${IMGSRC.ui_coin || ''}" alt="">${D.sellable ? `賣掉（退 ${fmtN(back)} 金幣）` : '拆掉（收進倉庫）'}</button>`;
+  showPop53(cx, cy - 30, h); POP53.classList.add('efg2543');
+  const sb = POP53.querySelector('[data-eo2543="shape"] img'); if (sb) sb.replaceWith(efDia2543(M, x, y, [b], true));
+  if (open) shapeDecorate2543(M, x, y, 'data-sh2543');
+  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); shapeApply2543(M, x, y, SHAPES2543[+btn.dataset.sh2543], st); });
+  POP53.querySelectorAll('[data-eo2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.eo2543;
+    if (v === 'shape'){ edgeOne2543(M, x, y, b, !open); return; }
+    closePop53(); if (efGet254(M, x, y, b) !== st) return;
+    if (v === 'move'){ RT.mv254 = { mi: S.cur, x, y, b, st }; toast(`${TX254.mvHint || '點另一格，柵欄放在同一邊'}（${EFN254[b]}邊）；點原本那格取消`, false, 3500); updateHint(); return; }
+    efSet254(M, x, y, b, null);
+    if (v === 'remove' && D.sellable){ S.player.coins += back; flyCoins(worldToScreen(cx, cy - 20), back); floatText(cx, cy - 24, `賣掉 +${fmtN(back)}`, '#c98a0c', 12); }
+    else { S.storage[st] = (S.storage[st] || 0) + 1; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); }
+    sfx('click'); afterAction(); }); };
+
+/* ---------- 存檔 ---------- */
+{ const _ns2543 = normalizeState; normalizeState = function(d){ const r = _ns2543(d); const s = r || d;
+  try { if (s){ s.batKwh2543 = s.batKwh2543 || {}; tbxMigrate2543(s); if (!s.v2543) s.v2543 = 1; } } catch(e){ console.warn(e); }
+  return r; }; }
+if (typeof S !== 'undefined' && S && S.maps) normalizeState(S);
+
+{ const st = document.createElement('style'); st.textContent = `
+.urow47 .un47 small{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
+.rb2543{display:inline-block;margin-top:3px;color:#2f7fa8;font-weight:700;text-decoration:underline;cursor:pointer}
+body.night .rb2543{color:#8cc8ff}
+.den2543 .pets253,.res2543 .pets253{margin-top:4px}
+.res2543 .pr2543{padding:8px 0;border-top:1px solid rgba(127,127,127,.18)}.res2543 .pr2543:first-of-type{border-top:0}
+.res2543 .ph2543{display:flex;align-items:center;gap:8px;margin-bottom:4px}.res2543 .ph2543 img{width:40px;height:40px;object-fit:contain}.res2543 .ph2543 .btn{margin-left:auto}
+.dpl2543{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+.dpc2543{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:center}.dpc2543 p{margin:2px 0}.dpc2543.cur{outline:2px solid #2f9a5a}
+.dpc2543 .dpm2543 canvas{max-width:120px}
+.bird40.hl2543{outline:3px solid #f2c230;outline-offset:2px}
+.sheet.ip2543s #modalTitle{visibility:hidden}
+.iph2543{display:grid;grid-template-columns:200px minmax(0,1fr);gap:18px;align-items:start;margin-bottom:14px}
+.ipp2543{width:200px;height:200px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(120,170,230,.28),rgba(40,70,120,.18));box-shadow:0 0 0 3px rgba(120,160,220,.35),0 8px 24px rgba(0,0,0,.18)}
+.ipp2543 img{width:150px;height:150px;object-fit:contain;image-rendering:auto}
+.ipt2543{display:flex;align-items:center;gap:10px;margin:2px 0 8px}.ipt2543 b{font-size:30px;line-height:1.1}.ipt2543 .pill{font-size:13px}
+.ips2543{margin:0 0 8px;opacity:.9}
+.ipkv2543,.bk2543{border:1px solid rgba(127,160,210,.35);border-radius:14px;overflow:hidden}
+.ipkv2543 .r,.bk2543 .r{display:grid;grid-template-columns:150px minmax(0,1fr);border-top:1px solid rgba(127,160,210,.25)}.ipkv2543 .r:first-child,.bk2543 .r:first-child{border-top:0}
+.ipkv2543 .k,.bk2543 .k{display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(127,160,210,.10);font-weight:700}.ipkv2543 .v,.bk2543 .v{padding:8px 12px}
+.i2543{width:20px;height:20px;flex:none;color:var(--accent,#5a8ad6)}
+.warn2543{color:#e0a020}
+.ipg2543{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:14px;margin-bottom:14px}
+.ipc2543{border:1px solid rgba(127,160,210,.35);border-radius:14px;padding:12px 14px;margin-bottom:14px}.ipg2543 .ipc2543{margin:0}
+.ipc2543 h4{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:17px}
+.two2543{display:grid;grid-template-columns:1fr 1fr;gap:18px}.two2543>div+div{border-left:1px solid rgba(127,160,210,.3);padding-left:18px}
+.ft2543{display:flex;align-items:center;gap:10px;padding:8px 10px;margin:6px 0;border-radius:12px;border:1px solid rgba(127,160,210,.3)}.ft2543 img{width:34px;height:34px;object-fit:contain}
+.ipden2543{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;align-items:center}.ipden2543 img{width:110px;height:110px;object-fit:contain}.ipden2543 p{margin:2px 0;display:flex;align-items:center;gap:4px}
+.sm2543{opacity:.7;font-size:13px}.mates2543{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}.mate2543{display:flex;align-items:center;gap:4px;border:1px solid rgba(127,160,210,.35);border-radius:10px;background:none;color:inherit;padding:3px 8px;cursor:pointer}.mate2543 img{width:24px;height:24px}
+.ipb2543{display:flex;flex-wrap:wrap;gap:10px}.ipb2543 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:15px}.ipb2543 .btn img{width:28px;height:28px;object-fit:contain}
+.bat2543{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;border:1px solid rgba(127,160,210,.35);border-radius:14px;padding:12px}
+.bp2543{display:grid;grid-template-columns:64px 1fr;gap:6px 12px;align-items:center}.bp2543 img{width:60px;height:60px;object-fit:contain}.bp2543 b{font-size:22px;white-space:nowrap}.bp2543 em{font-style:normal;color:#f2c230;font-size:30px}
+.bb2543{grid-column:1/-1;height:14px;border-radius:9px;border:1px solid rgba(127,160,210,.5);overflow:hidden}.bb2543 i{display:block;height:100%;background:linear-gradient(90deg,#5fd36f,#2f9a5a)}
+.dp2543 .dph2543{display:flex;justify-content:flex-end;margin-top:-8px}.dpcur2543{border-radius:12px;padding:10px 14px;background:rgba(127,160,210,.14);margin:8px 0 12px}.dpcur2543 small{display:block;opacity:.7}.dpcur2543 b{display:flex;align-items:center;gap:6px;font-size:16px}
+.dpt2543{margin:4px 0 8px;font-weight:700}
+.dpo2543{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;padding:10px 14px;margin:0 0 10px;border-radius:12px;border:1px solid rgba(127,160,210,.35);background:rgba(127,160,210,.08);color:inherit;cursor:pointer}
+.dpo2543.on{background:rgba(60,120,200,.35);border-color:#5a9ae6}.dpo2543:disabled{opacity:.5;cursor:default}.dpo2543 b{font-size:16px}.dpo2543 b .pill{font-style:normal;font-size:11px;margin-left:6px}.dpo2543 small{display:block;opacity:.8}
+.dpi2543{width:54px;height:54px;border-radius:12px;background:rgba(127,160,210,.18);display:flex;align-items:center;justify-content:center}.dpi2543 img{width:44px;height:44px;object-fit:contain}
+.dpk2543 .i2543{width:24px;height:24px;color:#8fc2ff}.dpf2543{display:flex;justify-content:flex-end;gap:10px;margin-top:4px}.dpf2543 .btn{display:inline-flex;align-items:center;gap:6px}
+#cap2522 canvas{width:44px!important;height:44px!important}#cap2522 .p img{display:none}#cap2522 .st2543{padding:1px 8px;border-radius:9px;background:#2f9a5a;color:#fff;font-weight:800;font-size:12px;white-space:nowrap}
+#pick53.efg2543{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:360px}#pick53.efg2543>h5,#pick53.efg2543>p,#pick53.efg2543>.wide2543{grid-column:1/-1}
+#pick53.efg2543>button:not(.wide2543){display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:6px 4px;font-size:12px;line-height:1.25}
+#pick53.efg2543>button:not(.wide2543) canvas.ef2543{width:84px;height:48px}
+@media (max-width:760px){.iph2543{grid-template-columns:110px minmax(0,1fr);gap:12px}.ipp2543{width:110px;height:110px}.ipp2543 img{width:84px;height:84px}.ipt2543 b{font-size:22px}
+  .ipkv2543 .r,.bk2543 .r{grid-template-columns:96px minmax(0,1fr)}.ipkv2543 .k,.bk2543 .k{padding:6px 8px;font-size:13px}.ipkv2543 .v,.bk2543 .v{padding:6px 8px;font-size:13px}
+  .ipg2543,.two2543,.bat2543{grid-template-columns:minmax(0,1fr)}.two2543>div+div{border-left:0;padding-left:0;border-top:1px solid rgba(127,160,210,.3);padding-top:10px}.ipden2543{grid-template-columns:72px minmax(0,1fr)}.ipden2543 img{width:72px;height:72px}}
+@media (max-width:420px){.iph2543{grid-template-columns:minmax(0,1fr)}.ipp2543{margin:0 auto}}
+
+.wild2543{margin-top:12px}
+#pick53 [data-pp2543] img,#pick53 [data-ai2543] img{width:22px;height:22px;object-fit:contain}
+#pick53 canvas.ef2543{width:84px;height:48px;flex:0 0 84px}#pick53:has(canvas.ef2543){max-width:320px}#pick53 .efh2543{margin:2px 0 6px;font-size:12px;opacity:.8}
+#pick53 [data-fm2543] img{width:22px;height:22px;object-fit:contain}
+#pick53 .shg2543{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#pick53 .shg2543>button{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:6px 4px;font-size:12px;line-height:1.25}
+#pick53 .eb2543{display:flex;align-items:center;gap:8px;text-align:left}#pick53 .eb2543 canvas.ef2543{width:64px;height:37px;flex:0 0 64px}#pick53 .eb2543 span{display:flex;flex-direction:column}#pick53 .eb2543 small{opacity:.7;font-size:11px}
+#pick53 .wide2543>canvas.ef2543{width:64px;height:37px;flex:0 0 64px}
+
+@media (max-width:600px){.dpc2543{grid-template-columns:110px 1fr}.dpc2543 .dpm2543 canvas{max-width:110px}}
+`; document.head.appendChild(st); }
+
+window.__farm2543 = { markRail2543, openDenPick2543, denPop2543, openBird2543, openAnimal2543, herbGuard2543, isHerb2543, batLine2543, act: (x, y) => act(x, y), objEdgeMenu2543, SHAPES2543, shapeApply2543, shapeOk2543, placeMoved: (M, x, y) => placeMoved254(M, x, y), openInsect2543, openBattery2543, edgeEditMenu2543, edgeOne2543, fillCap2522: el => fillCap2522(el), openDevice: (...a) => openDevice(...a), capX2543, tbxBuy2543, tbxMigrate2543, fenceMenu2543, efDia2543, edgeMenu: (...a) => edgeMenu254(...a), openTrash: (...a) => openTrash(...a), renderBoost: el => renderBoost(el), meteorTap: (x, y) => meteorTap(x, y),
+  tapAnimal: (...a) => tapAnimal(...a), stepPest: (...a) => stepPest(...a), storeDev: (M, k) => storeDev56(M, k, M.tiles[k]), placeStored: (...a) => placeStoredDev56(...a), unitText: (k, u) => unitText(k, u),
+  openPet: P => openPet(P), openDen: (mi, k) => openDen(mi, k), UIbuildTray: () => UIbuildTray(), drawBr247: (...a) => drawBr247(...a), openBook: (...a) => openBook(...a) };
 
   })(CFG, ATLAS_JSON);
 })();
