@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.55",
+  "configVersion": "2.56",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -2095,7 +2095,8 @@
     "bird_budgie",
     "bird_house",
     "bird_food",
-    "bf:papilio_polytes"
+    "bf:papilio_polytes",
+    "dog_chihuahua"
    ],
    "animalCap": 14,
    "fishPoolTileCap": 12,
@@ -2132,7 +2133,9 @@
     "minebot_3",
     "rent_mine_2",
     "gradebot_3",
-    "rent_grade_2"
+    "rent_grade_2",
+    "dog_beagle",
+    "cat_tabby"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -2173,7 +2176,8 @@
     "mallotus",
     "strobilanthes",
     "bird_canary",
-    "bf:eurema_blanda"
+    "bf:eurema_blanda",
+    "dog_shihtzu"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -2207,7 +2211,9 @@
     "muskmelon",
     "down_goose",
     "bird_gouldian",
-    "bf:papilio_protenor"
+    "bf:papilio_protenor",
+    "dog_yorkie",
+    "cat_tuxedo"
    ],
    "animalCap": 20,
    "fishPoolTileCap": 20,
@@ -2239,7 +2245,8 @@
    "unlocks": [
     "taro",
     "rosemary",
-    "bf:pieris_canidia"
+    "bf:pieris_canidia",
+    "dog_pug"
    ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
@@ -2257,7 +2264,8 @@
     "thyme",
     "bird_cockatiel",
     "bird_cockatiel_white",
-    "bf:erionota_torus"
+    "bf:erionota_torus",
+    "dog_papillon"
    ],
    "animalCap": 23,
    "fishPoolTileCap": 23,
@@ -2285,7 +2293,9 @@
    "coinReward": 14000,
    "specialDeco": null,
    "unlocks": [
-    "sage"
+    "sage",
+    "dog_schnauzer",
+    "cat_british"
    ],
    "animalCap": 25,
    "fishPoolTileCap": 25,
@@ -2301,7 +2311,8 @@
     "blacktip_shark",
     "sugarcane",
     "bird_sun_conure",
-    "bf:papilio_memnon"
+    "bf:papilio_memnon",
+    "dog_akita"
    ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
@@ -2315,7 +2326,8 @@
    "specialDeco": null,
    "unlocks": [
     "dog_dachshund",
-    "bf:cyrestis_thyodamas"
+    "bf:cyrestis_thyodamas",
+    "cat_siamese"
    ],
    "animalCap": 27,
    "fishPoolTileCap": 27,
@@ -2329,7 +2341,8 @@
    "specialDeco": null,
    "unlocks": [
     "cotton",
-    "bf:heliophorus_ila"
+    "bf:heliophorus_ila",
+    "dog_dalmatian"
    ],
    "animalCap": 28,
    "fishPoolTileCap": 28,
@@ -2344,7 +2357,8 @@
    "unlocks": [
     "cat_ragdoll",
     "bird_quaker",
-    "bf:jamides_alecto"
+    "bf:jamides_alecto",
+    "dog_bullterrier"
    ],
    "animalCap": 29,
    "fishPoolTileCap": 29,
@@ -2373,7 +2387,8 @@
    "unlocks": [
     "hammerhead",
     "tea",
-    "bf:bamboo_skipper"
+    "bf:bamboo_skipper",
+    "dog_chowchow"
    ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
@@ -2386,7 +2401,9 @@
    "coinReward": 21000,
    "specialDeco": null,
    "unlocks": [
-    "bf:ideopsis_similis"
+    "bf:ideopsis_similis",
+    "dog_samoyed",
+    "cat_russianblue"
    ],
    "animalCap": 32,
    "fishPoolTileCap": 32,
@@ -2415,7 +2432,8 @@
    "specialDeco": null,
    "unlocks": [
     "coffee",
-    "bf:tagiades_dagai"
+    "bf:tagiades_dagai",
+    "dog_shepherd"
    ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
@@ -2454,7 +2472,9 @@
    "xpToReach": 1578600,
    "coinReward": 26000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "dog_doberman"
+   ],
    "animalCap": 37,
    "fishPoolTileCap": 37,
    "produceCapacity": 7450,
@@ -2468,7 +2488,8 @@
    "unlocks": [
     "dog_husky",
     "bird_white_cockatoo",
-    "bf:pachliopta_aristolochiae"
+    "bf:pachliopta_aristolochiae",
+    "cat_scottishfold"
    ],
    "animalCap": 38,
    "fishPoolTileCap": 38,
@@ -2480,7 +2501,9 @@
    "xpToReach": 1725600,
    "coinReward": 28000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "dog_rottweiler"
+   ],
    "animalCap": 39,
    "fishPoolTileCap": 39,
    "produceCapacity": 7950,
@@ -2517,7 +2540,9 @@
    "xpToReach": 1950600,
    "coinReward": 31000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "dog_malamute"
+   ],
    "animalCap": 42,
    "fishPoolTileCap": 42,
    "produceCapacity": 8700,
@@ -2528,7 +2553,9 @@
    "xpToReach": 2026800,
    "coinReward": 32000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "cat_silvershade"
+   ],
    "animalCap": 43,
    "fishPoolTileCap": 43,
    "produceCapacity": 8950,
@@ -2564,7 +2591,8 @@
    "coinReward": 70000,
    "specialDeco": "lighthouse",
    "unlocks": [
-    "bf:seseria_formosana"
+    "bf:seseria_formosana",
+    "dog_stbernard"
    ],
    "animalCap": 46,
    "fishPoolTileCap": 46,
@@ -2587,7 +2615,9 @@
    "xpToReach": 2416800,
    "coinReward": 37000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "cat_mainecoon"
+   ],
    "animalCap": 48,
    "fishPoolTileCap": 48,
    "produceCapacity": 10200,
@@ -2620,7 +2650,9 @@
    "xpToReach": 2658000,
    "coinReward": 80000,
    "specialDeco": "observatory",
-   "unlocks": [],
+   "unlocks": [
+    "dog_mastiff"
+   ],
    "animalCap": 51,
    "fishPoolTileCap": 51,
    "produceCapacity": 10950,
@@ -7552,16 +7584,34 @@
      "icon": "ui_tab_pet_dog",
      "ids": [
       "dog_shiba",
+      "dog_chihuahua",
+      "dog_beagle",
       "dog_maltese",
+      "dog_shihtzu",
       "dog_pomeranian",
+      "dog_yorkie",
       "dog_corgi",
+      "dog_pug",
+      "dog_papillon",
       "dog_border",
+      "dog_schnauzer",
+      "dog_akita",
       "dog_dachshund",
+      "dog_dalmatian",
+      "dog_bullterrier",
       "dog_poodle",
+      "dog_chowchow",
+      "dog_samoyed",
       "dog_labrador",
+      "dog_shepherd",
       "dog_bulldog",
+      "dog_doberman",
       "dog_husky",
-      "dog_golden"
+      "dog_rottweiler",
+      "dog_golden",
+      "dog_malamute",
+      "dog_stbernard",
+      "dog_mastiff"
      ]
     },
     {
@@ -7570,10 +7620,18 @@
      "icon": "ui_tab_pet_cat",
      "ids": [
       "cat_orange",
+      "cat_tabby",
       "cat_calico",
+      "cat_tuxedo",
       "cat_black",
+      "cat_british",
+      "cat_siamese",
       "cat_ragdoll",
-      "cat_persian"
+      "cat_russianblue",
+      "cat_persian",
+      "cat_scottishfold",
+      "cat_silvershade",
+      "cat_mainecoon"
      ]
     },
     {
@@ -9962,7 +10020,50 @@
      "wolf": 0.6
     },
     "skill": "chicken",
-    "skillText": "守雞：對黃鼠狼、狐狸特別兇"
+    "skillText": "守雞：對黃鼠狼、狐狸特別兇",
+    "book": {
+     "origin": "日本",
+     "trait": "獨立、愛乾淨、有點固執",
+     "know": "日本最古老的犬種之一，原本在山區獵鳥和小動物；招牌是捲起來的尾巴和「柴犬笑」。"
+    }
+   },
+   "chihuahua": {
+    "name": "吉娃娃",
+    "size": "S",
+    "level": 9,
+    "price": 2200,
+    "range": 5,
+    "drive": {
+     "weasel": 0.6,
+     "fox": 0.5,
+     "wolf": 0.3
+    },
+    "skill": "bark",
+    "skillText": "大嗓門：天敵進範圍時叫一聲，範圍內其他狗這次驅趕率 +10%",
+    "book": {
+     "origin": "墨西哥",
+     "trait": "勇敢、警覺、很黏主人",
+     "know": "世界上體型最小的狗，膽子卻很大，看到陌生人會大聲吠叫。"
+    }
+   },
+   "beagle": {
+    "name": "米格魯",
+    "size": "M",
+    "level": 10,
+    "price": 2400,
+    "range": 7,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.65,
+     "wolf": 0.5
+    },
+    "skill": "sniff",
+    "skillText": "嗅覺：範圍內被黃鼠狼偷走的蛋，50% 機率找回來",
+    "book": {
+     "origin": "英國",
+     "trait": "活潑、好奇、愛吃",
+     "know": "嗅覺非常靈敏，機場常用米格魯當檢疫犬，聞行李裡的水果和肉品。"
+    }
    },
    "maltese": {
     "name": "馬爾濟斯",
@@ -9976,7 +10077,31 @@
      "wolf": 0.4
     },
     "skill": "alarm",
-    "skillText": "警報：範圍內天敵得手時間從 60 秒延到 3 分鐘，並發通知"
+    "skillText": "警報：範圍內天敵得手時間從 60 秒延到 3 分鐘，並發通知",
+    "book": {
+     "origin": "地中海馬爾他島",
+     "trait": "溫柔、愛撒嬌",
+     "know": "有兩千多年歷史的玩賞犬，白色長毛不太會掉毛。"
+    }
+   },
+   "shihtzu": {
+    "name": "西施犬",
+    "size": "S",
+    "level": 12,
+    "price": 2800,
+    "range": 5,
+    "drive": {
+     "weasel": 0.55,
+     "fox": 0.55,
+     "wolf": 0.35
+    },
+    "skill": "buddy",
+    "skillText": "陪伴：同一間狗屋的室友驅趕率 +8%",
+    "book": {
+     "origin": "中國（西藏、宮廷）",
+     "trait": "友善、穩定、愛陪伴",
+     "know": "名字來自「獅子狗」，曾是宮廷裡的寵物；臉上的毛要綁起來才看得到路。"
+    }
    },
    "pomeranian": {
     "name": "博美",
@@ -9990,7 +10115,32 @@
      "wolf": 0.4
     },
     "skill": "weasel",
-    "skillText": "抓黃鼠狼高手"
+    "skillText": "抓黃鼠狼高手",
+    "book": {
+     "origin": "德國、波蘭（波美拉尼亞）",
+     "trait": "活潑、勇敢、愛叫",
+     "know": "祖先是大型的雪橇犬，後來被培育得越來越小。"
+    }
+   },
+   "yorkie": {
+    "name": "約克夏犬",
+    "size": "S",
+    "level": 14,
+    "price": 3500,
+    "range": 5,
+    "drive": {
+     "weasel": 0.8,
+     "fox": 0.55,
+     "wolf": 0.35
+    },
+    "skill": "ratter2",
+    "skillText": "捕鼠㹴：範圍內倉庫、垃圾站的老鼠也會抓，每 30 分 1 隻（跟貓一樣快）",
+    "catchMinutes": 30,
+    "book": {
+     "origin": "英國",
+     "trait": "精力旺盛、膽大",
+     "know": "原本是工廠和礦坑裡抓老鼠的㹴犬，現在是很受歡迎的小型犬。"
+    }
    },
    "corgi": {
     "name": "柯基",
@@ -10004,7 +10154,51 @@
      "wolf": 0.8
     },
     "skill": "cattle",
-    "skillText": "牧牛：範圍內受驚的牛恢復時間減半"
+    "skillText": "牧牛：範圍內受驚的牛恢復時間減半",
+    "book": {
+     "origin": "英國威爾斯",
+     "trait": "聰明、開朗、愛指揮",
+     "know": "腿短跑得快，會咬牛的腳跟把牛趕回家，牛踢腳時正好從頭上掠過。"
+    }
+   },
+   "pug": {
+    "name": "巴哥犬",
+    "size": "S",
+    "level": 16,
+    "price": 4500,
+    "range": 5,
+    "drive": {
+     "weasel": 0.55,
+     "fox": 0.55,
+     "wolf": 0.45
+    },
+    "skill": "lazy",
+    "skillText": "愛睡：每 9 小時才吃 1 份狗飼料（一般 6 小時）",
+    "foodEveryHours": 9,
+    "book": {
+     "origin": "中國",
+     "trait": "隨和、愛睡、愛黏人",
+     "know": "一天可以睡上十幾個小時；臉上的皺紋要常常清潔。"
+    }
+   },
+   "papillon": {
+    "name": "蝴蝶犬",
+    "size": "S",
+    "level": 17,
+    "price": 4800,
+    "range": 5,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.6,
+     "wolf": 0.4
+    },
+    "skill": "butterfly",
+    "skillText": "賞蝶：範圍內死掉的蝴蝶自動撿起來（記進圖鑑、翅膀完整的做成標本）",
+    "book": {
+     "origin": "法國、西班牙",
+     "trait": "機靈、好學",
+     "know": "大大的耳朵張開像蝴蝶翅膀，所以叫 Papillon（法文的蝴蝶）。"
+    }
    },
    "border": {
     "name": "邊境牧羊犬",
@@ -10018,7 +10212,50 @@
      "wolf": 0.9
     },
     "skill": "sheep",
-    "skillText": "牧羊：範圍內的羊不會受驚"
+    "skillText": "牧羊：範圍內的羊不會受驚",
+    "book": {
+     "origin": "英國、蘇格蘭邊境",
+     "trait": "非常聰明、精力旺盛",
+     "know": "常被評為最聰明的狗，用眼神就能把羊群趕到指定的地方。"
+    }
+   },
+   "schnauzer": {
+    "name": "雪納瑞犬",
+    "size": "M",
+    "level": 19,
+    "price": 5200,
+    "range": 7,
+    "drive": {
+     "weasel": 0.8,
+     "fox": 0.7,
+     "wolf": 0.6
+    },
+    "skill": "ratDeter",
+    "skillText": "驅鼠：範圍內倉庫、垃圾站老鼠出現機率 −30%",
+    "book": {
+     "origin": "德國",
+     "trait": "警覺、勇敢、有活力",
+     "know": "名字來自德文的「鬍鬚」；原本在農場抓老鼠、看家。"
+    }
+   },
+   "akita": {
+    "name": "秋田犬",
+    "size": "M",
+    "level": 20,
+    "price": 5400,
+    "range": 7,
+    "drive": {
+     "weasel": 0.8,
+     "fox": 0.8,
+     "wolf": 0.7
+    },
+    "skill": "loyal",
+    "skillText": "忠犬：你離線時驅趕率 +15%",
+    "book": {
+     "origin": "日本",
+     "trait": "忠心、沉穩、有尊嚴",
+     "know": "「忠犬小八」就是秋田犬，在車站等過世的主人等了將近十年。"
+    }
    },
    "dachshund": {
     "name": "臘腸犬",
@@ -10032,7 +10269,50 @@
      "wolf": 0.4
     },
     "skill": "ratter",
-    "skillText": "獵鼠：範圍內的倉庫、垃圾站老鼠也會抓（速度是貓的一半）"
+    "skillText": "獵鼠：範圍內的倉庫、垃圾站老鼠也會抓（速度是貓的一半）",
+    "book": {
+     "origin": "德國",
+     "trait": "勇敢、固執、愛挖洞",
+     "know": "身體長、腿短，原本是鑽進洞裡抓獾的獵犬。"
+    }
+   },
+   "dalmatian": {
+    "name": "大麥町",
+    "size": "L",
+    "level": 22,
+    "price": 6000,
+    "range": 11,
+    "drive": {
+     "weasel": 0.65,
+     "fox": 0.7,
+     "wolf": 0.75
+    },
+    "skill": "runner",
+    "skillText": "長跑：守護範圍 11×11，狗裡面最大",
+    "book": {
+     "origin": "克羅埃西亞",
+     "trait": "精力旺盛、愛跑",
+     "know": "以前跟著馬車跑、替消防車開路；剛出生時全身白色，斑點是後來才長出來的。"
+    }
+   },
+   "bullterrier": {
+    "name": "牛頭梗",
+    "size": "M",
+    "level": 23,
+    "price": 6200,
+    "range": 7,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.75,
+     "wolf": 0.75
+    },
+    "skill": "retry",
+    "skillText": "不放棄：驅趕失敗會再追一次（第二次機率減半）",
+    "book": {
+     "origin": "英國",
+     "trait": "頑皮、黏人、不服輸",
+     "know": "頭從側面看像一顆蛋，眼睛是小小的三角形。"
+    }
    },
    "poodle": {
     "name": "貴賓犬",
@@ -10046,7 +10326,50 @@
      "wolf": 0.7
     },
     "skill": "double",
-    "skillText": "機警：同時應付 2 隻天敵（其他狗一次 1 隻）"
+    "skillText": "機警：同時應付 2 隻天敵（其他狗一次 1 隻）",
+    "book": {
+     "origin": "德國、法國",
+     "trait": "聰明、反應快",
+     "know": "原本是在水裡撿獵物的獵犬，招牌造型是為了游泳時保暖關節。"
+    }
+   },
+   "chowchow": {
+    "name": "鬆獅犬",
+    "size": "M",
+    "level": 25,
+    "price": 7000,
+    "range": 7,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.75,
+     "wolf": 0.8
+    },
+    "skill": "barnGuard",
+    "skillText": "看家：範圍內農產倉庫的老鼠偷吃量減半",
+    "book": {
+     "origin": "中國",
+     "trait": "獨立、穩重、護家",
+     "know": "舌頭是藍黑色的；毛很厚，像一頭小獅子，怕熱。"
+    }
+   },
+   "samoyed": {
+    "name": "薩摩耶犬",
+    "size": "L",
+    "level": 26,
+    "price": 7500,
+    "range": 9,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.75,
+     "wolf": 0.85
+    },
+    "skill": "calmAll",
+    "skillText": "微笑天使：範圍內受驚的羊、牛、豬恢復時間減半",
+    "book": {
+     "origin": "俄羅斯西伯利亞",
+     "trait": "友善、愛笑、愛熱鬧",
+     "know": "嘴角上揚的「薩摩耶微笑」很有名，原本幫遊牧民族放馴鹿、拉雪橇。"
+    }
    },
    "labrador": {
     "name": "拉布拉多",
@@ -10060,7 +10383,31 @@
      "wolf": 0.8
     },
     "skill": "balanced",
-    "skillText": "均衡、範圍大"
+    "skillText": "均衡、範圍大",
+    "book": {
+     "origin": "加拿大",
+     "trait": "友善、溫和、愛吃",
+     "know": "常當導盲犬和搜救犬；很愛玩水。"
+    }
+   },
+   "shepherd": {
+    "name": "德國狼犬",
+    "size": "L",
+    "level": 28,
+    "price": 8500,
+    "range": 9,
+    "drive": {
+     "weasel": 0.85,
+     "fox": 0.85,
+     "wolf": 0.85
+    },
+    "skill": "police",
+    "skillText": "警犬：趕走的天敵當晚不會再來同一塊地",
+    "book": {
+     "origin": "德國",
+     "trait": "忠心、聰明、勇敢",
+     "know": "最常見的警犬和軍犬，學東西又快又穩。"
+    }
    },
    "bulldog": {
     "name": "鬥牛犬",
@@ -10074,7 +10421,31 @@
      "wolf": 0.85
     },
     "skill": "deter",
-    "skillText": "嚇阻：範圍內天敵出現機率 −50%，守豬"
+    "skillText": "嚇阻：範圍內天敵出現機率 −50%，守豬",
+    "book": {
+     "origin": "英國",
+     "trait": "穩重、溫和、有點懶",
+     "know": "外表兇、個性其實很溫和；鼻子短，怕熱。"
+    }
+   },
+   "doberman": {
+    "name": "杜賓犬",
+    "size": "L",
+    "level": 31,
+    "price": 10000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.8,
+     "fox": 0.85,
+     "wolf": 0.88
+    },
+    "skill": "storm",
+    "skillText": "雨夜哨兵：陰雨天驅趕率 +15%",
+    "book": {
+     "origin": "德國",
+     "trait": "機警、忠心、敏捷",
+     "know": "一位收稅員為了保護自己而培育的護衛犬，名字就是他的姓。"
+    }
    },
    "husky": {
     "name": "哈士奇",
@@ -10088,7 +10459,31 @@
      "wolf": 0.9
     },
     "skill": "cold",
-    "skillText": "耐寒：冬天和下雪時驅趕率再 +15%"
+    "skillText": "耐寒：冬天和下雪時驅趕率再 +15%",
+    "book": {
+     "origin": "俄羅斯西伯利亞",
+     "trait": "活潑、愛跑、很會「說話」",
+     "know": "雪橇犬，耐寒耐跑；常常會嗷嗷叫，很少真的吠。"
+    }
+   },
+   "rottweiler": {
+    "name": "羅威納犬",
+    "size": "L",
+    "level": 33,
+    "price": 11000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.7,
+     "fox": 0.8,
+     "wolf": 0.9
+    },
+    "skill": "cattleGuard",
+    "skillText": "護牧：範圍內的牛、豬不會受驚",
+    "book": {
+     "origin": "德國",
+     "trait": "沉穩、護主、有自信",
+     "know": "以前跟著屠夫趕牛群到市場，還會揹著錢袋回家。"
+    }
    },
    "golden": {
     "name": "黃金獵犬",
@@ -10102,7 +10497,69 @@
      "wolf": 0.75
     },
     "skill": "medic",
-    "skillText": "救護：範圍內被咬傷的家禽會自動救護好"
+    "skillText": "救護：範圍內被咬傷的家禽會自動救護好",
+    "book": {
+     "origin": "英國蘇格蘭",
+     "trait": "溫柔、耐心、愛人",
+     "know": "嘴巴很軟，叼獵物不會咬傷；也是常見的導盲犬和治療犬。"
+    }
+   },
+   "malamute": {
+    "name": "阿拉斯加雪橇犬",
+    "size": "L",
+    "level": 36,
+    "price": 13500,
+    "range": 9,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.8,
+     "wolf": 0.92
+    },
+    "skill": "polar",
+    "skillText": "極地：冬天和下雪時驅趕率 +20%，下雪時守護範圍 +2",
+    "book": {
+     "origin": "美國阿拉斯加",
+     "trait": "力氣大、友善、獨立",
+     "know": "最古老的雪橇犬之一，拉的是重貨，比哈士奇更大更壯。"
+    }
+   },
+   "stbernard": {
+    "name": "聖伯納犬",
+    "size": "L",
+    "level": 40,
+    "price": 16000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.75,
+     "fox": 0.8,
+     "wolf": 0.85
+    },
+    "skill": "rescue",
+    "skillText": "救難：範圍內被咬傷的家禽、受驚的家畜都馬上恢復",
+    "book": {
+     "origin": "瑞士、義大利（阿爾卑斯山）",
+     "trait": "溫和、有耐心",
+     "know": "在山上的修道院救過兩千多位迷路的旅人；脖子上的小酒桶是後來畫家畫出來的形象。"
+    }
+   },
+   "mastiff": {
+    "name": "藏獒",
+    "size": "L",
+    "level": 45,
+    "price": 20000,
+    "range": 9,
+    "drive": {
+     "weasel": 0.92,
+     "fox": 0.92,
+     "wolf": 0.95
+    },
+    "skill": "guardian",
+    "skillText": "鎮守：範圍內天敵出現機率 −70%",
+    "book": {
+     "origin": "中國西藏",
+     "trait": "獨立、護家、警戒心強",
+     "know": "在高原上替牧民守護羊群和帳篷，厚厚的鬃毛能擋風雪。"
+    }
    }
   },
   "cats": {
@@ -10114,7 +10571,27 @@
     "catchMinutes": 20,
     "catchMinutesNight": 20,
     "skill": "glutton",
-    "skillText": "貪吃：每 6 小時就吃 1 份貓飼料"
+    "skillText": "貪吃：每 6 小時就吃 1 份貓飼料",
+    "book": {
+     "origin": "世界各地（毛色）",
+     "trait": "親人、愛吃",
+     "know": "「橘貓」是毛色不是品種；橘貓大多是公的。"
+    }
+   },
+   "tabby": {
+    "name": "虎斑貓",
+    "level": 10,
+    "price": 1800,
+    "range": 7,
+    "catchMinutes": 25,
+    "catchMinutesNight": 25,
+    "skill": "combo",
+    "skillText": "獵手：抓到老鼠時 25% 機率順便多抓 1 隻",
+    "book": {
+     "origin": "世界各地（毛色）",
+     "trait": "活潑、好奇、獵性強",
+     "know": "虎斑是最原始的貓毛色，額頭上常有「M」字紋路。"
+    }
    },
    "calico": {
     "name": "三花貓",
@@ -10124,7 +10601,27 @@
     "catchMinutes": 30,
     "catchMinutesNight": 30,
     "skill": "lucky",
-    "skillText": "招財：每天 10% 機率叼回小禮物（20～200 金幣）"
+    "skillText": "招財：每天 10% 機率叼回小禮物（20～200 金幣）",
+    "book": {
+     "origin": "世界各地（毛色）",
+     "trait": "有主見、愛撒嬌",
+     "know": "三花貓幾乎都是母的；在日本被當成招財貓的原型。"
+    }
+   },
+   "tuxedo": {
+    "name": "奶牛貓",
+    "level": 14,
+    "price": 2800,
+    "range": 7,
+    "catchMinutes": 30,
+    "catchMinutesNight": 30,
+    "skill": "multi",
+    "skillText": "好動：同時顧 2 個地方，倉庫和垃圾站一起抓",
+    "book": {
+     "origin": "世界各地（毛色）",
+     "trait": "調皮、精力旺盛",
+     "know": "黑白相間像乳牛，英文叫 Tuxedo（燕尾服）貓。"
+    }
    },
    "black": {
     "name": "黑貓",
@@ -10134,7 +10631,43 @@
     "catchMinutes": 30,
     "catchMinutesNight": 15,
     "skill": "night",
-    "skillText": "夜貓：晚上抓鼠快一倍"
+    "skillText": "夜貓：晚上抓鼠快一倍",
+    "book": {
+     "origin": "世界各地（毛色）",
+     "trait": "安靜、聰明",
+     "know": "在日本和英國，黑貓被當成會帶來好運的貓。"
+    }
+   },
+   "british": {
+    "name": "英國短毛貓",
+    "level": 19,
+    "price": 4000,
+    "range": 9,
+    "catchMinutes": 30,
+    "catchMinutesNight": 30,
+    "skill": "calm",
+    "skillText": "沉穩：每 12 小時才吃 1 份貓飼料（一般 8 小時）",
+    "foodEveryHours": 12,
+    "book": {
+     "origin": "英國",
+     "trait": "穩重、獨立、好相處",
+     "know": "圓臉圓眼、毛很厚很密；《愛麗絲夢遊仙境》的柴郡貓就是以牠為原型。"
+    }
+   },
+   "siamese": {
+    "name": "暹羅貓",
+    "level": 21,
+    "price": 4500,
+    "range": 7,
+    "catchMinutes": 25,
+    "catchMinutesNight": 25,
+    "skill": "talk",
+    "skillText": "愛講話：範圍內一有老鼠就叫並發通知，老鼠進來 30 分鐘內偷吃不到東西",
+    "book": {
+     "origin": "泰國",
+     "trait": "愛講話、黏人",
+     "know": "臉、耳朵、腳和尾巴顏色比較深，叫聲很多變化，像在跟人聊天。"
+    }
    },
    "ragdoll": {
     "name": "布偶貓",
@@ -10144,7 +10677,27 @@
     "catchMinutes": 30,
     "catchMinutesNight": 30,
     "skill": "wide",
-    "skillText": "黏人：範圍最大，一隻顧得到倉庫和好幾座垃圾站"
+    "skillText": "黏人：範圍最大，一隻顧得到倉庫和好幾座垃圾站",
+    "book": {
+     "origin": "美國",
+     "trait": "溫柔、放鬆、黏人",
+     "know": "被抱起來時全身放鬆像布偶，所以叫 Ragdoll。"
+    }
+   },
+   "russianblue": {
+    "name": "俄羅斯藍貓",
+    "level": 26,
+    "price": 6000,
+    "range": 9,
+    "catchMinutes": 20,
+    "catchMinutesNight": 20,
+    "skill": "tidy",
+    "skillText": "愛乾淨：範圍內垃圾站的老鼠不會咬破垃圾袋",
+    "book": {
+     "origin": "俄羅斯",
+     "trait": "安靜、害羞、愛乾淨",
+     "know": "銀藍色的雙層毛和綠眼睛；嘴角微微上揚，像在微笑。"
+    }
    },
    "persian": {
     "name": "波斯貓",
@@ -10154,7 +10707,57 @@
     "catchMinutes": 60,
     "catchMinutesNight": 60,
     "skill": "deter",
-    "skillText": "嚇阻：範圍內老鼠出現機率 −60%"
+    "skillText": "嚇阻：範圍內老鼠出現機率 −60%",
+    "book": {
+     "origin": "伊朗（波斯）",
+     "trait": "安靜、優雅、愛睡",
+     "know": "長毛又扁臉，要天天梳毛；是很古老的長毛貓品種。"
+    }
+   },
+   "scottishfold": {
+    "name": "折耳貓",
+    "level": 32,
+    "price": 8000,
+    "range": 7,
+    "catchMinutes": 30,
+    "catchMinutesNight": 30,
+    "skill": "cuddle",
+    "skillText": "療癒：每天第一次摸摸牠 +50 經驗",
+    "book": {
+     "origin": "英國蘇格蘭",
+     "trait": "溫和、愛撒嬌",
+     "know": "耳朵向前折是基因突變造成的，會坐成「佛像坐」。"
+    }
+   },
+   "silvershade": {
+    "name": "銀漸層貓",
+    "level": 37,
+    "price": 9500,
+    "range": 9,
+    "catchMinutes": 15,
+    "catchMinutesNight": 15,
+    "skill": "pro",
+    "skillText": "捕鼠專家：每 15 分抓 1 隻，貓裡面最快",
+    "book": {
+     "origin": "英國（毛色）",
+     "trait": "溫和、安靜、親人",
+     "know": "「銀漸層」是毛色：毛根白、毛尖銀灰，看起來閃閃發亮，配上綠眼睛最經典；常見於英國短毛貓和金吉拉。"
+    }
+   },
+   "mainecoon": {
+    "name": "緬因貓",
+    "level": 42,
+    "price": 12000,
+    "range": 13,
+    "catchMinutes": 20,
+    "catchMinutesNight": 20,
+    "skill": "giant",
+    "skillText": "大塊頭：巡邏範圍 13×13，還會嚇跑黃鼠狼（範圍內黃鼠狼出現機率 −50%）",
+    "book": {
+     "origin": "美國緬因州",
+     "trait": "溫柔的大個子",
+     "know": "體型最大的家貓之一，耳尖有長毛、尾巴蓬鬆，能適應寒冷的冬天。"
+    }
    }
   },
   "food": {
@@ -10219,11 +10822,45 @@
     20,
     200
    ],
-   "doubleTargets": 2
+   "doubleTargets": 2,
+   "barkBonus": 0.1,
+   "sniffReturn": 0.5,
+   "buddyBonus": 0.08,
+   "ratDeterMult": 0.7,
+   "loyalBonus": 0.15,
+   "retryMult": 0.5,
+   "barnGuardMult": 0.5,
+   "stormBonus": 0.15,
+   "polarBonus": 0.2,
+   "polarRange": 2,
+   "guardianSpawnMult": 0.3,
+   "policeHours": 10,
+   "comboChance": 0.25,
+   "talkMinutes": 30,
+   "cuddleXp": 50,
+   "weaselDeterMult": 0.5
   },
   "tapToPet": true,
   "nightSleepsInDen": true,
-  "drawScale": 1.5
+  "drawScale": 1.5,
+  "v256": {
+   "note": "v2.56 品種介紹面板文字。專長數值在 pets.skills；品種介紹在 pets.dogs/cats.<代號>.book",
+   "texts": {
+    "origin": "原產地",
+    "trait": "個性",
+    "skill": "專長",
+    "know": "小知識",
+    "farm": "在農場",
+    "button": "品種介紹",
+    "bookHint": "點品種那一列看介紹",
+    "talk": "{name}喵喵叫：{where}跑進老鼠了！",
+    "barn": "倉庫",
+    "trash": "垃圾站",
+    "cuddle": "{name}好療癒：+{xp} 經驗",
+    "sniff": "{name}把蛋找回來了",
+    "police": "{name}守住了這塊地，今晚{pred}不會再來"
+   }
+  }
  },
  "predators": {
   "weasel": {
@@ -10744,7 +11381,7 @@
     "group": "狗",
     "stat": "allDogs",
     "tiers": null,
-    "desc": "養過全部 11 種狗"
+    "desc": "養過全部 29 種狗"
    },
    {
     "id": "nurse",
@@ -10777,7 +11414,7 @@
     "group": "貓",
     "stat": "allCats",
     "tiers": null,
-    "desc": "養過全部 5 種貓"
+    "desc": "養過全部 13 種貓"
    },
    {
     "id": "robots",

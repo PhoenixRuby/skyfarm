@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.55-163ee64558'), getJSON('sprites/atlas.json?v=2.55-163ee64558')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.56-ede4244ad6'), getJSON('sprites/atlas.json?v=2.56-ede4244ad6')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.55-163ee64558';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.56-ede4244ad6';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21277,6 +21277,214 @@ window.__farm255 = { storeCar255, noCar255, openCart: (mi, key) => openCart249(m
   worker: (...a) => worker84(...a), walkGoHome: (...a) => walkGoHome(...a), drive249: (...a) => drive249(...a), unitText: (k, u) => unitText(k, u), autoRowHTML: k => autoRowHTML(k),
   act: (x, y) => act(x, y), storeObject: (M, k) => storeObject(M, k), paintOk: (M, k) => paintOk(M, k), paintTool: () => paintTool(), syncPaint255, hardReload255, moreHTML: () => moreHTML(),
   denPop2543: (...a) => denPop2543(...a), openBirdPick255: (...a) => openBirdPick255(...a), openBird255, openBird2543: B => openBird2543(B), railMenu: (...a) => railMenu246(...a), openDen: (mi, k) => openDen(mi, k), openBirdHouse: (mi, k) => openBirdHouse40(mi, k), openCloudTable255, newer255, cloudRows255, apply255, drawBuildingAt: (...a) => drawBuildingAt(...a), openShed: mi => openShed84(mi) };
+
+/* ===== 108. v2.56: 18 new dog breeds and 8 new cat breeds mixed into the unlock order (config pets.dogs / pets.cats, sorted by level;
+   art batch66 = drawn map sprites + tray icons (art/draw66.js, render66.js), batch67 = player portraits ui_pt_pet_<breed> (art/v256_67.py)).
+   New skills (numbers in pets.skills):
+     dogs  bark 吉娃娃 · sniff 米格魯 · buddy 西施 · ratter2 約克夏 · lazy 巴哥（breed.foodEveryHours）· butterfly 蝴蝶犬 · ratDeter 雪納瑞 ·
+           loyal 秋田 · runner 大麥町（range 11）· retry 牛頭梗 · barnGuard 鬆獅 · calmAll 薩摩耶 · police 德國狼犬 · storm 杜賓 ·
+           cattleGuard 羅威納 · polar 阿拉斯加 · rescue 聖伯納 · guardian 藏獒
+     cats  combo 虎斑 · multi 奶牛 · calm 英短（breed.foodEveryHours）· talk 暹羅 · tidy 俄藍 · cuddle 折耳 · pro 銀漸層 · giant 緬因
+   Re-declares g39's petInterval / petRange / stepRats / stepPreds / spawnPred / predHit / bookPets (g81 / g97 wrappers still wrap these);
+   breed info panel openBreed256 (圖鑑 rows, tray「i」, pet panel button); normalizeState v256; window.__farm256 ===== */
+const V256 = PETC.v256 || {}, TX256 = V256.texts || {};
+const tx256 = (s, o = {}) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => o[k] ?? '');
+const sk256 = P => breedOf(P).skill;
+const workingWith256 = (skill, kind) => petList().filter(P => working(P) && (!kind || P.kind === kind) && sk256(P) === skill);
+const covers256 = (P, mi, x, y) => inRange(petRange(P), mi, x, y);
+const spotBy256 = (sp, skill, kind) => workingWith256(skill, kind).find(P => spotCovered(sp, P)) || null;
+function polarNow256(){ const m = Math.floor(Date.now() / 60e3); if (RT.polar256 && RT.polar256.m === m) return RT.polar256.v;
+  let v = false; try { v = !!(typeof farmSnow === 'function' && farmSnow(Date.now())); } catch(e){} RT.polar256 = { m, v }; return v; }
+
+/* ---------- food: breed.foodEveryHours (巴哥 9、英短 12), 橘貓 glutton ---------- */
+function petInterval(P){ const F = PETC.food || {}, f = P.kind === 'dog' ? F.dog || { everyHours: 6 } : F.cat || { everyHours: 8 }, B = breedOf(P);
+  let h = B.foodEveryHours || f.everyHours; if (P.kind === 'cat' && B.skill === 'glutton') h = f.gluttonEveryHours || h;
+  return h * 3600 / (petAdult(P) ? 1 : (PETC.youngFoodMult || .5)); }
+
+/* ---------- range: 阿拉斯加 +2 while snowing ---------- */
+function petRange(P){ const d = denByUid(P.den); if (!d) return null; const B = breedOf(P); let w = (B.range || 7) + (DENS39[d.T.id].rangeBonus || 0);
+  if (B.skill === 'polar' && polarNow256()) w += PSK.polarRange || 2;
+  const r = Math.floor(w / 2); return { mi: d.mi, x0: d.x - r, y0: d.y - r, x1: d.x + r, y1: d.y + r, cx: d.x, cy: d.y, den: d }; }
+
+/* ---------- rats ---------- */
+function stepRats(dt, t){
+  if (S.player.level < (RATC.startLevel || 9) || S.v216Grace > t) return;
+  const wm = winterAt(t) ? (RATC.winterMult || 1.5) : 1, Q = S.rats.q256 = S.rats.q256 || {};
+  for (const sp of ratSpots()){
+    let deter = 1;
+    if (spotBy256(sp, 'deter', 'cat')) deter *= PSK.catDeterRatMult || .4;
+    if (spotBy256(sp, 'ratDeter', 'dog')) deter *= PSK.ratDeterMult || .7;
+    const n0 = sp.n, quiet = Q[sp.key] > t;
+    if (sp.key === 'barn'){ const B = RATC.barn || {}, full = invUsed() / Math.max(1, invCap());
+      if (sp.n < sp.max && Math.random() < (B.chancePerHour || .1) * ((B.fullnessBase ?? .5) + full) * wm * deter * dt / 3600){ sp.n++; RT.notices.push({ kind: 'ratIn', where: 'barn', t }); }
+      if (sp.n > 0 && !quiet){ const g = spotBy256(sp, 'barnGuard', 'dog') ? (PSK.barnGuardMult || .5) : 1; S.rats.eat = (S.rats.eat || 0) + dt * sp.n * g;
+        while (S.rats.eat >= 3600){ S.rats.eat -= 3600; const a = eatFromBarn('crop'), b = eatFromBarn('feed'); for (const id of [a, b]) if (id) RT.notices.push({ kind: 'ratAte', id, t }); } }
+      else if (!(sp.n > 0)) S.rats.eat = 0;
+    } else { const Tr = RATC.trash || {}, T = sp.st, bags = (T.g || 0) + (T.r || 0);
+      if (bags > 0 && sp.n < sp.max && Math.random() < (Tr.chancePerHour || .15) * (daysSinceDump(t) > (Tr.overdueDays || 3) ? (Tr.overdueMult || 2) : 1) * wm * deter * dt / 3600){ sp.n++; RT.notices.push({ kind: 'ratIn', where: 'trash', t }); }
+      if (sp.n > 0 && !quiet && !spotBy256(sp, 'tidy', 'cat')){ T.chew = (T.chew || 0) + dt * sp.n; const per = (Tr.chewHoursPerBag || 2) * 3600;
+        while (T.chew >= per){ T.chew -= per; const kk = (T.g || 0) >= 1 ? 'g' : (T.r || 0) >= 1 ? 'r' : null; if (!kk){ T.chew = 0; break; }
+          T[kk] -= 1; const Pl = trashState().pile; Pl[kk] = (Pl[kk] || 0) + 1; if (!S.trash.fullSince) S.trash.fullSince = t; RT.notices.push({ kind: 'ratChew', t }); } }
+      else if (!(sp.n > 0)) T.chew = 0; }
+    // 暹羅貓：a new rat in its range → it yowls, the rat can't eat / chew for talkMinutes
+    if (sp.n > n0){ const S1 = spotBy256(sp, 'talk', 'cat');
+      if (S1){ Q[sp.key] = t + (PSK.talkMinutes || 30) * 60e3; if (liveT(t)) toast(tx256(TX256.talk || '{name}喵喵叫：{where}跑進老鼠了！', { name: S1.name, where: sp.key === 'barn' ? (TX256.barn || '倉庫') : (TX256.trash || '垃圾站') }), true, 3600); } } }
+  for (const k in Q) if (!(Q[k] > t)) delete Q[k];
+  // cats, 臘腸犬 (half speed), 約克夏犬 (own catchMinutes) catch
+  for (const P of petList()){ if (!working(P)) continue; const B = breedOf(P), dog = P.kind === 'dog', ratDog = dog && (B.skill === 'ratter' || B.skill === 'ratter2'); if (dog && !ratDog) continue;
+    const near = () => ratSpots().filter(sp => sp.n > 0 && spotCovered(sp, P)).sort((a, b) => b.n - a.n);
+    const spots = near(); if (!spots.length){ P.catchAcc = 0; continue; }
+    const min = dog ? (B.skill === 'ratter2' ? (B.catchMinutes || 30) : (CATS39.orange ? CATS39.orange.catchMinutes : 20) / (PSK.ratterSpeedMult || .5)) : (isNightAt(t) ? B.catchMinutesNight || B.catchMinutes : B.catchMinutes);
+    P.catchAcc = (P.catchAcc || 0) + dt;
+    if (P.catchAcc >= min * 60){ P.catchAcc = 0; const hits = B.skill === 'multi' ? spots.slice(0, 2) : spots.slice(0, 1); let n = 0;
+      for (const sp of hits){ sp.n--; n++; }
+      if (B.skill === 'combo' && Math.random() < (PSK.comboChance || .25)){ const s2 = near()[0]; if (s2){ s2.n--; n++; } }
+      for (let i = 0; i < n; i++){ if (!dog) stat('mouser'); RT.notices.push({ kind: 'ratCaught', by: P.name, t }); }
+      P.rats = (P.rats || 0) + n; if (liveT(t)) RT.catchFx = { id: P.id, key: hits[0].key, t0: performance.now() }; } } }
+
+/* ---------- predators ---------- */
+const policeKey256 = (mi, x, y) => mi + '|' + blockOf(x, y);
+function spawnMult256(kind, mi, x, y){ const dogs = dogsCovering(mi, x, y); let m = 1;
+  if (dogs.some(P => sk256(P) === 'guardian')) m = Math.min(m, PSK.guardianSpawnMult ?? .3);
+  if (dogs.some(P => sk256(P) === 'deter')) m = Math.min(m, PSK.deterSpawnMult ?? .5);
+  if (kind === 'weasel' && workingWith256('giant', 'cat').some(P => covers256(P, mi, x, y))) m *= PSK.weaselDeterMult ?? .5;
+  return m; }
+function stepPreds(dt, t){
+  const lv = S.player.level, night = isNightAt(t), rain = farmRain(t), list = predList(), PO = S.police256 = S.police256 || {};
+  for (const k in PO) if (!(PO[k] > t)) delete PO[k];
+  if (predOn() && !(S.v216Grace > t)) S.maps.forEach((M, mi) => {
+    const blocks = {};
+    for (const k in M.tiles){ const T = M.tiles[k]; if (T.t !== 'animal') continue; if (M.glass && M.glass[k]) continue; const [x, y] = pkey(k), b = blockOf(x, y); (blocks[b] = blocks[b] || []).push([k, T, x, y]); }
+    for (const b in blocks){ const A = blocks[b], targeted = new Set(list.filter(q => q.mi === mi).map(q => q.k));
+      if (PO[mi + '|' + b] > t) continue;   // 德國狼犬 chased one off here tonight
+      const roll = (kind, p, pool) => { const c = pool.filter(([k]) => !targeted.has(k)); if (!c.length) return;
+        const [k, , x, y] = c[Math.floor(Math.random() * c.length)];
+        if (Math.random() < p * spawnMult256(kind, mi, x, y) * dt / 3600){ spawnPred(kind, mi, M, k, t); targeted.add(k); } };
+      const W = PREDC.weasel, F = PREDC.fox, Wo = PREDC.wolf, NH = PREDC.nightHours || 10;
+      if (W && night && lv >= W.level) roll('weasel', W.chancePerBlockPerHour || .05, A.filter(([, T]) => T.id === 'egg_hen' && T.stack > 0));
+      if (F && night && lv >= F.level) roll('fox', (F.chancePerBlockPerNight || .2) / NH, A.filter(([, T]) => POUL.includes(T.id) && !(T.hurt > t)));
+      if (Wo && (night || rain) && lv >= Wo.level) roll('wolf', (Wo.chancePerBlockPerNight || .15) / NH, A.filter(([, T]) => LIVE.includes(T.id) && !(T.scared > t))); }
+  });
+  for (const Pd of list){ if (Pd.done) continue; const M = S.maps[Pd.mi], T = M && M.tiles[Pd.k];
+    if (!T || T.t !== 'animal'){ Pd.done = t; continue; }
+    if (Pd.fleeAt && t >= Pd.fleeAt){ Pd.done = t; Pd.ok = false; let D = null;
+      if (Pd.by && Pd.by !== 'player'){ stat('guard'); D = petList().find(q => q.id === Pd.by); if (D) D.guard = (D.guard || 0) + 1; }
+      if (D && sk256(D) === 'police'){ const [x, y] = pkey(Pd.k); PO[policeKey256(Pd.mi, x, y)] = t + (PSK.policeHours || 10) * 3600e3;
+        if (liveT(t)) toast(tx256(TX256.police || '{name}守住了這塊地，今晚{pred}不會再來', { name: D.name, pred: (PREDC[Pd.kind] || {}).name || '' }), true, 3200); }
+      RT.notices.push({ kind: 'pred', pk: Pd.kind, ok: false, by: Pd.by === 'player' ? '你' : Pd.byName, t }); continue; }
+    if (!Pd.fleeAt && t >= Pd.until){ Pd.done = t; Pd.ok = true; predHit(Pd, M, T, t); } }
+  S.preds = list.filter(q => !q.done || t - q.done < 6000); }
+function spawnPred(kind, mi, M, k, t){
+  const [x, y] = pkey(k), dogs = dogsCovering(mi, x, y), alarm = dogs.some(P => breedOf(P).skill === 'alarm'), bark = dogs.find(P => sk256(P) === 'bark');
+  const bx = Math.floor(x / BS) * BS, by = Math.floor(y / BS) * BS, side = Math.floor(Math.random() * 4), r = Math.random() * BS;
+  const from = side === 0 ? [bx + r, by - 1] : side === 1 ? [bx + BS, by + r] : side === 2 ? [bx + r, by + BS] : [bx - 1, by + r];
+  const Pd = { id: uid39(), kind, mi, k, t0: t, until: t + (alarm ? (PSK.alarmSeconds || 180) : (PREDC.approachSeconds || 60)) * 1000, taps: 0, fx: from[0], fy: from[1] };
+  const winterSnow = winterAt(t) || (typeof farmSnow === 'function' && farmSnow(t)), rain = farmRain(t), offline = !liveT(t);
+  for (const D of dogs){ const B = breedOf(D), busy = predList().filter(q => q.by === D.id && !q.done).length; if (busy >= (B.skill === 'double' ? (PSK.doubleTargets || 2) : 1)) continue;
+    const den = denByUid(D.den); let rate = (B.drive || {})[kind] || 0; if (den) rate += (DENS39[den.T.id].driveBonus || 0);
+    if (B.skill === 'cold' && winterSnow) rate += PSK.coldBonus || .15;
+    if (B.skill === 'polar' && winterSnow) rate += PSK.polarBonus || .2;
+    if (B.skill === 'storm' && rain) rate += PSK.stormBonus || .15;
+    if (B.skill === 'loyal' && offline) rate += PSK.loyalBonus || .15;
+    if (bark && bark !== D) rate += PSK.barkBonus || .1;
+    if (den && residents(den.T).some(q => q !== D && working(q) && sk256(q) === 'buddy')) rate += PSK.buddyBonus || .08;
+    let ok = Math.random() < rate; if (!ok && B.skill === 'retry') ok = Math.random() < rate * (PSK.retryMult || .5);
+    if (ok){ Pd.by = D.id; Pd.byName = D.name; Pd.fleeAt = t + (3 + Math.random() * 5) * 1000; break; } }
+  predList().push(Pd);
+  if (liveT(t)){ sfx('click'); toast(alarm ? `${PREDC[kind].name}靠近了！${dogs.find(P => breedOf(P).skill === 'alarm').name}發出警報，3 分鐘內點牠 3 下就能趕走` : `${PREDC[kind].name}出現了！點牠 3 下趕走`, true, 3600); }
+  return Pd; }
+function predHit(Pd, M, T, t){
+  const P = PREDC[Pd.kind] || {}, [x, y] = pkey(Pd.k), near = dogsCovering(Pd.mi, x, y); let loss = '';
+  if (Pd.kind === 'weasel'){ const n = T.stack || 0, sn = near.find(D => sk256(D) === 'sniff');
+    if (sn && n > 0 && Math.random() < (PSK.sniffReturn ?? .5)){ loss = `想偷 ${n} 顆蛋，${sn.name}把蛋找回來了`; }
+    else { T.stack = 0; loss = `偷走 ${n} 顆蛋`; } }
+  else if (Pd.kind === 'fox'){ T.hurt = t + (P.injureSeconds || 3600) * 1000; loss = `咬傷了 1 隻${CFG.animals[T.id].name}`;
+    const medic = near.find(D => ['medic', 'rescue'].includes(sk256(D))); if (medic){ T.hurt = 0; stat('nurse'); loss += `，${medic.name}馬上救護好了`; } }
+  else if (Pd.kind === 'wolf'){ const r = P.scareRange ?? 2; let n = 0, saved = 0, saver = null;
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const A = M.tiles[tkey(x + dx, y + dy)]; if (!A || A.t !== 'animal' || !LIVE.includes(A.id)) continue;
+      const dogs = dogsCovering(Pd.mi, x + dx, y + dy);
+      if (SHEEP.includes(A.id) && dogs.some(D => sk256(D) === 'sheep')) continue;
+      if ((CATTLE.includes(A.id) || A.id === 'pig') && dogs.some(D => sk256(D) === 'cattleGuard')) continue;
+      const rs = dogs.find(D => sk256(D) === 'rescue'); if (rs){ saved++; saver = saver || rs; continue; }
+      let mult = 1; if (CATTLE.includes(A.id) && dogs.some(D => sk256(D) === 'cattle')) mult = Math.min(mult, PSK.cattleRecoverMult || .5);
+      if (dogs.some(D => sk256(D) === 'calmAll')) mult = Math.min(mult, PSK.cattleRecoverMult || .5);
+      A.scared = t + (P.scareSeconds || 14400) * 1000 * mult; n++; }
+    if (saved) stat('nurse', saved);
+    loss = (n ? `嚇到 ${n} 隻家畜` : '沒嚇到家畜') + (saved ? `，${saver.name}馬上安撫好 ${saved} 隻` : ''); }
+  RT.notices.push({ kind: 'pred', pk: Pd.kind, ok: true, loss, t }); }
+
+/* ---------- 蝴蝶犬：pick up dead butterflies in range (same rules as collectDead40, quietly) ---------- */
+function papillon256(dt, t){ const dogs = workingWith256('butterfly', 'dog'); if (!dogs.length || typeof bfBook40 !== 'function') return;
+  for (const D of dogs){ D.bf256 = (D.bf256 || 0) + dt; if (D.bf256 < 30) continue; D.bf256 = 0; const rg = petRange(D); if (!rg) continue; const M = S.maps[rg.mi]; if (!M) continue;
+    for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const k = tkey(x, y), T = M.tiles[k]; if (!T || !T.bfd || !T.bfd.length) continue;
+      const list = T.bfd; delete T.bfd; const Bk = bfBook40(), inv = specInv40(); let spec = 0;
+      for (const d of list){ const e = Bk[d.sp] = Bk[d.sp] || { got: 0, spec: 0 }; e.got++; stat('bfGot40'); if (Math.random() < (BFV40.specimenChance ?? .4)){ e.spec++; inv[d.sp] = (inv[d.sp] || 0) + 1; spec++; } }
+      D.bfn256 = (D.bfn256 || 0) + list.length;
+      if (liveT(t) && rg.mi === S.cur){ const c = center(x, y); floatText(c.cx, c.cy - 30, `${D.name}撿到 ${list.length} 隻蝴蝶${spec ? `・${spec} 個標本` : ''}`, '#2f7fa8', 11); } } } }
+{ const _st256 = stepAll; stepAll = function(dt, t){ _st256(dt, t); if (!S) return; try { papillon256(dt, t); } catch(e){ if (!RT.err256){ RT.err256 = 1; console.error(e); } } }; }
+
+/* ---------- 折耳貓：first pet of the day +XP; pet panel gets a 品種介紹 button ---------- */
+{ const _op256 = openPet; openPet = function(P){
+  try { const h = RT.heartFx; if (P && h && h.id === P.id && performance.now() - h.t0 < 1000 && sk256(P) === 'cuddle' && working(P)){ const d = dayKey(Date.now());
+      if (P.cud256 !== d){ P.cud256 = d; const xp = PSK.cuddleXp || 50; addXP(xp); toast(tx256(TX256.cuddle || '{name}好療癒：+{xp} 經驗', { name: P.name, xp }), true, 2600); } } } catch(e){ console.warn(e); }
+  const r = _op256(P);
+  try { const bar = document.querySelector('#modalBody .ipb2543'); if (P && bar && !bar.querySelector('#br256')){ bar.insertAdjacentHTML('afterbegin', `<button class="btn ghost" id="br256">${ic2543('paw')}${escapeHTML(TX256.button || '品種介紹')}</button>`);
+      bar.querySelector('#br256').onclick = () => openBreed256(P.kind + '_' + P.breed); } } catch(e){}
+  return r; }; }
+
+/* ---------- 品種介紹 panel ---------- */
+const SZ256 = { S: '小型', M: '中型', L: '大型' };
+function breedFarm256(dog, B){ const F = PETC.food || {}, f = dog ? F.dog || { everyHours: 6 } : F.cat || { everyHours: 8 }, dv = B.drive || {};
+  const h = B.foodEveryHours || (B.skill === 'glutton' ? f.gluttonEveryHours : 0) || f.everyHours, pc = v => Math.round((v || 0) * 100) + '%';
+  return [[dog ? '守護範圍' : '巡邏範圍', `${B.range}×${B.range}（以窩為中心）`],
+    dog ? ['驅趕率', `黃鼠狼 ${pc(dv.weasel)}／狐狸 ${pc(dv.fox)}／野狼 ${pc(dv.wolf)}`] : ['抓鼠', B.catchMinutesNight && B.catchMinutesNight !== B.catchMinutes ? `白天每 ${B.catchMinutes} 分、晚上每 ${B.catchMinutesNight} 分 1 隻` : `每 ${B.catchMinutes} 分 1 隻`],
+    ['飼料', `${dog ? '狗' : '貓'}飼料每 ${h} 小時 1 份（幼年吃一半）`], ['價格', `${fmtN(B.price)} 金幣・Lv ${B.level} 解鎖`]]; }
+function openBreed256(id){ id = String(id); const dog = id.startsWith('dog_'), b = id.slice(4), B = (dog ? DOGS39 : CATS39)[b]; if (!B) return false;
+  const bk = B.book || {}, mine = petList().filter(P => P.kind === (dog ? 'dog' : 'cat') && P.breed === b);
+  openModal(B.name, null, (kk, el) => {
+    el.innerHTML = ipHead2543({ img: pt2543('pet_' + b, IMGSRC['ui_pet_' + b]), title: B.name, pill: lockPill2543(id),
+        kv: [['paw', '分類', `${dog ? `寵物犬・${SZ256[B.size] || ''}` : '寵物貓'}`], ['pin', escapeHTML(TX256.origin || '原產地'), escapeHTML(bk.origin || '—')], ['tag', escapeHTML(TX256.trait || '個性'), escapeHTML(bk.trait || '—')],
+          ['medal', escapeHTML(TX256.skill || '專長'), escapeHTML(B.skillText || '—')], ['chart', '農場裡', mine.length ? `養了 ${mine.length} 隻：${escapeHTML(mine.map(P => P.name).join('、'))}` : '還沒養']] }) +
+      `<div class="ipc2543 two2543"><div><h4>${ic2543('horn')}${escapeHTML(TX256.know || '小知識')}</h4><p>${escapeHTML(bk.know || '')}</p></div>
+        <div><h4>${ic2543('leaf')}${escapeHTML(TX256.farm || '在農場')}</h4><div class="kv br256">${breedFarm256(dog, B).map(([a, v]) => `<span>${a}</span><span>${escapeHTML(v)}</span>`).join('')}</div></div></div>
+      ${mine.length ? `<div class="ipb2543">${mine.slice(0, 6).map(P => `<button class="btn ghost" data-bp256="${P.id}"><img src="${IMGSRC['ui_pet_' + b] || ''}" alt="">${escapeHTML(P.name)}</button>`).join('')}</div>` : ''}`;
+    el.querySelectorAll('[data-bp256]').forEach(x => x.onclick = () => { const P = petList().find(q => q.id === x.dataset.bp256); if (P) openPet(P); }); });
+  ipSheet2543(); return true; }
+{ const _ob256 = openBook; openBook = function(tab, focusId){
+  try { if (!RT.br256 && focusId != null && isPetSel(String(focusId)) && openBreed256(focusId)) return; } catch(e){ console.warn(e); }
+  return _ob256(tab, focusId); }; }
+
+/* ---------- 圖鑑 · 寵物: sorted by level (config order), 個性 column, rows open the breed panel ---------- */
+function bookPets(el){
+  const ic = id => { const [n, f] = itemSprite('pet', id); return `<span data-br256="${id}"></span>` + (n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : ''); }, pc = d => `${Math.round((d || 0) * 100)}%`;
+  const cur = id => (isUnlocked(id) ? '' : 'locked') + (RT.bookFocus === id ? ' cur' : '') + ' br256r';
+  el.innerHTML = `<p>寵物不算動物上限，另有寵物上限（狗貓合計 ${petCap()} 隻，最多擴充到 ${PETC.capMax || 30}）。買來是幼犬／幼貓，${PETC.youngDays || 2} 天後長大才工作（餓著不長）。狗吃狗飼料、每 ${(PETC.food || {}).dog ? PETC.food.dog.everyHours : 6} 小時 1 份；貓吃貓飼料、每 ${(PETC.food || {}).cat ? PETC.food.cat.everyHours : 8} 小時 1 份；幼年吃一半。飼料只能在「倉庫 · 飼料商店」買，倉庫有就自己吃，沒有就餓了不工作（餵食機器人也會餵）。寵物不老死、不能出貨，送養退買入價一半。</p>
+    <p class="small">${escapeHTML(TX256.bookHint || '點品種那一列看介紹')}</p>
+    <h3>狗（${Object.keys(DOGS39).length} 種）</h3>` + tbl([H(''), H('品種'), H('解鎖'), H('價格', 1), H('體型'), H('守護範圍'), H('黃鼠狼', 1), H('狐狸', 1), H('野狼', 1), H('個性'), H('專長')],
+      Object.entries(DOGS39).map(([b, B]) => ({ cls: cur('dog_' + b), cells: [ic('dog_' + b), B.name, lockCell('dog_' + b), fmtN(B.price), SZ256[B.size] ? SZ256[B.size].slice(0, 1) : '', `${B.range}×${B.range}`, pc(B.drive.weasel), pc(B.drive.fox), pc(B.drive.wolf), escapeHTML((B.book || {}).trait || ''), B.skillText] }))) +
+    `<h3>貓（${Object.keys(CATS39).length} 種）</h3>` + tbl([H(''), H('品種'), H('解鎖'), H('價格', 1), H('巡邏範圍'), H('抓鼠速度'), H('個性'), H('專長')],
+      Object.entries(CATS39).map(([b, B]) => ({ cls: cur('cat_' + b), cells: [ic('cat_' + b), B.name, lockCell('cat_' + b), fmtN(B.price), `${B.range}×${B.range}`, B.catchMinutesNight !== B.catchMinutes ? `白天每 ${B.catchMinutes} 分、晚上每 ${B.catchMinutesNight} 分` : `每 ${B.catchMinutes} 分 1 隻`, escapeHTML((B.book || {}).trait || ''), B.skillText] }))) +
+    `<h3>寵物的窩</h3>` + tbl([H(''), H('窩'), H('解鎖'), H('蓋一格', 1), H('擴充'), H('說明')], Object.entries(DENS39).filter(([id]) => CFG.decos[id]).map(([id, D]) => { const [n, f] = itemSprite('deco', id);
+      return { cells: [n ? `<canvas data-spr="${n}" data-f="${f}" class="ico"></canvas>` : '', CFG.decos[id].name, D.reward ? `Lv ${D.reward} 獎勵` : lockCell(id), D.reward ? '—' : fmtN(CFG.decos[id].cost), D.expandCost ? D.expandCost.map(c => '+' + fmtN(c)).join('、') : '—',
+        D.driveBonus ? `住 1 隻狗，驅趕率 +${Math.round(D.driveBonus * 100)}%` : D.rangeBonus ? `住 1 隻貓，範圍 +${D.rangeBonus}` : `一格可並排到 ${D.maxSlots} ${D.for === 'dog' ? '間' : '個'}`] }; })) +
+    `<h3>天敵與老鼠</h3>` + tbl([H(''), H('名稱')], []);   // g97 replaces this table with a link to 天敵與害獸
+  paintIcons(el);
+  if (!el.dataset.br256){ el.dataset.br256 = 1; el.addEventListener('click', e => { const tr = e.target.closest('tr.br256r'); if (!tr || !el.contains(tr)) return; const m = tr.querySelector('[data-br256]'); if (m) openBreed256(m.dataset.br256); }); } }
+
+/* ---------- save flag ---------- */
+{ const _ns256 = normalizeState; normalizeState = function(d){ const r = _ns256(d), s = r || d;
+  try { if (s && !s.v256){ s.v256 = 1; s.police256 = s.police256 || {}; } } catch(e){}
+  return r; }; }
+
+{ const st = document.createElement('style'); st.textContent = `
+  #modalBody tr.br256r { cursor: pointer; }
+  #modalBody tr.br256r:hover td { background: rgba(80,150,90,.10); }
+  #modalBody .kv.br256 { grid-template-columns: auto 1fr; }
+  `; document.head.appendChild(st); }
+
+window.__farm256 = { openBreed256, petRange: P => petRange(P), petInterval: P => petInterval(P), stepRats: (dt, t) => stepRats(dt, t), stepPreds: (dt, t) => stepPreds(dt, t),
+  spawnPred: (...a) => spawnPred(...a), predHit: (...a) => predHit(...a), papillon256, openPet: P => openPet(P), openBook: (...a) => openBook(...a),
+  CFG, normalizeState: d => normalizeState(d), UIbuildTray: () => UIbuildTray(), afterAction: () => afterAction() };
 
   })(CFG, ATLAS_JSON);
 })();
