@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.54.3-35adda2d7a'), getJSON('sprites/atlas.json?v=2.54.3-35adda2d7a')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.55-163ee64558'), getJSON('sprites/atlas.json?v=2.55-163ee64558')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.54.3-35adda2d7a';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.55-163ee64558';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -20807,6 +20807,476 @@ body.night .rb2543{color:#8cc8ff}
 window.__farm2543 = { markRail2543, openDenPick2543, denPop2543, openBird2543, openAnimal2543, herbGuard2543, isHerb2543, batLine2543, act: (x, y) => act(x, y), objEdgeMenu2543, SHAPES2543, shapeApply2543, shapeOk2543, placeMoved: (M, x, y) => placeMoved254(M, x, y), openInsect2543, openBattery2543, edgeEditMenu2543, edgeOne2543, fillCap2522: el => fillCap2522(el), openDevice: (...a) => openDevice(...a), capX2543, tbxBuy2543, tbxMigrate2543, fenceMenu2543, efDia2543, edgeMenu: (...a) => edgeMenu254(...a), openTrash: (...a) => openTrash(...a), renderBoost: el => renderBoost(el), meteorTap: (x, y) => meteorTap(x, y),
   tapAnimal: (...a) => tapAnimal(...a), stepPest: (...a) => stepPest(...a), storeDev: (M, k) => storeDev56(M, k, M.tiles[k]), placeStored: (...a) => placeStoredDev56(...a), unitText: (k, u) => unitText(k, u),
   openPet: P => openPet(P), openDen: (mi, k) => openDen(mi, k), UIbuildTray: () => UIbuildTray(), drawBr247: (...a) => drawBr247(...a), openBook: (...a) => openBook(...a) };
+
+/* ===== 107. v2.55 修正與新功能（規則文件「v2.55 修正與新功能」）=====
+   1. 鐵軌橋：batch65 新圖（atlas 有 v65）時 drawBr247 最外層自己畫（橋墩在橋格裡），不走 v2.54.3 的橋頭補畫和沿 y 翻轉；沒有新圖照舊。
+   2. 礦車一節一節收回建設倉庫（礦車資訊面板「收回最後一節」）；整列收完 S.nc255['島|key'] = 1，train246 回傳不在軌道上的空殼，
+      機器人不出門、走回充電樁；加掛（buyCar246 包裝）把旗標拿掉、重新放一列（第 1 節倉庫有先用，沒有免費）。
+   3. 建材小屋面板：圖示欄跟著圖示寬度（CSS）。
+   5. 雲端存檔總表：登入 Google 後先列出這台裝置＋雲端全部存檔，每列選怎麼處理；這台／雲端各最多 ui.v255.maxLocalSlots／maxCloudSlots 組。
+   6. 手機「✋ 移動｜🖌 連續」：#zoomCtl 多一顆切換鈕（S.settings.paint255），連續模式 paintTool() 為真、一次滑動每格只做一次，兩指移動地圖。
+   7. ☰ 選單、設定「版本與更新」多「重新載入」（存檔、清快取、重新註冊 service worker、帶新網址重新載入）。
+   8. 垃圾站收回倉庫：擴充次數存進 S.tsLv255（放出來時給新的那座）；裡面的垃圾倒進這座島的地上堆，畫在原地 S.tsSpot255[島]，那格清完之前不能放別的東西。
+  11. 伐木／採礦／整地機器人不瞬移：走不到時 W.phase = 'stuck255'，頭上「沒路可走，幫幫我」，每 stuckRetrySeconds 秒再找路；
+      去開礦車（fetch）先走到小屋門口旁邊才變車頭，開完回到原本站的位置；讓路（drive249）只有站在列車旁邊時才開，開完站在列車旁邊。
+  12. 充電中：地圖上機器人頭上會閃的閃電、自動化面板電量旁邊 ⚡。
+  13. 垃圾站「該倒了」→「已 n 天未倒垃圾」。
+  14. 晚上點窩的小選單：「查看狗屋／貓跳台」用窩自己的圖示。
+  15. 寵物鳥換鳥屋：鳥屋面板每隻鳥多「換鳥屋…」，列出全部鳥屋（哪座島、位置、住幾隻），選了再確認。
+   normalizeState 旗標 v255。設定 ui.v255（patches/patch_v2_55.py）。 ===== */
+const V255 = (CFG.ui || {}).v255 || {}, TX255 = V255.texts || {};
+const tx255 = (k, d, o) => { let s = TX255[k] || d; if (o) for (const [a, b] of Object.entries(o)) s = s.split(`{${a}}`).join(b); return s; };
+
+/* ---------- 1. 鐵軌橋新圖（batch65，atlas 有 v65）：橋墩在橋格裡，不再補畫橋頭軌道、沿 y 不翻轉 ---------- */
+{ const _db255 = drawBr247; drawBr247 = function(M, mi, k, T, x, y, t, now, snow, cx, cy){
+  const A = ATLAS.bridge_steel_x_one; if (!A || !A.v65) return _db255(M, mi, k, T, x, y, t, now, snow, cx, cy);
+  drawTerrain83(M, mi, k, T.br247, x, y, t, now);
+  const m = T.cm || 0, ax = (m & 10) ? 'x' : 'y', rn = run248(M, x, y, ax, isRailBr248, 8), i = rn.findIndex(([a, b]) => a === x && b === y), n = 'bridge_steel_' + ax + '_' + part248(i, rn.length);
+  if (ATLAS[n]){ spr(n, 0, cx, cy); if (snow && ATLAS['snow_' + n]) spr('snow_' + n, 0, cx, cy); if (m !== 5 && m !== 10) spr(roadSprite(M, x, y, T), 0, cx, cy); }
+  else return _db255(M, mi, k, T, x, y, t, now, snow, cx, cy); }; }
+
+/* ---------- 2. 礦車一節一節收回 ---------- */
+const nc255 = () => (S.nc255 = S.nc255 || {});
+const noCar255 = (mi, key) => !!(S && S.nc255 && S.nc255[mi + '|' + key]);
+RT.ncd255 = {};
+{ const _tr255 = train246; train246 = function(mi, key){
+  if (noCar255(mi, key)){ const k = mi + '|' + key; const R = r246(mi); if (R.tr[key]) delete R.tr[key];
+    return RT.ncd255[k] || (RT.ncd255[k] = { key, n: 0, load: {}, cells: [], loco: false, sl: null, st: 'yard', job: null, path: null, i: 0, el: 0, blk: 0, fc: [], lp: null, nc255: 1 }); }
+  return _tr255(mi, key); }; }
+function storeCar255(mi, key){ const R = r246(mi), TR = R.tr[key]; if (!TR || !TR.n){ toast(tx255('trainGone', '整列車廂都收回倉庫了')); return false; }
+  const W = WS[key];
+  if (TR.job || TR.sl || (TR.st !== 'park' && TR.st !== 'yard')){ toast(tx255('carMoving', '列車在路上，等它停好再收')); return false; }
+  if (W && (W.loco246 || W.phase === 'drive' || W.phase === 'load')){ toast(tx255('carDriving', '機器人正在開這列車，等它停好再收')); return false; }
+  const cc = cartCap89(), keep = (TR.n - 1) * cc, have = loadN89(TR.load || {});
+  if (have > keep){ const got = unloadCart89(mi, TR); if (loadN89(TR.load || {}) > keep){ toast(tx255('shedFull', '建材小屋放不下車上的建材，先賣掉一些再收')); return false; }
+    if (got) toast(tx255('carUnload', '車上的 {n} 份建材直接送進建材小屋', { n: fmtN(got) })); }
+  TR.n--; S.buildStore.rail_car = (S.buildStore.rail_car || 0) + 1;
+  if (TR.n <= 0){ toYard246(TR); endJob246(TR); delete R.tr[key]; nc255()[mi + '|' + key] = 1; delete RT.ncd255[mi + '|' + key];
+    if (W){ W.lp246 = null; W.g246 = null; if (W.phase === 'atboard') W.phase = 'pick'; }
+    toast(tx255('trainGone', '整列車廂都收回車庫了，列車離開軌道'), true); }
+  else { TR.cells = TR.cells.slice(0, TR.n); TR.fc = (TR.fc || []).slice(0, TR.n); toast(tx255('carStored', '收回一節車廂（車庫剩餘 {n} 節）', { n: S.buildStore.rail_car }), true); }
+  RT.decoVer = (RT.decoVer || 0) + 1; sfx('click'); afterAction(); return true; }
+{ const _bc255 = buyCar246; buyCar246 = function(mi, key){
+  if (!noCar255(mi, key)){ const _t = toast; toast = (m, ...a) => _t(String(m).replace('倉庫的車廂', '車庫的車廂'), ...a); try { return _bc255(mi, key); } finally { toast = _t; } }
+  delete nc255()[mi + '|' + key]; delete RT.ncd255[mi + '|' + key];
+  const st = (S.buildStore.rail_car || 0) > 0; if (st) S.buildStore.rail_car--;
+  const TR = train246(mi, key); TR.n = 1; toYard246(TR); sfx('coin'); toast(st ? '用車庫的車廂加掛第 1 節' : '加掛第 1 節（免費）', true); afterAction(); return true; }; }
+{ const _oc255 = openCart249; openCart249 = function(mi, key){
+  if (noCar255(mi, key)){ openModal(TX249.title || '礦車資訊', null, (k, el) => { el.classList.add('v250', 'ci249');
+      el.innerHTML = `<div class="sub250 hdr250"><p>${escapeHTML(trainWho248(key))}的列車</p></div><div class="card250"><h4>${escapeHTML(tx255('noCarTitle', '這列車沒有車廂'))}</h4><p>${escapeHTML(tx255('noCarText', ''))}</p>
+        <button class="btn" data-add255>${escapeHTML(tx255('addFirst', '加掛第 1 節'))}・${(S.buildStore.rail_car || 0) ? '車庫的車廂' : '免費'}</button></div>`;
+      el.querySelector('[data-add255]').onclick = () => { if (buyCar246(mi, key)) openCart249(mi, key); }; }); return; }
+  const r = _oc255(mi, key);
+  try { const el = $('modalBody'), TR = r246(mi).tr[key], box = el && el.querySelector('.slots250'); if (box && TR && TR.n > 0 && !el.querySelector('[data-sc255]')){
+      box.closest('.card250').insertAdjacentHTML('beforeend', `<p class="sm255">${escapeHTML(tx255('storeCarNote', ''))}</p><button class="btn ghost sm" data-sc255>${escapeHTML(tx255('storeCar', '收回最後一節（第 {n} 節）', { n: TR.n }))}</button>`);
+      el.querySelector('[data-sc255]').onclick = () => { if (storeCar255(mi, key)) openCart249(mi, key); }; } } catch(e){ console.warn(e); }
+  return r; }; }
+// 建材小屋「軌道與列車」：沒有車廂的那列寫清楚
+{ const _os255 = openShed84; openShed84 = function(mi){ const r = _os255(mi);
+  try { const el = $('modalBody'); if (el) el.querySelectorAll('[data-car246]').forEach(b => { const key = b.dataset.car246; if (!noCar255(mi, key)) return;
+      b.textContent = `${tx255('addFirst', '加掛第 1 節')} · ${(S.buildStore.rail_car || 0) ? '車庫的車廂' : '免費'}`; const sp = b.parentElement.querySelector('div span'); if (sp) sp.textContent = tx255('noCarTitle', '這列車沒有車廂'); }); } catch(e){}
+  return r; }; }
+// 沒有車廂：不出門，在外面的走回充電樁
+for (const kind of TK84){ const _w = workerWants[kind]; if (!_w) continue;
+  workerWants[kind] = (key, u) => { try { const home = workerHome(kind, u); if (home && noCar255(home.mi, key) && !walkAway(WS[key], home)) return false; } catch(e){} return _w(key, u); }; }
+
+/* ---------- 11. 沒路可走：不瞬移 ---------- */
+const STUCK255 = { stuck255: true };
+const adj255 = (W, cells) => cells.some(c => { const [x, y] = pkey(c); return Math.abs(x - W.x) + Math.abs(y - W.y) <= 1; });
+// 走得到的、跟 cells 相鄰的格子（最近的那條路）
+function pathNext255(M, W, cells){ const prev = swBFS(M, W.x, W.y); let best = null;
+  for (const c of cells){ const [x, y] = pkey(c); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]){ const k = tkey(x + dx, y + dy); if (!inMap(M, x + dx, y + dy) || !prev.has(k)) continue;
+      const p = swPathTo(prev, k); if (p && (!best || p.length < best.length)) best = p; } }
+  return best; }
+function standBeside255(M, cells){ for (const c of cells){ const [x, y] = pkey(c); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]){ const k = tkey(x + dx, y + dy); if (inMap(M, x + dx, y + dy) && swPass(M, k)) return [x + dx, y + dy]; } } return null; }
+{ const _wg255 = walkGoHome; walkGoHome = function(W, M, home){
+  if (!RT.wk255) return _wg255(W, M, home);
+  const hk = tkey(home.x, home.y), p = swPathTo(swBFS(M, W.x, W.y, hk), hk);
+  if (p || (W.x === home.x && W.y === home.y)) return _wg255(W, M, home);
+  W.phase = 'stuck255'; W.stuck255 = W.stuck255 || Date.now(); W.try255 = Date.now(); W.why255 = 'home'; W.path = null; W.target = null; W.loco246 = 0; W.forced = false; throw STUCK255; }; }
+function walk255(W, M, kind, dt, t){ const stepT = 1 / tps60(kind); let b = dt, g = 0;
+  while (b > 0 && g++ < 500){ if (!W.path || W.i >= W.path.length - 1) return { b, done: true };
+    const nk = W.path[W.i + 1]; if (!swPass(M, nk)) return { b, blocked: true };
+    const left = stepT - W.el; if (b < left){ W.el += b; W.simAt = t; return { b: 0 }; } b -= left; W.el = 0; W.i++; [W.x, W.y] = pkey(nk); }
+  return { b: 0 }; }
+function fetchDoor255(mi, TR){ const M = S.maps[mi]; if (TR.gk){ const d = doorOf247(M, TR.gk); if (d) return [tkey(d[0], d[1])]; }
+  const h = cartHome89(mi); return h ? [h.k] : []; }
+{ const _wk255 = worker84; worker84 = function(kind, key, u, dt, t){
+  const home = workerHome(kind, u); if (!home) return _wk255(kind, key, u, dt, t);
+  const W = walkState(key, home), M = S.maps[W.mi]; if (!M) return _wk255(kind, key, u, dt, t);
+  const now = Date.now(), retry = (V255.stuckRetrySeconds || 3) * 1000;
+  // 卡住：隔幾秒再找一次路
+  if (W.phase === 'stuck255'){ W.simAt = t; if (now - (W.try255 || 0) < retry) return; W.try255 = now;
+    if (W.why255 === 'fetch' && W.lpf255){ const TR = train246(W.mi, key), p = pathNext255(M, W, fetchDoor255(W.mi, TR)); if (!p){ return; } W.stuck255 = 0; W.path = p; W.i = 0; W.el = 0; W.goal = 'fetch255'; W.phase = 'walk'; }
+    else { const hk = tkey(home.x, home.y), p = swPathTo(swBFS(M, W.x, W.y, hk), hk); if (!p){ if (W.x === home.x && W.y === home.y){ W.stuck255 = 0; W.phase = 'home'; } return; }
+      W.stuck255 = 0; W.path = p; W.i = 0; W.el = 0; W.goal = 'home'; W.phase = 'walk'; } }
+  W.stuck255 = 0;
+  // 沒有車廂：回家
+  if (noCar255(W.mi, key)){ W.loco246 = 0; if (!walkAway(W, home)){ W.phase = 'home'; W.target = null; return; }
+    if (!(W.phase === 'walk' && W.goal === 'home')){ RT.wk255 = 1; try { walkGoHome(W, M, home); } catch(e){ if (e === STUCK255) return; throw e; } finally { RT.wk255 = 0; } } }
+  const TR = train246(W.mi, key);
+  // 去小屋開礦車：自己走
+  if (W.phase === 'walk' && W.goal === 'fetch255'){ const r = walk255(W, M, kind, dt, t);
+    if (r.blocked){ const p = pathNext255(M, W, fetchDoor255(W.mi, TR)); if (p){ W.path = p; W.i = 0; W.el = 0; return; } W.phase = 'stuck255'; W.why255 = 'fetch'; W.try255 = now; W.stuck255 = now; return; }
+    if (!r.done) return;
+    if (TR.job || noCar255(W.mi, key)){ W.phase = 'pick'; W.goal = null; return; }
+    TR.job = { kind: 'fetch', lp: W.lpf255 }; TR.why = ''; W.lp246 = W.lpf255; W.phase = 'drive'; W.loco246 = 1; W.after246 = 'atboard'; W.goal = null; W.fw255 = 1; W.simAt = t; return; }
+  // 開完車：站回該站的地方
+  if (W.fw255 && !(W.phase === 'drive' && TR.job)){ if (W.bx255){ [W.x, W.y] = W.bx255; } W.fw255 = 0; W.bx255 = null; }
+  if (W.as255 && !(W.phase === 'drive' && TR.job)){ const s = standBeside255(M, TR.cells.length ? [TR.cells[0], TR.cells[TR.cells.length - 1]] : []); if (s) [W.x, W.y] = s; W.as255 = 0; }
+  const ph0 = W.phase; let r;
+  RT.wk255 = 1; try { r = _wk255(kind, key, u, dt, t); } catch(e){ if (e !== STUCK255) throw e; } finally { RT.wk255 = 0; }
+  // 剛開始去小屋開礦車、人卻不在小屋旁邊 → 先走過去
+  try { if (W.phase === 'drive' && W.loco246 && TR.job && TR.job.kind === 'fetch' && !onTrack246(TR) && !W.fw255){ const door = fetchDoor255(W.mi, TR);
+      if (door.length && !adj255(W, door)){ const lp = TR.job.lp; TR.job = null; TR.why = ''; W.loco246 = 0; W.lpf255 = lp; W.bx255 = [W.x, W.y];
+        const p = pathNext255(M, W, door); if (p){ W.path = p; W.i = 0; W.el = 0; W.goal = 'fetch255'; W.phase = 'walk'; }
+        else { W.phase = 'stuck255'; W.why255 = 'fetch'; W.try255 = now; W.stuck255 = now; } }
+      else if (door.length){ W.fw255 = 1; W.bx255 = W.bx255 || [W.x, W.y]; } } } catch(e){ console.warn(e); }
+  void ph0; return r; }; }
+// 列車一停好（工作結束）人就站回去，不會在小屋那邊閃一下
+{ const _stt255 = stepTrain246; stepTrain246 = function(mi, TR, ...a){ const r = _stt255(mi, TR, ...a);
+  try { if (!TR.job){ const W = WS[TR.key]; if (W && W.fw255 && W.bx255){ [W.x, W.y] = W.bx255; W.fw255 = 0; W.bx255 = null; }
+      if (W && W.as255 && TR.cells.length){ const s = standBeside255(S.maps[mi], [TR.cells[0], TR.cells[TR.cells.length - 1]]); if (s) [W.x, W.y] = s; W.as255 = 0; } } } catch(e){}
+  return r; }; }
+// 讓路：人要在列車旁邊才開
+{ const _dv255 = drive249; drive249 = function(TR, ref){ const W = WS[TR.key]; if (W && TR.cells.length && !adj255(W, TR.cells)) return; const r = _dv255(TR, ref); if (W) W.as255 = 1; return r; }; }
+{ const _ut255 = unitText; unitText = function(kind, u){
+  try { if (TK84.includes(kind) && u){ const home = workerHome(kind, u), key = wKey(kind, u), W = WS[key];
+      if (W && W.phase === 'stuck255') return escapeHTML(W.why255 === 'fetch' ? tx255('stuckFetch', '沒路可走，幫幫我') : tx255('stuckWhy', '沒路可走，幫幫我'));
+      if (home && noCar255(home.mi, key)) return escapeHTML(tx255('noCar', '沒有礦車')); } } catch(e){}
+  return _ut255(kind, u); }; }
+// 頭上的「沒路可走，幫幫我」
+RT.stk255 = new Map();
+{ const _dw255 = drawWorld; drawWorld = function(t, now){ try { const m = new Map(); if (S) for (const key in WS){ const W = WS[key]; if (W && W.phase === 'stuck255' && W.mi === S.cur) m.set(tkey(W.x, W.y), key); } RT.stk255 = m; } catch(e){}
+  return _dw255(t, now); }; }
+{ const _dte255 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ const r = _dte255(M, k, T, x, y, t, now);
+  try { if (RT.stk255.size && RT.stk255.has(k) && !RT.snap68){ const c = center(x, y); bubble(c.cx, c.cy - 40, tx255('stuck', '沒路可走，幫幫我'), 'ui_tool_care', '#ffe6dc'); }
+    // 8. 收回的垃圾站留下的垃圾
+    const mi = S.maps.indexOf(M), sp = S.tsSpot255 && S.tsSpot255[mi];
+    if (sp === k && !T){ const p = pileOf63(islTrash63(mi)); if (p > .01){ const c = center(x, y); spr('fx_trash_pile', Math.min(6, Math.ceil(p)) - 1, c.cx, c.cy + 4); } else delete S.tsSpot255[mi]; } } catch(e){}
+  return r; }; }
+
+/* ---------- 12. 充電閃電 ---------- */
+function zap255(x, y){ const Z = V255.zap || {}, a = .55 + .45 * Math.abs(Math.sin(performance.now() / 260));
+  ctx.save(); ctx.globalAlpha *= a; ctx.translate(x, y); ctx.beginPath(); ctx.moveTo(2.5, -10); ctx.lineTo(-5.5, 1.5); ctx.lineTo(-.5, 1.5); ctx.lineTo(-2.5, 10); ctx.lineTo(5.5, -1.5); ctx.lineTo(.5, -1.5); ctx.closePath();
+  ctx.fillStyle = Z.color || '#ffd400'; ctx.strokeStyle = Z.edge || '#7a4a00'; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.stroke(); ctx.fill(); ctx.restore(); }
+{ const _dp255 = drawParked; drawParked = function(e, x, y, t){ const r = _dp255(e, x, y, t);
+  try { if (e && e.u && e.u.state === 'charge' && TK84.includes(e.kind) && !RT.snap68) zap255(x, y - ((V255.zap || {}).lift || 30)); } catch(e2){}
+  return r; }; }
+{ const _ar255 = autoRowHTML; autoRowHTML = function(kind){ let h = _ar255(kind);
+  try { const f = fleet(kind); if (!f.some(u => u.state === 'charge')) return h; const tpl = document.createElement('template'); tpl.innerHTML = h;
+    tpl.content.querySelectorAll('.urow47').forEach(row => { const b = row.querySelector('b'), m = b && /^#(\d+)$/.exec(b.textContent.trim()); if (!m) return; const u = f[+m[1] - 1], bat = row.querySelector('.bat47');
+      if (u && bat && u.state === 'charge'){ bat.classList.add('chg255'); const cell = bat.querySelector('i') || bat; cell.insertAdjacentHTML('beforeend', '<em class="zap255" title="充電中">⚡</em>'); } });
+    h = tpl.innerHTML; } catch(e){}
+  return h; }; }
+
+/* ---------- 13. 垃圾站「已 n 天未倒垃圾」 ---------- */
+{ const _db255 = drawBuildingAt; drawBuildingAt = function(T, x, y, t){
+  if (!T || T.id !== 'trash_station') return _db255(T, x, y, t);
+  const _bb = bubble; bubble = (cx, cy, text, ...rest) => { if (text === '該倒了'){ let n = 2; try { n = Math.max(2, Math.floor(daysSinceDump(Date.now()))); } catch(e){} text = tx255('daysNoDump', '已 {n} 天未倒垃圾', { n }); } if (RT.bubbleLog255) RT.bubbleLog255.push(text); return _bb(cx, cy, text, ...rest); };
+  try { return _db255(T, x, y, t); } finally { bubble = _bb; } }; }
+
+/* ---------- 8. 垃圾站收回倉庫：擴充次數、垃圾留在原地 ---------- */
+{ const _so255 = storeObject; storeObject = function(M, k){ const o = objectAt(M, k); let T = null, at = null;
+  if (o && o.bid === 'trash_station'){ at = o.cells[0]; T = M.tiles[at]; }
+  const r = _so255(M, k);
+  if (r && T && !M.tiles[at]){ const mi = S.maps.indexOf(M); (S.tsLv255 = S.tsLv255 || []).push(T.bx2543 || 0);
+    const I = islTrash63(mi); let any = false; for (const kd of ['g', 'r', 's']) if ((T[kd] || 0) > 1e-9){ I.pile[kd] = (I.pile[kd] || 0) + T[kd]; any = true; }
+    if (any){ (S.tsSpot255 = S.tsSpot255 || {})[mi] = at; if (!I.fullSince) I.fullSince = Date.now(); setTimeout(() => toast(tx255('tsPile', '垃圾留在原地'), false, 4200), 50); } }
+  return r; }; }
+{ const _act255 = act; act = function(x, y){
+  if (!S) return _act255(x, y);
+  const M = curMap(), k = tkey(x, y), mi = S.cur, sp = S.tsSpot255 && S.tsSpot255[mi], tl = S.sel.tool;
+  if (sp === k && !M.tiles[k] && pileOf63(islTrash63(mi)) > .01 && !(tl === 'build' && S.sel.build === 'trash_station') && !(tl === 'deco' && S.sel.deco === 'bld:trash_station') && ['plow', 'seed', 'animal', 'fish', 'build', 'deco', 'move'].includes(tl) && !(tl === 'move' && !RT.mv)){
+    toast(tx255('tsBlocked', '這格還有一堆垃圾')); return; }
+  const before = S.buildStore.trash_station || 0, had = new Set(stations().map(s => s.T));
+  const r = _act255(x, y);
+  try { if ((S.buildStore.trash_station || 0) < before && (S.tsLv255 || []).length){ const nw = stations().find(s => !had.has(s.T)); if (nw){ nw.T.bx2543 = Math.max(nw.T.bx2543 || 0, S.tsLv255.shift() || 0); } }
+    if (sp && M.tiles[k] && sp === k && M.tiles[k].id === 'trash_station') delete S.tsSpot255[mi]; } catch(e){ console.warn(e); }
+  return r; }; }
+// 地上堆畫在原地，就不要再畫在農舍旁邊
+{ const _dhp255 = drawHousePile; drawHousePile = function(M){ const mi = S.maps.indexOf(M); if (S.tsSpot255 && S.tsSpot255[mi] && !M.tiles[S.tsSpot255[mi]]) return; return _dhp255(M); }; }
+
+/* ---------- 6. 手機連續操作 ---------- */
+const PT255 = V255.paintTools || ['seed', 'hand', 'water', 'care'];
+const paintOn255 = () => !!(S && S.settings && S.settings.paint255 && isM() && PT255.includes(S.sel.tool));
+{ const _pt255 = paintTool; paintTool = function(){ if (paintOn255()) return true; return _pt255(); }; }
+RT.pset255 = new Set();
+{ const _po255 = paintOk; paintOk = function(M, k){
+  if (!paintOn255()) return _po255(M, k);
+  if (RT.pset255.has(k)) return false; const T = M.tiles[k], tl = S.sel.tool; let ok = false;
+  if (tl === 'seed') ok = !!T && T.t === 'soil' && !T.crop && !!CFG.crops[S.sel.seed];
+  else if (tl === 'hand') ok = !!T && ((T.t === 'soil' && !!T.crop && (T.crop.wither || T.crop.prog >= CFG.crops[T.crop.id].growSeconds)) || (T.t === 'tree' && !!CFG.trees[T.id] && treeReady(T)));   // v2.55.1：果樹也能滑過收成（種果樹還是一格一格點）
+  else if (tl === 'water') ok = !!T && (T.t === 'soil' || T.t === 'tree');
+  else if (tl === 'care') ok = !!hostOf(T);
+  if (ok) RT.pset255.add(k); return ok; }; }
+cv.addEventListener('pointerdown', () => { if (pointers.size <= 1) RT.pset255 = new Set(); RT.pm255 = null; }, true);
+cv.addEventListener('pointermove', () => { if (!paintOn255() || !pinch || pointers.size < 2) { RT.pm255 = null; return; }
+  const [a, b] = [...pointers.values()], m = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+  if (RT.pm255){ cam.x += m.x - RT.pm255.x; cam.y += m.y - RT.pm255.y; } RT.pm255 = m; });
+cv.addEventListener('pointerup', () => { RT.pm255 = null; });
+function paintBtn255(){ const z = $('zoomCtl'); if (!z) return null; let b = $('zPaint255');
+  if (!b){ b = document.createElement('button'); b.id = 'zPaint255'; b.type = 'button'; z.insertBefore(b, z.firstChild);
+    b.onclick = e => { e.stopPropagation(); if (!S) return; S.settings.paint255 = !S.settings.paint255; toast(S.settings.paint255 ? tx255('paintTipOn', '連續模式') : tx255('paintTipOff', '移動模式')); syncPaint255(); save(); }; }
+  return b; }
+function syncPaint255(){ const b = paintBtn255(); if (!b) return; const show = !!S && isM() && PT255.includes(S.sel.tool); b.hidden = !show; if (!show) return;
+  const on = !!S.settings.paint255; b.classList.toggle('on255', on); b.textContent = on ? tx255('paintOn', '🖌') : tx255('paintMove', '✋'); b.setAttribute('aria-label', on ? '連續模式（點一下切回移動）' : '移動模式（點一下切成連續）'); b.title = b.getAttribute('aria-label'); }
+{ const _st255 = setTool; setTool = function(...a){ const r = _st255(...a); try { syncPaint255(); } catch(e){} return r; }; }
+setInterval(() => { try { syncPaint255(); } catch(e){} }, 700);
+
+/* ---------- 7. 重新載入（強迫刷新） ---------- */
+async function hardReload255(){ toast('存檔後重新載入…', true, 4000);
+  try { if (S) save(); } catch(e){}
+  try { if (window.caches){ const ks = await caches.keys(); await Promise.all(ks.filter(k => k.startsWith('skyfarm-')).map(k => caches.delete(k))); } } catch(e){}
+  try { if (navigator.serviceWorker){ const rs = await navigator.serviceWorker.getRegistrations(); await Promise.all(rs.map(r => r.unregister())); } } catch(e){}
+  try { RT.noReload69 = true; } catch(e){}
+  const u = new URL(location.href); u.searchParams.set('r', Date.now().toString(36)); setTimeout(() => location.replace(u.toString()), 120); }
+function askReload255(){ if (location.protocol === 'file:'){ location.reload(); return; } confirmBox(tx255('reload', '重新載入'), tx255('reloadAsk', '要重新載入嗎？'), tx255('reload', '重新載入'), ok => { if (ok) hardReload255(); }); }
+{ const _mh255 = moreHTML; moreHTML = function(){ return _mh255() + `<button class="mi" data-m="reload255"><b class="sym">↻</b><span>${escapeHTML(tx255('reload', '重新載入'))}<small style="display:block;opacity:.7;font-size:11px">${escapeHTML(tx255('reloadSub', ''))}</small></span></button>`; }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="reload255"]'); if (!b) return; e.stopPropagation(); askReload255(); }, true);
+{ const _rs255 = renderSettings; renderSettings = function(el, ...a){ const r = _rs255(el, ...a);
+  try { const b = el.querySelector('#upd57'); if (b && !el.querySelector('#rl255')){ b.insertAdjacentHTML('afterend', `<button class="btn ghost" id="rl255">↻ ${escapeHTML(tx255('reload', '重新載入'))}</button>`); el.querySelector('#rl255').onclick = askReload255; } } catch(e){}
+  return r; }; }
+
+/* ---------- 14. 晚上點窩：查看窩用窩自己的圖示 ---------- */
+function denPop2543(d, x, y){ const res = residents(d.T), nm = denName2543(d);
+  showPop53(x, y, `<h5>${escapeHTML(nm)}</h5>${res.map(P => `<button data-pp2543="${P.id}"><img src="${petImg253(P)}" alt="">${escapeHTML(P.name)}</button>`).join('')}<button data-pp2543="den"><img src="${denImg2543(d) || ''}" alt="">${escapeHTML(TX2543.viewDen || `查看${nm}`)}</button>`);
+  POP53.querySelectorAll('[data-pp2543]').forEach(b => b.onclick = () => { closePop53(); const v = b.dataset.pp2543; if (v === 'den') openDen(d.mi, d.k); else { const P = petList().find(q => q.id === v); if (P){ RT.heartFx = { id: P.id, t0: performance.now() }; openPet(P); } } }); }
+
+/* ---------- 15. 寵物鳥換鳥屋 ---------- */
+const houseImg255 = () => IMGSRC.ui_hd_bird_house || IMGSRC.ui_bird_house || '';
+function openBirdPick255(B, selUid){
+  openModal(`更換${B.name}的鳥屋`, null, (kk, el) => { const list = houseList40(), cur = list.find(h => h.T.uid === B.house);
+    const cards = list.slice().sort((a, b) => (b === cur) - (a === cur));
+    el.innerHTML = `<div class="dp2543"><div class="dph2543"><span class="pill">${escapeHTML(B.name)}</span></div>
+      <div class="dpcur2543"><small>目前居住</small><b>${ic2543('pin')}${cur ? `${escapeHTML(isle2543(cur.mi))} · 鳥屋（${cur.x}, ${cur.y}）` : '還沒有鳥屋'}</b></div>
+      <p class="dpt2543">選擇要搬去的鳥屋</p>
+      ${cards.length ? cards.map((h, i) => { const res = houseBirds40(h.T), n = houseCap40(h.T), isCur = h === cur, full = !isCur && res.length >= n, sel = h.T.uid === selUid;
+        return `<button class="dpo2543${isCur ? ' cur' : ''}${full ? ' full' : ''}${sel ? ' on' : ''}" data-bp255="${h.T.uid}" ${isCur || full ? 'disabled' : ''}><span class="dpi2543"><img src="${houseImg255()}" alt=""></span>
+          <span class="dpx2543"><b>${isCur ? '目前的鳥屋' : `鳥屋 ${String.fromCharCode(65 + i)}`}${isCur ? ' <i class="pill ok">目前居住</i>' : full ? ' <i class="pill">已住滿</i>' : ''}</b><small>${escapeHTML(isle2543(h.mi))}（${h.x}, ${h.y}）</small><small>入住 ${res.length} / ${n} 隻${res.length ? `：${res.map(q => escapeHTML(q.name)).join('、')}` : ''}</small></span>
+          ${sel ? `<span class="dpk2543">${ic2543('check')}</span>` : ''}</button>`; }).join('') : '<p>還沒有鳥屋。</p>'}
+      <div class="dpf2543"><button class="btn ghost" id="bpCancel255">${selUid ? '取消選擇' : '回到鳥屋'}</button><button class="btn" id="bpOk255" ${selUid ? '' : 'disabled'}>${ic2543('check')}確認搬家</button></div></div>`;
+    el.querySelectorAll('[data-bp255]').forEach(b => b.onclick = () => openBirdPick255(B, b.dataset.bp255));
+    el.querySelector('#bpCancel255').onclick = () => { if (selUid) openBirdPick255(B); else if (cur) openBirdHouse40(cur.mi, cur.k); else closeModal(); };
+    el.querySelector('#bpOk255').onclick = () => { const h = list.find(q => q.T.uid === selUid); if (!h || houseBirds40(h.T).length >= houseCap40(h.T)) return;
+      B.house = h.T.uid; try { if (RT.bAg40) delete RT.bAg40[B.id]; } catch(e){} save(); sfx('place'); toast(`${B.name}搬到${isle2543(h.mi)}的鳥屋了`); afterAction(); openBirdHouse40(h.mi, h.k); }; }); }
+{ const _ob255 = openBirdHouse40; openBirdHouse40 = function(mi, k){ const r = _ob255(mi, k);
+  const add = () => { try { const el = $('modalBody'); if (!el) return; el.querySelectorAll('.bird40[data-b]').forEach(row => { if (row.querySelector('[data-bm255]')) return; const B = birds40().find(q => q.id === row.dataset.b); if (!B) return;
+      const host = row.querySelector('div') || row; host.insertAdjacentHTML('beforeend', `<button class="btn ghost sm bm255" data-bm255="${B.id}">換鳥屋…</button>`);
+      host.querySelector('[data-bm255]').onclick = ev => { ev.stopPropagation(); openBirdPick255(B); }; }); } catch(e){ console.warn(e); } };
+  add(); setTimeout(add, 0); return r; }; }
+
+/* ---------- v2.55.1 ---------- */
+// 1. 點列車那格的小選單也能「收回最後一節」
+{ const _rm255 = railMenu246; railMenu246 = function(M, k, x, y, join){ const r = _rm255(M, k, x, y, join);
+  const put = () => { try { if (join || POP53.hidden || POP53.querySelector('[data-sc255]')) return; const ci = POP53.querySelector('[data-ci249]'); if (!ci) return; const mi = S.cur, key = ci.dataset.ci249, TR = r246(mi).tr[key]; if (!TR || !TR.n) return;
+      const b = document.createElement('button'); b.dataset.sc255 = key; b.innerHTML = `<img src="${IMGSRC.ui_tool_store || IMGSRC.ui_rail_cart || ''}" alt="">${escapeHTML(tx255('storeCar', '收回最後一節（第 {n} 節）', { n: TR.n }))}`;
+      b.onclick = () => { closePop53(); storeCar255(mi, key); }; ci.insertAdjacentElement('afterend', b);
+      const top = parseFloat(POP53.style.top) || 0; POP53.style.top = Math.max(8, top - b.offsetHeight) + 'px'; } catch(e){ console.warn(e); } };
+  put(); setTimeout(put, 0); return r; }; }
+// v2.55.1：建材小屋「軌道與列車」每列右邊改成車廂格子＋「＋ 加掛一節車廂」大按鈕（玩家參考圖）
+function carCol2551(mi, key){ const TR = train246(mi, key), n = TR.n || 0, mx = maxCars246(), B = CT89.buy || [800, 1500], st = S.buildStore.rail_car || 0;
+  const lv = (TN246.carsByLevel || [[3, 1], [10, 2], [20, 3]]), top = lv.length ? lv[lv.length - 1][1] : 3, nextLv = (lv.find(([l, c]) => c > mx) || [])[0];
+  let slots = ''; for (let i = 0; i < top; i++) slots += i < n ? `<i class="cf2551"><img src="${IMGSRC.ui_rail_cart || ''}" alt=""></i>` : `<i class="ce2551${i >= mx ? ' lk2551' : ''}" title="${i >= mx && nextLv ? `Lv ${nextLv} 解鎖` : '空位'}"></i>`;
+  const full = n >= mx, price = n === 0 ? 0 : (B[n - 1] ?? B[B.length - 1]), canBuy = !full && !st, canUse = !full && st > 0;
+  const buyTx = full ? '已達上限' : price ? `購買並加掛・${fmtN(price)}` : '免費加掛第 1 節', why = full ? (nextLv ? `Lv ${nextLv} 可以再加掛` : '已經掛滿') : st ? '車庫有車廂，先用車庫的' : '車庫沒有車廂';
+  return `<div class="tc2551"><div class="tch2551"><span class="slots2551">${slots}</span><b>車廂 ${n} / ${mx}</b></div>
+    <div class="tcbs2553"><button class="btn tcb2551" data-car2551="${key}" data-how="buy" ${canBuy ? '' : 'disabled'}>${buyTx}</button><button class="btn ghost tcu2553" data-car2551="${key}" data-how="use" ${canUse ? '' : 'disabled'}>從車庫加掛</button></div><small>${escapeHTML(why)}</small></div>`; }
+{ const _os2551 = openShed84; openShed84 = function(mi){ const r = _os2551(mi);
+  try { const el = $('modalBody'), box = el && el.querySelector('.rl89'); if (!box) return r;
+    const keys = []; for (const kind of TK84){ for (const u of fleet(kind)) if (unitTier(kind, u) && (u.isl77 === undefined || u.isl77 === mi)) keys.push(wKey(kind, u)); if (rentActive(kind, Date.now())) keys.push(wKey(kind, null)); }
+    const rows = [...box.querySelectorAll('.tr246')];
+    rows.forEach((row, i) => { const key = keys[i]; if (!key || row.classList.contains('tr2551')) return; row.classList.add('tr2551');
+      row.querySelectorAll(':scope > button').forEach(b => b.remove()); row.insertAdjacentHTML('beforeend', carCol2551(mi, key));
+      if (noCar255(mi, key)){ const sp = row.querySelector(':scope > div span'); if (sp) sp.textContent = tx255('noCarTitle', '這列車沒有車廂'); } });
+    box.querySelectorAll('[data-car2551]').forEach(b => b.onclick = () => { const st = S.buildStore.rail_car || 0; if (b.dataset.how === 'buy' && st > 0){ toast('車庫還有車廂，先用車庫的'); return; } if (b.dataset.how === 'use' && !st){ toast('車庫沒有車廂'); return; } if (buyCar246(mi, b.dataset.car2551)) openShed84(mi); });
+    if (!el.querySelector('.gar2553')){ const st = S.buildStore.rail_car || 0; box.insertAdjacentHTML('afterend', `<div class="gar2553"><span class="gi2553">${IMGSRC.ui_garage ? `<img src="${IMGSRC.ui_garage}" alt="">` : '🏠'}</span><div><b>車庫</b><small>未加掛的車廂・所有列車共用（收回的車廂放這裡，加掛時先用）</small></div><span class="gn2553">剩餘 ${fmtN(st)} 節</span></div>`); } } catch(e){ console.warn(e); }
+  return r; }; }
+// v2.55.1：建材小屋面板版面（玩家參考圖）：電腦版上面一張卡＝標題＋進度條＋%（左）／擴充（右），建材四欄；手機版建材一列一種、擴充放最下面；「n 份・每份 p」同一行；軌道與列車的統計排成一行
+{ const _os2552 = openShed84; openShed84 = function(mi){ const r = _os2552(mi);
+  try { const el = $('modalBody'); if (!el || el.querySelector('.top2552')) return r;
+    el.querySelectorAll('.mr84').forEach(m => { const sp = m.querySelector('span'), sm = m.querySelector('small'); if (sp && sm){ sp.textContent = `${sp.textContent.trim()}・${sm.textContent.trim()}`; sm.remove(); } });
+    const hd = el.querySelector('.hd84'), boost = el.querySelector('#shb84'), brow = boost && boost.parentNode;
+    if (hd && boost){ const h3 = hd.querySelector('h3'), bar = hd.querySelector('.bar84'), txt = hd.querySelector('.sm84'), w = parseFloat((bar && bar.querySelector('i') || {}).style ? bar.querySelector('i').style.width : 0) || 0;
+      const top = document.createElement('div'); top.className = 'top2552';
+      top.innerHTML = `<div class="tl2552"><div class="tt2552"></div><div class="tb2552"></div><div class="tx2552"></div></div><div class="tr2552"></div>`;
+      top.querySelector('.tt2552').appendChild(h3); const tb = top.querySelector('.tb2552'); tb.appendChild(bar); tb.insertAdjacentHTML('beforeend', `<b>${Math.round(w)}%</b>`); top.querySelector('.tx2552').appendChild(txt);
+      const b2 = boost.cloneNode(true); b2.id = 'shb2552'; b2.onclick = () => boost.click(); const note = brow.querySelector('.sm84'); top.querySelector('.tr2552').append(b2, note ? note.cloneNode(true) : '');
+      hd.replaceWith(top); brow.classList.add('bt2552'); }
+    const rl = el.querySelector('.rl89'); if (rl){ const kvs = [...rl.querySelectorAll(':scope > .kv')]; if (kvs.length){ const line = document.createElement('div'); line.className = 'st2552';
+        for (const kv of kvs){ const sp = [...kv.children]; for (let i = 0; i + 1 < sp.length; i += 2) line.insertAdjacentHTML('beforeend', `<span><i>${sp[i].innerHTML}</i>${sp[i + 1].innerHTML}</span>`); }
+        kvs[0].replaceWith(line); kvs.slice(1).forEach(k => k.remove()); } } } catch(e){ console.warn(e); }
+  return r; }; }
+// 4. 狗屋／貓跳台面板抬頭用窩的大圖
+for (const id of ['dog_house', 'cat_tree', 'dog_house_gold', 'cat_tree_gold']){ try { const src = pt2543('den_' + id); if (src) IMGSRC['ui_hd_den_' + id] = src; } catch(e){} }
+// 6. 寵物鳥自己的面板（換鳥屋在這裡選）
+const birdImg255 = B => pt2543('bird_' + B.sp, IMGSRC['ui_pg_bird_' + birdSpr40(B)] || IMGSRC['ui_bird_' + birdSpr40(B)] || '');
+function openBird255(B){
+  const D = birdSp40(B), fi = (BR40.food || {}).item || 'bird_food', price = Math.floor((D.price || 0) * (BR40.sellRate ?? .5));
+  openModal(B.name, null, (kk, el) => { const rg = birdRange40(B), sz = rg ? rg.x1 - rg.x0 + 1 : D.range, h = rg && rg.h, today = B.dayN === dayNo40(Date.now()) ? B.today || 0 : 0;
+    const rows = [['paw', '品種', `${escapeHTML(D.name || '')}${B.sp === 'cockatiel' ? `（${B.color === 'white' ? '白' : '灰'}）` : ''}`],
+      ['medal', '專長', escapeHTML(D.skillText || '—')],
+      ['pin', '活動範圍', h ? `${sz}×${sz}，以鳥屋為中心的果樹` : '沒有鳥屋'],
+      ['target', '抓一棵', `${D.catchSeconds || '—'} 秒`],
+      ['bowl', '飼料', B.hungry ? `<b class="warn2543">餓了</b>，倉庫沒有${itemName(fi)}（倉庫 ${S.inv[fi] || 0} 份）` : `吃飽了（倉庫 ${S.inv[fi] || 0} 份，每 ${(BR40.food || {}).everyHours || 8} 小時吃 1 份）`],
+      ['chart', '戰績', `今天 ${today} 棵・累計 ${B.caught || 0} 棵`],
+      ['clock', '現在', escapeHTML(birdState40(B))]];
+    const mates = h ? houseBirds40(h.T).filter(q => q.id !== B.id) : [];
+    const house = h ? `<div class="ipden2543"><img src="${houseImg255()}" alt=""><div><p>${ic2543('pin')}鳥屋・${escapeHTML(isle2543(h.mi))}（${h.x}, ${h.y}）・住 ${houseBirds40(h.T).length}／${houseCap40(h.T)} 隻</p>
+        ${mates.length ? `<p class="sm2543">室友：</p><div class="mates2543">${mates.map(q => `<button class="mate2543" data-bmate255="${q.id}"><img src="${birdImg255(q)}" alt="">${escapeHTML(q.name)}</button>`).join('')}</div>` : '<p class="sm2543">沒有室友</p>'}
+        <button class="btn ghost" id="toHouse255">查看鳥屋</button></div></div>` : '<p class="sm2543">還沒有鳥屋：先蓋鳥屋，再按「換鳥屋」搬進去。</p>';
+    el.innerHTML = ipHead2543({ img: birdImg255(B), title: B.name, pill: `<span class="pill ok">寵物鳥</span>`, kv: rows }) +
+      `<div class="ipg2543"><div class="ipc2543"><h4>${ic2543('edit')}名字</h4><div class="row"><input type="text" id="birdName255" maxlength="${BR40.nameMaxChars || 8}" value="${escapeHTML(B.name)}" style="font-size:16px"><button class="btn" id="birdRen255">改名</button></div></div>
+        <div class="ipc2543 den2543"><h4>${ic2543('home')}住的鳥屋</h4>${house}</div></div>
+      <div class="ipb2543"><button class="btn ghost" id="birdFood255"><img src="${IMGSRC['ui_item_' + fi] || IMGSRC['ui_' + fi] || ''}" alt="">買${itemName(fi)}</button><button class="btn ghost" id="birdMove255">${ic2543('home')}換鳥屋…</button><button class="btn warn" id="birdGive255">${ic2543('back')}送養（退 ${fmtN(price)}）</button></div>`;
+    el.querySelector('#birdRen255').onclick = () => { const v = el.querySelector('#birdName255').value.trim().slice(0, BR40.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } B.name = v; save(); toast(`改好了：${v}`); openBird255(B); };
+    el.querySelector('#birdFood255').onclick = () => openStorage('shop');
+    el.querySelector('#birdMove255').onclick = () => openBirdPick255(B);
+    el.querySelectorAll('[data-bmate255]').forEach(b => b.onclick = () => { const q = birds40().find(z => z.id === b.dataset.bmate255); if (q) openBird255(q); });
+    const th = el.querySelector('#toHouse255'); if (th && h) th.onclick = () => openBirdHouse40(h.mi, h.k);
+    const gv = el.querySelector('#birdGive255'); gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+      S.birds40 = birds40().filter(q => q !== B); S.player.coins += price; try { if (RT.bAg40) delete RT.bAg40[B.id]; } catch(e){} toast(`${B.name}找到新家了，退回 ${fmtN(price)} 金幣`); closeModal(); afterAction(); }; });
+  ipSheet2543(); }
+// 點飛在外面的鳥 → 鳥的面板
+function openBird2543(B){ openBird255(B); }
+// 換鳥屋：取消回到鳥的面板、搬完回到鳥的面板
+{ const _bp255 = openBirdPick255; openBirdPick255 = function(B, selUid){ const r = _bp255(B, selUid);
+  try { const el = $('modalBody'), c = el.querySelector('#bpCancel255'); if (c && !selUid){ c.textContent = `回到${B.name}`; c.onclick = () => openBird255(B); }
+    const ok = el.querySelector('#bpOk255'); if (ok && selUid){ const o0 = ok.onclick; ok.onclick = () => { const h0 = B.house; o0(); if (B.house !== h0) openBird255(B); }; } } catch(e){ console.warn(e); }
+  return r; }; }
+// 鳥屋面板：每隻鳥的「換鳥屋…」改成「查看資訊」（換鳥屋在鳥的面板裡）
+{ const _ob2551 = openBirdHouse40; openBirdHouse40 = function(mi, k){ const r = _ob2551(mi, k);
+  const fix = () => { try { $('modalBody').querySelectorAll('[data-bm255]').forEach(b => { if (b.dataset.v2551) return; b.dataset.v2551 = 1; b.textContent = '查看資訊・換鳥屋'; const B = birds40().find(q => q.id === b.dataset.bm255);
+      b.onclick = ev => { ev.stopPropagation(); if (B) openBird255(B); }; }); } catch(e){} };
+  fix(); setTimeout(fix, 0); setTimeout(fix, 30); return r; }; }
+
+/* ---------- 5. 雲端存檔總表 ---------- */
+const maxLocal255 = () => V255.maxLocalSlots || 10, maxCloud255 = () => V255.maxCloudSlots || 10;
+const visSlots255 = () => slotList().filter(e => slotVisible(e.id));
+{ const _cs255 = createSlot; createSlot = function(name){ if (visSlots255().length >= maxLocal255()){ toast(tx255('slotFull', '這台裝置最多 {n} 座農場', { n: maxLocal255() }), false, 4000); return false; } return _cs255(name); }; }
+{ const _ia255 = importAsNew63; importAsNew63 = function(d){ if (visSlots255().length >= maxLocal255()){ toast(tx255('slotFull', '這台裝置最多 {n} 座農場', { n: maxLocal255() }), false, 4000); return; } return _ia255(d); }; }
+function when255(ms){ if (!+ms) return '—'; const d = new Date(+ms); return `${d.getMonth() + 1}/${d.getDate()} ${fmtHM(+ms)}`; }
+function newer255(l, c){ if (!l) return 'c'; if (!c) return 'l'; const la = +l.acts || 0, ca = +c.acts || 0; if (la !== ca) return la > ca ? 'l' : 'c';
+  const ls = +l.savedAt || 0, cs = +c.savedAt || 0; if (Math.abs(ls - cs) < 1000) return '='; return ls > cs ? 'l' : 'c'; }
+async function cloudRows255(){ await driveList(); const me = curEmail(), files = CL.files || [], rows = new Map();
+  for (const e of visSlots255()){ const d = parseSaved(lsGet(SLOT_PREFIX + e.id)); if (!d) continue; const m = summarize(d);
+    rows.set(e.id, { id: e.id, name: e.name, owner: ownerOf(e.id), l: { level: m.level, coins: m.coins, blocks: m.blocks, maps: m.maps, savedAt: d.savedAt, acts: d.acts || 0 } }); }
+  for (const f of files){ const A = f.appProperties || {}, id = A.slot; if (!id) continue; const R = rows.get(id) || { id, name: A.name || '雲端農場' }; if (!rows.has(id) && slotList().some(x => x.id === id && !slotVisible(id))) continue;
+    R.f = f; R.c = { level: +A.level || 0, coins: +A.coins || 0, blocks: +A.blocks || 0, savedAt: +A.savedAt || 0, acts: +A.acts || 0, dev: A.actDev || A.device || '' }; rows.set(id, R); }
+  void me; return [...rows.values()]; }
+function sideHTML255(s, tag){ if (!s) return '<div class="cs255 none">沒有</div>';
+  return `<div class="cs255"><b>Lv ${s.level}${tag}</b><small>金幣 ${fmtN(s.coins)} · 土地 ${s.blocks} 塊${s.maps ? ` · ${s.maps} 座島` : ''}</small><small>存檔 ${when255(s.savedAt)}${s.dev ? ` · ${escapeHTML(s.dev)}` : ''}</small></div>`; }
+function openCloudTable255(done, testRows){
+  let rows = testRows || null, err = '';
+  const finish = () => { closeModal(); try { done && done(); } catch(e){ console.warn(e); } };
+  const render = () => openModal(tx255('cloudTitle', '雲端存檔總表'), null, (k, el) => {
+    if (!rows){ el.innerHTML = `<p>${err ? escapeHTML(err) : '正在讀取雲端存檔…'}</p>${err ? '<div class="row"><button class="btn" id="ct255skip">先跳過</button></div>' : ''}`; const sk = el.querySelector('#ct255skip'); if (sk) sk.onclick = finish; return; }
+    const nL = rows.filter(r => r.l).length, nC = rows.filter(r => r.c).length;
+    const opt = (r, v, label, dis) => `<label class="op255${dis ? ' dis' : ''}"><input type="radio" name="ct255_${r.id}" value="${v}" ${r.pick === v ? 'checked' : ''} ${dis ? 'disabled' : ''}>${label}</label>`;
+    el.innerHTML = `<p class="small">${escapeHTML(tx255('cloudIntro', ''))}</p><p class="small">這台裝置 ${nL} / ${maxLocal255()} 座 · 雲端 ${nC} / ${maxCloud255()} 座</p>
+      <div class="ct255">${rows.map(r => { const nw = r.l && r.c ? newer255(r.l, r.c) : null, tagL = nw === 'l' ? '<i class="pill ok">較新</i>' : nw === '=' ? '<i class="pill">一樣</i>' : '', tagC = nw === 'c' ? '<i class="pill ok">較新</i>' : nw === '=' ? '<i class="pill">一樣</i>' : '';
+        let ops = '';
+        if (r.l && r.c){ if (nw === '=') ops = opt(r, 'skip', '已同步，不用處理');
+          else ops = opt(r, 'up', '用這台的（上傳蓋掉雲端）') + opt(r, 'down', '用雲端的（下載蓋掉這台）') + opt(r, 'both', '兩份都留（雲端那份另存成新農場）', nL >= maxLocal255() || nC >= maxCloud255()) + opt(r, 'skip', '先不要'); }
+        else if (r.l) ops = opt(r, 'up', '上傳到雲端', nC >= maxCloud255()) + opt(r, 'skip', '先不要');
+        else ops = opt(r, 'down', '下載到這台', nL >= maxLocal255()) + opt(r, 'del', '從雲端刪掉') + opt(r, 'skip', '先不要');
+        return `<div class="cr255"><h4>${escapeHTML(r.name)}${r.id === SLOT ? ' <span class="small">（現在在玩）</span>' : ''}${r.l && !r.owner ? ' <span class="small">（未綁帳號）</span>' : ''}</h4>
+          <div class="cg255"><div><small class="hd255">這台裝置</small>${sideHTML255(r.l, tagL)}</div><div><small class="hd255">雲端</small>${sideHTML255(r.c, tagC)}</div></div><div class="ops255">${ops}</div></div>`; }).join('') || '<p>這台裝置和雲端都還沒有農場。</p>'}</div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="ct255ok">照這樣處理</button><button class="btn ghost" id="ct255skip">先跳過</button></div>`;
+    el.querySelectorAll('input[type=radio]').forEach(i => i.onchange = () => { const r = rows.find(q => 'ct255_' + q.id === i.name); if (r) r.pick = i.value; });
+    el.querySelector('#ct255skip').onclick = finish;
+    el.querySelector('#ct255ok').onclick = async () => { const b = el.querySelector('#ct255ok'); b.disabled = true; b.textContent = '處理中…'; await apply255(rows); finish(); }; });
+  render(); $('modalClose').onclick = finish;
+  if (testRows){ for (const r of rows) if (!r.pick){ const nw = r.l && r.c ? newer255(r.l, r.c) : null; r.pick = nw ? (nw === '=' ? 'skip' : nw === 'l' ? 'up' : 'down') : r.l ? 'up' : 'down'; } render(); return; }
+  (async () => { try { if (!tokValid()) throw new Error('login'); rows = await cloudRows255();
+      for (const r of rows){ if (r.l && r.c){ const nw = newer255(r.l, r.c); r.pick = nw === '=' ? 'skip' : nw === 'l' ? 'up' : 'down'; } else if (r.l) r.pick = r.owner === curEmail() ? 'up' : 'skip'; else r.pick = 'down'; }
+      let nL = rows.filter(r => r.l).length; for (const r of rows) if (!r.l && r.pick === 'down'){ if (nL >= maxLocal255()) r.pick = 'skip'; else nL++; }
+      let nC = rows.filter(r => r.c).length; for (const r of rows) if (!r.c && r.pick === 'up'){ if (nC >= maxCloud255()) r.pick = 'skip'; else nC++; }
+    } catch(e){ err = '讀不到雲端存檔（' + (/login/.test(e.message) ? 'Google 登入過期' : '網路有問題') + '）'; }
+    if (!$('modal').hidden && $('modalTitle').textContent.includes(tx255('cloudTitle', '雲端存檔總表'))) render(); })(); }
+async function apply255(rows){ const me = curEmail(); cloudBusy(true); let n = 0;
+  try { for (const r of rows){ try {
+      if (r.pick === 'up'){ if (!r.owner && me) setOwner(r.id, me); clSetSlot(r.id, { on: true, fileId: r.f ? r.f.id : null }); await driveUpload(r.id); n++; }
+      else if (r.pick === 'down' && r.f){ const raw = await driveDownload(r.f.id), d = parseSaved(raw); if (!d){ toast(`「${r.name}」雲端那份讀不到（校驗失敗）`); continue; }
+        const cur = lsGet(SLOT_PREFIX + r.id); if (cur) lsSet(BACKUP_PREFIX + r.id, cur);
+        if (r.id === SLOT && S) adoptState(d); else lsSet(SLOT_PREFIX + r.id, raw);
+        setOwner(r.id, me); const l = slotList().filter(x => x.id !== r.id); l.push({ id: r.id, name: r.f.appProperties.name || (d.profile && d.profile.name) || '雲端農場', savedAt: d.savedAt, createdAt: d.savedAt, summary: summarize(d) }); writeSlotList(l);
+        clSetSlot(r.id, { on: true, fileId: r.f.id, lastUp: d.savedAt || 0, lastRemote: String(r.f.appProperties.savedAt || 0), lastActs: d.acts || 0, syncedAt: Date.now() }); n++; }
+      else if (r.pick === 'both' && r.f){ const raw = await driveDownload(r.f.id), d = parseSaved(raw); if (!d) continue; const nid = newSlotId(), nm = `${r.name}（雲端）`.slice(0, 12);
+        d.profile = d.profile || {}; d.profile.name = nm; const body = JSON.stringify(d); lsSet(SLOT_PREFIX + nid, JSON.stringify({ sum: checksum(body), body }));
+        setOwner(nid, me); const l = slotList(); l.push({ id: nid, name: nm, savedAt: d.savedAt, createdAt: d.savedAt, summary: summarize(d) }); writeSlotList(l);
+        clSetSlot(nid, { on: true }); await driveUpload(nid);
+        if (!r.owner && me) setOwner(r.id, me); clSetSlot(r.id, { on: true, fileId: r.f.id }); await driveUpload(r.id); n++; }
+      else if (r.pick === 'del' && r.f){ await driveDelete(r.f.id); n++; }
+    } catch(e){ console.warn(e); toast(`「${r.name}」沒處理成功，等一下再試`); } }
+    CL.files = null; CL.status = 'ok';
+  } finally { cloudBusy(false); }
+  if (n) toast(`雲端存檔處理好了（${n} 座）`, true); }
+// 登入後：先開總表，選完才同步、進選擇農場
+{ const _al255 = afterLogin; afterLogin = function(from){ RT.ct255 = true; return _al255(from); }; }
+{ const _sa255 = syncAll; syncAll = function(...a){ if (RT.ct255) return Promise.resolve(); return _sa255(...a); }; }
+{ const _osp255 = openSlotPicker; openSlotPicker = function(...a){ if (RT.ct255){ RT.ct255 = false; openCloudTable255(() => { syncAll(); _osp255(...a); }); return; } return _osp255(...a); }; }
+{ const _om255 = openMenu; openMenu = function(...a){ if (RT.ct255 && a[0] === 'save'){ RT.ct255 = false; openCloudTable255(() => { syncAll(); _om255(...a); }); return; } return _om255(...a); }; }
+
+/* ---------- 存檔 ---------- */
+{ const _ns255 = normalizeState; normalizeState = function(d){ const r = _ns255(d), s = r || d;
+  try { if (s && !s.v255){ s.v255 = 1; s.nc255 = s.nc255 || {}; s.tsLv255 = s.tsLv255 || []; s.tsSpot255 = s.tsSpot255 || {}; } } catch(e){}
+  return r; }; }
+
+{ const st = document.createElement('style'); st.textContent = `
+.shed84 .mr84{grid-template-columns:auto minmax(0,1fr) auto}
+.shed84 .mr84 img{grid-column:1;grid-row:1/4;align-self:center;object-fit:contain}
+.shed84 .mr84 b,.shed84 .mr84 span,.shed84 .mr84 small{grid-column:2;min-width:0;overflow-wrap:anywhere}
+.shed84 .mr84 b{grid-row:1}.shed84 .mr84 span{grid-row:2}.shed84 .mr84 small{grid-row:3}
+.shed84 .mr84 button{grid-column:3;grid-row:1/4;align-self:center}
+.shed84.v250 .mr84{grid-template-columns:52px minmax(0,1fr) auto}
+.ci249 .sm255{font-size:12px;opacity:.75;margin:8px 0 6px}
+#zPaint255{font-size:18px}#zPaint255.on255{background:#ffd75e;color:#4a2c00;box-shadow:0 0 0 2px #fff8 inset}#zPaint255[hidden]{display:none!important}
+.bat47.chg255 i{position:relative;overflow:visible}.bat47.chg255 .zap255{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-style:normal;font-size:12px;line-height:1;pointer-events:none;filter:drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);animation:zap255 .9s ease-in-out infinite alternate}
+@keyframes zap255{from{opacity:.45}to{opacity:1}}
+.bm255{margin-top:6px}
+.rl89 .tr246 .tcbs2553{display:flex!important;flex-direction:row!important;gap:8px;flex:none!important}.tcbs2553 .btn{flex:1;white-space:nowrap}
+.tcu2553{border:2px solid #3fd0c0!important;color:inherit;font-weight:700;background:rgba(63,208,192,.08)!important}.tcu2553:disabled{border-color:rgba(127,127,127,.35)!important;opacity:.55}
+.shed84 .gar2553{display:flex;align-items:center;gap:14px;padding:12px 16px;margin:12px 0;border-radius:14px;background:rgba(127,127,127,.12)}.gar2553 .gi2553 img{width:48px;height:48px;object-fit:contain}.gar2553 .gi2553{font-size:34px}
+.gar2553 > div{flex:1;display:flex;flex-direction:column}.gar2553 b{font-size:18px}.gar2553 small{opacity:.8}.gar2553 .gn2553{padding:6px 16px;border:2px solid #3fd0c0;border-radius:12px;font-weight:700;font-size:16px;white-space:nowrap}
+.rl89 .tr246 .tc2551{min-width:280px}
+.shed84 .top2552{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 20px;align-items:center;padding:12px 16px;margin-bottom:10px;border-radius:14px;background:rgba(127,127,127,.12)}
+.top2552 h3{margin:0 0 6px;font-size:18px}.top2552 .tb2552{display:flex;align-items:center;gap:12px}.top2552 .tb2552 .bar84{flex:1;max-width:460px;margin:0}.top2552 .tb2552 b{font-size:15px}.top2552 .tx2552 .sm84{margin:4px 0 0}
+.top2552 .tr2552{display:flex;flex-direction:column;align-items:center;gap:4px;padding-left:20px;border-left:1px solid rgba(127,127,127,.35)}.top2552 .tr2552 .btn{min-width:220px;font-weight:700}.top2552 .tr2552 .sm84{font-size:12px;margin:0}
+.shed84.v250 .bt2552{display:none}
+.shed84.v250 .mr84{grid-template-columns:48px minmax(0,1fr) auto;gap:0 8px}.shed84.v250 .mr84 img{width:48px!important;height:48px!important}.shed84.v250 .mr84 span{opacity:.85;font-size:13px;white-space:nowrap;grid-column:2/4!important;grid-row:2!important}.shed84.v250 .mr84 b{grid-row:1!important}.shed84.v250 .mr84 img{grid-row:1/3!important}.shed84.v250 .mr84 button{grid-row:1!important;align-self:center}
+.rl89 .st2552{display:flex;flex-wrap:wrap;gap:6px 0;margin:4px 0 8px}.rl89 .st2552 span{padding:0 14px 0 0;margin-right:14px;border-right:1px solid rgba(127,127,127,.4);font-size:14px}.rl89 .st2552 span:last-child{border-right:0}.rl89 .st2552 i{font-style:normal;opacity:.7;margin-right:8px}
+@media (max-width:760px){
+ .shed84 .top2552{grid-template-columns:minmax(0,1fr);background:none;padding:4px 2px}.top2552 .tr2552{display:none}.top2552 .tb2552 b{display:none}
+ .shed84.v250 .bt2552{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px 16px;margin-top:14px}
+ .shed84.v250 .mats84{grid-template-columns:minmax(0,1fr)!important;gap:0;border-top:1px solid rgba(127,127,127,.3)}
+ .shed84.v250 .mr84{background:none!important;border-radius:0!important;border-bottom:1px solid rgba(127,127,127,.3);padding:12px 4px!important}
+ .shed84.v250 .mr84 b{font-size:17px}.shed84.v250 .mr84 span{font-size:14px;grid-column:2!important}.shed84.v250 .mr84 button{grid-row:1/3!important;padding:8px 16px}
+ .rl89 .st2552{flex-direction:column}.rl89 .st2552 span{border-right:0;padding:0;margin:0}}
+.rl89 .tr246.tr2551{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(200px,auto);align-items:center;gap:10px 14px;padding:10px 12px}
+.rl89 .tr246.tr2551 > div:not(.tc2551){min-width:0}.rl89 .tr246.tr2551 > div:not(.tc2551) b{font-size:16px}
+.rl89 .tr246 .tc2551{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex:none;padding-left:14px;border-left:1px solid rgba(127,127,127,.35);min-width:200px}
+.rl89 .tr246 .tch2551{display:flex;flex-direction:row!important;align-items:center;justify-content:space-between;gap:10px;flex:none!important}.tch2551 b{font-size:14px;white-space:nowrap}
+.rl89 .tr246 .slots2551{display:flex!important;flex-direction:row!important;gap:6px;flex:none!important}
+.slots2551 i{display:inline-block;width:30px;height:22px;border-radius:5px}.slots2551 .cf2551 img{width:30px!important;height:22px!important;object-fit:contain}
+.slots2551 .ce2551{border:2px dashed rgba(170,180,195,.75)}.slots2551 .lk2551{opacity:.4}
+.tcb2551{width:100%;font-weight:700;background:#1f6fe0!important;color:#fff!important;border-color:#1f6fe0!important}.tcb2551:disabled{background:rgba(127,127,127,.35)!important;border-color:transparent!important;color:inherit!important;opacity:.8}
+.tc2551 small{text-align:center;font-size:12px;opacity:.85}
+@media (max-width:640px){.rl89 .tr246.tr2551{grid-template-columns:auto minmax(0,1fr)}.rl89 .tr246 .tc2551{grid-column:1/-1;border-left:0;padding-left:0;border-top:1px solid rgba(127,127,127,.35);padding-top:8px;min-width:0}}
+/* v2.55.1：電腦版 ☰ 選單太長時可以捲動（之前超出畫面，最下面的「重新載入」點不到） */
+body:not(.m) #morePanel{max-height:calc(100vh - 76px);max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+.ct255{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow:auto}
+.cr255{border:1px solid var(--gline,rgba(127,127,127,.3));border-radius:12px;padding:10px 12px;background:var(--gcard,rgba(127,127,127,.08))}
+.cr255 h4{margin:0 0 6px}.cg255{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hd255{display:block;opacity:.7;font-size:11px;margin-bottom:2px}
+.cs255{display:flex;flex-direction:column;gap:1px}.cs255 b .pill,.cs255 .pill{margin-left:6px}.cs255.none{opacity:.5}.cs255 small{opacity:.8}
+.ops255{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px}.op255{display:flex;align-items:center;gap:4px;font-size:13px}.op255.dis{opacity:.45}
+`; document.head.appendChild(st); }
+
+window.__farm255 = { storeCar255, noCar255, openCart: (mi, key) => openCart249(mi, key), buyCar: (mi, key) => buyCar246(mi, key), train: (mi, key) => train246(mi, key),
+  worker: (...a) => worker84(...a), walkGoHome: (...a) => walkGoHome(...a), drive249: (...a) => drive249(...a), unitText: (k, u) => unitText(k, u), autoRowHTML: k => autoRowHTML(k),
+  act: (x, y) => act(x, y), storeObject: (M, k) => storeObject(M, k), paintOk: (M, k) => paintOk(M, k), paintTool: () => paintTool(), syncPaint255, hardReload255, moreHTML: () => moreHTML(),
+  denPop2543: (...a) => denPop2543(...a), openBirdPick255: (...a) => openBirdPick255(...a), openBird255, openBird2543: B => openBird2543(B), railMenu: (...a) => railMenu246(...a), openDen: (mi, k) => openDen(mi, k), openBirdHouse: (mi, k) => openBirdHouse40(mi, k), openCloudTable255, newer255, cloudRows255, apply255, drawBuildingAt: (...a) => drawBuildingAt(...a), openShed: mi => openShed84(mi) };
 
   })(CFG, ATLAS_JSON);
 })();

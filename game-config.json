@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.54.3",
+  "configVersion": "2.55",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8565,6 +8565,54 @@
     "noHive": "還沒有{hive}：到「昆蟲 · 設施」蓋一個",
     "batUseBat": "燈先用電池，電池沒電才用市電；陰天白天開燈、晚上電價貴時，用電池比較省。",
     "batUseGrid": "燈先用市電，市電停掉或沒接時才用電池。"
+   }
+  },
+  "v255": {
+   "note": "v2.55。maxLocalSlots／maxCloudSlots：這台裝置／雲端最多幾組存檔；stuckRetrySeconds：沒路可走時隔幾秒再找一次路；paintTools：手機「連續」模式可以用的工具",
+   "maxLocalSlots": 10,
+   "maxCloudSlots": 10,
+   "stuckRetrySeconds": 3,
+   "paintTools": [
+    "seed",
+    "hand",
+    "water",
+    "care"
+   ],
+   "zap": {
+    "color": "#ffd400",
+    "edge": "#7a4a00",
+    "lift": 30
+   },
+   "texts": {
+    "stuck": "沒路可走，幫幫我",
+    "stuckWhy": "沒路可走，幫幫我：回充電樁的路被擋住了（軌道上鋪通行板，或清出一條路）",
+    "stuckFetch": "沒路可走，幫幫我：走不到建材小屋去開礦車（軌道上鋪通行板，或清出一條路）",
+    "noCar": "沒有礦車：到建材小屋「軌道與列車」加掛車廂",
+    "storeCar": "收回最後一節（第 {n} 節）",
+    "storeCarNote": "森林、礦山採完了，列車可以一節一節收回車庫；整列收完就離開軌道，要用時再加掛（車庫有車廂時先用車庫的）。",
+    "carMoving": "列車在路上，等它停好再收",
+    "carDriving": "機器人正在開這列車，等它停好再收",
+    "carUnload": "車上的 {n} 份建材直接送進建材小屋",
+    "shedFull": "建材小屋放不下車上的建材，先賣掉一些再收",
+    "carStored": "收回一節車廂（車庫剩餘 {n} 節）",
+    "trainGone": "整列車廂都收回車庫了，列車離開軌道",
+    "addFirst": "加掛第 1 節",
+    "noCarTitle": "這列車沒有車廂",
+    "noCarText": "車廂都收回車庫了。加掛一節，機器人就會再去採（車庫有車廂先用車庫的；沒有的話第 1 節免費）。",
+    "tsPile": "垃圾站裡的垃圾留在原地，倒垃圾機器人會搬到其他垃圾站，垃圾車來也會收",
+    "tsBlocked": "這格還有一堆垃圾：放垃圾站會裝回去，或等垃圾清走",
+    "daysNoDump": "已 {n} 天未倒垃圾",
+    "paintMove": "✋",
+    "paintOn": "🖌",
+    "paintTipOn": "連續模式：一指滑過的格子都做，兩指移動、縮放地圖",
+    "paintTipOff": "移動模式：拖曳移動地圖",
+    "reload": "重新載入",
+    "reloadSub": "強迫刷新，拿最新版",
+    "reloadAsk": "會先存檔，再重新下載遊戲檔案（拿最新版）。要重新載入嗎？",
+    "cloudTitle": "雲端存檔總表",
+    "cloudIntro": "這台裝置和 Google Drive 上的全部農場存檔。兩邊都有的已標出哪份「較新」，每一列選好要怎麼處理，再按「照這樣處理」。",
+    "slotFull": "這台裝置最多 {n} 座農場：先刪一座才能再建立或下載",
+    "cloudFull": "雲端最多 {n} 座農場：先到雲端存檔總表刪一座"
    }
   }
  },
