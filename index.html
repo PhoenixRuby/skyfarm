@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59-d7491bb4a9'), getJSON('sprites/atlas.json?v=2.59-d7491bb4a9')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-58054a3f5f'), getJSON('sprites/atlas.json?v=2.59.1-58054a3f5f')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.59-d7491bb4a9';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.59.1-58054a3f5f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21912,6 +21912,228 @@ body.night .bs259 .tl259 button,body.night .bs259 .qt259 button,body.night .bs25
 body.night .bs259 .sum259{background:#fff8e4;color:#7a6326}
 `;
 window.__farm259 = { openStorage: t => openStorage(t), openBatch: () => openBatch259(), sel: () => RT.bs259, decorate: () => decorate259($('modalBody')) };
+
+/* ===== v2.59.1 伐木／採礦／整地機器人「為什麼不動」：原因、修法、地圖標示；列車停住的原因；修三個 bug =====
+   1. prob2591(kind, u)：找出這台機器人現在的問題（要換耗材／沒有小屋／小屋滿／沒有採集點／採集點沒接軌道／採集點被圍住／
+      走不到採集點／回不了充電樁／走不到礦車），route2591 用「擋路的格子有代價」的最短路找出要處理的格子與修法。
+   2. 地圖：有問題的機器人頭上小泡泡（短句＋›），點機器人或泡泡開小選單（完整原因、要處理的格子、點一項鏡頭移過去），
+      開著小選單時地圖畫建議路線（黃點）、擋路的格子（紅框＋修法）、採集點／軌道（黃框）；關掉小選單或 30 秒後消失。
+      自動化／充電樁面板的狀態換成同一句原因＋「在地圖上標出」「在地圖上找到它」。拿掉 g107 的「沒路可走，幫幫我」泡泡。
+   3. 列車停住（有工作、不是裝卸、車頭 4 秒沒動）：車頭上方泡泡寫原因（trainDoing248），機器人狀態也寫。
+   4. 修正：(a) 背袋有礦、採集點沒接軌道時 wants 說要出門、worker 又待在充電樁 → 整台不畫：這種情況改成不出門（會充電），
+      另外人在充電樁那格、狀態是工作中的也畫出來；(b) 搬了採集點後，去拉車途中或在裝填點的機器人發現裝填點不在採集點旁邊就放棄這趟；
+      (c) 鐵軌橋那格的河面＋橋在「東西」那一層之前先畫（drawStoreGlow 之後），礦車、車頭不再被橋蓋掉。
+   設定 ui.v2591（patches/patch_v2_59_1.py）。沒有新的存檔欄位。 ===== */
+const V2591 = Object.assign({ markSeconds: 30, bubbleEveryMs: 1500, trainStopSeconds: 4, maxItems: 5,
+  cost: { walk: 1, board: 12, railX: 600, railBridge: 600, river: 18, deco: 10, field: 40, terrain: 80, building: 300 } }, (CFG.ui || {}).v2591 || {});
+const TX2591 = Object.assign({
+  part: '要換耗材', noShed: '這座島沒有建材小屋', shedFull: '建材小屋滿了', noPoint: '還沒有採集點',
+  cpNoRail: '{cp}沒接軌道', cpNoRailLong: '採集點{cp}旁邊沒有接上建材小屋的軌道，礦沒地方裝。把{cp}搬到軌道旁邊（一邊貼著軌道、另一邊是走得到的空地），或把軌道接到{cp}旁邊。',
+  cpWalled: '{cp}被圍住', cpWalledLong: '採集點{cp}四周除了軌道都沒有走得到的空地，機器人走不進去倒礦。用採集點小選單「搬移」換到一邊貼著軌道、另一邊有空地的格子，或把{cp}另一邊擋路的東西清掉。',
+  toCp: '走不到{cp}', home: '回不了充電樁', fetch: '走不到礦車', fetchShed: '走不到小屋開礦車',
+  more: '等 {n} 處', tap: '›',
+  fix: { board: '鋪通行板（建設 · 鐵道）', railX: '彎道／岔路／車擋：不能鋪通行板，要從旁邊繞', railBridge: '鐵軌橋：人不能走，要另外蓋木橋或石橋',
+    river: '河：蓋木橋或石橋（建設 · 橋）', deco: '{name}擋路：搬開或收回倉庫', field: '{name}擋路：搬開', terrain: '{name}擋路：等它採完、用炸藥或「清理」', building: '{name}擋路：搬開' },
+  short: { board: '要鋪通行板', railX: '被彎道擋住', railBridge: '要蓋橋', river: '要蓋橋', deco: '{name}擋路', field: '{name}擋路', terrain: '{name}擋路', building: '{name}擋路' },
+  noRoute: '找不到任何路：目的地四周都被島邊、彎道或建物圍住',
+  markLink: '在地圖上標出', findLink: '在地圖上找到它', close: '關閉', items: '要處理的格子', here: '它在這裡', cpHere: '採集點{cp}', nearRail: '最近的軌道',
+  trainStop: '停住了：等路空出來', robotGone: '找不到這台機器人', notStuck: '現在沒有問題了' }, V2591.text || {});
+const t2591 = (s, o = {}) => String(s || '').replace(/\{(\w+)\}/g, (m, n) => o[n] !== undefined ? o[n] : m);
+const cpName2591 = n => (n >= 1 && n <= 20) ? String.fromCharCode(0x2460 + n - 1) : `#${n}`;
+const TNAME2591 = { forest: '森林', mine: '礦山', mound: '土丘', debris: '碎屑', river: '河' };
+RT.pb2591 = RT.pb2591 || {};
+
+/* ---------- 1. 擋路的格子：種類、代價、名稱 ---------- */
+function block2591(M, k){
+  const T = M.tiles[k], C = V2591.cost;
+  if (walkK(M, k)) return null;
+  if (isRail89(T)){ if (T.br247) return { type: 'railBridge', c: C.railBridge };
+    const m = T.cm || 0, straight = (m === 5 || m === 10) && !T.st246 && !T.stop; return straight ? { type: 'board', c: C.board } : { type: 'railX', c: C.railX }; }
+  if (T && T.t === 'terrain'){ if (T.kind === 'river') return { type: 'river', c: C.river };
+    const g = M.ter242 && M.ter242.g && M.ter242.g[T.g]; return { type: 'terrain', c: C.terrain, name: TNAME2591[T.kind] || TNAME2591[g && g.kind] || '地形' }; }
+  if (T && T.t === 'deco'){ const D = CFG.decos[T.style || T.id] || CFG.decos[T.id] || {}; return { type: 'deco', c: C.deco, name: D.name || '裝飾' }; }
+  if (T && (T.t === 'soil' || T.t === 'tree')){ const nm = T.t === 'tree' ? ((CFG.trees[T.id] || {}).name || '果樹') : T.flower ? '花' : '田'; return { type: 'field', c: C.field, name: nm }; }
+  if (M.glass && M.glass[k]) return { type: 'field', c: C.field, name: '溫室' };
+  let nm = ''; try { nm = objName(M, k); } catch(e){} return { type: 'building', c: C.building, name: nm || '建物' }; }
+// 從 from 走到 goals（Set）任一格；起點、終點本身不算擋路。回傳 { path, blocks:[{k,type,name}] } 或 null
+function route2591(M, from, goals){
+  if (!goals || !goals.size) return null; const start = tkey(from[0], from[1]); if (goals.has(start)) return { path: [start], blocks: [] };
+  const dist = new Map([[start, 0]]), prev = new Map(), info = new Map(), heap = [[0, start]];
+  const push = (d, k) => { heap.push([d, k]); let i = heap.length - 1; while (i > 0){ const p = (i - 1) >> 1; if (heap[p][0] <= heap[i][0]) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } };
+  const pop = () => { const top = heap[0], last = heap.pop(); if (heap.length){ heap[0] = last; let i = 0; for (;;){ const l = i * 2 + 1, r = l + 1; let m = i;
+      if (l < heap.length && heap[l][0] < heap[m][0]) m = l; if (r < heap.length && heap[r][0] < heap[m][0]) m = r; if (m === i) break; [heap[m], heap[i]] = [heap[i], heap[m]]; i = m; } } return top; };
+  let end = null, guard = 0;
+  while (heap.length && guard++ < 60000){ const [d, k] = pop(); if (d > (dist.get(k) ?? Infinity)) continue; if (goals.has(k)){ end = k; break; }
+    const [x, y] = pkey(k);
+    for (const [dx, dy] of N4_84){ const nx = x + dx, ny = y + dy; if (!inMap(M, nx, ny)) continue; const n = tkey(nx, ny);
+      let c = V2591.cost.walk, b = null; if (!goals.has(n)){ b = block2591(M, n); if (b) c = b.c; }
+      const nd = d + c; if (nd < (dist.get(n) ?? Infinity)){ dist.set(n, nd); prev.set(n, k); if (b) info.set(n, b); else info.delete(n); push(nd, n); } } }
+  if (!end) return null;
+  const path = [end]; while (path[0] !== start) path.unshift(prev.get(path[0]));
+  return { path, blocks: path.filter(k => info.has(k)).map(k => Object.assign({ k }, info.get(k))) }; }
+const fixText2591 = b => t2591(TX2591.fix[b.type] || '', { name: b.name || '' });
+const shortBlk2591 = bs => { if (!bs.length) return ''; const b = bs[0]; const s = t2591(TX2591.short[b.type] || '', { name: b.name || '' }); return bs.length > 1 ? `${s}${t2591(TX2591.more, { n: bs.length })}` : s; };
+
+/* ---------- 2. 這台機器人的問題 ---------- */
+function cpOk2591(mi, pk){ return !!lpOf247(mi, pk); }
+function nearRail2591(mi, pk){ const net = railNet89(mi); let best = null, bd = 1e9; const [px, py] = pkey(pk);
+  for (const k of net){ const [x, y] = pkey(k), d = Math.abs(x - px) + Math.abs(y - py); if (d < bd){ bd = d; best = k; } } return best; }
+function prob2591(kind, u){
+  if (!TK84.includes(kind) || !u || u.on === false || !unitTier(kind, u)) return null;
+  const home = workerHome(kind, u); if (!home) return null; const mi = home.mi, M = S.maps[mi]; if (!M) return null;
+  const key = wKey(kind, u), W = WS[key] || { mi, x: home.x, y: home.y, phase: 'home' }, isl = isle2543(mi);
+  const mk = (code, short, long, extra = {}) => Object.assign({ code, short, long: long || short, mi, isl, kind, key, blocks: [], path: [], marks: [], at: [W.x, W.y] }, extra);
+  if (u.needPart) return mk('part', TX2591.part, why84(kind, u));
+  if (!shedOf84(mi)) return mk('noShed', TX2591.noShed);
+  const bag = bagN84(bagOf84(u, W)), want = TERK84[kind];
+  const pts = points247(M).filter(p => { const g = M.ter242 && M.ter242.g[p.g]; return g && g.kind === want; });
+  const hasTer = Object.keys(M.tiles).some(k => isTarget84(kind, M, k));
+  if (room84(mi) <= 0 && bag > 0) return mk('shedFull', TX2591.shedFull);
+  if (!hasTer && !bag) return null;   // 沒東西可採：正常待命
+  if (!pts.length) return mk('noPoint', TX2591.noPoint, why84(kind, u));
+  // 卡在路上（g107）
+  if (W.phase === 'stuck255'){
+    let goals, label, extra = {};
+    if (W.why255 === 'fetch'){ const TR = train246(mi, key), cells = (onTrack246(TR) && TR.cells.length) ? TR.cells : fetchDoor255(mi, TR); goals = new Set();
+      for (const c of cells) for (const n of N4K247(c)){ const [x, y] = pkey(n); if (inMap(M, x, y) && !cells.includes(n)) goals.add(n); }
+      label = onTrack246(TR) ? TX2591.fetch : TX2591.fetchShed; extra.marks = cells.slice(0, 2).map(k => ({ k, label: onTrack246(TR) ? '礦車' : '小屋門口' })); }
+    else { goals = new Set([tkey(home.x, home.y)]); label = TX2591.home; extra.marks = [{ k: tkey(home.x, home.y), label: '充電樁' }]; }
+    const r = route2591(M, [W.x, W.y], goals);
+    if (!r) return mk('noRoute', `${label}`, `${label}：${TX2591.noRoute}`, extra);
+    return mk(W.why255 === 'fetch' ? 'fetch' : 'home', `${label}：${shortBlk2591(r.blocks)}`, `${label}。`, Object.assign(extra, { blocks: r.blocks, path: r.path })); }
+  // 採集點沒接軌道
+  const okPts = pts.filter(p => cpOk2591(mi, p.k));
+  if (!okPts.length){ const p = pts.slice().sort((a, b) => a.n - b.n)[0], cp = cpName2591(p.n), nr = nearRail2591(mi, p.k);
+    return mk('cpNoRail', t2591(TX2591.cpNoRail, { cp }), t2591(TX2591.cpNoRailLong, { cp }), { marks: [{ k: p.k, label: t2591(TX2591.cpHere, { cp }) }, ...(nr ? [{ k: nr, label: TX2591.nearRail }] : [])] }); }
+  // 走不走得到採集點（從充電樁／現在的位置）
+  if (u.state === 'work' && walkAway(W, home) && W.phase !== 'home') return null;   // 正在工作，不打擾
+  const from = [W.x, W.y], prevB = swBFS(M, from[0], from[1]);
+  const reach = okPts.filter(p => prevB.has(p.k));
+  if (reach.length) return null;
+  const p = okPts.slice().sort((a, b) => a.n - b.n)[0], cp = cpName2591(p.n), r = route2591(M, from, new Set([p.k]));
+  const marks = [{ k: p.k, label: t2591(TX2591.cpHere, { cp }) }];
+  const open = N4K247(p.k).filter(n => { const [x, y] = pkey(n); if (!inMap(M, x, y)) return false; const b = block2591(M, n); return !b || (b.type !== 'board' && b.type !== 'railX' && b.type !== 'railBridge'); });
+  if (!open.length || !r || r.blocks.some(b => b.type === 'railX' && N4K247(p.k).includes(b.k)))
+    return mk('cpWalled', t2591(TX2591.cpWalled, { cp }), t2591(TX2591.cpWalledLong, { cp }), { marks, blocks: r ? r.blocks : [], path: r ? r.path : [] });
+  return mk('toCp', `${t2591(TX2591.toCp, { cp })}：${shortBlk2591(r.blocks)}`, `${t2591(TX2591.toCp, { cp })}。`, { marks, blocks: r.blocks, path: r.path }); }
+function probC2591(kind, u){ const key = wKey(kind, u), now = performance.now(), C = RT.pb2591[key]; if (C && now - C.t < V2591.bubbleEveryMs) return C.p;
+  let p = null; try { p = prob2591(kind, u); } catch(e){ console.warn(e); } RT.pb2591[key] = { t: now, p }; return p; }
+function longHTML2591(p){ const items = p.blocks.slice(0, V2591.maxItems).map((b, i) => `<li data-go2591="${b.k}">${i + 1}. ${escapeHTML(fixText2591(b))}</li>`).join('');
+  return `<b>【${escapeHTML(p.isl)}】${escapeHTML(p.long)}</b>${items ? `<ol class="ls2591">${items}</ol>${p.blocks.length > V2591.maxItems ? `<small>…還有 ${p.blocks.length - V2591.maxItems} 處</small>` : ''}` : ''}`; }
+
+/* ---------- 3. 修正 (a)：出不了門就不出門；工作中卻在充電樁也畫出來 ---------- */
+for (const kind of TK84){ const w = workerWants[kind]; workerWants[kind] = (key, u) => { const r = w(key, u);
+  try { if (!r || !u) return r; const home = workerHome(kind, u), W = WS[key]; if (!home || (W && walkAway(W, home))) return r;
+    if (bagN84(bagOf84(u, W || {})) > 0 && !lpFor246(home.mi, null, W || { x: home.x, y: home.y }, key)) return false;   // 背袋有礦、沒地方裝
+  } catch(e){} return r; }; }
+{ const _mw2591 = myWalkers; myWalkers = function(now){ const out = _mw2591(now);
+  try { for (const kind of TK84) for (const u of fleet(kind)){ if (u.state !== 'work' || u.on === false) continue; const key = wKey(kind, u), W = WS[key], home = workerHome(kind, u);
+      if (W && home && !walkAway(W, home) && !out.some(e => e.key === key)) out.push({ kind, key, W, carry: false }); } } catch(e){}
+  return out; }; }
+
+/* ---------- 4. 修正 (b)：裝填點已經不在採集點旁邊就放棄這趟 ---------- */
+{ const _wk2591 = worker84; worker84 = function(kind, key, u, dt, t){
+  try { const W = WS[key]; if (W && TK84.includes(kind)){ const M = S.maps[W.mi], lp = W.lpf255 || W.lp246;
+      if (M && lp && (W.goal === 'fetch255' || W.phase === 'atboard' || W.goal === 'board') && !boards246(M, lp).length){
+        const TR = train246(W.mi, key); if (TR && TR.job && TR.job.kind === 'fetch' && !onTrack246(TR)){ TR.job = null; TR.why = ''; }
+        W.lpf255 = null; W.lp246 = null; W.g246 = null; W.loco246 = 0; W.path = null; W.goal = null; W.phase = 'pick'; if (RT.cpc247) delete RT.cpc247[key]; } } } catch(e){ console.warn(e); }
+  return _wk2591(kind, key, u, dt, t); }; }
+
+/* ---------- 5. 狀態文字＋連結 ---------- */
+{ const _ut2591 = unitText; unitText = function(kind, u){ const r = _ut2591(kind, u);
+  try { if (!TK84.includes(kind) || !u || !u.id) return r; const p = probC2591(kind, u), id = `${kind}|${u.id}`;
+    const links = `<span class="lk2591">${p && (p.blocks.length || p.marks.length) ? `<a role="button" data-rk2591="${id}">${escapeHTML(TX2591.markLink)}</a>` : ''}<a role="button" data-rf2591="${id}">${escapeHTML(TX2591.findLink)}</a></span>`;
+    if (p) return `<span class="pr2591">${escapeHTML(`【${p.isl}】${p.long}`)}${p.blocks.length ? `<br>${escapeHTML(p.blocks.slice(0, 3).map(fixText2591).join('；'))}` : ''}</span>${links}`;
+    const ts = trainStop2591(kind, u); if (ts) return `${r}<br><span class="pr2591">${escapeHTML(ts)}</span>${links}`;
+    return `${r}${links}`; } catch(e){ console.warn(e); }
+  return r; }; }
+document.addEventListener('click', e => { const a = e.target && e.target.closest && e.target.closest('[data-rk2591],[data-rf2591]'); if (!a) return;
+  e.preventDefault(); e.stopPropagation(); const [kind, id] = (a.dataset.rk2591 || a.dataset.rf2591).split('|'), u = fleet(kind).find(z => z.id === id);
+  if (!u){ toast(TX2591.robotGone); return; } closeModal(); if (a.dataset.rk2591) markRobot2591(kind, u); else findRobot2591(kind, u); }, true);
+
+/* ---------- 6. 地圖：泡泡、點擊、標示 ---------- */
+function robotTile2591(kind, u){ const key = wKey(kind, u), W = WS[key], home = workerHome(kind, u); if (!home) return null;
+  if (W && W.loco246){ const TR = train246(W.mi, key); if (TR && TR.cells.length) return { mi: W.mi, k: TR.cells[0] }; }
+  return W ? { mi: W.mi, k: tkey(W.x, W.y) } : { mi: home.mi, k: tkey(home.x, home.y) }; }
+function camTo2591(mi, k){ if (S.cur !== mi){ try { goIsland63(mi); } catch(e){} } const [x, y] = pkey(k), c = center(x, y); cam.x = VW / 2 - c.cx * cam.z; cam.y = VH / 2 - c.cy * cam.z; }
+function findRobot2591(kind, u){ const p = robotTile2591(kind, u); if (!p){ toast(TX2591.robotGone); return; } camTo2591(p.mi, p.k); RT.find2591 = { mi: p.mi, k: p.k, until: performance.now() + 6000 }; }
+function markRobot2591(kind, u){ delete RT.pb2591[wKey(kind, u)]; const p = probC2591(kind, u);
+  if (!p){ toast(TX2591.notStuck); findRobot2591(kind, u); return; }
+  const at = robotTile2591(kind, u); camTo2591(p.mi, (p.marks[0] && p.marks[0].k) || (at && at.k) || tkey(p.at[0], p.at[1]));
+  RT.mark2591 = { mi: p.mi, path: new Set(p.path), blocks: new Map(p.blocks.map(b => [b.k, fixText2591(b)])), marks: new Map(p.marks.map(m => [m.k, m.label])), until: performance.now() + V2591.markSeconds * 1000 };
+  setTimeout(() => openPop2591(kind, u, p), 30); }
+function openPop2591(kind, u, p){ p = p || probC2591(kind, u); if (!p) return; const at = robotTile2591(kind, u); if (!at) return; const [x, y] = pkey(at.k), c = center(x, y);
+  if (!RT.mark2591 || RT.mark2591.key !== p.key) RT.mark2591 = { key: p.key, mi: p.mi, path: new Set(p.path), blocks: new Map(p.blocks.map(b => [b.k, fixText2591(b)])), marks: new Map(p.marks.map(m => [m.k, m.label])), until: performance.now() + V2591.markSeconds * 1000 };
+  RT.mark2591.key = p.key; RT.mark2591.pop = true;
+  const K = RK(kind); showPop53(c.cx, c.cy - 30, `<div class="pp2591"><h5>${escapeHTML(K.name || '')}</h5><p>${longHTML2591(p)}</p><button data-cl2591="1">${escapeHTML(TX2591.close)}</button></div>`);
+  POP53.querySelectorAll('[data-go2591]').forEach(li => li.onclick = () => camTo2591(p.mi, li.dataset.go2591));
+  const b = POP53.querySelector('[data-cl2591]'); if (b) b.onclick = () => closePop53(); }
+{ const _cp2591 = closePop53; closePop53 = function(...a){ if (RT.mark2591 && RT.mark2591.pop) RT.mark2591 = null; return _cp2591(...a); }; }
+// g107 的「沒路可走，幫幫我」泡泡改由這裡畫（寫原因）
+{ const _bb2591 = bubble; bubble = function(x, y, text, ...a){ if (!RT.own2591 && typeof text === 'string' && text === (((CFG.ui || {}).v255 || {}).stuck || '沒路可走，幫幫我')) return; return _bb2591(x, y, text, ...a); }; }
+const pulse2591 = () => .55 + .45 * Math.sin(performance.now() / 160);
+{ const _dw2591 = drawWorld; drawWorld = function(t, now){
+  try { RT.brDone2591 = null; const m = new Map(), tm = new Map();
+    if (S && !RT.snap68){ const mi = S.cur;
+      for (const kind of TK84) for (const u of fleet(kind)){ const p = probC2591(kind, u); if (!p || p.mi !== mi) continue; const at = robotTile2591(kind, u); if (at && at.mi === mi) m.set(at.k, (m.get(at.k) || []).concat([{ kind, u, p }])); }
+      const R = S.rail246 && S.rail246[mi]; if (R) for (const TR of Object.values(R.tr)){ const s = trainStopTR2591(mi, TR); if (s && TR.cells.length) tm.set(TR.cells[0], s); } }
+    RT.rb2591 = m; RT.ts2591 = tm;
+    const G = RT.mark2591; if (G && performance.now() > G.until) RT.mark2591 = null;
+    if (RT.find2591 && performance.now() > RT.find2591.until) RT.find2591 = null; } catch(e){ console.warn(e); }
+  return _dw2591(t, now); }; }
+{ const _dte2591 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ const r = _dte2591(M, k, T, x, y, t, now);
+  try { if (M !== S.maps[S.cur] || RT.snap68) return r; const { cx, cy } = center(x, y), a = pulse2591();
+    const G = RT.mark2591;
+    if (G && G.mi === S.cur){
+      if (G.path.has(k) && !G.blocks.has(k)){ ctx.save(); ctx.fillStyle = `rgba(255,214,40,${(.5 + a * .4).toFixed(2)})`; ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+      if (G.blocks.has(k)){ ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = `rgba(255,80,60,${a.toFixed(2)})`; ctx.fillStyle = `rgba(255,80,60,${(a * .25).toFixed(2)})`; diamondPath(cx, cy, .92); ctx.fill(); ctx.stroke(); ctx.restore();
+        RT.own2591 = 1; try { bubble(cx, cy - 22, G.blocks.get(k).split('：')[0] === G.blocks.get(k) ? G.blocks.get(k) : G.blocks.get(k).split('：')[1], null, '#ffe2dc'); } finally { RT.own2591 = 0; } }
+      if (G.marks.has(k)){ ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = `rgba(255,214,40,${a.toFixed(2)})`; ctx.fillStyle = `rgba(255,214,40,${(a * .22).toFixed(2)})`; diamondPath(cx, cy, .92); ctx.fill(); ctx.stroke(); ctx.restore();
+        RT.own2591 = 1; try { bubble(cx, cy - 26, G.marks.get(k), null, '#fff6cf'); } finally { RT.own2591 = 0; } } }
+    const F = RT.find2591; if (F && F.mi === S.cur && F.k === k){ ctx.save(); ctx.lineWidth = 3; ctx.strokeStyle = `rgba(80,200,255,${a.toFixed(2)})`; ctx.beginPath(); ctx.ellipse(cx, cy, 30, 16, 0, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+      RT.own2591 = 1; try { bubble(cx, cy - 52, TX2591.here, null, '#e3f6ff'); } finally { RT.own2591 = 0; } }
+    const L = RT.rb2591 && RT.rb2591.get(k);
+    if (L) L.forEach((e, i) => { const by = cy - 44 - i * 22; RT.own2591 = 1; try { bubble(cx, by, `${e.p.short} ${TX2591.tap}`, 'ui_tool_care', '#ffe6dc'); } finally { RT.own2591 = 0; }
+      if (RT.critHit){ RT.critHit.push({ x: cx, y: by, r: 26, kind: 'rb2591', e }); RT.critHit.push({ x: cx, y: cy - 12, r: 20, kind: 'rb2591', e }); } });
+    const ts = RT.ts2591 && RT.ts2591.get(k); if (ts){ RT.own2591 = 1; try { bubble(cx, cy - 46, ts, 'ui_rail_cart', '#fff3d6'); } finally { RT.own2591 = 0; } }
+  } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _mt2591 = meteorTap; meteorTap = function(sx, sy, ...a){
+  try { if (S && !UI.expand && !RT.mv && RT.critHit && RT.critHit.length){ const { wx, wy } = toWorld(sx, sy); let best = null, bd = 1e9;
+      for (const h of RT.critHit){ if (h.kind !== 'rb2591') continue; const d = Math.hypot(wx - h.x, wy - h.y); if (d < h.r && d < bd){ bd = d; best = h; } }
+      if (best){ sfx('click'); openPop2591(best.e.kind, best.e.u); return true; } } } catch(e){ console.warn(e); }
+  return _mt2591(sx, sy, ...a); }; }
+
+/* ---------- 7. 列車停住的原因 ---------- */
+RT.trm2591 = RT.trm2591 || {};
+function trainStopTR2591(mi, TR){ if (!TR || !TR.job || !TR.cells || !TR.cells.length || ['park', 'unload', 'yard'].includes(TR.st)) { if (TR) delete RT.trm2591[mi + '|' + TR.key]; return ''; }
+  const id = mi + '|' + TR.key, sig = TR.cells.join(';'), now = performance.now(), C = RT.trm2591[id];
+  if (!C || C.sig !== sig){ RT.trm2591[id] = { sig, t: now }; return ''; }
+  if (now - C.t < V2591.trainStopSeconds * 1000) return '';
+  let s = ''; try { s = trainDoing248(TR); } catch(e){}
+  if (!s || /^(拉回小屋卸貨|開往採集點|沒事了)/.test(s)) s = TX2591.trainStop; return s; }
+function trainStop2591(kind, u){ const home = workerHome(kind, u); if (!home) return ''; const TR = train246(home.mi, wKey(kind, u)); return TR ? trainStopTR2591(home.mi, TR) : ''; }
+
+/* ---------- 8. 修正 (c)：鐵軌橋先畫，礦車畫在上面 ---------- */
+{ const _db2591 = drawBr247; drawBr247 = function(M, mi, k, T, ...a){ if (!RT.inPre2591 && RT.brDone2591 && RT.brDone2591.has(k) && M === S.maps[S.cur]) return; return _db2591(M, mi, k, T, ...a); }; }
+{ const _sg2591 = drawStoreGlow; drawStoreGlow = function(t, ...a){ const r = _sg2591(t, ...a);
+  try { if (!S) return r; const mi = S.cur, M = S.maps[mi]; if (!M) return r; const now = Date.now(), snow = !!(S.snow && S.snow.cover), done = new Set(), list = [];
+    for (const k in M.tiles){ const T = M.tiles[k]; if (isRail89(T) && T.br247){ const [x, y] = pkey(k); list.push([x, y, k, T]); } }
+    list.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]) || a[0] - b[0]);
+    RT.inPre2591 = true;
+    for (const [x, y, k, T] of list){ const { cx, cy } = center(x, y); try { drawBr247(M, mi, k, T, x, y, t, now, snow, cx, cy); done.add(k); } catch(e){} }
+    RT.brDone2591 = done; } catch(e){ console.warn(e); } finally { RT.inPre2591 = false; }
+  return r; }; }
+
+css38.textContent += `
+.pr2591{white-space:normal}.lk2591{display:inline-flex;gap:10px;flex-wrap:wrap;margin-left:6px}.lk2591 a{color:#2f7fd0;text-decoration:underline;cursor:pointer;font-weight:700}
+body.night .lk2591 a{color:#8cc4ff}
+#pick53 .pp2591{max-width:320px}#pick53 .pp2591 p{margin:4px 0 8px;line-height:1.5}#pick53 .ls2591{margin:6px 0 0;padding-left:0;list-style:none}
+#pick53 .ls2591 li{padding:4px 6px;border-radius:8px;cursor:pointer;font-size:13px}#pick53 .ls2591 li:hover{background:rgba(255,80,60,.12)}
+`;
+window.__farm2591 = { prob: (k, u) => prob2591(k, u), route: (M, f, g) => route2591(M, f, g), block: (M, k) => block2591(M, k), unitText: (k, u) => unitText(k, u),
+  mark: (k, u) => markRobot2591(k, u), find: (k, u) => findRobot2591(k, u), openPop: (k, u) => openPop2591(k, u), wants: (k, key, u) => workerWants[k](key, u),
+  myWalkers: n => myWalkers(n), trainStop: (mi, TR) => trainStopTR2591(mi, TR), get brDone(){ return RT.brDone2591; }, get mark2591(){ return RT.mark2591; }, clearCache: () => { RT.pb2591 = {}; } };
 
   })(CFG, ATLAS_JSON);
 })();

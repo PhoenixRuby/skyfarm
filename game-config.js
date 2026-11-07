@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.59",
+  "configVersion": "2.59.1",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8971,6 +8971,24 @@ window.GAME_CONFIG = {
     "cancel": "取消",
     "ok": "確定賣出",
     "done": "賣掉 {k} 種共 {n} 個，+{coin} 金幣"
+   }
+  },
+  "v2591": {
+   "note": "v2.59.1 g112：prob2591 找出機器人不動的原因、route2591 擋路格子的代價（cost）；泡泡、標示 markSeconds 秒；列車停 trainStopSeconds 秒以上寫原因",
+   "markSeconds": 30,
+   "bubbleEveryMs": 1500,
+   "trainStopSeconds": 4,
+   "maxItems": 5,
+   "cost": {
+    "walk": 1,
+    "board": 12,
+    "railX": 600,
+    "railBridge": 600,
+    "river": 18,
+    "deco": 10,
+    "field": 40,
+    "terrain": 80,
+    "building": 300
    }
   }
  },
