@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.57",
+  "configVersion": "2.58",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -947,6 +947,133 @@
    "stageFeedQty": 4,
    "cycleFeedQty": 5,
    "badge": "goose"
+  },
+  "egg_duck": {
+   "name": "蛋鴨",
+   "type": "producer",
+   "youngCost": 120,
+   "growStages": 2,
+   "stageSeconds": 2700,
+   "product": "鴨蛋",
+   "cycleSeconds": 2700,
+   "productPrice": 45,
+   "xpPerCycle": 4,
+   "lifespanCycles": 40,
+   "productItem": "duck_egg",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 1,
+   "cycleFeedQty": 1,
+   "trait258": {
+    "type": "rainFast",
+    "speed": 1.5,
+    "name": "愛下雨",
+    "text": "下雨時產蛋快 1/3（每輪時間 ×2/3）"
+   }
+  },
+  "meat_rabbit": {
+   "name": "肉兔",
+   "type": "meat",
+   "youngCost": 100,
+   "growStages": 3,
+   "stageSeconds": 5400,
+   "product": "兔肉",
+   "salePrice": 420,
+   "xp": 24,
+   "productItem": "rabbit_meat",
+   "feedItem": "pasture",
+   "stageFeedQty": 2,
+   "trait258": {
+    "type": "litter",
+    "chance": 0.2,
+    "name": "生得多",
+    "text": "收成後有 20% 機率原地留下一隻幼兔（不用再買）",
+    "toast": "原地多了一隻幼兔！"
+   }
+  },
+  "mallard": {
+   "name": "綠頭鴨",
+   "type": "producer",
+   "youngCost": 350,
+   "growStages": 2,
+   "stageSeconds": 5400,
+   "product": "羽毛",
+   "cycleSeconds": 7200,
+   "productPrice": 70,
+   "xpPerCycle": 8,
+   "lifespanCycles": 30,
+   "productItem": "feather",
+   "feedItem": "corn_cake",
+   "stageFeedQty": 1,
+   "cycleFeedQty": 2,
+   "trait258": {
+    "type": "pestEater",
+    "name": "田間除蟲",
+    "text": "跟蛋雞一樣，會走到附近的田吃蟲"
+   }
+  },
+  "angora_rabbit": {
+   "name": "毛兔",
+   "type": "producer",
+   "youngCost": 450,
+   "growStages": 2,
+   "stageSeconds": 7200,
+   "product": "兔毛",
+   "cycleSeconds": 10800,
+   "productPrice": 160,
+   "xpPerCycle": 14,
+   "lifespanCycles": 30,
+   "productItem": "angora_wool",
+   "feedItem": "pasture",
+   "stageFeedQty": 3,
+   "cycleFeedQty": 4,
+   "trait258": {
+    "type": "winterExtra",
+    "extra": 1,
+    "name": "冬毛",
+    "text": "冬天（12～2 月，南半球相反）每輪產 2 個"
+   }
+  },
+  "alpaca": {
+   "name": "毛駝",
+   "type": "producer",
+   "youngCost": 1200,
+   "growStages": 3,
+   "stageSeconds": 14400,
+   "product": "駝毛",
+   "cycleSeconds": 21600,
+   "productPrice": 420,
+   "xpPerCycle": 36,
+   "lifespanCycles": 24,
+   "productItem": "alpaca_fiber",
+   "feedItem": "pasture",
+   "stageFeedQty": 8,
+   "cycleFeedQty": 10,
+   "trait258": {
+    "type": "guard",
+    "mult": 0.7,
+    "name": "護衛",
+    "text": "同一座島有成年毛駝，天敵出現機率 −30%（多隻不疊加）"
+   }
+  },
+  "ostrich": {
+   "name": "肉鴕",
+   "type": "meat",
+   "youngCost": 1500,
+   "growStages": 4,
+   "stageSeconds": 28800,
+   "product": "鴕鳥肉",
+   "salePrice": 4600,
+   "xp": 300,
+   "productItem": "ostrich_meat",
+   "feedItem": "pasture",
+   "stageFeedQty": 18,
+   "trait258": {
+    "type": "bonusItem",
+    "item": "feather",
+    "qty": 3,
+    "name": "附贈羽毛",
+    "text": "收成時另得 3 根羽毛"
+   }
   }
  },
  "fishPool": {
@@ -2178,7 +2305,8 @@
     "rent_grade_2",
     "dog_beagle",
     "cat_tabby",
-    "block:6"
+    "block:6",
+    "egg_duck"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -2197,7 +2325,8 @@
     "crateva",
     "parsonsia",
     "bird_java_black",
-    "bf:danaus_chrysippus"
+    "bf:danaus_chrysippus",
+    "meat_rabbit"
    ],
    "animalCap": 17,
    "fishPoolTileCap": 17,
@@ -2292,7 +2421,8 @@
     "rosemary",
     "bf:pieris_canidia",
     "dog_pug",
-    "block:9"
+    "block:9",
+    "mallard"
    ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
@@ -2327,7 +2457,8 @@
     "dog_border",
     "honeydew",
     "bf:graphium_sarpedon",
-    "block:10"
+    "block:10",
+    "angora_rabbit"
    ],
    "animalCap": 24,
    "fishPoolTileCap": 24,
@@ -2421,7 +2552,8 @@
    "specialDeco": null,
    "unlocks": [
     "dog_poodle",
-    "bf:prosotas_nora"
+    "bf:prosotas_nora",
+    "alpaca"
    ],
    "animalCap": 30,
    "fishPoolTileCap": 30,
@@ -2484,7 +2616,8 @@
     "coffee",
     "bf:tagiades_dagai",
     "dog_shepherd",
-    "block:14"
+    "block:14",
+    "ostrich"
    ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
@@ -3794,6 +3927,31 @@
    "category": "buildMat",
    "sellPrice": 60,
    "store": "material_shed"
+  },
+  "duck_egg": {
+   "name": "鴨蛋",
+   "category": "product",
+   "sellPrice": 45
+  },
+  "rabbit_meat": {
+   "name": "兔肉",
+   "category": "meat",
+   "sellPrice": 420
+  },
+  "angora_wool": {
+   "name": "兔毛",
+   "category": "product",
+   "sellPrice": 160
+  },
+  "alpaca_fiber": {
+   "name": "駝毛",
+   "category": "product",
+   "sellPrice": 420
+  },
+  "ostrich_meat": {
+   "name": "鴕鳥肉",
+   "category": "meat",
+   "sellPrice": 4600
   }
  },
  "feedShop": {
@@ -7306,7 +7464,8 @@
  "chickenPest": {
   "animals": [
    "egg_hen",
-   "broiler"
+   "broiler",
+   "mallard"
   ],
   "minutesPerTile": 10,
   "needsAdjacentTo": [
@@ -7620,8 +7779,11 @@
       "broiler",
       "meat_duck",
       "down_duck",
+      "egg_duck",
       "meat_goose",
-      "down_goose"
+      "down_goose",
+      "mallard",
+      "ostrich"
      ]
     },
     {
@@ -7634,7 +7796,10 @@
       "dairy_goat",
       "dairy_cow",
       "beef_cattle",
-      "pig"
+      "pig",
+      "meat_rabbit",
+      "angora_rabbit",
+      "alpaca"
      ]
     },
     {
@@ -8602,7 +8767,10 @@
     "meat_duck",
     "down_duck",
     "meat_goose",
-    "down_goose"
+    "down_goose",
+    "egg_duck",
+    "mallard",
+    "ostrich"
    ],
    "bridgeFlipY": true,
    "insects": {
@@ -8755,6 +8923,24 @@
     "head": "或是：",
     "note": "v2.57：沿邊柵欄「改方向／改樣子」和放沿邊柵欄的小選單多一個整格；這一段直接拿來用，這格其他沿邊的段收回倉庫"
    }
+  },
+  "v258": {
+   "note": "v2.58 動物資訊面板（照寵物面板 ipHead2543）：左邊頭像 ui_pt_an_<id>[_young|_mid]，名字＝種類＋編號（照放上去的順序，存在 T.no258，賣掉不重編、不能改名），下面同一座島同種名單",
+   "rosterScope": "island",
+   "numberPad": 2,
+   "text": {
+    "roster": "這座島的{name}",
+    "rosterSub": "{n} 隻・點一下切換",
+    "trait": "特性",
+    "young": "幼年",
+    "mid": "中年",
+    "adult": "成年",
+    "buyFeed": "買{feed}",
+    "gone": "這隻動物已經不在了。",
+    "litter": "原地多了一隻幼兔！",
+    "bonus": "另得 {qty} 根{item}"
+   },
+   "bubbleBase": 21
   }
  },
  "droneWatering": {
@@ -10991,7 +11177,10 @@
    "dairy_goat",
    "dairy_cow",
    "beef_cattle",
-   "pig"
+   "pig",
+   "meat_rabbit",
+   "angora_rabbit",
+   "alpaca"
   ],
   "sheep": [
    "wool_sheep",
@@ -11375,7 +11564,7 @@
     "group": "動物",
     "stat": "allAnimals",
     "tiers": null,
-    "desc": "養過全部 12 種動物"
+    "desc": "養過全部 18 種動物"
    },
    {
     "id": "fisher",
@@ -12338,6 +12527,102 @@
      10000
     ],
     "desc": "累計出貨肉豬隻數"
+   },
+   {
+    "id": "animal_egg_duck",
+    "name": "蛋鴨專家",
+    "group": "動物專家",
+    "stat": "animal:egg_duck",
+    "statIds": [
+     "egg_duck"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收鴨蛋個數"
+   },
+   {
+    "id": "animal_meat_rabbit",
+    "name": "肉兔專家",
+    "group": "動物專家",
+    "stat": "animal:meat_rabbit",
+    "statIds": [
+     "meat_rabbit"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉兔隻數"
+   },
+   {
+    "id": "animal_mallard",
+    "name": "綠頭鴨專家",
+    "group": "動物專家",
+    "stat": "animal:mallard",
+    "statIds": [
+     "mallard"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收綠頭鴨羽毛個數"
+   },
+   {
+    "id": "animal_angora_rabbit",
+    "name": "毛兔專家",
+    "group": "動物專家",
+    "stat": "animal:angora_rabbit",
+    "statIds": [
+     "angora_rabbit"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收兔毛個數"
+   },
+   {
+    "id": "animal_alpaca",
+    "name": "毛駝專家",
+    "group": "動物專家",
+    "stat": "animal:alpaca",
+    "statIds": [
+     "alpaca"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計收駝毛個數"
+   },
+   {
+    "id": "animal_ostrich",
+    "name": "肉鴕專家",
+    "group": "動物專家",
+    "stat": "animal:ostrich",
+    "statIds": [
+     "ostrich"
+    ],
+    "tiers": [
+     100,
+     1000,
+     5000,
+     10000
+    ],
+    "desc": "累計出貨肉鴕隻數"
    },
    {
     "id": "bee_honey",
@@ -14391,5 +14676,6 @@
    "rain": "下雨：田全濕、枯萎的救回來、水塔免費補水",
    "snow": "下雪（任何氣候都可以，白天晚上都行）"
   }
- }
-}
+ },
+ "animals_note258": "v2.58：新增 egg_duck／meat_rabbit／mallard／angora_rabbit／alpaca／ostrich；trait258 是特性（rainFast、litter、pestEater、winterExtra、guard、bonusItem），面板「特性」列顯示 name＋text"
+}

@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-81e91b9778'), getJSON('sprites/atlas.json?v=2.57-81e91b9778')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.58-c6295dc7cc'), getJSON('sprites/atlas.json?v=2.58-c6295dc7cc')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.57-81e91b9778';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.58-c6295dc7cc';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21596,6 +21596,140 @@ function placeWhole257(M, x, y, st){ const k = tkey(x, y), { cx, cy } = center(x
   return r; }; }
 { const st = document.createElement('style'); st.textContent = `#pick53 [data-fw257]{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:6px 4px;font-size:12px;line-height:1.25}`; document.head.appendChild(st); }
 window.__farm257.edgeToWhole = edgeToWhole257; window.__farm257.placeWhole = placeWhole257; window.__farm257.edgeOne = (...a) => edgeOne2543(...a); window.__farm257.closePop = () => closePop53();
+
+/* ===== 110. v2.58: farm animals (家禽／家畜) on the player's frame strips (art batch70: 4× sprites, walk 8 frames, eat 4 frames,
+   same world size and foot point as before), 6 new animals with traits (animals.*.trait258), and an animal info panel in the pet-panel
+   layout (g106 ipHead2543) with a roster of the same kind on this island.
+   - Re-declares g2's drawAnimal (function declaration, so g31 / g39 / g72 still wrap it): the product bubble and the 餓了／出貨 bubble are
+     lifted by the sprite's standing height (atlas "top", world px, written by art/v258_70.py), so taller new art does not cover them.
+   - Re-declares g106's openAnimal2543 (the「查看資訊」button in the tap menu calls it by name).
+   - Traits: rainFast (stepAnimal: timer runs `speed`× while it rains), winterExtra (stepAnimal: extra stack per round in winter),
+     litter / bonusItem (tapAnimal + deliver: after shipping a meat animal), guard (spawnMult256 × mult if an adult guard lives on the island),
+     pestEater (config only: chickenPest.animals).
+   - Animal numbers: T.no258 (per kind, in placement order; counter S.anNo258), given in afterAction and normalizeState (v258).
+   window.__farm258 ===== */
+const V258 = (CFG.ui || {}).v258 || {}, TX258 = V258.text || {};
+const trait258 = id => (CFG.animals[id] || {}).trait258 || null;
+const NEWITEMS258 = ['duck_egg', 'rabbit_meat', 'angora_wool', 'alpaca_fiber', 'ostrich_meat'];
+if (typeof ITEM_ICON === 'object'){ for (const id of NEWITEMS258) if (ATLAS['ui_product_' + id]) ITEM_ICON[id] = 'ui_product_' + id; }
+
+/* ---------- 1. tray icon: the new standing picture with trim (g109 iconCanvas fits it into the box) ---------- */
+{ const _is258 = itemSprite; itemSprite = function(kind, id){ if (kind === 'animal' && ATLAS['ui_an_' + id]) return ['ui_an_' + id, 0]; return _is258(kind, id); }; }
+
+/* ---------- 2. drawing: same as g2, bubbles lifted by the sprite's height ---------- */
+function drawAnimal(T, cx, cy, t, ag){
+  const A = CFG.animals[T.id], stg = animalStageName(T, A), r = T.r || 0;
+  let ox = 0, oy = 0, flip = false, act = 'idle';
+  if (ag){ flip = ag.flip; act = ag.moving ? 'walk' : (motion && Math.floor(t / 3 + r) % 3 === 0 ? 'eat' : 'idle'); }
+  else if (motion){
+    const ph = t * .35 + r; ox = Math.sin(ph) * 8; oy = Math.sin(t * .25 + r * 1.7) * 3; flip = Math.cos(ph) < 0;
+    act = Math.abs(Math.cos(ph)) > .35 ? 'walk' : (Math.floor(t / 3 + r) % 3 === 0 ? 'eat' : 'idle');
+  }
+  const n = `animal_${T.id}_${stg}_${act}`;
+  spr(n, frameOf(n, t, r), cx + ox, cy + 2 + oy, flip);
+  const ai = ATLAS[`animal_${T.id}_${stg}_idle`], top = ai && ai.top, big = T.id === 'dairy_cow' || T.id === 'beef_cattle';
+  const hy = cy + oy - (top ? top + 6 : (stg === 'young' ? 16 : big ? 34 : 26));
+  const lift = top ? Math.max(0, top + 2 - (V258.bubbleBase ?? 21)) : (T.id === 'dairy_cow' ? 6 : 0), bn = `animal_${T.id}_adult_bubble`;
+  if (T.stack > 0){ spr(bn, frameOf(bn, t, r), cx + ox, cy + 2 + oy - lift); if (T.stack > 1) bubble(cx + ox + 14, cy + oy - 30 - lift, '×' + T.stack); }
+  else if (A.type === 'meat' && isAdult(T, A)) bubble(cx + ox, hy, '出貨', 'ui_coin', '#fffbe9');
+  else if (T.timer === 0 && canFeed(T, A)) bubble(cx + ox, hy, '餓了', 'ui_tool_animal');
+  const old = A.type === 'producer' && isAdult(T, A) && T.cycles / A.lifespanCycles < R.animalOldWarningRatio;
+  if (old) bubble(cx + ox - 16, cy + oy - 8, '年老', null, '#eee6d8');
+}
+
+/* ---------- 3. traits ---------- */
+const winter258 = t => { try { return climSeason(t, geo().lat) === 'winter'; } catch(e){ return false; } };
+// rainFast: 下雨時每輪快；winterExtra: 冬天每輪多產
+{ const _sa258 = stepAnimal; stepAnimal = function(M, k, T, dt, t, feedOn){
+  const A = T && CFG.animals[T.id], tr = A && A.trait258; let d = dt;
+  try { if (tr && tr.type === 'rainFast' && T.timer > 0 && isAdult(T, A) && farmRain(t)) d = dt * (tr.speed || 1.5); } catch(e){}
+  const st0 = T ? (T.stack || 0) : 0, r = _sa258(M, k, T, d, t, feedOn);
+  try { if (tr && tr.type === 'winterExtra' && M.tiles[k] === T && (T.stack || 0) > st0 && winter258(t)) T.stack += ((T.stack || 0) - st0) * (tr.extra || 1); } catch(e){}
+  return r; }; }
+// guard: 同一座島有成年的護衛動物，天敵出現機率 × mult（多隻不疊加）
+function guard258(mi){ const M = S.maps[mi]; let g = 1; if (!M) return g;
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'animal') continue; const A = CFG.animals[T.id], tr = A && A.trait258;
+    if (tr && tr.type === 'guard' && isAdult(T, A)) g = Math.min(g, tr.mult ?? .7); }
+  return g; }
+{ const _sm258 = spawnMult256; spawnMult256 = function(kind, mi, x, y){ const m = _sm258(kind, mi, x, y); let g = 1; try { g = guard258(mi); } catch(e){} return m * g; }; }
+// litter / bonusItem: 出貨肉用動物之後
+RT.meat258 = null;
+{ const _ta258 = tapAnimal; tapAnimal = function(M, k, T, cx, cy){ const A = T && CFG.animals[T.id], tr = A && A.trait258;
+  if (!(A && tr && A.type === 'meat' && isAdult(T, A) && (tr.type === 'litter' || tr.type === 'bonusItem'))) return _ta258(M, k, T, cx, cy);
+  const pv = RT.meat258; RT.meat258 = { M, k, T, A, tr, cx, cy };
+  try { return _ta258(M, k, T, cx, cy); } finally { RT.meat258 = pv; } }; }
+{ const _dl258 = deliver; deliver = function(goods, x, y, finalize, ...a){ const J = RT.meat258;
+  if (!J) return _dl258(goods, x, y, finalize, ...a);
+  RT.meat258 = null;
+  return _dl258(goods, x, y, (...fa) => { const r = finalize ? finalize(...fa) : undefined; try { meatAfter258(J); } catch(e){ console.warn(e); } return r; }, ...a); }; }
+function meatAfter258(J){ const { M, k, T, A, tr, cx, cy } = J;
+  if (M.tiles[k] === T) return;   // 沒出貨（取消）
+  if (tr.type === 'litter' && !M.tiles[k] && Math.random() < (tr.chance ?? .2)){
+    const N = newAnimal(T.id); N.no258 = nextNo258(T.id); M.tiles[k] = N; const fr = feedAnimal(N, A); if (fr && fr.ok) feedMsg(fr, cx, cy - 14);
+    floatText(cx, cy - 58, tr.toast || TX258.litter || '原地多了一隻幼兔！', '#2f6a3a', 12); sfx('place'); afterAction(); }
+  if (tr.type === 'bonusItem' && tr.item && tr.qty > 0){ const pv = RT.ani62; RT.ani62 = null;   // 羽毛不算進肉鴕徽章
+    try { deliver([{ id: tr.item, qty: tr.qty }], cx, cy - 16, () => {}); } finally { RT.ani62 = pv; } } }
+
+/* ---------- 4. numbers: 蛋雞 01, 02… in placement order (per kind, never renumbered) ---------- */
+function nextNo258(id){ const C = S.anNo258 = S.anNo258 || {}; C[id] = (C[id] || 0) + 1; return C[id]; }
+function numberAll258(s){ s = s || S; if (!s || !s.maps) return; const C = s.anNo258 = s.anNo258 || {};
+  for (const M of s.maps){ const ks = Object.keys(M.tiles || {}).filter(k => M.tiles[k] && M.tiles[k].t === 'animal' && !M.tiles[k].no258)
+      .sort((a, b) => { const [ax, ay] = a.split(',').map(Number), [bx, by] = b.split(',').map(Number); return ay - by || ax - bx; });
+    for (const k of ks){ const T = M.tiles[k]; C[T.id] = (C[T.id] || 0) + 1; T.no258 = C[T.id]; } } }
+const animalName258 = T => { const A = CFG.animals[T.id] || {}; return `${A.name || ''} ${String(T.no258 || 0).padStart(V258.numberPad || 2, '0')}`; };
+{ const _aa258 = afterAction; afterAction = function(...a){ try { numberAll258(); } catch(e){} return _aa258(...a); }; }
+{ const _ns258 = normalizeState; normalizeState = function(d){ const r = _ns258(d), s = r || d; try { if (s && s.maps){ numberAll258(s); if (!s.v258) s.v258 = 1; } } catch(e){ console.warn(e); } return r; }; }
+
+/* ---------- 5. info panel (pet-panel layout) + roster of the same kind on this island ---------- */
+const stageWord258 = st => TX258[st] || { young: '幼年', mid: '中年', adult: '成年' }[st] || '';
+const img258 = T => { const A = CFG.animals[T.id], st = animalStageName(T, A);
+  return IMGSRC['ui_pt_an_' + T.id + (st === 'adult' ? '' : '_' + st)] || IMGSRC['ui_pt_an_' + T.id] || IMGSRC['ui_an_' + T.id] || ''; };
+function roster258(M, id){ return Object.keys(M.tiles).filter(k => M.tiles[k] && M.tiles[k].t === 'animal' && M.tiles[k].id === id)
+  .map(k => [k, M.tiles[k]]).sort((a, b) => (a[1].no258 || 0) - (b[1].no258 || 0)); }
+function animalRows258(T, A){ const adult = isAdult(T, A), poultry = POULTRY2543.includes(T.id), q = A.productQty || 1, tr = A.trait258, e = s => escapeHTML(String(s)), rows = [];
+  rows.push(['paw', '種類', e(`${poultry ? '家禽' : '家畜'}・${A.type === 'meat' ? '肉用（長大後收成一次）' : `產${A.product}`}`)]);
+  if (tr) rows.push(['medal', e(TX258.trait || '特性'), `<b>${e(tr.name || '')}</b>：${e(tr.text || '')}${adult || tr.type === 'litter' || tr.type === 'bonusItem' ? '' : '（長大才有）'}`]);
+  rows.push(['cal', '成長', e(adult ? '成年' : `第 ${T.stage + 1}／${A.growStages} 階（每階 ${fmtDur(A.stageSeconds)}）`)]);
+  let now;
+  if (T.timer > 0) now = adult ? (A.type === 'meat' ? '可以收成' : `${fmtDur(T.timer)}後產出 ${q} 個${A.product}`) : `${fmtDur(T.timer)}後長大一階`;
+  else now = A.type === 'meat' && adult ? '可以收成' : (T.stack > 0 ? `有 ${T.stack * q} 個${A.product}可以收` : canFeed(T, A) ? '餓了，等著餵' : '休息中');
+  rows.push(['clock', '現在', e(now)]);
+  if (A.type === 'producer'){ const ph = 3600 / A.cycleSeconds * q;
+    rows.push(['cycle', '產出', e(`每 ${fmtDur(A.cycleSeconds)} 產 ${q} 個${A.product}（約每小時 ${Math.round(ph * 10) / 10} 個）・每個 ${fmtN(A.productPrice)} 金幣`)]);
+    rows.push(['layers', '待收', e(`${(T.stack || 0) * q} 個${R.animalStackMax > 0 ? `（最多存 ${R.animalStackMax} 輪）` : '（不限，會一直存著）'}`)]);
+    rows.push(['moon', '壽命', e(`還能生產 ${T.cycles} 輪／共 ${A.lifespanCycles} 輪${T.cycles / A.lifespanCycles < R.animalOldWarningRatio ? '（年老，生完會老死）' : ''}`)]);
+    rows.push(['tag', '還能賺', e(`約 ${fmtN(T.cycles * q * A.productPrice)} 金幣（${T.cycles * q} 個）`)]); }
+  else rows.push(['gift', '收成', e(`長大後得 1 份${A.product}・${fmtN(A.salePrice || 0)} 金幣`)]);
+  rows.push(['bowl', '飼料', e(`${itemName(A.feedItem)}：長大每階 ${A.stageFeedQty} 份${A.type === 'producer' ? `、每輪 ${A.cycleFeedQty} 份` : ''}・倉庫 ${fmtN(S.inv[A.feedItem] || 0)} 份`)]);
+  if (T.made2543) rows.push(['chart', '累計收過', e(`${fmtN(T.made2543)} 個${A.product}`)]);
+  try { if (CP.animals.includes(T.id)){ const [n, tot] = ckToday41(T); rows.push(['bug', '吃蟲', e(`今天 ${fmtN(n)} 格・累計 ${fmtN(tot)} 格`)]); } } catch(e2){}
+  rows.push(['back', '賣掉', e(`退 ${fmtN(animalBack53(T))} 金幣（買價 ${fmtN(A.youngCost)}）`)]);
+  return rows; }
+function openAnimal2543(M, k){ const T0 = M.tiles[k]; if (!T0 || T0.t !== 'animal') return; const A = CFG.animals[T0.id]; if (!A) return;
+  try { numberAll258(); } catch(e){}
+  openModal(animalName258(T0), null, (kk, el) => { const T = M.tiles[k];
+    if (T !== T0){ el.innerHTML = `<p>${escapeHTML(TX258.gone || '這隻動物已經不在了。')}</p>`; return; }
+    const st = animalStageName(T, A), list = roster258(M, T.id), e = s => escapeHTML(String(s)), fi = (ITEM_ICON[A.feedItem] && IMGSRC[ITEM_ICON[A.feedItem]]) || '';
+    const chips = list.map(([k2, T2]) => { const s2 = animalStageName(T2, A);
+      return `<button class="mate2543${T2 === T ? ' on258' : ''}" data-an258="${k2}"><img src="${img258(T2)}" alt="">${e(animalName258(T2))}${s2 === 'adult' ? '' : `<i class="st258">${e(stageWord258(s2).slice(0, 1))}</i>`}</button>`; }).join('');
+    el.innerHTML = ipHead2543({ img: img258(T), title: animalName258(T), pill: `<span class="pill ok">${e(stageWord258(st))}</span>`, kv: animalRows258(T, A) }) +
+      `<div class="ipc2543 ros258"><h4>${ic2543('pin')}${e(tx84(TX258.roster || '這座島的{name}', { name: A.name }))}<small class="sm2543">${e(tx84(TX258.rosterSub || '{n} 隻・點一下切換', { n: list.length }))}</small></h4><div class="mates2543">${chips}</div></div>
+      <div class="ipb2543"><button class="btn ghost" id="anFeed258">${fi ? `<img src="${fi}" alt="">` : ''}${e(tx84(TX258.buyFeed || '買{feed}', { feed: itemName(A.feedItem) }))}</button></div>`;
+    el.querySelectorAll('[data-an258]').forEach(b => b.onclick = () => { if (b.dataset.an258 !== k) openAnimal2543(M, b.dataset.an258); });
+    el.querySelector('#anFeed258').onclick = () => openStorage('shop'); });
+  ipSheet2543(); }
+{ const st = document.createElement('style'); st.textContent = `
+.ros258 h4 small{margin-left:8px;font-weight:400}
+.ros258 .mates2543{gap:8px}.ros258 .mate2543{padding:4px 12px 4px 4px;border-radius:12px;font-size:15px;gap:6px}
+.ros258 .mate2543 img{width:32px;height:32px;border-radius:50%;object-fit:contain;background:rgba(127,160,210,.15)}
+.ros258 .mate2543.on258{border-color:#e6c25a;background:rgba(230,194,90,.16);box-shadow:0 0 0 1px #e6c25a inset}
+.ros258 .st258{font-style:normal;font-size:11px;padding:0 4px;border-radius:6px;background:rgba(80,160,100,.35)}
+@media (max-width:760px){.ros258 .mate2543{font-size:13px}.ros258 .mate2543 img{width:26px;height:26px}}`;
+  document.head.appendChild(st); }
+
+window.__farm258 = { farmRain: t => farmRain(t), atlas: n => ATLAS[n], img: n => !!IMGSRC[n], numberAll258, animalName258, roster258, guard258, winter258, openAnimal: (M, k) => openAnimal2543(M, k), meatAfter258,
+  stepAnimal: (...a) => stepAnimal(...a), tapAnimal: (...a) => tapAnimal(...a), spawnMult: (...a) => spawnMult256(...a), itemSprite: (...a) => itemSprite(...a),
+  CFG, normalizeState: d => normalizeState(d), afterAction: () => afterAction(), UIbuildTray: () => UIbuildTray() };
 
   })(CFG, ATLAS_JSON);
 })();
