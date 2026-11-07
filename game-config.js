@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.56",
+  "configVersion": "2.57",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8672,6 +8672,14 @@ window.GAME_CONFIG = {
     "cloudIntro": "這台裝置和 Google Drive 上的全部農場存檔。兩邊都有的已標出哪份「較新」，每一列選好要怎麼處理，再按「照這樣處理」。",
     "slotFull": "這台裝置最多 {n} 座農場：先刪一座才能再建立或下載",
     "cloudFull": "雲端最多 {n} 座農場：先到雲端存檔總表刪一座"
+   }
+  },
+  "v257": {
+   "note": "atlas 有 trim（圖案範圍）的小圖示：iconCanvas 把圖案縮進框裡，寬最多 w、高最多 h（框的比例），底部對齊 bottom，上方留給「i」和 Lv 標籤",
+   "iconFit": {
+    "w": 0.84,
+    "h": 0.66,
+    "bottom": 0.97
    }
   }
  },

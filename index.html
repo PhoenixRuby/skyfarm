@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.56-1b987d7f05'), getJSON('sprites/atlas.json?v=2.56-1b987d7f05')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-71b5aa955e'), getJSON('sprites/atlas.json?v=2.57-71b5aa955e')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.56-1b987d7f05';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.57-71b5aa955e';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21485,6 +21485,32 @@ function bookPets(el){
 window.__farm256 = { openBreed256, petRange: P => petRange(P), petInterval: P => petInterval(P), stepRats: (dt, t) => stepRats(dt, t), stepPreds: (dt, t) => stepPreds(dt, t),
   spawnPred: (...a) => spawnPred(...a), predHit: (...a) => predHit(...a), papillon256, openPet: P => openPet(P), openBook: (...a) => openBook(...a),
   CFG, normalizeState: d => normalizeState(d), UIbuildTray: () => UIbuildTray(), afterAction: () => afterAction() };
+
+/* ===== 109. v2.57: pets walk on the player's 8-frame strips and butterflies flap the player's 5 frames (art batch69, 4× sprites: g43 spr
+   draws atlas "scale": 4 at 0.25 with high-quality smoothing, so they stay sharp when zoomed in); nothing in the game logic changed.
+   Re-declares g4's iconCanvas: a sprite whose atlas entry has "trim" ([x0, y0, x1, y1], the drawn part of the frame) is fitted into the box
+   by that part (ui.v257.iconFit: width ≤ w, height ≤ h of the box, bottom at `bottom`, centred), so pet / pet-bird / butterfly tray icons
+   are not cut at the top and leave room for the「i」and Lv tags. Being a function declaration, g64's lazy-load redraw (_ic64) uses it too.
+   window.__farm257 ===== */
+const FIT257 = Object.assign({ w: .84, h: .66, bottom: .97 }, ((CFG.ui || {}).v257 || {}).iconFit || {});
+function iconCanvas(name, frame = 0, size = 56){
+  const c = document.createElement('canvas'), r = Math.min(2, window.devicePixelRatio || 1);
+  c.width = size * r; c.height = size * r; const g = c.getContext('2d');
+  const a = ATLAS[name], im = IMG[name];
+  if (a && im){
+    const fx = (a.sx || 0) + frame * a.frameWidth, fy = a.sy || 0, B = size * r, tr = Array.isArray(a.trim) && a.trim.length === 4 ? a.trim : null;
+    if (tr){
+      const cw = Math.max(1, tr[2] - tr[0]), ch = Math.max(1, tr[3] - tr[1]), s = Math.min(B * FIT257.w / cw, B * FIT257.h / ch), w = cw * s, h = ch * s;
+      g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+      g.drawImage(im, fx + tr[0], fy + tr[1], cw, ch, (B - w) / 2, B * FIT257.bottom - h, w, h);
+    } else {   // same as g4
+      const s = Math.min(B / a.frameWidth, B / a.frameHeight) * 1.15, w = a.frameWidth * s, h = a.frameHeight * s;
+      g.drawImage(im, fx, fy, a.frameWidth, a.frameHeight, (B - w) / 2, B - h * 0.98, w, h);
+    }
+  }
+  return c;
+}
+window.__farm257 = { iconCanvas: (...a) => iconCanvas(...a), fit: FIT257, atlas: n => ATLAS[n], cam: () => cam, center: (x, y) => center(x, y) };
 
   })(CFG, ATLAS_JSON);
 })();
