@@ -60,7 +60,7 @@ window.GAME_CONFIG = {
   "autoMaxHours": 48,
   "blockSize": 10,
   "maxBlocksPerMap": 4,
-  "maxMaps": 3,
+  "maxMaps": 5,
   "maxLevel": 50,
   "autosaveSeconds": 30,
   "produceStorage": true,
@@ -1701,47 +1701,96 @@ window.GAME_CONFIG = {
    {
     "index": 6,
     "map": 2,
-    "level": 8,
+    "level": 10,
     "cost": 24000
    },
    {
     "index": 7,
     "map": 2,
-    "level": 9,
+    "level": 12,
     "cost": 30000
    },
    {
     "index": 8,
     "map": 2,
-    "level": 9,
+    "level": 14,
     "cost": 36000
    },
    {
     "index": 9,
     "map": 3,
-    "level": 10,
+    "level": 16,
     "cost": 45000
    },
    {
     "index": 10,
     "map": 3,
-    "level": 10,
+    "level": 18,
     "cost": 54000
    },
    {
     "index": 11,
     "map": 3,
-    "level": 10,
+    "level": 20,
     "cost": 63000
    },
    {
     "index": 12,
     "map": 3,
-    "level": 10,
+    "level": 22,
     "cost": 75000
+   },
+   {
+    "index": 13,
+    "map": 4,
+    "level": 25,
+    "cost": 90000
+   },
+   {
+    "index": 14,
+    "map": 4,
+    "level": 28,
+    "cost": 105000
+   },
+   {
+    "index": 15,
+    "map": 4,
+    "level": 31,
+    "cost": 120000
+   },
+   {
+    "index": 16,
+    "map": 4,
+    "level": 34,
+    "cost": 140000
+   },
+   {
+    "index": 17,
+    "map": 5,
+    "level": 37,
+    "cost": 160000
+   },
+   {
+    "index": 18,
+    "map": 5,
+    "level": 40,
+    "cost": 185000
+   },
+   {
+    "index": 19,
+    "map": 5,
+    "level": 44,
+    "cost": 210000
+   },
+   {
+    "index": 20,
+    "map": 5,
+    "level": 48,
+    "cost": 240000
    }
   ],
-  "beyondCostStep": 12000
+  "beyondCostStep": 12000,
+  "note257": "v2.57：5 座島 × 4 塊，開地等級錯開到 Lv 48；已經開的地不受影響，還沒開的照這張表"
  },
  "levels": [
   {
@@ -1802,7 +1851,6 @@ window.GAME_CONFIG = {
     "wool_sheep",
     "hay",
     "drone_1",
-    "block:2",
     "grow_lamp",
     "battery_s",
     "doll_rain",
@@ -1827,7 +1875,8 @@ window.GAME_CONFIG = {
     "bridge_stone",
     "material_shed",
     "lumberbot",
-    "gradebot"
+    "gradebot",
+    "block:2"
    ],
    "animalCap": 5,
    "fishPoolTileCap": 0,
@@ -1896,7 +1945,6 @@ window.GAME_CONFIG = {
     "papaya",
     "meat_sheep",
     "dairy_cow",
-    "block:3",
     "battery_m",
     "road_asphalt",
     "snow_melter",
@@ -1917,7 +1965,8 @@ window.GAME_CONFIG = {
     "hyacinth",
     "forget_me_not",
     "cyclamen",
-    "snowdrop"
+    "snowdrop",
+    "block:3"
    ],
    "animalCap": 8,
    "fishPoolTileCap": 4,
@@ -1993,7 +2042,6 @@ window.GAME_CONFIG = {
     "banana",
     "beef_cattle",
     "feeder_2",
-    "block:4",
     "battery_l",
     "rose",
     "coconut",
@@ -2019,7 +2067,8 @@ window.GAME_CONFIG = {
     "minebot_2",
     "rent_mine_1",
     "gradebot_2",
-    "rent_grade_1"
+    "rent_grade_1",
+    "block:4"
    ],
    "animalCap": 10,
    "fishPoolTileCap": 8,
@@ -2035,8 +2084,6 @@ window.GAME_CONFIG = {
     "apple",
     "seabass",
     "water_tower",
-    "block:5",
-    "block:6",
     "cherry",
     "dog_shiba",
     "cat_orange",
@@ -2054,7 +2101,8 @@ window.GAME_CONFIG = {
     "asclepias",
     "alpinia",
     "cinnamomum",
-    "bf:zizeeria_maha"
+    "bf:zizeeria_maha",
+    "block:5"
    ],
    "animalCap": 12,
    "fishPoolTileCap": 12,
@@ -2069,8 +2117,6 @@ window.GAME_CONFIG = {
    "unlocks": [
     "windmill",
     "drone_3",
-    "block:7",
-    "block:8",
     "avocado",
     "snowbot_3",
     "rent_snow_2",
@@ -2111,10 +2157,6 @@ window.GAME_CONFIG = {
    "specialDeco": "rainbow_windmill",
    "unlocks": [
     "feeder_3",
-    "block:9",
-    "block:10",
-    "block:11",
-    "block:12",
     "grape",
     "poopbot_3",
     "rent_poop_2",
@@ -2136,7 +2178,8 @@ window.GAME_CONFIG = {
     "gradebot_3",
     "rent_grade_2",
     "dog_beagle",
-    "cat_tabby"
+    "cat_tabby",
+    "block:6"
    ],
    "animalCap": 16,
    "fishPoolTileCap": 16,
@@ -2178,7 +2221,8 @@ window.GAME_CONFIG = {
     "strobilanthes",
     "bird_canary",
     "bf:eurema_blanda",
-    "dog_shihtzu"
+    "dog_shihtzu",
+    "block:7"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -2214,7 +2258,8 @@ window.GAME_CONFIG = {
     "bird_gouldian",
     "bf:papilio_protenor",
     "dog_yorkie",
-    "cat_tuxedo"
+    "cat_tuxedo",
+    "block:8"
    ],
    "animalCap": 20,
    "fishPoolTileCap": 20,
@@ -2247,7 +2292,8 @@ window.GAME_CONFIG = {
     "taro",
     "rosemary",
     "bf:pieris_canidia",
-    "dog_pug"
+    "dog_pug",
+    "block:9"
    ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
@@ -2281,7 +2327,8 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_border",
     "honeydew",
-    "bf:graphium_sarpedon"
+    "bf:graphium_sarpedon",
+    "block:10"
    ],
    "animalCap": 24,
    "fishPoolTileCap": 24,
@@ -2313,7 +2360,8 @@ window.GAME_CONFIG = {
     "sugarcane",
     "bird_sun_conure",
     "bf:papilio_memnon",
-    "dog_akita"
+    "dog_akita",
+    "block:11"
    ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
@@ -2343,7 +2391,8 @@ window.GAME_CONFIG = {
    "unlocks": [
     "cotton",
     "bf:heliophorus_ila",
-    "dog_dalmatian"
+    "dog_dalmatian",
+    "block:12"
    ],
    "animalCap": 28,
    "fishPoolTileCap": 28,
@@ -2389,7 +2438,8 @@ window.GAME_CONFIG = {
     "hammerhead",
     "tea",
     "bf:bamboo_skipper",
-    "dog_chowchow"
+    "dog_chowchow",
+    "block:13"
    ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
@@ -2434,7 +2484,8 @@ window.GAME_CONFIG = {
    "unlocks": [
     "coffee",
     "bf:tagiades_dagai",
-    "dog_shepherd"
+    "dog_shepherd",
+    "block:14"
    ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
@@ -2474,7 +2525,8 @@ window.GAME_CONFIG = {
    "coinReward": 26000,
    "specialDeco": null,
    "unlocks": [
-    "dog_doberman"
+    "dog_doberman",
+    "block:15"
    ],
    "animalCap": 37,
    "fishPoolTileCap": 37,
@@ -2516,7 +2568,8 @@ window.GAME_CONFIG = {
    "coinReward": 29000,
    "specialDeco": null,
    "unlocks": [
-    "dog_golden"
+    "dog_golden",
+    "block:16"
    ],
    "animalCap": 40,
    "fishPoolTileCap": 40,
@@ -2555,7 +2608,8 @@ window.GAME_CONFIG = {
    "coinReward": 32000,
    "specialDeco": null,
    "unlocks": [
-    "cat_silvershade"
+    "cat_silvershade",
+    "block:17"
    ],
    "animalCap": 43,
    "fishPoolTileCap": 43,
@@ -2593,7 +2647,8 @@ window.GAME_CONFIG = {
    "specialDeco": "lighthouse",
    "unlocks": [
     "bf:seseria_formosana",
-    "dog_stbernard"
+    "dog_stbernard",
+    "block:18"
    ],
    "animalCap": 46,
    "fishPoolTileCap": 46,
@@ -2640,7 +2695,9 @@ window.GAME_CONFIG = {
    "xpToReach": 2577000,
    "coinReward": 39000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "block:19"
+   ],
    "animalCap": 50,
    "fishPoolTileCap": 50,
    "produceCapacity": 10700,
@@ -2686,7 +2743,9 @@ window.GAME_CONFIG = {
    "xpToReach": 2904600,
    "coinReward": 43000,
    "specialDeco": null,
-   "unlocks": [],
+   "unlocks": [
+    "block:20"
+   ],
    "animalCap": 54,
    "fishPoolTileCap": 54,
    "produceCapacity": 11700,
@@ -8680,6 +8739,15 @@ window.GAME_CONFIG = {
     "w": 0.84,
     "h": 0.66,
     "bottom": 0.97
+   },
+   "baseTray": {
+    "store": "倉庫還有 {st} 座（免費擺）",
+    "storeLine": "島上 {on}・倉庫 {st}（{n}/{max}）",
+    "free": "{n}/{max} 座 · 可加到 2 位",
+    "fullSome": "{n}/{max} 座 · {k} 座可加位",
+    "fullAll": "{n}/{max} 座 · 都是 2 位",
+    "toastFull": "{name}最多 {max} 座。要多一個位子：點地圖上的{name}，在面板按「擴充」（每座最多 2 位）",
+    "note": "v2.57：選單只寫短的一行，完整說明在點了之後的提示；倉庫有就能免費擺回島上"
    }
   }
  },
@@ -9491,7 +9559,13 @@ window.GAME_CONFIG = {
     "openAfterLandSeconds": 2,
     "closeBeforeLeaveSeconds": 3,
     "note": "v2.36：降落時後車斗關著，停好 openAfterLandSeconds 秒後打開（truck_*_open_*，batch41）；要走時先關上停 closeBeforeLeaveSeconds 秒，再車頭朝外飛走（進場圖左右翻）"
-   }
+   },
+   "stayByIslands": {
+    "1": 30,
+    "2": 15,
+    "3": 10
+   },
+   "note257": "v2.57：每座島停留分鐘依島的數量 stayByIslands（沒列到的用最大那一項，3 座以上都是 10 分）；singleIslandMinutes／stayMinutes 只是舊的備用值"
   }
  },
  "consumables": {

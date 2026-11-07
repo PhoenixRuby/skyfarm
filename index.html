@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-71b5aa955e'), getJSON('sprites/atlas.json?v=2.57-71b5aa955e')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-f8fe35ab2c'), getJSON('sprites/atlas.json?v=2.57-f8fe35ab2c')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -12091,8 +12091,8 @@ RT.poolDraw56 = 0;
     const L = poolLook56(M, tx, ty), t = performance.now() / 1000;
     _spr56('pool2_bed_' + L.nm, 0, x, y);
     const fr = n => motion ? frameOf(n, t, tx + ty) : 0;
-    if (L.sw) _spr56(`pool2_side_sw_v${tx % 2}`, fr('pool2_side_sw_v0'), x, y);
-    if (L.se) _spr56(`pool2_side_se_v${ty % 2}`, fr('pool2_side_se_v0'), x, y);
+    if (L.sw) _spr56(`pool2_side_sw_v${(tx % 2 + 2) % 2}`, fr('pool2_side_sw_v0'), x, y);
+    if (L.se) _spr56(`pool2_side_se_v${(ty % 2 + 2) % 2}`, fr('pool2_side_se_v0'), x, y);
     const lamp = pllAt56(M, k); if (lamp){ const n = `device_pool_lamp_${lamp.lit ? 'on' : 'off'}`; _spr56(n, lamp.lit && motion ? frameOf(n, t, tx) : 0, x, y); }
     return; }
   return _spr56(name, frame, x, y, flip, alpha); }; }
@@ -13445,6 +13445,9 @@ window.__farm2281 = { LZ64, lzPreload: lzPreload64, img: n => IMG[n], powerSave6
 const RTE65 = (CFG.trash || {}).route || {};
 const STAY1_65 = (RTE65.singleIslandMinutes || 30) * 60e3, STAYN_65 = (RTE65.stayMinutes || 15) * 60e3, WAIT65 = (RTE65.maxExtraWaitMinutes || 15) * 60e3,
   FLY65 = (RTE65.flyMinutes || 1) * 60e3, OVERDUE65 = (RTE65.overdueAfterMinutes || 10) * 60e3, ARR65 = (RTE65.arriveSeconds || 15) * 1e3;
+// v2.57（直接改這一檔）：每座島停多久看島的數量 route.stayByIslands（1 座 30、2 座 15、3 座以上 10 分）；沒設定就照舊 singleIslandMinutes／stayMinutes
+function stay65(){ const T = RTE65.stayByIslands, n = S && S.maps ? S.maps.length : 1; if (!T) return n === 1 ? STAY1_65 : STAYN_65;
+  const ks = Object.keys(T).map(Number).filter(k => k <= n); return (ks.length ? T[Math.max(...ks)] : T[Math.min(...Object.keys(T).map(Number))]) * 60e3; }
 const hasTrash65 = mi => stationsOn63(mi).length > 0 || pileOf63(islTrash63(mi)) > .01;
 // is anything still being carried on this island by its own trash / recycling robots?
 function robotsBusy65(mi){
@@ -13460,7 +13463,7 @@ function routeStep65(t){
   if (R && R.day === dk && t < (R.made || 0) - 1000) R = G.route = null;          // time went back (offline catch-up from earlier): plan again
   if (t < start){ if (R && R.day !== dk) G.route = null; return; }
   // nothing to collect yet: look again while the first stop would still be on
-  if (R && R.day === dk && R.empty && t < start + (S.maps.length === 1 ? STAY1_65 : STAYN_65)) R = G.route = null;
+  if (R && R.day === dk && R.empty && t < start + stay65()) R = G.route = null;
   if (!R || R.day !== dk){
     const order = S.maps.map((M, mi) => mi).filter(hasTrash65);
     R = G.route = { day: dk, made: t, order, i: 0, phase: order.length ? 'stay' : 'gone', empty: !order.length, mi: order[0] ?? null, at: start, from: null, to: null, busyAt: 0 };
@@ -13468,7 +13471,7 @@ function routeStep65(t){
   }
   for (let guard = 0; guard < 12; guard++){
     if (R.phase === 'stay'){
-      const stay = S.maps.length === 1 ? STAY1_65 : STAYN_65, base = R.at + stay;
+      const stay = stay65(), base = R.at + stay;
       if (t < base) return;
       const busy = robotsBusy65(R.mi); if (busy) R.busyAt = t;
       if (busy && t < base + WAIT65) return;
@@ -13483,7 +13486,7 @@ function routeStep65(t){
 }
 function arrive65(R, t){
   const live = Math.abs(Date.now() - t) < 5000; if (!live || R.mi !== S.cur || t - R.at > 60e3) return;   // no toast when catching up later in the day
-  const stay = S.maps.length === 1 ? STAY1_65 : STAYN_65, until = fmtHM(R.at + stay);
+  const stay = stay65(), until = fmtHM(R.at + stay);
   toast(S.maps.length === 1 ? `飛天垃圾車和資源回收車來了，停到 ${until}。用「收成」點垃圾站倒垃圾` : `垃圾車和資源回收車到「${islName63(R.mi)}」了，停到 ${until}。用「收成」點垃圾站倒垃圾`, true, 4200); }
 // are the trucks parked at island mi right now?
 function trucksHere65(mi, t){ const R = routeState65(); return !!(R && R.day === dayKeyLocal(t) && R.phase === 'stay' && R.mi === mi && t >= R.at); }
@@ -13508,7 +13511,7 @@ function stepTrash(dt, t){
   withIsl63(mi, () => { const I = trashState(); if (I.overdueDay === dk || !overdueNow(t)) return; I.overdueDay = dk;
     const L = { g: 0, r: 0, s: 0 }; for (const s of stationsOn63(mi)){ const l = takeLoad(s.T, ['g', 'r', 's']); for (const k in L) L[k] += l[k]; }
     for (const k in L){ L[k] += I.pile[k] || 0; I.pile[k] = 0; } I.fullSince = null;
-    if (L.g + L.r + L.s / 100 > .01){ const total = payLoad(L, true); I.collectUntil = R.at + (S.maps.length === 1 ? STAY1_65 : STAYN_65); I.lastOverdue = { t, money: total, L };
+    if (L.g + L.r + L.s / 100 > .01){ const total = payLoad(L, true); I.collectUntil = R.at + stay65(); I.lastOverdue = { t, money: total, L };
       if (live) toast(`${multi63() ? `【${islName63(mi)}】` : ''}太久沒倒垃圾，垃圾車派機器人來代收：付 ${-total} 金幣（比自己倒貴，回收也要收費）`, false, 5200);
       else RT.notices.push({ kind: 'trashOverdue', t, money: total, map: mi }); }
     else I.lastDump = Date.now(); });
@@ -13539,7 +13542,7 @@ for (const kind of MYK) robotJob[kind] = t => S.maps.some((M, mi) => trucksHere6
     if (b){ b.disabled = !here; b.textContent = here ? '現在倒垃圾' : nextTruckText65(now); }
     const kv = [...document.querySelectorAll('#modalBody .kv span')].find(s => s.textContent === '垃圾車、回收車');
     if (kv && kv.nextElementSibling) kv.nextElementSibling.textContent = S.maps.length === 1 ? `每天 ${fmtHM(truckWindowStart(now))} 來，停 ${Math.round(STAY1_65 / 60e3)} 分鐘`
-      : `每天 ${fmtHM(truckWindowStart(now))} 從第 1 座島開始輪流收，每座島停 ${Math.round(STAYN_65 / 60e3)} 分鐘（沒垃圾的島跳過；機器人還在搬時最多多等 ${Math.round(WAIT65 / 60e3)} 分鐘）`;
+      : `每天 ${fmtHM(truckWindowStart(now))} 從第 1 座島開始輪流收，每座島停 ${Math.round(stay65() / 60e3)} 分鐘（沒垃圾的島跳過；機器人還在搬時最多多等 ${Math.round(WAIT65 / 60e3)} 分鐘）`;
   } catch(e){} return r; }; }
 
 /* ---------- drawing: hover pictures when parked, flying pictures when arriving / leaving ---------- */
@@ -14372,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.57-71b5aa955e';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.57-f8fe35ab2c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21491,6 +21494,8 @@ window.__farm256 = { openBreed256, petRange: P => petRange(P), petInterval: P =>
    Re-declares g4's iconCanvas: a sprite whose atlas entry has "trim" ([x0, y0, x1, y1], the drawn part of the frame) is fitted into the box
    by that part (ui.v257.iconFit: width ≤ w, height ≤ h of the box, bottom at `bottom`, centred), so pet / pet-bird / butterfly tray icons
    are not cut at the top and leave room for the「i」and Lv tags. Being a function declaration, g64's lazy-load redraw (_ic64) uses it too.
+   Fixes: trayItem wrapper — an item locked because it is full (no unlock level) gets the tag「已滿」instead of「Lv undefined」;
+   g56 (edited in place) pool glass sides on negative x/y used v-1 (no such sprite) → every other island-edge cell had no glass.
    window.__farm257 ===== */
 const FIT257 = Object.assign({ w: .84, h: .66, bottom: .97 }, ((CFG.ui || {}).v257 || {}).iconFit || {});
 function iconCanvas(name, frame = 0, size = 56){
@@ -21510,7 +21515,38 @@ function iconCanvas(name, frame = 0, size = 56){
   }
   return c;
 }
-window.__farm257 = { iconCanvas: (...a) => iconCanvas(...a), fit: FIT257, atlas: n => ATLAS[n], cam: () => cam, center: (x, y) => center(x, y) };
+window.__farm257 = { trayItem: (...a) => trayItem(...a), UIbuildTray: (...a) => UIbuildTray(...a), stay: () => stay65(), nextBlock: () => nextBlockInfo(), iconCanvas: (...a) => iconCanvas(...a), fit: FIT257, atlas: n => ATLAS[n], cam: () => cam, center: (x, y) => center(x, y) };
+
+/* v2.57 修正：選項列「已達上限」被當成鎖住時（重型充電樁 6/6），角標寫「已滿」，不再出現「Lv undefined」 */
+{ const _ti257 = trayItem; trayItem = function(kind, id, name, lines, selected, locked, extra = {}){ const b = _ti257(kind, id, name, lines, selected, locked, extra);
+  if (locked && extra.lockLv == null && UNLOCK[id] == null){ const t = b.querySelector('.tag'); if (t) t.textContent = '已滿'; }
+  return b; }; }
+
+/* v2.57 修正：借用別的工具時（例如「播種 · 蝴蝶園」借「裝飾」放寄主植物），購買確認是按了才繼續，那時 withTool 已經把工具換回來，
+   第一次按確認會變成「播種」的動作（跳「先開墾」）。buyAsk47 包裝：問的時候記下工具和選取，按確認時如果工具已經換了，就在原本的工具裡做 */
+{ const _ba257 = buyAsk47; buyAsk47 = function(I, onOk){
+  const snap = S ? { tool: S.sel.tool, deco: S.sel.deco, build: S.sel.build, seed: S.sel.seed, animal: S.sel.animal } : null;
+  return _ba257(I, (...a) => { if (!snap || !S || S.sel.tool === snap.tool) return onOk(...a);
+    const { tool, ...patch } = snap; return withTool(tool, patch, () => onOk(...a)); }); }; }
+
+/* v2.57：建設選單的停機坪／充電站／掃地基座（g25 的選單項目）
+   - 倉庫裡有（全部收回倉庫也算）：寫「倉庫還有 n 座（免費擺）」，可以選，點草地由 g51 placeStored51 免費擺回去（原本 baseCount 含倉庫 → 顯示已達上限、不能選）
+   - 第二行只寫短的狀態（ui.v257.baseTray），完整說明在點了以後的提示 */
+const BT257 = Object.assign({ store: '倉庫還有 {st} 座（免費擺）', storeLine: '島上 {on}・倉庫 {st}（{n}/{max}）', free: '{n}/{max} 座 · 可加到 2 位',
+  fullSome: '{n}/{max} 座 · {k} 座可加位', fullAll: '{n}/{max} 座 · 都是 2 位', toastFull: '{name}最多 {max} 座。要多一個位子：點地圖上的{name}，在面板按「擴充」（每座最多 2 位）' },
+  ((CFG.ui || {}).v257 || {}).baseTray || {});
+const tx257 = (s, o) => String(s).replace(/\{(\w+)\}/g, (m, k) => o[k] ?? '');
+{ const _ut257 = UIbuildTray; UIbuildTray = function(...a){ const r = _ut257(...a);
+  try { if (!S || S.sel.tool !== 'build' || RT.borrow34) return r; const tray = $('tray'); if (!tray) return r;
+    for (const id of (FLC.baseTypes || ['drone_pad', 'robot_charger', 'sweeper_dock'])){ const old = tray.querySelector(`.item[data-id="${id}"]`); if (!old) continue;
+      const B = BLD[id], mx = FLC.baseMax || 3, st = S.buildStore[id] || 0, on = basesOf(id), n = on.length + st, lk = !isUnlocked(id) && !st, full = n >= mx;
+      const k = on.filter(b => slotsOfT(b.T) < (FLC.slotsMax || 2)).length, cost = id === 'sweeper_dock' ? FLC.dockBuildCost : B.cost, o = { st, on: on.length, n, max: mx, k, name: B.name };
+      const l1 = st ? tx257(BT257.store, o) : full ? '已達上限' : `${coinImg()}${fmtN(cost)}`, l2 = tx257(st ? BT257.storeLine : !full ? BT257.free : k ? BT257.fullSome : BT257.fullAll, o);
+      const el = trayItem('building', id, B.name, [l1, l2], S.sel.build === id, lk || (full && !st), { lockLv: UNLOCK[id] });
+      el.hidden = old.hidden;
+      el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } if (full && !st){ toast(tx257(BT257.toastFull, o)); return; } S.sel.build = id; UIbuildTray(); updateHint(); };
+      old.replaceWith(el); } } catch(e){ console.warn(e); }
+  return r; }; }
 
   })(CFG, ATLAS_JSON);
 })();
