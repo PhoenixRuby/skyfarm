@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-58054a3f5f'), getJSON('sprites/atlas.json?v=2.59.1-58054a3f5f')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-ccd3176de0'), getJSON('sprites/atlas.json?v=2.59.1-ccd3176de0')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.59.1-58054a3f5f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.59.1-ccd3176de0';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22073,7 +22073,7 @@ function openPop2591(kind, u, p){ p = p || probC2591(kind, u); if (!p) return; c
 { const _bb2591 = bubble; bubble = function(x, y, text, ...a){ if (!RT.own2591 && typeof text === 'string' && text === (((CFG.ui || {}).v255 || {}).stuck || '沒路可走，幫幫我')) return; return _bb2591(x, y, text, ...a); }; }
 const pulse2591 = () => .55 + .45 * Math.sin(performance.now() / 160);
 { const _dw2591 = drawWorld; drawWorld = function(t, now){
-  try { RT.brDone2591 = null; const m = new Map(), tm = new Map();
+  try { RT.brDone2591 = null; RT.rvDone2591 = null; const m = new Map(), tm = new Map();
     if (S && !RT.snap68){ const mi = S.cur;
       for (const kind of TK84) for (const u of fleet(kind)){ const p = probC2591(kind, u); if (!p || p.mi !== mi) continue; const at = robotTile2591(kind, u); if (at && at.mi === mi) m.set(at.k, (m.get(at.k) || []).concat([{ kind, u, p }])); }
       const R = S.rail246 && S.rail246[mi]; if (R) for (const TR of Object.values(R.tr)){ const s = trainStopTR2591(mi, TR); if (s && TR.cells.length) tm.set(TR.cells[0], s); } }
@@ -22116,14 +22116,19 @@ function trainStop2591(kind, u){ const home = workerHome(kind, u); if (!home) re
 
 /* ---------- 8. 修正 (c)：鐵軌橋先畫，礦車畫在上面 ---------- */
 { const _db2591 = drawBr247; drawBr247 = function(M, mi, k, T, ...a){ if (!RT.inPre2591 && RT.brDone2591 && RT.brDone2591.has(k) && M === S.maps[S.cur]) return; return _db2591(M, mi, k, T, ...a); }; }
+// v2.59.1 第二版：只先畫橋的話，後面那排河格在「東西」那層才畫，河面會蓋到橋上的軌道（玩家截圖）→ 河格也一起先畫：
+// 河、鐵軌橋都是地面以下的東西，照深度順序在所有東西之前畫完；「東西」那層跳過這些河格（drawTileExtras 包裝），橋格只跳過 drawBr247
+const isRiv2591 = T => !!(T && T.t === 'terrain' && T.kind === 'river');
 { const _sg2591 = drawStoreGlow; drawStoreGlow = function(t, ...a){ const r = _sg2591(t, ...a);
-  try { if (!S) return r; const mi = S.cur, M = S.maps[mi]; if (!M) return r; const now = Date.now(), snow = !!(S.snow && S.snow.cover), done = new Set(), list = [];
-    for (const k in M.tiles){ const T = M.tiles[k]; if (isRail89(T) && T.br247){ const [x, y] = pkey(k); list.push([x, y, k, T]); } }
+  try { if (!S) return r; const mi = S.cur, M = S.maps[mi]; if (!M) return r; const now = Date.now(), snow = !!(S.snow && S.snow.cover), done = new Set(), rdone = new Set(), list = [];
+    for (const k in M.tiles){ const T = M.tiles[k]; if ((isRail89(T) && T.br247) || isRiv2591(T)){ const [x, y] = pkey(k); list.push([x, y, k, T]); } }
     list.sort((a, b) => (a[0] + a[1]) - (b[0] + b[1]) || a[0] - b[0]);
     RT.inPre2591 = true;
-    for (const [x, y, k, T] of list){ const { cx, cy } = center(x, y); try { drawBr247(M, mi, k, T, x, y, t, now, snow, cx, cy); done.add(k); } catch(e){} }
-    RT.brDone2591 = done; } catch(e){ console.warn(e); } finally { RT.inPre2591 = false; }
+    for (const [x, y, k, T] of list){ const { cx, cy } = center(x, y);
+      try { if (isRiv2591(T)){ drawTileExtras(M, k, T, x, y, t, now); rdone.add(k); } else { drawBr247(M, mi, k, T, x, y, t, now, snow, cx, cy); done.add(k); } } catch(e){} }
+    RT.brDone2591 = done; RT.rvDone2591 = rdone; } catch(e){ console.warn(e); } finally { RT.inPre2591 = false; }
   return r; }; }
+{ const _dte2591b = drawTileExtras; drawTileExtras = function(M, k, ...a){ if (!RT.inPre2591 && RT.rvDone2591 && RT.rvDone2591.has(k) && S && M === S.maps[S.cur]) return; return _dte2591b(M, k, ...a); }; }
 
 css38.textContent += `
 .pr2591{white-space:normal}.lk2591{display:inline-flex;gap:10px;flex-wrap:wrap;margin-left:6px}.lk2591 a{color:#2f7fd0;text-decoration:underline;cursor:pointer;font-weight:700}
@@ -22133,7 +22138,7 @@ body.night .lk2591 a{color:#8cc4ff}
 `;
 window.__farm2591 = { prob: (k, u) => prob2591(k, u), route: (M, f, g) => route2591(M, f, g), block: (M, k) => block2591(M, k), unitText: (k, u) => unitText(k, u),
   mark: (k, u) => markRobot2591(k, u), find: (k, u) => findRobot2591(k, u), openPop: (k, u) => openPop2591(k, u), wants: (k, key, u) => workerWants[k](key, u),
-  myWalkers: n => myWalkers(n), trainStop: (mi, TR) => trainStopTR2591(mi, TR), get brDone(){ return RT.brDone2591; }, get mark2591(){ return RT.mark2591; }, clearCache: () => { RT.pb2591 = {}; } };
+  myWalkers: n => myWalkers(n), trainStop: (mi, TR) => trainStopTR2591(mi, TR), get brDone(){ return RT.brDone2591; }, get rvDone(){ return RT.rvDone2591; }, get mark2591(){ return RT.mark2591; }, clearCache: () => { RT.pb2591 = {}; } };
 
   })(CFG, ATLAS_JSON);
 })();
