@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.56-45fbc385f0'), getJSON('sprites/atlas.json?v=2.56-45fbc385f0')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.56-1b987d7f05'), getJSON('sprites/atlas.json?v=2.56-1b987d7f05')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14372,7 +14372,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.56-45fbc385f0';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.56-1b987d7f05';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
