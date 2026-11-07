@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.58",
+  "configVersion": "2.59",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -8942,6 +8942,36 @@ window.GAME_CONFIG = {
     "bonus": "另得 {qty} 根{item}"
    },
    "bubbleBase": 21
+  },
+  "v259": {
+   "note": "v2.59 農產倉庫批次賣出：每列勾選、分類「全選」（noSelectAll 的分類沒有）、底部結帳列、確認視窗可改數量／保留 N 個",
+   "noSelectAll": [
+    "feed",
+    "material",
+    "part"
+   ],
+   "keepDefault": 1,
+   "text": {
+    "selAll": "全選",
+    "selNone": "取消全選",
+    "bar": "已選 {n} 種",
+    "barSum": "預估 +{coin}",
+    "barHint": "下一步可調整數量，確認後才會賣出",
+    "clear": "清除",
+    "sellAll": "確認數量 ›",
+    "title": "批次賣出",
+    "sub": "勾選商品，或直接修改數量。",
+    "stock": "庫存 {n}",
+    "max": "全部",
+    "fillMax": "全部最大",
+    "keep": "每種保留",
+    "keepUnit": "個",
+    "apply": "套用",
+    "total": "共 {n} 個",
+    "cancel": "取消",
+    "ok": "確定賣出",
+    "done": "賣掉 {k} 種共 {n} 個，+{coin} 金幣"
+   }
   }
  },
  "droneWatering": {
@@ -14679,5 +14709,4 @@ window.GAME_CONFIG = {
   }
  },
  "animals_note258": "v2.58：新增 egg_duck／meat_rabbit／mallard／angora_rabbit／alpaca／ostrich；trait258 是特性（rainFast、litter、pestEater、winterExtra、guard、bonusItem），面板「特性」列顯示 name＋text"
-}
-;
+};

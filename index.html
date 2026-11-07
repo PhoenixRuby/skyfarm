@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.58-c6295dc7cc'), getJSON('sprites/atlas.json?v=2.58-c6295dc7cc')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59-d7491bb4a9'), getJSON('sprites/atlas.json?v=2.59-d7491bb4a9')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.58-c6295dc7cc';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.59-d7491bb4a9';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21730,6 +21730,188 @@ function openAnimal2543(M, k){ const T0 = M.tiles[k]; if (!T0 || T0.t !== 'anima
 window.__farm258 = { farmRain: t => farmRain(t), atlas: n => ATLAS[n], img: n => !!IMGSRC[n], numberAll258, animalName258, roster258, guard258, winter258, openAnimal: (M, k) => openAnimal2543(M, k), meatAfter258,
   stepAnimal: (...a) => stepAnimal(...a), tapAnimal: (...a) => tapAnimal(...a), spawnMult: (...a) => spawnMult256(...a), itemSprite: (...a) => itemSprite(...a),
   CFG, normalizeState: d => normalizeState(d), afterAction: () => afterAction(), UIbuildTray: () => UIbuildTray() };
+
+/* ===== v2.59 倉庫賣出不跳回最上面、農產倉庫批次賣出 =====
+   1. openStorage 包裝：倉庫已經開著、重開同一個分頁時保留 #modalBody 的捲動位置（openModal 的 show() 會歸零）。
+   2. 農產倉庫每列勾選框（點整列空白處也能勾）、分類「全選／取消全選」（ui.v259.noSelectAll 的分類沒有）、
+      底部固定結帳列（已選 n 種・全部賣 +金幣、清除、一起賣出）。勾選存在 RT.bs259（Set），倉庫開著時保留，關掉再開清空。
+   3. 確認視窗 openBatch259（#ask47.ask47 > .cf47.bs259）：依分類分組，每種一行 勾選・圖・名稱（庫存）・− [數量] ＋・全部；
+      全部最大、每種保留 N 個；共 n 個＋金幣合計；確定後一次賣掉、清空勾選、openStorage('produce') 保留捲動位置。 */
+const V259 = Object.assign({ noSelectAll: ['feed', 'material', 'part'], keepDefault: 1 }, (CFG.ui || {}).v259 || {});
+const TX259 = Object.assign({ selAll: '全選', selNone: '取消全選', bar: '已選 {n} 種', barSum: '預估 +{coin}', barHint: '下一步可調整數量，確認後才會賣出', clear: '清除', sellAll: '確認數量 ›',
+  title: '批次賣出', sub: '勾選商品，或直接修改數量。', stock: '庫存 {n}', max: '全部', fillMax: '全部最大', keep: '每種保留', keepUnit: '個', apply: '套用',
+  total: '共 {n} 個', cancel: '取消', ok: '確定賣出', done: '賣掉 {k} 種共 {n} 個，+{coin} 金幣' }, V259.text || {});
+const tx259 = (k, o = {}) => String(TX259[k] || '').replace(/\{(\w+)\}/g, (m, n) => o[n] !== undefined ? o[n] : m);
+RT.bs259 = RT.bs259 || new Set();
+const price259 = id => ((CFG.items[id] || {}).sellPrice) || 0;
+const cat259 = id => ((CFG.items[id] || {}).category) || '';
+const curTab259 = () => { const b = document.querySelector('#modalTabs button.on[data-k]'); return b ? b.dataset.k : null; };
+const inStorage259 = () => !$('modal').hidden && ($('modalTitle').dataset.real || $('modalTitle').textContent) === '倉庫';
+function prune259(){ for (const id of [...RT.bs259]) if (!(S.inv[id] > 0) || !CFG.items[id]) RT.bs259.delete(id); }
+
+/* ---------- 1. 重開同一分頁保留捲動位置 ---------- */
+{ const _os259 = openStorage; openStorage = function(tab){
+  const body = $('modalBody'), same = inStorage259() && curTab259() === (tab || 'produce'), P = RT.top259,
+    // 開賣出視窗時捲動區可能被夾小（版面暫時變了），所以用按下按鈕那一刻記下的位置
+    top = !same ? 0 : P && P.tab === curTab259() && Date.now() - P.t < 600e3 ? P.top : body.scrollTop, hgt = Math.max(body.scrollHeight, P && same ? P.h : 0);
+  RT.top259 = null;
+  if (!inStorage259()) RT.bs259 = new Set();
+  const r = _os259(tab);
+  if (same && top){
+    // 重畫後圖片還沒撐開高度時 scrollTop 會被夾小，之後別的程式也可能動到捲動：
+    // 先墊一塊跟原本一樣高的空白，1.2 秒內（玩家自己捲動就停）有人改了捲動位置就放回去，最後拿掉空白
+    const pad = document.createElement('div'); pad.className = 'pad259'; pad.style.cssText = 'height:0;pointer-events:none'; body.appendChild(pad);
+    let live = true;
+    const put = () => { if (!live) return; if (!body.contains(pad)) body.appendChild(pad); pad.style.height = '0px'; pad.style.height = Math.max(0, hgt - body.scrollHeight) + 'px'; if (Math.abs(body.scrollTop - top) > 1) body.scrollTop = top; };
+    const stop = () => { if (!live) return; live = false; pad.remove(); body.removeEventListener('scroll', put); ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(ev => body.removeEventListener(ev, stop)); };
+    body.addEventListener('scroll', put); ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(ev => body.addEventListener(ev, stop, { passive: true }));
+    put(); queueMicrotask(put); requestAnimationFrame(put); setTimeout(put, 0); setTimeout(put, 60);
+    body.querySelectorAll('img').forEach(im => { if (!im.complete){ im.addEventListener('load', put, { once: true }); im.addEventListener('error', put, { once: true }); } });
+    setTimeout(() => { put(); stop(); }, 1200); }
+  return r; }; }
+
+document.addEventListener('pointerdown', e => { if (!e.target.closest || !e.target.closest('#modalBody') || !inStorage259()) return;
+  const b = $('modalBody'); RT.top259 = { t: Date.now(), top: b.scrollTop, h: b.scrollHeight, tab: curTab259() }; }, true);
+
+/* ---------- 2. 農產倉庫：勾選框、全選、結帳列 ---------- */
+function rowId259(tr){ const b = tr.querySelector('[data-sell49],[data-sell]'); return b ? (b.dataset.sell49 || b.dataset.sell) : null; }
+function decorate259(el){
+  if (!el || !el.isConnected) return; prune259();
+  el.querySelectorAll('section.stsec:not(.dyn251) tbody tr').forEach(tr => {
+    const id = rowId259(tr); if (!id || !CFG.items[id] || !price259(id)) return;
+    tr.dataset.bs259 = id; tr.classList.add('row259');
+    let cb = tr.querySelector('input.cb259');
+    if (!cb){ const td = tr.querySelector('td'); if (!td) return; td.classList.add('cbtd259');
+      td.insertAdjacentHTML('afterbegin', `<input type="checkbox" class="cb259" aria-label="勾選${escapeHTML(itemName(id))}">`); cb = tr.querySelector('input.cb259'); }
+    cb.checked = RT.bs259.has(id); tr.classList.toggle('on259', cb.checked); });
+  el.querySelectorAll('section.stsec:not(.dyn251)').forEach(sec => {
+    const ids = [...sec.querySelectorAll('tr[data-bs259]')].map(tr => tr.dataset.bs259); if (!ids.length) return;
+    const c = cat259(ids[0]); if (V259.noSelectAll.includes(c)) return;
+    let b = sec.querySelector('.sa259'); if (!b){ const side = sec.querySelector('.stside') || sec; side.insertAdjacentHTML('beforeend', `<button class="sa259" type="button"></button>`); b = sec.querySelector('.sa259'); }
+    const all = ids.every(id => RT.bs259.has(id)); b.textContent = all ? tx259('selNone') : tx259('selAll'); b.dataset.all = all ? '1' : ''; });
+  bar259(el); }
+function bar259(el){
+  el = el || $('modalBody'); if (!el) return; let bar = el.querySelector(':scope > #bsbar259'); prune259();
+  const ids = [...RT.bs259];
+  if (!ids.length){ if (bar) bar.remove(); return; }
+  if (!bar){ el.insertAdjacentHTML('beforeend', `<div id="bsbar259"><span class="bn259"></span><div class="bm259"><b class="bc259"></b><small class="bh259"></small></div><button class="btn ghost" data-bsclr259 type="button"></button><button class="btn" data-bsgo259 type="button"></button></div>`); bar = el.querySelector(':scope > #bsbar259'); }
+  else if (bar !== el.lastElementChild) el.appendChild(bar);
+  const pb = parseFloat(getComputedStyle(el).paddingBottom) || 0; bar.style.bottom = -pb + 'px'; bar.style.marginBottom = -pb + 'px';   // 貼齊捲動區底邊，下面不露出內容
+  const coin = ids.reduce((s, id) => s + (S.inv[id] || 0) * price259(id), 0);
+  bar.querySelector('.bn259').textContent = tx259('bar', { n: ids.length });
+  bar.querySelector('.bc259').innerHTML = `${coinI()}${escapeHTML(tx259('barSum', { coin: fmtN(coin) }))}`;
+  bar.querySelector('.bh259').textContent = tx259('barHint');
+  bar.querySelector('[data-bsclr259]').textContent = tx259('clear'); bar.querySelector('[data-bsgo259]').textContent = tx259('sellAll'); }
+{ const _om259 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '倉庫' && typeof render === 'function'){ const r0 = render; render = (k, el) => { r0(k, el);
+    if (k === 'produce'){ const go = () => decorate259(el); go(); queueMicrotask(go); setTimeout(go, 0); } }; }
+  return _om259(title, tabs, render, initial); }; }
+document.addEventListener('click', e => {
+  if (!e.target.closest || !e.target.closest('#modalBody') || !inStorage259() || curTab259() !== 'produce') return;
+  const el = $('modalBody');
+  if (e.target.closest('[data-bsclr259]')){ RT.bs259.clear(); decorate259(el); return; }
+  if (e.target.closest('[data-bsgo259]')){ openBatch259(); return; }
+  const sa = e.target.closest('.sa259');
+  if (sa){ const ids = [...sa.closest('section').querySelectorAll('tr[data-bs259]')].map(tr => tr.dataset.bs259);
+    if (sa.dataset.all) ids.forEach(id => RT.bs259.delete(id)); else ids.forEach(id => RT.bs259.add(id)); decorate259(el); return; }
+  const tr = e.target.closest('tr[data-bs259]'); if (!tr) return;
+  if (e.target.closest('button, a, label, input:not(.cb259), select')) return;   // 「賣出」照舊單項賣出
+  const id = tr.dataset.bs259, on = e.target.classList.contains('cb259') ? e.target.checked : !RT.bs259.has(id);
+  if (on) RT.bs259.add(id); else RT.bs259.delete(id); decorate259(el); });
+
+/* ---------- 3. 確認視窗 ---------- */
+function openBatch259(){
+  if (document.getElementById('ask47')) return; prune259();
+  const ids = [...RT.bs259]; if (!ids.length) return;
+  const order = ST_CAT.map(c => c[0]), lab = Object.fromEntries(ST_CAT.map(c => [c[0], c[1]]));
+  ids.sort((a, b) => ((order.indexOf(cat259(a)) + 99) % 99) - ((order.indexOf(cat259(b)) + 99) % 99));
+  const R = Object.fromEntries(ids.map(id => [id, { max: S.inv[id], q: S.inv[id], on: true }]));
+  let h = '', last = null;
+  for (const id of ids){ const c = cat259(id); if (c !== last){ h += `<h4 class="g259">${escapeHTML(lab[c] || c)}</h4>`; last = c; }
+    const [n, f] = itemSprite('item', id);
+    h += `<div class="r259 on259" data-id="${id}"><input type="checkbox" class="rc259" checked aria-label="勾選${escapeHTML(itemName(id))}">${n ? `<canvas data-spr47="${n}" data-f="${f || 0}" data-sz="34"></canvas>` : '<i class="ph259"></i>'}
+      <div class="nm259"><b>${escapeHTML(itemName(id))}</b><small>${escapeHTML(tx259('stock', { n: fmtN(R[id].max) }))}・${coinI()}${fmtN(price259(id))}</small></div>
+      <div class="qt259"><button type="button" data-d="-1">−</button><input type="number" min="0" max="${R[id].max}" value="${R[id].max}" inputmode="numeric"><button type="button" data-d="1">＋</button><button type="button" class="mx259" data-mx="1">${escapeHTML(tx259('max'))}</button></div></div>`; }
+  const box = document.createElement('div'); box.id = 'ask47'; box.className = 'ask47';
+  box.innerHTML = `<div class="cf47 bs259" role="dialog" aria-modal="true"><div class="hd259"><h3>${escapeHTML(tx259('title'))}</h3><small>${escapeHTML(tx259('sub'))}</small></div>
+    <div class="tl259"><button type="button" data-fill259>${escapeHTML(tx259('fillMax'))}</button><span class="kp259">${escapeHTML(tx259('keep'))}<input type="number" id="keep259" min="0" value="${V259.keepDefault || 0}" inputmode="numeric">${escapeHTML(tx259('keepUnit'))}<button type="button" data-keep259>${escapeHTML(tx259('apply'))}</button></span></div>
+    <div class="ls259">${h}</div>
+    <div class="ft259"><div class="sum259"><span id="sn259"></span><b>${coinI()}<span id="sc259"></span></b></div>
+      <div class="btns47"><button class="btn ghost" id="ask47c" type="button">${escapeHTML(tx259('cancel'))}</button><button class="btn" id="ask47y" type="button">${escapeHTML(tx259('ok'))}</button></div></div></div>`;
+  ($('modal').parentElement || document.body).appendChild(box); paint47(box);
+  const rowEl = id => box.querySelector(`.r259[data-id="${id}"]`);
+  const paint = id => { const r = R[id], el = rowEl(id); el.classList.toggle('on259', r.on); el.querySelector('.rc259').checked = r.on;
+    const inp = el.querySelector('input[type=number]'); if (document.activeElement !== inp) inp.value = r.q;
+    el.querySelector('[data-d="-1"]').disabled = r.q <= 0; el.querySelector('[data-d="1"]').disabled = r.q >= r.max; };
+  const sum = () => { let n = 0, c = 0; for (const id of ids){ const r = R[id]; if (r.on && r.q > 0){ n += r.q; c += r.q * price259(id); } }
+    box.querySelector('#sn259').textContent = tx259('total', { n: fmtN(n) }); box.querySelector('#sc259').textContent = fmtN(c); box.querySelector('#ask47y').disabled = n <= 0; };
+  const setQ = (id, q) => { const r = R[id]; r.q = Math.max(0, Math.min(r.max, Math.floor(+q || 0))); if (r.q <= 0) r.on = false; paint(id); sum(); };
+  ids.forEach(paint); sum();
+  box.addEventListener('click', e => {
+    if (e.target === box){ box.remove(); return; }
+    if (e.target.closest('[data-fill259]')){ ids.forEach(id => { if (R[id].on) R[id].q = R[id].max; paint(id); }); sum(); return; }
+    if (e.target.closest('[data-keep259]')){ const k = Math.max(0, Math.floor(+box.querySelector('#keep259').value || 0));
+      ids.forEach(id => { const r = R[id]; if (!r.on) return; r.q = Math.max(0, r.max - k); if (!r.q) r.on = false; paint(id); }); sum(); return; }
+    const row = e.target.closest('.r259'); if (!row) return; const id = row.dataset.id, r = R[id];
+    const d = e.target.closest('[data-d]'); if (d){ if (!r.on){ r.on = true; } setQ(id, r.q + +d.dataset.d); return; }
+    if (e.target.closest('[data-mx]')){ r.on = true; setQ(id, r.max); return; }
+    if (e.target.closest('input[type=number]')) return;
+    const on = e.target.classList.contains('rc259') ? e.target.checked : !r.on;
+    r.on = on; if (on && r.q <= 0) r.q = r.max; paint(id); sum(); });
+  box.addEventListener('input', e => { const row = e.target.closest('.r259'); if (!row || e.target.type !== 'number') return;
+    const id = row.dataset.id; if (e.target.value === '') return; R[id].on = +e.target.value > 0; setQ(id, e.target.value); });
+  box.addEventListener('change', e => { const row = e.target.closest('.r259'); if (row && e.target.type === 'number'){ const id = row.dataset.id; if (e.target.value === '') setQ(id, 0); e.target.value = R[id].q; } });
+  box.querySelector('#ask47c').onclick = () => box.remove();
+  box.querySelector('#ask47y').onclick = () => { const btn = document.querySelector('#bsbar259 [data-bsgo259]') || $('modalBody'); let k = 0, n = 0, coin = 0;
+    for (const id of ids){ const r = R[id]; if (!r.on || r.q <= 0) continue; const got = invTake(id, r.q); if (!got) continue; k++; n += got; coin += got * price259(id); }
+    box.remove(); if (!n) return;
+    S.player.coins += coin; flyCoins(btn, coin); toast(tx259('done', { k, n: fmtN(n), coin: fmtN(coin) }));
+    RT.bs259.clear(); afterAction(); if (typeof tutEvent === 'function') tutEvent('sellItem'); openStorage('produce'); }; }
+
+css38.textContent += `
+#modalBody .row259{cursor:pointer}#modalBody .row259.on259 td{background:rgba(255,200,60,.16)}
+#modalBody td.cbtd259{white-space:nowrap}#modalBody td.cbtd259 > *{vertical-align:middle}
+#modalBody input.cb259,.bs259 input.rc259{width:20px;height:20px;margin:0 6px 0 0;accent-color:#f5b51d;cursor:pointer;flex:none}
+#modalBody .sa259{display:block;margin:8px auto 0;border:1.5px solid #f2c94c;background:#fff8e4;color:#7a5200;border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#bsbar259{position:sticky;bottom:0;z-index:5;margin:10px -4px 0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));
+  background:#fff8e4;border:1.5px solid #f2c94c;border-radius:16px 16px 0 0;box-shadow:0 -6px 18px rgba(0,0,0,.14);color:#5a3a00}
+#bsbar259 .bn259{font-weight:800}#bsbar259 .bm259{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start}#bsbar259 .bc259{display:flex;align-items:center;gap:4px;font-size:17px}#bsbar259 .bh259{font-size:12px;color:#8a6a1a;line-height:1.3}#bsbar259 .bc259 img{width:20px}
+#bsbar259 [data-bsgo259]{background:linear-gradient(#ffd75a,#f5b51d);color:#5a3a00;border:0;box-shadow:0 2px 0 #d29a12;font-weight:800;padding:9px 16px}
+.cf47.bs259{display:flex !important;flex-direction:column;width:min(540px,100%);overflow:hidden;max-height:calc(100% - 8px);max-height:calc(100dvh - 24px)}
+.bs259 .hd259{padding:16px 18px 6px;background:linear-gradient(#eaf5ff,#fff)}.bs259 .hd259 h3{margin:0;font-size:20px}.bs259 .hd259 small{color:#5b6b80}
+.bs259 .tl259{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:6px 18px 8px;border-bottom:1px solid #e3e9f1}
+.bs259 .tl259 button{border:1.5px solid #d6dfea;background:#fff;border-radius:10px;padding:6px 10px;font:inherit;font-weight:700;color:#24344a;cursor:pointer}
+.bs259 .kp259{display:flex;align-items:center;gap:5px;margin-left:auto;font-size:14px}.bs259 #keep259{width:48px;height:32px;border:1px solid #d6dfea;border-radius:8px;text-align:center;font-size:15px}
+.bs259 .ls259{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:2px 18px 8px}
+.bs259 .g259{margin:10px 0 2px;font-size:13px;color:#5b6b80}
+.bs259 .r259{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #eef2f7;cursor:pointer}
+.bs259 .r259:not(.on259){opacity:.45}.bs259 .r259 canvas,.bs259 .ph259{width:34px;height:34px;flex:none}
+.bs259 .nm259{flex:1;min-width:0;display:flex;flex-direction:column}.bs259 .nm259 b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bs259 .nm259 small{color:#6b7b90;font-size:12px;display:flex;align-items:center;gap:2px}.bs259 .nm259 small img{width:13px}
+.bs259 .qt259{display:flex;align-items:center;gap:4px;flex:none}
+.bs259 .qt259 button{min-width:32px;height:32px;border-radius:9px;border:1px solid #d6dfea;background:#fff;font-size:16px;color:#24344a;cursor:pointer;padding:0 6px}
+.bs259 .qt259 button:disabled{opacity:.4;cursor:default}.bs259 .qt259 .mx259{font-size:13px;font-weight:700}
+.bs259 .qt259 input{width:54px;height:32px;border:1px solid #d6dfea;border-radius:9px;text-align:center;font-size:15px}
+.bs259 .ft259{flex:none;padding:10px 18px 16px;border-top:1px solid #e3e9f1;display:flex;flex-direction:column;gap:10px}
+.bs259 .sum259{display:flex;align-items:center;justify-content:space-between;background:#fff8e4;border:1px solid #f5d77a;border-radius:14px;padding:8px 14px;color:#7a6326;font-weight:700}
+.bs259 .sum259 b{display:flex;align-items:center;gap:6px;font-size:22px;color:#8a5a00}.bs259 .sum259 img{width:22px}
+@media (max-height:520px){.bs259 .hd259{padding:8px 16px 2px;display:flex;align-items:baseline;gap:10px}.bs259 .hd259 h3{font-size:18px}.bs259 .hd259 small{display:none}
+  .bs259 .tl259{padding:2px 16px 6px}.bs259 .tl259 button{padding:4px 10px}.bs259 #keep259{height:28px}.bs259 .r259{padding:4px 0}
+  .bs259 .ft259{flex-direction:row;align-items:center;padding:8px 16px 10px}.bs259 .sum259{flex:1;padding:4px 12px}.bs259 .sum259 b{font-size:18px}
+  .bs259 .ft259 .btns47{flex:1.3}.bs259 .ft259 .btns47 .btn{padding:8px}}
+#bsbar259 .bc259,#bsbar259 .bn259{white-space:nowrap}
+@media (max-width:560px){#bsbar259 .bm259{flex:1 1 calc(100% - 110px)}#bsbar259 [data-bsclr259]{margin-left:auto}#bsbar259 [data-bsgo259]{flex:0 1 58%}}
+@media (max-width:420px){.bs259 .qt259 .mx259{display:none}.bs259 .qt259 input{width:46px}.bs259 .kp259{margin-left:0}}
+body.night #modalBody .row259.on259 td{background:rgba(255,200,60,.12)}
+body.night #modalBody .sa259{background:rgba(255,215,90,.12);color:#ffd75a;border-color:rgba(255,215,90,.5)}
+body.night #bsbar259{background:#1d2c4c;border-color:rgba(255,215,90,.55);color:#ffe9a8}body.night #bsbar259 .bh259{color:#c9b47a}
+body.night .cf47.bs259{background:#18284a;color:#eaf2ff}body.night .bs259 .hd259{background:linear-gradient(#22375f,#18284a)}body.night .bs259 .hd259 h3{color:#fff}
+body.night .bs259 .hd259 small,body.night .bs259 .g259,body.night .bs259 .nm259 small{color:#a9bbd8}
+body.night .bs259 .tl259,body.night .bs259 .ft259{border-color:rgba(150,185,255,.2)}body.night .bs259 .r259{border-color:rgba(150,185,255,.14)}
+body.night .bs259 .tl259 button,body.night .bs259 .qt259 button,body.night .bs259 .qt259 input,body.night .bs259 #keep259{background:rgba(255,255,255,.08);border-color:rgba(150,185,255,.3);color:#eaf2ff}
+body.night .bs259 .sum259{background:#fff8e4;color:#7a6326}
+`;
+window.__farm259 = { openStorage: t => openStorage(t), openBatch: () => openBatch259(), sel: () => RT.bs259, decorate: () => decorate259($('modalBody')) };
 
   })(CFG, ATLAS_JSON);
 })();
