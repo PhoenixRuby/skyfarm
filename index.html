@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-ccd3176de0'), getJSON('sprites/atlas.json?v=2.59.1-ccd3176de0')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-4212752809'), getJSON('sprites/atlas.json?v=2.59.1-4212752809')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.59.1-ccd3176de0';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.59.1-4212752809';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22065,7 +22065,7 @@ function markRobot2591(kind, u){ delete RT.pb2591[wKey(kind, u)]; const p = prob
 function openPop2591(kind, u, p){ p = p || probC2591(kind, u); if (!p) return; const at = robotTile2591(kind, u); if (!at) return; const [x, y] = pkey(at.k), c = center(x, y);
   if (!RT.mark2591 || RT.mark2591.key !== p.key) RT.mark2591 = { key: p.key, mi: p.mi, path: new Set(p.path), blocks: new Map(p.blocks.map(b => [b.k, fixText2591(b)])), marks: new Map(p.marks.map(m => [m.k, m.label])), until: performance.now() + V2591.markSeconds * 1000 };
   RT.mark2591.key = p.key; RT.mark2591.pop = true;
-  const K = RK(kind); showPop53(c.cx, c.cy - 30, `<div class="pp2591"><h5>${escapeHTML(K.name || '')}</h5><p>${longHTML2591(p)}</p><button data-cl2591="1">${escapeHTML(TX2591.close)}</button></div>`);
+  const K = RK(kind); showPop53(c.cx, c.cy - 30, `<div class="pp2591"><h5>${escapeHTML(K.name || '')}</h5><div class="pb2591">${longHTML2591(p)}</div><button data-cl2591="1">${escapeHTML(TX2591.close)}</button></div>`);
   POP53.querySelectorAll('[data-go2591]').forEach(li => li.onclick = () => camTo2591(p.mi, li.dataset.go2591));
   const b = POP53.querySelector('[data-cl2591]'); if (b) b.onclick = () => closePop53(); }
 { const _cp2591 = closePop53; closePop53 = function(...a){ if (RT.mark2591 && RT.mark2591.pop) RT.mark2591 = null; return _cp2591(...a); }; }
@@ -22133,8 +22133,9 @@ const isRiv2591 = T => !!(T && T.t === 'terrain' && T.kind === 'river');
 css38.textContent += `
 .pr2591{white-space:normal}.lk2591{display:inline-flex;gap:10px;flex-wrap:wrap;margin-left:6px}.lk2591 a{color:#2f7fd0;text-decoration:underline;cursor:pointer;font-weight:700}
 body.night .lk2591 a{color:#8cc4ff}
-#pick53 .pp2591{max-width:320px}#pick53 .pp2591 p{margin:4px 0 8px;line-height:1.5}#pick53 .ls2591{margin:6px 0 0;padding-left:0;list-style:none}
-#pick53 .ls2591 li{padding:4px 6px;border-radius:8px;cursor:pointer;font-size:13px}#pick53 .ls2591 li:hover{background:rgba(255,80,60,.12)}
+body.night #pick53 .pb2591{color:#e8f0fc}body.night #pick53 .ls2591 li:hover{background:rgba(255,120,100,.2)}
+#pick53 .pp2591{max-width:320px}#pick53 .pb2591{margin:4px 4px 8px;font-size:13px;line-height:1.5;color:#34495e}#pick53 .pb2591 b{color:inherit}#pick53 .pb2591 small{color:inherit;opacity:.8}#pick53 .ls2591{margin:6px 0 0;padding-left:0;list-style:none}
+#pick53 .ls2591 li{padding:4px 6px;border-radius:8px;cursor:pointer;font-size:13px;color:inherit}#pick53 .ls2591 li:hover{background:rgba(255,80,60,.12)}
 `;
 window.__farm2591 = { prob: (k, u) => prob2591(k, u), route: (M, f, g) => route2591(M, f, g), block: (M, k) => block2591(M, k), unitText: (k, u) => unitText(k, u),
   mark: (k, u) => markRobot2591(k, u), find: (k, u) => findRobot2591(k, u), openPop: (k, u) => openPop2591(k, u), wants: (k, key, u) => workerWants[k](key, u),
