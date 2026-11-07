@@ -769,7 +769,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-f8fe35ab2c'), getJSON('sprites/atlas.json?v=2.57-f8fe35ab2c')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.57-81e91b9778'), getJSON('sprites/atlas.json?v=2.57-81e91b9778')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14375,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.57-f8fe35ab2c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.57-81e91b9778';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -17645,7 +17645,7 @@ function pieces246(mi, TR){ const out = [], st = cartStep89(), kind = kindOfKey2
 { const _dte90 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
   try { if (isRail89(T)){ const { cx, cy } = center(x, y), snow = !!(S.snow && S.snow.cover), m = T.cm || 0;
       if (snow && pc246(m) === 1 && T.stop && T.stop !== 'red') spr('snow_rail_m' + String(m).padStart(2, '0'), 0, cx, cy);
-      if (T.xp){ const a = m === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, cx, cy); if (snow) spr('snow_rail_cross_' + a, 0, cx, cy); }
+      if (T.xp){ const a = (m & 10) && !(m & 5) ? 'x' : 'y';   /* v2.57：門口格 cm 只有一邊，照那一邊的方向 */ spr('rail_cross_' + a, 0, cx, cy); if (snow) spr('snow_rail_cross_' + a, 0, cx, cy); }
       for (const b of bits246(fenceOf246(T)).filter(b => b === 1 || b === 8)){ spr('rail_fence_e' + b, 0, cx, cy); if (snow) spr('snow_rail_fence_e' + b, 0, cx, cy); } } } catch(e){}
   const r = _dte90(M, k, T, x, y, t, now);
   try { const mi = S.cur; if (M !== S.maps[mi]) return r; const { cx, cy } = center(x, y), snow = !!(S.snow && S.snow.cover);
@@ -20200,7 +20200,7 @@ document.addEventListener('click', e => { const a = e.target && e.target.closest
     if (f[0] === x && f[1] === y) ends.push([x - d[0], y - d[1]]); if (l[0] === x && l[1] === y) ends.push([x + d[0], y + d[1]]);
     for (const [nx, ny] of ends){ const nk = tkey(nx, ny), N = M.tiles[nk]; if (!isRail89(N) || N.br247) continue; const c = center(nx, ny), nm = N.cm || 0;
       spr(roadSprite(M, nx, ny, N), 0, c.cx, c.cy);
-      if (N.xp){ const a = nm === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); if (snow) spr('snow_rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){}
+      if (N.xp){ const a = (nm & 10) && !(nm & 5) ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); if (snow) spr('snow_rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){}
   return r; }; }
 
 /* ---------- 3. 野生寄主植物：點了開面板，不直接拔 ---------- */
@@ -20555,7 +20555,7 @@ function fillCap2522(el){ CAP2522.innerHTML = ''; const spr = el.dataset.spr47;
     // 橋頭兩端：隔壁軌道補畫在橋墩上面（同 2.）
     const f = rn[0], l = rn[rn.length - 1], ends = []; if (f[0] === x && f[1] === y) ends.push([x, y - 1]); if (l[0] === x && l[1] === y) ends.push([x, y + 1]);
     for (const [nx, ny] of ends){ const N = M.tiles[tkey(nx, ny)]; if (!isRail89(N) || N.br247) continue; const c = center(nx, ny); spr(roadSprite(M, nx, ny, N), 0, c.cx, c.cy);
-      if (N.xp){ const a = (N.cm || 0) === 10 ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){ return _db2543y(M, mi, k, T, x, y, t, now, snow, cx, cy); } }; }
+      if (N.xp){ const a = ((N.cm || 0) & 10) && !((N.cm || 0) & 5) ? 'x' : 'y'; spr('rail_cross_' + a, 0, c.cx, c.cy); } } } catch(e){ return _db2543y(M, mi, k, T, x, y, t, now, snow, cx, cy); } }; }
 
 /* ---------- 15. 柵欄：角落兩邊一起、已經放好的沿邊柵欄點得到 ---------- */
 const CORNER2543 = [[1, 2, '右角'], [2, 4, '下角'], [4, 8, '左角'], [8, 1, '上角']];
@@ -20679,18 +20679,18 @@ edgeOne2543 = function(M, x, y, b){ const st = efGet254(M, x, y, b), { cx, cy } 
     sfx('click'); afterAction(); }); };
 // 整格柵欄改成沿邊：8 種樣子，這格原本那 1 段免費，角落多 1 段要付
 fenceMenu2543 = function(M, x, y){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y); if (!T) return;
-  const nm = efName254(T.id), turn = T.id === 'fence' && maskAt(M, x, y, isFence) === '00', cur = efOf254(M, x, y);
+  const nm = efName254(T.style || T.id), turn = T.id === 'fence' && maskAt(M, x, y, isFence) === '00', cur = efOf254(M, x, y);
   let h = `<h5>${escapeHTML(nm)}（${escapeHTML(TX2543.whole || '整格')}）</h5>`;
   if (turn) h += `<button data-fm2543="turn" class="wide2543"><img src="${IMGSRC.ui_tool_move || ''}" alt="">${escapeHTML(TX2543.turn || '轉向')}</button>`;
   h += `<p class="efh2543">${escapeHTML(TX2543.toEdge || '改成沿邊（這一段不用再付錢）：選樣子')}</p>` + shapeBtns2543(M, x, y, 'data-sh2543', { mustKeep: true, free: 1 });
   h += `<button data-fm2543="store" class="wide2543"><img src="${IMGSRC.ui_tool_store || ''}" alt="">${escapeHTML(TX2543.storeFence || '收回倉庫')}</button>`;
   if (cur.length) h += `<button data-ee2543="1" class="wide2543">${escapeHTML(TX2543.editEdges || '改這格已經有的沿邊柵欄…')}</button>`;
   showPop53(cx, cy - 30, h); shapeDecorate2543(M, x, y, 'data-sh2543');
-  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); if (M.tiles[k] !== T) return; const id = T.id; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0;
+  POP53.querySelectorAll('[data-sh2543]').forEach(btn => btn.onclick = () => { closePop53(); if (M.tiles[k] !== T) return; const id = T.style || T.id; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0;
     if (!shapeApply2543(M, x, y, SHAPES2543[+btn.dataset.sh2543], id, 1)){ M.tiles[k] = T; RT.decoVer++; RT.regionsAt = 0; return; } floatText(cx, cy - 24, '改成沿邊', '#8a5d36', 11); });
   POP53.querySelectorAll('[data-fm2543]').forEach(btn => btn.onclick = () => { const v = btn.dataset.fm2543; closePop53(); if (M.tiles[k] !== T) return;
     if (v === 'turn'){ fenceTurn53(M, x, y, T); return; }
-    S.storage[T.id] = (S.storage[T.id] || 0) + 1; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('click'); afterAction(); });
+    S.storage[T.style || T.id] = (S.storage[T.style || T.id] || 0) + 1; delete M.tiles[k]; RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, '收進倉庫', '#2f7fa8', 11); sfx('click'); afterAction(); });
   const ee = POP53.querySelector('[data-ee2543]'); if (ee) ee.onclick = () => { closePop53(); edgeEditMenu2543(M, x, y); }; };
 // 搬到別格（同一邊）：放下去那格要還是 8 種之一
 { const _pm2543 = placeMoved254; placeMoved254 = function(M, x, y){ const V = RT.mv254;
@@ -21515,7 +21515,7 @@ function iconCanvas(name, frame = 0, size = 56){
   }
   return c;
 }
-window.__farm257 = { trayItem: (...a) => trayItem(...a), UIbuildTray: (...a) => UIbuildTray(...a), stay: () => stay65(), nextBlock: () => nextBlockInfo(), iconCanvas: (...a) => iconCanvas(...a), fit: FIT257, atlas: n => ATLAS[n], cam: () => cam, center: (x, y) => center(x, y) };
+window.__farm257 = { placeAtt: (...a) => placeAtt246(...a), railNet: mi => railNet89(mi), trayItem: (...a) => trayItem(...a), UIbuildTray: (...a) => UIbuildTray(...a), stay: () => stay65(), nextBlock: () => nextBlockInfo(), iconCanvas: (...a) => iconCanvas(...a), fit: FIT257, atlas: n => ATLAS[n], cam: () => cam, center: (x, y) => center(x, y) };
 
 /* v2.57 修正：選項列「已達上限」被當成鎖住時（重型充電樁 6/6），角標寫「已滿」，不再出現「Lv undefined」 */
 { const _ti257 = trayItem; trayItem = function(kind, id, name, lines, selected, locked, extra = {}){ const b = _ti257(kind, id, name, lines, selected, locked, extra);
@@ -21547,6 +21547,55 @@ const tx257 = (s, o) => String(s).replace(/\{(\w+)\}/g, (m, k) => o[k] ?? '');
       el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } if (full && !st){ toast(tx257(BT257.toastFull, o)); return; } S.sel.build = id; UIbuildTray(); updateHint(); };
       old.replaceWith(el); } } catch(e){ console.warn(e); }
   return r; }; }
+
+/* v2.57 修正：建材小屋／車庫門口那格軌道接進門（T.sj251、doorMask247），看起來是直線，但 T.cm 只記了外面那一邊，
+   放通行板時被當成「不是直線」擋掉；sanitize246 每次也會把這種格子的通行板收回倉庫（放的當下 afterAction 也會跑到）。
+   放通行板、整理接法時把接進門的那一邊也算進去（doorBits2542）。畫通行板的方向（g90／g106 直接改）也照這個 */
+const door257 = (M, k, T) => { const cm = T.cm || 0, d = typeof doorBits2542 === 'function' ? doorBits2542(M, k, T) : 0, m = cm | d; return d && (m === 5 || m === 10) ? m : 0; };   // 接進門、加上門那一邊是直線
+{ const _sz257 = sanitize246; sanitize246 = function(M){ const keep = [];
+  if (M) for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.xp && isRail89(T) && door257(M, k, T)){ keep.push(T); delete T.xp; } }
+  try { return _sz257(M); } finally { for (const T of keep) T.xp = 1; } }; }
+{ const _pa257 = placeAtt246; placeAtt246 = function(M, x, y, id){
+  const k = tkey(x, y), T = M && M.tiles[k];
+  if (id !== 'rail_cross' || !T || !isRail89(T) || T.xp) return _pa257(M, x, y, id);
+  railNet89(S.cur); const m = door257(M, k, T); if (!m || T.cm === m) return _pa257(M, x, y, id);   // 先整理好接法（之後 _pa257 裡的 railNet89 走快取），再暫時把門那一邊算進去
+  const had = Object.prototype.hasOwnProperty.call(T, 'cm'), cm = T.cm; T.cm = m;
+  try { return _pa257(M, x, y, id); } finally { if (M.tiles[k] === T){ if (had) T.cm = cm; else delete T.cm; } } }; }
+
+/* v2.57：沿邊柵欄的「改方向／改樣子」和放沿邊柵欄的小選單，多一個「整格（原本的放法）」：柵欄佔滿這一格（{ t:'deco', id:'fence', style }）。
+   這格要是空的；這一段直接拿來用（不用再付錢），這格其他沿邊的段收回倉庫。放新柵欄時（這格沒有沿邊）倉庫先用、不夠付錢。
+   g106 fenceMenu2543 直接改：有款式的整格柵欄（白色尖頭、竹籬笆…）改成沿邊／收回倉庫時用自己的款式（之前變成木柵欄） */
+const FW257 = Object.assign({ btn: '整格（原本的放法）', busy: '這格有東西', done: '改成整格', head: '或是：' }, ((CFG.ui || {}).v257 || {}).fenceWhole || {});
+const wholeTile257 = st => st && st !== 'fence' ? { t: 'deco', id: 'fence', style: st } : { t: 'deco', id: 'fence' };
+function wholeDia257(){ const r = Math.min(2, window.devicePixelRatio || 1), W = 84, H = 48, c = document.createElement('canvas'); c.width = W * r; c.height = H * r; c.className = 'ef2543';
+  const g = c.getContext('2d'); g.scale(r, r); const cx = W / 2, cy = H / 2, hw = 20, hh = 10;
+  const dia = (px, py, fill, line) => { g.beginPath(); g.moveTo(px, py - hh); g.lineTo(px + hw, py); g.lineTo(px, py + hh); g.lineTo(px - hw, py); g.closePath(); g.fillStyle = fill; g.fill(); if (line){ g.strokeStyle = line; g.lineWidth = 1.2; g.stroke(); } };
+  for (const [sx, sy] of [[.5, -.5], [.5, .5], [-.5, .5], [-.5, -.5]]) dia(cx + sx * hw * 2, cy + sy * hh * 2, 'rgba(150,150,150,.14)', 'rgba(120,120,120,.35)');
+  dia(cx, cy, 'rgba(196,150,96,.55)', 'rgba(45,123,224,.95)');
+  const a = [cx - hw / 2, cy - hh / 2], d = [cx + hw / 2, cy + hh / 2];   // 穿過格子中間的一排柵欄
+  g.save(); g.lineCap = 'round'; g.strokeStyle = '#7a4a22'; g.lineWidth = 4; g.beginPath(); g.moveTo(a[0], a[1] - 3); g.lineTo(d[0], d[1] - 3); g.stroke();
+  for (const f of [0, .5, 1]){ g.fillStyle = '#7a4a22'; g.fillRect(a[0] + (d[0] - a[0]) * f - 1.5, a[1] + (d[1] - a[1]) * f - 8, 3, 9); } g.restore(); return c; }
+function wholeBtn257(M, x, y, grid, onPick){ const busy = !!M.tiles[tkey(x, y)], b = document.createElement('button');
+  b.dataset.fw257 = '1'; b.disabled = busy; b.innerHTML = `<span>${escapeHTML(FW257.btn)}${busy ? `（${escapeHTML(FW257.busy)}）` : ''}</span>`; b.insertBefore(wholeDia257(), b.firstChild);
+  b.onclick = () => { closePop53(); if (!M.tiles[tkey(x, y)]) onPick(); }; grid.appendChild(b); return b; }
+// 沿邊的一段 → 整格
+function edgeToWhole257(M, x, y, b){ const k = tkey(x, y), st = efGet254(M, x, y, b), { cx, cy } = center(x, y); if (!st || M.tiles[k]) return false; let back = 0;
+  for (const e of efOf254(M, x, y)){ const s2 = efGet254(M, x, y, e); if (!s2) continue; efSet254(M, x, y, e, null); if (e !== b){ S.storage[s2] = (S.storage[s2] || 0) + 1; back++; } }
+  M.tiles[k] = wholeTile257(st); RT.decoVer++; RT.regionsAt = 0; floatText(cx, cy - 24, FW257.done, '#8a5d36', 11);
+  if (back) floatText(cx, cy - 38, `${back} 段收進倉庫`, '#2f7fa8', 10); sfx('place'); afterAction(); return true; }
+// 放新的柵欄（沿邊模式）時直接放整格：倉庫先用、不夠付錢
+function placeWhole257(M, x, y, st){ const k = tkey(x, y), { cx, cy } = center(x, y); if (M.tiles[k] || efOf254(M, x, y).length) return false;
+  if (!efPay254(st, cx, cy)) return false; M.tiles[k] = wholeTile257(st); RT.decoVer++; RT.regionsAt = 0; sfx('place'); afterAction(); return true; }
+{ const _eo257 = edgeOne2543; edgeOne2543 = function(M, x, y, b, open){ const r = _eo257(M, x, y, b, open);
+  try { const grid = open && !POP53.hidden && POP53.querySelector('.shg2543'); if (grid) wholeBtn257(M, x, y, grid, () => edgeToWhole257(M, x, y, b)); } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _em257 = edgeMenu254; edgeMenu254 = function(M, x, y, st){ const r = _em257(M, x, y, st);
+  try { if (!POP53.hidden && !efOf254(M, x, y).length && !M.tiles[tkey(x, y)]){ const btns = POP53.querySelectorAll('[data-sh2543]'), last = btns[btns.length - 1];
+      if (last){ const h = document.createElement('p'); h.className = 'efh2543'; h.textContent = FW257.head; last.after(h); const fake = document.createElement('div'); h.after(fake);
+        const bt = wholeBtn257(M, x, y, fake, () => placeWhole257(M, x, y, st)); fake.replaceWith(bt); } } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `#pick53 [data-fw257]{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;padding:6px 4px;font-size:12px;line-height:1.25}`; document.head.appendChild(st); }
+window.__farm257.edgeToWhole = edgeToWhole257; window.__farm257.placeWhole = placeWhole257; window.__farm257.edgeOne = (...a) => edgeOne2543(...a); window.__farm257.closePop = () => closePop53();
 
   })(CFG, ATLAS_JSON);
 })();
