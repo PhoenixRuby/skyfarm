@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.59.1",
+  "configVersion": "2.60",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -11641,6 +11641,32 @@
     "desc": "一次收成的整池格數"
    },
    {
+    "id": "catch_fish",
+    "name": "撈魚高手",
+    "group": "魚",
+    "stat": "catchFish",
+    "tiers": [
+     10,
+     100,
+     300,
+     1000
+    ],
+    "desc": "在河裡用撈網撈到魚的條數"
+   },
+   {
+    "id": "catch_clam",
+    "name": "摸蛤仔",
+    "group": "魚",
+    "stat": "catchClam",
+    "tiers": [
+     10,
+     100,
+     300,
+     1000
+    ],
+    "desc": "在河底沙裡摸到扇貝、蛤的個數"
+   },
+   {
     "id": "honey",
     "name": "蜜蜂大王",
     "group": "昆蟲",
@@ -13703,8 +13729,8 @@
     ],
     "contiguous": true,
     "reserve": [
-     200,
-     300
+     1200,
+     1800
     ],
     "yields": {
      "soil": 1
@@ -13712,7 +13738,8 @@
     "robot": "grade",
     "dynamite": 1,
     "debris": "dirt",
-    "draw": "contour"
+    "draw": "contour",
+    "reserveNote": "v2.60（玩家 2026-11-08）：原本 200～300，初級整地機器人 2 小時就挖完一格，太快；改成 ×6，初級約 12 小時、中級約 7 小時、高級約 4.5 小時一格"
    },
    "river": {
     "name": "河流",
@@ -14725,5 +14752,208 @@
    "snow": "下雪（任何氣候都可以，白天晚上都行）"
   }
  },
- "animals_note258": "v2.58：新增 egg_duck／meat_rabbit／mallard／angora_rabbit／alpaca／ostrich；trait258 是特性（rainFast、litter、pestEater、winterExtra、guard、bonusItem），面板「特性」列顯示 name＋text"
-}
+ "animals_note258": "v2.58：新增 egg_duck／meat_rabbit／mallard／angora_rabbit／alpaca／ostrich；trait258 是特性（rainFast、litter、pestEater、winterExtra、guard、bonusItem），面板「特性」列顯示 name＋text",
+ "terrain260": {
+  "species": {
+   "ayu": {
+    "fryCostPerTile": 0,
+    "stages": 3,
+    "stageSeconds": 21600,
+    "feedItem": "fish_feed",
+    "river": true,
+    "noFry": true,
+    "name": "香魚",
+    "harvestPerTile": 320,
+    "xpPerTile": 22,
+    "stageFeedQtyPerTile": 2,
+    "swimScale": 1.8,
+    "stageNames": [
+     "幼魚",
+     "成長中",
+     "成熟"
+    ]
+   },
+   "salmon": {
+    "fryCostPerTile": 0,
+    "stages": 3,
+    "stageSeconds": 21600,
+    "feedItem": "fish_feed",
+    "river": true,
+    "noFry": true,
+    "name": "鮭魚",
+    "harvestPerTile": 600,
+    "xpPerTile": 40,
+    "stageFeedQtyPerTile": 3,
+    "swimScale": 2.0,
+    "stageNames": [
+     "幼魚",
+     "成長中",
+     "成熟"
+    ]
+   },
+   "eel": {
+    "fryCostPerTile": 0,
+    "stages": 3,
+    "stageSeconds": 21600,
+    "feedItem": "fish_feed",
+    "river": true,
+    "noFry": true,
+    "name": "鰻魚",
+    "harvestPerTile": 900,
+    "xpPerTile": 60,
+    "stageFeedQtyPerTile": 3,
+    "swimScale": 1.8,
+    "stageNames": [
+     "鰻線",
+     "黃鰻",
+     "銀鰻"
+    ],
+    "stageSprites": [
+     "eel_glass",
+     "eel_yellow",
+     "eel_silver"
+    ],
+    "icon": "eel_silver"
+   },
+   "scallop": {
+    "fryCostPerTile": 0,
+    "stages": 3,
+    "stageSeconds": 21600,
+    "feedItem": "fish_feed",
+    "river": true,
+    "noFry": true,
+    "name": "扇貝",
+    "harvestPerTile": 380,
+    "xpPerTile": 26,
+    "stageFeedQtyPerTile": 2,
+    "swimScale": 1.6,
+    "shell": true,
+    "stageNames": [
+     "幼貝",
+     "成長中",
+     "成熟"
+    ]
+   },
+   "clam": {
+    "fryCostPerTile": 0,
+    "stages": 3,
+    "stageSeconds": 21600,
+    "feedItem": "fish_feed",
+    "river": true,
+    "noFry": true,
+    "name": "蛤",
+    "harvestPerTile": 180,
+    "xpPerTile": 12,
+    "stageFeedQtyPerTile": 1,
+    "swimScale": 1.6,
+    "shell": true,
+    "stageNames": [
+     "幼貝",
+     "成長中",
+     "成熟"
+    ]
+   }
+  },
+  "netItem": {
+   "name": "撈網",
+   "category": "consumable",
+   "sellPrice": 0,
+   "shopOnly": true,
+   "buyPrice": 6,
+   "icon": "ui_it_paper_net",
+   "note": "v2.60：夜市撈金魚那種紙網，一包 5 張 30 金幣（terrain260.catch.pack）；撈到破為止；程式載入時併進 CFG.items.paper_net"
+  },
+  "note": "v2.60（規則文件「v2.60 挖礦動畫殘影、土丘太快挖完、河流水產、瀑布一格與河岸側面」）",
+  "wild": {
+   "minCells": 3,
+   "perCell": 2,
+   "spawnHours": 6,
+   "riverStageHours": 24,
+   "winterRate": 0.5,
+   "weights": {
+    "ayu": 30,
+    "salmon": 15,
+    "eel": 20,
+    "scallop": 15,
+    "clam": 20
+   },
+   "matureSellRate": 0.5,
+   "note": "天然或玩家挖的河都算，相連的河格至少 minCells 格才有；每條河最多 河格數 × perCell 隻，少於上限時每 spawnHours 小時多一隻幼體（種類照 weights）；在河裡每階段 riverStageHours 小時，冬天／下雪 × winterRate，一樣看得到、撈得到；撈到成熟的可以直接賣（魚池收成價 × matureSellRate）；河被填到不足 minCells 格時野生水產消失；不會游進瀑布那格"
+  },
+  "catch": {
+   "dailyTries": 10,
+   "reset": "localMidnight",
+   "pack": 5,
+   "packPrice": 30,
+   "net": {
+    "soakSeconds": 4.0,
+    "fastSwipe": 2600,
+    "hitRadius": 1.0,
+    "flee": {
+     "radius": 1.3,
+     "turn": 1.5
+    },
+    "note": "v2.60.2（玩家 2026-11-08：還是撈不到）：滑的過程中魚只要進到網框 hitRadius 內就「進網」，跟著網子走，放開就撈起來（不再有太慢失敗）；fastSwipe 看放開前一小段；魚在網子 flee.radius 倍內才躲、轉向力道 flee.turn"
+   },
+   "difficulty": {
+    "stage": [
+     0.05,
+     0.15,
+     0.3
+    ],
+    "eel": 0.1,
+    "salmon": 0.05,
+    "escape": [
+     0.1,
+     0.25,
+     0.45
+    ],
+    "esc_eel": 0.2,
+    "note": "stage／eel／salmon：撈起來時網裡有魚加的破網機率；escape：魚在網裡每秒溜走的機率（幼／成長中／成熟），esc_eel 鰻魚另外加 → 進網就要快撈起來"
+   },
+   "shellTap": true,
+   "toFryStore": true,
+   "shellRub": {
+    "sandHeight": 70,
+    "radius": 28,
+    "times": 4,
+    "swing": 8,
+    "note": "v2.60.1（玩家 2026-11-08：點一下就收穫太容易；距離不好懂，改算次數）：扇貝、蛤埋在河底沙裡（畫面下方 sandHeight 點高），看不到，只會偶爾冒泡；在沙上按住、在貝 radius 點內來回摸 times 次（去＋回＝1 次，每一下至少滑 swing 點）才摸到；放開沒摸到也算一次"
+   },
+   "note": "河流面板「撈魚」→ 撈魚畫面：手指／滑鼠在水裡滑一下＝撈一次（算一次 dailyTries），網子泡在水裡超過 soakSeconds 秒變軟、滑太快（px/秒 > fastSwipe）容易破、魚進到網框 hitRadius 內就進網、放開就撈起來，在網裡待太久會溜走（difficulty.escape）；破網機率加 difficulty（階段、鰻魚滑、鮭魚大）；一張網沒破可以繼續撈；扇貝、蛤埋在河底沙裡，在沙上同一個地方來回摸 4 次才算（shellRub.times），不用網子、一樣算次數；撈到的進倉庫「魚苗」（保留階段，魚池空格放魚苗時選，免費）"
+  },
+  "waterfall": {
+   "one": true,
+   "width": 1,
+   "default": "downstream",
+   "note": "每條河最多一格瀑布、固定一格寬；預設在流向的出口（島邊下游最遠那格）；點靠島邊的河格小選單「設成瀑布」／「關掉瀑布」／「打開瀑布（設在這裡）」，記在河上（M.ter242.g[id].fall260＝\"x,y,se|sw\" 或 \"off\"）；那格不再是島邊就回到預設"
+  },
+  "side": {
+   "water": 13,
+   "bed": 9,
+   "taper": 2.4,
+   "note": "其他靠島右下／左下邊的河格在島身上畫剖面（水層、卵石河床、草根，兩端河岸收成弧形）；畫法 art/draw72.js riverSide72（程式照搬）"
+  },
+  "texts": {
+   "wildHead": "目前出現的野生生物",
+   "none": "這條河還沒有野生生物",
+   "tooShort": "河要連成 3 格以上才會有野生水產",
+   "catchBtn": "撈魚",
+   "triesLeft": "今天還能撈 {n} 次",
+   "nets": "撈網 {n} 張",
+   "noNet": "沒有撈網了：一包 5 張 30 金幣",
+   "swipe": "在水裡滑一下把網子撈起來",
+   "soft": "泡太久，網子變軟了…",
+   "torn": "破了！魚跑掉了",
+   "miss": "沒撈到，魚跑掉了",
+   "inNet": "魚進網了！快撈起來",
+   "slip": "魚從網子溜走了！",
+   "got": "撈到 {name}（{stage}）",
+   "shell": "扇貝、蛤：在河底的沙裡同一個地方來回摸 4 次（不用網子）",
+   "noTries": "今天的次數用完了，明天再來",
+   "setFall": "設成瀑布",
+   "offFall": "關掉瀑布",
+   "onFall": "打開瀑布（設在這裡）"
+  }
+ }
+}

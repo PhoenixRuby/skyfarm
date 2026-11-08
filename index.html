@@ -271,7 +271,7 @@ body.m-land .item b{font-size:12.5px}body.m-land .item small{font-size:10px}
 body.m-land .item .tag,body.m-land .item .count{top:auto;bottom:2px;left:auto;right:2px}
 body.m-land .traytog{position:fixed;align-self:auto;margin:0;z-index:3}
 body.m-land .hint{position:fixed;top:8px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .4s;pointer-events:none;max-width:44%;z-index:4}
-body.m-land .hint.show{opacity:1}
+body.m-land .hint.show{opacity:1}body.m-land .hint{border-radius:14px;line-height:1.35}body.m-land .hint.low260{text-align:center}
 body.m-land .tut{top:auto;bottom:60px;width:min(420px,60%)}
 .orgico{position:relative;display:inline-block}.orgico img{position:absolute;right:-3px;top:-3px;width:14px;height:14px}
 .seedtabs{flex:none;display:flex;flex-direction:column;gap:4px;justify-content:center}.seedtabs button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:3px 8px;font-size:12px;display:flex;align-items:center;gap:4px;white-space:nowrap}.seedtabs button.on{background:var(--ink);color:var(--accent);border-color:var(--ink)}.seedtabs img{width:20px;height:20px}
@@ -699,6 +699,22 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
 .bookpg h3 .ico252{width:26px;height:26px;object-fit:contain;vertical-align:middle;margin-right:6px}
 .bookpg h3 .small{font-weight:400;margin-left:6px}
 .bookpg td img.ico252{width:32px;height:32px;object-fit:contain}
+/* v2.60 河流水產、撈魚（g113） */
+.rv260 h4{margin:0 0 6px;font-size:14px}.wl260{display:flex;flex-direction:column;gap:4px}
+.wr260{display:grid;grid-template-columns:34px auto auto 1fr;align-items:center;gap:6px}.wr260 img{width:34px;height:34px;object-fit:contain}.wr260 .n260{font-weight:700}.wr260 small{opacity:.75;text-align:right}
+.row260{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 4px}
+#catch260{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;background:rgba(10,20,28,.55);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+#catch260 .cc260{background:#f7f3ea;color:#2a3b46;border-radius:20px;padding:12px 14px 10px;width:min(96vw,640px);height:min(94vh,860px);height:min(94dvh,860px);box-sizing:border-box;box-shadow:0 10px 40px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;gap:6px}
+#catch260 .hd260{display:flex;width:100%;align-items:center;justify-content:space-between;gap:8px}#catch260 .hd260 b{font-size:16px}
+#catch260 .st260{font-size:13px;color:#5b6b75}#catch260 canvas{border-radius:14px;touch-action:none;width:100%;flex:1 1 auto;min-height:0;cursor:crosshair;display:block}#catch260 .row260,#catch260 .buy260{flex:none}#catch260 [hidden]{display:none!important}@media (max-height:520px){#catch260 .sub260{display:none}#catch260 .cc260{gap:4px;padding:8px 12px}}
+#catch260 .cc260.side260{display:grid;width:min(98vw,980px);grid-template-columns:auto 1fr auto;grid-template-rows:auto auto 1fr auto;grid-template-areas:"hd hd hd" "st st st" "md cv bt" "ms ms ms";column-gap:10px;row-gap:4px;align-items:center}
+#catch260 .side260 .hd260{grid-area:hd}#catch260 .side260 .st260{grid-area:st;text-align:center}#catch260 .side260 canvas{grid-area:cv;justify-self:center}#catch260 .side260 .msg260{grid-area:ms}#catch260 .side260 .sub260{display:none}
+#catch260 .side260 .mode260{grid-area:md;flex-direction:column;border-radius:16px;gap:4px}#catch260 .side260 .mode260 button{border-radius:12px;padding:12px 10px;white-space:nowrap}
+#catch260 .side260 .bt260{grid-area:bt;flex-direction:column;margin:0}#catch260 .side260 .bt260 .btn{min-width:84px}
+#catch260 .cc260{position:relative}#catch260 .buy260{position:absolute;left:12px;right:12px;bottom:10px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff6dc;border-radius:12px;padding:10px 12px;box-sizing:border-box;box-shadow:0 4px 18px rgba(0,0,0,.25)}body.night #catch260 .buy260{background:#2b3a48}
+#catch260 .mode260{display:flex;gap:0;border-radius:999px;background:#e6dfcf;padding:3px}#catch260 .mode260 button{border:0;background:none;padding:6px 14px;border-radius:999px;font:inherit;font-weight:700;color:#5b6b75;cursor:pointer}#catch260 .mode260 button.on{background:#2b6f9e;color:#fff}body.night #catch260 .mode260{background:#2b3a48}body.night #catch260 .mode260 button{color:#9fb2c0}body.night #catch260 .mode260 button.on{background:#3d86bb;color:#fff}
+#catch260 .msg260{font-weight:700;font-size:15px;min-height:20px;text-align:center}#catch260 .sub260{color:#5b6b75}
+body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch260 .st260,body.night #catch260 .sub260{color:#9fb2c0}
 </style>
 </head>
 <body>
@@ -769,7 +785,7 @@ body.ui-hide #isl63,body.ui-hide #isl63btn{display:none!important}
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.59.1-4212752809'), getJSON('sprites/atlas.json?v=2.59.1-4212752809')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60-f7b4a7bdb9'), getJSON('sprites/atlas.json?v=2.60-f7b4a7bdb9')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14375,7 +14391,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.59.1-4212752809';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.60-f7b4a7bdb9';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22140,6 +22156,372 @@ body.night #pick53 .pb2591{color:#e8f0fc}body.night #pick53 .ls2591 li:hover{bac
 window.__farm2591 = { prob: (k, u) => prob2591(k, u), route: (M, f, g) => route2591(M, f, g), block: (M, k) => block2591(M, k), unitText: (k, u) => unitText(k, u),
   mark: (k, u) => markRobot2591(k, u), find: (k, u) => findRobot2591(k, u), openPop: (k, u) => openPop2591(k, u), wants: (k, key, u) => workerWants[k](key, u),
   myWalkers: n => myWalkers(n), trainStop: (mi, TR) => trainStopTR2591(mi, TR), get brDone(){ return RT.brDone2591; }, get rvDone(){ return RT.rvDone2591; }, get mark2591(){ return RT.mark2591; }, clearCache: () => { RT.pb2591 = {}; } };
+
+/* ===== v2.60：土丘舊存檔 ×6、河流野生水產與撈魚小遊戲、瀑布一格（可指定／關掉）、河岸側面 =====
+   規則文件「v2.60 挖礦動畫殘影、土丘太快挖完、河流水產、瀑布一格與河岸側面」；設定 terrain260；美術 batch71（機器人加寬，不用改程式）、batch72
+   - 設定：terrain260.species 併進 CFG.fish（noFry，魚池選單拿掉、只能從河裡撈）、CFG.items（魚池收成品＋野生成熟 wild_<id>，半價）
+   - 野生水產存在地圖上 M.w260 = { list: [{ sp, st, t, k }], acc: { 河 id: 秒 }, seeded }（k＝住在哪一格河；不在瀑布那格）
+     step260 在 stepAll 後面：長大（冬天／下雪 × winterRate）、每條河（相連 ≥ minCells 格）不滿 河格數 × perCell 時每 spawnHours 多一隻幼體
+   - 畫：drawTileExtras 包裝，河格畫住在那格的水產（drawFishSprite56，跟魚池一樣的俯視圖）＋靠島邊的河格畫側面 riverSide260（畫法同 art/draw72.js）
+   - 瀑布：重新宣告 drawFall83（一條河只畫 fall260(M, g) 那一格、固定一格寬）、falls87（河水漸變淺藍只看那一格）；g.fall260 ＝ 'x,y,se|sw' 或 'off'
+   - 查看地形（河）：openTerrain83 包裝，左欄加「目前出現的野生生物」＋「撈魚」＋瀑布按鈕
+   - 撈魚畫面 openCatch260：#catch260 全畫面浮層（不在 #modal 裡）、紙網 S.net260、每天次數 S.catch260、撈到的幼體 S.fry260['<種>|<階段>']，成熟的進倉庫 wild_<種>
+   - 魚池：魚的選單多「河鮮」分頁（r260_<種>_<階段>，免費放進空格）；鰻魚在魚池照階段換圖
+   - normalizeState v260：土丘 r、r0 ×6（一次）；S.fry260、S.net260、S.catch260 */
+const C260 = CFG.terrain260 || {}, WL260 = C260.wild || {}, CA260 = C260.catch || {}, SD260 = C260.side || {}, TX260 = C260.texts || {};
+const SPEC260 = C260.species || {}, SPIDS260 = Object.keys(SPEC260);
+const tx260 = (s, o = {}) => String(s || '').replace(/\{(\w+)\}/g, (m, k) => o[k] ?? '');
+
+/* ---------- 1. 設定併進魚與物品 ---------- */
+for (const id of SPIDS260){ const F = SPEC260[id];
+  if (!CFG.fish[id]) CFG.fish[id] = Object.assign({}, F, { fryCostPerTile: F.fryCostPerTile || 0 });
+  if (!CFG.items[id]) CFG.items[id] = { name: F.name, category: 'fish', sellPrice: F.harvestPerTile };
+  const w = 'wild_' + id; if (!CFG.items[w]) CFG.items[w] = { name: '野生' + F.name, category: 'fish', sellPrice: Math.round(F.harvestPerTile * (WL260.matureSellRate ?? .5)) };
+  if (typeof ITEM_ICON === 'object'){ const ic = 'ui_fish_' + (F.icon || id); if (IMGSRC[ic]){ ITEM_ICON[id] = ic; ITEM_ICON[w] = ic; } } }
+const stName260 = (sp, st) => ((SPEC260[sp] || {}).stageNames || ['幼', '成長中', '成熟'])[Math.min(2, st)] || '';
+const sprOf260 = (sp, st) => { const F = SPEC260[sp] || CFG.fish[sp] || {}; return F.stageSprites ? F.stageSprites[Math.max(0, Math.min(F.stageSprites.length - 1, st))] : sp; };
+const isShell260 = sp => !!(SPEC260[sp] || {}).shell;
+
+/* ---------- 2. 舊存檔 ---------- */
+{ const _ns260 = normalizeState; normalizeState = function(d){ const r = _ns260(d), s = r || d;
+  try { if (s){ s.fry260 = s.fry260 || {}; s.net260 = s.net260 || 0; s.catch260 = s.catch260 || { day: '', n: 0 };
+    if (!s.v260){ for (const M of s.maps || []) for (const k in (M.tiles || {})){ const T = M.tiles[k]; if (T && T.t === 'terrain' && T.kind === 'mound' && T.r0){ T.r = Math.round(T.r * 6); T.r0 = Math.round(T.r0 * 6); } }
+      s.v260 = 1; } } } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* ---------- 3. 河、島邊、瀑布那一格 ---------- */
+const isRv260 = T => !!(T && T.t === 'terrain' && T.kind === 'river');
+const rivers260 = M => Object.entries((M.ter242 && M.ter242.g) || {}).filter(([, g]) => g && g.kind === 'river' && g.cells && g.cells.length);
+// 這格靠哪些島邊（看得到的右下 se＝+x、左下 sw＝+y）
+const edges260 = (M, x, y) => { const e = []; if (!inMap(M, x + 1, y)) e.push('se'); if (!inMap(M, x, y + 1)) e.push('sw'); return e; };
+function fallDefault260(M, g){ let best = null, bs = -1e9;
+  const ax = g.axis === 'y' ? 1 : 0, sg = (g.dir || 1) < 0 ? -1 : 1;
+  for (const k of g.cells){ const [x, y] = pkey(k), es = edges260(M, x, y); if (!es.length) continue;
+    const s = ([x, y][ax]) * sg * 1000 + (x + y); if (s > bs){ bs = s; best = { x, y, edge: es.includes('se') && (ax === 0 || !es.includes('sw')) ? 'se' : es[0] }; } }
+  return best; }
+// 這條河的瀑布：{ x, y, edge } 或 null（沒接到島邊、或玩家關掉）
+function fall260(M, g){ if (!g) return null; const f = g.fall260;
+  if (f === 'off') return null;
+  if (f){ const [xs, ys, e] = f.split(','), x = +xs, y = +ys, k = tkey(x, y);
+    if (g.cells.includes(k) && edges260(M, x, y).includes(e)) return { x, y, edge: e }; }
+  return fallDefault260(M, g); }
+const fallKey260 = F => F ? `${F.x},${F.y},${F.edge}` : '';
+
+// 河水接近瀑布漸變淺藍：只看那一格（g87 的 terCache 包裝照這個字串判斷要不要重算）
+function falls87(M, g){ const F = fall260(M, g); if (!F) return []; return [F.edge === 'se' ? [F.x + .5, F.y] : [F.x, F.y + .5]]; }
+
+// 一條河只畫一格瀑布（同 g86，n 固定 1）
+function drawFall83(M, x, y, t){
+  const F0 = RV83.waterfall || {}, name = F0.sprite || 'terrain_waterfall_loop', A = ATLAS[name], im = IMG[name]; if (!A || !im) return;
+  const T0 = M.tiles[tkey(x, y)], g = T0 && terG83(M, T0), F = fall260(M, g); if (!F || F.x !== x || F.y !== y) return;
+  const fr = motion && A.frames > 1 ? Math.floor(t * (A.fps || 8) + h32(x * 7 + y * 13) * A.frames) % A.frames : 0;
+  const faces = A.faces || 'sw', skew = A.skew ?? F0.skew ?? .162, dx = F.edge === 'se' ? 1 : 0, dy = 1 - dx;
+  const flip = F.edge !== faces, mid = center(x + dx * .5, y + dy * .5), s = 1 / (A.scale || 4), k = skew * (flip ? -1 : 1);
+  ctx.save(); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.translate(mid.cx, mid.cy); ctx.transform(1, k, 0, 1, 0, 0); ctx.scale(flip ? -s : s, s);
+  ctx.drawImage(im, (A.sx || 0) + fr * A.frameWidth, A.sy || 0, A.frameWidth, A.frameHeight, -A.anchor[0], -A.anchor[1], A.frameWidth, A.frameHeight); ctx.restore();
+  try { rainbow86(S.cur, x, y, F.edge, mid, 1, A, flip); } catch(e){ if (!RT.err86){ RT.err86 = 1; console.warn(e); } } }
+function setFall260(mi, gid, v){ const M = S.maps[mi], g = M && M.ter242 && M.ter242.g[gid]; if (!g) return; g.fall260 = v; delete RT.ter83[mi + '|' + gid]; afterAction(); }
+
+/* ---------- 4. 河岸側面（畫法同 art/draw72.js riverSide72；這裡照格子畫，擾動用整條邊的座標，相鄰格接得起來） ---------- */
+const rnd260 = seed => { let s = (seed * 9301 + 49297) % 233280; if (s < 0) s += 233280; return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; };
+function riverSide260(P0, P1, s0, s1, tp0, tp1, seed, f){
+  const c = ctx, r = rnd260(seed), WD = SD260.water ?? 13, BED = SD260.bed ?? 9, TP = SD260.taper ?? 2.4, N = 16;
+  const at = u => [P0[0] + (P1[0] - P0[0]) * u, P0[1] + (P1[1] - P0[1]) * u], sAt = u => s0 + (s1 - s0) * u;
+  const wob = (s, k, amp) => (Math.sin(s * 6.1 + k) * .55 + Math.sin(s * 13.7 + k * 2.3) * .3) * amp;
+  const prof = u => { const a = tp0 ? Math.min(1, u * TP) : 1, b = tp1 ? Math.min(1, (1 - u) * TP) : 1; return Math.sqrt(Math.max(0, Math.min(a, b))); };
+  const top = [], wBot = [], bBot = [];
+  for (let i = 0; i <= N; i++){ const u = i / N, p = at(u), k = prof(u), s = sAt(u); top.push(p); wBot.push([p[0], p[1] + 1 + WD * k + wob(s, 1, 1.2) * k]); bBot.push([p[0], p[1] + 2 + (WD + BED) * k + wob(s, 7, 2.6) * k]); }
+  const path = (A, B) => { c.beginPath(); A.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); for (let i = B.length - 1; i >= 0; i--) c.lineTo(B[i][0], B[i][1]); c.closePath(); };
+  const y0 = Math.min(P0[1], P1[1]), y1 = Math.max(P0[1], P1[1]);
+  c.save(); path(top, bBot); const gb = c.createLinearGradient(0, y0, 0, y1 + WD + BED + 4); gb.addColorStop(0, '#7d5c3b'); gb.addColorStop(1, '#583f29'); c.fillStyle = gb; c.fill(); c.clip();
+  const pc = ['#a29a8c', '#877f74', '#b8b0a2', '#6f6a62'];
+  for (let i = 0; i < 10; i++){ const u = r(), p = at(u), k = prof(u), y = p[1] + WD * k + 1.5 + r() * BED * k * .9, w = .9 + r() * 2.2;
+    c.fillStyle = pc[i % 4]; c.beginPath(); c.ellipse(p[0], y, w, w * .7, 0, 0, 7); c.fill(); c.fillStyle = 'rgba(255,255,255,.2)'; c.beginPath(); c.ellipse(p[0] - w * .3, y - w * .3, w * .4, w * .25, 0, 0, 7); c.fill(); }
+  c.restore();
+  c.save(); path(top, wBot); const gw = c.createLinearGradient(0, y0 - 2, 0, y1 + WD); gw.addColorStop(0, 'rgba(92,182,218,.94)'); gw.addColorStop(1, 'rgba(30,98,150,.94)'); c.fillStyle = gw; c.fill(); c.clip();
+  for (let i = 0; i < 2; i++){ const u = (i + .5) / 2 + Math.sin(f * 1.3 + i) * .01, p = at(u); c.fillStyle = 'rgba(205,242,255,.13)'; c.beginPath(); c.moveTo(p[0] - 2, p[1]); c.lineTo(p[0] + 2, p[1]); c.lineTo(p[0] + 5, p[1] + WD + 4); c.lineTo(p[0] - 1, p[1] + WD + 4); c.closePath(); c.fill(); }
+  c.lineCap = 'round';
+  for (let i = 0; i < 2; i++){ const u = .1 + r() * .8, p = at(u), y = p[1] + WD * prof(u); c.strokeStyle = ['#3d8a55', '#4f9d62'][i % 2]; c.lineWidth = .8; c.beginPath(); c.moveTo(p[0], y + 1); c.quadraticCurveTo(p[0] - 2 + Math.sin(f * 1.5 + i) * .8, y - 3, p[0] + r() - .5, y - 5 - r() * 3); c.stroke(); }
+  for (let i = 0; i < 3; i++){ const u = r(), p = at(u); c.fillStyle = 'rgba(255,255,255,.6)'; c.beginPath(); c.arc(p[0], p[1] + WD * prof(u) * (.2 + ((r() + f * .22) % 1) * .65), .45, 0, 7); c.fill(); }
+  c.restore();
+  c.strokeStyle = 'rgba(228,250,255,.95)'; c.lineWidth = .8; c.beginPath(); top.forEach(([x, y], i) => { const yy = y + 1 + Math.sin(sAt(i / N) * 14 + f * 1.4) * .25; i ? c.lineTo(x, yy) : c.moveTo(x, yy); }); c.stroke();
+  c.strokeStyle = 'rgba(118,88,48,.85)'; c.lineWidth = .45;
+  for (let i = 0; i < 2; i++){ const u = r(), p = at(u), k = prof(u), yy = p[1] + 1 + (WD + BED * .3) * k; c.beginPath(); c.moveTo(p[0], yy); c.quadraticCurveTo(p[0] + 1.5, yy + 3, p[0] + (r() - .5) * 3, yy + 5 + BED * k * .5); c.stroke(); }
+  c.strokeStyle = 'rgba(40,25,12,.35)'; c.lineWidth = 1; c.beginPath(); bBot.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke(); }
+// 這格靠島邊的每一邊（瀑布那邊除外）畫側面；兩端：隔壁也是沿著同一條島邊的河側面（或同一格轉角）就接著畫，否則河岸收成弧形
+function drawSides260(M, k, T, x, y, t){
+  const es = edges260(M, x, y); if (!es.length) return;
+  const g = terG83(M, T), F = fall260(M, g), { cx, cy } = center(x, y), f = motion ? Math.floor(t * 3) % 4 : 0;
+  const isSide = (a, b, e) => { const U = M.tiles[tkey(a, b)]; if (!isRv260(U) || U.g !== T.g) return false; if (!edges260(M, a, b).includes(e)) return false; return !(F && F.x === a && F.y === b && F.edge === e); };
+  const isFall = (a, b, e) => !!(F && F.x === a && F.y === b && F.edge === e);
+  for (const e of es){ if (isFall(x, y, e)) continue;
+    if (e === 'se'){   // 從 B（左下，往 y+1）到 R（右上，往 y-1）
+      const n0 = isSide(x, y + 1, 'se') || isFall(x, y + 1, 'se') || es.includes('sw'), n1 = isSide(x, y - 1, 'se') || isFall(x, y - 1, 'se');
+      riverSide260([cx, cy + HH], [cx + HW, cy], y + 1, y, !n0, !n1, (x * 131 + y * 17 + 7) | 0, f); }
+    else {             // 從 L（左上，往 x-1）到 B（右下，往 x+1）
+      const n0 = isSide(x - 1, y, 'sw') || isFall(x - 1, y, 'sw'), n1 = isSide(x + 1, y, 'sw') || isFall(x + 1, y, 'sw') || es.includes('se');
+      riverSide260([cx - HW, cy], [cx, cy + HH], x + 50, x + 51, !n0, !n1, (x * 37 + y * 113 + 3) | 0, f); } } }
+
+/* ---------- 5. 野生水產：長大、多出來 ---------- */
+const STAGE260 = () => (WL260.riverStageHours ?? 24) * 3600, SPAWN260 = () => (WL260.spawnHours ?? 6) * 3600;
+function pickSp260(){ const W = WL260.weights || {}, ids = SPIDS260.filter(id => (W[id] ?? 1) > 0); let sum = ids.reduce((a, id) => a + (W[id] ?? 1), 0), r = Math.random() * sum;
+  for (const id of ids){ r -= (W[id] ?? 1); if (r <= 0) return id; } return ids[0]; }
+function homeCells260(M, g){ const F = fall260(M, g), fk = F ? tkey(F.x, F.y) : null; return g.cells.filter(c => c !== fk && isRv260(M.tiles[c])); }
+function wild260(M){ return M.w260 = M.w260 || { list: [], acc: {}, seeded: 0 }; }
+function step260(dt, t){
+  if (!S || !SPIDS260.length) return; const min = WL260.minCells ?? 3, per = WL260.perCell ?? 2;
+  let winter = false; try { winter = farmSeason(t) === 'winter' || !!(S.snow && S.snow.cover); } catch(e){}
+  const rate = winter ? (WL260.winterRate ?? .5) : 1, stS = STAGE260(), spS = SPAWN260();
+  for (const M of S.maps){ if (!M || !M.tiles) continue; const W = wild260(M), rv = rivers260(M), byG = {};
+    for (const [gid, g] of rv) byG[gid] = g;
+    // 住的格子不是河了、那條河不到 min 格、剛好變成瀑布那格 → 搬家或消失
+    W.list = W.list.filter(c => { const T = M.tiles[c.k]; if (!isRv260(T)) return false; const g = byG[T.g]; if (!g || g.cells.length < min) return false;
+      const F = fall260(M, g); if (F && tkey(F.x, F.y) === c.k){ const h = homeCells260(M, g); if (!h.length) return false; c.k = h[Math.floor(Math.random() * h.length)]; } return true; });
+    for (const c of W.list) if (c.st < 2){ c.t += dt * rate; while (c.t >= stS && c.st < 2){ c.t -= stS; c.st++; } }
+    for (const [gid, g] of rv){ if (g.cells.length < min){ delete W.acc[gid]; continue; }
+      const home = homeCells260(M, g); if (!home.length) continue; const cap = g.cells.length * per, cnt = () => W.list.filter(c => g.cells.includes(c.k)).length;
+      if (!W.seeded){ for (let i = cnt(); i < Math.ceil(cap / 2); i++) W.list.push({ sp: pickSp260(), st: Math.floor(Math.random() * 3), t: Math.random() * stS, k: home[Math.floor(Math.random() * home.length)] }); continue; }
+      W.acc[gid] = (W.acc[gid] || 0) + dt;
+      while (W.acc[gid] >= spS){ W.acc[gid] -= spS; if (cnt() < cap) W.list.push({ sp: pickSp260(), st: 0, t: 0, k: home[Math.floor(Math.random() * home.length)] }); }
+      if (cnt() >= cap) W.acc[gid] = Math.min(W.acc[gid], spS); }
+    for (const gid in W.acc) if (!byG[gid]) delete W.acc[gid];
+    W.seeded = 1; } }
+{ const _sa260 = stepAll; stepAll = function(dt, t){ _sa260(dt, t); try { step260(dt, t); } catch(e){ if (!RT.err260s){ RT.err260s = 1; console.warn(e); } } }; }
+const wildOf260 = (M, g) => (M.w260 ? M.w260.list.filter(c => g.cells.includes(c.k)) : []);
+
+/* ---------- 6. 畫：河裡的水產＋側面 ---------- */
+function drawWild260(M, k, x, y, t){ const W = M.w260; if (!W || !W.list.length) return; const T = M.tiles[k]; if (T.bw248) return;
+  const { cx, cy } = center(x, y), list = W.list.filter(c => c.k === k); if (!list.length) return;
+  ctx.save(); ctx.globalAlpha = .82;
+  list.forEach((c, i) => { const F = CFG.fish[c.sp] || {}, sh = isShell260(c.sp), seed = (W.list.indexOf(c) + 1) * 1.37;
+    const sc = (F.swimScale || 1.6) * (.6 + .4 * Math.min(1, (c.st + 1) / 3)) * .8, tt = motion ? t : 0;
+    if (sh){ const ox = (h32(x * 3 + i + seed) - .5) * .5, oy = (h32(y * 5 + i * 7 + seed) - .5) * .5, p = center(x + ox, y + oy);
+      const fr = motion ? [0, 0, 1, 2, 1, 0][Math.floor(tt * .8 + seed * 3) % 6] : 0; drawFishSprite56(sprOf260(c.sp, c.st), fr, p.cx, p.cy + 9, h32(seed) * 6.28, sc); return; }
+    const amp = .3, sp = .1 * (c.sp === 'eel' ? .7 : 1), p1 = h32(seed * 3.1) * 6.28, p2 = h32(seed * 7.7) * 6.28, w1 = sp * (.8 + h32(seed) * .6), w2 = sp * (.6 + h32(seed + 1) * .6);
+    const a = amp * Math.sin(tt * w1 + p1), b = amp * Math.sin(tt * w2 + p2), da = amp * w1 * Math.cos(tt * w1 + p1), db = amp * w2 * Math.cos(tt * w2 + p2);
+    const sx = cx + (a - b) * HW, sy = cy + (a + b) * HH + 7, ang = Math.atan2((da + db) * HH * 2, (da - db) * HW);
+    const fr = motion ? [0, 1, 2, 1][Math.floor(tt * 5 + seed) % 4] : 1; drawFishSprite56(sprOf260(c.sp, c.st), fr, sx, sy, ang, sc); });
+  ctx.restore(); }
+{ const _dte260 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
+  const r = _dte260(M, k, T, x, y, t, now);
+  if (isRv260(T) && !(!RT.inPre2591 && RT.rvDone2591 && RT.rvDone2591.has(k) && S && M === S.maps[S.cur])){
+    try { drawSides260(M, k, T, x, y, t); drawWild260(M, k, x, y, t); } catch(e){ if (!RT.err260d){ RT.err260d = 1; console.warn(e); } } }
+  return r; }; }
+// 魚池裡的鰻魚照階段換圖
+{ const _dp260 = drawPoolCell56; drawPoolCell56 = function(M, k, T, ...a){ RT.pc260 = T; try { return _dp260(M, k, T, ...a); } finally { RT.pc260 = null; } }; }
+{ const _df260 = drawFishSprite56; drawFishSprite56 = function(id, ...a){ if (!ATLAS['fishtop_' + id] && SPEC260[id]){ const T = RT.pc260; id = sprOf260(id, T ? Math.min(2, T.stage) : 1); } return _df260(id, ...a); }; }
+
+/* ---------- 7. 查看地形（河）：野生生物、撈魚、瀑布 ---------- */
+function wildHTML260(M, g){
+  const min = WL260.minCells ?? 3; if (g.cells.length < min) return `<p class="sm83">${TX260.tooShort || '河要連成 3 格以上才會有野生水產'}</p>`;
+  const list = wildOf260(M, g); if (!list.length) return `<p class="sm83">${TX260.none || '這條河還沒有野生生物'}</p>`;
+  const by = {}; for (const c of list){ const b = by[c.sp] || (by[c.sp] = [0, 0, 0]); b[Math.min(2, c.st)]++; }
+  return `<div class="wl260">${SPIDS260.filter(id => by[id]).map(id => { const b = by[id], n = b[0] + b[1] + b[2], ic = IMGSRC['ui_fish_' + sprOf260(id, 2)] || IMGSRC['ui_fish_' + id] || '';
+    return `<div class="wr260">${ic ? `<img src="${ic}" alt="">` : ''}<b>${escapeHTML(CFG.fish[id].name)}</b><span class="n260">× ${n}</span><small>${[0, 1, 2].filter(s => b[s]).map(s => `${stName260(id, s)} ${b[s]}`).join('・')}</small></div>`; }).join('')}</div>`; }
+function riverCard260(mi, k){
+  const M = S.maps[mi], T = M.tiles[k], g = terG83(M, T); if (!g || g.kind !== 'river') return '';
+  const [x, y] = pkey(k), es = edges260(M, x, y), F = fall260(M, g), min = WL260.minCells ?? 3;
+  let fb = '';
+  if (es.length){ const here = F && F.x === x && F.y === y;
+    if (here) fb = `<button class="btn ghost" data-rv260="off">${TX260.offFall || '關掉瀑布'}</button>`;
+    else fb = `<button class="btn ghost" data-rv260="set">${g.fall260 === 'off' ? (TX260.onFall || '打開瀑布（設在這裡）') : (TX260.setFall || '設成瀑布')}</button>`; }
+  const fallTxt = F ? (F.x === x && F.y === y ? '這一格就是這條河的瀑布（一條河只有一格）' : (es.length ? '這條河的瀑布在另一格；按「設成瀑布」改到這格' : '這條河的瀑布在靠島邊的另一格')) : (g.fall260 === 'off' ? '瀑布關掉了：整條沿岸都是河的側面' : '這條河沒接到島邊，沒有瀑布');
+  return `<div class="card250 rv260" data-mi="${mi}" data-k="${k}" data-g="${escapeHTML(String(T.g))}"><h4>${TX260.wildHead || '目前出現的野生生物'}</h4>${wildHTML260(M, g)}
+    <div class="row260">${g.cells.length >= min ? `<button class="btn" data-rv260="catch">${TX260.catchBtn || '撈魚'}</button>` : ''}${fb}</div><p class="sm83">${fallTxt}</p></div>`; }
+{ const _ot260 = openTerrain83; openTerrain83 = function(mi, k){ const r = _ot260(mi, k);
+  try { const M = S.maps[mi], T = M && M.tiles[k], el = $('modalBody'); if (!isRv260(T) || !el) return r;
+    const h = riverCard260(mi, k); if (!h) return r; const box = document.createElement('div'); box.innerHTML = h;
+    const L = el.querySelector('.l250') || el; L.appendChild(box.firstElementChild); } catch(e){ console.warn(e); }
+  return r; }; }
+$('modal').addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-rv260]'); if (!b) return; const card = b.closest('.rv260'); if (!card) return; e.stopPropagation();
+  const mi = +card.dataset.mi, k = card.dataset.k, gid = card.dataset.g, M = S.maps[mi], [x, y] = pkey(k);
+  if (b.dataset.rv260 === 'catch'){ closeModal(); openCatch260(mi, gid); return; }
+  if (b.dataset.rv260 === 'off'){ setFall260(mi, gid, 'off'); toast('瀑布關掉了：沿岸都是河的側面，河水不外流'); }
+  else { const es = edges260(M, x, y); setFall260(mi, gid, `${x},${y},${es[0]}`); toast('瀑布改在這一格'); }
+  openTerrain83(mi, k); });
+
+/* ---------- 8. 撈魚畫面 ---------- */
+const today260 = () => dayKeyLocal(Date.now());
+const triesLeft260 = () => { const C = S.catch260 = S.catch260 || { day: '', n: 0 }; if (C.day !== today260()){ C.day = today260(); C.n = 0; } return Math.max(0, (CA260.dailyTries ?? 10) - C.n); };
+const useTry260 = () => { triesLeft260(); S.catch260.n++; };
+function doBuyNets260(){ const q = CA260.pack || 5, p = CA260.packPrice || 30;
+  RT.coinWhy.push('買撈網'); try { if (!spend(p)) return false; } finally { RT.coinWhy.pop(); }
+  S.net260 = (S.net260 || 0) + q; sfx('coin'); toast(`買了撈網 ×${q}`); afterAction(); return true; }
+function buyNets260(after){ const q = CA260.pack || 5, p = CA260.packPrice || 30;
+  confirmBox('買撈網', `紙網一包 ${q} 張，${fmtN(p)} 金幣。要買嗎？`, `買一包 ${fmtN(p)}`, ok => { if (ok && doBuyNets260() && after) after(); }); }
+function sprDraw260(c, name, fr, x, y, k, ang){ const a = ATLAS[name], im = IMG[name]; if (!a || !im) return false;
+  const fw = a.frameWidth, fh = a.frameHeight; c.save(); c.translate(x, y); if (ang) c.rotate(ang);
+  c.drawImage(im, (a.sx || 0) + fr * fw, a.sy || 0, fw, fh, -a.anchor[0] * k, -a.anchor[1] * k, fw * k, fh * k); c.restore(); return true; }
+function openCatch260(mi, gid){
+  const M = S.maps[mi], g = M && M.ter242 && M.ter242.g[gid]; if (!g) return;
+  document.getElementById('catch260')?.remove();
+  const wrap = document.createElement('div'); wrap.id = 'catch260';
+  wrap.innerHTML = `<div class="cc260"><div class="hd260"><b>撈魚 · ${escapeHTML(M.name || '這座島')}的河（${g.cells.length} 格）</b><button class="btn ghost x260" aria-label="關閉">✕</button></div>
+    <div class="st260"></div><div class="mode260"><button class="on" data-c260="mnet">🥢 撈網</button><button data-c260="mclam">🐚 摸蛤仔</button></div><canvas></canvas><div class="msg260">${TX260.swipe || '在水裡滑一下把網子撈起來'}</div><small class="sub260">${TX260.shell || '扇貝、蛤：在河底的沙裡來回摸，摸到才算（不用網子）'}</small>
+    <div class="buy260" hidden><span>紙網一包 ${CA260.pack || 5} 張，${fmtN(CA260.packPrice || 30)} 金幣。要買嗎？</span><div class="row260"><button class="btn" data-c260="buyok">買一包 ${fmtN(CA260.packPrice || 30)}</button><button class="btn ghost" data-c260="buyno">先不要</button></div></div>
+    <div class="row260 bt260"><button class="btn ghost" data-c260="buy">買撈網</button><button class="btn" data-c260="close">好了</button></div></div>`;
+  document.body.appendChild(wrap);
+  const cv = wrap.querySelector('canvas'), msg = wrap.querySelector('.msg260'), stEl = wrap.querySelector('.st260');
+  // 畫面跟著螢幕放大（手機幾乎全螢幕、電腦最寬 640）：邏輯寬固定 320，高照實際比例，圖跟著等比例放大
+  // 可用高度＝框內高度扣掉其他東西（買撈網確認列浮在框底，不佔位置），算完才決定畫布大小，按鈕不會被擠出框外
+  const cc = wrap.querySelector('.cc260'), ccs = getComputedStyle(cc), gap = parseFloat(ccs.rowGap) || 6, padV = parseFloat(ccs.paddingTop) + parseFloat(ccs.paddingBottom), padH = parseFloat(ccs.paddingLeft) + parseFloat(ccs.paddingRight);
+  cv.style.height = '0px'; cv.style.flex = 'none';
+  // 手機橫拿（矮螢幕）：撈網／摸蛤仔在左、買撈網／好了在右，中間整個給水面（CSS .side260）
+  const side = matchMedia('(max-height:520px) and (orientation:landscape)').matches; cc.classList.toggle('side260', side);
+  const sideCols = side ? [cc.querySelector('.mode260'), cc.querySelector('.bt260')] : [];
+  const others = [...cc.children].filter(el => el !== cv && !el.hidden && !el.classList.contains('buy260') && !sideCols.includes(el)), used = others.reduce((a, el) => a + el.getBoundingClientRect().height, 0) + gap * others.length + (side ? 12 : 30);
+  const sideW = side ? sideCols.reduce((a, el) => a + el.getBoundingClientRect().width, 0) + gap * 2 + 8 : 0;
+  const cssW = Math.max(200, cc.clientWidth - padH - sideW), cssH = Math.max(120, cc.clientHeight - padV - used);
+  const W = 320, H = Math.round(Math.max(140, Math.min(720, W * cssH / cssW))), dpr = Math.min(2, window.devicePixelRatio || 1), KS = Math.min(cssW / W, cssH / H);   // 橫拿太矮時改縮寬度、置中
+  cv.width = Math.round(W * KS * dpr); cv.height = Math.round(H * KS * dpr); cv.style.width = (W * KS) + 'px'; cv.style.height = (H * KS) + 'px'; cv.style.flex = 'none';
+  const c = cv.getContext('2d'), D260 = () => CA260.difficulty || {}, NR = CA260.net || {}, FL = NR.flee || {}, NET_R = 34;
+  // 這條河的水產：每隻一個在畫面裡游的位置（不存檔）
+  const SANDH0 = Math.min((CA260.shellRub || {}).sandHeight ?? 70, H * .3), FISHY = H - SANDH0 - 16;   // 沙地高、魚游的下緣
+  const fish = wildOf260(M, g).map((w, i) => { const sh = isShell260(w.sp); return { w, sh, x: 30 + Math.random() * (W - 60), y: sh ? H - 10 - Math.random() * (SANDH0 - 20) : 26 + Math.random() * Math.max(10, H - SANDH0 - 46), rub: 0, bub: Math.random() * 3,
+    a: Math.random() * 6.28, v: sh ? 0 : 18 + Math.random() * 16 + (w.sp === 'eel' ? 6 : 0), turn: (Math.random() - .5) * .8, ph: Math.random() * 10 }; });
+  const N = { st: 'ok', down: false, x: W / 2, y: H / 2, t0: 0, path: [], tornT: 0 }; RT.c260 = { fish, N, W, H };   // 測試用
+  let alive = true, last = performance.now(), say = (s, col) => { msg.textContent = s; msg.style.color = col || ''; };
+  const status = () => { stEl.textContent = `${tx260(TX260.triesLeft || '今天還能撈 {n} 次', { n: triesLeft260() })} ・ ${tx260(TX260.nets || '撈網 {n} 張', { n: S.net260 || 0 })}`; };
+  status();
+  const pt = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * W / r.width, (e.clientY - r.top) * H / r.height]; };
+  const MODE = { v: 'net' }; RT.c260m = MODE;
+  const SR = CA260.shellRub || {}, SAND = H - SANDH0, RUB_R = SR.radius ?? 28, RUB_N = (SR.times ?? 4) * 2, SWING = SR.swing ?? 8;   // RUB_N＝要摸幾下（來回一次＝去＋回 2 下）
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); const [x, y] = pt(e); N.px = x; N.py = y; N.pt0 = performance.now();
+    if (MODE.v === 'clam'){   // 摸蛤仔（切換按鈕選的；不用網子），只有沙地摸得到
+      if (y < SAND){ say('貝埋在下面的沙裡，到沙地上來回摸', '#5b6b75'); return; }
+      if (triesLeft260() <= 0){ say(TX260.noTries || '今天的次數用完了，明天再來', '#b04030'); return; }
+      N.rub = true; N.x = x; N.y = y; N.lp = [x, y]; N.s0 = [x, y]; N.v = [0, 0]; for (const f of fish) if (f.sh) f.rub = 0; cv.setPointerCapture(e.pointerId); say(`在沙上同一個地方來回摸 ${RUB_N / 2} 次`, '#5b6b75'); return; }
+    if (triesLeft260() <= 0){ say(TX260.noTries || '今天的次數用完了，明天再來', '#b04030'); return; }
+    if (!(S.net260 > 0)){ say(TX260.noNet || '沒有撈網了：一包 5 張 30 金幣', '#b04030'); return; }
+    N.down = true; N.st = 'ok'; N.x = x; N.y = y; N.dist = 0; N.mt = 0; N.held = null; N.t0 = performance.now(); N.path = [[x, y, N.t0]]; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => {
+    if (N.rub){ const [x, y] = pt(e), m = [x - N.lp[0], y - N.lp[1]]; N.lp = [x, y]; N.x = x; N.y = y; RT.puff260 = (RT.puff260 || []).concat([[x, Math.max(SAND, y), performance.now()]]).slice(-24);
+      // 一下＝往一個方向滑至少 SWING 點再折返（移動方向跟這一下相反）；折返時這一下中間點 RUB_R 內的貝 +1 下
+      const L = Math.hypot(N.v[0], N.v[1]);
+      if (L > 0 && m[0] * N.v[0] + m[1] * N.v[1] < 0){ if (L >= SWING){ const mx = N.s0[0] + N.v[0] / 2, my = N.s0[1] + N.v[1] / 2;
+          for (const f of fish) if (f.sh && Math.hypot(f.x - mx, f.y - my) < RUB_R) f.rub++;
+          const best = Math.max(0, ...fish.filter(f => f.sh).map(f => f.rub)); if (best) say(`摸到東西了…來回 ${Math.floor(best / 2)}／${RUB_N / 2} 次`, '#5b6b75'); }
+        N.s0 = [N.s0[0] + N.v[0], N.s0[1] + N.v[1]]; N.v = m; }
+      else N.v = [N.v[0] + m[0], N.v[1] + m[1]];
+      const hit = fish.find(f => f.sh && f.rub >= RUB_N); if (hit){ N.rub = false; useTry260(); got(hit); } return; }
+    if (!N.down) return; const [x, y] = pt(e), now = performance.now(); const lp = N.path[N.path.length - 1]; if (lp){ const dd = Math.hypot(x - lp[0], y - lp[1]); if (dd > .5){ N.dist = (N.dist || 0) + dd; N.mt = (N.mt || 0) + Math.min(.1, (now - lp[2]) / 1000); } } N.x = x; N.y = y; N.path.push([x, y, now]); while (N.path.length > 2 && now - N.path[0][2] > 160) N.path.shift(); });
+  const end = e => { const now = performance.now(), [x, y] = pt(e);
+    if (N.rub){ N.rub = false; useTry260(); const best = Math.max(0, ...fish.filter(f => f.sh).map(f => f.rub));
+      for (const f of fish) if (f.sh) f.rub = 0;
+      say(best >= 2 ? '好像摸到什麼了，再仔細摸一次…' : '沒摸到，貝藏在沙裡，要在同一個地方來回摸', '#5b6b75'); afterAction(); status(); return; }
+    if (!N.down) return; N.down = false; useTry260();
+    const soak = (now - N.t0) / 1000, p0 = N.path[0] || [x, y, now], dtp = Math.max(.016, (now - p0[2]) / 1000), speed = Math.hypot(x - p0[0], y - p0[1]) / dtp;   // 放開前一小段（滑太快會破）
+    // 網子底下（撈起來那一刻＋最後一小段路）有沒有魚
+    // 滑的過程中魚進過網子（held）就有資格撈起來；沒有的話看放開那一刻網子底下
+    let f = N.held && fish.includes(N.held) ? N.held : null; N.held = null; for (const g of fish) g.held = false;
+    if (!f){ const near = fish.filter(g => !g.sh && Math.hypot(g.x - x, g.y - y) < NET_R * (NR.hitRadius ?? 1)); near.sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y)); f = near[0]; }
+    const soakS = NR.soakSeconds ?? 4, fast = NR.fastSwipe ?? 2600, D = CA260.difficulty || {};
+    let pb = Math.min(.5, soak / soakS * .15) + (soak > soakS ? .35 : 0) + (speed > fast ? .45 : 0);
+    if (f) pb += ((D.stage || [])[Math.min(2, f.w.st)] || 0) + (D[f.w.sp] || 0);
+    if (Math.random() < pb){ S.net260 = Math.max(0, (S.net260 || 0) - 1); N.st = 'torn'; N.tornT = now; say(TX260.torn || '破了！魚跑掉了', '#b04030'); if (f) f.a += Math.PI; sfx('splash'); afterAction(); status(); return; }
+    if (!f){ say(soak > soakS ? (TX260.soft || '泡太久，網子變軟了…') : (TX260.miss || '沒撈到，魚跑掉了'), '#5b6b75'); if (f) f.a += Math.PI; afterAction(); status(); return; }
+    got(f); };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', e => { N.down = false; N.rub = false; });
+  function got(f){ const w = f.w, Wl = M.w260, i = Wl ? Wl.list.indexOf(w) : -1; if (i < 0){ fish.splice(fish.indexOf(f), 1); return; }
+    const nm = CFG.fish[w.sp].name, sn = stName260(w.sp, w.st);
+    if (w.st >= 2){ if (invFree() < 1){ say('倉庫滿了，先賣掉一些再撈成熟的', '#b04030'); return; } invAdd('wild_' + w.sp, 1); }
+    else { const key = w.sp + '|' + w.st; S.fry260 = S.fry260 || {}; S.fry260[key] = (S.fry260[key] || 0) + 1; }
+    RT.lift260 = (RT.lift260 || []).concat([{ n: 'fishtop_' + sprOf260(w.sp, w.st), x: f.x, y: f.y, a: f.sh ? 0 : f.a, k: .55 + (f.sh ? 0 : .2 * Math.min(1, w.st / 2)), t0: performance.now(), sh: f.sh }]);
+    Wl.list.splice(i, 1); fish.splice(fish.indexOf(f), 1); S.got260 = (S.got260 || 0) + 1; stat(f.sh ? 'catchClam' : 'catchFish');   // 徽章 catch_fish／catch_clam
+    say(tx260(TX260.got || '撈到 {name}（{stage}）', { name: nm, stage: sn }) + (w.st >= 2 ? '・進倉庫水產（可以賣）' : '・進魚苗，放進魚池養'), '#2f7a3a'); sfx('harvest'); afterAction(); status(); }
+  const close = () => { alive = false; wrap.remove(); UIbuildTray(); };
+  wrap.addEventListener('click', e => { const b = e.target.closest('[data-c260], .x260'); if (!b) return; if (b.classList.contains('x260') || b.dataset.c260 === 'close') close(); else { const bx = wrap.querySelector('.buy260'), bt = wrap.querySelector('.bt260');
+    if (b.dataset.c260 === 'mnet' || b.dataset.c260 === 'mclam'){ MODE.v = b.dataset.c260 === 'mnet' ? 'net' : 'clam'; N.down = false; N.rub = false;
+      wrap.querySelectorAll('.mode260 button').forEach(x => x.classList.toggle('on', x === b));
+      say(MODE.v === 'net' ? (TX260.swipe || '在水裡滑一下把網子撈起來') : `在下面的沙地上，同一個地方來回摸 ${RUB_N / 2} 次`, '#5b6b75'); return; }
+    if (b.dataset.c260 === 'buy'){ bx.hidden = false; bt.hidden = true; }
+    else { if (b.dataset.c260 === 'buyok' && doBuyNets260()) say('買好了，可以撈了', '#2f7a3a'); bx.hidden = true; bt.hidden = false; status(); } } });
+  function frame(now){ if (!alive) return; const dt = Math.min(.05, (now - last) / 1000); last = now;
+    c.setTransform(dpr * KS, 0, 0, dpr * KS, 0, 0); const gr = c.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#5cb4d8'); gr.addColorStop(1, '#2a7fae'); c.fillStyle = gr; c.fillRect(0, 0, W, H);
+    c.fillStyle = 'rgba(255,255,255,.12)'; for (let i = 0; i < 9; i++){ const xx = (i * 53 + now / 60) % (W + 60) - 30; c.beginPath(); c.ellipse(xx, 20 + (i * 97) % (H - 40), 26, 3, .2, 0, 7); c.fill(); }
+    const sg = c.createLinearGradient(0, SAND, 0, H); sg.addColorStop(0, 'rgba(176,150,104,.55)'); sg.addColorStop(1, 'rgba(140,112,74,.8)'); c.fillStyle = sg; c.fillRect(0, SAND, W, H - SAND);
+    if (MODE.v === 'clam'){ c.fillStyle = `rgba(255,236,170,${.18 + .1 * Math.sin(now / 300)})`; c.fillRect(0, SAND, W, H - SAND); c.strokeStyle = 'rgba(255,240,190,.9)'; c.setLineDash([6, 5]); c.lineWidth = 1.5; c.strokeRect(2, SAND + 1, W - 4, H - SAND - 3); c.setLineDash([]);
+      c.font = '700 12px sans-serif'; c.fillStyle = 'rgba(255,255,255,.9)'; c.textAlign = 'center'; c.fillText('在這裡摸', W / 2, SAND + 16); }
+    c.fillStyle = 'rgba(255,255,255,.12)'; for (let i = 0; i < 26; i++){ c.beginPath(); c.arc((i * 47) % W, SAND + 8 + (i * 29) % (H - SAND - 12), 1.2, 0, 7); c.fill(); }
+    for (const f of fish){
+      if (f.sh){ const sh = Math.min(1, f.rub / RUB_N); if (sh > .25){ c.globalAlpha = Math.min(.85, sh); sprDraw260(c, 'fishtop_' + sprOf260(f.w.sp, f.w.st), 0, f.x, f.y, .55, 0); c.globalAlpha = 1; }
+        const bt = (now / 1000 + f.bub) % 3.2; if (motion && bt < 1.2){ c.fillStyle = 'rgba(255,255,255,.7)'; for (let j = 0; j < 2; j++){ c.beginPath(); c.arc(f.x + (j ? 4 : -2) + Math.sin(bt * 6 + j) * 1.5, f.y - 6 - bt * 34 - j * 7, 1.6 - j * .4, 0, 7); c.fill(); } }
+        continue; }
+      if (N.down && !N.held && Math.hypot(f.x - N.x, f.y - N.y) < NET_R * (NR.hitRadius ?? 1)){ N.held = f; f.held = true; f.hx = f.x - N.x; f.hy = f.y - N.y; N.hT = now; say(TX260.inNet || '魚進網了！快撈起來', '#2f7d4f'); }
+      if (f.held && N.down){   // 在網子裡：跟著網子走、會掙扎，待太久可能溜走
+        const esc = ((D260().escape || [])[Math.min(2, f.w.st)] ?? .3) + (D260()['esc_' + f.w.sp] || 0);
+        if (Math.random() < esc * dt){ f.held = false; N.held = null; f.a = Math.atan2(f.hy, f.hx); say(TX260.slip || '魚從網子溜走了！', '#5b6b75'); }
+        else { f.hx *= Math.pow(.2, dt); f.hy *= Math.pow(.2, dt); f.x = N.x + f.hx + Math.sin(now / 70) * 2; f.y = N.y + f.hy; f.a += Math.sin(now / 90 + f.ph) * 6 * dt; } }
+      else if (motion){ f.a += f.turn * dt + Math.sin(now / 900 + f.ph) * .6 * dt;
+        if (N.down && Math.hypot(f.x - N.x, f.y - N.y) < NET_R * (FL.radius ?? 1.3)){ const away = Math.atan2(f.y - N.y, f.x - N.x); f.a += Math.sin(away - f.a) * (FL.turn ?? 1.5) * dt; }
+        f.x += Math.cos(f.a) * f.v * dt; f.y += Math.sin(f.a) * f.v * dt;
+        if (f.x < 24 || f.x > W - 24){ f.a = Math.PI - f.a; f.x = Math.max(24, Math.min(W - 24, f.x)); } if (f.y < 22 || f.y > FISHY){ f.a = -f.a; f.y = Math.max(22, Math.min(FISHY, f.y)); } }
+      const nm = 'fishtop_' + sprOf260(f.w.sp, f.w.st), fr = [0, 1, 2, 1][Math.floor(now / 160 + f.ph) % 4];
+      sprDraw260(c, nm, fr, f.x, f.y, .55 + .2 * Math.min(1, f.w.st / 2), f.a); }
+    if (RT.lift260){ RT.lift260 = RT.lift260.filter(L => now - L.t0 < 900);
+      for (const L of RT.lift260){ const u = (now - L.t0) / 900, e = 1 - (1 - u) * (1 - u);
+        if (L.sh && u < .35){ c.fillStyle = `rgba(190,165,120,${.5 * (1 - u / .35)})`; for (let j = 0; j < 5; j++){ c.beginPath(); c.arc(L.x + (j - 2) * 7, L.y + 4 - u * 30, 4 + u * 12, 0, 7); c.fill(); } }   // 沙子揚起來
+        c.globalAlpha = u < .6 ? 1 : Math.max(0, 1 - (u - .6) / .4); sprDraw260(c, L.n, L.sh ? 1 : 1, L.x, L.y - e * 70, L.k * (1 + .35 * e), L.a * (1 - e)); c.globalAlpha = 1;
+        if (u > .3 && u < .9){ c.fillStyle = `rgba(255,255,255,${.8 * (1 - u)})`; for (let j = 0; j < 4; j++){ const an = j * 1.57 + u * 3; c.beginPath(); c.arc(L.x + Math.cos(an) * 18 * e, L.y - e * 70 + Math.sin(an) * 12 * e, 2, 0, 7); c.fill(); } } } }   // 閃一下
+    if (RT.puff260){ RT.puff260 = RT.puff260.filter(p => now - p[2] < 600); for (const [px, py, pt0] of RT.puff260){ const a = 1 - (now - pt0) / 600; c.fillStyle = `rgba(190,165,120,${.45 * a})`; c.beginPath(); c.arc(px, py - (1 - a) * 8, 4 + (1 - a) * 6, 0, 7); c.fill(); } }
+    if (N.rub){ c.strokeStyle = 'rgba(255,255,255,.8)'; c.lineWidth = 2; c.beginPath(); c.arc(N.x, N.y, 10, 0, 7); c.stroke(); }
+    const soak = N.down ? (now - N.t0) / 1000 : 0, nst = N.st === 'torn' && now - N.tornT < 900 ? 'torn' : N.down && soak > (NR.soakSeconds ?? 4) ? 'soft' : 'ok';
+    if (N.down || nst === 'torn'){ c.globalAlpha = N.down ? .92 : .8; sprDraw260(c, 'net_paper_' + nst, 0, N.x, N.y, NET_R / 36, -.35); c.globalAlpha = 1; }
+    requestAnimationFrame(frame); }
+  requestAnimationFrame(frame); }
+
+/* ---------- 9. 魚池：河鮮分頁（撈到的幼體免費放進空格） ---------- */
+const FRYID260 = (sp, st) => `r260_${sp}_${st}`, parseFry260 = id => { const m = /^r260_(.+)_(\d)$/.exec(id || ''); return m ? [m[1], +m[2]] : null; };
+{ const L = (CFG.ui.trayTabs || {}).fish; if (Array.isArray(L) && !L.some(t => t.id === 'river260')){ const ids = []; for (const sp of SPIDS260) for (const st of [0, 1]) ids.push(FRYID260(sp, st));
+  L.push({ id: 'river260', label: '河鮮', icon: IMGSRC.ui_fish_ayu ? 'ui_fish_ayu' : 'ui_tab_fish', ids }); } }
+{ const _is260 = itemSprite; itemSprite = function(kind, id){ const p = kind === 'fish' && parseFry260(id); if (p) return ['ui_fish_' + sprOf260(p[0], p[1]), 0];
+  if (kind === 'fish' && SPEC260[id]) return ['ui_fish_' + sprOf260(id, 2), 0]; return _is260(kind, id); }; }
+{ const _ut260 = UIbuildTray; UIbuildTray = function(){ const r = _ut260();
+  try { if (S && S.sel.tool === 'fish'){ const tray = $('tray'); tray.querySelectorAll('.item').forEach(el => { if (SPEC260[el.dataset.id]) el.remove(); });
+      const fry = S.fry260 || {};
+      for (const sp of SPIDS260) for (const st of [0, 1]){ const n = fry[sp + '|' + st] || 0; if (!n) continue; const id = FRYID260(sp, st), F = CFG.fish[sp];
+        const el = trayItem('fish', id, `${F.name}（${stName260(sp, st)}）`, ['河裡撈的・免費放', `值 ${F.harvestPerTile}／格`], S.sel.fish === id, false, { count: n });
+        el.onclick = () => { S.sel.fish = id; S.sel.fishTab = 'river260'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
+      if (S.sel.fish && parseFry260(S.sel.fish) && !(fry[S.sel.fish.replace(/^r260_(.+)_(\d)$/, '$1|$2')] > 0)) S.sel.fish = null;
+      applyTabs33();
+      if (S.sel.fishTab === 'river260' && !tray.querySelector('.item:not([hidden])')){ tray.querySelectorAll('.trayempty').forEach(e => e.remove()); const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = '還沒有河鮮：點河流「撈魚」，撈到的幼體會放在這裡'; tray.appendChild(e); } } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const tf = TOOLS.find(t => t.id === 'fish'); if (tf){ const _h260 = tf.hint; tf.hint = () => { const p = S && parseFry260(S.sel.fish); if (!p) return _h260();
+  const F = CFG.fish[p[0]]; return `點魚池的空格放${F.name}（${stName260(p[0], p[1])}）· 河裡撈的，免費 · 要 ${F.stageFeedQtyPerTile} 份魚飼料`; }; } }
+{ const _act260 = act; act = function(x, y){
+  const p = S && S.sel.tool === 'fish' && parseFry260(S.sel.fish); if (!p) return _act260(x, y);
+  const M = curMap(), k = tkey(x, y), T = M && inMap(M, x, y) ? M.tiles[k] : null, { cx, cy } = center(x, y);
+  if (!T || T.t !== 'pool'){ toast('點魚池的空格放進去（一格一種）'); return; }
+  if (T.fish){ tapPool(M, poolOf(M, k), cx, cy); return; }
+  const [sp, st] = p, key = sp + '|' + st, F = CFG.fish[sp]; if (!((S.fry260 || {})[key] > 0)){ toast('沒有這種河鮮了'); return; }
+  const r = payFeed(F.feedItem, F.stageFeedQtyPerTile, true); if (!r.ok){ feedMsg(r, cx, cy); return; }
+  feedMsg(payFeed(F.feedItem, F.stageFeedQtyPerTile), cx, cy - 14); Object.assign(T, { fish: sp, stage: st, timer: F.stageSeconds, eat56: 0 });
+  S.fry260[key]--; if (!S.fry260[key]) delete S.fry260[key];
+  floatText(cx, cy - 30, `放${F.name}（${stName260(sp, st)}）`, '#2f6a8a', 11); sfx('place'); afterAction(); UIbuildTray(); }; }
+
+/* ---------- 10. 倉庫：撈網與河鮮 ---------- */
+function rvSec260(){ const fry = S.fry260 || {}, rows = Object.keys(fry).filter(k => fry[k] > 0);
+  const net = IMGSRC.ui_it_paper_net ? `<img class="ico" src="${IMGSRC.ui_it_paper_net}" alt="">` : '';
+  return `<section class="stsec c-b rvs260"><div class="stside"><b>撈網與河鮮</b>${IMGSRC.ui_it_paper_net ? `<img class="stpic" src="${IMGSRC.ui_it_paper_net}" alt="">` : ''}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th></th></tr></thead><tbody>
+    <tr><td>${net}</td><td>撈網<br><small>河流「撈魚」用，撈到破為止</small></td><td class="num">${fmtN(S.net260 || 0)}</td><td class="acts"><button class="btn" data-net260="1">買一包 ${CA260.pack || 5} 張 ${coinI()}${CA260.packPrice || 30}</button></td></tr>
+    ${rows.map(k => { const [sp, st] = k.split('|'), ic = IMGSRC['ui_fish_' + sprOf260(sp, +st)]; return `<tr><td>${ic ? `<img class="ico" src="${ic}" alt="">` : ''}</td><td>${escapeHTML(CFG.fish[sp].name)}（${stName260(sp, +st)}）<br><small>魚苗・魚 → 河鮮 分頁放進魚池</small></td><td class="num">${fmtN(fry[k])}</td><td></td></tr>`; }).join('')}
+    </tbody></table></div></section>`; }
+{ const _sp260 = storageProduceHTML; storageProduceHTML = function(){ const h = _sp260(); try { if (!S || (!(S.net260 > 0) && !Object.keys(S.fry260 || {}).length && !S.got260)) return h; return h + rvSec260(); } catch(e){ return h; } }; }
+$('modal').addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-net260]'); if (!b) return; e.stopPropagation(); buyNets260(() => { try { openStorage('produce'); } catch(e){} }); });
+
+/* ---------- 11. 手機橫拿的工具提示：上方兩塊抬頭中間太窄時（會擠成好幾行的直條），改放到下方工具列上面、置中 ---------- */
+{ const _lh260 = layoutHUD; layoutHUD = function(...a){ const r = _lh260(...a);
+  try { const h = $('hint'); if (MOB.mode === 'land' && h){ const hud = document.querySelector('.hud'), g1 = hud && hud.firstElementChild, g2 = hud && hud.lastElementChild, dock = $('dock');
+      const room = g1 && g2 ? g2.getBoundingClientRect().left - g1.getBoundingClientRect().right - 16 : 0;
+      if (room < 300 && dock){ const db = dock.getBoundingClientRect(), w = Math.round(Math.min(innerWidth * .6, 520)) + 'px';
+        for (const [k, v] of Object.entries({ top: 'auto', bottom: Math.round(innerHeight - db.top + 36) + 'px', left: '50%', right: 'auto', maxWidth: w, transform: 'translateX(-50%)' })) if (h.style[k] !== v) h.style[k] = v; h.classList.add('low260'); }
+      else { if (h.style.bottom) h.style.bottom = ''; if (h.style.top === 'auto') h.style.top = ''; h.classList.remove('low260'); } }
+    else if (h){ h.classList.remove('low260'); if (h.style.bottom) h.style.bottom = ''; if (h.style.top === 'auto') h.style.top = ''; } } catch(e){ if (!RT.err260h){ RT.err260h = 1; console.warn(e); } }
+  return r; }; }
+
+window.__farm260 = { step: (dt, t) => step260(dt, t || Date.now()), fall: (M, g) => fall260(M, g), setFall: (mi, gid, v) => setFall260(mi, gid, v), openCatch: (mi, gid) => openCatch260(mi, gid),
+  rivers: M => rivers260(M), wild: (M, g) => wildOf260(M, g), card: (mi, k) => riverCard260(mi, k), triesLeft: () => triesLeft260(), edges: (M, x, y) => edges260(M, x, y),
+  act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), normalizeState: d => normalizeState(d), openTerrain: (mi, k) => openTerrain83(mi, k), storageHTML: () => storageProduceHTML() };
 
   })(CFG, ATLAS_JSON);
 })();
