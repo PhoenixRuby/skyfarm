@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60-f7b4a7bdb9'), getJSON('sprites/atlas.json?v=2.60-f7b4a7bdb9')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.1-fc70ef52be'), getJSON('sprites/atlas.json?v=2.60.1-fc70ef52be')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -2265,7 +2265,7 @@ function openStorage(tab){
   openModal('倉庫', [['produce','農產倉庫'],['shop','飼料商店'],['deco','裝飾倉庫']], (k, el) => {
     if (k === 'produce'){
       const used = invUsed(), cap = invCap();
-      const cats = [['crop','作物'],['fruit','水果'],['product','動物產物'],['meat','肉'],['fish','魚'],['honey','蜂蜜'],['material','材料'],['feed','飼料']];
+      const cats = [['crop','作物'],['fruit','水果'],['product','動物產物'],['meat','肉'],['fish','魚'],['honey','蜂蜜'],['material','肥料'],['feed','飼料']];
       const rows = cats.map(([c,label]) => {
         const ids = Object.keys(S.inv).filter(id => (S.inv[id] || 0) > 0 && CFG.items[id] && CFG.items[id].category === c);
         if (!ids.length) return '';
@@ -7481,7 +7481,7 @@ function layoutBook(k, el){
   const heads = tws.map(tw => [...tw.querySelectorAll('th')].map(t => t.textContent));
   const rows = []; tws.forEach((tw, ti) => tw.querySelectorAll('tbody tr').forEach(tr => { const catCol = heads[ti].indexOf('類別'); tr.dataset.sec = secs[ti] || ''; if (catCol >= 0) tr.dataset.cat = tr.children[catCol].textContent; rows.push({ tr, ti }); }));
   const cats = []; if (secs.filter(Boolean).length > 1 || (secs.length === 1 && secs[0])) secs.forEach((s, i) => cats.push({ key: 'sec:' + (s || '一般'), label: s || (k === 'animals' ? '產物型' : '一般'), n: tws[i].querySelectorAll('tbody tr').length }));
-  const cc = {}; rows.forEach(r => { if (r.tr.dataset.cat) cc[r.tr.dataset.cat] = (cc[r.tr.dataset.cat] || 0) + 1; }); const CATN = { material: '材料', honey: '蜂蜜', crop: '作物', fruit: '水果', product: '動物產物', meat: '肉', fish: '魚', feed: '飼料' };
+  const cc = {}; rows.forEach(r => { if (r.tr.dataset.cat) cc[r.tr.dataset.cat] = (cc[r.tr.dataset.cat] || 0) + 1; }); const CATN = { material: '肥料', honey: '蜂蜜', crop: '作物', fruit: '水果', product: '動物產物', meat: '肉', fish: '魚', feed: '飼料' };
   Object.entries(cc).forEach(([c, n]) => cats.push({ key: 'cat:' + c, label: CATN[c] || c, n }));
   if (k === 'animals' && cats[0]) cats[0].label = '產物型';
   const hasLock = rows.some(r => r.tr.querySelector('.pill.lock') || r.tr.querySelector('.pill.ok'));
@@ -14391,7 +14391,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.60-f7b4a7bdb9';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.60.1-fc70ef52be';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -21794,7 +21794,7 @@ function rowId259(tr){ const b = tr.querySelector('[data-sell49],[data-sell]'); 
 function decorate259(el){
   if (!el || !el.isConnected) return; prune259();
   el.querySelectorAll('section.stsec:not(.dyn251) tbody tr').forEach(tr => {
-    const id = rowId259(tr); if (!id || !CFG.items[id] || !price259(id)) return;
+    const id = rowId259(tr); if (!id || !CFG.items[id] || CFG.items[id].sellPrice == null) return;   // v2.60.1：0 元的（糞便）也能勾選賣掉，清出倉庫空間
     tr.dataset.bs259 = id; tr.classList.add('row259');
     let cb = tr.querySelector('input.cb259');
     if (!cb){ const td = tr.querySelector('td'); if (!td) return; td.classList.add('cbtd259');
@@ -22483,7 +22483,7 @@ const FRYID260 = (sp, st) => `r260_${sp}_${st}`, parseFry260 = id => { const m =
         const el = trayItem('fish', id, `${F.name}（${stName260(sp, st)}）`, ['河裡撈的・免費放', `值 ${F.harvestPerTile}／格`], S.sel.fish === id, false, { count: n });
         el.onclick = () => { S.sel.fish = id; S.sel.fishTab = 'river260'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
       if (S.sel.fish && parseFry260(S.sel.fish) && !(fry[S.sel.fish.replace(/^r260_(.+)_(\d)$/, '$1|$2')] > 0)) S.sel.fish = null;
-      applyTabs33();
+      { const k0 = RT.tab33Pick; RT.tab33Pick = true; try { applyTabs33(); } finally { RT.tab33Pick = k0; } }   // v2.60.1：分頁已經由裡面的 applyTabs33 決定好，這裡只重排，不能再照選取的品項跳回原分頁（原本點「魚」「河鮮」會被拉回「設施」）
       if (S.sel.fishTab === 'river260' && !tray.querySelector('.item:not([hidden])')){ tray.querySelectorAll('.trayempty').forEach(e => e.remove()); const e = document.createElement('div'); e.className = 'empty trayempty'; e.textContent = '還沒有河鮮：點河流「撈魚」，撈到的幼體會放在這裡'; tray.appendChild(e); } } } catch(e){ console.warn(e); }
   return r; }; }
 { const tf = TOOLS.find(t => t.id === 'fish'); if (tf){ const _h260 = tf.hint; tf.hint = () => { const p = S && parseFry260(S.sel.fish); if (!p) return _h260();
@@ -22522,6 +22522,123 @@ $('modal').addEventListener('click', e => { const b = e.target.closest && e.targ
 window.__farm260 = { step: (dt, t) => step260(dt, t || Date.now()), fall: (M, g) => fall260(M, g), setFall: (mi, gid, v) => setFall260(mi, gid, v), openCatch: (mi, gid) => openCatch260(mi, gid),
   rivers: M => rivers260(M), wild: (M, g) => wildOf260(M, g), card: (mi, k) => riverCard260(mi, k), triesLeft: () => triesLeft260(), edges: (M, x, y) => edges260(M, x, y),
   act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), normalizeState: d => normalizeState(d), openTerrain: (mi, k) => openTerrain83(mi, k), storageHTML: () => storageProduceHTML() };
+
+/* ===== v2.60.1 會車互卡一律猜拳 =====
+   原本（g94）只有「兩列都整列在跑、正面對撞」才猜拳；只要一邊是單獨的車頭（solo，去拉車廂的途中）或在讓路中，就不猜拳，兩邊乾等 ghostSeconds（40 秒）後穿過去。
+   現在：stepTrain246 最外層包裝，每一步看「我被 O 擋住、O 也被我擋住」（兩邊都在動、blk 都 ≥ minBlockSeconds）＝互卡 →
+   rps249 猜拳（贏家照 wins249 優先順序，g94 的冷卻照舊）→ 輸的那列自己處理：
+     ① 整列在跑：剛從小屋出來（車頭還在小屋那格、要出門）退回小屋；否則 yield246 退到待避處／小屋；
+     ② 退不了（單獨車頭、讓路中又被擋、找不到待避處）→ 贏的那邊 blk 直接設成 ghostSeconds，下一步就通過，不再乾等。
+   兩列各自在自己那一步判斷，所以 home 一定是自己的（g94／g96 的家照舊換）。 */
+const D2601 = (CFG.terrain2601 && CFG.terrain2601.deadlock) || {};
+RT.dl2601 = RT.dl2601 || {};
+const mover2601 = O => (O && O.st === 'solo' && O.sl) ? O.sl : O;
+function mutual2601(mi, TR){ const V = mover2601(TR), min = D2601.minBlockSeconds ?? .3;
+  if (!TR || !TR.job || !moving246(TR) || !V || (V.blk || 0) < min || !V.by) return null;
+  const O = trainsOf246(mi).find(o => o.key === V.by); if (!O || O === TR || !moving246(O)) return null;
+  const VO = mover2601(O); if (!VO || (VO.blk || 0) < min || VO.by !== TR.key) return null;
+  return O; }
+function pass2601(W){ const V = mover2601(W), gs = TN246.ghostSeconds ?? 40; if (V) V.blk = Math.max(V.blk || 0, gs); RT.pass2601 = (RT.pass2601 || 0) + 1; }
+function resolve2601(mi, TR, O, home, occ){ const W = wins249(mi, TR, O) ? TR : O, L = W === TR ? O : TR, pk = [TR.key, O.key].sort().join('|');
+  rps249(mi, TR, O, W); RT.dl2601[pk] = { t: performance.now(), w: W.key };
+  if (L !== TR) return 'wait';   // 輸的是對方：它自己那一步會讓
+  const J = TR.job;
+  if (TR.st === 'run'){
+    if (TR.cells[0] === home.k && J.leg === 'out'){ toYard246(TR); TR.st = 'yard'; J.leg = 'fromYard'; RT.yield2601 = (RT.yield2601 || 0) + 1; return 'yard'; }
+    if (yield246(mi, TR, W, home, occ)){ TR.blk = 0; RT.yield2601 = (RT.yield2601 || 0) + 1; return 'yield'; } }
+  if (D2601.passIfNoRefuge !== false){ pass2601(W); return 'pass'; }
+  return 'stuck'; }
+{ const _st114 = stepTrain246; stepTrain246 = function(mi, TR, dt, home, occ){ const r = _st114(mi, TR, dt, home, occ);
+  try { if (D2601.enabled !== false){ const O = mutual2601(mi, TR); if (O && home) TR.dl2601 = resolve2601(mi, TR, O, home, occ); } } catch(e){ if (!RT.err2601){ RT.err2601 = 1; console.warn(e); } }
+  return r; }; }
+// 猜拳的位置：單獨車頭沒有 cells 時用 sl 的格子（g94 只看 cells[0]）
+{ const _rp114 = rps249; rps249 = function(mi, A, B, W){ const r = _rp114(mi, A, B, W);
+  try { const pk = [A.key, B.key].sort().join('|'), o = RT.rps249[pk]; if (o){ const L = W === A ? B : A, c = X => (X.st === 'solo' && X.sl && X.sl.cells[0]) || X.cells[0] || (X.sl && X.sl.cells[0]);
+      o.wc = c(W) || o.wc; o.lc = c(L) || o.lc; } } catch(e){}
+  return r; }; }
+window.__farm2601 = { D: D2601, mutual2601, resolve2601, RT, step: (...a) => stepTrain246(...a) };
+
+/* ===== v2.60.1 倉庫「材料」→「肥料」 =====
+   裡面只剩糞便、雜草（設定改到 material）、有機肥；分類名稱與大圖照設定 terrain2601.storage.material（玩家肥料袋 ui_pg_st_fertilizer）。
+   ST_CAT 是 g29 的陣列，g96 已經把耗材插在後面；這裡直接改那一列的名稱與圖。 */
+{ const SM2601 = ((CFG.terrain2601 || {}).storage || {}).material; const row = ST_CAT.find(c => c[0] === 'material');
+  if (SM2601 && row){ if (SM2601.label) row[1] = SM2601.label; if (SM2601.art && IMGSRC['ui_pg_' + SM2601.art]) row[2] = SM2601.art; } }
+
+/* ===== v2.60.1 收回倉庫保留擴充 =====
+   原本只有加工機器／生質發電機／融雪機（S.mlvl61）、垃圾站（S.tsLv255）、車庫（S.garLv247）收回會記住等級。
+   充電站／停機坪／掃地基座的第 2 個位子（T.slots）、蜂箱／熊蜂箱等級（T.lvl）、鳥屋的位子（T.n）收回後拿出來變回 1；
+   狗屋／貓跳台（T.n）要先拆回 1 間才准收。現在都記在 S.up2601[id]＝[{ slots|lvl|n }, …]，從倉庫拿出來時給最高的那一份。 */
+const UPF2601 = ['slots', 'lvl', 'n'];
+function upRec2601(M, k){ let T = M && M.tiles[k]; if (!T) return null;
+  if (T.t === 'building' && T.rx != null){ const m = M.tiles[tkey(T.rx, T.ry)]; if (m) T = m; }
+  if (!T.id || T.t === 'machine' || (typeof isDevUp62 === 'function' && isDevUp62(T))) return null;   // 這些 g61／g62 已經自己記
+  const isHive = T.t === 'device' && DEV[T.id] && DEV[T.id].kind === 'hive', isNest = T.t === 'deco' && (isDenId(T.id) || T.id === 'bird_house');
+  const rec = {}; let any = false;
+  if (T.t === 'building' && (T.slots || 1) > 1){ rec.slots = T.slots; any = true; }
+  if (isHive && (T.lvl || 1) > 1){ rec.lvl = T.lvl; any = true; }
+  if (isNest && (T.n || 1) > 1){ rec.n = T.n; any = true; }
+  return any ? { id: T.id, rec, T } : null; }
+const stock2601 = id => (S.buildStore[id] || 0) + (S.storage[id] || 0);
+function keep2601(c){ S.up2601 = S.up2601 || {}; (S.up2601[c.id] = S.up2601[c.id] || []).push(c.rec); }
+function score2601(r){ return (r.slots || 0) + (r.lvl || 0) + (r.n || 0); }
+function give2601(M, x, y, id){ const L = S.up2601 && S.up2601[id]; if (!L || !L.length) return false;
+  let T = M.tiles[tkey(x, y)]; if (!T || T.id !== id) return false; if (T.t === 'building' && T.rx != null) T = M.tiles[tkey(T.rx, T.ry)] || T;
+  let bi = 0; L.forEach((r, i) => { if (score2601(r) > score2601(L[bi])) bi = i; }); const r = L.splice(bi, 1)[0]; if (!L.length) delete S.up2601[id];
+  for (const f of UPF2601) if (r[f]) T[f] = r[f];
+  if (r.slots){ try { assignHomes(); } catch(e){} }
+  const { cx, cy } = center(x, y); floatText(cx, cy - 52, (CFG.terrain2601 && CFG.terrain2601.keepUpText) || '擴充保留', '#2f9a56', 10); return true; }
+// 收：storeObject（建物、設施）
+{ const _so114 = storeObject; storeObject = function(M, k){ const c = RT.in2601 ? null : upRec2601(M, k), n0 = c ? stock2601(c.id) : 0; const r = _so114(M, k);
+  try { if (c && stock2601(c.id) > n0 && c.T !== M.tiles[k]) keep2601(c); } catch(e){ console.warn(e); } return r; }; }
+// 收：狗屋／貓跳台原本要先拆回 1 間 → 直接收，位子記著
+{ const _rd114 = removeDen; removeDen = function(M, k, T, cx, cy, store){
+  if (!store || !T || (T.n || 1) <= 1 || residents(T).length) return _rd114(M, k, T, cx, cy, store);
+  const n = T.n, c = { id: T.id, rec: { n } }; T.n = 1; const was = RT.in2601; RT.in2601 = true; let r;
+  try { r = _rd114(M, k, T, cx, cy, store); } finally { RT.in2601 = was; }
+  if (M.tiles[k] === T) T.n = n; else if (!was) keep2601(c); return r; }; }   // 在 act 裡面時由 act 包裝記
+// 收（裝飾倉庫：鳥屋等）＋拿出來：act 最外層
+{ const _a114 = act; act = function(x, y){ const M = S && curMap(); if (!M || !inMap(M, x, y)) return _a114(x, y);
+  const k = tkey(x, y), c = RT.in2601 ? null : upRec2601(M, k), n0 = c ? stock2601(c.id) : 0;
+  const ids = S.up2601 ? Object.keys(S.up2601) : [], before = {}; for (const id of ids) before[id] = stock2601(id);
+  const was = RT.in2601; RT.in2601 = true; let r; try { r = _a114(x, y); } finally { RT.in2601 = was; }
+  try { if (c && stock2601(c.id) > n0 && M.tiles[k] !== c.T) keep2601(c);
+    for (const id of ids) if (stock2601(id) < before[id]) give2601(M, x, y, id); } catch(e){ console.warn(e); }
+  return r; }; }
+// 讀檔：補欄位
+{ const _ns114 = normalizeState; normalizeState = function(d){ const r = _ns114(d), s = r || d; try { if (s && !s.v2601){ s.up2601 = s.up2601 || {}; s.v2601 = 1; } } catch(e){} return r; }; }
+Object.assign(window.__farm2601, { upRec2601, give2601, act: (x, y) => act(x, y), storeObject: (M, k) => storeObject(M, k) });
+
+/* ===== v2.60.1 撈魚的「本次成績」 =====
+   玩家 2026-11-09：撈到的是魚苗還是成熟的分不出來（訊息一下就換掉），以為魚苗沒進「河鮮」。
+   撈魚時狀態列後面接「本次：魚苗 n・成熟 n」；按「好了」關掉時，有撈到就跳成績單：
+   魚苗（可以養 → 魚 · 河鮮 放進魚池）、成熟（進倉庫，可以賣），有魚苗時按鈕「去放魚苗」直接切到 魚 → 河鮮。 */
+const TX2601 = ((CFG.terrain2601 || {}).catchResult) || {};
+function snap2601(){ const f = {}, w = {}; for (const k in (S.fry260 || {})) f[k] = S.fry260[k];
+  for (const sp of Object.keys(CFG.fish || {})) if (CFG.items['wild_' + sp]) w[sp] = (S.inv && S.inv['wild_' + sp]) || 0; return { f, w }; }
+function diff2601(a){ const b = snap2601(), fry = [], adult = [];
+  for (const k in b.f){ const n = b.f[k] - (a.f[k] || 0); if (n > 0){ const [sp, st] = k.split('|'); fry.push({ sp, st: +st, n }); } }
+  for (const sp in b.w){ const n = b.w[sp] - (a.w[sp] || 0); if (n > 0) adult.push({ sp, n }); }
+  return { fry, adult, nf: fry.reduce((s, r) => s + r.n, 0), na: adult.reduce((s, r) => s + r.n, 0) }; }
+function resRows2601(list, adult){ return list.map(r => { const F = CFG.fish[r.sp] || {}, ic = IMGSRC['ui_fish_' + sprOf260(r.sp, adult ? 2 : r.st)];
+  return `<tr><td>${ic ? `<img class="ico" src="${ic}" alt="">` : ''}</td><td>${escapeHTML(adult ? (CFG.items['wild_' + r.sp] || {}).name || ('野生' + F.name) : `${F.name}（${stName260(r.sp, r.st)}）`)}</td><td class="num">×${fmtN(r.n)}</td></tr>`; }).join(''); }
+function openRes2601(d){
+  openModal(TX2601.title || '本次撈魚成績', null, (k, el) => {
+    el.innerHTML = `${d.nf ? `<h3>${TX2601.fryHead || '魚苗：可以養'}（${d.nf}）</h3><p class="small">${TX2601.fryHint || '放在「魚 → 河鮮」分頁，點魚池的空格放進去養大'}</p><table class="res2601">${resRows2601(d.fry, false)}</table>` : ''}
+      ${d.na ? `<h3>${TX2601.adultHead || '成熟的：進倉庫'}（${d.na}）</h3><p class="small">${TX2601.adultHint || '在倉庫「魚」那一區，可以直接賣（半價）'}</p><table class="res2601">${resRows2601(d.adult, true)}</table>` : ''}
+      <div class="row">${d.nf ? `<button class="btn" id="res2601go">${TX2601.go || '去放魚苗'}</button>` : ''}<button class="btn ${d.nf ? 'ghost' : ''}" id="res2601ok">${TX2601.ok || '好'}</button></div>`;
+    const go = el.querySelector('#res2601go'); if (go) go.onclick = () => { closeModal(); setTool('fish'); S.sel.fishTab = 'river260'; S.sel.none49 = false; const id = 'r260_' + d.fry[0].sp + '_' + d.fry[0].st; S.sel.fish = id; RT.tab33Pick = true; try { UIbuildTray(); } finally { RT.tab33Pick = false; } updateHint(); };
+    el.querySelector('#res2601ok').onclick = () => closeModal(); }); }
+{ const _oc114 = openCatch260; openCatch260 = function(mi, gid){ const a = snap2601(); const r = _oc114(mi, gid);
+  try { const wrap = document.getElementById('catch260'); if (!wrap) return r; const st = wrap.querySelector('.st260');
+    const tally = () => { const d = diff2601(a); return (d.nf || d.na) ? tx84(TX2601.bar || '本次：魚苗 {f}・成熟 {a}', { f: d.nf, a: d.na }) : ''; };
+    const fix = () => { if (!st) return; const t = tally(), cur = st.querySelector('.tl2601'), want = t ? '· ' + t : '';   // 只有內容不同才動，不然 MutationObserver 會自己一直觸發
+      if ((cur ? cur.textContent : '') === want) return; if (cur) cur.remove(); if (want){ const b = document.createElement('b'); b.className = 'tl2601'; b.textContent = want; st.append(' ', b); } };
+    if (st){ new MutationObserver(fix).observe(st, { childList: true, characterData: true, subtree: true }); fix(); }
+    const gone = new MutationObserver(() => { if (wrap.isConnected) return; gone.disconnect(); const d = diff2601(a); if (d.nf || d.na) setTimeout(() => openRes2601(d), 50); });
+    gone.observe(document.body, { childList: true }); } catch(e){ console.warn(e); }
+  return r; }; }
+Object.assign(window.__farm2601, { diff2601, snap2601, openRes2601 });
+{ const st = document.createElement('style'); st.textContent = '#modalBody table.res2601{width:100%;border-collapse:collapse;margin:4px 0 10px}#modalBody table.res2601 td{text-align:left;padding:4px 6px;border-bottom:1px solid rgba(127,127,127,.2)}#modalBody table.res2601 td.num{text-align:right;font-weight:700}#modalBody table.res2601 img.ico{width:32px;height:32px;object-fit:contain}#catch260 .tl2601{color:#2f7a3a}body.night #catch260 .tl2601{color:#8fd49a}'; document.head.appendChild(st); }
 
   })(CFG, ATLAS_JSON);
 })();

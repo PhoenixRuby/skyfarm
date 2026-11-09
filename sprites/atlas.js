@@ -58209,6 +58209,18 @@ window.GAME_ATLAS = {
         0,
         0
       ]
+    },
+    "ui_pg_st_fertilizer": {
+      "file": "ui_pg_st_fertilizer.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 227,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };

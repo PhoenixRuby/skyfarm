@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.60",
+  "configVersion": "2.60.1",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -3059,7 +3059,7 @@
   },
   "weed": {
    "name": "雜草",
-   "category": "feed",
+   "category": "material",
    "sellPrice": 1
   },
   "poop": {
@@ -14721,7 +14721,7 @@
    "meat": "肉",
    "fish": "魚",
    "feed": "飼料",
-   "material": "材料",
+   "material": "肥料",
    "honey": "蜂蜜",
    "buildMat": "建材",
    "part": "耗材",
@@ -14955,5 +14955,30 @@
    "offFall": "關掉瀑布",
    "onFall": "打開瀑布（設在這裡）"
   }
+ },
+ "terrain2601": {
+  "deadlock": {
+   "enabled": true,
+   "minBlockSeconds": 0.3,
+   "passIfNoRefuge": true,
+   "note": "兩台（整列或單獨車頭、讓路中也算）互相擋住超過 minBlockSeconds 秒＝互卡 → 猜拳（贏家照 terrain249.priority）；輸的整列在跑就退到待避處／小屋，退不了（單獨車頭、找不到地方）且 passIfNoRefuge 時贏的直接通過，不再等 terrain246.ghostSeconds"
+  },
+  "storage": {
+   "material": {
+    "label": "肥料",
+    "art": "st_fertilizer"
+   },
+   "note": "農產倉庫 material 分類顯示成「肥料」、大圖用玩家的肥料袋（batch75 ui_pg_st_fertilizer）；耗材在 v2.51.1 已經搬到 part"
+  },
+  "catchResult": {
+   "title": "本次撈魚成績",
+   "bar": "本次：魚苗 {f}・成熟 {a}",
+   "fryHead": "魚苗：可以養",
+   "fryHint": "放在「魚 → 河鮮」分頁，點魚池的空格放進去養大",
+   "adultHead": "成熟的：進倉庫",
+   "adultHint": "在倉庫「魚」那一區，可以直接賣（半價）",
+   "go": "去放魚苗",
+   "ok": "好"
+  }
  }
-}
+}
