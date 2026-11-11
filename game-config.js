@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.60.1",
+  "configVersion": "2.60.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -11347,7 +11347,7 @@ window.GAME_CONFIG = {
     "add": 100,
     "unit": "份",
     "price": 2000,
-    "mult": 1.5,
+    "mult": 1.15,
     "max": 20,
     "needs": "material_shed",
     "perIsland": true
@@ -14081,7 +14081,7 @@ window.GAME_CONFIG = {
    "boost": {
     "add": 100,
     "price": 2000,
-    "mult": 1.5,
+    "mult": 1.15,
     "max": 20
    },
    "sellRows": [
@@ -14980,6 +14980,15 @@ window.GAME_CONFIG = {
    "adultHint": "在倉庫「魚」那一區，可以直接賣（半價）",
    "go": "去放魚苗",
    "ok": "好"
+  },
+  "sortTray": true
+ },
+ "terrain2602": {
+  "refund": {
+   "enabled": true,
+   "oldPrice": 2000,
+   "oldMult": 1.5,
+   "note": "建材小屋擴充：舊存檔照 S.shedB243[島] 已擴充次數，把 ×1.5 時多付的（舊價 − 現在價）退回；只在第一次開檔算一次"
   }
  }
 };

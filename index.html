@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.1-10491ed40a'), getJSON('sprites/atlas.json?v=2.60.1-10491ed40a')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.2-82e636662d'), getJSON('sprites/atlas.json?v=2.60.2-82e636662d')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14391,7 +14391,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.60.1-10491ed40a';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.60.2-82e636662d';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22647,6 +22647,90 @@ Object.assign(window.__farm2601, { diff2601, snap2601, openRes2601 });
 { const _a114b = act; act = function(x, y){
   try { if (RT.efSkip254){ RT.lastAnimalTap = tkey(x, y); RT.lastAnimalTapAt = performance.now(); } } catch(e){}
   return _a114b(x, y); }; }
+
+/* ===== v2.60.1（玩家 2026-11-11）四個修正 ===== */
+// 1) 停機坪／充電站／掃地基座「每座島」3 座（設定 buildings.*.perMapLimit），原本整座農場加起來 3 座。
+//    蓋新的（buyBase）和建設選項列（UIbuildTray）計數時 basesOf 只算目前這座島；從倉庫拿出來（placeStored51）也照這座島的上限擋。
+RT.isl2601 = 0;
+{ const _bo114 = basesOf; basesOf = function(id){ const r = _bo114(id); return RT.isl2601 ? r.filter(b => b.mi === S.cur) : r; }; }
+const perIsl2601 = id => (BLD[id] && BLD[id].perMapLimit) || FLC.baseMax || 3;
+{ const _bb114 = buyBase; buyBase = function(...a){ const id = a[3], mx0 = FLC.baseMax; RT.isl2601++; FLC.baseMax = perIsl2601(id);
+  try { return _bb114(...a); } finally { RT.isl2601--; FLC.baseMax = mx0; } }; }
+{ const _ut114 = UIbuildTray; UIbuildTray = function(...a){ if (!S || S.sel.tool !== 'build') return _ut114(...a); const mx0 = FLC.baseMax; RT.isl2601++; FLC.baseMax = perIsl2601('robot_charger');
+  try { return _ut114(...a); } finally { RT.isl2601--; FLC.baseMax = mx0; } }; }
+{ const _ps114 = placeStored51; placeStored51 = function(M, x, y, id, inner){ const T = M.tiles[tkey(x, y)];
+  if (BASE_TYPES.includes(id) && (!T || T.t === 'weed')){ const n = _bo114base(id).filter(b => b.mi === S.cur).length, mx = perIsl2601(id);
+    if (n >= mx){ toast(`${BLD[id].name}每座島最多 ${mx} 座（這座島已經 ${n} 座）`); return; } }
+  return _ps114(M, x, y, id, inner); }; }
+function _bo114base(id){ const was = RT.isl2601; RT.isl2601 = 0; try { return basesOf(id); } finally { RT.isl2601 = was; } }
+
+// 3) 機器人停在充電樁上時，點下去是 g112 的「機器人狀態」小選單（只能移鏡頭），換不了耗材、也開不了充電樁面板 → 小選單加按鈕
+{ const _op114 = openPop2591; openPop2591 = function(kind, u, p){ const r = _op114(kind, u, p);
+  try { const pp = p || probC2591(kind, u), box = POP53 && POP53.querySelector('.pp2591'), cl = box && box.querySelector('[data-cl2591]'); if (!box || !cl) return r;
+    let h = '';
+    if (pp && pp.code === 'part' && u.needPart){ const P = PARTS[u.needPart] || {}, have = S.inv[partItem(u.needPart)] || 0;
+      h += `<button data-sw2601="1">換耗材：${escapeHTML(P.name || '')}（倉庫 ${have}）</button>`; }
+    h += `<button data-up2601="1">查看${escapeHTML((BLD[RK(kind).base] || {}).name || '充電樁')}面板</button>`;
+    cl.insertAdjacentHTML('beforebegin', h);
+    const sw = box.querySelector('[data-sw2601]'); if (sw) sw.onclick = () => { closePop53(); if (swapPart84(kind, u)){ afterAction(); toast('換好耗材了', true); } };
+    box.querySelector('[data-up2601]').onclick = () => { closePop53(); openUnitPanel(kind); }; } catch(e){ console.warn(e); }
+  return r; }; }
+
+// 4) 選項列照解鎖等級排（UNLOCK）；分組小標、分隔線之間各自排，沒有解鎖等級的品項跟著前一個
+{ const _ut114b = UIbuildTray; UIbuildTray = function(...a){ const r = _ut114b(...a);
+  try { const tray = $('tray'); if (tray && !(CFG.terrain2601 && CFG.terrain2601.sortTray === false)){
+      const runs = []; let cur = []; for (const el of [...tray.children]){ if (el.classList.contains('item') && el.dataset.id){ cur.push(el); } else { if (cur.length > 1) runs.push(cur); cur = []; } } if (cur.length > 1) runs.push(cur);
+      for (const run of runs){ let last = 0; const keyed = run.map((el, i) => { const lv = UNLOCK[el.dataset.id]; if (lv != null) last = lv; return { el, i, lv: lv != null ? lv : last }; });
+        const sorted = keyed.slice().sort((p, q) => (p.lv - q.lv) || (p.i - q.i)); if (sorted.every((s, i) => s === keyed[i])) continue;
+        const anchor = run[run.length - 1].nextSibling; for (const s of sorted) tray.insertBefore(s.el, anchor); } } } catch(e){ console.warn(e); }
+  return r; }; }
+Object.assign(window.__farm2601, { shedPrice: mi => shedBoostPrice84(mi), UNLOCK });
+
+// 5) 沿邊柵欄的小選單：動物那格多一個「查看資訊」（原本資訊按鈕只在點動物跳出狀態小選單時才有；可收成時一點就收走、看不到面板）
+{ const _oe114 = objEdgeMenu2543; objEdgeMenu2543 = function(M, x, y){ const r = _oe114(M, x, y);
+  try { const k = tkey(x, y), T = M.tiles[k];
+    if (r && T && T.t === 'animal' && CFG.animals[T.id] && !POP53.hidden && !POP53.querySelector('[data-ai2601]')){
+      const t = POP53.querySelector('[data-oe2543="tile"]'), nm = (CFG.animals[T.id] || {}).name || '動物';
+      const h = `<button data-ai2601="1" class="wide2543"><img src="${IMGSRC.ui_tool_hand || ''}" alt="">${escapeHTML('查看' + nm + '資訊')}</button>`;
+      if (t) t.insertAdjacentHTML('afterend', h); else POP53.insertAdjacentHTML('beforeend', h);
+      POP53.querySelector('[data-ai2601]').onclick = () => { closePop53(); if (M.tiles[k] === T) openAnimal2543(M, k); }; } } catch(e){ console.warn(e); }
+  return r; }; }
+
+// 6) 有東西可收（動物有產物、肉用成年）→ 先直接收成，不跳沿邊柵欄小選單；收完再點才出現小選單
+{ const _oe114b = objEdgeMenu2543; objEdgeMenu2543 = function(M, x, y){
+  try { const T = M.tiles[tkey(x, y)], A = T && T.t === 'animal' && CFG.animals[T.id];
+    if (A && ((T.stack || 0) > 0 || (A.type === 'meat' && isAdult(T, A)))){ RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return true; } } catch(e){ console.warn(e); }
+  return _oe114b(M, x, y); }; }
+
+/* v2.60.2：建材小屋擴充多收的金幣退回（玩家 2026-11-11）
+   v2.60.1 把建材小屋擴充漲幅從 ×1.5 改成 ×1.15。舊存檔照「這座島已擴充幾次」（S.shedB243[mi]）的紀錄，
+   把當初照 ×1.5 付的、減掉照現在價錢該付的，差額退回。只在第一次用 v2.60.2 開檔時算一次（存檔旗標 v2602），之後不再檢查。
+   S.shedNew2602[mi]：v2.60.2 之後照新價錢買的次數（目前只記錄，退費時已經算完）。 */
+(() => {
+const D2602 = (CFG.terrain2602 || {}).refund || {};
+const oldP2602 = i => Math.round((D2602.oldPrice || 2000) * Math.pow(D2602.oldMult || 1.5, i) / 10) * 10;
+const newP2602 = i => { const B = SH84.boost || {}; return Math.round((B.price || 2000) * Math.pow(B.mult || 1.5, i) / 10) * 10; };
+function calc2602(s){ const out = []; let tot = 0; const sb = (s && s.shedB243) || {};
+  for (const mi of Object.keys(sb)){ const n = Math.max(0, Math.floor(sb[mi] || 0)); let r = 0; for (let i = 0; i < n; i++) r += Math.max(0, oldP2602(i) - newP2602(i));
+    if (r > 0){ out.push({ mi: +mi, n, r }); tot += r; } }
+  return { tot, out }; }
+{ const _ns115 = normalizeState; normalizeState = function(d){ const r = _ns115(d), s = r || d;
+  try { if (s && !s.v2602){ if (D2602.enabled !== false){ const c = calc2602(s); if (c.tot > 0) s.refund2602 = c; } s.v2602 = 1; } } catch(e){ console.warn(e); }
+  return r; }; }
+function apply2602(){ const c = S && S.refund2602; if (!c || !(c.tot > 0) || !S.player) return 0;
+  delete S.refund2602; RT.coinWhy = RT.coinWhy || []; RT.coinWhy.push('建材小屋擴充多收退回');
+  try { S.player.coins += c.tot; } finally { RT.coinWhy.pop(); }
+  try { afterAction(); } catch(e){}
+  try { const rows = c.out.map(o => `<li>「${escapeHTML(islName63(o.mi))}」擴充 ${o.n} 次：退 ${fmtN(o.r)} 金幣</li>`).join('');
+    openModal('建材小屋擴充退費', null, (k, el) => { el.innerHTML = `<p>建材小屋擴充的價錢調低了（每次漲 1.5 倍 → 1.15 倍）。照你已經擴充的次數，把多收的金幣退回：</p><ul>${rows}</ul><p><b>共退回 ${fmtN(c.tot)} 金幣</b>，已經加進金幣裡。</p>`; }); } catch(e){ console.warn(e); toast(`建材小屋擴充多收的 ${fmtN(c.tot)} 金幣已退回`, true); }
+  return c.tot; }
+{ const _bs115 = buyShedBoost84; buyShedBoost84 = function(mi){ const r = _bs115(mi); try { if (r){ S.shedNew2602 = S.shedNew2602 || {}; S.shedNew2602[mi] = (S.shedNew2602[mi] || 0) + 1; } } catch(e){} return r; }; }
+// 開檔後等畫面好了再退（存檔載入時金幣的 setter、金幣紀錄還沒接上）
+RT.t2602 = setInterval(() => { try { if (S && !S.v2602) S.v2602 = 1;   // 新開的遊戲沒經過 normalizeState：直接標記，之後照新價錢買的不會被當成舊的退
+  if (!S || !S.refund2602 || !S.player) return; const l = document.getElementById('loading'), md = document.getElementById('modal');
+  if ((l && l.style.display !== 'none' && l.offsetParent) || (md && !md.hidden)) return; apply2602(); } catch(e){ console.warn(e); } }, 1500);
+window.__farm2602 = { calc2602, apply2602, oldP2602, newP2602 };
+})();
 
   })(CFG, ATLAS_JSON);
 })();
