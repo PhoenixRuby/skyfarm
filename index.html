@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.2-82e636662d'), getJSON('sprites/atlas.json?v=2.60.2-82e636662d')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.2-70a0924348'), getJSON('sprites/atlas.json?v=2.60.2-70a0924348')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -9565,7 +9565,7 @@ function updatePets(M, t){
     const chasing = predList().find(q => q.by === P.id && !q.done && q.mi === mi);
     ag.sleep = false; ag.chase = !!chasing;
     if (chasing){ const [px, py] = predPos(chasing, now); ag.tx = px; ag.ty = py; }
-    else if (night || !motion){ ag.tx = d.x + .45; ag.ty = d.y + .45; if (Math.hypot(ag.x - ag.tx, ag.y - ag.ty) < .1){ ag.tx = null; ag.sleep = true; } }
+    else if (night || !motion){ const so = typeof sleepOff2602 === 'function' ? sleepOff2602(P, d) : [0, 0]; ag.tx = d.x + .45 + so[0]; ag.ty = d.y + .45 + so[1]; /* v2.60.2：同一個窩的寵物左右排開 */ if (Math.hypot(ag.x - ag.tx, ag.y - ag.ty) < .1){ ag.tx = null; ag.sleep = true; } }
     else if (ag.tx === null){ if ((ag.wait -= dt) <= 0){ for (let i = 0; i < 6; i++){ const nx = rg.x0 + Math.floor(Math.random() * (rg.x1 - rg.x0 + 1)), ny = rg.y0 + Math.floor(Math.random() * (rg.y1 - rg.y0 + 1)), nk = tkey(nx, ny);
         if (inMap(M, nx, ny) && (P.kind === 'cat' || walkable(M.tiles[nk])) && !(M.glass && M.glass[nk]) && Math.hypot(nx - ag.x, ny - ag.y) < 4){ ag.tx = nx; ag.ty = ny; break; } } if (ag.tx === null) ag.wait = 1.5; } }
     if (ag.tx !== null){ const dx = ag.tx - ag.x, dy = ag.ty - ag.y, dd = Math.hypot(dx, dy), sp = (chasing ? 2.2 : P.kind === 'dog' ? .7 : .55) * (petAdult(P) ? 1 : .7) * dt;
@@ -14391,7 +14391,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.60.2-82e636662d';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.60.2-70a0924348';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22576,15 +22576,18 @@ function upRec2601(M, k){ let T = M && M.tiles[k]; if (!T) return null;
   const rec = {}; let any = false;
   if (T.t === 'building' && (T.slots || 1) > 1){ rec.slots = T.slots; any = true; }
   if (isHive && (T.lvl || 1) > 1){ rec.lvl = T.lvl; any = true; }
+  if (isHive && T.queen && hiveColOk2601()){ const col = JSON.parse(JSON.stringify(T)); delete col.t; delete col.id; delete col.lvl; rec.col = col; any = true; }   // 蜂群跟著蜂箱一起收
   if (isNest && (T.n || 1) > 1){ rec.n = T.n; any = true; }
   return any ? { id: T.id, rec, T } : null; }
 const stock2601 = id => (S.buildStore[id] || 0) + (S.storage[id] || 0);
 function keep2601(c){ S.up2601 = S.up2601 || {}; (S.up2601[c.id] = S.up2601[c.id] || []).push(c.rec); }
-function score2601(r){ return (r.slots || 0) + (r.lvl || 0) + (r.n || 0); }
+function score2601(r){ return (r.slots || 0) + (r.lvl || 0) + (r.n || 0) + (r.col ? 100 : 0); }
+const hiveColOk2601 = () => !(CFG.terrain2601 && CFG.terrain2601.hiveWithColony === false);
 function give2601(M, x, y, id){ const L = S.up2601 && S.up2601[id]; if (!L || !L.length) return false;
   let T = M.tiles[tkey(x, y)]; if (!T || T.id !== id) return false; if (T.t === 'building' && T.rx != null) T = M.tiles[tkey(T.rx, T.ry)] || T;
   let bi = 0; L.forEach((r, i) => { if (score2601(r) > score2601(L[bi])) bi = i; }); const r = L.splice(bi, 1)[0]; if (!L.length) delete S.up2601[id];
   for (const f of UPF2601) if (r[f]) T[f] = r[f];
+  if (r.col){ for (const f in r.col) if (f !== 't' && f !== 'id') T[f] = r.col[f]; RT.decoVer++; }
   if (r.slots){ try { assignHomes(); } catch(e){} }
   const { cx, cy } = center(x, y); floatText(cx, cy - 52, (CFG.terrain2601 && CFG.terrain2601.keepUpText) || '擴充保留', '#2f9a56', 10); return true; }
 // 收：storeObject（建物、設施）
@@ -22689,7 +22692,7 @@ Object.assign(window.__farm2601, { shedPrice: mi => shedBoostPrice84(mi), UNLOCK
 // 5) 沿邊柵欄的小選單：動物那格多一個「查看資訊」（原本資訊按鈕只在點動物跳出狀態小選單時才有；可收成時一點就收走、看不到面板）
 { const _oe114 = objEdgeMenu2543; objEdgeMenu2543 = function(M, x, y){ const r = _oe114(M, x, y);
   try { const k = tkey(x, y), T = M.tiles[k];
-    if (r && T && T.t === 'animal' && CFG.animals[T.id] && !POP53.hidden && !POP53.querySelector('[data-ai2601]')){
+    if (r && !RT.noAni2601 && T && T.t === 'animal' && CFG.animals[T.id] && !POP53.hidden && !POP53.querySelector('[data-ai2601]')){
       const t = POP53.querySelector('[data-oe2543="tile"]'), nm = (CFG.animals[T.id] || {}).name || '動物';
       const h = `<button data-ai2601="1" class="wide2543"><img src="${IMGSRC.ui_tool_hand || ''}" alt="">${escapeHTML('查看' + nm + '資訊')}</button>`;
       if (t) t.insertAdjacentHTML('afterend', h); else POP53.insertAdjacentHTML('beforeend', h);
@@ -22699,10 +22702,28 @@ Object.assign(window.__farm2601, { shedPrice: mi => shedBoostPrice84(mi), UNLOCK
 // 6) 有東西可收（動物有產物、肉用成年）→ 先直接收成，不跳沿邊柵欄小選單；收完再點才出現小選單
 { const _oe114b = objEdgeMenu2543; objEdgeMenu2543 = function(M, x, y){
   try { const T = M.tiles[tkey(x, y)], A = T && T.t === 'animal' && CFG.animals[T.id];
-    if (A && ((T.stack || 0) > 0 || (A.type === 'meat' && isAdult(T, A)))){ RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return true; } } catch(e){ console.warn(e); }
+    if (A && !RT.noAni2601 && ((T.stack || 0) > 0 || (A.type === 'meat' && isAdult(T, A)))){ RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return true; } } catch(e){ console.warn(e); }
   return _oe114b(M, x, y); }; }
 
-/* v2.60.2：建材小屋擴充多收的金幣退回（玩家 2026-11-11）
+// 7) 蜂箱裡有蜂群也能收：蜂群（蜂王、巢框、存蜜…）跟著蜂箱收進倉庫，拿出來擺回去照舊（S.up2601[id] 的 col）
+{ const _sd114 = storeDev56; storeDev56 = function(M, k, T){
+  if (!T || T.t !== 'device' || !(DEV[T.id] && DEV[T.id].kind === 'hive') || !T.queen || !hiveColOk2601()) return _sd114(M, k, T);
+  const c = RT.in2601 ? null : upRec2601(M, k), n0 = c ? stock2601(c.id) : 0; T.queen = false; let r;
+  try { r = _sd114(M, k, T); } finally { if (M.tiles[k] === T) T.queen = true; }
+  try { if (c && stock2601(c.id) > n0 && M.tiles[k] !== T) keep2601(c); if (M.tiles[k] !== T) toast(((CFG.terrain2601 || {}).hiveStoreText) || '蜂箱連同蜂群收進倉庫了，拿出來擺回去蜂群還在'); } catch(e){ console.warn(e); }
+  return r; }; }
+
+// 8) 動物走開了（畫面上不在那格）：點那格空地 → 小選單只列柵欄，不列動物；點動物本身（在別處）→ 直接當點動物，不跳柵欄選單
+{ const _oe114c = objEdgeMenu2543; objEdgeMenu2543 = function(M, x, y){ const k = tkey(x, y), T = M.tiles[k]; let away = false, sprite = false;
+  try { if (T && T.t === 'animal'){ away = animalAwayFrom(k); sprite = RT.lastAnimalTap === k && performance.now() - (RT.lastAnimalTapAt || 0) < 400; } } catch(e){ console.warn(e); }
+  if (!away) return _oe114c(M, x, y);
+  if (sprite){ RT.efSkip254 = true; try { act(x, y); } finally { RT.efSkip254 = false; } return true; }
+  const was = RT.noAni2601; RT.noAni2601 = true; let r;
+  try { r = _oe114c(M, x, y); } finally { RT.noAni2601 = was; }
+  try { if (r && !POP53.hidden){ POP53.querySelectorAll('[data-oe2543="tile"],[data-ai2601]').forEach(b => b.remove()); const h = POP53.querySelector('h5'); if (h) h.textContent = (CFG.terrain2601 || {}).edgeOnlyHead || '這一格的柵欄：'; } } catch(e){ console.warn(e); }
+  return r; }; }
+
+/* v2.60.2：建材小屋、農產倉庫擴充多收的金幣退回（農產倉庫照 S.boost.produce 次數）（玩家 2026-11-11）
    v2.60.1 把建材小屋擴充漲幅從 ×1.5 改成 ×1.15。舊存檔照「這座島已擴充幾次」（S.shedB243[mi]）的紀錄，
    把當初照 ×1.5 付的、減掉照現在價錢該付的，差額退回。只在第一次用 v2.60.2 開檔時算一次（存檔旗標 v2602），之後不再檢查。
    S.shedNew2602[mi]：v2.60.2 之後照新價錢買的次數（目前只記錄，退費時已經算完）。 */
@@ -22713,16 +22734,20 @@ const newP2602 = i => { const B = SH84.boost || {}; return Math.round((B.price |
 function calc2602(s){ const out = []; let tot = 0; const sb = (s && s.shedB243) || {};
   for (const mi of Object.keys(sb)){ const n = Math.max(0, Math.floor(sb[mi] || 0)); let r = 0; for (let i = 0; i < n; i++) r += Math.max(0, oldP2602(i) - newP2602(i));
     if (r > 0){ out.push({ mi: +mi, n, r }); tot += r; } }
+  // 農產倉庫容量等（全部島共用，S.boost[k]）：refund.kinds = { produce: { oldPrice, oldMult } }
+  for (const kk of Object.keys(D2602.kinds || {})){ const O = D2602.kinds[kk], B = BK38[kk]; const n = Math.max(0, Math.floor(((s && s.boost) || {})[kk] || 0)); if (!B || !n) continue;
+    let r = 0; for (let i = 0; i < n; i++) r += Math.max(0, Math.round(O.oldPrice * Math.pow(O.oldMult, i) / 10) * 10 - boostPrice(kk, i));
+    if (r > 0){ out.push({ kind: kk, name: B.name, n, r }); tot += r; } }
   return { tot, out }; }
 { const _ns115 = normalizeState; normalizeState = function(d){ const r = _ns115(d), s = r || d;
   try { if (s && !s.v2602){ if (D2602.enabled !== false){ const c = calc2602(s); if (c.tot > 0) s.refund2602 = c; } s.v2602 = 1; } } catch(e){ console.warn(e); }
   return r; }; }
 function apply2602(){ const c = S && S.refund2602; if (!c || !(c.tot > 0) || !S.player) return 0;
-  delete S.refund2602; RT.coinWhy = RT.coinWhy || []; RT.coinWhy.push('建材小屋擴充多收退回');
+  delete S.refund2602; RT.coinWhy = RT.coinWhy || []; RT.coinWhy.push('擴充多收退回');
   try { S.player.coins += c.tot; } finally { RT.coinWhy.pop(); }
   try { afterAction(); } catch(e){}
-  try { const rows = c.out.map(o => `<li>「${escapeHTML(islName63(o.mi))}」擴充 ${o.n} 次：退 ${fmtN(o.r)} 金幣</li>`).join('');
-    openModal('建材小屋擴充退費', null, (k, el) => { el.innerHTML = `<p>建材小屋擴充的價錢調低了（每次漲 1.5 倍 → 1.15 倍）。照你已經擴充的次數，把多收的金幣退回：</p><ul>${rows}</ul><p><b>共退回 ${fmtN(c.tot)} 金幣</b>，已經加進金幣裡。</p>`; }); } catch(e){ console.warn(e); toast(`建材小屋擴充多收的 ${fmtN(c.tot)} 金幣已退回`, true); }
+  try { const rows = c.out.map(o => o.kind ? `<li>${escapeHTML(o.name)}擴充 ${o.n} 次：退 ${fmtN(o.r)} 金幣</li>` : `<li>「${escapeHTML(islName63(o.mi))}」建材小屋擴充 ${o.n} 次：退 ${fmtN(o.r)} 金幣</li>`).join('');
+    openModal('擴充退費', null, (k, el) => { el.innerHTML = `<p>建材小屋、農產倉庫擴充的價錢調低了（每次漲 1.5 倍 → 1.15 倍）。照你已經擴充的次數，把多收的金幣退回：</p><ul>${rows}</ul><p><b>共退回 ${fmtN(c.tot)} 金幣</b>，已經加進金幣裡。</p>`; }); } catch(e){ console.warn(e); toast(`建材小屋擴充多收的 ${fmtN(c.tot)} 金幣已退回`, true); }
   return c.tot; }
 { const _bs115 = buyShedBoost84; buyShedBoost84 = function(mi){ const r = _bs115(mi); try { if (r){ S.shedNew2602 = S.shedNew2602 || {}; S.shedNew2602[mi] = (S.shedNew2602[mi] || 0) + 1; } } catch(e){} return r; }; }
 // 開檔後等畫面好了再退（存檔載入時金幣的 setter、金幣紀錄還沒接上）
@@ -22731,6 +22756,14 @@ RT.t2602 = setInterval(() => { try { if (S && !S.v2602) S.v2602 = 1;   // 新開
   if ((l && l.style.display !== 'none' && l.offsetParent) || (md && !md.hidden)) return; apply2602(); } catch(e){ console.warn(e); } }, 1500);
 window.__farm2602 = { calc2602, apply2602, oldP2602, newP2602 };
 })();
+
+/* v2.60.2：同一個窩（狗屋、貓跳台）晚上休息的寵物左右排開，不疊在一起（玩家 2026-11-11）
+   g39 updatePets 晚上的目的地 d.x+.45 加上這裡的位移：照窩裡住的順序，沿畫面水平方向（x+o, y−o）排開；
+   間距 terrain2602.petSleep.gap（格，預設 .5 ≈ 半格寬），總寬不超過 maxSpread。 */
+function sleepOff2602(P, d){ try { const C = (CFG.terrain2602 || {}).petSleep || {}; if (C.enabled === false || !d || !d.T) return [0, 0];
+    const L = residents(d.T), k = L.length, i = L.indexOf(P); if (k < 2 || i < 0) return [0, 0];
+    const gap = Math.min(C.gap || .5, (C.maxSpread || 1) / (k - 1)), o = (i - (k - 1) / 2) * gap;
+    return [o, -o]; } catch(e){ console.warn(e); return [0, 0]; } }
 
   })(CFG, ATLAS_JSON);
 })();

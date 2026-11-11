@@ -11284,7 +11284,7 @@ window.GAME_CONFIG = {
     "add": 100,
     "unit": "格",
     "price": 2000,
-    "mult": 1.5,
+    "mult": 1.15,
     "max": 20
    },
    "water": {
@@ -14981,13 +14981,26 @@ window.GAME_CONFIG = {
    "go": "去放魚苗",
    "ok": "好"
   },
-  "sortTray": true
+  "sortTray": true,
+  "hiveWithColony": true
  },
  "terrain2602": {
+  "petSleep": {
+   "enabled": true,
+   "gap": 0.5,
+   "maxSpread": 1,
+   "note": "同一個窩晚上休息的寵物左右排開：間距 gap 格（畫面水平），總寬最多 maxSpread 格"
+  },
   "refund": {
    "enabled": true,
    "oldPrice": 2000,
    "oldMult": 1.5,
+   "kinds": {
+    "produce": {
+     "oldPrice": 2000,
+     "oldMult": 1.5
+    }
+   },
    "note": "建材小屋擴充：舊存檔照 S.shedB243[島] 已擴充次數，把 ×1.5 時多付的（舊價 − 現在價）退回；只在第一次開檔算一次"
   }
  }
