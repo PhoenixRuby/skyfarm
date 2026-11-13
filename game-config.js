@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.60.2",
+  "configVersion": "2.63",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -2351,7 +2351,16 @@ window.GAME_CONFIG = {
     "bird_canary",
     "bf:eurema_blanda",
     "dog_shihtzu",
-    "block:7"
+    "block:7",
+    "bug_box",
+    "bug_jelly",
+    "bug:tw_round_wing",
+    "bug:tw_rhino",
+    "bug:seven_spot",
+    "bug:six_stripe",
+    "bug:black_wing",
+    "bug:white_chafer",
+    "dfly:pantala"
    ],
    "animalCap": 18,
    "fishPoolTileCap": 18,
@@ -2368,7 +2377,12 @@ window.GAME_CONFIG = {
     "piranha",
     "napa_cabbage",
     "basil",
-    "bf:suastus_gremius"
+    "bf:suastus_gremius",
+    "bug:deer_stag",
+    "bug:red_star",
+    "bug:bronze_chafer",
+    "bug:big_dung",
+    "dfly:neurothemis"
    ],
    "animalCap": 19,
    "fishPoolTileCap": 19,
@@ -2388,7 +2402,13 @@ window.GAME_CONFIG = {
     "bf:papilio_protenor",
     "dog_yorkie",
     "cat_tuxedo",
-    "block:8"
+    "block:8",
+    "bug:yellow_lady",
+    "bug:black_tip",
+    "dfly:crocothemis",
+    "owl:pygmy",
+    "owl_box",
+    "frozen_mouse"
    ],
    "animalCap": 20,
    "fishPoolTileCap": 20,
@@ -2405,7 +2425,10 @@ window.GAME_CONFIG = {
     "cat_shark",
     "chili",
     "bird_lovebird",
-    "bf:catopsilia_pomona"
+    "bf:catopsilia_pomona",
+    "bug:miyama_flat",
+    "bug:white_spot",
+    "owl:burrowing"
    ],
    "animalCap": 21,
    "fishPoolTileCap": 21,
@@ -2423,7 +2446,10 @@ window.GAME_CONFIG = {
     "bf:pieris_canidia",
     "dog_pug",
     "block:9",
-    "mallard"
+    "mallard",
+    "bug:twentyeight",
+    "dfly:frost_white",
+    "frog:rice_field"
    ],
    "animalCap": 22,
    "fishPoolTileCap": 22,
@@ -2442,7 +2468,10 @@ window.GAME_CONFIG = {
     "bird_cockatiel",
     "bird_cockatiel_white",
     "bf:erionota_torus",
-    "dog_papillon"
+    "dog_papillon",
+    "bug:yellow_edge",
+    "owl:boreal",
+    "frog:narrow_mouth"
    ],
    "animalCap": 23,
    "fishPoolTileCap": 23,
@@ -2459,7 +2488,9 @@ window.GAME_CONFIG = {
     "honeydew",
     "bf:graphium_sarpedon",
     "block:10",
-    "angora_rabbit"
+    "angora_rabbit",
+    "dfly:trithemis",
+    "owl:barn"
    ],
    "animalCap": 24,
    "fishPoolTileCap": 24,
@@ -2474,7 +2505,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "sage",
     "dog_schnauzer",
-    "cat_british"
+    "cat_british",
+    "bug:oni_glossy",
+    "frog:toad"
    ],
    "animalCap": 25,
    "fishPoolTileCap": 25,
@@ -2492,7 +2525,9 @@ window.GAME_CONFIG = {
     "bird_sun_conure",
     "bf:papilio_memnon",
     "dog_akita",
-    "block:11"
+    "block:11",
+    "bug:red_chest",
+    "owl:tawny"
    ],
    "animalCap": 26,
    "fishPoolTileCap": 26,
@@ -2507,7 +2542,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_dachshund",
     "bf:cyrestis_thyodamas",
-    "cat_siamese"
+    "cat_siamese",
+    "bug:thai_rhino",
+    "dfly:juniper"
    ],
    "animalCap": 27,
    "fishPoolTileCap": 27,
@@ -2523,7 +2560,9 @@ window.GAME_CONFIG = {
     "cotton",
     "bf:heliophorus_ila",
     "dog_dalmatian",
-    "block:12"
+    "block:12",
+    "bug:big_shoulder",
+    "frog:tree_frog"
    ],
    "animalCap": 28,
    "fishPoolTileCap": 28,
@@ -2539,7 +2578,9 @@ window.GAME_CONFIG = {
     "cat_ragdoll",
     "bird_quaker",
     "bf:jamides_alecto",
-    "dog_bullterrier"
+    "dog_bullterrier",
+    "bug:tw_horned",
+    "owl:tawny_fish"
    ],
    "animalCap": 29,
    "fishPoolTileCap": 29,
@@ -2554,7 +2595,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_poodle",
     "bf:prosotas_nora",
-    "alpaca"
+    "alpaca",
+    "bug:metallifer",
+    "dfly:golden_df"
    ],
    "animalCap": 30,
    "fishPoolTileCap": 30,
@@ -2571,7 +2614,9 @@ window.GAME_CONFIG = {
     "tea",
     "bf:bamboo_skipper",
     "dog_chowchow",
-    "block:13"
+    "block:13",
+    "bug:mountain_window",
+    "frog:guenther"
    ],
    "animalCap": 31,
    "fishPoolTileCap": 31,
@@ -2586,7 +2631,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "bf:ideopsis_similis",
     "dog_samoyed",
-    "cat_russianblue"
+    "cat_russianblue",
+    "bug:kanamori_rhino",
+    "dfly:grey_black"
    ],
    "animalCap": 32,
    "fishPoolTileCap": 32,
@@ -2601,7 +2648,9 @@ window.GAME_CONFIG = {
    "unlocks": [
     "dog_labrador",
     "bird_african_grey",
-    "bf:appias_lyncida"
+    "bf:appias_lyncida",
+    "bug:rainbow_dung",
+    "owl:blakiston"
    ],
    "animalCap": 33,
    "fishPoolTileCap": 33,
@@ -2618,7 +2667,8 @@ window.GAME_CONFIG = {
     "bf:tagiades_dagai",
     "dog_shepherd",
     "block:14",
-    "ostrich"
+    "ostrich",
+    "bug:snow_firefly"
    ],
    "animalCap": 34,
    "fishPoolTileCap": 34,
@@ -2632,7 +2682,9 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "cat_persian",
-    "bf:danaus_genutia"
+    "bf:danaus_genutia",
+    "dfly:tripod_vein",
+    "frog:golden_line"
    ],
    "animalCap": 35,
    "fishPoolTileCap": 35,
@@ -2645,7 +2697,8 @@ window.GAME_CONFIG = {
    "coinReward": 50000,
    "specialDeco": "weather_rooster",
    "unlocks": [
-    "dog_bulldog"
+    "dog_bulldog",
+    "owl:snowy"
    ],
    "animalCap": 36,
    "fishPoolTileCap": 36,
@@ -2659,7 +2712,8 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "dog_doberman",
-    "block:15"
+    "block:15",
+    "bug:tw_longarm"
    ],
    "animalCap": 37,
    "fishPoolTileCap": 37,
@@ -2675,7 +2729,8 @@ window.GAME_CONFIG = {
     "dog_husky",
     "bird_white_cockatoo",
     "bf:pachliopta_aristolochiae",
-    "cat_scottishfold"
+    "cat_scottishfold",
+    "dfly:rhyothemis"
    ],
    "animalCap": 38,
    "fishPoolTileCap": 38,
@@ -2688,7 +2743,9 @@ window.GAME_CONFIG = {
    "coinReward": 28000,
    "specialDeco": null,
    "unlocks": [
-    "dog_rottweiler"
+    "dog_rottweiler",
+    "bug:rainbow_stag",
+    "frog:bullfrog"
    ],
    "animalCap": 39,
    "fishPoolTileCap": 39,
@@ -2702,7 +2759,9 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "dog_golden",
-    "block:16"
+    "block:16",
+    "dfly:stout_waist",
+    "owl:great_gray"
    ],
    "animalCap": 40,
    "fishPoolTileCap": 40,
@@ -2715,7 +2774,8 @@ window.GAME_CONFIG = {
    "coinReward": 60000,
    "specialDeco": "hot_air_balloon",
    "unlocks": [
-    "bf:kallima_inachus"
+    "bf:kallima_inachus",
+    "bug:caucasus"
    ],
    "animalCap": 41,
    "fishPoolTileCap": 41,
@@ -2728,7 +2788,8 @@ window.GAME_CONFIG = {
    "coinReward": 31000,
    "specialDeco": null,
    "unlocks": [
-    "dog_malamute"
+    "dog_malamute",
+    "bug:golden_oni"
    ],
    "animalCap": 42,
    "fishPoolTileCap": 42,
@@ -2742,7 +2803,8 @@ window.GAME_CONFIG = {
    "specialDeco": null,
    "unlocks": [
     "cat_silvershade",
-    "block:17"
+    "block:17",
+    "dfly:anax_spotted"
    ],
    "animalCap": 43,
    "fishPoolTileCap": 43,
@@ -2755,7 +2817,9 @@ window.GAME_CONFIG = {
    "coinReward": 33000,
    "specialDeco": null,
    "unlocks": [
-    "bf:spindasis_lohita"
+    "bf:spindasis_lohita",
+    "bug:hercules",
+    "owl:great_horned"
    ],
    "animalCap": 44,
    "fishPoolTileCap": 44,
@@ -2781,7 +2845,8 @@ window.GAME_CONFIG = {
    "unlocks": [
     "bf:seseria_formosana",
     "dog_stbernard",
-    "block:18"
+    "block:18",
+    "bug:sumatra_giant"
    ],
    "animalCap": 46,
    "fishPoolTileCap": 46,
@@ -3953,6 +4018,18 @@ window.GAME_CONFIG = {
    "name": "鴕鳥肉",
    "category": "meat",
    "sellPrice": 4600
+  },
+  "bug_jelly": {
+   "name": "昆蟲果凍",
+   "category": "feed",
+   "sellPrice": 2,
+   "shopOnly": true
+  },
+  "frozen_mouse": {
+   "name": "冷凍小鼠",
+   "category": "feed",
+   "sellPrice": 5,
+   "shopOnly": true
   }
  },
  "feedShop": {
@@ -3961,7 +4038,9 @@ window.GAME_CONFIG = {
   "fish_feed": 5,
   "dog_food": 8,
   "cat_food": 6,
-  "bird_food": 6
+  "bird_food": 6,
+  "bug_jelly": 5,
+  "frozen_mouse": 20
  },
  "machines": {
   "corn_cake_machine": {
@@ -4647,6 +4726,18 @@ window.GAME_CONFIG = {
     "radius": 1.7,
     "note": "晚上的光：一整片從燈往外淡出的藍白光，只畫在範圍內的魚池格（含島邊玻璃側面）"
    }
+  },
+  "bug_box": {
+   "name": "飼育箱",
+   "kind": "bugbox",
+   "buildCost": 2000,
+   "size": 1
+  },
+  "owl_box": {
+   "name": "貓頭鷹巢箱",
+   "kind": "owlbox",
+   "buildCost": 2500,
+   "size": 1
   }
  },
  "power": {
@@ -7765,7 +7856,8 @@ window.GAME_CONFIG = {
       "compost_bin",
       "dog_house",
       "cat_tree",
-      "bird_house"
+      "bird_house",
+      "owl_box"
      ],
      "via": {
       "compost_bin": "build"
@@ -7877,6 +7969,38 @@ window.GAME_CONFIG = {
       "bird_african_grey",
       "bird_white_cockatoo"
      ]
+    },
+    {
+     "id": "owl",
+     "label": "貓頭鷹",
+     "icon": "ui_tab_owl",
+     "ids": [
+      "owl:pygmy",
+      "owl:burrowing",
+      "owl:boreal",
+      "owl:barn",
+      "owl:tawny",
+      "owl:tawny_fish",
+      "owl:blakiston",
+      "owl:snowy",
+      "owl:great_gray",
+      "owl:great_horned",
+      "frozen_mouse"
+     ]
+    },
+    {
+     "id": "frog",
+     "label": "青蛙",
+     "icon": "ui_tab_frog",
+     "ids": [
+      "frog:rice_field",
+      "frog:narrow_mouth",
+      "frog:toad",
+      "frog:tree_frog",
+      "frog:guenther",
+      "frog:golden_line",
+      "frog:bullfrog"
+     ]
     }
    ],
    "fish": [
@@ -7921,7 +8045,8 @@ window.GAME_CONFIG = {
      "icon": "ui_tab_fac_insect",
      "ids": [
       "beehive",
-      "bumble_hive"
+      "bumble_hive",
+      "bug_box"
      ]
     },
     {
@@ -7965,6 +8090,64 @@ window.GAME_CONFIG = {
       "bf:erionota_torus",
       "bf:bamboo_skipper",
       "bf:seseria_formosana"
+     ]
+    },
+    {
+     "id": "beetles",
+     "label": "甲蟲",
+     "icon": "ui_tab_beetles",
+     "ids": [
+      "bug:tw_round_wing",
+      "bug:deer_stag",
+      "bug:miyama_flat",
+      "bug:oni_glossy",
+      "bug:metallifer",
+      "bug:rainbow_stag",
+      "bug:golden_oni",
+      "bug:sumatra_giant",
+      "bug:tw_rhino",
+      "bug:thai_rhino",
+      "bug:kanamori_rhino",
+      "bug:caucasus",
+      "bug:hercules",
+      "bug:seven_spot",
+      "bug:six_stripe",
+      "bug:red_star",
+      "bug:yellow_lady",
+      "bug:twentyeight",
+      "bug:big_shoulder",
+      "bug:black_wing",
+      "bug:black_tip",
+      "bug:yellow_edge",
+      "bug:red_chest",
+      "bug:mountain_window",
+      "bug:snow_firefly",
+      "bug:white_chafer",
+      "bug:bronze_chafer",
+      "bug:white_spot",
+      "bug:tw_horned",
+      "bug:tw_longarm",
+      "bug:big_dung",
+      "bug:rainbow_dung"
+     ]
+    },
+    {
+     "id": "dragonfly",
+     "label": "蜻蜓",
+     "icon": "ui_tab_dragonfly",
+     "ids": [
+      "dfly:pantala",
+      "dfly:neurothemis",
+      "dfly:crocothemis",
+      "dfly:frost_white",
+      "dfly:trithemis",
+      "dfly:juniper",
+      "dfly:golden_df",
+      "dfly:grey_black",
+      "dfly:tripod_vein",
+      "dfly:rhyothemis",
+      "dfly:stout_waist",
+      "dfly:anax_spotted"
      ]
     }
    ],
@@ -8100,7 +8283,10 @@ window.GAME_CONFIG = {
     "insects": "bookbg_animals",
     "preds": "bookbg_animals",
     "buildings": "bookbg_devices",
-    "terrain": "bookbg_crops"
+    "terrain": "bookbg_crops",
+    "bugs261": "bookbg_animals",
+    "owls262": "bookbg_animals",
+    "frogs263": "bookbg_animals"
    }
   },
   "tools": {
@@ -12739,6 +12925,110 @@ window.GAME_CONFIG = {
     "desc": "累計採到薰衣草蜜罐數"
    },
    {
+    "id": "bug_stag",
+    "name": "鍬形蟲收集",
+    "group": "昆蟲收集",
+    "stat": "bug_stag",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的鍬形蟲隻數"
+   },
+   {
+    "id": "bug_rhino",
+    "name": "兜蟲收集",
+    "group": "昆蟲收集",
+    "stat": "bug_rhino",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的兜蟲隻數"
+   },
+   {
+    "id": "bug_lady",
+    "name": "瓢蟲收集",
+    "group": "昆蟲收集",
+    "stat": "bug_lady",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的瓢蟲隻數"
+   },
+   {
+    "id": "bug_firefly",
+    "name": "螢火蟲收集",
+    "group": "昆蟲收集",
+    "stat": "bug_firefly",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的螢火蟲隻數"
+   },
+   {
+    "id": "bug_scarab",
+    "name": "金龜子收集",
+    "group": "昆蟲收集",
+    "stat": "bug_scarab",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的金龜子隻數"
+   },
+   {
+    "id": "bug_dung",
+    "name": "糞金龜收集",
+    "group": "昆蟲收集",
+    "stat": "bug_dung",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的糞金龜隻數"
+   },
+   {
+    "id": "bug_dragonfly",
+    "name": "蜻蜓收集",
+    "group": "昆蟲收集",
+    "stat": "bug_dragonfly",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的蜻蜓隻數"
+   },
+   {
+    "id": "bug_all",
+    "name": "昆蟲收集",
+    "group": "昆蟲收集",
+    "stat": "bugKinds",
+    "tiers": [
+     5,
+     15,
+     30,
+     44
+    ],
+    "desc": "圖鑑登記的昆蟲種類（甲蟲類 32＋蜻蜓 12）"
+   },
+   {
     "id": "bird_watcher",
     "name": "賞鳥達人",
     "group": "寵物鳥",
@@ -12763,6 +13053,40 @@ window.GAME_CONFIG = {
      1000
     ],
     "desc": "寵物鳥累計抓蟲（棵次）"
+   },
+   {
+    "id": "owl",
+    "name": "貓頭鷹",
+    "group": "貓頭鷹",
+    "stat": "owlRats",
+    "tiers": [
+     10,
+     100,
+     500,
+     2000
+    ],
+    "desc": "貓頭鷹累計抓老鼠隻數"
+   },
+   {
+    "id": "owl_day",
+    "name": "白天的訪客",
+    "group": "貓頭鷹",
+    "stat": "owlLureDay",
+    "hidden": true,
+    "desc": "第一次在白天用冷凍小鼠把貓頭鷹引出來"
+   },
+   {
+    "id": "frog",
+    "name": "青蛙",
+    "group": "青蛙",
+    "stat": "frogs",
+    "tiers": [
+     3,
+     20,
+     60,
+     200
+    ],
+    "desc": "累計抓到＋養出的青蛙隻數"
    },
    {
     "id": "pioneer_wood",
@@ -13075,7 +13399,10 @@ window.GAME_CONFIG = {
    "note": "裁成 art/batch37/ui_badge_<成就 id>.png（160×160），灰色版 _off；第 7 張的南瓜不用（v2.19 已有）、第 8 張的「雞」不用（改用第 9 張的蛋雞、肉雞）"
   },
   "groupIcons241": {
-   "開拓": "ui_badge_pioneer_wood"
+   "開拓": "ui_badge_pioneer_wood",
+   "昆蟲收集": "ui_badge_bug_all",
+   "貓頭鷹": "ui_badge_owl",
+   "青蛙": "ui_badge_frog"
   },
   "badgeSources241": {
    "art/src_ui/v241/badges_terrain_11.png": {
@@ -14612,9 +14939,27 @@ window.GAME_CONFIG = {
     "animal"
    ],
    [
+    "owls262",
+    "貓頭鷹",
+    "ui_tab_owl",
+    "animal"
+   ],
+   [
+    "frogs263",
+    "青蛙",
+    "ui_tab_frog",
+    "animal"
+   ],
+   [
     "insects",
     "昆蟲",
     "ui_tab_insects",
+    "animal"
+   ],
+   [
+    "bugs261",
+    "昆蟲收集",
+    "ui_tab_beetles",
     "animal"
    ],
    [
@@ -15003,5 +15348,843 @@ window.GAME_CONFIG = {
    },
    "note": "建材小屋擴充：舊存檔照 S.shedB243[島] 已擴充次數，把 ×1.5 時多付的（舊價 − 現在價）退回；只在第一次開檔算一次"
   }
+ },
+ "bugs261": {
+  "note": "v2.61 昆蟲收集（含 v2.64 蜻蜓）：活體不能賣、不進倉庫（同蝴蝶）；死掉 specimenChance 機率掉在地上，撿起來做成「甲蟲標本」（倉庫「標本」分頁，跟蝴蝶標本分區，可以賣）。天＝真實一天",
+  "groups": {
+   "stag": {
+    "name": "鍬形蟲",
+    "kind": "beetle"
+   },
+   "rhino": {
+    "name": "兜蟲",
+    "kind": "beetle"
+   },
+   "lady": {
+    "name": "瓢蟲",
+    "kind": "lady"
+   },
+   "firefly": {
+    "name": "螢火蟲",
+    "kind": "firefly"
+   },
+   "scarab": {
+    "name": "金龜子",
+    "kind": "beetle"
+   },
+   "dung": {
+    "name": "糞金龜",
+    "kind": "beetle"
+   },
+   "dragonfly": {
+    "name": "蜻蜓",
+    "kind": "dragonfly"
+   }
+  },
+  "rarity": {
+   "common": {
+    "name": "普通",
+    "wildWeight": 70,
+    "larvaCost": 40,
+    "specimenPrice": 60,
+    "firstXp": 20,
+    "xp": 3
+   },
+   "rare": {
+    "name": "稀有",
+    "wildWeight": 25,
+    "larvaCost": 150,
+    "specimenPrice": 200,
+    "firstXp": 60,
+    "xp": 8
+   },
+   "epic": {
+    "name": "珍稀",
+    "wildWeight": 5,
+    "larvaCost": 500,
+    "specimenPrice": 600,
+    "firstXp": 150,
+    "xp": 20
+   }
+  },
+  "species": {
+   "tw_round_wing": {
+    "name": "臺灣圓翅鍬形蟲",
+    "group": "stag",
+    "rarity": "common",
+    "level": 12
+   },
+   "deer_stag": {
+    "name": "鹿角鍬形蟲",
+    "group": "stag",
+    "rarity": "common",
+    "level": 13
+   },
+   "miyama_flat": {
+    "name": "深山扁鍬形蟲",
+    "group": "stag",
+    "rarity": "common",
+    "level": 15
+   },
+   "oni_glossy": {
+    "name": "鬼豔鍬形蟲",
+    "group": "stag",
+    "rarity": "rare",
+    "level": 19
+   },
+   "metallifer": {
+    "name": "美他利佛細身赤鍬形蟲",
+    "group": "stag",
+    "rarity": "rare",
+    "level": 24
+   },
+   "rainbow_stag": {
+    "name": "彩虹鍬形蟲",
+    "group": "stag",
+    "rarity": "epic",
+    "level": 33
+   },
+   "golden_oni": {
+    "name": "黃金鬼鍬形蟲",
+    "group": "stag",
+    "rarity": "epic",
+    "level": 36
+   },
+   "sumatra_giant": {
+    "name": "蘇門答臘巨扁鍬形蟲",
+    "group": "stag",
+    "rarity": "epic",
+    "level": 40
+   },
+   "tw_rhino": {
+    "name": "台灣獨角仙",
+    "group": "rhino",
+    "rarity": "common",
+    "level": 12
+   },
+   "thai_rhino": {
+    "name": "泰國獨角仙",
+    "group": "rhino",
+    "rarity": "rare",
+    "level": 21
+   },
+   "kanamori_rhino": {
+    "name": "卡納摩利獨角仙",
+    "group": "rhino",
+    "rarity": "rare",
+    "level": 26
+   },
+   "caucasus": {
+    "name": "高加索大兜蟲",
+    "group": "rhino",
+    "rarity": "epic",
+    "level": 35
+   },
+   "hercules": {
+    "name": "長戟大兜蟲",
+    "group": "rhino",
+    "rarity": "epic",
+    "level": 38
+   },
+   "seven_spot": {
+    "name": "七星瓢蟲",
+    "group": "lady",
+    "rarity": "common",
+    "level": 12
+   },
+   "six_stripe": {
+    "name": "六條瓢蟲",
+    "group": "lady",
+    "rarity": "common",
+    "level": 12
+   },
+   "red_star": {
+    "name": "赤星瓢蟲",
+    "group": "lady",
+    "rarity": "common",
+    "level": 13
+   },
+   "yellow_lady": {
+    "name": "黃瓢蟲",
+    "group": "lady",
+    "rarity": "common",
+    "level": 14
+   },
+   "twentyeight": {
+    "name": "二十八星瓢蟲",
+    "group": "lady",
+    "rarity": "common",
+    "level": 16
+   },
+   "big_shoulder": {
+    "name": "大突肩瓢蟲",
+    "group": "lady",
+    "rarity": "rare",
+    "level": 22
+   },
+   "black_wing": {
+    "name": "黑翅螢",
+    "group": "firefly",
+    "rarity": "common",
+    "level": 12
+   },
+   "black_tip": {
+    "name": "端黑螢",
+    "group": "firefly",
+    "rarity": "common",
+    "level": 14
+   },
+   "yellow_edge": {
+    "name": "黃緣螢",
+    "group": "firefly",
+    "rarity": "rare",
+    "level": 17
+   },
+   "red_chest": {
+    "name": "大紅胸窗螢",
+    "group": "firefly",
+    "rarity": "rare",
+    "level": 20
+   },
+   "mountain_window": {
+    "name": "山窗螢",
+    "group": "firefly",
+    "rarity": "rare",
+    "level": 25
+   },
+   "snow_firefly": {
+    "name": "雪螢",
+    "group": "firefly",
+    "rarity": "epic",
+    "level": 28
+   },
+   "white_chafer": {
+    "name": "白金龜",
+    "group": "scarab",
+    "rarity": "common",
+    "level": 12
+   },
+   "bronze_chafer": {
+    "name": "青銅金龜",
+    "group": "scarab",
+    "rarity": "common",
+    "level": 13
+   },
+   "white_spot": {
+    "name": "東方白點花金龜",
+    "group": "scarab",
+    "rarity": "common",
+    "level": 15
+   },
+   "tw_horned": {
+    "name": "臺灣角金龜",
+    "group": "scarab",
+    "rarity": "rare",
+    "level": 23
+   },
+   "tw_longarm": {
+    "name": "臺灣長臂金龜",
+    "group": "scarab",
+    "rarity": "epic",
+    "level": 31
+   },
+   "big_dung": {
+    "name": "大黑糞金龜",
+    "group": "dung",
+    "rarity": "common",
+    "level": 13
+   },
+   "rainbow_dung": {
+    "name": "彩虹糞金龜",
+    "group": "dung",
+    "rarity": "rare",
+    "level": 27
+   },
+   "pantala": {
+    "name": "薄翅蜻蜓",
+    "group": "dragonfly",
+    "rarity": "common",
+    "level": 12
+   },
+   "neurothemis": {
+    "name": "善變蜻蜓",
+    "group": "dragonfly",
+    "rarity": "common",
+    "level": 13
+   },
+   "crocothemis": {
+    "name": "猩紅蜻蜓",
+    "group": "dragonfly",
+    "rarity": "common",
+    "level": 14
+   },
+   "frost_white": {
+    "name": "霜白蜻蜓",
+    "group": "dragonfly",
+    "rarity": "common",
+    "level": 16
+   },
+   "trithemis": {
+    "name": "紫紅蜻蜓",
+    "group": "dragonfly",
+    "rarity": "common",
+    "level": 18
+   },
+   "juniper": {
+    "name": "杜松蜻蜓",
+    "group": "dragonfly",
+    "rarity": "rare",
+    "level": 21
+   },
+   "golden_df": {
+    "name": "金黃蜻蜓",
+    "group": "dragonfly",
+    "rarity": "rare",
+    "level": 24
+   },
+   "grey_black": {
+    "name": "灰黑蜻蜓",
+    "group": "dragonfly",
+    "rarity": "rare",
+    "level": 26
+   },
+   "tripod_vein": {
+    "name": "鼎脈蜻蜓",
+    "group": "dragonfly",
+    "rarity": "rare",
+    "level": 29
+   },
+   "rhyothemis": {
+    "name": "彩裳蜻蜓",
+    "group": "dragonfly",
+    "rarity": "epic",
+    "level": 32
+   },
+   "stout_waist": {
+    "name": "粗腰蜻蜓",
+    "group": "dragonfly",
+    "rarity": "epic",
+    "level": 34
+   },
+   "anax_spotted": {
+    "name": "麻斑晏蜓",
+    "group": "dragonfly",
+    "rarity": "epic",
+    "level": 37
+   }
+  },
+  "wild": {
+   "maxPerIsland": 3,
+   "dragonflyMaxPerIsland": 2,
+   "checkMinutes": 10,
+   "chance": 0.25,
+   "staySeconds": 1800,
+   "groups": {
+    "stag": {
+     "months": [
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "when": "night",
+     "near": [
+      "fruitTree",
+      "wildTree"
+     ],
+     "r": 1
+    },
+    "rhino": {
+     "months": [
+      6,
+      7,
+      8
+     ],
+     "when": "night",
+     "near": [
+      "fruitTree",
+      "wildTree"
+     ],
+     "r": 1
+    },
+    "scarab": {
+     "months": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ],
+     "when": "day",
+     "near": [
+      "fruitTree",
+      "flower"
+     ],
+     "r": 1
+    },
+    "lady": {
+     "months": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "when": "day",
+     "near": [
+      "crop",
+      "flower"
+     ],
+     "r": 1,
+     "pestMult": 2
+    },
+    "firefly": {
+     "months": [
+      4,
+      5,
+      6
+     ],
+     "when": "night",
+     "near": [
+      "any"
+     ],
+     "r": 0,
+     "species": {
+      "yellow_edge": {
+       "nearRiver": 3
+      },
+      "snow_firefly": {
+       "months": [
+        12,
+        1,
+        2
+       ]
+      }
+     }
+    },
+    "dung": {
+     "months": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+     ],
+     "when": "any",
+     "near": [
+      "poop"
+     ],
+     "r": 1
+    },
+    "dragonfly": {
+     "months": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+     ],
+     "when": "day",
+     "near": [
+      "river",
+      "pool"
+     ],
+     "r": 3
+    }
+   },
+   "note": "到等級才會出現；每次檢查先挑這時候、這個地方能出現、已開放的種類，再照稀有度 wildWeight 抽；點一下抓到（不用工具），記進圖鑑，跳小選單：放進飼育箱（有空箱或同種的箱子）／放生"
+  },
+  "growthDays": {
+   "beetle": {
+    "egg": 0.5,
+    "larva": 1.5,
+    "pupa": 1
+   },
+   "lady": {
+    "egg": 0.2,
+    "larva": 0.5,
+    "pupa": 0.3
+   },
+   "firefly": {
+    "egg": 0.3,
+    "larva": 1.2,
+    "pupa": 0.5
+   }
+  },
+  "lifeDays": {
+   "beetle": 14,
+   "lady": 7,
+   "firefly": 3,
+   "dragonfly": 7
+  },
+  "specimenChance": 0.5,
+  "box": {
+   "id": "bug_box",
+   "name": "飼育箱",
+   "level": 12,
+   "cost": 2000,
+   "cap": 6,
+   "oneSpecies": true,
+   "noDragonfly": true,
+   "food": {
+    "item": "bug_jelly",
+    "perDay": 1,
+    "dungEats": "poop",
+    "noFoodStopsGrowth": true,
+    "lifeStillCounts": true
+   },
+   "fireflyNearRiver": 3,
+   "pair": {
+    "minAdults": 2,
+    "days": 1,
+    "eggs": [
+     2,
+     4
+    ],
+    "cooldownDays": 1
+   },
+   "sprites": {
+    "empty": "building_bug_box_empty",
+    "larva": "building_bug_box_larva",
+    "adult": "building_bug_box_adult"
+   },
+   "hints": {
+    "noFood": "ui_it_bug_jelly",
+    "canPair": "heart",
+    "dead": "specimen"
+   },
+   "note": "一箱一種、最多 cap 隻（卵＋幼蟲＋蛹＋成蟲）；每箱每天吃 1 個昆蟲果凍（倉庫自動扣），沒有就停止成長、成蟲壽命照算；糞金龜改吃 1 坨糞便；螢火蟲的箱子要在河邊 3 格內。面板：觀察窗（側面剖面、成蟲 walk／idle、幼蟲蠕動、螢火蟲晚上發光）、點單隻小卡、6 格清單、果凍狀態、按鈕（放幼蟲、配對、放生、撿標本、收回倉庫）"
+  },
+  "effects": {
+   "lady": {
+    "area": 3,
+    "noPestHours": 24,
+    "except": [
+     "twentyeight"
+    ]
+   },
+   "twentyeight": {
+    "eatsCrops": [
+     "tomato",
+     "eggplant",
+     "potato",
+     "bell_pepper",
+     "chili"
+    ],
+    "area": 3,
+    "yieldMult": 0.8,
+    "onlyWhenReleased": true,
+    "bookNote": "其實是害蟲：吃茄子、馬鈴薯、番茄的葉子，不吃蚜蟲。放生要小心！",
+    "note": "彩蛋：二十八星瓢蟲只有玩家自己放生才會啃；周圍 3×3 的茄科作物收成 ×0.8，到牠壽命結束（7 天）為止"
+   },
+   "firefly": {
+    "tapXp": 3,
+    "oncePerNight": true,
+    "nearRiver": 3
+   },
+   "dung": {
+    "poopPerDay": 1,
+    "area": 5
+   },
+   "dragonfly": {
+    "flyArea": 5,
+    "eatArea": 3,
+    "eatPerDay": 1,
+    "selfBreedChance": 0.3
+   }
+  },
+  "dragonfly": {
+   "nymphIn": [
+    "pool",
+    "river"
+   ],
+   "poolTakesFishSlot": true,
+   "riverPerCell": 1,
+   "waterDays": 2,
+   "noFeed": true,
+   "emergeSeconds": 6,
+   "sprites": {
+    "nymph": "dfly_nymph",
+    "emerge": "dfly_emerge"
+   },
+   "note": "水蠆放進魚池（佔一隻魚的位置）或河格（一格一隻），2 天後爬上岸羽化（共用一組圖）；死前 30% 在範圍內的魚池／河格留 1 隻同種水蠆"
+  }
+ },
+ "owls262": {
+  "note": "v2.62 貓頭鷹：巢箱（動物 · 設施）一箱一隻；在「動物 · 貓頭鷹」買（要先有空的巢箱）；不用餵、沒有壽命、不能收進倉庫；黃昏出巢、晚上在範圍內飛、停在樹／建物上，範圍內的倉庫或垃圾站有老鼠就俯衝抓，抓完休息；天亮前 30 分鐘回巢；下雨、下雪待在巢箱（鬼鴞、雪鴞除外）；算進「捕鼠」統計，抓一隻 +經驗 2",
+  "box": {
+   "id": "owl_box",
+   "name": "貓頭鷹巢箱",
+   "level": 14,
+   "cost": 2500,
+   "treeRange": 2,
+   "treeNote": "2 格內要有樹（果樹、野樹、裝飾樹）；住穴鴞的不用"
+  },
+  "species": {
+   "pygmy": {
+    "name": "鵂鶹",
+    "level": 14,
+    "price": 3000,
+    "range": 7,
+    "ratsPerNight": 3,
+    "restMinutes": 6,
+    "skill": "small",
+    "skillText": "最小、抓一隻後休息最短"
+   },
+   "burrowing": {
+    "name": "穴鴞",
+    "level": 15,
+    "price": 3500,
+    "range": 7,
+    "ratsPerNight": 4,
+    "restMinutes": 10,
+    "skill": "noTree",
+    "skillText": "住的巢箱旁邊不用有樹"
+   },
+   "boreal": {
+    "name": "鬼鴞",
+    "level": 17,
+    "price": 4200,
+    "range": 9,
+    "ratsPerNight": 4,
+    "restMinutes": 10,
+    "skill": "rain",
+    "skillText": "下雨下雪也出門"
+   },
+   "barn": {
+    "name": "倉鴞",
+    "level": 18,
+    "price": 5000,
+    "range": 9,
+    "ratsPerNight": 7,
+    "restMinutes": 8,
+    "skill": "barn",
+    "skillText": "先巡倉庫的老鼠，再巡垃圾站"
+   },
+   "tawny": {
+    "name": "灰林鴞",
+    "level": 20,
+    "price": 5800,
+    "range": 9,
+    "ratsPerNight": 5,
+    "restMinutes": 8,
+    "skill": "deter",
+    "skillText": "範圍內的倉庫、垃圾站老鼠出現機率 −20%"
+   },
+   "tawny_fish": {
+    "name": "黃魚鴞",
+    "level": 23,
+    "price": 7000,
+    "range": 9,
+    "ratsPerNight": 4,
+    "restMinutes": 10,
+    "skill": "fish",
+    "skillText": "每晚從範圍內的河撈 1 隻成熟的野生水產進倉庫（冬天不撈）"
+   },
+   "blakiston": {
+    "name": "毛腿漁鴞",
+    "level": 27,
+    "price": 8500,
+    "range": 11,
+    "ratsPerNight": 5,
+    "restMinutes": 10,
+    "skill": "fish2",
+    "skillText": "每晚從範圍內的河撈 2 隻成熟的野生水產進倉庫，冬天也撈"
+   },
+   "snowy": {
+    "name": "雪鴞",
+    "level": 30,
+    "price": 9500,
+    "range": 11,
+    "ratsPerNight": 6,
+    "restMinutes": 8,
+    "skill": "winter",
+    "skillText": "冬天（12～2 月）白天也工作；下雪也出門"
+   },
+   "great_gray": {
+    "name": "烏林鴞",
+    "level": 34,
+    "price": 10500,
+    "range": 13,
+    "ratsPerNight": 6,
+    "restMinutes": 8,
+    "skill": "wide",
+    "skillText": "範圍最大"
+   },
+   "great_horned": {
+    "name": "大雕鴞",
+    "level": 38,
+    "price": 12000,
+    "range": 11,
+    "ratsPerNight": 8,
+    "restMinutes": 6,
+    "skill": "guard",
+    "skillText": "晚上範圍內的黃鼠狼、狐狸直接嚇走（野狼不行）"
+   }
+  },
+  "sellRate": 0.5,
+  "nameMaxChars": 8,
+  "xpPerRat": 2,
+  "peckSeconds": 3,
+  "homeBeforeDawnMinutes": 30,
+  "skills": {
+   "deterRatMult": 0.8,
+   "fishPerNight": {
+    "fish": 1,
+    "fish2": 2
+   },
+   "winterMonths": [
+    12,
+    1,
+    2
+   ]
+  },
+  "lure": {
+   "item": "frozen_mouse",
+   "wakeSeconds": 3,
+   "peckSeconds": 1.2,
+   "expireMinutes": 10,
+   "xp": 5,
+   "xpOncePerOwlPerDay": true,
+   "note": "動物 · 貓頭鷹 選冷凍小鼠點空地：放在某隻貓頭鷹的範圍內（最近的那隻來）；在巢箱裡的約 3 秒後飛出來叼走、飛回巢箱；晚上出門的也會過來叼（不算抓老鼠）；10 分鐘沒被叼走退回倉庫；每隻每天第一次 +經驗 5；第一次白天成功＝隱藏成就「白天的訪客」"
+  }
+ },
+ "frogs263": {
+  "note": "v2.63 青蛙：野生（3～9 月，下雨或晚上，河邊／魚池 2 格內）點一下抓到，記進圖鑑，選「放進魚池」或「放生」；圖鑑登記過才能在「動物 · 青蛙」買蛙卵，點魚池沒有魚的格子放進去（佔一隻魚的位置）；卵 → 小蝌蚪 → 大蝌蚪 → 長後腳 → 長前腳 → 上岸，共 2 天，蝌蚪自己找吃的（不扣飼料）；上岸後在魚池周圍跳、吃害蟲；活的不能賣、不進倉庫、死了不掉標本；冬天（12～2 月）冬眠",
+  "rarity": {
+   "common": {
+    "name": "普通",
+    "wildWeight": 70,
+    "eggCost": 30,
+    "firstXp": 20,
+    "xp": 3
+   },
+   "rare": {
+    "name": "稀有",
+    "wildWeight": 25,
+    "eggCost": 100,
+    "firstXp": 60,
+    "xp": 8
+   },
+   "epic": {
+    "name": "珍稀",
+    "wildWeight": 5,
+    "eggCost": 300,
+    "firstXp": 150,
+    "xp": 20
+   }
+  },
+  "species": {
+   "rice_field": {
+    "name": "澤蛙",
+    "rarity": "common",
+    "level": 16,
+    "bugsPerDay": 6,
+    "skill": null,
+    "skillText": "—"
+   },
+   "narrow_mouth": {
+    "name": "小雨蛙",
+    "rarity": "common",
+    "level": 17,
+    "bugsPerDay": 6,
+    "skill": "rain",
+    "skillText": "下雨天每天多吃 3 次"
+   },
+   "toad": {
+    "name": "黑框蟾蜍",
+    "rarity": "common",
+    "level": 19,
+    "bugsPerDay": 8,
+    "skill": "dry",
+    "skillText": "不下雨的晚上也會在野外出現"
+   },
+   "tree_frog": {
+    "name": "斑腿樹蛙",
+    "rarity": "rare",
+    "level": 22,
+    "bugsPerDay": 6,
+    "skill": "tree",
+    "skillText": "也會跳上果樹吃果樹的蟲"
+   },
+   "guenther": {
+    "name": "狗蛙",
+    "rarity": "rare",
+    "level": 25,
+    "bugsPerDay": 7,
+    "skill": "wide",
+    "skillText": "活動範圍 7×7"
+   },
+   "golden_line": {
+    "name": "金線蛙",
+    "rarity": "epic",
+    "level": 29,
+    "bugsPerDay": 8,
+    "skill": "long",
+    "skillText": "壽命 14 天"
+   },
+   "bullfrog": {
+    "name": "虎皮蛙",
+    "rarity": "epic",
+    "level": 33,
+    "bugsPerDay": 10,
+    "skill": "area",
+    "skillText": "一次吃掉 3×3 的害蟲"
+   }
+  },
+  "wild": {
+   "months": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "nearWater": 2,
+   "maxPerIsland": 2,
+   "checkMinutes": 10,
+   "chance": 0.2,
+   "staySeconds": 1800,
+   "note": "下雨的時候（白天晚上都可以）出現；黑框蟾蜍不下雨的晚上也會出現"
+  },
+  "growthDays": {
+   "egg": 0.25,
+   "tad_s": 0.5,
+   "tad_l": 0.5,
+   "hind": 0.4,
+   "front": 0.35
+  },
+  "feed": {
+   "item": null,
+   "note": "玩家 2026-11-12：蝌蚪自己找吃的，不扣飼料（填 fish_feed 就會每天扣 1 份）"
+  },
+  "land": {
+   "range": 5,
+   "maxPerPool": 4,
+   "lifeDays": 10,
+   "longLifeDays": 14,
+   "eatEveryMinutes": 20,
+   "rainExtra": 3,
+   "deadHours": 6
+  },
+  "winterMonths": [
+   12,
+   1,
+   2
+  ]
  }
 };

@@ -10,7 +10,7 @@ window.GAME_ATLAS = {
   },
   "sprites": {
     "ground_grass_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21,10 +21,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 704
+      "sy": 0
     },
     "ground_soil_m0_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35,10 +35,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 832
+      "sy": 128
     },
     "ground_soil_m1_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49,10 +49,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 832
+      "sy": 128
     },
     "ground_soil_m2_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -63,10 +63,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 832
+      "sy": 128
     },
     "ground_soil_m3_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -77,10 +77,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 832
+      "sy": 128
     },
     "ground_soil_m4_idle": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -91,10 +91,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 832
+      "sy": 128
     },
     "fx_water_splash": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -105,10 +105,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 448
+      "sy": 768
     },
     "crop_wheat_seed_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -122,7 +122,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_wheat_sprout_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -136,7 +136,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_wheat_young_sway": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -150,7 +150,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_wheat_mature_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -164,7 +164,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_wheat_withered_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -178,7 +178,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_tomato_seed_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -192,7 +192,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_tomato_sprout_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -206,7 +206,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_tomato_young_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -220,7 +220,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_tomato_mature_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -234,7 +234,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_tomato_withered_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -248,7 +248,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_potato_seed_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -262,7 +262,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_potato_sprout_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -276,7 +276,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_potato_young_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -290,7 +290,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_potato_mature_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -304,7 +304,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_potato_withered_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -318,7 +318,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_corn_seed_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -332,7 +332,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_corn_sprout_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -346,7 +346,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_corn_young_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -360,7 +360,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_corn_mature_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -374,7 +374,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_corn_withered_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -388,7 +388,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_peanut_seed_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -402,7 +402,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_peanut_sprout_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -416,7 +416,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_peanut_young_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -430,7 +430,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_peanut_mature_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -444,7 +444,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_peanut_withered_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -458,7 +458,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_strawberry_seed_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -472,7 +472,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_strawberry_sprout_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -486,7 +486,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_strawberry_young_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -500,7 +500,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_strawberry_mature_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -514,7 +514,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_strawberry_withered_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -528,7 +528,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_cabbage_seed_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -542,7 +542,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_cabbage_sprout_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -556,7 +556,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_cabbage_young_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -570,7 +570,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_cabbage_mature_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -584,7 +584,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_cabbage_withered_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -598,7 +598,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_rice_seed_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -612,7 +612,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_rice_sprout_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -626,7 +626,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_rice_young_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -640,7 +640,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_rice_mature_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -654,7 +654,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_rice_withered_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -668,7 +668,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_pumpkin_seed_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -682,7 +682,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_pumpkin_sprout_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -696,7 +696,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_pumpkin_young_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -710,7 +710,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_pumpkin_mature_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -724,7 +724,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_pumpkin_withered_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -738,7 +738,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_watermelon_seed_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -752,7 +752,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_watermelon_sprout_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -766,7 +766,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_watermelon_young_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -780,7 +780,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_watermelon_mature_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -794,7 +794,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_watermelon_withered_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -808,7 +808,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_sunflower_seed_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -822,7 +822,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_sunflower_sprout_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -836,7 +836,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_sunflower_young_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -850,7 +850,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_sunflower_mature_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -864,7 +864,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_sunflower_withered_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -878,7 +878,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_lemon_sapling_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -892,7 +892,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_lemon_grown_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -906,7 +906,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_lemon_fruiting_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -920,7 +920,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_lemon_dry_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -934,7 +934,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_lemon_harvest_drop": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -948,7 +948,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_papaya_sapling_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -962,7 +962,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_papaya_grown_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -976,7 +976,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_papaya_fruiting_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -990,7 +990,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_papaya_dry_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1004,7 +1004,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_papaya_harvest_drop": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1018,7 +1018,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_mango_sapling_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1032,7 +1032,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_mango_grown_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1046,7 +1046,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_mango_fruiting_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1060,7 +1060,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_mango_dry_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1074,7 +1074,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_mango_harvest_drop": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1088,7 +1088,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_banana_sapling_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1102,7 +1102,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_banana_grown_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1116,7 +1116,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_banana_fruiting_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1130,7 +1130,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_banana_dry_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1144,7 +1144,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_banana_harvest_drop": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1158,7 +1158,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_apple_sapling_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1172,7 +1172,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_apple_grown_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1186,7 +1186,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_apple_fruiting_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1200,7 +1200,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_apple_dry_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -1214,7 +1214,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_apple_harvest_drop": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -2204,7 +2204,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "water_pond_m00_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2218,7 +2218,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "water_pond_m01_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2232,7 +2232,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "water_pond_m02_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2246,7 +2246,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "water_pond_m03_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2260,7 +2260,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "water_pond_m04_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2274,7 +2274,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "water_pond_m05_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2288,7 +2288,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "water_pond_m06_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2302,7 +2302,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "water_pond_m07_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2316,7 +2316,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "water_pond_m08_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2330,7 +2330,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "water_pond_m09_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2344,7 +2344,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "water_pond_m10_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2358,7 +2358,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "water_pond_m11_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2372,7 +2372,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "water_pond_m12_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2386,7 +2386,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "water_pond_m13_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2400,7 +2400,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "water_pond_m14_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2414,7 +2414,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "water_pond_m15_ripple": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2428,7 +2428,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "water_fishpool_m00_ripple": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2442,7 +2442,7 @@ window.GAME_ATLAS = {
       "sy": 712
     },
     "water_fishpool_m01_ripple": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2456,7 +2456,7 @@ window.GAME_ATLAS = {
       "sy": 840
     },
     "water_fishpool_m02_ripple": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2470,7 +2470,7 @@ window.GAME_ATLAS = {
       "sy": 840
     },
     "water_fishpool_m03_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2484,7 +2484,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "water_fishpool_m04_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2498,7 +2498,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "water_fishpool_m05_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2512,7 +2512,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "water_fishpool_m06_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2526,7 +2526,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "water_fishpool_m07_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2540,7 +2540,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "water_fishpool_m08_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2554,7 +2554,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "water_fishpool_m09_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2568,7 +2568,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "water_fishpool_m10_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2582,7 +2582,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "water_fishpool_m11_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2596,7 +2596,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "water_fishpool_m12_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2610,7 +2610,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "water_fishpool_m13_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2624,7 +2624,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "water_fishpool_m14_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2638,7 +2638,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "water_fishpool_m15_ripple": {
-      "file": "sheet_410.png",
+      "file": "sheet_466.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2652,7 +2652,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "fish_tilapia_jump": {
-      "file": "sheet_112.png",
+      "file": "sheet_142.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2663,10 +2663,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 608
     },
     "fish_milkfish_jump": {
-      "file": "sheet_112.png",
+      "file": "sheet_142.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2675,54 +2675,54 @@ window.GAME_ATLAS = {
       "anchor": [
         64,
         96
+      ],
+      "sx": 0,
+      "sy": 352
+    },
+    "fish_seabass_jump": {
+      "file": "sheet_142.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 480
+    },
+    "drone_water_fly": {
+      "file": "sheet_142.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        64,
+        100
       ],
       "sx": 0,
       "sy": 0
     },
-    "fish_seabass_jump": {
-      "file": "sheet_112.png",
+    "drone_water_work": {
+      "file": "sheet_142.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
       "fps": 10,
-      "loop": false,
+      "loop": true,
       "anchor": [
         64,
-        96
+        100
       ],
       "sx": 0,
       "sy": 128
     },
-    "drone_water_fly": {
-      "file": "sheet_111.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 640
-    },
-    "drone_water_work": {
-      "file": "sheet_111.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 768
-    },
     "robot_feeder_move": {
-      "file": "sheet_345.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2733,10 +2733,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 512
     },
     "robot_feeder_work": {
-      "file": "sheet_346.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2747,7 +2747,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 640
     },
     "weather_rain_fall": {
       "file": "weather_rain_fall.png",
@@ -2774,7 +2774,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_maple_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2788,7 +2788,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_pine_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2802,7 +2802,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_m00_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2816,7 +2816,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_m01_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2830,7 +2830,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_m02_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2844,7 +2844,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_m03_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2858,7 +2858,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_m04_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2872,7 +2872,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_m05_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2886,7 +2886,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m06_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2900,7 +2900,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m07_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2914,7 +2914,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m08_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2928,7 +2928,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m09_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2942,7 +2942,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m10_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2956,7 +2956,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m11_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2970,7 +2970,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m12_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2984,7 +2984,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "deco_fence_m13_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -2998,7 +2998,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_m14_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3012,7 +3012,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_m15_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3026,7 +3026,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_flowers_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3040,7 +3040,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_hay_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3054,7 +3054,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "deco_scarecrow_sway": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3068,7 +3068,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_gold_scarecrow_sway": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3082,7 +3082,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "deco_water_tower_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3096,7 +3096,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_windmill_spin": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 8,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -3110,7 +3110,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_rainbow_windmill_spin": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 8,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -3124,7 +3124,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "deco_rain_barrel_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3138,7 +3138,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_beehive_buzz": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3152,7 +3152,7 @@ window.GAME_ATLAS = {
       "sy": 352
     },
     "deco_stone_well_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3166,7 +3166,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "building_farmhouse_idle": {
-      "file": "sheet_079.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -3177,7 +3177,7 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 768,
-      "sy": 752
+      "sy": 128
     },
     "ui_tool_harvest": {
       "file": "ui_tool_harvest.png",
@@ -3456,7 +3456,7 @@ window.GAME_ATLAS = {
       ]
     },
     "crop_pasture_seed_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3470,7 +3470,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_pasture_sprout_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3484,7 +3484,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_pasture_young_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3498,7 +3498,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_pasture_mature_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3512,7 +3512,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_pasture_withered_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3526,7 +3526,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "machine_corn_cake_machine_idle": {
-      "file": "sheet_127.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3537,10 +3537,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 128
     },
     "machine_corn_cake_machine_work": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3551,10 +3551,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 256
     },
     "machine_fish_feed_machine_idle": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3565,10 +3565,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 256
     },
     "machine_fish_feed_machine_work": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3579,7 +3579,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 384
     },
     "ui_item_pasture": {
       "file": "ui_item_pasture.png",
@@ -3642,7 +3642,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_grow_lamp_off": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3656,7 +3656,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "device_grow_lamp_on": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3670,7 +3670,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "device_grow_lamp_large_off": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3684,7 +3684,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "device_grow_lamp_large_on": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3698,7 +3698,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "device_battery_s_level": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3712,7 +3712,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "device_battery_m_level": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3726,7 +3726,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "device_battery_l_level": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3740,7 +3740,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "device_biomass_gen_idle": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3754,7 +3754,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "device_biomass_gen_work": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3768,7 +3768,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "device_hand_crank_idle": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3782,7 +3782,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "device_hand_crank_crank": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -3796,7 +3796,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "building_farmhouse_night": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -3807,10 +3807,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 384
     },
     "utility_water_meter_off": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -3824,7 +3824,7 @@ window.GAME_ATLAS = {
       "sy": 712
     },
     "utility_water_meter_on": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -3838,7 +3838,7 @@ window.GAME_ATLAS = {
       "sy": 712
     },
     "utility_pole_off": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -3852,7 +3852,7 @@ window.GAME_ATLAS = {
       "sy": 520
     },
     "utility_pole_on": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -3866,7 +3866,7 @@ window.GAME_ATLAS = {
       "sy": 520
     },
     "weed_a_sway": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -3880,7 +3880,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "weed_b_sway": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -3894,7 +3894,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "weed_c_sway": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -4028,7 +4028,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_water_tower_level": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4042,7 +4042,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "building_water_tower_fill_0": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4056,7 +4056,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "building_water_tower_fill_1": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4070,7 +4070,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "building_water_tower_fill_2": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4084,7 +4084,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_water_tower_fill_3": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4098,7 +4098,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_water_tower_fill_4": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -4112,7 +4112,7 @@ window.GAME_ATLAS = {
       "sy": 224
     },
     "utility_water_meter_idle": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -4126,7 +4126,7 @@ window.GAME_ATLAS = {
       "sy": 520
     },
     "building_barn_empty": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -4137,10 +4137,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 320
     },
     "building_barn_half": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -4151,10 +4151,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 320
     },
     "building_barn_full": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -4165,10 +4165,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 320
     },
     "building_shed_idle": {
-      "file": "sheet_084.png",
+      "file": "sheet_113.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4178,11 +4178,11 @@ window.GAME_ATLAS = {
         64,
         100
       ],
-      "sx": 0,
-      "sy": 728
+      "sx": 128,
+      "sy": 792
     },
     "doll_sun_s_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4193,10 +4193,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 720
     },
     "doll_sun_m_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4207,10 +4207,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 592
     },
     "doll_sun_l_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4221,10 +4221,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 592
     },
     "doll_sun_spent": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4235,10 +4235,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 720
     },
     "doll_rain_s_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4249,10 +4249,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 336
     },
     "doll_rain_m_sway": {
-      "file": "sheet_110.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4263,10 +4263,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 864
+      "sy": 208
     },
     "doll_rain_l_sway": {
-      "file": "sheet_110.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4277,10 +4277,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 864
+      "sy": 208
     },
     "doll_rain_spent": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -4291,7 +4291,7 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 336
     },
     "ui_water_tower": {
       "file": "ui_water_tower.png",
@@ -4354,7 +4354,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_drone_pad_idle": {
-      "file": "sheet_079.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4365,10 +4365,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 624
+      "sy": 0
     },
     "building_drone_pad_charge": {
-      "file": "sheet_079.png",
+      "file": "sheet_109.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4379,10 +4379,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 624
+      "sy": 0
     },
     "building_drone_pad_refill": {
-      "file": "sheet_079.png",
+      "file": "sheet_109.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4393,10 +4393,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 752
+      "sy": 128
     },
     "building_robot_charger_idle": {
-      "file": "sheet_084.png",
+      "file": "sheet_113.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4406,11 +4406,11 @@ window.GAME_ATLAS = {
         64,
         96
       ],
-      "sx": 768,
-      "sy": 600
+      "sx": 0,
+      "sy": 792
     },
     "building_robot_charger_charge": {
-      "file": "sheet_084.png",
+      "file": "sheet_113.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4420,11 +4420,11 @@ window.GAME_ATLAS = {
         64,
         96
       ],
-      "sx": 0,
+      "sx": 256,
       "sy": 600
     },
     "drone_water_rest": {
-      "file": "sheet_111.png",
+      "file": "sheet_142.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -4435,10 +4435,10 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "robot_feeder_rest": {
-      "file": "sheet_346.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -4449,7 +4449,7 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 768
     },
     "ui_tool_move": {
       "file": "ui_tool_move.png",
@@ -4500,7 +4500,7 @@ window.GAME_ATLAS = {
       ]
     },
     "rooster_fly": {
-      "file": "sheet_350.png",
+      "file": "sheet_406.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4511,10 +4511,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 384
     },
     "rooster_crow": {
-      "file": "sheet_350.png",
+      "file": "sheet_406.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4525,7 +4525,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 256
     },
     "sky_starry": {
       "file": "sky_starry.jpg",
@@ -4708,7 +4708,7 @@ window.GAME_ATLAS = {
       ]
     },
     "road_gravel_m00": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4719,10 +4719,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m01": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4733,10 +4733,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m02": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4747,10 +4747,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m03": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4761,10 +4761,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m04": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4775,10 +4775,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m05": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4789,10 +4789,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 768
     },
     "road_gravel_m06": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4803,10 +4803,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m07": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4817,10 +4817,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m08": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4831,10 +4831,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m09": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4845,10 +4845,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m10": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4859,10 +4859,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m11": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4873,10 +4873,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m12": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4887,10 +4887,794 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 896
     },
     "road_gravel_m13": {
-      "file": "sheet_345.png",
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "road_gravel_m14": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "road_gravel_m15": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 0
+    },
+    "road_dirt_m00": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 512
+    },
+    "road_dirt_m01": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "road_dirt_m02": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 512
+    },
+    "road_dirt_m03": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 512
+    },
+    "road_dirt_m04": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "road_dirt_m05": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "road_dirt_m06": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "road_dirt_m07": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "road_dirt_m08": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "road_dirt_m09": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 640
+    },
+    "road_dirt_m10": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 640
+    },
+    "road_dirt_m11": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 640
+    },
+    "road_dirt_m12": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 640
+    },
+    "road_dirt_m13": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 640
+    },
+    "road_dirt_m14": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "road_dirt_m15": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 768
+    },
+    "road_stone_m00": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "road_stone_m01": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "road_stone_m02": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "road_stone_m03": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "road_stone_m04": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "road_stone_m05": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "road_stone_m06": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "road_stone_m07": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "road_stone_m08": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "road_stone_m09": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "road_stone_m10": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "road_stone_m11": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 128
+    },
+    "road_stone_m12": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 128
+    },
+    "road_stone_m13": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "road_stone_m14": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "road_stone_m15": {
+      "file": "sheet_401.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "road_asphalt_m00": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "road_asphalt_m01": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 0
+    },
+    "road_asphalt_m02": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "road_asphalt_m03": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "road_asphalt_m04": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "road_asphalt_m05": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "road_asphalt_m06": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 128
+    },
+    "road_asphalt_m07": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 128
+    },
+    "road_asphalt_m08": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 128
+    },
+    "road_asphalt_m09": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "road_asphalt_m10": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 128
+    },
+    "road_asphalt_m11": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 128
+    },
+    "road_asphalt_m12": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 128
+    },
+    "road_asphalt_m13": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "road_asphalt_m14": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "road_asphalt_m15": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "road_boardwalk_m00": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "road_boardwalk_m01": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "road_boardwalk_m02": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "road_boardwalk_m03": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 256
+    },
+    "road_boardwalk_m04": {
+      "file": "sheet_400.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 256
+    },
+    "road_boardwalk_m05": {
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -4903,792 +5687,8 @@ window.GAME_ATLAS = {
       "sx": 896,
       "sy": 256
     },
-    "road_gravel_m14": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 384
-    },
-    "road_gravel_m15": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 384
-    },
-    "road_dirt_m00": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 896
-    },
-    "road_dirt_m01": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 896
-    },
-    "road_dirt_m02": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 896
-    },
-    "road_dirt_m03": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 896
-    },
-    "road_dirt_m04": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 896
-    },
-    "road_dirt_m05": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 896
-    },
-    "road_dirt_m06": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 0
-    },
-    "road_dirt_m07": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 0
-    },
-    "road_dirt_m08": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 0
-    },
-    "road_dirt_m09": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 0
-    },
-    "road_dirt_m10": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 0
-    },
-    "road_dirt_m11": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 0
-    },
-    "road_dirt_m12": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 0
-    },
-    "road_dirt_m13": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 0
-    },
-    "road_dirt_m14": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 128
-    },
-    "road_dirt_m15": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 128
-    },
-    "road_stone_m00": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 384
-    },
-    "road_stone_m01": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 384
-    },
-    "road_stone_m02": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 384
-    },
-    "road_stone_m03": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 384
-    },
-    "road_stone_m04": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 384
-    },
-    "road_stone_m05": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 384
-    },
-    "road_stone_m06": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 512
-    },
-    "road_stone_m07": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 512
-    },
-    "road_stone_m08": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 512
-    },
-    "road_stone_m09": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 512
-    },
-    "road_stone_m10": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 512
-    },
-    "road_stone_m11": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 512
-    },
-    "road_stone_m12": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 512
-    },
-    "road_stone_m13": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 512
-    },
-    "road_stone_m14": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 640
-    },
-    "road_stone_m15": {
-      "file": "sheet_345.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 640
-    },
-    "road_asphalt_m00": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 384
-    },
-    "road_asphalt_m01": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 384
-    },
-    "road_asphalt_m02": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 384
-    },
-    "road_asphalt_m03": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 384
-    },
-    "road_asphalt_m04": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 384
-    },
-    "road_asphalt_m05": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 384
-    },
-    "road_asphalt_m06": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 512
-    },
-    "road_asphalt_m07": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 512
-    },
-    "road_asphalt_m08": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 512
-    },
-    "road_asphalt_m09": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 512
-    },
-    "road_asphalt_m10": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 512
-    },
-    "road_asphalt_m11": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 512
-    },
-    "road_asphalt_m12": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 512
-    },
-    "road_asphalt_m13": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 512
-    },
-    "road_asphalt_m14": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 640
-    },
-    "road_asphalt_m15": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 640
-    },
-    "road_boardwalk_m00": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 640
-    },
-    "road_boardwalk_m01": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 640
-    },
-    "road_boardwalk_m02": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 640
-    },
-    "road_boardwalk_m03": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 640
-    },
-    "road_boardwalk_m04": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 640
-    },
-    "road_boardwalk_m05": {
-      "file": "sheet_344.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 640
-    },
     "road_boardwalk_m06": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5699,10 +5699,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m07": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5713,10 +5713,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m08": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5727,10 +5727,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m09": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5741,10 +5741,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m10": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5755,10 +5755,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m11": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5769,10 +5769,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m12": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5783,10 +5783,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m13": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5797,10 +5797,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 384
     },
     "road_boardwalk_m14": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5811,10 +5811,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 512
     },
     "road_boardwalk_m15": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5825,7 +5825,7 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 896
+      "sy": 512
     },
     "ui_weather_snow": {
       "file": "ui_weather_snow.png",
@@ -5912,7 +5912,7 @@ window.GAME_ATLAS = {
       ]
     },
     "ground_snow_a": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5923,10 +5923,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 832
+      "sy": 128
     },
     "ground_snow_b": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5937,10 +5937,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 832
+      "sy": 128
     },
     "ground_snow_c": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -5951,10 +5951,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 832
+      "sy": 128
     },
     "fx_tornado": {
-      "file": "sheet_124.png",
+      "file": "sheet_157.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 384,
@@ -5968,7 +5968,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "debris_a": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -5982,7 +5982,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "debris_b": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -5996,7 +5996,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "debris_c": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -6010,7 +6010,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "weed_ball_roll": {
-      "file": "sheet_411.png",
+      "file": "sheet_467.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -6024,7 +6024,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "fx_quake_crack": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6035,10 +6035,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 576,
-      "sy": 570
+      "sy": 826
     },
     "deco_windbreak_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6052,7 +6052,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "deco_fence_fallen": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6066,7 +6066,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "building_water_tower_brace": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -6080,7 +6080,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "building_water_tower2_level": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -6094,7 +6094,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "device_snow_melter_idle": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6108,7 +6108,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "device_snow_melter_work": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6122,7 +6122,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "robot_snow_move": {
-      "file": "sheet_349.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6133,10 +6133,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 608
     },
     "robot_snow_work": {
-      "file": "sheet_349.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6147,10 +6147,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 736
     },
     "robot_snow_rest": {
-      "file": "sheet_349.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -6161,10 +6161,10 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 864
     },
     "robot_sweeper_move": {
-      "file": "sheet_349.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 64,
@@ -6175,10 +6175,10 @@ window.GAME_ATLAS = {
         48
       ],
       "sx": 0,
-      "sy": 352
+      "sy": 960
     },
     "robot_sweeper_rest": {
-      "file": "sheet_349.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 64,
@@ -6189,10 +6189,10 @@ window.GAME_ATLAS = {
         48
       ],
       "sx": 0,
-      "sy": 416
+      "sy": 0
     },
     "building_sweeper_dock_idle": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6206,7 +6206,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "building_sweeper_dock_charge": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6304,7 +6304,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_pest": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6315,10 +6315,24 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 288,
-      "sy": 176
+      "sy": 432
     },
     "fx_spray": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 320
+    },
+    "fx_fert_chem": {
+      "file": "sheet_156.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6331,22 +6345,8 @@ window.GAME_ATLAS = {
       "sx": 0,
       "sy": 0
     },
-    "fx_fert_chem": {
-      "file": "sheet_121.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 768
-    },
     "fx_fert_org": {
-      "file": "sheet_121.png",
+      "file": "sheet_156.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6357,10 +6357,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 128
     },
     "poop_a": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -6371,10 +6371,10 @@ window.GAME_ATLAS = {
         48
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "poop_b": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -6385,10 +6385,10 @@ window.GAME_ATLAS = {
         48
       ],
       "sx": 576,
-      "sy": 640
+      "sy": 384
     },
     "poop_c": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -6399,10 +6399,10 @@ window.GAME_ATLAS = {
         48
       ],
       "sx": 640,
-      "sy": 640
+      "sy": 384
     },
     "machine_compost_bin_idle": {
-      "file": "sheet_127.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6413,10 +6413,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 128
     },
     "machine_compost_bin_work": {
-      "file": "sheet_127.png",
+      "file": "sheet_163.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6427,24 +6427,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 128,
-      "sy": 896
-    },
-    "robot_poop_move": {
-      "file": "sheet_348.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
       "sy": 128
     },
-    "robot_poop_work": {
-      "file": "sheet_348.png",
+    "robot_poop_move": {
+      "file": "sheet_403.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6455,10 +6441,24 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 768
+    },
+    "robot_poop_work": {
+      "file": "sheet_403.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 0,
+      "sy": 896
     },
     "robot_poop_rest": {
-      "file": "sheet_348.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -6469,10 +6469,10 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 0
     },
     "greenhouse_m00": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6483,10 +6483,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 800,
-      "sy": 448
+      "sy": 768
     },
     "greenhouse_m01": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6497,10 +6497,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m02": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6511,10 +6511,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m03": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6525,10 +6525,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m04": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6539,10 +6539,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m05": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6553,10 +6553,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m06": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6567,10 +6567,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m07": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6581,10 +6581,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m08": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6595,10 +6595,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 576
+      "sy": 896
     },
     "greenhouse_m09": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6609,10 +6609,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m10": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6623,10 +6623,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m11": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6637,10 +6637,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m12": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6651,10 +6651,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m13": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6665,10 +6665,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m14": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6679,10 +6679,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 704
+      "sy": 0
     },
     "greenhouse_m15": {
-      "file": "sheet_125.png",
+      "file": "sheet_159.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6693,7 +6693,7 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 704
+      "sy": 0
     },
     "ui_tool_care": {
       "file": "ui_tool_care.png",
@@ -6840,7 +6840,7 @@ window.GAME_ATLAS = {
       ]
     },
     "flower_rapeseed_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6851,10 +6851,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 640
+      "sy": 0
     },
     "flower_rapeseed_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6865,10 +6865,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 896
     },
     "flower_rapeseed_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6879,10 +6879,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "flower_rapeseed_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6893,10 +6893,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 640
+      "sy": 0
     },
     "flower_rapeseed_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6907,10 +6907,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 512
+      "sy": 896
     },
     "flower_milk_vetch_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6921,10 +6921,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 640
+      "sy": 0
     },
     "flower_milk_vetch_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6935,10 +6935,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 896
     },
     "flower_milk_vetch_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6949,10 +6949,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "flower_milk_vetch_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6963,10 +6963,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 640
+      "sy": 0
     },
     "flower_milk_vetch_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6977,10 +6977,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 512
+      "sy": 896
     },
     "flower_wildflower_seed": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -6991,10 +6991,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 512
+      "sy": 896
     },
     "flower_wildflower_bud": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7005,10 +7005,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_wildflower_rest": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7019,10 +7019,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "flower_wildflower_spent": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7033,10 +7033,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 512
+      "sy": 896
     },
     "flower_wildflower_bloom": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7047,10 +7047,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 768
     },
     "flower_buckwheat_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7061,10 +7061,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 512
     },
     "flower_buckwheat_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7075,10 +7075,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 512
     },
     "flower_buckwheat_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7089,10 +7089,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 512
     },
     "flower_buckwheat_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7103,10 +7103,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 512
     },
     "flower_buckwheat_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7117,10 +7117,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_lavender_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7131,10 +7131,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 384
     },
     "flower_lavender_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7145,10 +7145,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 384
     },
     "flower_lavender_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7159,10 +7159,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 384
     },
     "flower_lavender_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7173,10 +7173,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 384
     },
     "flower_lavender_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7187,10 +7187,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "flower_rose_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7201,10 +7201,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 768
+      "sy": 128
     },
     "flower_rose_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7215,10 +7215,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 0
     },
     "flower_rose_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7229,10 +7229,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_rose_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7243,10 +7243,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 768
+      "sy": 128
     },
     "flower_rose_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7257,10 +7257,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 640
+      "sy": 0
     },
     "device_beehive_empty": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7274,7 +7274,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "device_beehive_bees": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7288,7 +7288,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "device_beehive_full": {
-      "file": "sheet_108.png",
+      "file": "sheet_137.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7302,7 +7302,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "fx_bee": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -7312,11 +7312,11 @@ window.GAME_ATLAS = {
         16,
         16
       ],
-      "sx": 0,
-      "sy": 640
+      "sx": 704,
+      "sy": 720
     },
     "robot_honey_fly": {
-      "file": "sheet_346.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7327,10 +7327,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 736
+      "sy": 384
     },
     "robot_honey_work": {
-      "file": "sheet_346.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7341,10 +7341,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 864
+      "sy": 512
     },
     "robot_honey_rest": {
-      "file": "sheet_347.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -7355,7 +7355,7 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 640
     },
     "ui_beehive": {
       "file": "ui_beehive.png",
@@ -7502,7 +7502,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_well_dry": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7516,7 +7516,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "device_well_low": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7530,7 +7530,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "device_well_half": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7544,7 +7544,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "device_well_full": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7558,7 +7558,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "robot_wellbot_move": {
-      "file": "sheet_350.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7569,10 +7569,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 832
     },
     "robot_wellbot_carry": {
-      "file": "sheet_350.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7583,10 +7583,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 576
     },
     "robot_wellbot_fill": {
-      "file": "sheet_350.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7597,10 +7597,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 704
     },
     "robot_wellbot_pour": {
-      "file": "sheet_350.png",
+      "file": "sheet_406.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7611,10 +7611,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 0
     },
     "robot_wellbot_rest": {
-      "file": "sheet_350.png",
+      "file": "sheet_406.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7625,10 +7625,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 128
     },
     "device_solar_day": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 8,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7642,7 +7642,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "device_solar_night": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7656,7 +7656,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "device_solar_snow": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7670,7 +7670,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "fossil_ammonite": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 80,
       "frameHeight": 48,
@@ -7681,10 +7681,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 384,
-      "sy": 512
+      "sy": 896
     },
     "fossil_skull": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 80,
       "frameHeight": 48,
@@ -7695,10 +7695,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 544,
-      "sy": 512
+      "sy": 896
     },
     "fossil_spine": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 80,
       "frameHeight": 48,
@@ -7709,10 +7709,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 624,
-      "sy": 512
+      "sy": 896
     },
     "fossil_leg": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 80,
       "frameHeight": 48,
@@ -7723,7 +7723,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 464,
-      "sy": 512
+      "sy": 896
     },
     "ui_well": {
       "file": "ui_well.png",
@@ -7750,7 +7750,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_sweeper_dock_clean": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 8,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -7764,7 +7764,7 @@ window.GAME_ATLAS = {
       "sy": 304
     },
     "doll_snow_s_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -7775,10 +7775,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 464
     },
     "doll_snow_m_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -7789,10 +7789,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 464
     },
     "doll_snow_l_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -7803,10 +7803,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 480,
-      "sy": 0
+      "sy": 336
     },
     "doll_snow_spent": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -7817,7 +7817,7 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 464
     },
     "ui_doll_snow": {
       "file": "ui_doll_snow.png",
@@ -7832,35 +7832,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_drone_pad_x2": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 176,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        144
-      ],
-      "sx": 384,
-      "sy": 448
-    },
-    "building_robot_charger_x2": {
-      "file": "sheet_084.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 176,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        144
-      ],
-      "sx": 680,
-      "sy": 0
-    },
-    "building_sweeper_dock_x2": {
-      "file": "sheet_084.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -7871,7 +7843,35 @@ window.GAME_ATLAS = {
         144
       ],
       "sx": 768,
-      "sy": 728
+      "sy": 768
+    },
+    "building_robot_charger_x2": {
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ],
+      "sx": 128,
+      "sy": 600
+    },
+    "building_sweeper_dock_x2": {
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ],
+      "sx": 896,
+      "sy": 792
     },
     "ui_pg_generator": {
       "file": "ui_pg_generator.png",
@@ -8270,7 +8270,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_sweeper_dock_tank": {
-      "file": "sheet_086.png",
+      "file": "sheet_115.png",
       "frames": 11,
       "frameWidth": 128,
       "frameHeight": 144,
@@ -8284,7 +8284,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_sweeper_dock_x2_l0": {
-      "file": "sheet_085.png",
+      "file": "sheet_114.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8298,7 +8298,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_sweeper_dock_x2_l1": {
-      "file": "sheet_085.png",
+      "file": "sheet_114.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8312,7 +8312,7 @@ window.GAME_ATLAS = {
       "sy": 176
     },
     "building_sweeper_dock_x2_l2": {
-      "file": "sheet_085.png",
+      "file": "sheet_114.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8326,7 +8326,7 @@ window.GAME_ATLAS = {
       "sy": 352
     },
     "building_sweeper_dock_x2_l3": {
-      "file": "sheet_085.png",
+      "file": "sheet_114.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8340,7 +8340,7 @@ window.GAME_ATLAS = {
       "sy": 528
     },
     "building_sweeper_dock_x2_l4": {
-      "file": "sheet_085.png",
+      "file": "sheet_114.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8354,7 +8354,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "building_sweeper_dock_x2_l5": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -8404,7 +8404,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_sprinkler_s_idle": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -8418,7 +8418,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "device_sprinkler_s_spray": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -8432,7 +8432,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "device_sprinkler_l_idle": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -8446,7 +8446,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "device_sprinkler_l_spray": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -8460,7 +8460,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "tree_orange_sapling_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8474,7 +8474,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_orange_grown_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8488,7 +8488,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_orange_fruiting_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8502,7 +8502,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_orange_dry_sway": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8516,7 +8516,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_orange_harvest_drop": {
-      "file": "sheet_379.png",
+      "file": "sheet_435.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8530,7 +8530,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_peach_sapling_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8544,7 +8544,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_peach_grown_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8558,7 +8558,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_peach_fruiting_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8572,7 +8572,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_peach_dry_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8586,7 +8586,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_peach_harvest_drop": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8600,7 +8600,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_peach_bloom_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8614,7 +8614,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_persimmon_sapling_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8628,7 +8628,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_persimmon_grown_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8642,7 +8642,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_persimmon_fruiting_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8656,7 +8656,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_persimmon_dry_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8670,7 +8670,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_persimmon_harvest_drop": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8684,7 +8684,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_lychee_sapling_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8698,7 +8698,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_lychee_grown_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8712,7 +8712,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_lychee_fruiting_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8726,7 +8726,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_lychee_dry_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8740,7 +8740,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_lychee_harvest_drop": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8754,7 +8754,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_longan_sapling_sway": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8768,7 +8768,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_longan_grown_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8782,7 +8782,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_longan_fruiting_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8796,7 +8796,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_longan_dry_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8810,7 +8810,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_longan_harvest_drop": {
-      "file": "sheet_378.png",
+      "file": "sheet_434.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8824,7 +8824,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_pear_sapling_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8838,7 +8838,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_pear_grown_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8852,7 +8852,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_pear_fruiting_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8866,7 +8866,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_pear_dry_sway": {
-      "file": "sheet_380.png",
+      "file": "sheet_436.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8880,7 +8880,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_pear_harvest_drop": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8894,7 +8894,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_coconut_sapling_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8908,7 +8908,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_coconut_grown_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8922,7 +8922,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_coconut_fruiting_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8936,7 +8936,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_coconut_dry_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8950,7 +8950,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "tree_coconut_harvest_drop": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8964,7 +8964,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "tree_cherry_sapling_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8978,7 +8978,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_cherry_grown_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -8992,7 +8992,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_cherry_fruiting_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9006,7 +9006,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_cherry_dry_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9020,7 +9020,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_cherry_harvest_drop": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9034,7 +9034,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_cherry_bloom_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9048,7 +9048,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_avocado_sapling_sway": {
-      "file": "sheet_375.png",
+      "file": "sheet_431.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9062,7 +9062,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_avocado_grown_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9076,7 +9076,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_avocado_fruiting_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9090,7 +9090,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_avocado_dry_sway": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9104,7 +9104,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_avocado_harvest_drop": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9118,7 +9118,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_grape_sapling_sway": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9132,7 +9132,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_grape_grown_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9146,7 +9146,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_grape_fruiting_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9160,7 +9160,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "tree_grape_dry_sway": {
-      "file": "sheet_376.png",
+      "file": "sheet_432.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9174,7 +9174,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_grape_harvest_drop": {
-      "file": "sheet_377.png",
+      "file": "sheet_433.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9188,7 +9188,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "tree_persimmon_grown_autumn_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9202,7 +9202,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "tree_persimmon_fruiting_autumn_sway": {
-      "file": "sheet_381.png",
+      "file": "sheet_437.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -9216,7 +9216,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_sakura_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9230,7 +9230,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_bamboo_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9244,7 +9244,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_palm_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9258,7 +9258,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_ginkgo_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9272,7 +9272,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_willow_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9286,7 +9286,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "deco_oak_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9300,7 +9300,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_birch_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9314,7 +9314,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_banyan_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9328,7 +9328,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_sakura_spring": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9342,7 +9342,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_sakura_summer": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9356,7 +9356,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_sakura_autumn": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9370,7 +9370,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_sakura_winter": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9384,7 +9384,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_ginkgo_summer": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9398,7 +9398,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_ginkgo_autumn": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9412,7 +9412,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_ginkgo_winter": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9426,7 +9426,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_oak_summer": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9440,7 +9440,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_oak_autumn": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9454,7 +9454,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_birch_summer": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9468,7 +9468,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_birch_autumn": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9482,7 +9482,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_maple_summer": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9496,7 +9496,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_maple_autumn": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9510,7 +9510,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "deco_maple_winter": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -9524,63 +9524,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "ground_soil22_m0": {
-      "file": "sheet_126.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 0
-    },
-    "ground_soil22_m1": {
-      "file": "sheet_126.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 0
-    },
-    "ground_soil22_m2": {
-      "file": "sheet_126.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 128
-    },
-    "ground_soil22_m3": {
-      "file": "sheet_126.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 128
-    },
-    "ground_soil22_m4": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -9593,8 +9537,64 @@ window.GAME_ATLAS = {
       "sx": 0,
       "sy": 256
     },
+    "ground_soil22_m1": {
+      "file": "sheet_159.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "ground_soil22_m2": {
+      "file": "sheet_159.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "ground_soil22_m3": {
+      "file": "sheet_159.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "ground_soil22_m4": {
+      "file": "sheet_159.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
     "fx_cake_plate": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 48,
@@ -9604,11 +9604,11 @@ window.GAME_ATLAS = {
         32,
         32
       ],
-      "sx": 816,
-      "sy": 640
+      "sx": 640,
+      "sy": 784
     },
     "fx_egg_nest": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 48,
@@ -9619,10 +9619,24 @@ window.GAME_ATLAS = {
         32
       ],
       "sx": 256,
-      "sy": 704
+      "sy": 848
     },
     "building_shed_off": {
-      "file": "sheet_084.png",
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 768,
+      "sy": 792
+    },
+    "building_shed_lit": {
+      "file": "sheet_113.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -9633,24 +9647,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 640,
-      "sy": 728
-    },
-    "building_shed_lit": {
-      "file": "sheet_084.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 512,
-      "sy": 728
+      "sy": 792
     },
     "building_barn_light": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -9661,7 +9661,7 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 320
     },
     "ui_tool_tidy": {
       "file": "ui_tool_tidy.png",
@@ -9928,7 +9928,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_trash_station": {
-      "file": "sheet_087.png",
+      "file": "sheet_116.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 144,
@@ -9942,7 +9942,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "fx_trash_pile": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 6,
       "frameWidth": 96,
       "frameHeight": 64,
@@ -9953,10 +9953,10 @@ window.GAME_ATLAS = {
         44
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 576
     },
     "truck_garbage_fly": {
-      "file": "sheet_393.png",
+      "file": "sheet_449.png",
       "frames": 4,
       "frameWidth": 192,
       "frameHeight": 192,
@@ -9970,7 +9970,7 @@ window.GAME_ATLAS = {
       "sy": 520
     },
     "robot_collector_garbage": {
-      "file": "sheet_345.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -9981,10 +9981,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 256,
-      "sy": 640
+      "sy": 256
     },
     "truck_recycle_fly": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 4,
       "frameWidth": 192,
       "frameHeight": 192,
@@ -9998,7 +9998,7 @@ window.GAME_ATLAS = {
       "sy": 520
     },
     "robot_collector_recycle": {
-      "file": "sheet_345.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10009,10 +10009,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 384
     },
     "robot_trashbot_move": {
-      "file": "sheet_349.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10023,10 +10023,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 608
+      "sy": 192
     },
     "robot_trashbot_carry": {
-      "file": "sheet_349.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10037,10 +10037,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 480
+      "sy": 64
     },
     "robot_trashbot_work": {
-      "file": "sheet_349.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10051,10 +10051,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 864
+      "sy": 448
     },
     "robot_trashbot_rest": {
-      "file": "sheet_349.png",
+      "file": "sheet_405.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10065,10 +10065,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 736
+      "sy": 320
     },
     "robot_recyclebot_move": {
-      "file": "sheet_348.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10079,14 +10079,28 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 608
+      "sy": 224
     },
     "robot_recyclebot_carry": {
-      "file": "sheet_348.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
       "fps": 10,
+      "loop": true,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 0,
+      "sy": 96
+    },
+    "robot_recyclebot_work": {
+      "file": "sheet_404.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 8,
       "loop": true,
       "anchor": [
         64,
@@ -10095,22 +10109,8 @@ window.GAME_ATLAS = {
       "sx": 0,
       "sy": 480
     },
-    "robot_recyclebot_work": {
-      "file": "sheet_348.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 8,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 864
-    },
     "robot_recyclebot_rest": {
-      "file": "sheet_348.png",
+      "file": "sheet_404.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10121,10 +10121,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 736
+      "sy": 352
     },
     "fx_solar_dust": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10135,10 +10135,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 448,
-      "sy": 858
+      "sy": 160
     },
     "fx_wash_spray": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10149,7 +10149,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 320
+      "sy": 640
     },
     "ui_pg_book_icon": {
       "file": "ui_pg_book_icon.png",
@@ -10356,7 +10356,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_bumble_hive_empty": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10370,7 +10370,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "device_bumble_hive_bees": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10384,7 +10384,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "device_bumble_hive_full": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -10398,7 +10398,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "fx_bf_egg": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 1,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -10408,11 +10408,11 @@ window.GAME_ATLAS = {
         24,
         24
       ],
-      "sx": 128,
-      "sy": 640
+      "sx": 832,
+      "sy": 720
     },
     "fx_bf_larva": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -10422,11 +10422,11 @@ window.GAME_ATLAS = {
         24,
         24
       ],
-      "sx": 176,
-      "sy": 640
+      "sx": 0,
+      "sy": 784
     },
     "fx_bf_pupa": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -10436,11 +10436,11 @@ window.GAME_ATLAS = {
         24,
         24
       ],
-      "sx": 368,
-      "sy": 640
+      "sx": 192,
+      "sy": 784
     },
     "fx_butterfly": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -10450,8 +10450,8 @@ window.GAME_ATLAS = {
         32,
         32
       ],
-      "sx": 560,
-      "sy": 640
+      "sx": 384,
+      "sy": 784
     },
     "ui_pg_truck_garbage": {
       "file": "ui_pg_truck_garbage.png",
@@ -10478,7 +10478,7 @@ window.GAME_ATLAS = {
       ]
     },
     "truckpad_sw": {
-      "file": "sheet_408.png",
+      "file": "sheet_464.png",
       "frames": 1,
       "frameWidth": 1040,
       "frameHeight": 880,
@@ -10493,7 +10493,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truckpad_se": {
-      "file": "sheet_407.png",
+      "file": "sheet_463.png",
       "frames": 1,
       "frameWidth": 1040,
       "frameHeight": 880,
@@ -10508,7 +10508,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truckpad_ne": {
-      "file": "sheet_405.png",
+      "file": "sheet_461.png",
       "frames": 1,
       "frameWidth": 1040,
       "frameHeight": 880,
@@ -10523,7 +10523,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truckpad_nw": {
-      "file": "sheet_406.png",
+      "file": "sheet_462.png",
       "frames": 1,
       "frameWidth": 1040,
       "frameHeight": 880,
@@ -10538,7 +10538,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_sw": {
-      "file": "sheet_393.png",
+      "file": "sheet_449.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10553,7 +10553,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_se": {
-      "file": "sheet_392.png",
+      "file": "sheet_448.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10568,7 +10568,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_ne": {
-      "file": "sheet_386.png",
+      "file": "sheet_442.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10583,7 +10583,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_nw": {
-      "file": "sheet_387.png",
+      "file": "sheet_443.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10598,7 +10598,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_sw": {
-      "file": "sheet_409.png",
+      "file": "sheet_465.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10613,7 +10613,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_se": {
-      "file": "sheet_404.png",
+      "file": "sheet_460.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10628,7 +10628,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_ne": {
-      "file": "sheet_398.png",
+      "file": "sheet_454.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10643,7 +10643,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_nw": {
-      "file": "sheet_399.png",
+      "file": "sheet_455.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -10658,7 +10658,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shiba_adult_idle": {
-      "file": "sheet_292.png",
+      "file": "sheet_349.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10670,10 +10670,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_shiba_adult_walk": {
-      "file": "sheet_293.png",
+      "file": "sheet_348.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10688,7 +10688,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shiba_adult_run": {
-      "file": "sheet_291.png",
+      "file": "sheet_347.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10703,7 +10703,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shiba_adult_sleep": {
-      "file": "sheet_298.png",
+      "file": "sheet_349.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10715,10 +10715,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_shiba_young_idle": {
-      "file": "sheet_298.png",
+      "file": "sheet_355.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10730,10 +10730,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_shiba_young_walk": {
-      "file": "sheet_295.png",
+      "file": "sheet_351.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10748,7 +10748,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shiba_young_play": {
-      "file": "sheet_294.png",
+      "file": "sheet_350.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10763,7 +10763,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shiba_young_sleep": {
-      "file": "sheet_298.png",
+      "file": "sheet_355.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10775,7 +10775,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_shiba": {
       "file": "ui_pet_shiba.png",
@@ -10796,7 +10796,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_maltese_adult_idle": {
-      "file": "sheet_220.png",
+      "file": "sheet_277.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10808,10 +10808,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_maltese_adult_walk": {
-      "file": "sheet_221.png",
+      "file": "sheet_276.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10826,7 +10826,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_maltese_adult_run": {
-      "file": "sheet_219.png",
+      "file": "sheet_275.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10841,7 +10841,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_maltese_adult_sleep": {
-      "file": "sheet_226.png",
+      "file": "sheet_277.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10853,10 +10853,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_maltese_young_idle": {
-      "file": "sheet_226.png",
+      "file": "sheet_283.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10868,10 +10868,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_maltese_young_walk": {
-      "file": "sheet_223.png",
+      "file": "sheet_279.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10886,7 +10886,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_maltese_young_play": {
-      "file": "sheet_222.png",
+      "file": "sheet_278.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10901,7 +10901,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_maltese_young_sleep": {
-      "file": "sheet_226.png",
+      "file": "sheet_283.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10913,7 +10913,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_maltese": {
       "file": "ui_pet_maltese.png",
@@ -10934,7 +10934,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_pomeranian_adult_idle": {
-      "file": "sheet_244.png",
+      "file": "sheet_301.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10946,10 +10946,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_pomeranian_adult_walk": {
-      "file": "sheet_245.png",
+      "file": "sheet_300.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10964,7 +10964,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pomeranian_adult_run": {
-      "file": "sheet_243.png",
+      "file": "sheet_299.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10979,7 +10979,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pomeranian_adult_sleep": {
-      "file": "sheet_250.png",
+      "file": "sheet_301.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -10991,10 +10991,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_pomeranian_young_idle": {
-      "file": "sheet_250.png",
+      "file": "sheet_307.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11006,10 +11006,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_pomeranian_young_walk": {
-      "file": "sheet_247.png",
+      "file": "sheet_303.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11024,7 +11024,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pomeranian_young_play": {
-      "file": "sheet_246.png",
+      "file": "sheet_302.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11039,7 +11039,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pomeranian_young_sleep": {
-      "file": "sheet_250.png",
+      "file": "sheet_307.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11051,7 +11051,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_pomeranian": {
       "file": "ui_pet_pomeranian.png",
@@ -11072,7 +11072,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_corgi_adult_idle": {
-      "file": "sheet_178.png",
+      "file": "sheet_235.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11084,10 +11084,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_corgi_adult_walk": {
-      "file": "sheet_177.png",
+      "file": "sheet_233.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11102,7 +11102,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_corgi_adult_run": {
-      "file": "sheet_176.png",
+      "file": "sheet_232.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11117,7 +11117,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_corgi_adult_sleep": {
-      "file": "sheet_178.png",
+      "file": "sheet_235.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11129,10 +11129,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_corgi_young_idle": {
-      "file": "sheet_184.png",
+      "file": "sheet_235.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11144,10 +11144,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_corgi_young_walk": {
-      "file": "sheet_180.png",
+      "file": "sheet_236.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11162,7 +11162,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_corgi_young_play": {
-      "file": "sheet_179.png",
+      "file": "sheet_234.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11177,7 +11177,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_corgi_young_sleep": {
-      "file": "sheet_184.png",
+      "file": "sheet_241.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11189,7 +11189,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_corgi": {
       "file": "ui_pet_corgi.png",
@@ -11210,7 +11210,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_border_adult_idle": {
-      "file": "sheet_148.png",
+      "file": "sheet_199.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11222,10 +11222,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_border_adult_walk": {
-      "file": "sheet_144.png",
+      "file": "sheet_200.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11240,7 +11240,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_border_adult_run": {
-      "file": "sheet_143.png",
+      "file": "sheet_198.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11255,7 +11255,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_border_adult_sleep": {
-      "file": "sheet_148.png",
+      "file": "sheet_205.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11267,10 +11267,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_border_young_idle": {
-      "file": "sheet_148.png",
+      "file": "sheet_205.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11282,10 +11282,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_border_young_walk": {
-      "file": "sheet_146.png",
+      "file": "sheet_202.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11300,7 +11300,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_border_young_play": {
-      "file": "sheet_145.png",
+      "file": "sheet_201.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11315,7 +11315,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_border_young_sleep": {
-      "file": "sheet_148.png",
+      "file": "sheet_205.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11327,7 +11327,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_border": {
       "file": "ui_pet_border.png",
@@ -11348,7 +11348,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_dachshund_adult_idle": {
-      "file": "sheet_184.png",
+      "file": "sheet_241.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11360,10 +11360,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_dachshund_adult_walk": {
-      "file": "sheet_182.png",
+      "file": "sheet_238.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11378,7 +11378,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dachshund_adult_run": {
-      "file": "sheet_181.png",
+      "file": "sheet_237.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11393,7 +11393,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dachshund_adult_sleep": {
-      "file": "sheet_184.png",
+      "file": "sheet_241.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11405,10 +11405,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_dachshund_young_idle": {
-      "file": "sheet_184.png",
+      "file": "sheet_241.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11420,10 +11420,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_dachshund_young_walk": {
-      "file": "sheet_185.png",
+      "file": "sheet_240.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11438,7 +11438,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dachshund_young_play": {
-      "file": "sheet_183.png",
+      "file": "sheet_239.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11453,7 +11453,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dachshund_young_sleep": {
-      "file": "sheet_190.png",
+      "file": "sheet_241.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11465,7 +11465,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_dachshund": {
       "file": "ui_pet_dachshund.png",
@@ -11486,7 +11486,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_poodle_adult_idle": {
-      "file": "sheet_250.png",
+      "file": "sheet_307.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11498,10 +11498,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_poodle_adult_walk": {
-      "file": "sheet_249.png",
+      "file": "sheet_305.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11516,7 +11516,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_poodle_adult_run": {
-      "file": "sheet_248.png",
+      "file": "sheet_304.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11531,7 +11531,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_poodle_adult_sleep": {
-      "file": "sheet_250.png",
+      "file": "sheet_307.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11543,10 +11543,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_poodle_young_idle": {
-      "file": "sheet_256.png",
+      "file": "sheet_307.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11558,10 +11558,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_poodle_young_walk": {
-      "file": "sheet_252.png",
+      "file": "sheet_308.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11576,7 +11576,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_poodle_young_play": {
-      "file": "sheet_251.png",
+      "file": "sheet_306.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11591,7 +11591,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_poodle_young_sleep": {
-      "file": "sheet_256.png",
+      "file": "sheet_313.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11603,7 +11603,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_poodle": {
       "file": "ui_pet_poodle.png",
@@ -11624,7 +11624,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_labrador_adult_idle": {
-      "file": "sheet_208.png",
+      "file": "sheet_265.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11636,10 +11636,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_labrador_adult_walk": {
-      "file": "sheet_206.png",
+      "file": "sheet_262.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11654,7 +11654,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_labrador_adult_run": {
-      "file": "sheet_205.png",
+      "file": "sheet_261.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11669,7 +11669,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_labrador_adult_sleep": {
-      "file": "sheet_208.png",
+      "file": "sheet_265.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11681,10 +11681,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_labrador_young_idle": {
-      "file": "sheet_208.png",
+      "file": "sheet_265.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11696,10 +11696,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_labrador_young_walk": {
-      "file": "sheet_209.png",
+      "file": "sheet_264.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11714,7 +11714,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_labrador_young_play": {
-      "file": "sheet_207.png",
+      "file": "sheet_263.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11729,7 +11729,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_labrador_young_sleep": {
-      "file": "sheet_214.png",
+      "file": "sheet_265.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11741,7 +11741,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_labrador": {
       "file": "ui_pet_labrador.png",
@@ -11762,7 +11762,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_bulldog_adult_idle": {
-      "file": "sheet_154.png",
+      "file": "sheet_211.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11774,10 +11774,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_bulldog_adult_walk": {
-      "file": "sheet_153.png",
+      "file": "sheet_209.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11792,7 +11792,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bulldog_adult_run": {
-      "file": "sheet_152.png",
+      "file": "sheet_208.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11807,7 +11807,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bulldog_adult_sleep": {
-      "file": "sheet_154.png",
+      "file": "sheet_211.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11819,10 +11819,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_bulldog_young_idle": {
-      "file": "sheet_160.png",
+      "file": "sheet_211.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11834,10 +11834,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_bulldog_young_walk": {
-      "file": "sheet_156.png",
+      "file": "sheet_212.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11852,7 +11852,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bulldog_young_play": {
-      "file": "sheet_155.png",
+      "file": "sheet_210.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11867,7 +11867,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bulldog_young_sleep": {
-      "file": "sheet_160.png",
+      "file": "sheet_217.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11879,7 +11879,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_bulldog": {
       "file": "ui_pet_bulldog.png",
@@ -11900,7 +11900,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_husky_adult_idle": {
-      "file": "sheet_202.png",
+      "file": "sheet_259.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11912,10 +11912,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_husky_adult_walk": {
-      "file": "sheet_201.png",
+      "file": "sheet_257.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11930,7 +11930,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_husky_adult_run": {
-      "file": "sheet_200.png",
+      "file": "sheet_256.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11945,7 +11945,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_husky_adult_sleep": {
-      "file": "sheet_202.png",
+      "file": "sheet_259.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11957,10 +11957,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_husky_young_idle": {
-      "file": "sheet_208.png",
+      "file": "sheet_259.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11972,10 +11972,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_husky_young_walk": {
-      "file": "sheet_204.png",
+      "file": "sheet_260.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -11990,7 +11990,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_husky_young_play": {
-      "file": "sheet_203.png",
+      "file": "sheet_258.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12005,7 +12005,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_husky_young_sleep": {
-      "file": "sheet_208.png",
+      "file": "sheet_265.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12017,7 +12017,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_husky": {
       "file": "ui_pet_husky.png",
@@ -12038,7 +12038,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_golden_adult_idle": {
-      "file": "sheet_196.png",
+      "file": "sheet_253.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12050,10 +12050,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_golden_adult_walk": {
-      "file": "sheet_197.png",
+      "file": "sheet_252.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12068,7 +12068,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_golden_adult_run": {
-      "file": "sheet_195.png",
+      "file": "sheet_251.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12083,7 +12083,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_golden_adult_sleep": {
-      "file": "sheet_202.png",
+      "file": "sheet_253.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12095,10 +12095,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_golden_young_idle": {
-      "file": "sheet_202.png",
+      "file": "sheet_259.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12110,10 +12110,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_golden_young_walk": {
-      "file": "sheet_199.png",
+      "file": "sheet_255.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12128,7 +12128,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_golden_young_play": {
-      "file": "sheet_198.png",
+      "file": "sheet_254.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12143,7 +12143,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_golden_young_sleep": {
-      "file": "sheet_202.png",
+      "file": "sheet_259.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12155,7 +12155,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_golden": {
       "file": "ui_pet_golden.png",
@@ -12176,7 +12176,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_black_adult_idle": {
-      "file": "sheet_142.png",
+      "file": "sheet_199.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12188,10 +12188,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_black_adult_walk": {
-      "file": "sheet_139.png",
+      "file": "sheet_195.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12206,7 +12206,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_black_adult_run": {
-      "file": "sheet_138.png",
+      "file": "sheet_194.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12221,7 +12221,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_black_adult_sleep": {
-      "file": "sheet_142.png",
+      "file": "sheet_199.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12233,10 +12233,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_black_young_idle": {
-      "file": "sheet_142.png",
+      "file": "sheet_199.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12248,10 +12248,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_black_young_walk": {
-      "file": "sheet_141.png",
+      "file": "sheet_197.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12266,7 +12266,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_black_young_play": {
-      "file": "sheet_140.png",
+      "file": "sheet_196.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12281,7 +12281,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_black_young_sleep": {
-      "file": "sheet_142.png",
+      "file": "sheet_199.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12293,7 +12293,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_black": {
       "file": "ui_pet_black.png",
@@ -12314,7 +12314,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_persian_adult_idle": {
-      "file": "sheet_244.png",
+      "file": "sheet_295.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12326,10 +12326,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_persian_adult_walk": {
-      "file": "sheet_240.png",
+      "file": "sheet_296.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12344,7 +12344,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_persian_adult_run": {
-      "file": "sheet_239.png",
+      "file": "sheet_294.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12359,7 +12359,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_persian_adult_sleep": {
-      "file": "sheet_244.png",
+      "file": "sheet_301.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12371,10 +12371,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_persian_young_idle": {
-      "file": "sheet_244.png",
+      "file": "sheet_301.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12386,10 +12386,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_persian_young_walk": {
-      "file": "sheet_242.png",
+      "file": "sheet_298.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12404,7 +12404,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_persian_young_play": {
-      "file": "sheet_241.png",
+      "file": "sheet_297.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12419,7 +12419,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_persian_young_sleep": {
-      "file": "sheet_244.png",
+      "file": "sheet_301.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12431,7 +12431,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_persian": {
       "file": "ui_pet_persian.png",
@@ -12452,7 +12452,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_orange_adult_idle": {
-      "file": "sheet_232.png",
+      "file": "sheet_289.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12464,10 +12464,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_orange_adult_walk": {
-      "file": "sheet_230.png",
+      "file": "sheet_286.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12482,7 +12482,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_orange_adult_run": {
-      "file": "sheet_229.png",
+      "file": "sheet_285.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12497,7 +12497,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_orange_adult_sleep": {
-      "file": "sheet_232.png",
+      "file": "sheet_289.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12509,10 +12509,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_orange_young_idle": {
-      "file": "sheet_232.png",
+      "file": "sheet_289.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12524,10 +12524,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_orange_young_walk": {
-      "file": "sheet_233.png",
+      "file": "sheet_288.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12542,7 +12542,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_orange_young_play": {
-      "file": "sheet_231.png",
+      "file": "sheet_287.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12557,7 +12557,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_orange_young_sleep": {
-      "file": "sheet_238.png",
+      "file": "sheet_289.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12569,7 +12569,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_orange": {
       "file": "ui_pet_orange.png",
@@ -12590,7 +12590,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_calico_adult_idle": {
-      "file": "sheet_166.png",
+      "file": "sheet_223.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12602,10 +12602,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_calico_adult_walk": {
-      "file": "sheet_163.png",
+      "file": "sheet_219.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12620,7 +12620,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_calico_adult_run": {
-      "file": "sheet_162.png",
+      "file": "sheet_218.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12635,7 +12635,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_calico_adult_sleep": {
-      "file": "sheet_166.png",
+      "file": "sheet_223.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12647,10 +12647,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_calico_young_idle": {
-      "file": "sheet_166.png",
+      "file": "sheet_223.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12662,10 +12662,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_calico_young_walk": {
-      "file": "sheet_165.png",
+      "file": "sheet_221.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12680,7 +12680,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_calico_young_play": {
-      "file": "sheet_164.png",
+      "file": "sheet_220.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12695,7 +12695,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_calico_young_sleep": {
-      "file": "sheet_166.png",
+      "file": "sheet_223.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12707,7 +12707,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_calico": {
       "file": "ui_pet_calico.png",
@@ -12728,7 +12728,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_ragdoll_adult_idle": {
-      "file": "sheet_262.png",
+      "file": "sheet_319.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12740,10 +12740,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_ragdoll_adult_walk": {
-      "file": "sheet_259.png",
+      "file": "sheet_315.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12758,7 +12758,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_ragdoll_adult_run": {
-      "file": "sheet_258.png",
+      "file": "sheet_314.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12773,7 +12773,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_ragdoll_adult_sleep": {
-      "file": "sheet_262.png",
+      "file": "sheet_319.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12785,10 +12785,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_ragdoll_young_idle": {
-      "file": "sheet_262.png",
+      "file": "sheet_319.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12800,10 +12800,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_ragdoll_young_walk": {
-      "file": "sheet_261.png",
+      "file": "sheet_317.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12818,7 +12818,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_ragdoll_young_play": {
-      "file": "sheet_260.png",
+      "file": "sheet_316.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12833,7 +12833,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_ragdoll_young_sleep": {
-      "file": "sheet_262.png",
+      "file": "sheet_319.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -12845,7 +12845,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_ragdoll": {
       "file": "ui_pet_ragdoll.png",
@@ -12866,91 +12866,7 @@ window.GAME_ATLAS = {
       ]
     },
     "building_dog_house_1": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 896,
-      "sy": 256
-    },
-    "building_cat_tree_1": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 192,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        150
-      ],
-      "sx": 384,
-      "sy": 256
-    },
-    "building_dog_house_2": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 0,
-      "sy": 448
-    },
-    "building_cat_tree_2": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 192,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        150
-      ],
-      "sx": 512,
-      "sy": 256
-    },
-    "building_dog_house_3": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 128,
-      "sy": 448
-    },
-    "building_cat_tree_3": {
-      "file": "sheet_079.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 192,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        150
-      ],
-      "sx": 640,
-      "sy": 256
-    },
-    "building_dog_house_gold": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -12961,10 +12877,10 @@ window.GAME_ATLAS = {
         112
       ],
       "sx": 256,
-      "sy": 448
+      "sy": 768
     },
-    "building_cat_tree_gold": {
-      "file": "sheet_079.png",
+    "building_cat_tree_1": {
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -12975,7 +12891,91 @@ window.GAME_ATLAS = {
         150
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 576
+    },
+    "building_dog_house_2": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 384,
+      "sy": 768
+    },
+    "building_cat_tree_2": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 896,
+      "sy": 576
+    },
+    "building_dog_house_3": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 512,
+      "sy": 768
+    },
+    "building_cat_tree_3": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "building_dog_house_gold": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 640,
+      "sy": 768
+    },
+    "building_cat_tree_gold": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 128,
+      "sy": 768
     },
     "ui_dog_house": {
       "file": "ui_dog_house.png",
@@ -13074,7 +13074,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pred_weasel_sneak": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13085,10 +13085,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pred_weasel_attack": {
-      "file": "sheet_342.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13099,10 +13099,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pred_weasel_flee": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13113,7 +13113,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "ui_pred_weasel": {
       "file": "ui_pred_weasel.png",
@@ -13128,7 +13128,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pred_fox_sneak": {
-      "file": "sheet_342.png",
+      "file": "sheet_397.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13139,10 +13139,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pred_fox_attack": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13153,10 +13153,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pred_fox_flee": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13167,7 +13167,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "ui_pred_fox": {
       "file": "ui_pred_fox.png",
@@ -13182,7 +13182,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pred_wolf_sneak": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13193,10 +13193,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pred_wolf_attack": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13207,10 +13207,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pred_wolf_flee": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13221,7 +13221,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "ui_pred_wolf": {
       "file": "ui_pred_wolf.png",
@@ -13236,7 +13236,7 @@ window.GAME_ATLAS = {
       ]
     },
     "rat_run": {
-      "file": "sheet_344.png",
+      "file": "sheet_400.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13247,10 +13247,10 @@ window.GAME_ATLAS = {
         50
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 0
     },
     "rat_carry": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13261,7 +13261,7 @@ window.GAME_ATLAS = {
         50
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 896
     },
     "ui_rat": {
       "file": "ui_rat.png",
@@ -13276,7 +13276,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_bandage": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 1,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13286,11 +13286,11 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 960,
-      "sy": 512
+      "sx": 640,
+      "sy": 720
     },
     "fx_cross_bubble": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13301,10 +13301,10 @@ window.GAME_ATLAS = {
         50
       ],
       "sx": 0,
-      "sy": 704
+      "sy": 848
     },
     "fx_alert": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13314,11 +13314,11 @@ window.GAME_ATLAS = {
         32,
         50
       ],
-      "sx": 704,
-      "sy": 512
+      "sx": 384,
+      "sy": 720
     },
     "fx_scared": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 2,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -13329,38 +13329,10 @@ window.GAME_ATLAS = {
         50
       ],
       "sx": 320,
-      "sy": 858
+      "sy": 160
     },
     "fx_rescue": {
-      "file": "sheet_123.png",
-      "frames": 6,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": false,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 698
-    },
-    "fx_pet_heart": {
-      "file": "sheet_123.png",
-      "frames": 6,
-      "frameWidth": 64,
-      "frameHeight": 64,
-      "fps": 8,
-      "loop": false,
-      "anchor": [
-        32,
-        50
-      ],
-      "sx": 0,
-      "sy": 506
-    },
-    "fx_grow_star": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13372,6 +13344,34 @@ window.GAME_ATLAS = {
       ],
       "sx": 0,
       "sy": 0
+    },
+    "fx_pet_heart": {
+      "file": "sheet_156.png",
+      "frames": 6,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 8,
+      "loop": false,
+      "anchor": [
+        32,
+        50
+      ],
+      "sx": 0,
+      "sy": 762
+    },
+    "fx_grow_star": {
+      "file": "sheet_156.png",
+      "frames": 6,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 0,
+      "sy": 256
     },
     "ui_rescue": {
       "file": "ui_rescue.png",
@@ -13410,7 +13410,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_fountain_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -13424,7 +13424,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_weather_rooster_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -13438,7 +13438,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "deco_balloon_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -13452,7 +13452,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_lighthouse_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -13466,7 +13466,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "deco_observatory_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -13480,7 +13480,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_farmhouse_idle_gold": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -13491,10 +13491,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "building_farmhouse_night_gold": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -13505,7 +13505,7 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 384
     },
     "ui_deco_fountain": {
       "file": "ui_deco_fountain.png",
@@ -16464,7 +16464,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_fence_picket_m10_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16478,7 +16478,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m11_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16492,7 +16492,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m12_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16506,7 +16506,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_picket_m13_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16520,7 +16520,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_picket_m14_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16534,7 +16534,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_picket_m15_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16548,7 +16548,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_picket_fallen": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16562,7 +16562,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_stone_m10_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16576,7 +16576,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m11_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16590,7 +16590,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_stone_m12_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16604,7 +16604,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_stone_m13_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16618,7 +16618,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_stone_m14_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16632,7 +16632,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_stone_m15_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16646,7 +16646,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_stone_fallen": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16660,7 +16660,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_bamboo_m10_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16674,7 +16674,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m11_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16688,7 +16688,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m12_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16702,7 +16702,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m13_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16716,7 +16716,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m14_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16730,7 +16730,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m15_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16744,7 +16744,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_fallen": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16758,7 +16758,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "deco_fence_hedge_m10_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16772,7 +16772,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m11_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16786,7 +16786,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m12_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16800,7 +16800,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m13_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16814,7 +16814,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m14_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16828,7 +16828,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_hedge_m15_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16842,7 +16842,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_hedge_fallen": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16856,7 +16856,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_iron_m10_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16870,7 +16870,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m11_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16884,7 +16884,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m12_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16898,7 +16898,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m13_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16912,7 +16912,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_iron_m14_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16926,7 +16926,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_iron_m15_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16940,7 +16940,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "deco_fence_iron_fallen": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16966,7 +16966,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_fence_picket_m00_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16980,7 +16980,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_picket_m01_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -16994,7 +16994,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_picket_m02_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17008,7 +17008,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_picket_m03_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17022,7 +17022,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_picket_m04_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17036,7 +17036,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m05_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17050,7 +17050,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m06_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17064,7 +17064,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m07_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17078,7 +17078,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m08_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17092,7 +17092,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_picket_m09_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17106,7 +17106,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_stone_m00_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17120,7 +17120,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_stone_m01_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17134,7 +17134,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_stone_m02_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17148,7 +17148,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_stone_m03_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17162,7 +17162,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m04_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17176,7 +17176,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m05_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17190,7 +17190,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m06_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17204,7 +17204,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m07_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17218,7 +17218,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m08_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17232,7 +17232,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_stone_m09_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17246,7 +17246,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_bamboo_m00_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17260,7 +17260,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m01_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17274,7 +17274,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m02_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17288,7 +17288,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m03_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17302,7 +17302,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m04_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17316,7 +17316,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m05_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17330,7 +17330,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m06_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17344,7 +17344,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m07_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17358,7 +17358,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "deco_fence_bamboo_m08_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17372,7 +17372,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_bamboo_m09_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17386,7 +17386,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "deco_fence_hedge_m00_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17400,7 +17400,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m01_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17414,7 +17414,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m02_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17428,7 +17428,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m03_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17442,7 +17442,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m04_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17456,7 +17456,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m05_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17470,7 +17470,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "deco_fence_hedge_m06_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17484,7 +17484,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m07_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17498,7 +17498,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m08_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17512,7 +17512,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_hedge_m09_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17526,7 +17526,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "deco_fence_iron_m00_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17540,7 +17540,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_iron_m01_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17554,7 +17554,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_iron_m02_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17568,7 +17568,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_iron_m03_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17582,7 +17582,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_iron_m04_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17596,7 +17596,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "deco_fence_iron_m05_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17610,7 +17610,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m06_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17624,7 +17624,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m07_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17638,7 +17638,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m08_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17652,7 +17652,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "deco_fence_iron_m09_idle": {
-      "file": "sheet_105.png",
+      "file": "sheet_134.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17702,7 +17702,7 @@ window.GAME_ATLAS = {
       ]
     },
     "snow_building_farmhouse_idle": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -17713,10 +17713,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 304
     },
     "snow_building_farmhouse_night": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -17727,10 +17727,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 560
     },
     "snow_building_water_tower_level": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17744,7 +17744,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "snow_building_water_tower_fill_0": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17758,7 +17758,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_building_water_tower_fill_1": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17772,7 +17772,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_building_water_tower_fill_2": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17786,7 +17786,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_water_tower_fill_3": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17800,7 +17800,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_water_tower_fill_4": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17814,7 +17814,7 @@ window.GAME_ATLAS = {
       "sy": 224
     },
     "snow_building_barn_empty": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -17828,7 +17828,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "snow_building_barn_half": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -17842,7 +17842,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "snow_building_barn_full": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -17856,7 +17856,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "snow_building_shed_idle": {
-      "file": "sheet_416.png",
+      "file": "sheet_472.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17866,11 +17866,11 @@ window.GAME_ATLAS = {
         64,
         100
       ],
-      "sx": 0,
-      "sy": 728
+      "sx": 128,
+      "sy": 792
     },
     "snow_building_drone_pad_idle": {
-      "file": "sheet_412.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17881,10 +17881,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 880
+      "sy": 176
     },
     "snow_building_drone_pad_charge": {
-      "file": "sheet_412.png",
+      "file": "sheet_469.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17895,10 +17895,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 880
+      "sy": 176
     },
     "snow_building_drone_pad_refill": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17909,10 +17909,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 304
     },
     "snow_building_robot_charger_idle": {
-      "file": "sheet_416.png",
+      "file": "sheet_472.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17922,11 +17922,11 @@ window.GAME_ATLAS = {
         64,
         96
       ],
-      "sx": 768,
-      "sy": 600
+      "sx": 0,
+      "sy": 792
     },
     "snow_building_robot_charger_charge": {
-      "file": "sheet_416.png",
+      "file": "sheet_472.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17936,11 +17936,11 @@ window.GAME_ATLAS = {
         64,
         96
       ],
-      "sx": 0,
+      "sx": 256,
       "sy": 600
     },
     "snow_building_water_tower_brace": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17954,7 +17954,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "snow_building_water_tower2_level": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 5,
       "frameWidth": 128,
       "frameHeight": 224,
@@ -17968,7 +17968,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "snow_building_sweeper_dock_idle": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17982,7 +17982,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "snow_building_sweeper_dock_charge": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -17996,7 +17996,7 @@ window.GAME_ATLAS = {
       "sy": 176
     },
     "snow_building_sweeper_dock_clean": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 8,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18010,7 +18010,35 @@ window.GAME_ATLAS = {
       "sy": 304
     },
     "snow_building_drone_pad_x2": {
-      "file": "sheet_412.png",
+      "file": "sheet_469.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ],
+      "sx": 256,
+      "sy": 0
+    },
+    "snow_building_robot_charger_x2": {
+      "file": "sheet_472.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 176,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        144
+      ],
+      "sx": 128,
+      "sy": 600
+    },
+    "snow_building_sweeper_dock_x2": {
+      "file": "sheet_472.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18021,38 +18049,10 @@ window.GAME_ATLAS = {
         144
       ],
       "sx": 896,
-      "sy": 688
-    },
-    "snow_building_robot_charger_x2": {
-      "file": "sheet_416.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 176,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        144
-      ],
-      "sx": 680,
-      "sy": 0
-    },
-    "snow_building_sweeper_dock_x2": {
-      "file": "sheet_416.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 176,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        144
-      ],
-      "sx": 768,
-      "sy": 728
+      "sy": 792
     },
     "snow_building_sweeper_dock_tank": {
-      "file": "sheet_418.png",
+      "file": "sheet_474.png",
       "frames": 11,
       "frameWidth": 128,
       "frameHeight": 144,
@@ -18066,7 +18066,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_sweeper_dock_x2_l0": {
-      "file": "sheet_417.png",
+      "file": "sheet_473.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18080,7 +18080,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_sweeper_dock_x2_l1": {
-      "file": "sheet_417.png",
+      "file": "sheet_473.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18094,7 +18094,7 @@ window.GAME_ATLAS = {
       "sy": 176
     },
     "snow_building_sweeper_dock_x2_l2": {
-      "file": "sheet_417.png",
+      "file": "sheet_473.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18108,7 +18108,7 @@ window.GAME_ATLAS = {
       "sy": 352
     },
     "snow_building_sweeper_dock_x2_l3": {
-      "file": "sheet_417.png",
+      "file": "sheet_473.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18122,7 +18122,7 @@ window.GAME_ATLAS = {
       "sy": 528
     },
     "snow_building_sweeper_dock_x2_l4": {
-      "file": "sheet_417.png",
+      "file": "sheet_473.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18136,7 +18136,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_building_sweeper_dock_x2_l5": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 176,
@@ -18150,7 +18150,21 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_shed_off": {
-      "file": "sheet_416.png",
+      "file": "sheet_472.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 768,
+      "sy": 792
+    },
+    "snow_building_shed_lit": {
+      "file": "sheet_472.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18161,24 +18175,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 640,
-      "sy": 728
-    },
-    "snow_building_shed_lit": {
-      "file": "sheet_416.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 512,
-      "sy": 728
+      "sy": 792
     },
     "snow_building_trash_station": {
-      "file": "sheet_419.png",
+      "file": "sheet_475.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 144,
@@ -18192,7 +18192,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "snow_building_farmhouse_idle_gold": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -18203,10 +18203,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 560
     },
     "snow_building_farmhouse_night_gold": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -18217,52 +18217,10 @@ window.GAME_ATLAS = {
         200
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 560
     },
     "snow_building_dog_house_1": {
-      "file": "sheet_412.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 384,
-      "sy": 688
-    },
-    "snow_building_dog_house_2": {
-      "file": "sheet_412.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 512,
-      "sy": 688
-    },
-    "snow_building_dog_house_3": {
-      "file": "sheet_412.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 160,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        112
-      ],
-      "sx": 640,
-      "sy": 688
-    },
-    "snow_building_dog_house_gold": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18275,8 +18233,50 @@ window.GAME_ATLAS = {
       "sx": 768,
       "sy": 688
     },
+    "snow_building_dog_house_2": {
+      "file": "sheet_468.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 896,
+      "sy": 688
+    },
+    "snow_building_dog_house_3": {
+      "file": "sheet_469.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "snow_building_dog_house_gold": {
+      "file": "sheet_469.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        112
+      ],
+      "sx": 128,
+      "sy": 0
+    },
     "snow_deco_water_tower_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18290,7 +18290,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_ground_soil22": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18556,7 +18556,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_street_lamp_classic_off": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18570,7 +18570,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "device_street_lamp_classic_on": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18584,7 +18584,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_device_street_lamp_classic_off": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18598,7 +18598,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_device_street_lamp_classic_on": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18624,7 +18624,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_street_lamp_garden_off": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18638,7 +18638,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "device_street_lamp_garden_on": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18652,7 +18652,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_device_street_lamp_garden_off": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18666,7 +18666,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_device_street_lamp_garden_on": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18692,7 +18692,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_street_lamp_double_off": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18706,7 +18706,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "device_street_lamp_double_on": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18720,7 +18720,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_device_street_lamp_double_off": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18734,7 +18734,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_device_street_lamp_double_on": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18760,7 +18760,7 @@ window.GAME_ATLAS = {
       ]
     },
     "device_street_lamp_modern_off": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18774,7 +18774,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "device_street_lamp_modern_on": {
-      "file": "sheet_110.png",
+      "file": "sheet_140.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18788,7 +18788,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "snow_device_street_lamp_modern_off": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18802,7 +18802,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_device_street_lamp_modern_on": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -18828,7 +18828,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_bench_wood_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18842,7 +18842,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_deco_bench_wood_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18856,7 +18856,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_bench_park_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18870,7 +18870,7 @@ window.GAME_ATLAS = {
       "sy": 352
     },
     "snow_deco_bench_park_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18884,7 +18884,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_bench_log_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18898,7 +18898,7 @@ window.GAME_ATLAS = {
       "sy": 352
     },
     "snow_deco_bench_log_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18912,7 +18912,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "deco_bench_stone_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18926,7 +18926,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_deco_bench_stone_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18940,7 +18940,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "pool2_bed_m00_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18951,10 +18951,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m00_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18965,10 +18965,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 832
+      "sy": 576
     },
     "pool2_bed_m00_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18979,10 +18979,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m00_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -18993,10 +18993,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 832
+      "sy": 576
     },
     "pool2_bed_m00_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19007,10 +19007,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m00_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19021,10 +19021,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 704
     },
     "pool2_bed_m01_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19035,10 +19035,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m01_v0": {
-      "file": "sheet_333.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19049,10 +19049,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 704
     },
     "pool2_bed_m01_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19063,10 +19063,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m01_v1": {
-      "file": "sheet_333.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19077,10 +19077,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 832
     },
     "pool2_bed_m01_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19091,10 +19091,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m01_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19105,10 +19105,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 832
     },
     "pool2_bed_m02_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19119,10 +19119,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m02_v0": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19133,10 +19133,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m02_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19147,10 +19147,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 192
+      "sy": 0
     },
     "pool2_top_m02_v1": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19161,10 +19161,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m02_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19175,10 +19175,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m02_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19189,10 +19189,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m03_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19203,10 +19203,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_v0": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19217,10 +19217,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m03_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19231,10 +19231,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_v1": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19245,10 +19245,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m03_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19259,10 +19259,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19273,10 +19273,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m04_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19287,10 +19287,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m04_v0": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19301,10 +19301,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m04_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19315,10 +19315,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m04_v1": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19329,10 +19329,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m04_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19343,10 +19343,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m04_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19357,10 +19357,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m05_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19371,10 +19371,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m05_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19385,10 +19385,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m05_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19399,10 +19399,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m05_v1": {
-      "file": "sheet_334.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19413,10 +19413,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m05_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19427,10 +19427,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m05_v2": {
-      "file": "sheet_334.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19441,10 +19441,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m06_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19455,10 +19455,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m06_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19469,10 +19469,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m06_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19483,10 +19483,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m06_v1": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19497,10 +19497,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m06_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19511,10 +19511,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m06_v2": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19525,10 +19525,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m07_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19539,10 +19539,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_v0": {
-      "file": "sheet_335.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19553,10 +19553,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m07_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19567,10 +19567,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19581,10 +19581,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m07_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19595,10 +19595,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_v2": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19609,10 +19609,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m08_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19623,10 +19623,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m08_v0": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19637,10 +19637,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m08_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19651,10 +19651,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m08_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19665,10 +19665,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m08_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19679,10 +19679,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m08_v2": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19693,10 +19693,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m09_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19707,10 +19707,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_v0": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19721,10 +19721,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m09_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19735,10 +19735,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19749,10 +19749,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m09_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19763,10 +19763,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_v2": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19777,10 +19777,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m10_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19791,10 +19791,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m10_v0": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19805,10 +19805,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m10_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19819,10 +19819,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m10_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19833,10 +19833,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m10_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19847,10 +19847,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m10_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19861,10 +19861,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m11_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19875,10 +19875,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_v0": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19889,10 +19889,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m11_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19903,10 +19903,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_v1": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19917,10 +19917,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m11_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19931,10 +19931,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19945,10 +19945,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m12_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19959,10 +19959,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m12_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19973,10 +19973,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m12_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -19987,10 +19987,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m12_v1": {
-      "file": "sheet_337.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20001,10 +20001,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m12_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20015,10 +20015,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m12_v2": {
-      "file": "sheet_337.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20029,10 +20029,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m13_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20043,10 +20043,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20057,10 +20057,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m13_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20071,10 +20071,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_v1": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20085,10 +20085,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m13_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20099,10 +20099,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m13_v2": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20113,10 +20113,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m14_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20127,10 +20127,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m14_v0": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20141,10 +20141,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m14_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20155,10 +20155,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m14_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20169,10 +20169,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m14_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20183,10 +20183,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m14_v2": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20197,10 +20197,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m15_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20211,10 +20211,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m15_v0": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20225,10 +20225,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m15_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20239,10 +20239,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m15_v1": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20253,10 +20253,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m15_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20267,10 +20267,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m15_v2": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20281,10 +20281,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "fishtop_tilapia": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20296,10 +20296,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "fishtop_milkfish": {
-      "file": "sheet_113.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20311,10 +20311,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "fishtop_seabass": {
-      "file": "sheet_114.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20326,10 +20326,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "fishtop_carp": {
-      "file": "sheet_112.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20341,10 +20341,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "fishtop_goldfish": {
-      "file": "sheet_113.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20356,10 +20356,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "fishtop_piranha": {
-      "file": "sheet_114.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20371,10 +20371,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "fishtop_bamboo_shark": {
-      "file": "sheet_112.png",
+      "file": "sheet_142.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20386,10 +20386,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 512
+      "sy": 864
     },
     "fishtop_cat_shark": {
-      "file": "sheet_112.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20401,10 +20401,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "fishtop_blacktip_shark": {
-      "file": "sheet_112.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20416,10 +20416,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "fishtop_hammerhead": {
-      "file": "sheet_113.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20431,10 +20431,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "fishtop_crab": {
-      "file": "sheet_113.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20446,10 +20446,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "fishtop_shrimp": {
-      "file": "sheet_114.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -20461,10 +20461,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "pool2_bed_m03_c02_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20475,10 +20475,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_c02_v0": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20489,10 +20489,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m03_c02_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20503,10 +20503,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_c02_v1": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20517,10 +20517,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m03_c02_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20531,10 +20531,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 320
+      "sy": 128
     },
     "pool2_top_m03_c02_v2": {
-      "file": "sheet_333.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20545,10 +20545,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m06_c04_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20559,10 +20559,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m06_c04_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_389.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20573,10 +20573,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m06_c04_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20587,10 +20587,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m06_c04_v1": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20601,10 +20601,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m06_c04_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20615,10 +20615,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 448
+      "sy": 256
     },
     "pool2_top_m06_c04_v2": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20629,10 +20629,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m07_c02_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20643,10 +20643,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m07_c02_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20657,10 +20657,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m07_c02_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20671,10 +20671,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m07_c02_v1": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20685,10 +20685,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m07_c02_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20699,10 +20699,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m07_c02_v2": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20713,10 +20713,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m07_c04_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20727,10 +20727,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m07_c04_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20741,10 +20741,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m07_c04_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20755,10 +20755,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 576
+      "sy": 384
     },
     "pool2_top_m07_c04_v1": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20769,10 +20769,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m07_c04_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20783,10 +20783,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_c04_v2": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20797,10 +20797,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m07_c06_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20811,10 +20811,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_c06_v0": {
-      "file": "sheet_334.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20825,10 +20825,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m07_c06_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20839,10 +20839,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_c06_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20853,10 +20853,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m07_c06_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20867,10 +20867,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 704
+      "sy": 512
     },
     "pool2_top_m07_c06_v2": {
-      "file": "sheet_335.png",
+      "file": "sheet_390.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20881,10 +20881,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m09_c01_v0": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20895,10 +20895,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_c01_v0": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20909,10 +20909,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m09_c01_v1": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20923,10 +20923,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_c01_v1": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20937,10 +20937,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m09_c01_v2": {
-      "file": "sheet_330.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20951,10 +20951,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 832
+      "sy": 640
     },
     "pool2_top_m09_c01_v2": {
-      "file": "sheet_335.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20965,10 +20965,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m11_c01_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20979,10 +20979,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m11_c01_v0": {
-      "file": "sheet_336.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -20993,10 +20993,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m11_c01_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21007,10 +21007,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m11_c01_v1": {
-      "file": "sheet_336.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21021,10 +21021,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m11_c01_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21035,10 +21035,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m11_c01_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_391.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21049,10 +21049,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m11_c02_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21063,10 +21063,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m11_c02_v0": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21077,10 +21077,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m11_c02_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21091,10 +21091,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m11_c02_v1": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21105,10 +21105,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m11_c02_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21119,10 +21119,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_c02_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21133,10 +21133,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m11_c03_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21147,10 +21147,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_c03_v0": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21161,10 +21161,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m11_c03_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21175,10 +21175,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_c03_v1": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21189,10 +21189,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m11_c03_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21203,10 +21203,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m11_c03_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21217,10 +21217,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m12_c08_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_386.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21231,10 +21231,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m12_c08_v0": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21245,10 +21245,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m12_c08_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21259,10 +21259,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m12_c08_v1": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21273,10 +21273,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m12_c08_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21287,10 +21287,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m12_c08_v2": {
-      "file": "sheet_336.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21301,10 +21301,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m13_c01_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21315,10 +21315,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m13_c01_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_392.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21329,10 +21329,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m13_c01_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21343,10 +21343,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m13_c01_v1": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21357,10 +21357,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m13_c01_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21371,10 +21371,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m13_c01_v2": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21385,10 +21385,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m13_c08_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21399,10 +21399,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c08_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21413,10 +21413,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m13_c08_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21427,10 +21427,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c08_v1": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21441,10 +21441,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m13_c08_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21455,10 +21455,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c08_v2": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21469,10 +21469,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m13_c09_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21483,10 +21483,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c09_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21497,10 +21497,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m13_c09_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21511,10 +21511,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c09_v1": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21525,10 +21525,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m13_c09_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21539,10 +21539,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m13_c09_v2": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21553,10 +21553,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m14_c04_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21567,10 +21567,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c04_v0": {
-      "file": "sheet_337.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21581,10 +21581,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m14_c04_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21595,10 +21595,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c04_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21609,10 +21609,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m14_c04_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21623,10 +21623,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c04_v2": {
-      "file": "sheet_338.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21637,10 +21637,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m14_c08_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21651,10 +21651,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c08_v0": {
-      "file": "sheet_338.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21665,10 +21665,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m14_c08_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21679,10 +21679,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c08_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_393.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21693,10 +21693,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m14_c08_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21707,10 +21707,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c08_v2": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21721,10 +21721,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m14_c12_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21735,10 +21735,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 256
     },
     "pool2_top_m14_c12_v0": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21749,10 +21749,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m14_c12_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21763,10 +21763,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m14_c12_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21777,10 +21777,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m14_c12_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21791,10 +21791,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m14_c12_v2": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21805,10 +21805,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c01_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21819,10 +21819,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m15_c01_v0": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21833,10 +21833,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m15_c01_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21847,10 +21847,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m15_c01_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21861,10 +21861,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m15_c01_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21875,10 +21875,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 384
     },
     "pool2_top_m15_c01_v2": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21889,10 +21889,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m15_c02_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21903,10 +21903,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c02_v0": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21917,10 +21917,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c02_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21931,10 +21931,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c02_v1": {
-      "file": "sheet_338.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21945,10 +21945,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c02_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21959,10 +21959,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c02_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21973,10 +21973,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m15_c03_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -21987,10 +21987,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c03_v0": {
-      "file": "sheet_339.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22001,10 +22001,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m15_c03_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22015,10 +22015,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c03_v1": {
-      "file": "sheet_339.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22029,10 +22029,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m15_c03_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22043,10 +22043,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c03_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_394.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22057,10 +22057,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m15_c04_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22071,10 +22071,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c04_v0": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22085,10 +22085,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m15_c04_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22099,10 +22099,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 512
     },
     "pool2_top_m15_c04_v1": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22113,10 +22113,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m15_c04_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22127,10 +22127,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c04_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22141,10 +22141,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c05_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22155,10 +22155,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c05_v0": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22169,10 +22169,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c05_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22183,10 +22183,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c05_v1": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22197,10 +22197,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m15_c05_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22211,10 +22211,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c05_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22225,10 +22225,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m15_c06_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22239,10 +22239,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c06_v0": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22253,10 +22253,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m15_c06_v1": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22267,10 +22267,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c06_v1": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22281,10 +22281,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 384
     },
     "pool2_bed_m15_c06_v2": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22295,10 +22295,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c06_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22309,10 +22309,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m15_c07_v0": {
-      "file": "sheet_331.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22323,10 +22323,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 640
     },
     "pool2_top_m15_c07_v0": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22337,10 +22337,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 512
     },
     "pool2_bed_m15_c07_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22351,10 +22351,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c07_v1": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22365,10 +22365,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c07_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22379,10 +22379,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c07_v2": {
-      "file": "sheet_339.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22393,10 +22393,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c08_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22407,10 +22407,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c08_v0": {
-      "file": "sheet_340.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22421,10 +22421,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m15_c08_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22435,10 +22435,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c08_v1": {
-      "file": "sheet_340.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22449,10 +22449,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m15_c08_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22463,10 +22463,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c08_v2": {
-      "file": "sheet_340.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22477,10 +22477,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m15_c09_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22491,10 +22491,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c09_v0": {
-      "file": "sheet_340.png",
+      "file": "sheet_395.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22505,10 +22505,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 896
     },
     "pool2_bed_m15_c09_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22519,10 +22519,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c09_v1": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22533,10 +22533,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m15_c09_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22547,10 +22547,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 768
     },
     "pool2_top_m15_c09_v2": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22561,10 +22561,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 0
     },
     "pool2_bed_m15_c10_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22575,10 +22575,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m15_c10_v0": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22589,10 +22589,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c10_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22603,10 +22603,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m15_c10_v1": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22617,10 +22617,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c10_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22631,10 +22631,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m15_c10_v2": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22645,10 +22645,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_bed_m15_c11_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_387.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22659,10 +22659,122 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 896
     },
     "pool2_top_m15_c11_v0": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 256
+    },
+    "pool2_bed_m15_c11_v1": {
+      "file": "sheet_387.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "pool2_top_m15_c11_v1": {
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "pool2_bed_m15_c11_v2": {
+      "file": "sheet_387.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 896
+    },
+    "pool2_top_m15_c11_v2": {
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "pool2_bed_m15_c12_v0": {
+      "file": "sheet_387.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 896
+    },
+    "pool2_top_m15_c12_v0": {
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "pool2_bed_m15_c12_v1": {
+      "file": "sheet_387.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "pool2_top_m15_c12_v1": {
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22675,120 +22787,8 @@ window.GAME_ATLAS = {
       "sx": 512,
       "sy": 512
     },
-    "pool2_bed_m15_c11_v1": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 128
-    },
-    "pool2_top_m15_c11_v1": {
-      "file": "sheet_340.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 640
-    },
-    "pool2_bed_m15_c11_v2": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 128
-    },
-    "pool2_top_m15_c11_v2": {
-      "file": "sheet_340.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 640
-    },
-    "pool2_bed_m15_c12_v0": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 128
-    },
-    "pool2_top_m15_c12_v0": {
-      "file": "sheet_340.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 768
-    },
-    "pool2_bed_m15_c12_v1": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 128
-    },
-    "pool2_top_m15_c12_v1": {
-      "file": "sheet_340.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 768
-    },
     "pool2_bed_m15_c12_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22799,10 +22799,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m15_c12_v2": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22813,10 +22813,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c13_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22827,10 +22827,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m15_c13_v0": {
-      "file": "sheet_340.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22841,10 +22841,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 640
     },
     "pool2_bed_m15_c13_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22855,10 +22855,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m15_c13_v1": {
-      "file": "sheet_341.png",
+      "file": "sheet_396.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22869,10 +22869,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pool2_bed_m15_c13_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22883,10 +22883,122 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 0
     },
     "pool2_top_m15_c13_v2": {
-      "file": "sheet_341.png",
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 768
+    },
+    "pool2_bed_m15_c14_v0": {
+      "file": "sheet_388.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 0
+    },
+    "pool2_top_m15_c14_v0": {
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "pool2_bed_m15_c14_v1": {
+      "file": "sheet_388.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 0
+    },
+    "pool2_top_m15_c14_v1": {
+      "file": "sheet_396.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "pool2_bed_m15_c14_v2": {
+      "file": "sheet_388.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 0
+    },
+    "pool2_top_m15_c14_v2": {
+      "file": "sheet_397.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 0
+    },
+    "pool2_bed_m15_c15_v0": {
+      "file": "sheet_388.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 0
+    },
+    "pool2_top_m15_c15_v0": {
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -22899,120 +23011,8 @@ window.GAME_ATLAS = {
       "sx": 512,
       "sy": 0
     },
-    "pool2_bed_m15_c14_v0": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 256
-    },
-    "pool2_top_m15_c14_v0": {
-      "file": "sheet_341.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 128
-    },
-    "pool2_bed_m15_c14_v1": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 256
-    },
-    "pool2_top_m15_c14_v1": {
-      "file": "sheet_341.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 128
-    },
-    "pool2_bed_m15_c14_v2": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 256
-    },
-    "pool2_top_m15_c14_v2": {
-      "file": "sheet_341.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 256
-    },
-    "pool2_bed_m15_c15_v0": {
-      "file": "sheet_332.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 256
-    },
-    "pool2_top_m15_c15_v0": {
-      "file": "sheet_341.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 256
-    },
     "pool2_bed_m15_c15_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23023,10 +23023,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m15_c15_v1": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23037,10 +23037,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 128
     },
     "pool2_bed_m15_c15_v2": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23051,10 +23051,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 384
+      "sy": 128
     },
     "pool2_top_m15_c15_v2": {
-      "file": "sheet_341.png",
+      "file": "sheet_397.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23065,10 +23065,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 128
     },
     "device_pool_lamp_off": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23082,7 +23082,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "device_pool_lamp_on": {
-      "file": "sheet_109.png",
+      "file": "sheet_138.png",
       "frames": 2,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23108,7 +23108,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pool2_side_sw_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -23119,10 +23119,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 672
+      "sy": 416
     },
     "pool2_side_sw_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -23133,10 +23133,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 672
+      "sy": 416
     },
     "pool2_side_se_v0": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -23147,10 +23147,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 256
     },
     "pool2_side_se_v1": {
-      "file": "sheet_332.png",
+      "file": "sheet_388.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -23161,7 +23161,7 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 256
     },
     "ui_fish_tilapia": {
       "file": "ui_fish_tilapia.png",
@@ -23320,7 +23320,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fx_feed_cans": {
-      "file": "sheet_121.png",
+      "file": "sheet_154.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -23331,10 +23331,10 @@ window.GAME_ATLAS = {
         52
       ],
       "sx": 448,
-      "sy": 704
+      "sy": 848
     },
     "fx_fert_sacks": {
-      "file": "sheet_121.png",
+      "file": "sheet_156.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -23345,10 +23345,10 @@ window.GAME_ATLAS = {
         52
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 128
     },
     "fx_pet_bottle": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 2,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -23359,10 +23359,10 @@ window.GAME_ATLAS = {
         40
       ],
       "sx": 384,
-      "sy": 506
+      "sy": 762
     },
     "snow_fx_feed_cans": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -23376,7 +23376,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_fx_fert_sacks": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 3,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -23390,7 +23390,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_fx_pet_bottle": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 2,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -23516,7 +23516,7 @@ window.GAME_ATLAS = {
       ]
     },
     "crop_alfalfa_seed_sway": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23530,7 +23530,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "crop_alfalfa_sprout_sway": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23544,7 +23544,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "crop_alfalfa_young_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23558,7 +23558,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_alfalfa_mature_sway": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23572,7 +23572,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "crop_alfalfa_withered_sway": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23586,7 +23586,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "crop_timothy_seed_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23600,7 +23600,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_timothy_sprout_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23614,7 +23614,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_timothy_young_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23628,7 +23628,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_timothy_mature_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23642,7 +23642,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_timothy_withered_sway": {
-      "file": "sheet_103.png",
+      "file": "sheet_132.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23656,7 +23656,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_oats_seed_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23670,7 +23670,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_oats_sprout_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23684,7 +23684,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_oats_young_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23698,7 +23698,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_oats_mature_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23712,7 +23712,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_oats_withered_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23726,7 +23726,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_barley_seed_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23740,7 +23740,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_barley_sprout_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23754,7 +23754,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_barley_young_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23768,7 +23768,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_barley_mature_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23782,7 +23782,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_barley_withered_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23796,7 +23796,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_rye_seed_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23810,7 +23810,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_rye_sprout_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23824,7 +23824,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_rye_young_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23838,7 +23838,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_rye_mature_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23852,7 +23852,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_rye_withered_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23866,7 +23866,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_millet_seed_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23880,7 +23880,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_millet_sprout_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23894,7 +23894,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_millet_young_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23908,7 +23908,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_millet_mature_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23922,7 +23922,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_millet_withered_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23936,7 +23936,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_sorghum_seed_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23950,7 +23950,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_sorghum_sprout_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23964,7 +23964,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_sorghum_young_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23978,7 +23978,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_sorghum_mature_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -23992,7 +23992,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_sorghum_withered_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24006,7 +24006,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_soybean_seed_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24020,7 +24020,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_soybean_sprout_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24034,7 +24034,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_soybean_young_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24048,7 +24048,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_soybean_mature_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24062,7 +24062,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_soybean_withered_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24076,7 +24076,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_pea_seed_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24090,7 +24090,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_pea_sprout_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24104,7 +24104,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_pea_young_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24118,7 +24118,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_pea_mature_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24132,7 +24132,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_pea_withered_sway": {
-      "file": "sheet_097.png",
+      "file": "sheet_126.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24146,7 +24146,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_mung_bean_seed_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24160,7 +24160,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_mung_bean_sprout_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24174,7 +24174,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_mung_bean_young_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24188,7 +24188,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_mung_bean_mature_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24202,7 +24202,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_mung_bean_withered_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24216,7 +24216,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_green_bean_seed_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24230,7 +24230,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_green_bean_sprout_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24244,7 +24244,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_green_bean_young_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24258,7 +24258,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_green_bean_mature_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24272,7 +24272,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_green_bean_withered_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24286,7 +24286,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_red_bean_seed_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24300,7 +24300,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_red_bean_sprout_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24314,7 +24314,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_red_bean_young_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24328,7 +24328,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_red_bean_mature_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24342,7 +24342,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_red_bean_withered_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24356,7 +24356,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_carrot_seed_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24370,7 +24370,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_carrot_sprout_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24384,7 +24384,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_carrot_young_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24398,7 +24398,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_carrot_mature_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24412,7 +24412,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_carrot_withered_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24426,7 +24426,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_sweet_potato_seed_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24440,7 +24440,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_sweet_potato_sprout_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24454,7 +24454,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_sweet_potato_young_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24468,7 +24468,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_sweet_potato_mature_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24482,7 +24482,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_sweet_potato_withered_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24496,7 +24496,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_daikon_seed_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24510,7 +24510,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_daikon_sprout_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24524,7 +24524,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_daikon_young_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24538,7 +24538,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_daikon_mature_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24552,7 +24552,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_daikon_withered_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24566,7 +24566,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_beet_seed_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24580,7 +24580,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_beet_sprout_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24594,7 +24594,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_beet_young_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24608,7 +24608,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_beet_mature_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24622,7 +24622,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_beet_withered_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24636,7 +24636,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_taro_seed_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24650,7 +24650,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_taro_sprout_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24664,7 +24664,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_taro_young_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24678,7 +24678,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_taro_mature_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24692,7 +24692,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_taro_withered_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24706,7 +24706,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_lettuce_seed_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24720,7 +24720,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_lettuce_sprout_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24734,7 +24734,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_lettuce_young_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24748,7 +24748,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_lettuce_mature_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24762,7 +24762,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_lettuce_withered_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24776,7 +24776,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_spinach_seed_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24790,7 +24790,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_spinach_sprout_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24804,7 +24804,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_spinach_young_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24818,7 +24818,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_spinach_mature_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24832,7 +24832,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_spinach_withered_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24846,7 +24846,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_bok_choy_seed_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24860,7 +24860,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_bok_choy_sprout_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24874,7 +24874,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_bok_choy_young_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24888,7 +24888,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_bok_choy_mature_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24902,7 +24902,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_bok_choy_withered_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24916,7 +24916,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_napa_cabbage_seed_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24930,7 +24930,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_napa_cabbage_sprout_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24944,7 +24944,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_napa_cabbage_young_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24958,7 +24958,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_napa_cabbage_mature_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24972,7 +24972,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_napa_cabbage_withered_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -24986,7 +24986,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_cucumber_seed_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25000,7 +25000,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_cucumber_sprout_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25014,7 +25014,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_cucumber_young_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25028,7 +25028,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_cucumber_mature_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25042,7 +25042,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_cucumber_withered_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25056,7 +25056,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_eggplant_seed_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25070,7 +25070,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_eggplant_sprout_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25084,7 +25084,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_eggplant_young_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25098,7 +25098,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_eggplant_mature_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25112,7 +25112,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_eggplant_withered_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25126,7 +25126,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_okra_seed_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25140,7 +25140,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_okra_sprout_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25154,7 +25154,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_okra_young_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25168,7 +25168,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_okra_mature_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25182,7 +25182,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_okra_withered_sway": {
-      "file": "sheet_096.png",
+      "file": "sheet_125.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25196,7 +25196,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_bell_pepper_seed_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25210,7 +25210,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_bell_pepper_sprout_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25224,7 +25224,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_bell_pepper_young_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25238,7 +25238,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_bell_pepper_mature_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25252,7 +25252,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_bell_pepper_withered_sway": {
-      "file": "sheet_090.png",
+      "file": "sheet_119.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25266,7 +25266,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_chili_seed_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25280,7 +25280,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_chili_sprout_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25294,7 +25294,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_chili_young_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25308,7 +25308,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_chili_mature_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25322,7 +25322,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_chili_withered_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25336,7 +25336,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_muskmelon_seed_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25350,7 +25350,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_muskmelon_sprout_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25364,7 +25364,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_muskmelon_young_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25378,7 +25378,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_muskmelon_mature_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25392,7 +25392,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_muskmelon_withered_sway": {
-      "file": "sheet_095.png",
+      "file": "sheet_124.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25406,7 +25406,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_honeydew_seed_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25420,7 +25420,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_honeydew_sprout_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25434,7 +25434,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_honeydew_young_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25448,7 +25448,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_honeydew_mature_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25462,7 +25462,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_honeydew_withered_sway": {
-      "file": "sheet_093.png",
+      "file": "sheet_122.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25476,7 +25476,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_sugarcane_seed_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25490,7 +25490,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_sugarcane_sprout_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25504,7 +25504,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_sugarcane_young_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25518,7 +25518,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_sugarcane_mature_sway": {
-      "file": "sheet_100.png",
+      "file": "sheet_129.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25532,7 +25532,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_sugarcane_withered_sway": {
-      "file": "sheet_101.png",
+      "file": "sheet_130.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25546,7 +25546,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_cotton_seed_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25560,7 +25560,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_cotton_sprout_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25574,7 +25574,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_cotton_young_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25588,7 +25588,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_cotton_mature_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25602,7 +25602,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_cotton_withered_sway": {
-      "file": "sheet_092.png",
+      "file": "sheet_121.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25616,7 +25616,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_tea_seed_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25630,7 +25630,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_tea_sprout_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25644,7 +25644,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "crop_tea_young_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25658,7 +25658,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_tea_mature_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25672,7 +25672,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "crop_tea_withered_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25686,7 +25686,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_coffee_seed_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25700,7 +25700,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_coffee_sprout_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25714,7 +25714,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_coffee_young_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25728,7 +25728,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_coffee_mature_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25742,7 +25742,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_coffee_withered_sway": {
-      "file": "sheet_091.png",
+      "file": "sheet_120.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25756,7 +25756,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_mint_seed_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25770,7 +25770,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_mint_sprout_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25784,7 +25784,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_mint_young_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25798,7 +25798,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_mint_mature_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25812,7 +25812,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_mint_withered_sway": {
-      "file": "sheet_094.png",
+      "file": "sheet_123.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25826,7 +25826,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_basil_seed_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25840,7 +25840,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_basil_sprout_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25854,7 +25854,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_basil_young_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25868,7 +25868,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_basil_mature_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25882,7 +25882,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_basil_withered_sway": {
-      "file": "sheet_089.png",
+      "file": "sheet_118.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25896,7 +25896,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_thyme_seed_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25910,7 +25910,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_thyme_sprout_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25924,7 +25924,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_thyme_young_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25938,7 +25938,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_thyme_mature_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25952,7 +25952,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_thyme_withered_sway": {
-      "file": "sheet_102.png",
+      "file": "sheet_131.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25966,7 +25966,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_rosemary_seed_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25980,7 +25980,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_rosemary_sprout_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -25994,7 +25994,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_rosemary_young_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26008,7 +26008,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "crop_rosemary_mature_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26022,7 +26022,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "crop_rosemary_withered_sway": {
-      "file": "sheet_098.png",
+      "file": "sheet_127.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26036,7 +26036,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "crop_sage_seed_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26050,7 +26050,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_sage_sprout_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26064,7 +26064,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "crop_sage_young_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26078,7 +26078,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "crop_sage_mature_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -26092,7 +26092,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "crop_sage_withered_sway": {
-      "file": "sheet_099.png",
+      "file": "sheet_128.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28454,7 +28454,7 @@ window.GAME_ATLAS = {
       ]
     },
     "snow_crop_alfalfa_mature_sway": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28468,7 +28468,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_crop_alfalfa_seed_sway": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28482,7 +28482,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_crop_alfalfa_sprout_sway": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28496,7 +28496,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_crop_alfalfa_withered_sway": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28510,7 +28510,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_crop_alfalfa_young_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28524,7 +28524,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_barley_mature_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28538,7 +28538,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_barley_seed_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28552,7 +28552,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_barley_sprout_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28566,7 +28566,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_barley_withered_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28580,7 +28580,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_barley_young_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28594,7 +28594,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_basil_mature_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28608,7 +28608,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_basil_seed_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28622,7 +28622,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_basil_sprout_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28636,7 +28636,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_basil_withered_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28650,7 +28650,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_basil_young_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28664,7 +28664,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_beet_mature_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28678,7 +28678,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_beet_seed_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28692,7 +28692,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_beet_sprout_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28706,7 +28706,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_beet_withered_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28720,7 +28720,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_beet_young_sway": {
-      "file": "sheet_421.png",
+      "file": "sheet_477.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28734,7 +28734,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_bell_pepper_mature_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28748,7 +28748,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_bell_pepper_seed_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28762,7 +28762,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_bell_pepper_sprout_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28776,7 +28776,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_bell_pepper_withered_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28790,7 +28790,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_bell_pepper_young_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28804,7 +28804,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_bok_choy_mature_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28818,7 +28818,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_bok_choy_seed_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28832,7 +28832,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_bok_choy_sprout_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28846,7 +28846,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_bok_choy_withered_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28860,7 +28860,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_bok_choy_young_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28874,7 +28874,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_carrot_mature_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28888,7 +28888,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_carrot_seed_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28902,7 +28902,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_carrot_sprout_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28916,7 +28916,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_carrot_withered_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28930,7 +28930,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_carrot_young_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28944,7 +28944,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_chili_mature_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28958,7 +28958,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_chili_seed_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28972,7 +28972,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_chili_sprout_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -28986,7 +28986,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_chili_withered_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29000,7 +29000,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_chili_young_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29014,7 +29014,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_coffee_mature_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29028,7 +29028,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_coffee_seed_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29042,7 +29042,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_coffee_sprout_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29056,7 +29056,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_coffee_withered_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29070,7 +29070,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_coffee_young_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29084,7 +29084,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_cotton_mature_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29098,7 +29098,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_cotton_seed_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29112,7 +29112,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_cotton_sprout_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29126,7 +29126,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_cotton_withered_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29140,7 +29140,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_cotton_young_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29154,7 +29154,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_cucumber_mature_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29168,7 +29168,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_cucumber_seed_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29182,7 +29182,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_cucumber_sprout_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29196,7 +29196,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_cucumber_withered_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29210,7 +29210,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_cucumber_young_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29224,7 +29224,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_daikon_mature_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29238,7 +29238,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_daikon_seed_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29252,7 +29252,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_daikon_sprout_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29266,7 +29266,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_daikon_withered_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29280,7 +29280,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_daikon_young_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29294,7 +29294,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_eggplant_mature_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29308,7 +29308,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_eggplant_seed_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29322,7 +29322,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_eggplant_sprout_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29336,7 +29336,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_eggplant_withered_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29350,7 +29350,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_eggplant_young_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29364,7 +29364,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_green_bean_mature_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29378,7 +29378,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_green_bean_seed_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29392,7 +29392,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_green_bean_sprout_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29406,7 +29406,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_green_bean_withered_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29420,7 +29420,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_green_bean_young_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29434,7 +29434,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_honeydew_mature_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29448,7 +29448,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_honeydew_seed_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29462,7 +29462,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_honeydew_sprout_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29476,7 +29476,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_honeydew_withered_sway": {
-      "file": "sheet_425.png",
+      "file": "sheet_481.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29490,7 +29490,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_honeydew_young_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29504,7 +29504,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_lettuce_mature_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29518,7 +29518,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_lettuce_seed_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29532,7 +29532,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_lettuce_sprout_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29546,7 +29546,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_lettuce_withered_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29560,7 +29560,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_lettuce_young_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29574,7 +29574,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_millet_mature_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29588,7 +29588,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_millet_seed_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29602,7 +29602,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_millet_sprout_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29616,7 +29616,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_millet_withered_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29630,7 +29630,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_millet_young_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29644,7 +29644,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_mint_mature_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29658,7 +29658,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_mint_seed_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29672,7 +29672,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_mint_sprout_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29686,7 +29686,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_mint_withered_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29700,7 +29700,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_mint_young_sway": {
-      "file": "sheet_426.png",
+      "file": "sheet_482.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29714,7 +29714,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_mung_bean_mature_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29728,7 +29728,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_mung_bean_seed_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29742,7 +29742,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_mung_bean_sprout_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29756,7 +29756,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_mung_bean_withered_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29770,7 +29770,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_mung_bean_young_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29784,7 +29784,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_muskmelon_mature_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29798,7 +29798,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_muskmelon_seed_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29812,7 +29812,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_muskmelon_sprout_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29826,7 +29826,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_muskmelon_withered_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29840,7 +29840,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_muskmelon_young_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29854,7 +29854,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_napa_cabbage_mature_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29868,7 +29868,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_napa_cabbage_seed_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29882,7 +29882,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_napa_cabbage_sprout_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29896,7 +29896,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_napa_cabbage_withered_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29910,7 +29910,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_napa_cabbage_young_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29924,7 +29924,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_oats_mature_sway": {
-      "file": "sheet_427.png",
+      "file": "sheet_483.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29938,7 +29938,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_oats_seed_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29952,7 +29952,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_oats_sprout_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29966,7 +29966,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_oats_withered_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29980,7 +29980,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_oats_young_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -29994,7 +29994,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_okra_mature_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30008,7 +30008,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_okra_seed_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30022,7 +30022,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_okra_sprout_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30036,7 +30036,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_okra_withered_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30050,7 +30050,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_okra_young_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30064,7 +30064,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_pea_mature_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30078,7 +30078,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_pea_seed_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30092,7 +30092,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_pea_sprout_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30106,7 +30106,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_pea_withered_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30120,7 +30120,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_pea_young_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30134,7 +30134,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_red_bean_mature_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30148,7 +30148,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_red_bean_seed_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30162,7 +30162,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_red_bean_sprout_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30176,7 +30176,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_red_bean_withered_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30190,7 +30190,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_red_bean_young_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30204,7 +30204,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_rosemary_mature_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30218,7 +30218,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_rosemary_seed_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30232,7 +30232,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_rosemary_sprout_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30246,7 +30246,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_rosemary_withered_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30260,7 +30260,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_rosemary_young_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30274,7 +30274,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_rye_mature_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30288,7 +30288,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_rye_seed_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30302,7 +30302,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_rye_sprout_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30316,7 +30316,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_rye_withered_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30330,7 +30330,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_rye_young_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30344,7 +30344,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_sage_mature_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30358,7 +30358,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_sage_seed_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30372,7 +30372,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_sage_sprout_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30386,7 +30386,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_sage_withered_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30400,7 +30400,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_sage_young_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30414,7 +30414,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_sorghum_mature_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30428,7 +30428,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_sorghum_seed_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30442,7 +30442,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_sorghum_sprout_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30456,7 +30456,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_sorghum_withered_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30470,7 +30470,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_sorghum_young_sway": {
-      "file": "sheet_431.png",
+      "file": "sheet_487.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30484,7 +30484,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_soybean_mature_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30498,7 +30498,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_soybean_seed_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30512,7 +30512,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_soybean_sprout_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30526,7 +30526,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_soybean_withered_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30540,7 +30540,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_soybean_young_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30554,7 +30554,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_spinach_mature_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30568,7 +30568,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_spinach_seed_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30582,7 +30582,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_spinach_sprout_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30596,7 +30596,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_spinach_withered_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30610,7 +30610,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_spinach_young_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30624,7 +30624,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_sugarcane_mature_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30638,7 +30638,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_sugarcane_seed_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30652,7 +30652,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_sugarcane_sprout_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30666,7 +30666,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_sugarcane_withered_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30680,7 +30680,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_sugarcane_young_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30694,7 +30694,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_sweet_potato_mature_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30708,7 +30708,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_sweet_potato_seed_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30722,7 +30722,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_sweet_potato_sprout_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30736,7 +30736,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_sweet_potato_withered_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30750,7 +30750,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_sweet_potato_young_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30764,7 +30764,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_taro_mature_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30778,7 +30778,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_taro_seed_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30792,7 +30792,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_taro_sprout_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30806,7 +30806,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_taro_withered_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30820,7 +30820,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_taro_young_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30834,7 +30834,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_tea_mature_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30848,7 +30848,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_tea_seed_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30862,7 +30862,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_tea_sprout_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30876,7 +30876,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_tea_withered_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30890,7 +30890,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_tea_young_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30904,7 +30904,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_thyme_mature_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30918,7 +30918,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_thyme_seed_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30932,7 +30932,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_thyme_sprout_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30946,7 +30946,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_thyme_withered_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30960,7 +30960,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_thyme_young_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30974,7 +30974,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_timothy_mature_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -30988,7 +30988,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_timothy_seed_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31002,7 +31002,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_timothy_sprout_sway": {
-      "file": "sheet_434.png",
+      "file": "sheet_490.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31016,7 +31016,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_timothy_withered_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31030,7 +31030,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_timothy_young_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31044,7 +31044,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_cabbage_mature_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31058,7 +31058,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_cabbage_seed_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31072,7 +31072,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_cabbage_sprout_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31086,7 +31086,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_cabbage_withered_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31100,7 +31100,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_cabbage_young_sway": {
-      "file": "sheet_422.png",
+      "file": "sheet_478.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31114,7 +31114,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_corn_mature_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31128,7 +31128,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_corn_seed_sway": {
-      "file": "sheet_423.png",
+      "file": "sheet_479.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31142,7 +31142,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_corn_sprout_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31156,7 +31156,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_corn_withered_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31170,7 +31170,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_corn_young_sway": {
-      "file": "sheet_424.png",
+      "file": "sheet_480.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31184,7 +31184,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_pasture_mature_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31198,7 +31198,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_pasture_seed_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31212,7 +31212,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_pasture_sprout_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31226,7 +31226,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_pasture_withered_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31240,7 +31240,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_pasture_young_sway": {
-      "file": "sheet_428.png",
+      "file": "sheet_484.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31254,7 +31254,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_peanut_mature_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31268,7 +31268,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_peanut_seed_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31282,7 +31282,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_peanut_sprout_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31296,7 +31296,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_peanut_withered_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31310,7 +31310,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_peanut_young_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31324,7 +31324,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_potato_mature_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31338,7 +31338,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_potato_seed_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31352,7 +31352,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_potato_sprout_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31366,7 +31366,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_potato_withered_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31380,7 +31380,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_potato_young_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31394,7 +31394,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_pumpkin_mature_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31408,7 +31408,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_pumpkin_seed_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31422,7 +31422,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_pumpkin_sprout_sway": {
-      "file": "sheet_429.png",
+      "file": "sheet_485.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31436,7 +31436,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_pumpkin_withered_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31450,7 +31450,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_pumpkin_young_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31464,7 +31464,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_crop_rice_mature_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31478,7 +31478,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_rice_seed_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31492,7 +31492,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_rice_sprout_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31506,7 +31506,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_rice_withered_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31520,7 +31520,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_rice_young_sway": {
-      "file": "sheet_430.png",
+      "file": "sheet_486.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31534,7 +31534,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_strawberry_mature_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31548,7 +31548,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_strawberry_seed_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31562,7 +31562,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_strawberry_sprout_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31576,7 +31576,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_strawberry_withered_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31590,7 +31590,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_strawberry_young_sway": {
-      "file": "sheet_432.png",
+      "file": "sheet_488.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31604,7 +31604,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_sunflower_mature_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31618,7 +31618,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_sunflower_seed_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31632,7 +31632,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_sunflower_sprout_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31646,7 +31646,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_sunflower_withered_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31660,7 +31660,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_sunflower_young_sway": {
-      "file": "sheet_433.png",
+      "file": "sheet_489.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31674,7 +31674,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_tomato_mature_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31688,7 +31688,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_tomato_seed_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31702,7 +31702,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_crop_tomato_sprout_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31716,7 +31716,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_tomato_withered_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31730,7 +31730,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_crop_tomato_young_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31744,7 +31744,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_watermelon_mature_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31758,7 +31758,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_crop_watermelon_seed_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31772,7 +31772,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_watermelon_sprout_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31786,7 +31786,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_crop_watermelon_withered_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31800,7 +31800,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_watermelon_young_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31814,7 +31814,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_crop_wheat_mature_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31828,7 +31828,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_wheat_seed_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31842,7 +31842,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_crop_wheat_sprout_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31856,7 +31856,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_wheat_withered_sway": {
-      "file": "sheet_435.png",
+      "file": "sheet_491.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31870,7 +31870,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_crop_wheat_young_sway": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31884,7 +31884,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_machine_fish_feed_machine_idle": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31898,7 +31898,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_machine_fish_feed_machine_work": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31912,7 +31912,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_machine_corn_cake_machine_idle": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31926,7 +31926,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_machine_corn_cake_machine_work": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31940,7 +31940,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_machine_compost_bin_idle": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31954,7 +31954,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_machine_compost_bin_work": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31968,7 +31968,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_device_biomass_gen_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31982,7 +31982,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_device_biomass_gen_work": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -31996,7 +31996,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_device_snow_melter_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32010,7 +32010,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_device_snow_melter_work": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32024,7 +32024,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "truck_garbage_fly_sw": {
-      "file": "sheet_385.png",
+      "file": "sheet_441.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32039,7 +32039,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_fly_se": {
-      "file": "sheet_384.png",
+      "file": "sheet_440.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32054,7 +32054,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_fly_ne": {
-      "file": "sheet_382.png",
+      "file": "sheet_438.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32069,7 +32069,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_fly_nw": {
-      "file": "sheet_383.png",
+      "file": "sheet_439.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32084,7 +32084,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_fly_sw": {
-      "file": "sheet_397.png",
+      "file": "sheet_453.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32099,7 +32099,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_fly_se": {
-      "file": "sheet_396.png",
+      "file": "sheet_452.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32114,7 +32114,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_fly_ne": {
-      "file": "sheet_394.png",
+      "file": "sheet_450.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32129,7 +32129,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_fly_nw": {
-      "file": "sheet_395.png",
+      "file": "sheet_451.png",
       "frames": 1,
       "frameWidth": 640,
       "frameHeight": 560,
@@ -32204,7 +32204,7 @@ window.GAME_ATLAS = {
       ]
     },
     "flower_flower_white_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32215,10 +32215,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 256
     },
     "flower_flower_white_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32229,10 +32229,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 256
     },
     "flower_flower_white_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32243,10 +32243,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 896
+      "sy": 256
     },
     "flower_flower_white_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32257,10 +32257,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 256
     },
     "flower_flower_white_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32271,10 +32271,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "flower_flower_yellow_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32285,10 +32285,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 384
     },
     "flower_flower_yellow_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32299,10 +32299,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 384
     },
     "flower_flower_yellow_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32313,10 +32313,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 384
     },
     "flower_flower_yellow_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32327,10 +32327,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 384
     },
     "flower_flower_yellow_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32341,10 +32341,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "flower_flower_red_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32355,10 +32355,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 128
     },
     "flower_flower_red_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32369,10 +32369,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 128
     },
     "flower_flower_red_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32383,10 +32383,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 128
     },
     "flower_flower_red_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32397,10 +32397,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 128
     },
     "flower_flower_red_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32411,10 +32411,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_flower_blue_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32425,10 +32425,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 640
+      "sy": 0
     },
     "flower_flower_blue_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32439,10 +32439,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 0
     },
     "flower_flower_blue_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32453,10 +32453,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 640
+      "sy": 0
     },
     "flower_flower_blue_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32467,10 +32467,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 0
     },
     "flower_flower_blue_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32481,10 +32481,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "flower_cherry_blossom_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32495,10 +32495,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 128
     },
     "flower_cherry_blossom_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32509,10 +32509,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 128
     },
     "flower_cherry_blossom_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32523,10 +32523,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 128
     },
     "flower_cherry_blossom_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32537,10 +32537,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 128
     },
     "flower_cherry_blossom_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32551,10 +32551,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_anemone_seed": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32565,10 +32565,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 128
     },
     "flower_anemone_bud": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32579,10 +32579,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 128
     },
     "flower_anemone_rest": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32593,10 +32593,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 128
     },
     "flower_anemone_spent": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32607,10 +32607,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 128
     },
     "flower_anemone_bloom": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32621,10 +32621,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_hyacinth_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32635,10 +32635,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 128
     },
     "flower_hyacinth_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32649,10 +32649,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 128
     },
     "flower_hyacinth_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32663,10 +32663,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 768
+      "sy": 128
     },
     "flower_hyacinth_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32677,10 +32677,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 128
     },
     "flower_hyacinth_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32691,10 +32691,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_tulip_seed": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32705,10 +32705,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 384
+      "sy": 768
     },
     "flower_tulip_bud": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32719,10 +32719,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_tulip_rest": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32733,10 +32733,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "flower_tulip_spent": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32747,10 +32747,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 384
+      "sy": 768
     },
     "flower_tulip_bloom": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32761,10 +32761,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 640
     },
     "flower_sweet_pea_seed": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32775,10 +32775,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 128
+      "sy": 512
     },
     "flower_sweet_pea_bud": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32789,10 +32789,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 384
     },
     "flower_sweet_pea_rest": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32803,10 +32803,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_sweet_pea_spent": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32817,10 +32817,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 512
     },
     "flower_sweet_pea_bloom": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32831,10 +32831,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 384
     },
     "flower_parrot_tulip_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32845,10 +32845,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 128
+      "sy": 512
     },
     "flower_parrot_tulip_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32859,10 +32859,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 384
     },
     "flower_parrot_tulip_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32873,10 +32873,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_parrot_tulip_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32887,10 +32887,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 512
     },
     "flower_parrot_tulip_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32901,10 +32901,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 384
     },
     "flower_carnation_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32915,10 +32915,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 640
+      "sy": 0
     },
     "flower_carnation_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32929,10 +32929,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 0
     },
     "flower_carnation_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32943,10 +32943,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 640
+      "sy": 0
     },
     "flower_carnation_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32957,10 +32957,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 0
     },
     "flower_carnation_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32971,10 +32971,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "flower_lily_of_valley_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32985,10 +32985,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 640
     },
     "flower_lily_of_valley_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -32999,10 +32999,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 640
     },
     "flower_lily_of_valley_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33013,10 +33013,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 640
     },
     "flower_lily_of_valley_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33027,10 +33027,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_lily_of_valley_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33041,10 +33041,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "flower_forget_me_not_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33055,10 +33055,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 512
     },
     "flower_forget_me_not_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33069,10 +33069,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 512
     },
     "flower_forget_me_not_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33083,10 +33083,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 512
     },
     "flower_forget_me_not_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33097,10 +33097,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 512
     },
     "flower_forget_me_not_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33111,10 +33111,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_hydrangea_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33125,10 +33125,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 256
     },
     "flower_hydrangea_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33139,10 +33139,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 256
     },
     "flower_hydrangea_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33153,10 +33153,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 896
+      "sy": 256
     },
     "flower_hydrangea_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33167,10 +33167,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 256
     },
     "flower_hydrangea_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33181,10 +33181,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "flower_calla_lily_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33195,10 +33195,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 640
     },
     "flower_calla_lily_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33209,10 +33209,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 640
     },
     "flower_calla_lily_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33223,10 +33223,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 640
     },
     "flower_calla_lily_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33237,10 +33237,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_calla_lily_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33251,10 +33251,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "flower_bellflower_seed": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33265,10 +33265,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 256
     },
     "flower_bellflower_bud": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33279,10 +33279,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 256
     },
     "flower_bellflower_rest": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33293,10 +33293,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 896
+      "sy": 256
     },
     "flower_bellflower_spent": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33307,10 +33307,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 256
     },
     "flower_bellflower_bloom": {
-      "file": "sheet_114.png",
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33321,10 +33321,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "flower_lily_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33335,10 +33335,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 384
+      "sy": 768
     },
     "flower_lily_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33349,10 +33349,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 512
     },
     "flower_lily_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33363,10 +33363,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "flower_lily_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33377,10 +33377,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 384
+      "sy": 768
     },
     "flower_lily_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33391,10 +33391,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_plumeria_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33405,10 +33405,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 384
+      "sy": 768
     },
     "flower_plumeria_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33419,10 +33419,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_plumeria_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33433,10 +33433,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "flower_plumeria_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33447,10 +33447,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 384
+      "sy": 768
     },
     "flower_plumeria_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33461,10 +33461,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 640
     },
     "flower_night_cereus_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33475,10 +33475,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 0
+      "sy": 384
     },
     "flower_night_cereus_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33489,10 +33489,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 256
     },
     "flower_night_cereus_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33503,10 +33503,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "flower_night_cereus_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33517,10 +33517,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 384
     },
     "flower_night_cereus_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33531,10 +33531,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 896
+      "sy": 256
     },
     "flower_hibiscus_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33545,10 +33545,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 640
+      "sy": 0
     },
     "flower_hibiscus_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33559,10 +33559,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 0
     },
     "flower_hibiscus_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33573,10 +33573,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 640
+      "sy": 0
     },
     "flower_hibiscus_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33587,10 +33587,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 0
     },
     "flower_hibiscus_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33601,10 +33601,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 0
     },
     "flower_canna_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33615,10 +33615,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 512
+      "sy": 896
     },
     "flower_canna_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33629,10 +33629,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 896
     },
     "flower_canna_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33643,10 +33643,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 512
+      "sy": 896
     },
     "flower_canna_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33657,10 +33657,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 896
     },
     "flower_canna_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33671,10 +33671,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "flower_cosmos_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33685,10 +33685,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 512
     },
     "flower_cosmos_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33699,10 +33699,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 512
     },
     "flower_cosmos_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33713,10 +33713,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 512
     },
     "flower_cosmos_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33727,10 +33727,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 512
     },
     "flower_cosmos_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33741,10 +33741,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "flower_dianthus_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33755,10 +33755,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 512
+      "sy": 896
     },
     "flower_dianthus_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33769,10 +33769,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 896
     },
     "flower_dianthus_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33783,10 +33783,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 512
+      "sy": 896
     },
     "flower_dianthus_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33797,10 +33797,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 896
     },
     "flower_dianthus_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33811,10 +33811,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "flower_dahlia_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33825,10 +33825,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 384
+      "sy": 768
     },
     "flower_dahlia_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33839,10 +33839,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 768
     },
     "flower_dahlia_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33853,10 +33853,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 384
+      "sy": 768
     },
     "flower_dahlia_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33867,10 +33867,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_dahlia_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33881,10 +33881,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "flower_gentian_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33895,10 +33895,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 384
+      "sy": 768
     },
     "flower_gentian_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33909,10 +33909,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 768
     },
     "flower_gentian_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33923,10 +33923,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 384
+      "sy": 768
     },
     "flower_gentian_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33937,10 +33937,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_gentian_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33951,10 +33951,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "flower_chrysanthemum_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33965,10 +33965,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 896
+      "sy": 256
     },
     "flower_chrysanthemum_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33979,10 +33979,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 256
     },
     "flower_chrysanthemum_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -33993,10 +33993,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 896
+      "sy": 256
     },
     "flower_chrysanthemum_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34007,10 +34007,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 896
+      "sy": 256
     },
     "flower_chrysanthemum_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34021,10 +34021,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "flower_thistle_seed": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34035,10 +34035,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 640
     },
     "flower_thistle_bud": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34049,10 +34049,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 512
     },
     "flower_thistle_rest": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34063,10 +34063,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "flower_thistle_spent": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34077,10 +34077,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 640
     },
     "flower_thistle_bloom": {
-      "file": "sheet_121.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34091,10 +34091,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 512
     },
     "flower_clematis_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34105,10 +34105,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 384
     },
     "flower_clematis_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34119,10 +34119,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 384
     },
     "flower_clematis_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34133,10 +34133,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 384
     },
     "flower_clematis_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34147,10 +34147,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 384
     },
     "flower_clematis_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34161,10 +34161,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "flower_marigold_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34175,10 +34175,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 512
+      "sy": 896
     },
     "flower_marigold_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34189,10 +34189,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_marigold_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34203,10 +34203,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "flower_marigold_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34217,10 +34217,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 512
+      "sy": 896
     },
     "flower_marigold_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_148.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34231,10 +34231,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 768
     },
     "flower_schisandra_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34245,10 +34245,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 896
+      "sy": 256
     },
     "flower_schisandra_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34259,10 +34259,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 128
     },
     "flower_schisandra_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34273,10 +34273,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 256
     },
     "flower_schisandra_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34287,10 +34287,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 896
+      "sy": 256
     },
     "flower_schisandra_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_150.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34301,10 +34301,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 768
+      "sy": 128
     },
     "flower_poinsettia_seed": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34315,10 +34315,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 512
+      "sy": 896
     },
     "flower_poinsettia_bud": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34329,10 +34329,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_poinsettia_rest": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34343,10 +34343,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "flower_poinsettia_spent": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34357,10 +34357,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 512
+      "sy": 896
     },
     "flower_poinsettia_bloom": {
-      "file": "sheet_119.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34371,10 +34371,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 384
+      "sy": 768
     },
     "flower_cyclamen_seed": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34385,10 +34385,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 640
     },
     "flower_cyclamen_bud": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34399,10 +34399,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 640
     },
     "flower_cyclamen_rest": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34413,10 +34413,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 640
     },
     "flower_cyclamen_spent": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34427,10 +34427,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_cyclamen_bloom": {
-      "file": "sheet_116.png",
+      "file": "sheet_146.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34441,10 +34441,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "flower_moth_orchid_seed": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34455,10 +34455,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 768
+      "sy": 128
     },
     "flower_moth_orchid_bud": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34469,10 +34469,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 640
+      "sy": 0
     },
     "flower_moth_orchid_rest": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34483,10 +34483,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 128
     },
     "flower_moth_orchid_spent": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34497,10 +34497,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 768
+      "sy": 128
     },
     "flower_moth_orchid_bloom": {
-      "file": "sheet_118.png",
+      "file": "sheet_149.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34511,10 +34511,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 640
+      "sy": 0
     },
     "flower_camellia_seed": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34525,10 +34525,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 384
+      "sy": 768
     },
     "flower_camellia_bud": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34539,10 +34539,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 768
     },
     "flower_camellia_rest": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34553,10 +34553,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 384
+      "sy": 768
     },
     "flower_camellia_spent": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34567,10 +34567,360 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 384
+      "sy": 768
     },
     "flower_camellia_bloom": {
-      "file": "sheet_115.png",
+      "file": "sheet_145.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 768
+    },
+    "flower_narcissus_seed": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 256
+    },
+    "flower_narcissus_bud": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 128
+    },
+    "flower_narcissus_rest": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 256
+    },
+    "flower_narcissus_spent": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 256
+    },
+    "flower_narcissus_bloom": {
+      "file": "sheet_149.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 128
+    },
+    "flower_snowdrop_seed": {
+      "file": "sheet_150.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 384
+    },
+    "flower_snowdrop_bud": {
+      "file": "sheet_150.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 256
+    },
+    "flower_snowdrop_rest": {
+      "file": "sheet_150.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 384
+    },
+    "flower_snowdrop_spent": {
+      "file": "sheet_150.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 384
+    },
+    "flower_snowdrop_bloom": {
+      "file": "sheet_150.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 256
+    },
+    "flower_hellebore_seed": {
+      "file": "sheet_147.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 896
+    },
+    "flower_hellebore_bud": {
+      "file": "sheet_147.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 896
+    },
+    "flower_hellebore_rest": {
+      "file": "sheet_147.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 896
+    },
+    "flower_hellebore_spent": {
+      "file": "sheet_147.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 896
+    },
+    "flower_hellebore_bloom": {
+      "file": "sheet_147.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 896
+    },
+    "flower_plum_blossom_seed": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 128,
+      "sy": 640
+    },
+    "flower_plum_blossom_bud": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 512
+    },
+    "flower_plum_blossom_rest": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "flower_plum_blossom_spent": {
+      "file": "sheet_149.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 256,
+      "sy": 640
+    },
+    "flower_plum_blossom_bloom": {
+      "file": "sheet_149.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 384,
+      "sy": 512
+    },
+    "flower_blue_eyed_daisy_seed": {
+      "file": "sheet_145.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 768,
+      "sy": 384
+    },
+    "flower_blue_eyed_daisy_bud": {
+      "file": "sheet_145.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 512,
+      "sy": 384
+    },
+    "flower_blue_eyed_daisy_rest": {
+      "file": "sheet_145.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 640,
+      "sy": 384
+    },
+    "flower_blue_eyed_daisy_spent": {
+      "file": "sheet_145.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "sx": 896,
+      "sy": 384
+    },
+    "flower_blue_eyed_daisy_bloom": {
+      "file": "sheet_145.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34583,358 +34933,8 @@ window.GAME_ATLAS = {
       "sx": 0,
       "sy": 384
     },
-    "flower_narcissus_seed": {
-      "file": "sheet_118.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 896
-    },
-    "flower_narcissus_bud": {
-      "file": "sheet_118.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 768
-    },
-    "flower_narcissus_rest": {
-      "file": "sheet_118.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 896
-    },
-    "flower_narcissus_spent": {
-      "file": "sheet_118.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 896
-    },
-    "flower_narcissus_bloom": {
-      "file": "sheet_118.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 4,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 768
-    },
-    "flower_snowdrop_seed": {
-      "file": "sheet_121.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 0
-    },
-    "flower_snowdrop_bud": {
-      "file": "sheet_119.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 896
-    },
-    "flower_snowdrop_rest": {
-      "file": "sheet_121.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 0
-    },
-    "flower_snowdrop_spent": {
-      "file": "sheet_121.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 0
-    },
-    "flower_snowdrop_bloom": {
-      "file": "sheet_119.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 4,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 896
-    },
-    "flower_hellebore_seed": {
-      "file": "sheet_117.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 512
-    },
-    "flower_hellebore_bud": {
-      "file": "sheet_117.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 512
-    },
-    "flower_hellebore_rest": {
-      "file": "sheet_117.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 512
-    },
-    "flower_hellebore_spent": {
-      "file": "sheet_117.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 512
-    },
-    "flower_hellebore_bloom": {
-      "file": "sheet_117.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 4,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 512
-    },
-    "flower_plum_blossom_seed": {
-      "file": "sheet_119.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 128,
-      "sy": 256
-    },
-    "flower_plum_blossom_bud": {
-      "file": "sheet_119.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 128
-    },
-    "flower_plum_blossom_rest": {
-      "file": "sheet_119.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 256
-    },
-    "flower_plum_blossom_spent": {
-      "file": "sheet_119.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 256,
-      "sy": 256
-    },
-    "flower_plum_blossom_bloom": {
-      "file": "sheet_119.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 4,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 384,
-      "sy": 128
-    },
-    "flower_blue_eyed_daisy_seed": {
-      "file": "sheet_115.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 768,
-      "sy": 0
-    },
-    "flower_blue_eyed_daisy_bud": {
-      "file": "sheet_115.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 512,
-      "sy": 0
-    },
-    "flower_blue_eyed_daisy_rest": {
-      "file": "sheet_115.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 640,
-      "sy": 0
-    },
-    "flower_blue_eyed_daisy_spent": {
-      "file": "sheet_115.png",
-      "frames": 1,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 0,
-      "loop": false,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 896,
-      "sy": 0
-    },
-    "flower_blue_eyed_daisy_bloom": {
-      "file": "sheet_115.png",
-      "frames": 4,
-      "frameWidth": 128,
-      "frameHeight": 128,
-      "fps": 4,
-      "loop": true,
-      "anchor": [
-        64,
-        96
-      ],
-      "sx": 0,
-      "sy": 0
-    },
     "flower_freesia_seed": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34945,10 +34945,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 640
     },
     "flower_freesia_bud": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34959,10 +34959,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 640
     },
     "flower_freesia_rest": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34973,10 +34973,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 640
     },
     "flower_freesia_spent": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -34987,10 +34987,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 256
+      "sy": 640
     },
     "flower_freesia_bloom": {
-      "file": "sheet_117.png",
+      "file": "sheet_147.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35001,7 +35001,7 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "ui_snap": {
       "file": "ui_snap.png",
@@ -35100,7 +35100,7 @@ window.GAME_ATLAS = {
       ]
     },
     "snow_flower_anemone_bloom": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35114,7 +35114,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "snow_flower_anemone_bud": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35128,7 +35128,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "snow_flower_anemone_rest": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35142,7 +35142,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "snow_flower_anemone_seed": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35156,7 +35156,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "snow_flower_anemone_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35170,7 +35170,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "snow_flower_bellflower_bloom": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35184,7 +35184,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_flower_bellflower_bud": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35198,7 +35198,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_flower_bellflower_rest": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35212,7 +35212,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_flower_bellflower_seed": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35226,7 +35226,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_flower_bellflower_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35240,7 +35240,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_flower_blue_eyed_daisy_bloom": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35254,7 +35254,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_flower_blue_eyed_daisy_bud": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35268,7 +35268,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_flower_blue_eyed_daisy_rest": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35282,7 +35282,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_flower_blue_eyed_daisy_seed": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35296,7 +35296,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_flower_blue_eyed_daisy_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35310,7 +35310,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_flower_calla_lily_bloom": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35324,7 +35324,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_flower_calla_lily_bud": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35338,7 +35338,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_flower_calla_lily_rest": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35352,7 +35352,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_flower_calla_lily_seed": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35366,7 +35366,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_flower_calla_lily_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35380,7 +35380,7 @@ window.GAME_ATLAS = {
       "sy": 800
     },
     "snow_flower_camellia_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35394,7 +35394,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_camellia_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35408,7 +35408,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_camellia_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35422,7 +35422,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_camellia_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35436,7 +35436,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_camellia_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35450,7 +35450,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_canna_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35464,7 +35464,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_canna_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35478,7 +35478,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_canna_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35492,7 +35492,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_canna_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35506,7 +35506,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_canna_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35520,7 +35520,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_carnation_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35534,7 +35534,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_carnation_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35548,7 +35548,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_carnation_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35562,7 +35562,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_carnation_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35576,7 +35576,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_carnation_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35590,7 +35590,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_cherry_blossom_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35604,7 +35604,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_cherry_blossom_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35618,7 +35618,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_cherry_blossom_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35632,7 +35632,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_cherry_blossom_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35646,7 +35646,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_cherry_blossom_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35660,7 +35660,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_chrysanthemum_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35674,7 +35674,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_chrysanthemum_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35688,7 +35688,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_chrysanthemum_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35702,7 +35702,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_chrysanthemum_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35716,7 +35716,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_chrysanthemum_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35730,7 +35730,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_clematis_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35744,7 +35744,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_clematis_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35758,7 +35758,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_clematis_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35772,7 +35772,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_clematis_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35786,7 +35786,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_clematis_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35800,7 +35800,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_cosmos_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35814,7 +35814,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_cosmos_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35828,7 +35828,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_cosmos_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35842,7 +35842,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_cosmos_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35856,7 +35856,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_cosmos_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35870,7 +35870,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_cyclamen_bloom": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35884,7 +35884,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_cyclamen_bud": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35898,7 +35898,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_cyclamen_rest": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35912,7 +35912,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_cyclamen_seed": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35926,7 +35926,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_cyclamen_spent": {
-      "file": "sheet_438.png",
+      "file": "sheet_494.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35940,7 +35940,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_dahlia_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35954,7 +35954,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_dahlia_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35968,7 +35968,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_dahlia_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35982,7 +35982,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_dahlia_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -35996,7 +35996,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_dahlia_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36010,7 +36010,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_dianthus_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36024,7 +36024,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_dianthus_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36038,7 +36038,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_dianthus_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36052,7 +36052,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_dianthus_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36066,7 +36066,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_dianthus_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36080,7 +36080,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_flower_blue_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36094,7 +36094,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_flower_blue_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36108,7 +36108,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_flower_blue_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36122,7 +36122,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_flower_blue_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36136,7 +36136,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_flower_blue_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36150,7 +36150,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_flower_red_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36164,7 +36164,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_flower_red_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36178,7 +36178,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_flower_red_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36192,7 +36192,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_flower_red_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36206,7 +36206,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_flower_red_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36220,7 +36220,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_flower_white_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36234,7 +36234,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_flower_white_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36248,7 +36248,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_flower_white_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36262,7 +36262,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_flower_white_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36276,7 +36276,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_flower_white_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36290,7 +36290,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_flower_yellow_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36304,7 +36304,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_flower_yellow_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36318,7 +36318,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_flower_yellow_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36332,7 +36332,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_flower_yellow_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36346,7 +36346,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_flower_yellow_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36360,7 +36360,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_forget_me_not_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36374,7 +36374,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_forget_me_not_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36388,7 +36388,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_forget_me_not_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36402,7 +36402,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_forget_me_not_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36416,7 +36416,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_forget_me_not_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36430,7 +36430,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_freesia_bloom": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36444,7 +36444,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_freesia_bud": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36458,7 +36458,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_freesia_rest": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36472,7 +36472,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_freesia_seed": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36486,7 +36486,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_freesia_spent": {
-      "file": "sheet_439.png",
+      "file": "sheet_495.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36500,7 +36500,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_gentian_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36514,7 +36514,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_gentian_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36528,7 +36528,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_gentian_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36542,7 +36542,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_gentian_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36556,7 +36556,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_gentian_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36570,7 +36570,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_hellebore_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36584,7 +36584,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_hellebore_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36598,7 +36598,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_hellebore_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36612,7 +36612,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_hellebore_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36626,7 +36626,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_hellebore_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36640,7 +36640,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_hibiscus_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36654,7 +36654,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_hibiscus_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36668,7 +36668,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_hibiscus_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36682,7 +36682,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_hibiscus_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36696,7 +36696,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_hibiscus_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36710,7 +36710,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_hyacinth_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36724,7 +36724,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_hyacinth_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36738,7 +36738,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_hyacinth_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36752,7 +36752,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_hyacinth_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36766,7 +36766,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_hyacinth_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36780,7 +36780,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_hydrangea_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36794,7 +36794,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_hydrangea_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36808,7 +36808,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_hydrangea_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36822,7 +36822,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_hydrangea_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36836,7 +36836,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_hydrangea_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36850,7 +36850,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_lily_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36864,7 +36864,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_lily_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36878,7 +36878,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_lily_of_valley_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36892,7 +36892,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_lily_of_valley_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36906,7 +36906,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_lily_of_valley_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36920,7 +36920,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_lily_of_valley_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36934,7 +36934,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_lily_of_valley_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36948,7 +36948,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_lily_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36962,7 +36962,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_lily_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36976,7 +36976,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_lily_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -36990,7 +36990,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_marigold_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37004,7 +37004,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_marigold_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37018,7 +37018,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_marigold_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37032,7 +37032,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_marigold_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37046,7 +37046,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_marigold_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37060,7 +37060,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_moth_orchid_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37074,7 +37074,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_moth_orchid_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37088,7 +37088,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_moth_orchid_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37102,7 +37102,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_moth_orchid_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37116,7 +37116,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_moth_orchid_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37130,7 +37130,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_narcissus_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37144,7 +37144,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_narcissus_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37158,7 +37158,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_narcissus_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37172,7 +37172,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_narcissus_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37186,7 +37186,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_narcissus_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37200,7 +37200,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_night_cereus_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37214,7 +37214,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_night_cereus_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37228,7 +37228,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_night_cereus_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37242,7 +37242,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_night_cereus_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37256,7 +37256,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_night_cereus_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37270,7 +37270,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_parrot_tulip_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37284,7 +37284,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_parrot_tulip_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37298,7 +37298,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_parrot_tulip_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37312,7 +37312,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_parrot_tulip_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37326,7 +37326,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_parrot_tulip_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37340,7 +37340,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_plum_blossom_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37354,7 +37354,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_plum_blossom_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37368,7 +37368,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_plum_blossom_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37382,7 +37382,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_plum_blossom_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37396,7 +37396,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_plum_blossom_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37410,7 +37410,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_plumeria_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37424,7 +37424,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_plumeria_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37438,7 +37438,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_plumeria_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37452,7 +37452,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_plumeria_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37466,7 +37466,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_plumeria_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37480,7 +37480,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_poinsettia_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37494,7 +37494,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_poinsettia_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37508,7 +37508,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_poinsettia_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37522,7 +37522,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_poinsettia_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37536,7 +37536,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_poinsettia_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37550,7 +37550,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_schisandra_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37564,7 +37564,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_schisandra_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37578,7 +37578,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_schisandra_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37592,7 +37592,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_schisandra_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37606,7 +37606,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_schisandra_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37620,7 +37620,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_snowdrop_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37634,7 +37634,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_snowdrop_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37648,7 +37648,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "snow_flower_snowdrop_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37662,7 +37662,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_snowdrop_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37676,7 +37676,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_snowdrop_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37690,7 +37690,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_sweet_pea_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37704,7 +37704,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_sweet_pea_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37718,7 +37718,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_sweet_pea_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37732,7 +37732,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_sweet_pea_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37746,7 +37746,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_sweet_pea_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37760,7 +37760,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_thistle_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37774,7 +37774,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_thistle_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37788,7 +37788,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "snow_flower_thistle_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37802,7 +37802,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_thistle_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37816,7 +37816,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_thistle_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37830,7 +37830,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_tulip_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37844,7 +37844,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_tulip_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37858,7 +37858,7 @@ window.GAME_ATLAS = {
       "sy": 896
     },
     "snow_flower_tulip_rest": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37872,7 +37872,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_tulip_seed": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37886,7 +37886,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_tulip_spent": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37900,7 +37900,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_buckwheat_bloom": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37914,7 +37914,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_flower_buckwheat_bud": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37928,7 +37928,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_flower_buckwheat_rest": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37942,7 +37942,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_flower_buckwheat_seed": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37956,7 +37956,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_flower_buckwheat_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37970,7 +37970,7 @@ window.GAME_ATLAS = {
       "sy": 672
     },
     "snow_flower_lavender_bloom": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37984,7 +37984,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_lavender_bud": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -37998,7 +37998,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_lavender_rest": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38012,7 +38012,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_lavender_seed": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38026,7 +38026,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_lavender_spent": {
-      "file": "sheet_440.png",
+      "file": "sheet_496.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38040,7 +38040,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_flower_milk_vetch_bloom": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38054,7 +38054,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_milk_vetch_bud": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38068,7 +38068,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_milk_vetch_rest": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38082,7 +38082,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_milk_vetch_seed": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38096,7 +38096,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_milk_vetch_spent": {
-      "file": "sheet_441.png",
+      "file": "sheet_497.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38110,7 +38110,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rapeseed_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38124,7 +38124,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_rapeseed_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38138,7 +38138,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_rapeseed_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38152,7 +38152,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rapeseed_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38166,7 +38166,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rapeseed_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38180,7 +38180,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rose_bloom": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38194,7 +38194,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rose_bud": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38208,7 +38208,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "snow_flower_rose_rest": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38222,7 +38222,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_rose_seed": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38236,7 +38236,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_rose_spent": {
-      "file": "sheet_442.png",
+      "file": "sheet_498.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38250,7 +38250,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_flower_wildflower_bloom": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38264,7 +38264,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_wildflower_bud": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38278,7 +38278,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_flower_wildflower_rest": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38292,7 +38292,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_wildflower_seed": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38306,7 +38306,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "snow_flower_wildflower_spent": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -38320,7 +38320,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "truck_garbage_open_sw": {
-      "file": "sheet_391.png",
+      "file": "sheet_447.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38335,7 +38335,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_open_se": {
-      "file": "sheet_390.png",
+      "file": "sheet_446.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38350,7 +38350,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_open_ne": {
-      "file": "sheet_388.png",
+      "file": "sheet_444.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38365,7 +38365,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_garbage_open_nw": {
-      "file": "sheet_389.png",
+      "file": "sheet_445.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38380,7 +38380,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_open_sw": {
-      "file": "sheet_403.png",
+      "file": "sheet_459.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38395,7 +38395,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_open_se": {
-      "file": "sheet_402.png",
+      "file": "sheet_458.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38410,7 +38410,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_open_ne": {
-      "file": "sheet_400.png",
+      "file": "sheet_456.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38425,7 +38425,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "truck_recycle_open_nw": {
-      "file": "sheet_401.png",
+      "file": "sheet_457.png",
       "frames": 1,
       "frameWidth": 600,
       "frameHeight": 520,
@@ -38464,7 +38464,7 @@ window.GAME_ATLAS = {
       ]
     },
     "doll_thunder_s_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38475,10 +38475,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 384,
-      "sy": 512
+      "sy": 848
     },
     "snow_doll_thunder_s_sway": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38492,7 +38492,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "doll_thunder_m_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38503,10 +38503,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 848
     },
     "snow_doll_thunder_m_sway": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38520,7 +38520,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "doll_thunder_l_sway": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38531,10 +38531,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 480,
-      "sy": 384
+      "sy": 720
     },
     "snow_doll_thunder_l_sway": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 4,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38548,7 +38548,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "doll_thunder_spent": {
-      "file": "sheet_111.png",
+      "file": "sheet_141.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38559,10 +38559,10 @@ window.GAME_ATLAS = {
         108
       ],
       "sx": 768,
-      "sy": 512
+      "sy": 848
     },
     "snow_doll_thunder_spent": {
-      "file": "sheet_437.png",
+      "file": "sheet_493.png",
       "frames": 1,
       "frameWidth": 96,
       "frameHeight": 128,
@@ -38588,7 +38588,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_lightning": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 3,
       "frameWidth": 96,
       "frameHeight": 330,
@@ -38599,10 +38599,10 @@ window.GAME_ATLAS = {
         320
       ],
       "sx": 0,
-      "sy": 176
+      "sy": 432
     },
     "fx_storm_cloud": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 2,
       "frameWidth": 256,
       "frameHeight": 128,
@@ -38613,10 +38613,10 @@ window.GAME_ATLAS = {
         76
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 448
     },
     "building_bird_house_1": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -38627,10 +38627,10 @@ window.GAME_ATLAS = {
         150
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 576
     },
     "snow_building_bird_house_1": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -38644,7 +38644,7 @@ window.GAME_ATLAS = {
       "sy": 688
     },
     "building_bird_house_2": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -38655,10 +38655,10 @@ window.GAME_ATLAS = {
         150
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 576
     },
     "snow_building_bird_house_2": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -38672,7 +38672,7 @@ window.GAME_ATLAS = {
       "sy": 688
     },
     "building_bird_house_3": {
-      "file": "sheet_079.png",
+      "file": "sheet_108.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -38683,10 +38683,10 @@ window.GAME_ATLAS = {
         150
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 576
     },
     "snow_building_bird_house_3": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -39400,7 +39400,7 @@ window.GAME_ATLAS = {
       ]
     },
     "bird_sun_conure_perch": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 2,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39414,7 +39414,7 @@ window.GAME_ATLAS = {
       "sy": 96
     },
     "bird_sun_conure_peck": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 8,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39428,7 +39428,7 @@ window.GAME_ATLAS = {
       "sy": 96
     },
     "bird_sun_conure_sleep": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 2,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39442,7 +39442,7 @@ window.GAME_ATLAS = {
       "sy": 192
     },
     "bird_sun_conure_fly": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 8,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39514,7 +39514,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "bird_quaker_sleep": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 2,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39658,7 +39658,7 @@ window.GAME_ATLAS = {
       ]
     },
     "bird_white_cockatoo_perch": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 2,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39672,7 +39672,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "bird_white_cockatoo_peck": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 8,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39686,7 +39686,7 @@ window.GAME_ATLAS = {
       "sy": 288
     },
     "bird_white_cockatoo_sleep": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 2,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -39700,7 +39700,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "bird_white_cockatoo_fly": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 8,
       "frameWidth": 96,
       "frameHeight": 96,
@@ -42090,7 +42090,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_larva_papilio": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42101,10 +42101,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 384
     },
     "fx_pupa_papilio": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42115,7 +42115,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 192,
-      "sy": 570
+      "sy": 826
     },
     "ui_larva_papilio": {
       "file": "ui_larva_papilio.png",
@@ -42142,7 +42142,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_larva_pieris": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42153,10 +42153,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 576,
-      "sy": 128
+      "sy": 384
     },
     "fx_pupa_pieris": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42167,7 +42167,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 384,
-      "sy": 570
+      "sy": 826
     },
     "ui_larva_pieris": {
       "file": "ui_larva_pieris.png",
@@ -42194,7 +42194,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_larva_nymph": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42205,10 +42205,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 192,
-      "sy": 128
+      "sy": 384
     },
     "fx_pupa_nymph": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42219,7 +42219,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 0,
-      "sy": 570
+      "sy": 826
     },
     "ui_larva_nymph": {
       "file": "ui_larva_nymph.png",
@@ -42246,7 +42246,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_larva_lycaena": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42257,10 +42257,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 384
     },
     "fx_pupa_lycaena": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42271,7 +42271,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 672,
-      "sy": 506
+      "sy": 762
     },
     "ui_larva_lycaena": {
       "file": "ui_larva_lycaena.png",
@@ -42298,7 +42298,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_larva_hesper": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42309,10 +42309,10 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 256
     },
     "fx_pupa_hesper": {
-      "file": "sheet_123.png",
+      "file": "sheet_156.png",
       "frames": 4,
       "frameWidth": 48,
       "frameHeight": 48,
@@ -42323,7 +42323,7 @@ window.GAME_ATLAS = {
         24
       ],
       "sx": 480,
-      "sy": 506
+      "sy": 762
     },
     "ui_larva_hesper": {
       "file": "ui_larva_hesper.png",
@@ -42374,7 +42374,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_oxalis_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42388,7 +42388,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_deco_oxalis_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42414,7 +42414,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_rumex_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42428,7 +42428,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_deco_rumex_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42454,7 +42454,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_senna_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42468,7 +42468,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_deco_senna_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42494,7 +42494,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_asclepias_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42508,7 +42508,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "snow_deco_asclepias_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42534,7 +42534,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_alpinia_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42548,7 +42548,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_deco_alpinia_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42574,7 +42574,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_cinnamomum_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42588,7 +42588,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_deco_cinnamomum_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42614,7 +42614,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_acacia_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42628,7 +42628,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_deco_acacia_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42654,7 +42654,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_aristolochia_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42668,7 +42668,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "snow_deco_aristolochia_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42694,7 +42694,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_heterostemma_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42708,7 +42708,7 @@ window.GAME_ATLAS = {
       "sy": 416
     },
     "snow_deco_heterostemma_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42734,7 +42734,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_crateva_idle": {
-      "file": "sheet_104.png",
+      "file": "sheet_133.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42748,7 +42748,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_deco_crateva_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42774,7 +42774,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_parsonsia_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42788,7 +42788,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_deco_parsonsia_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42814,7 +42814,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_mallotus_idle": {
-      "file": "sheet_106.png",
+      "file": "sheet_135.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42828,7 +42828,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_deco_mallotus_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -42854,7 +42854,7 @@ window.GAME_ATLAS = {
       ]
     },
     "deco_strobilanthes_idle": {
-      "file": "sheet_107.png",
+      "file": "sheet_136.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -42868,7 +42868,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "snow_deco_strobilanthes_idle": {
-      "file": "sheet_436.png",
+      "file": "sheet_492.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -43194,7 +43194,7 @@ window.GAME_ATLAS = {
       ]
     },
     "terrain_tree_oak_spring_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43208,7 +43208,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_spring_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43222,7 +43222,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_spring_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43236,7 +43236,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_summer_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43250,7 +43250,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_summer_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43264,7 +43264,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_summer_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43278,7 +43278,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_oak_autumn_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43292,7 +43292,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_tree_oak_autumn_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43306,7 +43306,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_tree_oak_autumn_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43320,7 +43320,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_tree_oak_winter_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43334,7 +43334,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_tree_oak_winter_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43348,7 +43348,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_oak_winter_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43362,7 +43362,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_tree_oak_winter_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43376,7 +43376,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_oak_winter_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43390,7 +43390,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "snow_terrain_tree_oak_winter_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43404,7 +43404,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_pine_spring_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43418,7 +43418,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_spring_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43432,7 +43432,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_spring_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43446,7 +43446,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_summer_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43460,7 +43460,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_summer_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43474,7 +43474,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "terrain_tree_pine_summer_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43488,7 +43488,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "terrain_tree_pine_autumn_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43502,7 +43502,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_autumn_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43516,7 +43516,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_autumn_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43530,7 +43530,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "terrain_tree_pine_winter_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43544,7 +43544,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_tree_pine_winter_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43558,7 +43558,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_pine_winter_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43572,7 +43572,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_tree_pine_winter_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43586,7 +43586,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_pine_winter_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43600,7 +43600,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_tree_pine_winter_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43614,7 +43614,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_spring_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43628,7 +43628,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_spring_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43642,7 +43642,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_spring_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43656,7 +43656,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_summer_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43670,7 +43670,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_summer_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43684,7 +43684,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_tree_camphor_summer_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43698,7 +43698,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_tree_camphor_autumn_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43712,7 +43712,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_autumn_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43726,7 +43726,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_autumn_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43740,7 +43740,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_tree_camphor_winter_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43754,7 +43754,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "snow_terrain_tree_camphor_winter_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43768,7 +43768,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_camphor_winter_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43782,7 +43782,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "snow_terrain_tree_camphor_winter_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43796,7 +43796,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_camphor_winter_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43810,7 +43810,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "snow_terrain_tree_camphor_winter_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43824,7 +43824,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_spring_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43838,7 +43838,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_spring_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43852,7 +43852,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_spring_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43866,7 +43866,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_summer_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43880,7 +43880,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_summer_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43894,7 +43894,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_summer_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43908,7 +43908,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "terrain_tree_birch_autumn_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43922,7 +43922,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_birch_autumn_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43936,7 +43936,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_birch_autumn_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43950,7 +43950,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_birch_winter_0": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43964,7 +43964,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "snow_terrain_tree_birch_winter_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43978,7 +43978,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_birch_winter_1": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -43992,7 +43992,7 @@ window.GAME_ATLAS = {
       "sy": 475
     },
     "snow_terrain_tree_birch_winter_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -44006,7 +44006,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_tree_birch_winter_2": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -44020,7 +44020,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "snow_terrain_tree_birch_winter_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -44034,7 +44034,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_logs_3": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44048,7 +44048,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_logs_3": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44062,7 +44062,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_logs_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44076,7 +44076,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_logs_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44090,7 +44090,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_logs_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44104,7 +44104,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_logs_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44118,7 +44118,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rock_granite_iron_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44132,7 +44132,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_iron_ore_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44146,7 +44146,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_iron_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44160,7 +44160,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_iron_ore_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44174,7 +44174,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_granite_iron_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44188,7 +44188,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_iron_ore_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44202,7 +44202,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_granite_copper_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44216,7 +44216,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_rock_granite_copper_ore_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44230,7 +44230,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_copper_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44244,7 +44244,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_rock_granite_copper_ore_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44258,7 +44258,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_copper_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44272,7 +44272,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "snow_terrain_rock_granite_copper_ore_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44286,7 +44286,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_crystal_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44300,7 +44300,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_crystal_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44314,7 +44314,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_crystal_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44328,7 +44328,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_crystal_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44342,7 +44342,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_granite_crystal_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44356,7 +44356,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_granite_crystal_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44370,7 +44370,7 @@ window.GAME_ATLAS = {
       "sy": 635
     },
     "terrain_rock_slate_iron_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44384,7 +44384,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_iron_ore_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44398,7 +44398,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rock_slate_iron_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44412,7 +44412,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_iron_ore_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44426,7 +44426,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rock_slate_iron_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44440,7 +44440,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_iron_ore_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44454,7 +44454,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rock_slate_copper_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44468,7 +44468,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_slate_copper_ore_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44482,7 +44482,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_slate_copper_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44496,7 +44496,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_copper_ore_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44510,7 +44510,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_slate_copper_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44524,7 +44524,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_copper_ore_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44538,7 +44538,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_slate_crystal_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44552,7 +44552,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_crystal_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44566,7 +44566,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_slate_crystal_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44580,7 +44580,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_crystal_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44594,7 +44594,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_slate_crystal_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44608,7 +44608,7 @@ window.GAME_ATLAS = {
       "sy": 736
     },
     "snow_terrain_rock_slate_crystal_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44622,7 +44622,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rock_sandstone_iron_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44636,7 +44636,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_iron_ore_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44650,7 +44650,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_sandstone_iron_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44664,7 +44664,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_iron_ore_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44678,7 +44678,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_sandstone_iron_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44692,7 +44692,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_iron_ore_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44706,7 +44706,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_rock_sandstone_copper_ore_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44720,7 +44720,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_sandstone_copper_ore_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44734,7 +44734,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_sandstone_copper_ore_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44748,7 +44748,7 @@ window.GAME_ATLAS = {
       "sy": 480
     },
     "snow_terrain_rock_sandstone_copper_ore_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44762,7 +44762,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_sandstone_copper_ore_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44776,7 +44776,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_copper_ore_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44790,7 +44790,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_sandstone_crystal_0": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44804,7 +44804,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_crystal_0": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44818,7 +44818,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_sandstone_crystal_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44832,7 +44832,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_crystal_1": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44846,7 +44846,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rock_sandstone_crystal_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44860,7 +44860,7 @@ window.GAME_ATLAS = {
       "sy": 608
     },
     "snow_terrain_rock_sandstone_crystal_2": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -44874,7 +44874,7 @@ window.GAME_ATLAS = {
       "sy": 795
     },
     "terrain_rubble_3": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44888,7 +44888,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_rubble_3": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44902,7 +44902,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_dirt_3": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44916,7 +44916,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_dirt_3": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44930,7 +44930,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rubble_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44944,7 +44944,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_rubble_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44958,7 +44958,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_dirt_2": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44972,7 +44972,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_dirt_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -44986,7 +44986,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_rubble_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -45000,7 +45000,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_rubble_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -45014,7 +45014,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_dirt_1": {
-      "file": "sheet_373.png",
+      "file": "sheet_429.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -45028,7 +45028,7 @@ window.GAME_ATLAS = {
       "sy": 864
     },
     "snow_terrain_dirt_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 96,
@@ -45042,7 +45042,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_shore_stone_0": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45056,7 +45056,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_shore_stone_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45070,7 +45070,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_tuft_0": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45084,7 +45084,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_tuft_0": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45098,7 +45098,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_shore_stone_1": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45112,7 +45112,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_shore_stone_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45126,7 +45126,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_tuft_1": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45140,7 +45140,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_tuft_1": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45154,7 +45154,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_shore_stone_2": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45168,7 +45168,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_shore_stone_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45182,7 +45182,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "terrain_tuft_2": {
-      "file": "sheet_374.png",
+      "file": "sheet_430.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45196,7 +45196,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_tuft_2": {
-      "file": "sheet_459.png",
+      "file": "sheet_515.png",
       "frames": 1,
       "frameWidth": 32,
       "frameHeight": 32,
@@ -45210,7 +45210,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "bridge_wood_x_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45224,7 +45224,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_wood_x_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45238,7 +45238,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_wood_x_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45252,7 +45252,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_wood_x_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45266,7 +45266,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_wood_x_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45280,7 +45280,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_wood_x_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45294,7 +45294,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_wood_y_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45308,7 +45308,7 @@ window.GAME_ATLAS = {
       "sy": 816
     },
     "snow_bridge_wood_y_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45322,7 +45322,7 @@ window.GAME_ATLAS = {
       "sy": 432
     },
     "bridge_wood_y_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45336,7 +45336,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_wood_y_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45350,7 +45350,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_wood_y_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45364,7 +45364,7 @@ window.GAME_ATLAS = {
       "sy": 816
     },
     "snow_bridge_wood_y_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45378,7 +45378,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_stone_x_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45392,7 +45392,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_stone_x_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45406,7 +45406,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "bridge_stone_x_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45420,7 +45420,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_stone_x_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45434,7 +45434,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "bridge_stone_x_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45448,7 +45448,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_stone_x_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45462,7 +45462,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "bridge_stone_y_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45476,7 +45476,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_stone_y_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45490,7 +45490,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "bridge_stone_y_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45504,7 +45504,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_stone_y_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45518,7 +45518,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "bridge_stone_y_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45532,7 +45532,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "snow_bridge_stone_y_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 112,
@@ -45546,7 +45546,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "item_dynamite": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 64,
       "frameHeight": 64,
@@ -45557,10 +45557,10 @@ window.GAME_ATLAS = {
         52
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 512
     },
     "fx_dynamite_boom": {
-      "file": "sheet_120.png",
+      "file": "sheet_153.png",
       "frames": 8,
       "frameWidth": 192,
       "frameHeight": 192,
@@ -45574,7 +45574,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_material_shed_empty": {
-      "file": "sheet_081.png",
+      "file": "sheet_110.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45638,10 +45638,10 @@ window.GAME_ATLAS = {
         -50.1
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 192
     },
     "snow_building_material_shed_empty": {
-      "file": "sheet_414.png",
+      "file": "sheet_470.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45652,11 +45652,11 @@ window.GAME_ATLAS = {
         420
       ],
       "scale": 4,
-      "sx": 0,
-      "sy": 0
+      "sx": 128,
+      "sy": 256
     },
     "building_material_shed_half": {
-      "file": "sheet_083.png",
+      "file": "sheet_112.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45723,7 +45723,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_material_shed_half": {
-      "file": "sheet_416.png",
+      "file": "sheet_472.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45738,7 +45738,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_material_shed_full": {
-      "file": "sheet_082.png",
+      "file": "sheet_111.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45805,7 +45805,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_building_material_shed_full": {
-      "file": "sheet_415.png",
+      "file": "sheet_471.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45820,7 +45820,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "building_material_shed_light": {
-      "file": "sheet_084.png",
+      "file": "sheet_113.png",
       "frames": 1,
       "frameWidth": 680,
       "frameHeight": 600,
@@ -45835,7 +45835,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "robot_lumber_move": {
-      "file": "sheet_347.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45846,10 +45846,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 224
+      "sy": 864
     },
     "robot_lumber_work": {
-      "file": "sheet_347.png",
+      "file": "sheet_403.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45860,10 +45860,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 480
+      "sy": 128
     },
     "robot_lumber_rest": {
-      "file": "sheet_347.png",
+      "file": "sheet_403.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45874,10 +45874,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 352
+      "sy": 0
     },
     "robot_mine_move": {
-      "file": "sheet_347.png",
+      "file": "sheet_403.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45888,10 +45888,38 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 736
+      "sy": 384
     },
     "robot_mine_work": {
-      "file": "sheet_348.png",
+      "file": "sheet_403.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 128,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 0,
+      "sy": 640
+    },
+    "robot_mine_rest": {
+      "file": "sheet_403.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 128,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        100
+      ],
+      "sx": 0,
+      "sy": 512
+    },
+    "robot_grade_move": {
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45904,36 +45932,8 @@ window.GAME_ATLAS = {
       "sx": 0,
       "sy": 0
     },
-    "robot_mine_rest": {
-      "file": "sheet_347.png",
-      "frames": 6,
-      "frameWidth": 160,
-      "frameHeight": 128,
-      "fps": 3,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 864
-    },
-    "robot_grade_move": {
-      "file": "sheet_346.png",
-      "frames": 6,
-      "frameWidth": 160,
-      "frameHeight": 128,
-      "fps": 10,
-      "loop": true,
-      "anchor": [
-        64,
-        100
-      ],
-      "sx": 0,
-      "sy": 352
-    },
     "robot_grade_work": {
-      "file": "sheet_346.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45944,10 +45944,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 608
+      "sy": 256
     },
     "robot_grade_rest": {
-      "file": "sheet_346.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -45958,7 +45958,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 480
+      "sy": 128
     },
     "ui_mat_wood": {
       "file": "ui_mat_wood.png",
@@ -47569,7 +47569,7 @@ window.GAME_ATLAS = {
       "sy": 768
     },
     "terrain_mine_coal": {
-      "file": "sheet_369.png",
+      "file": "sheet_425.png",
       "frames": 1,
       "frameWidth": 562,
       "frameHeight": 532,
@@ -47585,7 +47585,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_coal": {
-      "file": "sheet_455.png",
+      "file": "sheet_511.png",
       "frames": 1,
       "frameWidth": 562,
       "frameHeight": 532,
@@ -47601,7 +47601,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_iron_ore": {
-      "file": "sheet_368.png",
+      "file": "sheet_424.png",
       "frames": 1,
       "frameWidth": 578,
       "frameHeight": 542,
@@ -47617,7 +47617,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_iron_ore": {
-      "file": "sheet_454.png",
+      "file": "sheet_510.png",
       "frames": 1,
       "frameWidth": 578,
       "frameHeight": 542,
@@ -47633,7 +47633,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_copper_ore": {
-      "file": "sheet_370.png",
+      "file": "sheet_426.png",
       "frames": 1,
       "frameWidth": 548,
       "frameHeight": 497,
@@ -47649,7 +47649,7 @@ window.GAME_ATLAS = {
       "sy": 507
     },
     "snow_terrain_mine_copper_ore": {
-      "file": "sheet_456.png",
+      "file": "sheet_512.png",
       "frames": 1,
       "frameWidth": 548,
       "frameHeight": 497,
@@ -47665,7 +47665,7 @@ window.GAME_ATLAS = {
       "sy": 507
     },
     "terrain_mine_amethyst": {
-      "file": "sheet_366.png",
+      "file": "sheet_422.png",
       "frames": 1,
       "frameWidth": 518,
       "frameHeight": 581,
@@ -47681,7 +47681,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_amethyst": {
-      "file": "sheet_452.png",
+      "file": "sheet_508.png",
       "frames": 1,
       "frameWidth": 518,
       "frameHeight": 581,
@@ -47697,7 +47697,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_rose_quartz": {
-      "file": "sheet_362.png",
+      "file": "sheet_418.png",
       "frames": 1,
       "frameWidth": 524,
       "frameHeight": 670,
@@ -47713,7 +47713,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_rose_quartz": {
-      "file": "sheet_448.png",
+      "file": "sheet_504.png",
       "frames": 1,
       "frameWidth": 524,
       "frameHeight": 670,
@@ -47729,7 +47729,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_citrine": {
-      "file": "sheet_353.png",
+      "file": "sheet_409.png",
       "frames": 1,
       "frameWidth": 535,
       "frameHeight": 680,
@@ -47745,7 +47745,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_citrine": {
-      "file": "sheet_447.png",
+      "file": "sheet_503.png",
       "frames": 1,
       "frameWidth": 535,
       "frameHeight": 680,
@@ -47761,7 +47761,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_crystal_mix": {
-      "file": "sheet_371.png",
+      "file": "sheet_427.png",
       "frames": 1,
       "frameWidth": 529,
       "frameHeight": 492,
@@ -47777,7 +47777,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_crystal_mix": {
-      "file": "sheet_457.png",
+      "file": "sheet_513.png",
       "frames": 1,
       "frameWidth": 529,
       "frameHeight": 492,
@@ -47793,7 +47793,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_iron_ore_wild": {
-      "file": "sheet_371.png",
+      "file": "sheet_427.png",
       "frames": 1,
       "frameWidth": 540,
       "frameHeight": 484,
@@ -47809,7 +47809,7 @@ window.GAME_ATLAS = {
       "sy": 492
     },
     "snow_terrain_mine_iron_ore_wild": {
-      "file": "sheet_457.png",
+      "file": "sheet_513.png",
       "frames": 1,
       "frameWidth": 540,
       "frameHeight": 484,
@@ -47825,7 +47825,7 @@ window.GAME_ATLAS = {
       "sy": 492
     },
     "terrain_mine_copper_ore_wild": {
-      "file": "sheet_372.png",
+      "file": "sheet_428.png",
       "frames": 1,
       "frameWidth": 542,
       "frameHeight": 475,
@@ -47841,7 +47841,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_copper_ore_wild": {
-      "file": "sheet_458.png",
+      "file": "sheet_514.png",
       "frames": 1,
       "frameWidth": 542,
       "frameHeight": 475,
@@ -47857,7 +47857,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_coal_wild": {
-      "file": "sheet_370.png",
+      "file": "sheet_426.png",
       "frames": 1,
       "frameWidth": 541,
       "frameHeight": 507,
@@ -47873,7 +47873,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_coal_wild": {
-      "file": "sheet_456.png",
+      "file": "sheet_512.png",
       "frames": 1,
       "frameWidth": 541,
       "frameHeight": 507,
@@ -47889,7 +47889,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_amethyst_wild": {
-      "file": "sheet_365.png",
+      "file": "sheet_421.png",
       "frames": 1,
       "frameWidth": 534,
       "frameHeight": 605,
@@ -47905,7 +47905,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_amethyst_wild": {
-      "file": "sheet_451.png",
+      "file": "sheet_507.png",
       "frames": 1,
       "frameWidth": 534,
       "frameHeight": 605,
@@ -47921,7 +47921,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_rose_quartz_wild": {
-      "file": "sheet_364.png",
+      "file": "sheet_420.png",
       "frames": 1,
       "frameWidth": 535,
       "frameHeight": 640,
@@ -47937,7 +47937,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_rose_quartz_wild": {
-      "file": "sheet_450.png",
+      "file": "sheet_506.png",
       "frames": 1,
       "frameWidth": 535,
       "frameHeight": 640,
@@ -47953,7 +47953,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_citrine_wild": {
-      "file": "sheet_363.png",
+      "file": "sheet_419.png",
       "frames": 1,
       "frameWidth": 541,
       "frameHeight": 661,
@@ -47969,7 +47969,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_citrine_wild": {
-      "file": "sheet_449.png",
+      "file": "sheet_505.png",
       "frames": 1,
       "frameWidth": 541,
       "frameHeight": 661,
@@ -47985,7 +47985,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_crystal_mix_wild": {
-      "file": "sheet_367.png",
+      "file": "sheet_423.png",
       "frames": 1,
       "frameWidth": 567,
       "frameHeight": 553,
@@ -48001,7 +48001,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_crystal_mix_wild": {
-      "file": "sheet_453.png",
+      "file": "sheet_509.png",
       "frames": 1,
       "frameWidth": 567,
       "frameHeight": 553,
@@ -48017,7 +48017,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall": {
-      "file": "sheet_366.png",
+      "file": "sheet_422.png",
       "frames": 1,
       "frameWidth": 279,
       "frameHeight": 573,
@@ -48033,7 +48033,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall_loop": {
-      "file": "sheet_360.png",
+      "file": "sheet_416.png",
       "frames": 7,
       "frameWidth": 445,
       "frameHeight": 668,
@@ -48049,7 +48049,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall_start": {
-      "file": "sheet_361.png",
+      "file": "sheet_417.png",
       "frames": 3,
       "frameWidth": 445,
       "frameHeight": 668,
@@ -48113,7 +48113,7 @@ window.GAME_ATLAS = {
       ]
     },
     "terrain_mine_smoky_quartz_wild": {
-      "file": "sheet_352.png",
+      "file": "sheet_408.png",
       "frames": 1,
       "frameWidth": 533,
       "frameHeight": 683,
@@ -48129,7 +48129,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_smoky_quartz_wild": {
-      "file": "sheet_446.png",
+      "file": "sheet_502.png",
       "frames": 1,
       "frameWidth": 533,
       "frameHeight": 683,
@@ -48145,7 +48145,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_mine_smoky_quartz": {
-      "file": "sheet_351.png",
+      "file": "sheet_407.png",
       "frames": 1,
       "frameWidth": 538,
       "frameHeight": 715,
@@ -48161,7 +48161,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "snow_terrain_mine_smoky_quartz": {
-      "file": "sheet_445.png",
+      "file": "sheet_501.png",
       "frames": 1,
       "frameWidth": 538,
       "frameHeight": 715,
@@ -48177,7 +48177,7 @@ window.GAME_ATLAS = {
       "sy": 128
     },
     "terrain_waterfall3_a": {
-      "file": "sheet_354.png",
+      "file": "sheet_410.png",
       "frames": 5,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48195,7 +48195,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall3w_a": {
-      "file": "sheet_357.png",
+      "file": "sheet_413.png",
       "frames": 5,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48213,7 +48213,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall3_b": {
-      "file": "sheet_356.png",
+      "file": "sheet_412.png",
       "frames": 5,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48231,7 +48231,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall3w_b": {
-      "file": "sheet_359.png",
+      "file": "sheet_415.png",
       "frames": 5,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48249,7 +48249,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall3_ab": {
-      "file": "sheet_355.png",
+      "file": "sheet_411.png",
       "frames": 10,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48267,7 +48267,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "terrain_waterfall3w_ab": {
-      "file": "sheet_358.png",
+      "file": "sheet_414.png",
       "frames": 10,
       "frameWidth": 534,
       "frameHeight": 668,
@@ -48285,7 +48285,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "fx_rainbow_fall": {
-      "file": "sheet_122.png",
+      "file": "sheet_155.png",
       "frames": 18,
       "frameWidth": 192,
       "frameHeight": 175,
@@ -48406,7 +48406,7 @@ window.GAME_ATLAS = {
       ]
     },
     "rail_m00": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48417,10 +48417,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m00": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48434,7 +48434,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_m01": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48445,10 +48445,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m01": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48462,7 +48462,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_m02": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48473,10 +48473,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m02": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48490,7 +48490,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_m03": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48501,10 +48501,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m03": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48518,7 +48518,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_m04": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48529,10 +48529,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m04": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48546,7 +48546,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m05": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48557,10 +48557,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_m05": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48574,7 +48574,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m06": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48585,10 +48585,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m06": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48602,7 +48602,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m07": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48613,10 +48613,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m07": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48630,7 +48630,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m08": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48641,10 +48641,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m08": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48658,7 +48658,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m09": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48669,10 +48669,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m09": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48686,7 +48686,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m10": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48697,10 +48697,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m10": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48714,7 +48714,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m11": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48725,10 +48725,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m11": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48742,7 +48742,7 @@ window.GAME_ATLAS = {
       "sy": 832
     },
     "rail_m12": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48753,10 +48753,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m12": {
-      "file": "sheet_445.png",
+      "file": "sheet_501.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48770,7 +48770,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_m13": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48781,10 +48781,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 640
     },
     "snow_rail_m13": {
-      "file": "sheet_445.png",
+      "file": "sheet_501.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48798,7 +48798,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_m14": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48809,10 +48809,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 768
     },
     "snow_rail_m14": {
-      "file": "sheet_445.png",
+      "file": "sheet_501.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48826,7 +48826,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_m15": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48837,10 +48837,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 128
+      "sy": 768
     },
     "snow_rail_m15": {
-      "file": "sheet_445.png",
+      "file": "sheet_501.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48854,7 +48854,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_exit": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48865,10 +48865,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 672
+      "sy": 384
     },
     "rail_cart_empty": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48879,10 +48879,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48896,7 +48896,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_cart_half": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48907,10 +48907,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48924,7 +48924,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_full": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48935,10 +48935,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -48952,7 +48952,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "building_heavy_charger_idle": {
-      "file": "sheet_080.png",
+      "file": "sheet_110.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -48963,10 +48963,10 @@ window.GAME_ATLAS = {
         160
       ],
       "sx": 768,
-      "sy": 512
+      "sy": 0
     },
     "building_heavy_charger_charge": {
-      "file": "sheet_080.png",
+      "file": "sheet_110.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -48977,10 +48977,10 @@ window.GAME_ATLAS = {
         160
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 0
     },
     "building_heavy_charger_light": {
-      "file": "sheet_080.png",
+      "file": "sheet_110.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -48991,10 +48991,10 @@ window.GAME_ATLAS = {
         160
       ],
       "sx": 896,
-      "sy": 512
+      "sy": 0
     },
     "snow_building_heavy_charger_idle": {
-      "file": "sheet_413.png",
+      "file": "sheet_470.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -49005,10 +49005,10 @@ window.GAME_ATLAS = {
         160
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 256
     },
     "snow_building_heavy_charger_charge": {
-      "file": "sheet_413.png",
+      "file": "sheet_470.png",
       "frames": 6,
       "frameWidth": 128,
       "frameHeight": 192,
@@ -49019,10 +49019,10 @@ window.GAME_ATLAS = {
         160
       ],
       "sx": 256,
-      "sy": 512
+      "sy": 0
     },
     "robot_lumber_charge": {
-      "file": "sheet_347.png",
+      "file": "sheet_402.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -49033,10 +49033,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 96
+      "sy": 736
     },
     "robot_mine_charge": {
-      "file": "sheet_347.png",
+      "file": "sheet_403.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -49047,10 +49047,10 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 608
+      "sy": 256
     },
     "robot_grade_charge": {
-      "file": "sheet_346.png",
+      "file": "sheet_401.png",
       "frames": 6,
       "frameWidth": 160,
       "frameHeight": 128,
@@ -49061,7 +49061,7 @@ window.GAME_ATLAS = {
         100
       ],
       "sx": 0,
-      "sy": 224
+      "sy": 864
     },
     "ui_rail": {
       "file": "ui_rail.png",
@@ -49124,7 +49124,7 @@ window.GAME_ATLAS = {
       ]
     },
     "rail_cart_empty_e": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49135,10 +49135,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_e": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49152,7 +49152,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_cart_empty_w": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49163,10 +49163,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_w": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49180,7 +49180,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_empty_s": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49191,10 +49191,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_s": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49208,7 +49208,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_empty_n": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49219,10 +49219,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_n": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49236,7 +49236,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_cart_half_e": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49247,10 +49247,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half_e": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49264,7 +49264,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_half_w": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49275,10 +49275,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 544
+      "sy": 256
     },
     "snow_rail_cart_half_w": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49292,7 +49292,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_half_s": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49303,10 +49303,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half_s": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49320,7 +49320,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_half_n": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49331,10 +49331,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half_n": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49348,7 +49348,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_full_e": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49359,10 +49359,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_e": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49376,7 +49376,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_full_w": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49387,10 +49387,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_w": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49404,7 +49404,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_full_s": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49415,10 +49415,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_s": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49432,7 +49432,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_full_n": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49443,10 +49443,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_n": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49460,7 +49460,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "loco_lumber_e": {
-      "file": "sheet_126.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49471,10 +49471,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 896
+      "sy": 128
     },
     "snow_loco_lumber_e": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49488,7 +49488,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_lumber_w": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49499,10 +49499,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 384
     },
     "snow_loco_lumber_w": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49516,7 +49516,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_lumber_s": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49527,10 +49527,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 128
+      "sy": 384
     },
     "snow_loco_lumber_s": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49544,7 +49544,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_lumber_n": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49555,10 +49555,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 256
     },
     "snow_loco_lumber_n": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49572,7 +49572,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_mine_e": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49583,10 +49583,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 640
     },
     "snow_loco_mine_e": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49600,7 +49600,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_mine_w": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49611,10 +49611,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 896
     },
     "snow_loco_mine_w": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49628,7 +49628,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "loco_mine_s": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49639,10 +49639,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 896
     },
     "snow_loco_mine_s": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49656,7 +49656,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "loco_mine_n": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49667,10 +49667,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 768
     },
     "snow_loco_mine_n": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49684,7 +49684,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_grade_e": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49695,10 +49695,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 384
+      "sy": 640
     },
     "snow_loco_grade_e": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49712,7 +49712,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "loco_grade_w": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49723,10 +49723,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 640
+      "sy": 896
     },
     "snow_loco_grade_w": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49740,7 +49740,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_grade_s": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49751,10 +49751,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 640
+      "sy": 896
     },
     "snow_loco_grade_s": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49768,7 +49768,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_grade_n": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49779,10 +49779,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 512
+      "sy": 768
     },
     "snow_loco_grade_n": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49796,7 +49796,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "rail_fence_e1": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49807,10 +49807,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 672
+      "sy": 384
     },
     "snow_rail_fence_e1": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49824,7 +49824,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_fence_e2": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49835,10 +49835,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 672
+      "sy": 384
     },
     "snow_rail_fence_e2": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49852,7 +49852,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_fence_e4": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49863,10 +49863,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_fence_e4": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49880,7 +49880,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_fence_e8": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49891,10 +49891,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 800
+      "sy": 512
     },
     "snow_rail_fence_e8": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49908,7 +49908,7 @@ window.GAME_ATLAS = {
       "sy": 704
     },
     "rail_cross_x": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49919,10 +49919,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 544
+      "sy": 256
     },
     "snow_rail_cross_x": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49936,7 +49936,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cross_y": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49947,10 +49947,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 544
+      "sy": 256
     },
     "snow_rail_cross_y": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49964,7 +49964,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_end_yellow_m01": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49975,10 +49975,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 672
+      "sy": 384
     },
     "rail_end_yellow_m02": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -49989,10 +49989,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 672
+      "sy": 384
     },
     "rail_end_yellow_m04": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50003,10 +50003,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 672
+      "sy": 384
     },
     "rail_end_yellow_m08": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50017,10 +50017,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 672
+      "sy": 384
     },
     "rail_end_hump_m01": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50031,10 +50031,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 544
+      "sy": 256
     },
     "rail_end_hump_m02": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50045,10 +50045,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 544
+      "sy": 256
     },
     "rail_end_hump_m04": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50059,10 +50059,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 544
+      "sy": 256
     },
     "rail_end_hump_m08": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50073,10 +50073,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 672
+      "sy": 384
     },
     "rail_station": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50087,10 +50087,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 672
     },
     "rail_station_light": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50101,10 +50101,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 896,
-      "sy": 0
+      "sy": 672
     },
     "snow_rail_station": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50166,7 +50166,7 @@ window.GAME_ATLAS = {
       ]
     },
     "collect_point": {
-      "file": "sheet_088.png",
+      "file": "sheet_117.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50180,7 +50180,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "snow_collect_point": {
-      "file": "sheet_420.png",
+      "file": "sheet_476.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50194,7 +50194,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "building_garage_x": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50227,10 +50227,10 @@ window.GAME_ATLAS = {
         ]
       ],
       "sx": 768,
-      "sy": 0
+      "sy": 384
     },
     "building_garage_x_light": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50241,10 +50241,10 @@ window.GAME_ATLAS = {
         176
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "snow_building_garage_x": {
-      "file": "sheet_413.png",
+      "file": "sheet_469.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50255,10 +50255,10 @@ window.GAME_ATLAS = {
         176
       ],
       "sx": 768,
-      "sy": 256
+      "sy": 560
     },
     "building_garage_y": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50291,10 +50291,10 @@ window.GAME_ATLAS = {
         ]
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 640
     },
     "building_garage_y_light": {
-      "file": "sheet_080.png",
+      "file": "sheet_109.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50305,10 +50305,10 @@ window.GAME_ATLAS = {
         176
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 640
     },
     "snow_building_garage_y": {
-      "file": "sheet_413.png",
+      "file": "sheet_470.png",
       "frames": 1,
       "frameWidth": 256,
       "frameHeight": 256,
@@ -50319,10 +50319,10 @@ window.GAME_ATLAS = {
         176
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 0
     },
     "garage_lamp_off": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 16,
       "frameHeight": 16,
@@ -50333,10 +50333,10 @@ window.GAME_ATLAS = {
         8
       ],
       "sx": 768,
-      "sy": 448
+      "sy": 768
     },
     "garage_lamp_on": {
-      "file": "sheet_125.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 16,
       "frameHeight": 16,
@@ -50347,10 +50347,10 @@ window.GAME_ATLAS = {
         8
       ],
       "sx": 784,
-      "sy": 448
+      "sy": 768
     },
     "rail_lamp_e1": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50361,10 +50361,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 768,
-      "sy": 768
+      "sy": 512
     },
     "rail_lamp_e1_light": {
-      "file": "sheet_342.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50375,10 +50375,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 896,
-      "sy": 768
+      "sy": 512
     },
     "snow_rail_lamp_e1": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50392,7 +50392,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_lamp_e2": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50403,10 +50403,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 672
     },
     "rail_lamp_e2_light": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50417,10 +50417,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 128,
-      "sy": 0
+      "sy": 672
     },
     "snow_rail_lamp_e2": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50434,7 +50434,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "rail_lamp_e4": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50445,10 +50445,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 256,
-      "sy": 0
+      "sy": 672
     },
     "rail_lamp_e4_light": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50459,10 +50459,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 384,
-      "sy": 0
+      "sy": 672
     },
     "snow_rail_lamp_e4": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50476,7 +50476,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_lamp_e8": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50487,10 +50487,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 512,
-      "sy": 0
+      "sy": 672
     },
     "rail_lamp_e8_light": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50501,10 +50501,10 @@ window.GAME_ATLAS = {
         128
       ],
       "sx": 640,
-      "sy": 0
+      "sy": 672
     },
     "snow_rail_lamp_e8": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 160,
@@ -50578,7 +50578,7 @@ window.GAME_ATLAS = {
       ]
     },
     "bridge_steel_x_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50592,7 +50592,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_bridge_steel_x_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50606,7 +50606,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "bridge_steel_x_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50620,7 +50620,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_bridge_steel_x_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50634,7 +50634,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "bridge_steel_x_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50648,7 +50648,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_bridge_steel_x_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50662,7 +50662,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "bridge_steel_y_one": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50676,7 +50676,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_steel_y_one": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50690,7 +50690,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "bridge_steel_y_a": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50704,7 +50704,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "snow_bridge_steel_y_a": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50718,7 +50718,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "bridge_steel_y_b": {
-      "file": "sheet_078.png",
+      "file": "sheet_080.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50732,7 +50732,7 @@ window.GAME_ATLAS = {
       "sy": 544
     },
     "snow_bridge_steel_y_b": {
-      "file": "sheet_412.png",
+      "file": "sheet_468.png",
       "frames": 1,
       "frameWidth": 192,
       "frameHeight": 160,
@@ -50782,7 +50782,7 @@ window.GAME_ATLAS = {
       ]
     },
     "fx_rps_rock": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 160,
@@ -50794,10 +50794,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 858
+      "sy": 160
     },
     "fx_rps_paper": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 160,
@@ -50809,10 +50809,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 768,
-      "sy": 698
+      "sy": 0
     },
     "fx_rps_scissors": {
-      "file": "sheet_123.png",
+      "file": "sheet_158.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 160,
@@ -50824,7 +50824,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 160,
-      "sy": 858
+      "sy": 160
     },
     "ui_hd_cart_info": {
       "file": "ui_hd_cart_info.png",
@@ -50851,7 +50851,7 @@ window.GAME_ATLAS = {
       ]
     },
     "rail_cart_empty_es": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50862,10 +50862,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_es": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50879,7 +50879,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_cart_empty_en": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50890,10 +50890,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_en": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50907,7 +50907,7 @@ window.GAME_ATLAS = {
       "sy": 160
     },
     "rail_cart_empty_ws": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50918,10 +50918,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_empty_ws": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50935,7 +50935,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_empty_wn": {
-      "file": "sheet_343.png",
+      "file": "sheet_398.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50946,10 +50946,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 160
+      "sy": 832
     },
     "snow_rail_cart_empty_wn": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50963,7 +50963,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_half_es": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50974,10 +50974,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half_es": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -50991,7 +50991,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_half_en": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51002,10 +51002,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_half_en": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51019,7 +51019,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_half_ws": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51030,10 +51030,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 544
+      "sy": 256
     },
     "snow_rail_cart_half_ws": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51047,7 +51047,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_half_wn": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51058,10 +51058,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 544
+      "sy": 256
     },
     "snow_rail_cart_half_wn": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51075,7 +51075,7 @@ window.GAME_ATLAS = {
       "sy": 576
     },
     "rail_cart_full_es": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51086,10 +51086,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_es": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51103,7 +51103,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_full_en": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51114,10 +51114,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 288
+      "sy": 0
     },
     "snow_rail_cart_full_en": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51131,7 +51131,7 @@ window.GAME_ATLAS = {
       "sy": 320
     },
     "rail_cart_full_ws": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51142,10 +51142,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_full_ws": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51159,7 +51159,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "rail_cart_full_wn": {
-      "file": "sheet_343.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51170,10 +51170,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 416
+      "sy": 128
     },
     "snow_rail_cart_full_wn": {
-      "file": "sheet_444.png",
+      "file": "sheet_500.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51187,7 +51187,7 @@ window.GAME_ATLAS = {
       "sy": 448
     },
     "loco_lumber_es": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51198,10 +51198,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 0
+      "sy": 256
     },
     "snow_loco_lumber_es": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51215,7 +51215,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_lumber_en": {
-      "file": "sheet_126.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51226,10 +51226,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 896
+      "sy": 128
     },
     "snow_loco_lumber_en": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51243,7 +51243,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_lumber_ws": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51254,10 +51254,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 512
     },
     "snow_loco_lumber_ws": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51271,7 +51271,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_lumber_wn": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51282,10 +51282,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 512
     },
     "snow_loco_lumber_wn": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51299,7 +51299,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_mine_es": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51310,10 +51310,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 768
     },
     "snow_loco_mine_es": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51327,7 +51327,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_mine_en": {
-      "file": "sheet_127.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51338,10 +51338,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 640
     },
     "snow_loco_mine_en": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51355,7 +51355,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "loco_mine_ws": {
-      "file": "sheet_127.png",
+      "file": "sheet_163.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51366,10 +51366,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 0
     },
     "snow_loco_mine_ws": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51383,7 +51383,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "loco_mine_wn": {
-      "file": "sheet_127.png",
+      "file": "sheet_163.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51394,10 +51394,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 0
     },
     "snow_loco_mine_wn": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51411,7 +51411,7 @@ window.GAME_ATLAS = {
       "sy": 640
     },
     "loco_grade_es": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51422,10 +51422,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 512
+      "sy": 768
     },
     "snow_loco_grade_es": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51439,7 +51439,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "loco_grade_en": {
-      "file": "sheet_126.png",
+      "file": "sheet_159.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51450,10 +51450,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 384
+      "sy": 640
     },
     "snow_loco_grade_en": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51467,7 +51467,7 @@ window.GAME_ATLAS = {
       "sy": 256
     },
     "loco_grade_ws": {
-      "file": "sheet_126.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51478,10 +51478,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 768
+      "sy": 0
     },
     "snow_loco_grade_ws": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51495,7 +51495,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "loco_grade_wn": {
-      "file": "sheet_126.png",
+      "file": "sheet_160.png",
       "frames": 4,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51506,10 +51506,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 768
+      "sy": 0
     },
     "snow_loco_grade_wn": {
-      "file": "sheet_443.png",
+      "file": "sheet_499.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51523,7 +51523,7 @@ window.GAME_ATLAS = {
       "sy": 384
     },
     "rail_stop_red_m01": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51534,10 +51534,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 768
     },
     "rail_stop_red_m02": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51548,10 +51548,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 896,
-      "sy": 128
+      "sy": 768
     },
     "rail_stop_red_m04": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51562,10 +51562,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 0,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_red_m08": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51576,10 +51576,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 128,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_yellow_m01": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51590,10 +51590,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_yellow_m02": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51604,10 +51604,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_yellow_m04": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51618,10 +51618,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_yellow_m08": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51632,10 +51632,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 256
+      "sy": 896
     },
     "rail_stop_hump_m01": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51646,10 +51646,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 256,
-      "sy": 128
+      "sy": 768
     },
     "rail_stop_hump_m02": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51660,10 +51660,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 384,
-      "sy": 128
+      "sy": 768
     },
     "rail_stop_hump_m04": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51674,10 +51674,10 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 512,
-      "sy": 128
+      "sy": 768
     },
     "rail_stop_hump_m08": {
-      "file": "sheet_344.png",
+      "file": "sheet_399.png",
       "frames": 1,
       "frameWidth": 128,
       "frameHeight": 128,
@@ -51688,7 +51688,7 @@ window.GAME_ATLAS = {
         96
       ],
       "sx": 640,
-      "sy": 128
+      "sy": 768
     },
     "ui_pt_battery_battery_l": {
       "file": "ui_pt_battery_battery_l.png",
@@ -51991,7 +51991,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_chihuahua_adult_idle": {
-      "file": "sheet_172.png",
+      "file": "sheet_223.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52003,10 +52003,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_chihuahua_adult_walk": {
-      "file": "sheet_168.png",
+      "file": "sheet_224.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52021,7 +52021,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chihuahua_adult_run": {
-      "file": "sheet_167.png",
+      "file": "sheet_222.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52036,7 +52036,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chihuahua_adult_sleep": {
-      "file": "sheet_172.png",
+      "file": "sheet_229.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52048,10 +52048,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_chihuahua_young_idle": {
-      "file": "sheet_172.png",
+      "file": "sheet_229.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52063,10 +52063,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_chihuahua_young_walk": {
-      "file": "sheet_170.png",
+      "file": "sheet_226.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52081,7 +52081,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chihuahua_young_play": {
-      "file": "sheet_169.png",
+      "file": "sheet_225.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52096,7 +52096,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chihuahua_young_sleep": {
-      "file": "sheet_172.png",
+      "file": "sheet_229.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52108,7 +52108,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_chihuahua": {
       "file": "ui_pet_chihuahua.png",
@@ -52129,7 +52129,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_beagle_adult_idle": {
-      "file": "sheet_136.png",
+      "file": "sheet_193.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52141,10 +52141,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_beagle_adult_walk": {
-      "file": "sheet_134.png",
+      "file": "sheet_190.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52159,7 +52159,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_beagle_adult_run": {
-      "file": "sheet_133.png",
+      "file": "sheet_189.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52174,7 +52174,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_beagle_adult_sleep": {
-      "file": "sheet_136.png",
+      "file": "sheet_193.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52186,10 +52186,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_beagle_young_idle": {
-      "file": "sheet_136.png",
+      "file": "sheet_193.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52201,10 +52201,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_beagle_young_walk": {
-      "file": "sheet_137.png",
+      "file": "sheet_192.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52219,7 +52219,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_beagle_young_play": {
-      "file": "sheet_135.png",
+      "file": "sheet_191.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52234,7 +52234,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_beagle_young_sleep": {
-      "file": "sheet_142.png",
+      "file": "sheet_193.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52246,7 +52246,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_beagle": {
       "file": "ui_pet_beagle.png",
@@ -52267,7 +52267,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_shihtzu_adult_idle": {
-      "file": "sheet_298.png",
+      "file": "sheet_355.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52279,10 +52279,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_shihtzu_adult_walk": {
-      "file": "sheet_297.png",
+      "file": "sheet_353.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52297,7 +52297,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shihtzu_adult_run": {
-      "file": "sheet_296.png",
+      "file": "sheet_352.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52312,7 +52312,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shihtzu_adult_sleep": {
-      "file": "sheet_298.png",
+      "file": "sheet_355.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52324,10 +52324,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_shihtzu_young_idle": {
-      "file": "sheet_304.png",
+      "file": "sheet_355.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52339,10 +52339,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_shihtzu_young_walk": {
-      "file": "sheet_300.png",
+      "file": "sheet_356.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52357,7 +52357,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shihtzu_young_play": {
-      "file": "sheet_299.png",
+      "file": "sheet_354.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52372,7 +52372,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shihtzu_young_sleep": {
-      "file": "sheet_304.png",
+      "file": "sheet_361.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52384,7 +52384,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_shihtzu": {
       "file": "ui_pet_shihtzu.png",
@@ -52405,7 +52405,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_yorkie_adult_idle": {
-      "file": "sheet_328.png",
+      "file": "sheet_385.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52417,10 +52417,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_yorkie_adult_walk": {
-      "file": "sheet_326.png",
+      "file": "sheet_382.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52435,7 +52435,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_yorkie_adult_run": {
-      "file": "sheet_325.png",
+      "file": "sheet_381.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52450,7 +52450,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_yorkie_adult_sleep": {
-      "file": "sheet_328.png",
+      "file": "sheet_385.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52462,10 +52462,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_yorkie_young_idle": {
-      "file": "sheet_328.png",
+      "file": "sheet_385.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52477,10 +52477,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_yorkie_young_walk": {
-      "file": "sheet_329.png",
+      "file": "sheet_384.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52495,7 +52495,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_yorkie_young_play": {
-      "file": "sheet_327.png",
+      "file": "sheet_383.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52510,7 +52510,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_yorkie_young_sleep": {
-      "file": "sheet_330.png",
+      "file": "sheet_385.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52522,7 +52522,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_yorkie": {
       "file": "ui_pet_yorkie.png",
@@ -52543,7 +52543,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_pug_adult_idle": {
-      "file": "sheet_256.png",
+      "file": "sheet_313.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52555,10 +52555,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_pug_adult_walk": {
-      "file": "sheet_254.png",
+      "file": "sheet_310.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52573,7 +52573,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pug_adult_run": {
-      "file": "sheet_253.png",
+      "file": "sheet_309.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52588,7 +52588,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pug_adult_sleep": {
-      "file": "sheet_256.png",
+      "file": "sheet_313.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52600,10 +52600,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_pug_young_idle": {
-      "file": "sheet_256.png",
+      "file": "sheet_313.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52615,10 +52615,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_pug_young_walk": {
-      "file": "sheet_257.png",
+      "file": "sheet_312.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52633,7 +52633,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pug_young_play": {
-      "file": "sheet_255.png",
+      "file": "sheet_311.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52648,7 +52648,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_pug_young_sleep": {
-      "file": "sheet_262.png",
+      "file": "sheet_313.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52660,7 +52660,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_pug": {
       "file": "ui_pet_pug.png",
@@ -52681,7 +52681,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_papillon_adult_idle": {
-      "file": "sheet_238.png",
+      "file": "sheet_295.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52693,10 +52693,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_papillon_adult_walk": {
-      "file": "sheet_235.png",
+      "file": "sheet_291.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52711,7 +52711,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_papillon_adult_run": {
-      "file": "sheet_234.png",
+      "file": "sheet_290.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52726,7 +52726,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_papillon_adult_sleep": {
-      "file": "sheet_238.png",
+      "file": "sheet_295.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52738,10 +52738,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_papillon_young_idle": {
-      "file": "sheet_238.png",
+      "file": "sheet_295.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52753,10 +52753,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_papillon_young_walk": {
-      "file": "sheet_237.png",
+      "file": "sheet_293.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52771,7 +52771,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_papillon_young_play": {
-      "file": "sheet_236.png",
+      "file": "sheet_292.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52786,7 +52786,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_papillon_young_sleep": {
-      "file": "sheet_238.png",
+      "file": "sheet_295.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52798,7 +52798,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_papillon": {
       "file": "ui_pet_papillon.png",
@@ -52819,7 +52819,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_schnauzer_adult_idle": {
-      "file": "sheet_280.png",
+      "file": "sheet_337.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52831,10 +52831,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_schnauzer_adult_walk": {
-      "file": "sheet_278.png",
+      "file": "sheet_334.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52849,7 +52849,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_schnauzer_adult_run": {
-      "file": "sheet_277.png",
+      "file": "sheet_333.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52864,7 +52864,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_schnauzer_adult_sleep": {
-      "file": "sheet_280.png",
+      "file": "sheet_337.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52876,10 +52876,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_schnauzer_young_idle": {
-      "file": "sheet_280.png",
+      "file": "sheet_337.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52891,10 +52891,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_schnauzer_young_walk": {
-      "file": "sheet_281.png",
+      "file": "sheet_336.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52909,7 +52909,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_schnauzer_young_play": {
-      "file": "sheet_279.png",
+      "file": "sheet_335.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52924,7 +52924,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_schnauzer_young_sleep": {
-      "file": "sheet_286.png",
+      "file": "sheet_337.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52936,7 +52936,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_schnauzer": {
       "file": "ui_pet_schnauzer.png",
@@ -52957,7 +52957,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_akita_adult_idle": {
-      "file": "sheet_130.png",
+      "file": "sheet_187.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52969,10 +52969,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 568
+      "sy": 448
     },
     "pet_akita_adult_walk": {
-      "file": "sheet_129.png",
+      "file": "sheet_185.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -52987,7 +52987,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_akita_adult_run": {
-      "file": "sheet_128.png",
+      "file": "sheet_184.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53002,7 +53002,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_akita_adult_sleep": {
-      "file": "sheet_130.png",
+      "file": "sheet_187.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53014,10 +53014,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 760
+      "sy": 640
     },
     "pet_akita_young_idle": {
-      "file": "sheet_136.png",
+      "file": "sheet_187.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53029,10 +53029,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 832
     },
     "pet_akita_young_walk": {
-      "file": "sheet_132.png",
+      "file": "sheet_188.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53047,7 +53047,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_akita_young_play": {
-      "file": "sheet_131.png",
+      "file": "sheet_186.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53062,7 +53062,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_akita_young_sleep": {
-      "file": "sheet_136.png",
+      "file": "sheet_193.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53074,7 +53074,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_akita": {
       "file": "ui_pet_akita.png",
@@ -53095,7 +53095,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_dalmatian_adult_idle": {
-      "file": "sheet_190.png",
+      "file": "sheet_247.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53107,10 +53107,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_dalmatian_adult_walk": {
-      "file": "sheet_187.png",
+      "file": "sheet_243.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53125,7 +53125,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dalmatian_adult_run": {
-      "file": "sheet_186.png",
+      "file": "sheet_242.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53140,7 +53140,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dalmatian_adult_sleep": {
-      "file": "sheet_190.png",
+      "file": "sheet_247.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53152,10 +53152,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_dalmatian_young_idle": {
-      "file": "sheet_190.png",
+      "file": "sheet_247.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53167,10 +53167,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_dalmatian_young_walk": {
-      "file": "sheet_189.png",
+      "file": "sheet_245.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53185,7 +53185,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dalmatian_young_play": {
-      "file": "sheet_188.png",
+      "file": "sheet_244.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53200,7 +53200,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_dalmatian_young_sleep": {
-      "file": "sheet_190.png",
+      "file": "sheet_247.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53212,7 +53212,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_dalmatian": {
       "file": "ui_pet_dalmatian.png",
@@ -53233,7 +53233,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_bullterrier_adult_idle": {
-      "file": "sheet_160.png",
+      "file": "sheet_217.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53245,10 +53245,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_bullterrier_adult_walk": {
-      "file": "sheet_158.png",
+      "file": "sheet_214.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53263,7 +53263,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bullterrier_adult_run": {
-      "file": "sheet_157.png",
+      "file": "sheet_213.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53278,7 +53278,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bullterrier_adult_sleep": {
-      "file": "sheet_160.png",
+      "file": "sheet_217.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53290,10 +53290,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_bullterrier_young_idle": {
-      "file": "sheet_160.png",
+      "file": "sheet_217.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53305,10 +53305,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_bullterrier_young_walk": {
-      "file": "sheet_161.png",
+      "file": "sheet_216.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53323,7 +53323,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bullterrier_young_play": {
-      "file": "sheet_159.png",
+      "file": "sheet_215.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53338,7 +53338,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_bullterrier_young_sleep": {
-      "file": "sheet_166.png",
+      "file": "sheet_217.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53350,7 +53350,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_bullterrier": {
       "file": "ui_pet_bullterrier.png",
@@ -53371,7 +53371,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_chowchow_adult_idle": {
-      "file": "sheet_172.png",
+      "file": "sheet_229.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53383,10 +53383,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_chowchow_adult_walk": {
-      "file": "sheet_173.png",
+      "file": "sheet_228.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53401,7 +53401,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chowchow_adult_run": {
-      "file": "sheet_171.png",
+      "file": "sheet_227.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53416,7 +53416,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chowchow_adult_sleep": {
-      "file": "sheet_178.png",
+      "file": "sheet_229.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53428,10 +53428,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_chowchow_young_idle": {
-      "file": "sheet_178.png",
+      "file": "sheet_235.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53443,10 +53443,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_chowchow_young_walk": {
-      "file": "sheet_175.png",
+      "file": "sheet_231.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53461,7 +53461,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chowchow_young_play": {
-      "file": "sheet_174.png",
+      "file": "sheet_230.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53476,7 +53476,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_chowchow_young_sleep": {
-      "file": "sheet_178.png",
+      "file": "sheet_235.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53488,7 +53488,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_chowchow": {
       "file": "ui_pet_chowchow.png",
@@ -53509,7 +53509,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_samoyed_adult_idle": {
-      "file": "sheet_274.png",
+      "file": "sheet_331.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53521,10 +53521,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_samoyed_adult_walk": {
-      "file": "sheet_273.png",
+      "file": "sheet_329.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53539,7 +53539,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_samoyed_adult_run": {
-      "file": "sheet_272.png",
+      "file": "sheet_328.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53554,7 +53554,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_samoyed_adult_sleep": {
-      "file": "sheet_274.png",
+      "file": "sheet_331.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53566,10 +53566,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_samoyed_young_idle": {
-      "file": "sheet_280.png",
+      "file": "sheet_331.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53581,10 +53581,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_samoyed_young_walk": {
-      "file": "sheet_276.png",
+      "file": "sheet_332.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53599,7 +53599,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_samoyed_young_play": {
-      "file": "sheet_275.png",
+      "file": "sheet_330.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53614,7 +53614,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_samoyed_young_sleep": {
-      "file": "sheet_280.png",
+      "file": "sheet_337.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53626,7 +53626,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_samoyed": {
       "file": "ui_pet_samoyed.png",
@@ -53647,7 +53647,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_shepherd_adult_idle": {
-      "file": "sheet_292.png",
+      "file": "sheet_343.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53659,10 +53659,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_shepherd_adult_walk": {
-      "file": "sheet_288.png",
+      "file": "sheet_344.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53677,7 +53677,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shepherd_adult_run": {
-      "file": "sheet_287.png",
+      "file": "sheet_342.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53692,7 +53692,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shepherd_adult_sleep": {
-      "file": "sheet_292.png",
+      "file": "sheet_349.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53704,10 +53704,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_shepherd_young_idle": {
-      "file": "sheet_292.png",
+      "file": "sheet_349.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53719,10 +53719,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_shepherd_young_walk": {
-      "file": "sheet_290.png",
+      "file": "sheet_346.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53737,7 +53737,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shepherd_young_play": {
-      "file": "sheet_289.png",
+      "file": "sheet_345.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53752,7 +53752,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_shepherd_young_sleep": {
-      "file": "sheet_292.png",
+      "file": "sheet_349.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53764,7 +53764,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_shepherd": {
       "file": "ui_pet_shepherd.png",
@@ -53785,7 +53785,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_doberman_adult_idle": {
-      "file": "sheet_196.png",
+      "file": "sheet_247.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53797,10 +53797,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_doberman_adult_walk": {
-      "file": "sheet_192.png",
+      "file": "sheet_248.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53815,7 +53815,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_doberman_adult_run": {
-      "file": "sheet_191.png",
+      "file": "sheet_246.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53830,7 +53830,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_doberman_adult_sleep": {
-      "file": "sheet_196.png",
+      "file": "sheet_253.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53842,10 +53842,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_doberman_young_idle": {
-      "file": "sheet_196.png",
+      "file": "sheet_253.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53857,10 +53857,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_doberman_young_walk": {
-      "file": "sheet_194.png",
+      "file": "sheet_250.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53875,7 +53875,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_doberman_young_play": {
-      "file": "sheet_193.png",
+      "file": "sheet_249.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53890,7 +53890,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_doberman_young_sleep": {
-      "file": "sheet_196.png",
+      "file": "sheet_253.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53902,7 +53902,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_doberman": {
       "file": "ui_pet_doberman.png",
@@ -53923,7 +53923,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_rottweiler_adult_idle": {
-      "file": "sheet_268.png",
+      "file": "sheet_319.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53935,10 +53935,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_rottweiler_adult_walk": {
-      "file": "sheet_264.png",
+      "file": "sheet_320.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53953,7 +53953,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_rottweiler_adult_run": {
-      "file": "sheet_263.png",
+      "file": "sheet_318.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53968,7 +53968,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_rottweiler_adult_sleep": {
-      "file": "sheet_268.png",
+      "file": "sheet_325.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53980,10 +53980,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_rottweiler_young_idle": {
-      "file": "sheet_268.png",
+      "file": "sheet_325.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -53995,10 +53995,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_rottweiler_young_walk": {
-      "file": "sheet_266.png",
+      "file": "sheet_322.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54013,7 +54013,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_rottweiler_young_play": {
-      "file": "sheet_265.png",
+      "file": "sheet_321.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54028,7 +54028,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_rottweiler_young_sleep": {
-      "file": "sheet_268.png",
+      "file": "sheet_325.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54040,7 +54040,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_rottweiler": {
       "file": "ui_pet_rottweiler.png",
@@ -54061,7 +54061,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_malamute_adult_idle": {
-      "file": "sheet_220.png",
+      "file": "sheet_271.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54073,10 +54073,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_malamute_adult_walk": {
-      "file": "sheet_216.png",
+      "file": "sheet_272.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54091,7 +54091,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_malamute_adult_run": {
-      "file": "sheet_215.png",
+      "file": "sheet_270.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54106,7 +54106,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_malamute_adult_sleep": {
-      "file": "sheet_220.png",
+      "file": "sheet_277.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54118,10 +54118,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_malamute_young_idle": {
-      "file": "sheet_220.png",
+      "file": "sheet_277.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54133,10 +54133,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_malamute_young_walk": {
-      "file": "sheet_218.png",
+      "file": "sheet_274.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54151,7 +54151,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_malamute_young_play": {
-      "file": "sheet_217.png",
+      "file": "sheet_273.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54166,7 +54166,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_malamute_young_sleep": {
-      "file": "sheet_220.png",
+      "file": "sheet_277.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54178,7 +54178,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_malamute": {
       "file": "ui_pet_malamute.png",
@@ -54199,7 +54199,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_stbernard_adult_idle": {
-      "file": "sheet_316.png",
+      "file": "sheet_367.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54211,10 +54211,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_stbernard_adult_walk": {
-      "file": "sheet_312.png",
+      "file": "sheet_368.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54229,7 +54229,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_stbernard_adult_run": {
-      "file": "sheet_311.png",
+      "file": "sheet_366.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54244,7 +54244,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_stbernard_adult_sleep": {
-      "file": "sheet_316.png",
+      "file": "sheet_373.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54256,10 +54256,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_stbernard_young_idle": {
-      "file": "sheet_316.png",
+      "file": "sheet_373.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54271,10 +54271,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_stbernard_young_walk": {
-      "file": "sheet_314.png",
+      "file": "sheet_370.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54289,7 +54289,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_stbernard_young_play": {
-      "file": "sheet_313.png",
+      "file": "sheet_369.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54304,7 +54304,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_stbernard_young_sleep": {
-      "file": "sheet_316.png",
+      "file": "sheet_373.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54316,7 +54316,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "ui_pet_stbernard": {
       "file": "ui_pet_stbernard.png",
@@ -54337,7 +54337,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_mastiff_adult_idle": {
-      "file": "sheet_226.png",
+      "file": "sheet_283.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54349,10 +54349,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_mastiff_adult_walk": {
-      "file": "sheet_225.png",
+      "file": "sheet_281.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54367,7 +54367,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mastiff_adult_run": {
-      "file": "sheet_224.png",
+      "file": "sheet_280.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54382,7 +54382,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mastiff_adult_sleep": {
-      "file": "sheet_226.png",
+      "file": "sheet_283.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54394,10 +54394,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_mastiff_young_idle": {
-      "file": "sheet_232.png",
+      "file": "sheet_283.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54409,10 +54409,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_mastiff_young_walk": {
-      "file": "sheet_228.png",
+      "file": "sheet_284.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54427,7 +54427,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mastiff_young_play": {
-      "file": "sheet_227.png",
+      "file": "sheet_282.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54442,7 +54442,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mastiff_young_sleep": {
-      "file": "sheet_232.png",
+      "file": "sheet_289.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54454,7 +54454,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_mastiff": {
       "file": "ui_pet_mastiff.png",
@@ -54475,7 +54475,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_tabby_adult_idle": {
-      "file": "sheet_316.png",
+      "file": "sheet_373.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54487,10 +54487,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_tabby_adult_walk": {
-      "file": "sheet_317.png",
+      "file": "sheet_372.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54505,7 +54505,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tabby_adult_run": {
-      "file": "sheet_315.png",
+      "file": "sheet_371.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54520,7 +54520,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tabby_adult_sleep": {
-      "file": "sheet_322.png",
+      "file": "sheet_373.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54532,10 +54532,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_tabby_young_idle": {
-      "file": "sheet_322.png",
+      "file": "sheet_379.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54547,10 +54547,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_tabby_young_walk": {
-      "file": "sheet_319.png",
+      "file": "sheet_375.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54565,7 +54565,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tabby_young_play": {
-      "file": "sheet_318.png",
+      "file": "sheet_374.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54580,7 +54580,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tabby_young_sleep": {
-      "file": "sheet_322.png",
+      "file": "sheet_379.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54592,7 +54592,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_tabby": {
       "file": "ui_pet_tabby.png",
@@ -54613,7 +54613,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_tuxedo_adult_idle": {
-      "file": "sheet_322.png",
+      "file": "sheet_379.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54625,10 +54625,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_tuxedo_adult_walk": {
-      "file": "sheet_321.png",
+      "file": "sheet_377.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54643,7 +54643,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tuxedo_adult_run": {
-      "file": "sheet_320.png",
+      "file": "sheet_376.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54658,7 +54658,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tuxedo_adult_sleep": {
-      "file": "sheet_322.png",
+      "file": "sheet_379.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54670,10 +54670,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_tuxedo_young_idle": {
-      "file": "sheet_328.png",
+      "file": "sheet_379.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54685,10 +54685,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_tuxedo_young_walk": {
-      "file": "sheet_324.png",
+      "file": "sheet_380.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54703,7 +54703,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tuxedo_young_play": {
-      "file": "sheet_323.png",
+      "file": "sheet_378.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54718,7 +54718,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_tuxedo_young_sleep": {
-      "file": "sheet_328.png",
+      "file": "sheet_385.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54730,7 +54730,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "ui_pet_tuxedo": {
       "file": "ui_pet_tuxedo.png",
@@ -54751,7 +54751,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_british_adult_idle": {
-      "file": "sheet_148.png",
+      "file": "sheet_205.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54763,10 +54763,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_british_adult_walk": {
-      "file": "sheet_149.png",
+      "file": "sheet_204.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54781,7 +54781,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_british_adult_run": {
-      "file": "sheet_147.png",
+      "file": "sheet_203.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54796,7 +54796,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_british_adult_sleep": {
-      "file": "sheet_154.png",
+      "file": "sheet_205.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54808,10 +54808,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_british_young_idle": {
-      "file": "sheet_154.png",
+      "file": "sheet_211.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54823,10 +54823,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_british_young_walk": {
-      "file": "sheet_151.png",
+      "file": "sheet_207.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54841,7 +54841,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_british_young_play": {
-      "file": "sheet_150.png",
+      "file": "sheet_206.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54856,7 +54856,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_british_young_sleep": {
-      "file": "sheet_154.png",
+      "file": "sheet_211.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54868,7 +54868,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_british": {
       "file": "ui_pet_british.png",
@@ -54889,7 +54889,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_siamese_adult_idle": {
-      "file": "sheet_304.png",
+      "file": "sheet_361.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54901,10 +54901,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_siamese_adult_walk": {
-      "file": "sheet_302.png",
+      "file": "sheet_358.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54919,7 +54919,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_siamese_adult_run": {
-      "file": "sheet_301.png",
+      "file": "sheet_357.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54934,7 +54934,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_siamese_adult_sleep": {
-      "file": "sheet_304.png",
+      "file": "sheet_361.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54946,10 +54946,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_siamese_young_idle": {
-      "file": "sheet_304.png",
+      "file": "sheet_361.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54961,10 +54961,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_siamese_young_walk": {
-      "file": "sheet_305.png",
+      "file": "sheet_360.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54979,7 +54979,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_siamese_young_play": {
-      "file": "sheet_303.png",
+      "file": "sheet_359.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -54994,7 +54994,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_siamese_young_sleep": {
-      "file": "sheet_310.png",
+      "file": "sheet_361.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55006,7 +55006,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "ui_pet_siamese": {
       "file": "ui_pet_siamese.png",
@@ -55027,7 +55027,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_russianblue_adult_idle": {
-      "file": "sheet_268.png",
+      "file": "sheet_325.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55039,10 +55039,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "pet_russianblue_adult_walk": {
-      "file": "sheet_269.png",
+      "file": "sheet_324.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55057,7 +55057,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_russianblue_adult_run": {
-      "file": "sheet_267.png",
+      "file": "sheet_323.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55072,7 +55072,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_russianblue_adult_sleep": {
-      "file": "sheet_274.png",
+      "file": "sheet_325.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55084,10 +55084,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 0
+      "sy": 768
     },
     "pet_russianblue_young_idle": {
-      "file": "sheet_274.png",
+      "file": "sheet_331.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55099,10 +55099,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_russianblue_young_walk": {
-      "file": "sheet_271.png",
+      "file": "sheet_327.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55117,7 +55117,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_russianblue_young_play": {
-      "file": "sheet_270.png",
+      "file": "sheet_326.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55132,7 +55132,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_russianblue_young_sleep": {
-      "file": "sheet_274.png",
+      "file": "sheet_331.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55144,7 +55144,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "ui_pet_russianblue": {
       "file": "ui_pet_russianblue.png",
@@ -55165,7 +55165,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_scottishfold_adult_idle": {
-      "file": "sheet_286.png",
+      "file": "sheet_343.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55177,10 +55177,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_scottishfold_adult_walk": {
-      "file": "sheet_283.png",
+      "file": "sheet_339.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55195,7 +55195,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_scottishfold_adult_run": {
-      "file": "sheet_282.png",
+      "file": "sheet_338.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55210,7 +55210,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_scottishfold_adult_sleep": {
-      "file": "sheet_286.png",
+      "file": "sheet_343.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55222,10 +55222,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_scottishfold_young_idle": {
-      "file": "sheet_286.png",
+      "file": "sheet_343.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55237,10 +55237,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_scottishfold_young_walk": {
-      "file": "sheet_285.png",
+      "file": "sheet_341.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55255,7 +55255,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_scottishfold_young_play": {
-      "file": "sheet_284.png",
+      "file": "sheet_340.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55270,7 +55270,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_scottishfold_young_sleep": {
-      "file": "sheet_286.png",
+      "file": "sheet_343.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55282,7 +55282,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_scottishfold": {
       "file": "ui_pet_scottishfold.png",
@@ -55303,7 +55303,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_silvershade_adult_idle": {
-      "file": "sheet_310.png",
+      "file": "sheet_367.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55315,10 +55315,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_silvershade_adult_walk": {
-      "file": "sheet_307.png",
+      "file": "sheet_363.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55333,7 +55333,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_silvershade_adult_run": {
-      "file": "sheet_306.png",
+      "file": "sheet_362.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55348,7 +55348,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_silvershade_adult_sleep": {
-      "file": "sheet_310.png",
+      "file": "sheet_367.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55360,10 +55360,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_silvershade_young_idle": {
-      "file": "sheet_310.png",
+      "file": "sheet_367.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55375,10 +55375,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_silvershade_young_walk": {
-      "file": "sheet_309.png",
+      "file": "sheet_365.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55393,7 +55393,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_silvershade_young_play": {
-      "file": "sheet_308.png",
+      "file": "sheet_364.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55408,7 +55408,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_silvershade_young_sleep": {
-      "file": "sheet_310.png",
+      "file": "sheet_367.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55420,7 +55420,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_silvershade": {
       "file": "ui_pet_silvershade.png",
@@ -55441,7 +55441,7 @@ window.GAME_ATLAS = {
       ]
     },
     "pet_mainecoon_adult_idle": {
-      "file": "sheet_214.png",
+      "file": "sheet_271.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55453,10 +55453,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 192
+      "sy": 0
     },
     "pet_mainecoon_adult_walk": {
-      "file": "sheet_211.png",
+      "file": "sheet_267.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55471,7 +55471,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mainecoon_adult_run": {
-      "file": "sheet_210.png",
+      "file": "sheet_266.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55486,7 +55486,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mainecoon_adult_sleep": {
-      "file": "sheet_214.png",
+      "file": "sheet_271.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55498,10 +55498,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 192
     },
     "pet_mainecoon_young_idle": {
-      "file": "sheet_214.png",
+      "file": "sheet_271.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55513,10 +55513,10 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 576
+      "sy": 384
     },
     "pet_mainecoon_young_walk": {
-      "file": "sheet_213.png",
+      "file": "sheet_269.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55531,7 +55531,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mainecoon_young_play": {
-      "file": "sheet_212.png",
+      "file": "sheet_268.png",
       "frames": 8,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55546,7 +55546,7 @@ window.GAME_ATLAS = {
       "sy": 0
     },
     "pet_mainecoon_young_sleep": {
-      "file": "sheet_214.png",
+      "file": "sheet_271.png",
       "frames": 4,
       "frameWidth": 256,
       "frameHeight": 192,
@@ -55558,7 +55558,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 768
+      "sy": 576
     },
     "ui_pet_mainecoon": {
       "file": "ui_pet_mainecoon.png",
@@ -57911,7 +57911,7 @@ window.GAME_ATLAS = {
       "sy": 512
     },
     "fishtop_ayu": {
-      "file": "sheet_112.png",
+      "file": "sheet_142.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -57923,7 +57923,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 736
     },
     "ui_fish_ayu": {
       "file": "ui_fish_ayu.png",
@@ -57939,7 +57939,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_salmon": {
-      "file": "sheet_114.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -57951,7 +57951,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 128
+      "sy": 512
     },
     "ui_fish_salmon": {
       "file": "ui_fish_salmon.png",
@@ -57967,7 +57967,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_eel_glass": {
-      "file": "sheet_113.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -57979,7 +57979,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "ui_fish_eel_glass": {
       "file": "ui_fish_eel_glass.png",
@@ -57995,7 +57995,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_eel_yellow": {
-      "file": "sheet_113.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -58007,7 +58007,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 512
+      "sy": 896
     },
     "ui_fish_eel_yellow": {
       "file": "ui_fish_eel_yellow.png",
@@ -58023,7 +58023,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_eel_silver": {
-      "file": "sheet_113.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -58035,7 +58035,7 @@ window.GAME_ATLAS = {
       ],
       "scale": 4,
       "sx": 0,
-      "sy": 384
+      "sy": 768
     },
     "ui_fish_eel_silver": {
       "file": "ui_fish_eel_silver.png",
@@ -58051,7 +58051,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_scallop": {
-      "file": "sheet_114.png",
+      "file": "sheet_144.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -58064,7 +58064,7 @@ window.GAME_ATLAS = {
       "scale": 4,
       "shell": true,
       "sx": 0,
-      "sy": 256
+      "sy": 640
     },
     "ui_fish_scallop": {
       "file": "ui_fish_scallop.png",
@@ -58080,7 +58080,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "fishtop_clam": {
-      "file": "sheet_113.png",
+      "file": "sheet_143.png",
       "frames": 3,
       "frameWidth": 192,
       "frameHeight": 128,
@@ -58093,7 +58093,7 @@ window.GAME_ATLAS = {
       "scale": 4,
       "shell": true,
       "sx": 0,
-      "sy": 0
+      "sy": 384
     },
     "ui_fish_clam": {
       "file": "ui_fish_clam.png",
@@ -58109,7 +58109,7 @@ window.GAME_ATLAS = {
       "scale": 4
     },
     "net_paper_ok": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 220,
@@ -58120,10 +58120,10 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 768,
-      "sy": 128
+      "sy": 384
     },
     "net_paper_soft": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 220,
@@ -58134,10 +58134,10 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 0,
-      "sy": 348
+      "sy": 604
     },
     "net_paper_torn": {
-      "file": "sheet_130.png",
+      "file": "sheet_163.png",
       "frames": 1,
       "frameWidth": 160,
       "frameHeight": 220,
@@ -58148,7 +58148,7 @@ window.GAME_ATLAS = {
         72
       ],
       "sx": 160,
-      "sy": 348
+      "sy": 604
     },
     "ui_it_paper_net": {
       "file": "ui_it_paper_net.png",
@@ -58220,6 +58220,9962 @@ window.GAME_ATLAS = {
       "anchor": [
         0,
         0
+      ]
+    },
+    "bug_rainbow_stag_idle": {
+      "file": "sheet_099.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 12.2,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_rainbow_stag_walk": {
+      "file": "sheet_100.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_rainbow_stag_fly": {
+      "file": "sheet_099.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_rainbow_stag_dead": {
+      "file": "sheet_099.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_rainbow_stag_larva": {
+      "file": "sheet_100.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_rainbow_stag_pupa": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_rainbow_stag": {
+      "file": "ui_bug_rainbow_stag.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        21,
+        124,
+        106
+      ]
+    },
+    "ui_pg_bug_rainbow_stag": {
+      "file": "ui_pg_bug_rainbow_stag.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        58,
+        304,
+        261
+      ]
+    },
+    "ui_pt_bug_rainbow_stag": {
+      "file": "ui_pt_bug_rainbow_stag.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        74,
+        300,
+        245
+      ]
+    },
+    "ui_spec_bug_rainbow_stag": {
+      "file": "ui_spec_bug_rainbow_stag.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        33,
+        146,
+        126
+      ]
+    },
+    "bug_golden_oni_idle": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 14.5,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_golden_oni_walk": {
+      "file": "sheet_096.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_golden_oni_fly": {
+      "file": "sheet_095.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_golden_oni_dead": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_golden_oni_larva": {
+      "file": "sheet_095.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_golden_oni_pupa": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_golden_oni": {
+      "file": "ui_bug_golden_oni.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        21,
+        124,
+        106
+      ]
+    },
+    "ui_pg_bug_golden_oni": {
+      "file": "ui_pg_bug_golden_oni.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        58,
+        304,
+        262
+      ]
+    },
+    "ui_pt_bug_golden_oni": {
+      "file": "ui_pt_bug_golden_oni.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        63,
+        300,
+        256
+      ]
+    },
+    "ui_spec_bug_golden_oni": {
+      "file": "ui_spec_bug_golden_oni.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        33,
+        146,
+        127
+      ]
+    },
+    "bug_metallifer_idle": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 15.0,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_metallifer_walk": {
+      "file": "sheet_097.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_metallifer_fly": {
+      "file": "sheet_097.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_metallifer_dead": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_metallifer_larva": {
+      "file": "sheet_097.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_metallifer_pupa": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_metallifer": {
+      "file": "ui_bug_metallifer.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        22,
+        124,
+        105
+      ]
+    },
+    "ui_pg_bug_metallifer": {
+      "file": "ui_pg_bug_metallifer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        60,
+        304,
+        260
+      ]
+    },
+    "ui_pt_bug_metallifer": {
+      "file": "ui_pt_bug_metallifer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        80,
+        300,
+        239
+      ]
+    },
+    "ui_spec_bug_metallifer": {
+      "file": "ui_spec_bug_metallifer.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        34,
+        146,
+        126
+      ]
+    },
+    "bug_sumatra_giant_idle": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 14.0,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_sumatra_giant_walk": {
+      "file": "sheet_103.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_sumatra_giant_fly": {
+      "file": "sheet_102.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_sumatra_giant_dead": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_sumatra_giant_larva": {
+      "file": "sheet_103.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_sumatra_giant_pupa": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_sumatra_giant": {
+      "file": "ui_bug_sumatra_giant.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        23,
+        124,
+        104
+      ]
+    },
+    "ui_pg_bug_sumatra_giant": {
+      "file": "ui_pg_bug_sumatra_giant.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        62,
+        304,
+        257
+      ]
+    },
+    "ui_pt_bug_sumatra_giant": {
+      "file": "ui_pt_bug_sumatra_giant.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        88,
+        300,
+        232
+      ]
+    },
+    "ui_spec_bug_sumatra_giant": {
+      "file": "ui_spec_bug_sumatra_giant.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        35,
+        146,
+        124
+      ]
+    },
+    "bug_deer_stag_idle": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 15.2,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_deer_stag_walk": {
+      "file": "sheet_095.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_deer_stag_fly": {
+      "file": "sheet_095.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_deer_stag_dead": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_deer_stag_larva": {
+      "file": "sheet_095.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_deer_stag_pupa": {
+      "file": "sheet_095.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_deer_stag": {
+      "file": "ui_bug_deer_stag.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        21,
+        124,
+        106
+      ]
+    },
+    "ui_pg_bug_deer_stag": {
+      "file": "ui_pg_bug_deer_stag.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        58,
+        304,
+        262
+      ]
+    },
+    "ui_pt_bug_deer_stag": {
+      "file": "ui_pt_bug_deer_stag.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        58,
+        300,
+        261
+      ]
+    },
+    "ui_spec_bug_deer_stag": {
+      "file": "ui_spec_bug_deer_stag.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        33,
+        146,
+        127
+      ]
+    },
+    "bug_tw_round_wing_idle": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 11.0,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_tw_round_wing_walk": {
+      "file": "sheet_105.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_tw_round_wing_fly": {
+      "file": "sheet_105.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_tw_round_wing_dead": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_tw_round_wing_larva": {
+      "file": "sheet_105.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_tw_round_wing_pupa": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_tw_round_wing": {
+      "file": "ui_bug_tw_round_wing.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        22,
+        124,
+        105
+      ]
+    },
+    "ui_pg_bug_tw_round_wing": {
+      "file": "ui_pg_bug_tw_round_wing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        60,
+        304,
+        259
+      ]
+    },
+    "ui_pt_bug_tw_round_wing": {
+      "file": "ui_pt_bug_tw_round_wing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        76,
+        300,
+        244
+      ]
+    },
+    "ui_spec_bug_tw_round_wing": {
+      "file": "ui_spec_bug_tw_round_wing.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        34,
+        146,
+        125
+      ]
+    },
+    "bug_miyama_flat_idle": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 14.5,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_miyama_flat_walk": {
+      "file": "sheet_098.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_miyama_flat_fly": {
+      "file": "sheet_097.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_miyama_flat_dead": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_miyama_flat_larva": {
+      "file": "sheet_097.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_miyama_flat_pupa": {
+      "file": "sheet_097.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_miyama_flat": {
+      "file": "ui_bug_miyama_flat.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        24,
+        124,
+        103
+      ]
+    },
+    "ui_pg_bug_miyama_flat": {
+      "file": "ui_pg_bug_miyama_flat.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        65,
+        304,
+        254
+      ]
+    },
+    "ui_pt_bug_miyama_flat": {
+      "file": "ui_pt_bug_miyama_flat.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        64,
+        300,
+        256
+      ]
+    },
+    "ui_spec_bug_miyama_flat": {
+      "file": "ui_spec_bug_miyama_flat.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        36,
+        146,
+        123
+      ]
+    },
+    "bug_oni_glossy_idle": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 14.8,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_oni_glossy_walk": {
+      "file": "sheet_099.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_oni_glossy_fly": {
+      "file": "sheet_098.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_oni_glossy_dead": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_oni_glossy_larva": {
+      "file": "sheet_098.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_oni_glossy_pupa": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_oni_glossy": {
+      "file": "ui_bug_oni_glossy.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        25,
+        124,
+        103
+      ]
+    },
+    "ui_pg_bug_oni_glossy": {
+      "file": "ui_pg_bug_oni_glossy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        67,
+        304,
+        253
+      ]
+    },
+    "ui_pt_bug_oni_glossy": {
+      "file": "ui_pt_bug_oni_glossy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        71,
+        300,
+        249
+      ]
+    },
+    "ui_spec_bug_oni_glossy": {
+      "file": "ui_spec_bug_oni_glossy.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        37,
+        146,
+        122
+      ]
+    },
+    "bug_tw_rhino_idle": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 22.0,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_tw_rhino_walk": {
+      "file": "sheet_105.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_tw_rhino_fly": {
+      "file": "sheet_104.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_tw_rhino_dead": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_tw_rhino_larva": {
+      "file": "sheet_105.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_tw_rhino_pupa": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_tw_rhino": {
+      "file": "ui_bug_tw_rhino.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        17,
+        4,
+        110,
+        124
+      ]
+    },
+    "ui_pg_bug_tw_rhino": {
+      "file": "ui_pg_bug_tw_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        48,
+        16,
+        272,
+        304
+      ]
+    },
+    "ui_pt_bug_tw_rhino": {
+      "file": "ui_pt_bug_tw_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        25,
+        300,
+        294
+      ]
+    },
+    "ui_spec_bug_tw_rhino": {
+      "file": "ui_spec_bug_tw_rhino.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        28,
+        14,
+        131,
+        146
+      ]
+    },
+    "bug_thai_rhino_idle": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 16.2,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_thai_rhino_walk": {
+      "file": "sheet_103.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_thai_rhino_fly": {
+      "file": "sheet_103.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_thai_rhino_dead": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_thai_rhino_larva": {
+      "file": "sheet_103.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_thai_rhino_pupa": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_thai_rhino": {
+      "file": "ui_bug_thai_rhino.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        11,
+        4,
+        117,
+        124
+      ]
+    },
+    "ui_pg_bug_thai_rhino": {
+      "file": "ui_pg_bug_thai_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        33,
+        16,
+        287,
+        304
+      ]
+    },
+    "ui_pt_bug_thai_rhino": {
+      "file": "ui_pt_bug_thai_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        46,
+        300,
+        273
+      ]
+    },
+    "ui_spec_bug_thai_rhino": {
+      "file": "ui_spec_bug_thai_rhino.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        21,
+        14,
+        138,
+        146
+      ]
+    },
+    "bug_kanamori_rhino_idle": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 14.2,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_kanamori_rhino_walk": {
+      "file": "sheet_097.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_kanamori_rhino_fly": {
+      "file": "sheet_096.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_kanamori_rhino_dead": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_kanamori_rhino_larva": {
+      "file": "sheet_096.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_kanamori_rhino_pupa": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_kanamori_rhino": {
+      "file": "ui_bug_kanamori_rhino.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        4,
+        113,
+        124
+      ]
+    },
+    "ui_pg_bug_kanamori_rhino": {
+      "file": "ui_pg_bug_kanamori_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        41,
+        16,
+        279,
+        304
+      ]
+    },
+    "ui_pt_bug_kanamori_rhino": {
+      "file": "ui_pt_bug_kanamori_rhino.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        70,
+        300,
+        249
+      ]
+    },
+    "ui_spec_bug_kanamori_rhino": {
+      "file": "ui_spec_bug_kanamori_rhino.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        25,
+        14,
+        134,
+        146
+      ]
+    },
+    "bug_hercules_idle": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 21.0,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_hercules_walk": {
+      "file": "sheet_096.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_hercules_fly": {
+      "file": "sheet_096.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_hercules_dead": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_hercules_larva": {
+      "file": "sheet_096.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_hercules_pupa": {
+      "file": "sheet_096.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_hercules": {
+      "file": "ui_bug_hercules.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        13,
+        4,
+        114,
+        124
+      ]
+    },
+    "ui_pg_bug_hercules": {
+      "file": "ui_pg_bug_hercules.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        39,
+        16,
+        281,
+        304
+      ]
+    },
+    "ui_pt_bug_hercules": {
+      "file": "ui_pt_bug_hercules.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        62,
+        300,
+        258
+      ]
+    },
+    "ui_spec_bug_hercules": {
+      "file": "ui_spec_bug_hercules.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        24,
+        14,
+        135,
+        146
+      ]
+    },
+    "bug_caucasus_idle": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 21.5,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_caucasus_walk": {
+      "file": "sheet_095.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_caucasus_fly": {
+      "file": "sheet_094.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_caucasus_dead": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_caucasus_larva": {
+      "file": "sheet_094.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_caucasus_pupa": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_caucasus": {
+      "file": "ui_bug_caucasus.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        10,
+        4,
+        117,
+        124
+      ]
+    },
+    "ui_pg_bug_caucasus": {
+      "file": "ui_pg_bug_caucasus.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        32,
+        16,
+        288,
+        304
+      ]
+    },
+    "ui_pt_bug_caucasus": {
+      "file": "ui_pt_bug_caucasus.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        53,
+        300,
+        267
+      ]
+    },
+    "ui_spec_bug_caucasus": {
+      "file": "ui_spec_bug_caucasus.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        21,
+        14,
+        138,
+        146
+      ]
+    },
+    "bug_seven_spot_idle": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 8.2,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_seven_spot_walk": {
+      "file": "sheet_101.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_seven_spot_fly": {
+      "file": "sheet_101.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_seven_spot_dead": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_seven_spot_larva": {
+      "file": "sheet_101.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_seven_spot_pupa": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_seven_spot": {
+      "file": "ui_bug_seven_spot.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        14,
+        124,
+        114
+      ]
+    },
+    "ui_pg_bug_seven_spot": {
+      "file": "ui_pg_bug_seven_spot.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        39,
+        304,
+        280
+      ]
+    },
+    "ui_pt_bug_seven_spot": {
+      "file": "ui_pt_bug_seven_spot.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        66,
+        300,
+        254
+      ]
+    },
+    "ui_spec_bug_seven_spot": {
+      "file": "ui_spec_bug_seven_spot.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        24,
+        146,
+        135
+      ]
+    },
+    "bug_red_star_idle": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 7.8,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_red_star_walk": {
+      "file": "sheet_101.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_red_star_fly": {
+      "file": "sheet_100.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_red_star_dead": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_red_star_larva": {
+      "file": "sheet_101.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_red_star_pupa": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_red_star": {
+      "file": "ui_bug_red_star.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        13,
+        124,
+        114
+      ]
+    },
+    "ui_pg_bug_red_star": {
+      "file": "ui_pg_bug_red_star.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        38,
+        304,
+        281
+      ]
+    },
+    "ui_pt_bug_red_star": {
+      "file": "ui_pt_bug_red_star.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        71,
+        300,
+        248
+      ]
+    },
+    "ui_spec_bug_red_star": {
+      "file": "ui_spec_bug_red_star.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        24,
+        146,
+        135
+      ]
+    },
+    "bug_six_stripe_idle": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 8.8,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_six_stripe_walk": {
+      "file": "sheet_102.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_six_stripe_fly": {
+      "file": "sheet_101.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_six_stripe_dead": {
+      "file": "sheet_101.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_six_stripe_larva": {
+      "file": "sheet_102.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_six_stripe_pupa": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_six_stripe": {
+      "file": "ui_bug_six_stripe.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        12,
+        124,
+        116
+      ]
+    },
+    "ui_pg_bug_six_stripe": {
+      "file": "ui_pg_bug_six_stripe.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        35,
+        304,
+        285
+      ]
+    },
+    "ui_pt_bug_six_stripe": {
+      "file": "ui_pt_bug_six_stripe.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        58,
+        300,
+        261
+      ]
+    },
+    "ui_spec_bug_six_stripe": {
+      "file": "ui_spec_bug_six_stripe.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        22,
+        146,
+        137
+      ]
+    },
+    "bug_yellow_lady_idle": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 8.0,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_yellow_lady_walk": {
+      "file": "sheet_108.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_yellow_lady_fly": {
+      "file": "sheet_107.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_yellow_lady_dead": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_yellow_lady_larva": {
+      "file": "sheet_108.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_yellow_lady_pupa": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_yellow_lady": {
+      "file": "ui_bug_yellow_lady.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        5,
+        4,
+        122,
+        124
+      ]
+    },
+    "ui_pg_bug_yellow_lady": {
+      "file": "ui_pg_bug_yellow_lady.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        16,
+        301,
+        304
+      ]
+    },
+    "ui_pt_bug_yellow_lady": {
+      "file": "ui_pt_bug_yellow_lady.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        60,
+        300,
+        260
+      ]
+    },
+    "ui_spec_bug_yellow_lady": {
+      "file": "ui_spec_bug_yellow_lady.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        15,
+        14,
+        144,
+        146
+      ]
+    },
+    "bug_twentyeight_idle": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 8.8,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_twentyeight_walk": {
+      "file": "sheet_106.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_twentyeight_fly": {
+      "file": "sheet_105.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_twentyeight_dead": {
+      "file": "sheet_105.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_twentyeight_larva": {
+      "file": "sheet_106.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_twentyeight_pupa": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_twentyeight": {
+      "file": "ui_bug_twentyeight.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        4,
+        124,
+        123
+      ]
+    },
+    "ui_pg_bug_twentyeight": {
+      "file": "ui_pg_bug_twentyeight.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        16,
+        304,
+        303
+      ]
+    },
+    "ui_pt_bug_twentyeight": {
+      "file": "ui_pt_bug_twentyeight.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        59,
+        300,
+        260
+      ]
+    },
+    "ui_spec_bug_twentyeight": {
+      "file": "ui_spec_bug_twentyeight.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        14,
+        146,
+        145
+      ]
+    },
+    "bug_big_shoulder_idle": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 10.8,
+      "sx": 800,
+      "sy": 688
+    },
+    "bug_big_shoulder_walk": {
+      "file": "sheet_093.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_big_shoulder_fly": {
+      "file": "sheet_092.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 688
+    },
+    "bug_big_shoulder_dead": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 688
+    },
+    "bug_big_shoulder_larva": {
+      "file": "sheet_092.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 848
+    },
+    "bug_big_shoulder_pupa": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 848
+    },
+    "ui_bug_big_shoulder": {
+      "file": "ui_bug_big_shoulder.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        4,
+        123,
+        124
+      ]
+    },
+    "ui_pg_bug_big_shoulder": {
+      "file": "ui_pg_bug_big_shoulder.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        17,
+        16,
+        302,
+        304
+      ]
+    },
+    "ui_pt_bug_big_shoulder": {
+      "file": "ui_pt_bug_big_shoulder.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        51,
+        300,
+        269
+      ]
+    },
+    "ui_spec_bug_big_shoulder": {
+      "file": "ui_spec_bug_big_shoulder.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        15,
+        14,
+        145,
+        146
+      ]
+    },
+    "bug_black_wing_idle": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 6.2,
+      "sx": 800,
+      "sy": 640
+    },
+    "bug_black_wing_walk": {
+      "file": "sheet_094.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_black_wing_fly": {
+      "file": "sheet_093.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 640
+    },
+    "bug_black_wing_dead": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_black_wing_larva": {
+      "file": "sheet_093.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_black_wing_pupa": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 800
+    },
+    "ui_bug_black_wing": {
+      "file": "ui_bug_black_wing.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        22,
+        124,
+        105
+      ]
+    },
+    "ui_pg_bug_black_wing": {
+      "file": "ui_pg_bug_black_wing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        60,
+        304,
+        260
+      ]
+    },
+    "ui_pt_bug_black_wing": {
+      "file": "ui_pt_bug_black_wing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        80,
+        300,
+        239
+      ]
+    },
+    "ui_spec_bug_black_wing": {
+      "file": "ui_spec_bug_black_wing.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        34,
+        146,
+        126
+      ]
+    },
+    "bug_yellow_edge_idle": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 8.2,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_yellow_edge_walk": {
+      "file": "sheet_107.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_yellow_edge_fly": {
+      "file": "sheet_107.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_yellow_edge_dead": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_yellow_edge_larva": {
+      "file": "sheet_107.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_yellow_edge_pupa": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_yellow_edge": {
+      "file": "ui_bug_yellow_edge.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        25,
+        124,
+        103
+      ]
+    },
+    "ui_pg_bug_yellow_edge": {
+      "file": "ui_pg_bug_yellow_edge.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        67,
+        304,
+        253
+      ]
+    },
+    "ui_pt_bug_yellow_edge": {
+      "file": "ui_pt_bug_yellow_edge.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        83,
+        300,
+        236
+      ]
+    },
+    "ui_spec_bug_yellow_edge": {
+      "file": "ui_spec_bug_yellow_edge.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        37,
+        146,
+        122
+      ]
+    },
+    "bug_black_tip_idle": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 7.5,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_black_tip_walk": {
+      "file": "sheet_093.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_black_tip_fly": {
+      "file": "sheet_093.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_black_tip_dead": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_black_tip_larva": {
+      "file": "sheet_093.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_black_tip_pupa": {
+      "file": "sheet_093.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_black_tip": {
+      "file": "ui_bug_black_tip.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        32,
+        124,
+        96
+      ]
+    },
+    "ui_pg_bug_black_tip": {
+      "file": "ui_pg_bug_black_tip.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        83,
+        304,
+        237
+      ]
+    },
+    "ui_pt_bug_black_tip": {
+      "file": "ui_pt_bug_black_tip.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        85,
+        300,
+        235
+      ]
+    },
+    "ui_spec_bug_black_tip": {
+      "file": "ui_spec_bug_black_tip.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        44,
+        146,
+        115
+      ]
+    },
+    "bug_red_chest_idle": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 10.2,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_red_chest_walk": {
+      "file": "sheet_100.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_red_chest_fly": {
+      "file": "sheet_100.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_red_chest_dead": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_red_chest_larva": {
+      "file": "sheet_100.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_red_chest_pupa": {
+      "file": "sheet_100.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_red_chest": {
+      "file": "ui_bug_red_chest.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        28,
+        124,
+        100
+      ]
+    },
+    "ui_pg_bug_red_chest": {
+      "file": "ui_pg_bug_red_chest.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        73,
+        304,
+        246
+      ]
+    },
+    "ui_pt_bug_red_chest": {
+      "file": "ui_pt_bug_red_chest.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        69,
+        300,
+        250
+      ]
+    },
+    "ui_spec_bug_red_chest": {
+      "file": "ui_spec_bug_red_chest.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        40,
+        146,
+        119
+      ]
+    },
+    "bug_snow_firefly_idle": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 7.0,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_snow_firefly_walk": {
+      "file": "sheet_102.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_snow_firefly_fly": {
+      "file": "sheet_102.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_snow_firefly_dead": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_snow_firefly_larva": {
+      "file": "sheet_102.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_snow_firefly_pupa": {
+      "file": "sheet_102.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_snow_firefly": {
+      "file": "ui_bug_snow_firefly.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        26,
+        124,
+        101
+      ]
+    },
+    "ui_pg_bug_snow_firefly": {
+      "file": "ui_pg_bug_snow_firefly.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        70,
+        304,
+        249
+      ]
+    },
+    "ui_pt_bug_snow_firefly": {
+      "file": "ui_pt_bug_snow_firefly.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        75,
+        300,
+        245
+      ]
+    },
+    "ui_spec_bug_snow_firefly": {
+      "file": "ui_spec_bug_snow_firefly.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        39,
+        146,
+        121
+      ]
+    },
+    "bug_mountain_window_idle": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 10.0,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_mountain_window_walk": {
+      "file": "sheet_098.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_mountain_window_fly": {
+      "file": "sheet_098.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_mountain_window_dead": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_mountain_window_larva": {
+      "file": "sheet_098.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_mountain_window_pupa": {
+      "file": "sheet_098.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_mountain_window": {
+      "file": "ui_bug_mountain_window.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        22,
+        124,
+        105
+      ]
+    },
+    "ui_pg_bug_mountain_window": {
+      "file": "ui_pg_bug_mountain_window.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        60,
+        304,
+        260
+      ]
+    },
+    "ui_pt_bug_mountain_window": {
+      "file": "ui_pt_bug_mountain_window.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        75,
+        300,
+        244
+      ]
+    },
+    "ui_spec_bug_mountain_window": {
+      "file": "ui_spec_bug_mountain_window.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        34,
+        146,
+        126
+      ]
+    },
+    "bug_tw_longarm_idle": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 15.8,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_tw_longarm_walk": {
+      "file": "sheet_104.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_tw_longarm_fly": {
+      "file": "sheet_104.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_tw_longarm_dead": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_tw_longarm_larva": {
+      "file": "sheet_104.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_tw_longarm_pupa": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_tw_longarm": {
+      "file": "ui_bug_tw_longarm.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        13,
+        124,
+        115
+      ]
+    },
+    "ui_pg_bug_tw_longarm": {
+      "file": "ui_pg_bug_tw_longarm.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        37,
+        304,
+        282
+      ]
+    },
+    "ui_pt_bug_tw_longarm": {
+      "file": "ui_pt_bug_tw_longarm.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        69,
+        300,
+        251
+      ]
+    },
+    "ui_spec_bug_tw_longarm": {
+      "file": "ui_spec_bug_tw_longarm.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        24,
+        146,
+        136
+      ]
+    },
+    "bug_tw_horned_idle": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 15.5,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_tw_horned_walk": {
+      "file": "sheet_104.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_tw_horned_fly": {
+      "file": "sheet_103.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_tw_horned_dead": {
+      "file": "sheet_103.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_tw_horned_larva": {
+      "file": "sheet_104.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_tw_horned_pupa": {
+      "file": "sheet_104.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_tw_horned": {
+      "file": "ui_bug_tw_horned.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        13,
+        4,
+        115,
+        124
+      ]
+    },
+    "ui_pg_bug_tw_horned": {
+      "file": "ui_pg_bug_tw_horned.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        37,
+        16,
+        282,
+        304
+      ]
+    },
+    "ui_pt_bug_tw_horned": {
+      "file": "ui_pt_bug_tw_horned.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        31,
+        300,
+        289
+      ]
+    },
+    "ui_spec_bug_tw_horned": {
+      "file": "ui_spec_bug_tw_horned.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        24,
+        14,
+        136,
+        146
+      ]
+    },
+    "bug_white_chafer_idle": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 10.5,
+      "sx": 800,
+      "sy": 320
+    },
+    "bug_white_chafer_walk": {
+      "file": "sheet_106.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_white_chafer_fly": {
+      "file": "sheet_106.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 320
+    },
+    "bug_white_chafer_dead": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_white_chafer_larva": {
+      "file": "sheet_106.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_white_chafer_pupa": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 480
+    },
+    "ui_bug_white_chafer": {
+      "file": "ui_bug_white_chafer.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        9,
+        4,
+        119,
+        124
+      ]
+    },
+    "ui_pg_bug_white_chafer": {
+      "file": "ui_pg_bug_white_chafer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        27,
+        16,
+        292,
+        304
+      ]
+    },
+    "ui_pt_bug_white_chafer": {
+      "file": "ui_pt_bug_white_chafer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        68,
+        300,
+        252
+      ]
+    },
+    "ui_spec_bug_white_chafer": {
+      "file": "ui_spec_bug_white_chafer.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        14,
+        140,
+        146
+      ]
+    },
+    "bug_white_spot_idle": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 11.0,
+      "sx": 800,
+      "sy": 800
+    },
+    "bug_white_spot_walk": {
+      "file": "sheet_107.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_white_spot_fly": {
+      "file": "sheet_106.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 800
+    },
+    "bug_white_spot_dead": {
+      "file": "sheet_106.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 800
+    },
+    "bug_white_spot_larva": {
+      "file": "sheet_107.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_white_spot_pupa": {
+      "file": "sheet_107.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 0
+    },
+    "ui_bug_white_spot": {
+      "file": "ui_bug_white_spot.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        9,
+        4,
+        118,
+        124
+      ]
+    },
+    "ui_pg_bug_white_spot": {
+      "file": "ui_pg_bug_white_spot.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        30,
+        16,
+        290,
+        304
+      ]
+    },
+    "ui_pt_bug_white_spot": {
+      "file": "ui_pt_bug_white_spot.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        64,
+        300,
+        256
+      ]
+    },
+    "ui_spec_bug_white_spot": {
+      "file": "ui_spec_bug_white_spot.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        14,
+        139,
+        146
+      ]
+    },
+    "bug_bronze_chafer_idle": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 11.0,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_bronze_chafer_walk": {
+      "file": "sheet_094.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_bronze_chafer_fly": {
+      "file": "sheet_094.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_bronze_chafer_dead": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_bronze_chafer_larva": {
+      "file": "sheet_094.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_bronze_chafer_pupa": {
+      "file": "sheet_094.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_bronze_chafer": {
+      "file": "ui_bug_bronze_chafer.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        6,
+        124,
+        121
+      ]
+    },
+    "ui_pg_bug_bronze_chafer": {
+      "file": "ui_pg_bug_bronze_chafer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        22,
+        304,
+        298
+      ]
+    },
+    "ui_pt_bug_bronze_chafer": {
+      "file": "ui_pt_bug_bronze_chafer.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        64,
+        300,
+        256
+      ]
+    },
+    "ui_spec_bug_bronze_chafer": {
+      "file": "ui_spec_bug_bronze_chafer.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        16,
+        146,
+        143
+      ]
+    },
+    "bug_big_dung_idle": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 13.2,
+      "sx": 0,
+      "sy": 208
+    },
+    "bug_big_dung_walk": {
+      "file": "sheet_092.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 528
+    },
+    "bug_big_dung_fly": {
+      "file": "sheet_092.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 352,
+      "sy": 0
+    },
+    "bug_big_dung_push": {
+      "file": "sheet_092.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 8,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 368
+    },
+    "bug_big_dung_dead": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 0
+    },
+    "bug_big_dung_larva": {
+      "file": "sheet_092.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 160,
+      "sy": 208
+    },
+    "bug_big_dung_pupa": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 208
+    },
+    "ui_bug_big_dung": {
+      "file": "ui_bug_big_dung.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        10,
+        124,
+        118
+      ]
+    },
+    "ui_pg_bug_big_dung": {
+      "file": "ui_pg_bug_big_dung.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        30,
+        304,
+        290
+      ]
+    },
+    "ui_pt_bug_big_dung": {
+      "file": "ui_pt_bug_big_dung.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        52,
+        300,
+        268
+      ]
+    },
+    "ui_spec_bug_big_dung": {
+      "file": "ui_spec_bug_big_dung.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        20,
+        146,
+        139
+      ]
+    },
+    "bug_rainbow_dung_idle": {
+      "file": "sheet_099.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "top": 12.8,
+      "sx": 800,
+      "sy": 160
+    },
+    "bug_rainbow_dung_walk": {
+      "file": "sheet_099.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 10,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 640
+    },
+    "bug_rainbow_dung_fly": {
+      "file": "sheet_099.png",
+      "frames": 4,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 16,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "up": 9,
+      "sx": 160,
+      "sy": 160
+    },
+    "bug_rainbow_dung_push": {
+      "file": "sheet_099.png",
+      "frames": 6,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 8,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 480
+    },
+    "bug_rainbow_dung_dead": {
+      "file": "sheet_099.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 160
+    },
+    "bug_rainbow_dung_larva": {
+      "file": "sheet_099.png",
+      "frames": 2,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 2,
+      "loop": true,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 320
+    },
+    "bug_rainbow_dung_pupa": {
+      "file": "sheet_099.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 320
+    },
+    "ui_bug_rainbow_dung": {
+      "file": "ui_bug_rainbow_dung.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        9,
+        124,
+        118
+      ]
+    },
+    "ui_pg_bug_rainbow_dung": {
+      "file": "ui_pg_bug_rainbow_dung.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        29,
+        304,
+        291
+      ]
+    },
+    "ui_pt_bug_rainbow_dung": {
+      "file": "ui_pt_bug_rainbow_dung.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        49,
+        300,
+        271
+      ]
+    },
+    "ui_spec_bug_rainbow_dung": {
+      "file": "ui_spec_bug_rainbow_dung.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        20,
+        146,
+        140
+      ]
+    },
+    "ui_badge_bug_stag": {
+      "file": "ui_badge_bug_stag.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_stag_off": {
+      "file": "ui_badge_bug_stag_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_rhino": {
+      "file": "ui_badge_bug_rhino.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_rhino_off": {
+      "file": "ui_badge_bug_rhino_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_lady": {
+      "file": "ui_badge_bug_lady.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_lady_off": {
+      "file": "ui_badge_bug_lady_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_firefly": {
+      "file": "ui_badge_bug_firefly.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_firefly_off": {
+      "file": "ui_badge_bug_firefly_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_scarab": {
+      "file": "ui_badge_bug_scarab.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_scarab_off": {
+      "file": "ui_badge_bug_scarab_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_dung": {
+      "file": "ui_badge_bug_dung.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_dung_off": {
+      "file": "ui_badge_bug_dung_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_all": {
+      "file": "ui_badge_bug_all.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_all_off": {
+      "file": "ui_badge_bug_all_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_dragonfly": {
+      "file": "ui_badge_bug_dragonfly.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_bug_dragonfly_off": {
+      "file": "ui_badge_bug_dragonfly_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_frog": {
+      "file": "ui_badge_frog.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_frog_off": {
+      "file": "ui_badge_frog_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_owl": {
+      "file": "ui_badge_owl.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_owl_off": {
+      "file": "ui_badge_owl_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_st_catch": {
+      "file": "ui_pg_st_catch.png",
+      "frames": 1,
+      "frameWidth": 260,
+      "frameHeight": 214,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "building_bug_box_empty": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 512,
+      "sy": 576
+    },
+    "snow_building_bug_box_empty": {
+      "file": "sheet_468.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 512,
+      "sy": 688
+    },
+    "building_bug_box_larva": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 640,
+      "sy": 576
+    },
+    "snow_building_bug_box_larva": {
+      "file": "sheet_468.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 640,
+      "sy": 688
+    },
+    "building_bug_box_adult": {
+      "file": "sheet_108.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 384,
+      "sy": 576
+    },
+    "snow_building_bug_box_adult": {
+      "file": "sheet_468.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 384,
+      "sy": 688
+    },
+    "ui_bug_box": {
+      "file": "ui_bug_box.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        54
+      ]
+    },
+    "ui_hd_bug_box": {
+      "file": "ui_hd_bug_box.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        136
+      ]
+    },
+    "ui_it_bug_jelly": {
+      "file": "ui_it_bug_jelly.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        40
+      ]
+    },
+    "ui_pg_bug_jelly": {
+      "file": "ui_pg_bug_jelly.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        100
+      ]
+    },
+    "ui_tab_beetles": {
+      "file": "ui_tab_beetles.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        30,
+        30
+      ]
+    },
+    "ui_tab_dragonfly": {
+      "file": "ui_tab_dragonfly.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        30
+      ]
+    },
+    "ui_tab_owl": {
+      "file": "ui_tab_owl.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        31
+      ]
+    },
+    "ui_tab_frog": {
+      "file": "ui_tab_frog.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        31
+      ]
+    },
+    "dfly_nymph": {
+      "file": "sheet_141.png",
+      "frames": 4,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "dfly_emerge": {
+      "file": "sheet_139.png",
+      "frames": 6,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 1,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_pantala_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.5,
+      "sx": 384,
+      "sy": 416
+    },
+    "bug_pantala_fly": {
+      "file": "sheet_086.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_pantala_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 416
+    },
+    "ui_bug_pantala": {
+      "file": "ui_bug_pantala.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        10,
+        4,
+        118,
+        124
+      ]
+    },
+    "ui_pg_bug_pantala": {
+      "file": "ui_pg_bug_pantala.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        27,
+        12,
+        293,
+        308
+      ]
+    },
+    "ui_spec_bug_pantala": {
+      "file": "ui_spec_bug_pantala.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        12,
+        141,
+        148
+      ]
+    },
+    "ui_pt_bug_pantala": {
+      "file": "ui_pt_bug_pantala.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        28,
+        20,
+        292,
+        300
+      ]
+    },
+    "bug_neurothemis_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.0,
+      "sx": 0,
+      "sy": 416
+    },
+    "bug_neurothemis_fly": {
+      "file": "sheet_085.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_neurothemis_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 768,
+      "sy": 208
+    },
+    "ui_bug_neurothemis": {
+      "file": "ui_bug_neurothemis.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        4,
+        114,
+        124
+      ]
+    },
+    "ui_pg_bug_neurothemis": {
+      "file": "ui_pg_bug_neurothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        36,
+        12,
+        283,
+        308
+      ]
+    },
+    "ui_spec_bug_neurothemis": {
+      "file": "ui_spec_bug_neurothemis.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        23,
+        12,
+        137,
+        148
+      ]
+    },
+    "ui_pt_bug_neurothemis": {
+      "file": "ui_pt_bug_neurothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        37,
+        20,
+        282,
+        300
+      ]
+    },
+    "bug_crocothemis_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.2,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_crocothemis_fly": {
+      "file": "sheet_079.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_crocothemis_dead": {
+      "file": "sheet_080.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 704,
+      "sy": 816
+    },
+    "ui_bug_crocothemis": {
+      "file": "ui_bug_crocothemis.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        9,
+        4,
+        118,
+        124
+      ]
+    },
+    "ui_pg_bug_crocothemis": {
+      "file": "ui_pg_bug_crocothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        25,
+        12,
+        294,
+        308
+      ]
+    },
+    "ui_spec_bug_crocothemis": {
+      "file": "ui_spec_bug_crocothemis.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        18,
+        12,
+        141,
+        148
+      ]
+    },
+    "ui_pt_bug_crocothemis": {
+      "file": "ui_pt_bug_crocothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        26,
+        20,
+        293,
+        300
+      ]
+    },
+    "bug_frost_white_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.8,
+      "sx": 384,
+      "sy": 0
+    },
+    "bug_frost_white_fly": {
+      "file": "sheet_081.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_frost_white_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 0
+    },
+    "ui_bug_frost_white": {
+      "file": "ui_bug_frost_white.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        10,
+        4,
+        117,
+        124
+      ]
+    },
+    "ui_pg_bug_frost_white": {
+      "file": "ui_pg_bug_frost_white.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        27,
+        12,
+        292,
+        308
+      ]
+    },
+    "ui_spec_bug_frost_white": {
+      "file": "ui_spec_bug_frost_white.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        12,
+        141,
+        148
+      ]
+    },
+    "ui_pt_bug_frost_white": {
+      "file": "ui_pt_bug_frost_white.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        27,
+        20,
+        292,
+        300
+      ]
+    },
+    "bug_trithemis_idle": {
+      "file": "sheet_092.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 14.2,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_trithemis_fly": {
+      "file": "sheet_090.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_trithemis_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 768,
+      "sy": 624
+    },
+    "ui_bug_trithemis": {
+      "file": "ui_bug_trithemis.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        9,
+        4,
+        118,
+        124
+      ]
+    },
+    "ui_pg_bug_trithemis": {
+      "file": "ui_pg_bug_trithemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        26,
+        12,
+        294,
+        308
+      ]
+    },
+    "ui_spec_bug_trithemis": {
+      "file": "ui_spec_bug_trithemis.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        18,
+        12,
+        141,
+        148
+      ]
+    },
+    "ui_pt_bug_trithemis": {
+      "file": "ui_pt_bug_trithemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        27,
+        20,
+        293,
+        300
+      ]
+    },
+    "bug_juniper_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 14.8,
+      "sx": 576,
+      "sy": 208
+    },
+    "bug_juniper_fly": {
+      "file": "sheet_084.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_juniper_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 208
+    },
+    "ui_bug_juniper": {
+      "file": "ui_bug_juniper.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        4,
+        120,
+        124
+      ]
+    },
+    "ui_pg_bug_juniper": {
+      "file": "ui_pg_bug_juniper.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        21,
+        12,
+        298,
+        308
+      ]
+    },
+    "ui_spec_bug_juniper": {
+      "file": "ui_spec_bug_juniper.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        12,
+        143,
+        148
+      ]
+    },
+    "ui_pt_bug_juniper": {
+      "file": "ui_pt_bug_juniper.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        22,
+        20,
+        298,
+        300
+      ]
+    },
+    "bug_golden_df_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 15.2,
+      "sx": 768,
+      "sy": 0
+    },
+    "bug_golden_df_fly": {
+      "file": "sheet_082.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_golden_df_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 576,
+      "sy": 0
+    },
+    "ui_bug_golden_df": {
+      "file": "ui_bug_golden_df.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        4,
+        116,
+        124
+      ]
+    },
+    "ui_pg_bug_golden_df": {
+      "file": "ui_pg_bug_golden_df.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        31,
+        12,
+        289,
+        308
+      ]
+    },
+    "ui_spec_bug_golden_df": {
+      "file": "ui_spec_bug_golden_df.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        21,
+        12,
+        139,
+        148
+      ]
+    },
+    "ui_pt_bug_golden_df": {
+      "file": "ui_pt_bug_golden_df.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        31,
+        20,
+        289,
+        300
+      ]
+    },
+    "bug_grey_black_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.2,
+      "sx": 192,
+      "sy": 208
+    },
+    "bug_grey_black_fly": {
+      "file": "sheet_083.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_grey_black_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 208
+    },
+    "ui_bug_grey_black": {
+      "file": "ui_bug_grey_black.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        4,
+        115,
+        124
+      ]
+    },
+    "ui_pg_bug_grey_black": {
+      "file": "ui_pg_bug_grey_black.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        33,
+        12,
+        286,
+        308
+      ]
+    },
+    "ui_spec_bug_grey_black": {
+      "file": "ui_spec_bug_grey_black.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        22,
+        12,
+        138,
+        148
+      ]
+    },
+    "ui_pt_bug_grey_black": {
+      "file": "ui_pt_bug_grey_black.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        34,
+        20,
+        286,
+        300
+      ]
+    },
+    "bug_tripod_vein_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.0,
+      "sx": 576,
+      "sy": 624
+    },
+    "bug_tripod_vein_fly": {
+      "file": "sheet_089.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_tripod_vein_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 624
+    },
+    "ui_bug_tripod_vein": {
+      "file": "ui_bug_tripod_vein.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        11,
+        4,
+        116,
+        124
+      ]
+    },
+    "ui_pg_bug_tripod_vein": {
+      "file": "ui_pg_bug_tripod_vein.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        30,
+        12,
+        289,
+        308
+      ]
+    },
+    "ui_spec_bug_tripod_vein": {
+      "file": "ui_spec_bug_tripod_vein.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        12,
+        139,
+        148
+      ]
+    },
+    "ui_pt_bug_tripod_vein": {
+      "file": "ui_pt_bug_tripod_vein.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        31,
+        20,
+        289,
+        300
+      ]
+    },
+    "bug_rhyothemis_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 16.0,
+      "sx": 768,
+      "sy": 416
+    },
+    "bug_rhyothemis_fly": {
+      "file": "sheet_087.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_rhyothemis_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 576,
+      "sy": 416
+    },
+    "ui_bug_rhyothemis": {
+      "file": "ui_bug_rhyothemis.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        9,
+        4,
+        119,
+        124
+      ]
+    },
+    "ui_pg_bug_rhyothemis": {
+      "file": "ui_pg_bug_rhyothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        25,
+        12,
+        295,
+        308
+      ]
+    },
+    "ui_spec_bug_rhyothemis": {
+      "file": "ui_spec_bug_rhyothemis.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        18,
+        12,
+        142,
+        148
+      ]
+    },
+    "ui_pt_bug_rhyothemis": {
+      "file": "ui_pt_bug_rhyothemis.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        25,
+        20,
+        294,
+        300
+      ]
+    },
+    "bug_stout_waist_idle": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 15.2,
+      "sx": 192,
+      "sy": 624
+    },
+    "bug_stout_waist_fly": {
+      "file": "sheet_088.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_stout_waist_dead": {
+      "file": "sheet_091.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 624
+    },
+    "ui_bug_stout_waist": {
+      "file": "ui_bug_stout_waist.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        4,
+        116,
+        124
+      ]
+    },
+    "ui_pg_bug_stout_waist": {
+      "file": "ui_pg_bug_stout_waist.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        32,
+        12,
+        288,
+        308
+      ]
+    },
+    "ui_spec_bug_stout_waist": {
+      "file": "ui_spec_bug_stout_waist.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        21,
+        12,
+        139,
+        148
+      ]
+    },
+    "ui_pt_bug_stout_waist": {
+      "file": "ui_pt_bug_stout_waist.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        32,
+        20,
+        288,
+        300
+      ]
+    },
+    "bug_anax_spotted_idle": {
+      "file": "sheet_080.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "top": 17.0,
+      "sx": 512,
+      "sy": 816
+    },
+    "bug_anax_spotted_fly": {
+      "file": "sheet_078.png",
+      "frames": 10,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 20,
+      "loop": true,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "up": 12,
+      "sx": 0,
+      "sy": 0
+    },
+    "bug_anax_spotted_dead": {
+      "file": "sheet_080.png",
+      "frames": 1,
+      "frameWidth": 192,
+      "frameHeight": 208,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        96,
+        128
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 816
+    },
+    "ui_bug_anax_spotted": {
+      "file": "ui_bug_anax_spotted.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        5,
+        4,
+        122,
+        124
+      ]
+    },
+    "ui_pg_bug_anax_spotted": {
+      "file": "ui_pg_bug_anax_spotted.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        16,
+        12,
+        304,
+        308
+      ]
+    },
+    "ui_spec_bug_anax_spotted": {
+      "file": "ui_spec_bug_anax_spotted.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        14,
+        12,
+        146,
+        148
+      ]
+    },
+    "ui_pt_bug_anax_spotted": {
+      "file": "ui_pt_bug_anax_spotted.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        25,
+        300,
+        294
+      ]
+    },
+    "owl_pygmy_perch": {
+      "file": "sheet_176.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 15,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_pygmy_sleep": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 448
+    },
+    "owl_pygmy_peck": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 224
+    },
+    "owl_pygmy_fly": {
+      "file": "sheet_175.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_pygmy": {
+      "file": "ui_owl_pygmy.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        4,
+        108,
+        124
+      ]
+    },
+    "ui_pg_owl_pygmy": {
+      "file": "ui_pg_owl_pygmy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        50,
+        12,
+        270,
+        308
+      ]
+    },
+    "ui_pt_owl_pygmy": {
+      "file": "ui_pt_owl_pygmy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        50,
+        12,
+        270,
+        308
+      ]
+    },
+    "owl_burrowing_perch": {
+      "file": "sheet_169.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 19,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_burrowing_sleep": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 672
+    },
+    "owl_burrowing_peck": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 448
+    },
+    "owl_burrowing_fly": {
+      "file": "sheet_168.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_burrowing": {
+      "file": "ui_owl_burrowing.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        29,
+        4,
+        99,
+        124
+      ]
+    },
+    "ui_pg_owl_burrowing": {
+      "file": "ui_pg_owl_burrowing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        76,
+        12,
+        244,
+        308
+      ]
+    },
+    "ui_pt_owl_burrowing": {
+      "file": "ui_pt_owl_burrowing.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        76,
+        12,
+        244,
+        308
+      ]
+    },
+    "owl_boreal_perch": {
+      "file": "sheet_167.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 20,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_boreal_sleep": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 448
+    },
+    "owl_boreal_peck": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 224
+    },
+    "owl_boreal_fly": {
+      "file": "sheet_166.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_boreal": {
+      "file": "ui_owl_boreal.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        25,
+        4,
+        103,
+        124
+      ]
+    },
+    "ui_pg_owl_boreal": {
+      "file": "ui_pg_owl_boreal.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        261,
+        308
+      ]
+    },
+    "ui_pt_owl_boreal": {
+      "file": "ui_pt_owl_boreal.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        261,
+        308
+      ]
+    },
+    "owl_barn_perch": {
+      "file": "sheet_162.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 26,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_barn_sleep": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_barn_peck": {
+      "file": "sheet_163.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 320,
+      "sy": 604
+    },
+    "owl_barn_fly": {
+      "file": "sheet_161.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_barn": {
+      "file": "ui_owl_barn.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        20,
+        4,
+        107,
+        124
+      ]
+    },
+    "ui_pg_owl_barn": {
+      "file": "ui_pg_owl_barn.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        260,
+        308
+      ]
+    },
+    "ui_pt_owl_barn": {
+      "file": "ui_pt_owl_barn.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        260,
+        308
+      ]
+    },
+    "owl_tawny_perch": {
+      "file": "sheet_183.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 27,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_tawny_sleep": {
+      "file": "sheet_187.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "owl_tawny_peck": {
+      "file": "sheet_187.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 0
+    },
+    "owl_tawny_fly": {
+      "file": "sheet_182.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_tawny": {
+      "file": "ui_owl_tawny.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        24,
+        4,
+        104,
+        124
+      ]
+    },
+    "ui_pg_owl_tawny": {
+      "file": "ui_pg_owl_tawny.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        66,
+        12,
+        254,
+        308
+      ]
+    },
+    "ui_pt_owl_tawny": {
+      "file": "ui_pt_owl_tawny.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        66,
+        12,
+        254,
+        308
+      ]
+    },
+    "owl_tawny_fish_perch": {
+      "file": "sheet_180.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 31,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_tawny_fish_sleep": {
+      "file": "sheet_187.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_tawny_fish_peck": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 672
+    },
+    "owl_tawny_fish_fly": {
+      "file": "sheet_179.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_tawny_fish": {
+      "file": "ui_owl_tawny_fish.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        26,
+        4,
+        101,
+        124
+      ]
+    },
+    "ui_pg_owl_tawny_fish": {
+      "file": "ui_pg_owl_tawny_fish.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        69,
+        12,
+        251,
+        308
+      ]
+    },
+    "ui_pt_owl_tawny_fish": {
+      "file": "ui_pt_owl_tawny_fish.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        69,
+        12,
+        251,
+        308
+      ]
+    },
+    "owl_blakiston_perch": {
+      "file": "sheet_165.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 33.8,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_blakiston_sleep": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "owl_blakiston_peck": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 0
+    },
+    "owl_blakiston_fly": {
+      "file": "sheet_164.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_blakiston": {
+      "file": "ui_owl_blakiston.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        24,
+        4,
+        104,
+        124
+      ]
+    },
+    "ui_pg_owl_blakiston": {
+      "file": "ui_pg_owl_blakiston.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        260,
+        308
+      ]
+    },
+    "ui_pt_owl_blakiston": {
+      "file": "ui_pt_owl_blakiston.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        59,
+        12,
+        260,
+        308
+      ]
+    },
+    "owl_snowy_perch": {
+      "file": "sheet_178.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 30,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_snowy_sleep": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 672
+    },
+    "owl_snowy_peck": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 448
+    },
+    "owl_snowy_fly": {
+      "file": "sheet_177.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_snowy": {
+      "file": "ui_owl_snowy.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        19,
+        4,
+        109,
+        124
+      ]
+    },
+    "ui_pg_owl_snowy": {
+      "file": "ui_pg_owl_snowy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        51,
+        12,
+        268,
+        308
+      ]
+    },
+    "ui_pt_owl_snowy": {
+      "file": "ui_pt_owl_snowy.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        51,
+        12,
+        268,
+        308
+      ]
+    },
+    "owl_great_gray_perch": {
+      "file": "sheet_171.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 34,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_great_gray_sleep": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_great_gray_peck": {
+      "file": "sheet_172.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 672
+    },
+    "owl_great_gray_fly": {
+      "file": "sheet_170.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_great_gray": {
+      "file": "ui_owl_great_gray.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        26,
+        4,
+        102,
+        124
+      ]
+    },
+    "ui_pg_owl_great_gray": {
+      "file": "ui_pg_owl_great_gray.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        70,
+        12,
+        250,
+        308
+      ]
+    },
+    "ui_pt_owl_great_gray": {
+      "file": "ui_pt_owl_great_gray.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        70,
+        12,
+        250,
+        308
+      ]
+    },
+    "owl_great_horned_perch": {
+      "file": "sheet_174.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 4,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "top": 31.8,
+      "sx": 0,
+      "sy": 0
+    },
+    "owl_great_horned_sleep": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 1,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "owl_great_horned_peck": {
+      "file": "sheet_181.png",
+      "frames": 2,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 0
+    },
+    "owl_great_horned_fly": {
+      "file": "sheet_173.png",
+      "frames": 8,
+      "frameWidth": 256,
+      "frameHeight": 224,
+      "fps": 12,
+      "loop": true,
+      "anchor": [
+        128,
+        196
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 0
+    },
+    "ui_owl_great_horned": {
+      "file": "ui_owl_great_horned.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        30,
+        4,
+        98,
+        124
+      ]
+    },
+    "ui_pg_owl_great_horned": {
+      "file": "ui_pg_owl_great_horned.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        69,
+        12,
+        250,
+        308
+      ]
+    },
+    "ui_pt_owl_great_horned": {
+      "file": "ui_pt_owl_great_horned.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        69,
+        12,
+        250,
+        308
+      ]
+    },
+    "building_owl_box_empty": {
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "hole": [
+        -11.52,
+        -67.24
+      ],
+      "sx": 680,
+      "sy": 0
+    },
+    "snow_building_owl_box_empty": {
+      "file": "sheet_472.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 680,
+      "sy": 0
+    },
+    "building_owl_box_home": {
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "hole": [
+        -11.52,
+        -67.24
+      ],
+      "sx": 808,
+      "sy": 0
+    },
+    "snow_building_owl_box_home": {
+      "file": "sheet_472.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 808,
+      "sy": 0
+    },
+    "building_owl_box_out": {
+      "file": "sheet_113.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "hole": [
+        -11.52,
+        -67.24
+      ],
+      "sx": 0,
+      "sy": 600
+    },
+    "snow_building_owl_box_out": {
+      "file": "sheet_472.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 192,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        150
+      ],
+      "sx": 0,
+      "sy": 600
+    },
+    "ui_owl_box": {
+      "file": "ui_owl_box.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        60
+      ]
+    },
+    "ui_hd_owl_box": {
+      "file": "ui_hd_owl_box.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        152
+      ]
+    },
+    "ui_it_frozen_mouse": {
+      "file": "ui_it_frozen_mouse.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        34
+      ]
+    },
+    "ui_pg_frozen_mouse": {
+      "file": "ui_pg_frozen_mouse.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        80,
+        84
+      ]
+    },
+    "item_frozen_mouse": {
+      "file": "sheet_159.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 48,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        32,
+        34
+      ],
+      "sx": 768,
+      "sy": 512
+    },
+    "ui_badge_owl_day": {
+      "file": "ui_badge_owl_day.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_badge_owl_day_off": {
+      "file": "ui_badge_owl_day_off.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "frog_rice_field_idle": {
+      "file": "sheet_152.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 8.0,
+      "sx": 0,
+      "sy": 336
+    },
+    "frog_rice_field_jump": {
+      "file": "sheet_152.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 448
+    },
+    "frog_rice_field_tongue": {
+      "file": "sheet_152.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 560
+    },
+    "frog_rice_field_dead": {
+      "file": "sheet_152.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 224
+    },
+    "frog_rice_field_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 528
+    },
+    "frog_rice_field_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 592
+    },
+    "frog_rice_field_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 592
+    },
+    "frog_rice_field_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 528
+    },
+    "frog_rice_field_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 528
+    },
+    "ui_frog_rice_field": {
+      "file": "ui_frog_rice_field.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        50,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_rice_field": {
+      "file": "ui_pg_frog_rice_field.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        87,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_rice_field": {
+      "file": "ui_pt_frog_rice_field.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        87,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_rice_field": {
+      "file": "ui_frogegg_rice_field.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        119
+      ]
+    },
+    "frog_narrow_mouth_idle": {
+      "file": "sheet_152.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 5.0,
+      "sx": 0,
+      "sy": 0
+    },
+    "frog_narrow_mouth_jump": {
+      "file": "sheet_152.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 112
+    },
+    "frog_narrow_mouth_tongue": {
+      "file": "sheet_152.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "frog_narrow_mouth_dead": {
+      "file": "sheet_151.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 896
+    },
+    "frog_narrow_mouth_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 464
+    },
+    "frog_narrow_mouth_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 528
+    },
+    "frog_narrow_mouth_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 528
+    },
+    "frog_narrow_mouth_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 464
+    },
+    "frog_narrow_mouth_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 464
+    },
+    "ui_frog_narrow_mouth": {
+      "file": "ui_frog_narrow_mouth.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        59,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_narrow_mouth": {
+      "file": "ui_pg_frog_narrow_mouth.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        85,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_narrow_mouth": {
+      "file": "ui_pt_frog_narrow_mouth.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        85,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_narrow_mouth": {
+      "file": "ui_frogegg_narrow_mouth.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        119
+      ]
+    },
+    "frog_toad_idle": {
+      "file": "sheet_152.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 10.5,
+      "sx": 0,
+      "sy": 672
+    },
+    "frog_toad_jump": {
+      "file": "sheet_152.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 784
+    },
+    "frog_toad_tongue": {
+      "file": "sheet_152.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 896
+    },
+    "frog_toad_dead": {
+      "file": "sheet_152.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 560
+    },
+    "frog_toad_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 592
+    },
+    "frog_toad_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 656
+    },
+    "frog_toad_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 656
+    },
+    "frog_toad_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 592
+    },
+    "frog_toad_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 592
+    },
+    "ui_frog_toad": {
+      "file": "ui_frog_toad.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        40,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_toad": {
+      "file": "ui_pg_frog_toad.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        57,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_toad": {
+      "file": "ui_pt_frog_toad.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        57,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_toad": {
+      "file": "ui_frogegg_toad.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        119
+      ]
+    },
+    "frog_tree_frog_idle": {
+      "file": "sheet_154.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 8.0,
+      "sx": 0,
+      "sy": 0
+    },
+    "frog_tree_frog_jump": {
+      "file": "sheet_154.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 112
+    },
+    "frog_tree_frog_tongue": {
+      "file": "sheet_154.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "frog_tree_frog_dead": {
+      "file": "sheet_152.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 896
+    },
+    "frog_tree_frog_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 656
+    },
+    "frog_tree_frog_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 720
+    },
+    "frog_tree_frog_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 720
+    },
+    "frog_tree_frog_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 656
+    },
+    "frog_tree_frog_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 656
+    },
+    "ui_frog_tree_frog": {
+      "file": "ui_frog_tree_frog.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        44,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_tree_frog": {
+      "file": "ui_pg_frog_tree_frog.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        49,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_tree_frog": {
+      "file": "ui_pt_frog_tree_frog.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        49,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_tree_frog": {
+      "file": "ui_frogegg_tree_frog.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        120
+      ]
+    },
+    "frog_guenther_idle": {
+      "file": "sheet_151.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 8.2,
+      "sx": 0,
+      "sy": 672
+    },
+    "frog_guenther_jump": {
+      "file": "sheet_151.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 784
+    },
+    "frog_guenther_tongue": {
+      "file": "sheet_151.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 896
+    },
+    "frog_guenther_dead": {
+      "file": "sheet_151.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 560
+    },
+    "frog_guenther_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 400
+    },
+    "frog_guenther_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 464
+    },
+    "frog_guenther_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 464
+    },
+    "frog_guenther_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 400
+    },
+    "frog_guenther_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 400
+    },
+    "ui_frog_guenther": {
+      "file": "ui_frog_guenther.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        48,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_guenther": {
+      "file": "ui_pg_frog_guenther.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        59,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_guenther": {
+      "file": "ui_pt_frog_guenther.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        59,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_guenther": {
+      "file": "ui_frogegg_guenther.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        120
+      ]
+    },
+    "frog_golden_line_idle": {
+      "file": "sheet_151.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 8.0,
+      "sx": 0,
+      "sy": 336
+    },
+    "frog_golden_line_jump": {
+      "file": "sheet_151.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 448
+    },
+    "frog_golden_line_tongue": {
+      "file": "sheet_151.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 560
+    },
+    "frog_golden_line_dead": {
+      "file": "sheet_151.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 224
+    },
+    "frog_golden_line_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 384,
+      "sy": 336
+    },
+    "frog_golden_line_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 400
+    },
+    "frog_golden_line_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 400
+    },
+    "frog_golden_line_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 672,
+      "sy": 336
+    },
+    "frog_golden_line_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 480,
+      "sy": 336
+    },
+    "ui_frog_golden_line": {
+      "file": "ui_frog_golden_line.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        52,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_golden_line": {
+      "file": "ui_pg_frog_golden_line.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        77,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_golden_line": {
+      "file": "ui_pt_frog_golden_line.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        77,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_golden_line": {
+      "file": "ui_frogegg_golden_line.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        120
+      ]
+    },
+    "frog_bullfrog_idle": {
+      "file": "sheet_151.png",
+      "frames": 8,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "top": 11.2,
+      "sx": 0,
+      "sy": 0
+    },
+    "frog_bullfrog_jump": {
+      "file": "sheet_151.png",
+      "frames": 5,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 12,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 112
+    },
+    "frog_bullfrog_tongue": {
+      "file": "sheet_151.png",
+      "frames": 4,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 10,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 224
+    },
+    "frog_bullfrog_dead": {
+      "file": "sheet_150.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 112,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        64,
+        96
+      ],
+      "scale": 4,
+      "sx": 704,
+      "sy": 896
+    },
+    "frog_bullfrog_egg": {
+      "file": "sheet_154.png",
+      "frames": 1,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 512,
+      "sy": 224
+    },
+    "frog_bullfrog_tad_s": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 192,
+      "sy": 336
+    },
+    "frog_bullfrog_tad_l": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 0,
+      "sy": 336
+    },
+    "frog_bullfrog_hind": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 800,
+      "sy": 224
+    },
+    "frog_bullfrog_front": {
+      "file": "sheet_154.png",
+      "frames": 2,
+      "frameWidth": 96,
+      "frameHeight": 64,
+      "fps": 3,
+      "loop": true,
+      "anchor": [
+        48,
+        32
+      ],
+      "scale": 4,
+      "sx": 608,
+      "sy": 224
+    },
+    "ui_frog_bullfrog": {
+      "file": "ui_frog_bullfrog.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        4,
+        53,
+        124,
+        124
+      ]
+    },
+    "ui_pg_frog_bullfrog": {
+      "file": "ui_pg_frog_bullfrog.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        76,
+        308,
+        308
+      ]
+    },
+    "ui_pt_frog_bullfrog": {
+      "file": "ui_pt_frog_bullfrog.png",
+      "frames": 1,
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        76,
+        308,
+        308
+      ]
+    },
+    "ui_frogegg_bullfrog": {
+      "file": "ui_frogegg_bullfrog.png",
+      "frames": 1,
+      "frameWidth": 128,
+      "frameHeight": 128,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        120,
+        120
       ]
     }
   }

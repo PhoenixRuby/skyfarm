@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.60.2-70a0924348'), getJSON('sprites/atlas.json?v=2.60.2-70a0924348')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.63-e470f5936c'), getJSON('sprites/atlas.json?v=2.63-e470f5936c')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14391,7 +14391,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.60.2-70a0924348';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.63-e470f5936c';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -22502,7 +22502,7 @@ const FRYID260 = (sp, st) => `r260_${sp}_${st}`, parseFry260 = id => { const m =
 /* ---------- 10. 倉庫：撈網與河鮮 ---------- */
 function rvSec260(){ const fry = S.fry260 || {}, rows = Object.keys(fry).filter(k => fry[k] > 0);
   const net = IMGSRC.ui_it_paper_net ? `<img class="ico" src="${IMGSRC.ui_it_paper_net}" alt="">` : '';
-  return `<section class="stsec c-b rvs260"><div class="stside"><b>撈網與河鮮</b>${IMGSRC.ui_it_paper_net ? `<img class="stpic" src="${IMGSRC.ui_it_paper_net}" alt="">` : ''}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th></th></tr></thead><tbody>
+  return `<section class="stsec c-b rvs260"><div class="stside"><b>撈網與河鮮</b>${(IMGSRC.ui_pg_st_catch || IMGSRC.ui_it_paper_net) ? `<img class="stpic" src="${IMGSRC.ui_pg_st_catch || IMGSRC.ui_it_paper_net}" alt="">` : ''}</div><div class="stmain"><table><thead><tr><th></th><th>物品</th><th class="num">數量</th><th></th></tr></thead><tbody>
     <tr><td>${net}</td><td>撈網<br><small>河流「撈魚」用，撈到破為止</small></td><td class="num">${fmtN(S.net260 || 0)}</td><td class="acts"><button class="btn" data-net260="1">買一包 ${CA260.pack || 5} 張 ${coinI()}${CA260.packPrice || 30}</button></td></tr>
     ${rows.map(k => { const [sp, st] = k.split('|'), ic = IMGSRC['ui_fish_' + sprOf260(sp, +st)]; return `<tr><td>${ic ? `<img class="ico" src="${ic}" alt="">` : ''}</td><td>${escapeHTML(CFG.fish[sp].name)}（${stName260(sp, +st)}）<br><small>魚苗・魚 → 河鮮 分頁放進魚池</small></td><td class="num">${fmtN(fry[k])}</td><td></td></tr>`; }).join('')}
     </tbody></table></div></section>`; }
@@ -22764,6 +22764,1209 @@ function sleepOff2602(P, d){ try { const C = (CFG.terrain2602 || {}).petSleep ||
     const L = residents(d.T), k = L.length, i = L.indexOf(P); if (k < 2 || i < 0) return [0, 0];
     const gap = Math.min(C.gap || .5, (C.maxSpread || 1) / (k - 1)), o = (i - (k - 1) / 2) * gap;
     return [o, -o]; } catch(e){ console.warn(e); return [0, 0]; } }
+
+/* ===== 116. v2.61：甲蟲、螢火蟲、瓢蟲收集（＋v2.64 蜻蜓的設定，圖還沒切之前不出現）
+   設定 CFG.bugs261（patches/patch_v2_61.py）。存檔 S.bug261 = { book: { 種: { got, raised, spec, first } }, spec: { 種: 數量 }, wild: [], rel: [], dead: [], zones: [], wildT, seq }
+   飼育箱＝device 'bug_box'（T.bx = { sp, list: [{ id, st, p, life }], fed, pair, pairCd, dead: [{ sp, t }], lastT }）
+   野外：每 checkMinutes 檢查一次，照季節／時間／地點／等級抽種類；點一下抓到 → 放進飼育箱或放生（活體不能賣、不進倉庫）
+   放生效果：瓢蟲 3×3 一天不長蟲、二十八星瓢蟲啃茄科（收成 ×0.8）、螢火蟲晚上點了 +經驗、糞金龜每天搬走 1 坨糞便
+   死掉 specimenChance 掉在地上（飼育箱裡的留在箱裡），撿起來做成甲蟲標本（倉庫「標本」） ===== */
+{ const st61 = document.createElement('style'); st61.textContent = `
+.bug61 .hd61{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px}.bug61 .hd61 span{color:var(--gsub);font-size:12px}
+.bug61 .ob61{position:relative;border-radius:14px;overflow:hidden}.bug61 #ob61{display:block;width:100%;height:170px}
+.bug61 .emp61{position:absolute;left:12px;right:12px;bottom:10px;margin:0;font-size:12px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6);text-align:center}
+.bug61 .sl61{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:8px 0}
+.bug61 .sl61 > *{min-height:74px;border-radius:12px;border:1px dashed var(--glb);background:var(--gcard);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px;font:inherit;color:var(--gtx)}
+.bug61 .m61{border-style:solid;cursor:pointer}.bug61 .m61.on{outline:2px solid #ffc53d}.bug61 .m61 canvas{width:52px;height:52px}.bug61 .m61 small{font-size:11px}
+.bug61 .egg61{display:block;width:14px;height:11px;margin:14px 0;border-radius:50%;background:#f6efd6;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
+.bug61 .pb61{display:block;width:90%;height:5px;border-radius:3px;background:rgba(0,0,0,.12);overflow:hidden}.bug61 .pb61 i{display:block;height:100%;background:#4fae4c}.bug61 .pb61.life i{background:#e2a03a}
+.bug61 .st61{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--gtx)}.bug61 .st61 canvas{width:18px;height:18px;vertical-align:middle}.bug61 .no61{color:var(--gwarn)}
+.bug61 .pk61{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 10px;border-radius:12px;background:var(--gcard);margin-top:8px;font-size:13px}.bug61 .pk61 .btn{margin-left:auto}
+.bug61 .cat61{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center}.bug61 .cat61 img{width:120px;height:120px;object-fit:contain}.bug61 .cat61 h3{margin:0 0 4px}
+.bug61 .r61-common{background:#e7f3e2;color:#2f7a2a}.bug61 .r61-rare{background:#e3eefc;color:#1f5fa8}.bug61 .r61-epic{background:#fbe8f3;color:#a8306f}
+.bug61 h3 canvas{width:28px;height:28px;vertical-align:middle;margin-right:6px}.bug61 h3 small{font-weight:400;color:var(--gsub);margin-left:6px}
+.bug61 .bk61{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.bug61 .bk61 > div{padding:8px;border-radius:12px;background:var(--gcard);text-align:center;font-size:12px;color:var(--gtx)}.bug61 .bk61 .pic61{display:block;width:84px;height:84px;margin:0 auto 4px}
+.bug61 .bk61 > div.no .pic61{filter:brightness(0) opacity(.25)}.bug61 .bk61 small{color:var(--gsub)}
+.item.nb61 canvas{filter:grayscale(1) opacity(.5)}
+@media (max-width:600px){.bug61 .sl61{grid-template-columns:repeat(3,1fr)}.bug61 .cat61{grid-template-columns:84px 1fr}.bug61 .cat61 img{width:84px;height:84px}}
+`; document.head.appendChild(st61); }
+const B61 = CFG.bugs261 || null;
+const SP61 = (B61 && B61.species) || {}, GR61 = (B61 && B61.groups) || {}, RA61 = (B61 && B61.rarity) || {}, BOX61 = (B61 && B61.box) || {}, EF61 = (B61 && B61.effects) || {}, WI61 = (B61 && B61.wild) || {};
+const STG61 = ['egg', 'larva', 'pupa', 'adult'], STN61 = { egg: '卵', larva: '幼蟲', pupa: '蛹', adult: '成蟲' };
+const DFON61 = !!(ATLAS.dfly_nymph || ATLAS.dfly_emerge);   // v2.64 蜻蜓的圖切好之前，蜻蜓不出現、分頁不顯示
+const GLOW61 = { black_wing: ['190,255,90', 'flash'], yellow_edge: ['200,255,100', 'steady'], black_tip: ['255,130,60', 'flash'], red_chest: ['200,255,100', 'steady'], snow_firefly: ['140,255,140', 'faint'], mountain_window: ['210,255,90', 'strong'] };
+const grp61 = sp => (SP61[sp] || {}).group || 'stag';
+const kind61 = sp => (GR61[grp61(sp)] || {}).kind || 'beetle';
+const rar61 = sp => RA61[(SP61[sp] || {}).rarity] || {};
+const spName61 = sp => (SP61[sp] || {}).name || '昆蟲';
+const isDf61 = sp => grp61(sp) === 'dragonfly';
+const lifeMs61 = sp => ((B61.lifeDays || {})[kind61(sp)] || 7) * DAYMS;
+const stageDays61 = (sp, st) => (((B61.growthDays || {})[kind61(sp)] || {})[st]) || 1;
+const isBox61 = T => !!T && T.t === 'device' && T.id === 'bug_box';
+const near61 = (a, b, r) => Math.abs(a[0] - b[0]) <= r && Math.abs(a[1] - b[1]) <= r;
+const bugId61 = sp => (isDf61(sp) ? 'dfly:' : 'bug:') + sp;
+function bs61(){ if (!S.bug261) S.bug261 = { book: {}, spec: {}, wild: [], rel: [], dead: [], zones: [], seq: 1 }; const s = S.bug261;
+  for (const k of ['wild', 'rel', 'dead', 'zones']) if (!Array.isArray(s[k])) s[k] = []; if (!s.book) s.book = {}; if (!s.spec) s.spec = {}; return s; }
+const nid61 = () => { const s = bs61(); return 'b' + (s.seq = (s.seq || 1) + 1).toString(36); };
+const book61 = sp => bs61().book[sp];
+const known61 = sp => !!book61(sp);
+// 月份（南半球的城市差半年）
+function month61(t){ let m = new Date(t).getMonth() + 1; try { if (getLatLon().lat < 0) m = (m + 5) % 12 + 1; } catch(e){} return m; }
+function whenOk61(w, t){ if (w === 'night') return isNightAt(t); if (w === 'day') return !isNightAt(t); return true; }
+function riverNear61(M, x, y, r){ for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const T = M.tiles[tkey(x + dx, y + dy)]; if (isRiver248(T)) return true; } return false; }
+function boxes61(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (isBox61(T)){ if (!T.bx) T.bx = { list: [], dead: [] }; const [x, y] = pkey(k); out.push({ M, mi, k, x, y, T }); } } }); return out; }
+const boxLive61 = T => (T.bx && T.bx.list || []).length;
+const boxCap61 = () => BOX61.cap || 6;
+function boxOk61(b, sp){ const X = b.T.bx; if (X.list.length && X.sp !== sp) return '這箱已經養別種了（一箱一種）'; if (X.list.length >= boxCap61()) return `這箱滿了（最多 ${boxCap61()} 隻）`;
+  if (BOX61.noDragonfly && isDf61(sp)) return '蜻蜓不能養在飼育箱'; if (grp61(sp) === 'firefly' && !riverNear61(b.M, b.x, b.y, BOX61.fireflyNearRiver || 3)) return `螢火蟲的飼育箱要放在河邊 ${BOX61.fireflyNearRiver || 3} 格內`; return null; }
+
+/* ---------- 1. 野外出現 ---------- */
+function cands61(M, near){ const out = [];
+  if (near.includes('any')){ for (const [x, y] of mapTiles(M)) out.push([x, y]); return out; }
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!T) continue; let ok = false;
+    for (const n of near){
+      if (n === 'fruitTree' && T.t === 'tree') ok = true;
+      else if (n === 'wildTree' && T.t === 'terrain' && T.kind === 'forest') ok = true;
+      else if (n === 'flower' && T.t === 'soil' && T.flower) ok = true;
+      else if (n === 'crop' && T.t === 'soil' && T.crop && !T.crop.wither) ok = true;
+      else if (n === 'poop' && T.t === 'poop') ok = true;
+      else if (n === 'river' && isRiver248(T)) ok = true;
+      else if (n === 'pool' && T.t === 'pool') ok = true; }
+    if (ok) out.push(pkey(k)); }
+  return out; }
+function spawnWild61(M, mi, t){
+  const s = bs61(), here = s.wild.filter(w => w.mi === mi);
+  const mon = month61(t), groups = WI61.groups || {}, cand = {}, pick = [];
+  for (const [g, G] of Object.entries(groups)){ if (g === 'dragonfly' && !DFON61) continue;
+    if (g === 'dragonfly' ? here.filter(w => isDf61(w.sp)).length >= (WI61.dragonflyMaxPerIsland || 2) : here.filter(w => !isDf61(w.sp)).length >= (WI61.maxPerIsland || 3)) continue;
+    if (!whenOk61(G.when, t)) continue;
+    for (const [sp, D] of Object.entries(SP61)){ if (D.group !== g || !isUnlocked(bugId61(sp))) continue;
+      const SPX = (G.species || {})[sp] || {}; if (!(SPX.months || G.months || []).includes(mon)) continue;
+      const key = g + (SPX.nearRiver ? ':r' : ''); if (!cand[key]){ let c = cands61(M, G.near || ['any']);
+        if (SPX.nearRiver){ c = c.filter(([x, y]) => riverNear61(M, x, y, SPX.nearRiver)); }
+        cand[key] = c; }
+      if (!cand[key].length) continue;
+      let w = (RA61[D.rarity] || {}).wildWeight || 1;
+      if (G.pestMult && Object.values(M.tiles).some(T => T && T.pest)) w *= G.pestMult;
+      pick.push({ sp, w, key }); } }
+  if (!pick.length) return null;
+  let r = Math.random() * pick.reduce((a, b) => a + b.w, 0), P = pick[0]; for (const p of pick){ r -= p.w; if (r <= 0){ P = p; break; } }
+  const [x, y] = rnd40(cand[P.key]), W = { id: nid61(), sp: P.sp, mi, x, y, ox: (Math.random() - .5) * .5, oy: (Math.random() - .5) * .5, t0: t, until: t + (WI61.staySeconds || 1800) * 1000, seed: Math.random() * 9 };
+  s.wild.push(W); return W; }
+function stepWild61(t){ const s = bs61();
+  s.wild = s.wild.filter(w => w.until > t && S.maps[w.mi]);
+  if (!liveT(t)){ s.wildT = t; return; }   // 離線補算不生野外昆蟲
+  const every = (WI61.checkMinutes || 10) * 60e3; if (!s.wildT || s.wildT > t){ s.wildT = t; return; } if (t - s.wildT < every) return; s.wildT = t;
+  S.maps.forEach((M, mi) => { if (Math.random() < (WI61.chance ?? .25)) spawnWild61(M, mi, t); }); }
+
+/* ---------- 2. 抓到 ---------- */
+function register61(sp, how){ const s = bs61(); let e = s.book[sp], first = false;
+  if (!e){ e = s.book[sp] = { got: 0, raised: 0, spec: 0, first: Date.now() }; first = true; }
+  if (how === 'got') e.got++; else if (how === 'raised') e.raised++;
+  stat('bug_' + grp61(sp)); return first; }
+function catchWild61(W, cx, cy){
+  const s = bs61(); s.wild = s.wild.filter(w => w !== W);
+  const first = register61(W.sp, 'got'), R0 = rar61(W.sp), xp = first ? (R0.firstXp || 20) : (R0.xp || 3);
+  gain(0, xp, cx, cy); floatText(cx, cy - 34, `抓到${spName61(W.sp)}！`, '#2f7fa8', 12); sfx('harvest');
+  catchAsk61(W.sp, W.mi, W.x, W.y, first); afterAction(); }
+function bestBox61(sp, mi){ const L = boxes61().filter(b => !boxOk61(b, sp));
+  L.sort((a, b) => (b.T.bx.list.length && b.T.bx.sp === sp) - (a.T.bx.list.length && a.T.bx.sp === sp) || (a.mi === mi ? 0 : 1) - (b.mi === mi ? 0 : 1)); return L[0] || null; }
+function boxWhy61(sp){ const L = boxes61(); if (!L.length) return `還沒有飼育箱（昆蟲 · 設施，Lv ${UNLOCK.bug_box || BOX61.level || 12}）`;
+  const r = L.map(b => boxOk61(b, sp)).filter(Boolean); return r[0] || '沒有可以放的飼育箱'; }
+function catchAsk61(sp, mi, x, y, first){
+  const D = SP61[sp] || {}, R0 = rar61(sp), bx = BOX61.noDragonfly && isDf61(sp) ? null : bestBox61(sp, mi), done = { v: false };
+  const release = () => { if (done.v) return; done.v = true; release61(sp, mi, x, y, 0); };
+  pendingPrompt = () => release();
+  openModal('抓到昆蟲', null, (k, el) => { el.classList.add('bug61');
+    el.innerHTML = `<div class="cat61"><img src="${IMGSRC['ui_pg_bug_' + sp] || ''}" alt=""><div><h3>${escapeHTML(D.name || '')}</h3>
+      <p><span class="pill">${escapeHTML((GR61[D.group] || {}).name || '')}</span> <span class="pill r61-${D.rarity}">${escapeHTML(R0.name || '')}</span>${first ? ' <span class="pill ok">新登記</span>' : ''}</p>
+      <p class="small">${first ? '第一次抓到，記進圖鑑「昆蟲收集」。' : `圖鑑已經有了（累計抓到 ${(book61(sp) || {}).got || 1} 隻）。`}活的昆蟲不能賣、也不進倉庫。</p></div></div>
+      <div class="row"><button class="btn" id="cBox61" ${bx ? '' : 'disabled'}>放進飼育箱</button><button class="btn ghost" id="cRel61">放生</button></div>
+      <p class="small">${bx ? `會放進${bx.mi === S.cur ? '這座島' : '另一座島'}的飼育箱（${bx.T.bx.list.length ? `已經有 ${bx.T.bx.list.length} 隻${spName61(sp)}` : '空箱'}）。` : escapeHTML(boxWhy61(sp))}</p>
+      <p class="small">${relText61(sp)}</p>`;
+    const b1 = el.querySelector('#cBox61'); if (b1) b1.onclick = () => { if (done.v) return; done.v = true; pendingPrompt = null; const X = bx.T.bx; X.sp = sp; X.list.push({ id: nid61(), st: 'adult', p: 0, life: 0 }); X.lastT = X.lastT || Date.now();
+      closeModal(); toast(`${spName61(sp)}放進飼育箱了，點飼育箱可以看裡面`, true, 3000); RT.decoVer++; afterAction(); };
+    el.querySelector('#cRel61').onclick = () => { pendingPrompt = null; closeModal(); release(); afterAction(); }; }); }
+function relText61(sp){ const g = grp61(sp), d = Math.round(lifeMs61(sp) / DAYMS);
+  if (sp === 'twentyeight') return `放生後會啃周圍 3×3 的茄科作物（收成 ×${(EF61.twentyeight || {}).yieldMult ?? .8}），活 ${d} 天。其實是害蟲，放生要小心！`;
+  if (g === 'lady') return `放生在原地：周圍 ${(EF61.lady || {}).area || 3}×${(EF61.lady || {}).area || 3} 一天內不長蟲，活 ${d} 天。`;
+  if (g === 'dung') return `放生在原地：每天把附近 ${(EF61.dung || {}).area || 5}×${(EF61.dung || {}).area || 5} 的 1 坨糞便搬走，活 ${d} 天。`;
+  if (g === 'firefly') return `放生在原地：晚上飛來飛去發光，點牠 +${(EF61.firefly || {}).tapXp || 3} 經驗（每晚一次），活 ${d} 天。`;
+  return `放生在原地，在附近爬 ${d} 天後走完一生。`; }
+function release61(sp, mi, x, y, used){ const s = bs61(), t = Date.now();
+  const R = { id: nid61(), sp, mi, x, y, ox: (Math.random() - .5) * .4, oy: (Math.random() - .5) * .4, t0: t, die: t + Math.max(DAYMS * .1, lifeMs61(sp) - (used || 0)), seed: Math.random() * 9 };
+  s.rel.push(R);
+  if (grp61(sp) === 'lady' && !((EF61.lady || {}).except || []).includes(sp)) s.zones.push({ mi, x, y, r: Math.floor(((EF61.lady || {}).area || 3) / 2), until: t + ((EF61.lady || {}).noPestHours || 24) * 3600e3 });
+  const c = center(x, y); floatText(c.cx, c.cy - 30, `放生${spName61(sp)}`, '#2f8a3a', 11); RT.decoVer++; return R; }
+
+/* ---------- 3. 放生的昆蟲、地上的屍體、效果 ---------- */
+function stepRel61(t){ const s = bs61(), today = dayNo40(t);
+  s.zones = s.zones.filter(z => z.until > t && S.maps[z.mi]);
+  const keep = [];
+  for (const R of s.rel){ const M = S.maps[R.mi]; if (!M) continue;
+    if (t >= R.die){ if (Math.random() < (B61.specimenChance ?? .5)) s.dead.push({ sp: R.sp, mi: R.mi, x: R.x, y: R.y, t: R.die });
+      if (isDf61(R.sp) && Math.random() < ((EF61.dragonfly || {}).selfBreedChance || 0)) dfBreed61(R);
+      continue; }
+    if (grp61(R.sp) === 'dung' && R.day !== today){ R.day = today; const r = Math.floor(((EF61.dung || {}).area || 5) / 2); let done = 0;
+      for (let dy = -r; dy <= r && done < ((EF61.dung || {}).poopPerDay || 1); dy++) for (let dx = -r; dx <= r && done < ((EF61.dung || {}).poopPerDay || 1); dx++){ const k = tkey(R.x + dx, R.y + dy); if (M.tiles[k] && M.tiles[k].t === 'poop'){ delete M.tiles[k]; done++; } }
+      if (done) RT.decoVer++; }
+    if (isDf61(R.sp) && R.day !== today){ R.day = today; const r = Math.floor(((EF61.dragonfly || {}).eatArea || 3) / 2);
+      for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(R.x + dx, R.y + dy)]; if (U && U.pest){ U.pest = false; U.pestTaps = 0; } } }
+    keep.push(R); }
+  s.rel = keep;
+  s.dead = s.dead.filter(d => t - d.t < DEADMS40 && S.maps[d.mi]);
+  // 瓢蟲不長蟲的範圍、二十八星瓢蟲啃的格子
+  const np = new Set(), y28 = new WeakSet(), E28 = EF61.twentyeight || {}, eats = new Set(E28.eatsCrops || []);
+  for (const z of s.zones) for (let dy = -z.r; dy <= z.r; dy++) for (let dx = -z.r; dx <= z.r; dx++) np.add(z.mi + '|' + tkey(z.x + dx, z.y + dy));
+  for (const R of s.rel) if (R.sp === 'twentyeight'){ const M = S.maps[R.mi], r = Math.floor((E28.area || 3) / 2);
+    for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(R.x + dx, R.y + dy)]; if (U && U.t === 'soil' && U.crop && eats.has(U.crop.id)) y28.add(U); } }
+  RT.noPest61 = np; RT.y28_61 = y28; }
+function dfBreed61(R){ /* v2.64：水蠆放回附近的魚池／河格（等蜻蜓的圖切好再開） */ }
+{ const _pr61 = pestRate; pestRate = function(mi, k, t){ if (RT.noPest61 && RT.noPest61.has(mi + '|' + k)) return 0; return _pr61(mi, k, t); }; }
+{ const _hc61 = harvestCrop; harvestCrop = function(T, cx, cy){ const on = !!(T && RT.y28_61 && RT.y28_61.has(T)), pv = RT.h28_61; RT.h28_61 = on; try { return _hc61(T, cx, cy); } finally { RT.h28_61 = pv; } }; }
+{ const _yq61 = yieldQty; yieldQty = function(item, amount){ if (RT.h28_61) amount *= (EF61.twentyeight || {}).yieldMult ?? .8; return _yq61(item, amount); }; }
+{ const _hn61 = harvestNote; harvestNote = function(H, org){ const n = _hn61(H, org); if (!RT.h28_61) return n; return (n ? n + '、' : '') + `二十八星瓢蟲 ×${(EF61.twentyeight || {}).yieldMult ?? .8}`; }; }
+function collectDead61(mi, x, y, cx, cy){ const s = bs61(), here = s.dead.filter(d => d.mi === mi && d.x === x && d.y === y); if (!here.length) return false;
+  s.dead = s.dead.filter(d => !here.includes(d)); for (const d of here) addSpec61(d.sp);
+  floatText(cx, cy - 30, `做成 ${here.length} 個標本`, '#2f7fa8', 11); sfx('harvest');
+  toast(`撿起${here.map(d => spName61(d.sp)).join('、')}，做成甲蟲標本放進倉庫「標本」`, true, 3600); afterAction(); return true; }
+function addSpec61(sp, n = 1){ const s = bs61(); s.spec[sp] = (s.spec[sp] || 0) + n; const e = s.book[sp] || (s.book[sp] = { got: 0, raised: 0, spec: 0, first: Date.now() }); e.spec = (e.spec || 0) + n; }
+
+/* ---------- 4. 飼育箱 ---------- */
+function stepBox61(T, t, M, k){ const X = T.bx || (T.bx = { list: [], dead: [] }); if (!X.dead) X.dead = [];
+  if (!X.list.length){ X.lastT = t; delete X.pair; return; }
+  const last = X.lastT || t; X.lastT = t; if (t <= last) return; const sp = X.sp, today = dayNo40(t);
+  // 每天吃 1 個昆蟲果凍（糞金龜吃糞便）；沒有就不長
+  if (X.fed !== today){ const food = grp61(sp) === 'dung' ? ((BOX61.food || {}).dungEats || 'poop') : ((BOX61.food || {}).item || 'bug_jelly');
+    if (invTake(food, (BOX61.food || {}).perDay || 1)){ X.fed = today; X.hungry = false; } else X.hungry = true; }
+  const fed = X.fed === today, dd = (t - last) / DAYMS;
+  const keep = [];
+  for (const m of X.list){
+    if (m.st === 'adult'){ m.life = (m.life || 0) + dd; if (m.life * DAYMS >= lifeMs61(sp)){ if (Math.random() < (B61.specimenChance ?? .5)) X.dead.push({ sp, t }); continue; } keep.push(m); continue; }
+    if (fed){ m.p = (m.p || 0) + dd; let g = 0; while (m.st !== 'adult' && m.p >= stageDays61(sp, m.st) && g++ < 4){ m.p -= stageDays61(sp, m.st); m.st = STG61[STG61.indexOf(m.st) + 1];
+        if (m.st === 'adult'){ m.p = 0; m.life = 0; register61(sp, 'raised'); if (liveT(t) && M === curMap()){ const [x, y] = pkey(k), c = center(x, y); floatText(c.cx, c.cy - 50, `${spName61(sp)}羽化了！`, '#2f8a3a', 11); } } } }
+    keep.push(m); }
+  X.list = keep;
+  // 配對：1 天後生 2～4 顆卵
+  const P = BOX61.pair || {};
+  if (X.pair && t >= X.pair){ delete X.pair; X.pairCd = t + (P.cooldownDays ?? 1) * DAYMS; const [a, b] = P.eggs || [2, 4], n = a + Math.floor(Math.random() * (b - a + 1));
+    for (let i = 0; i < n && X.list.length < boxCap61(); i++) X.list.push({ id: nid61(), st: 'egg', p: 0 }); }
+  if (!X.list.length && !X.dead.length) delete X.sp; }
+const adults61 = X => X.list.filter(m => m.st === 'adult');
+const canPair61 = X => adults61(X).length >= ((BOX61.pair || {}).minAdults || 2) && !X.pair && !(X.pairCd && Date.now() < X.pairCd) && X.list.length < boxCap61();
+function startPair61(T){ const X = T.bx; if (!canPair61(X)) return false; X.pair = Date.now() + ((BOX61.pair || {}).days ?? 1) * DAYMS; return true; }
+function boxState61(T){ const L = (T.bx && T.bx.list) || []; return L.some(m => m.st === 'adult') ? 'adult' : L.length ? 'larva' : 'empty'; }
+{ const _dd61 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  if (!isBox61(T)) return _dd61(T, k, cx, cy, t);
+  const n = 'building_bug_box_' + boxState61(T); spr(n, 0, cx, cy);
+  if (S.snow && S.snow.cover && ATLAS['snow_' + n]){ let g = false; try { g = glassAt(S.cur, k); } catch(e){} if (!g) spr('snow_' + n, 0, cx, cy); }
+  const X = T.bx; if (!X) return;
+  if (X.dead && X.dead.length) bubble(cx, cy - 46, '標本', 'ui_spec_bug_' + X.dead[0].sp, '#fffbe9');
+  else if (X.list.length && X.hungry) bubble(cx, cy - 46, '缺', grp61(X.sp) === 'dung' ? itemSprite('item', 'poop')[0] : 'ui_it_bug_jelly', '#ffe9e4');
+  else if (X.list.length && canPair61(X)) bubble(cx, cy - 46, '♥', null, '#ffeef4'); }; }
+// 放幼蟲（昆蟲 · 甲蟲分頁選好種類，點飼育箱）
+function addLarva61(M, k, T, sp, cx, cy){
+  const D = SP61[sp]; if (!D) return; const id = bugId61(sp);
+  if (!isUnlocked(id)){ toast(`${D.name}要到第 ${UNLOCK[id]} 級才開放`); return; }
+  if (!known61(sp)){ toast(`先在野外抓到${D.name}（記進圖鑑）才能買幼蟲`); return; }
+  if (!isBox61(T)){ toast(`${D.name}的幼蟲要放進飼育箱：先在「設施」放飼育箱，再點它`); return; }
+  const [x, y] = pkey(k), why = boxOk61({ M, mi: S.cur, k, x, y, T }, sp); if (why){ toast(why); return; }
+  const cost = rar61(sp).larvaCost || 40; if (!spend(cost)) return;
+  const X = T.bx; X.sp = sp; X.list.push({ id: nid61(), st: 'larva', p: 0 }); X.lastT = X.lastT || Date.now();
+  floatText(cx, cy - 50, `放${D.name}幼蟲 -${cost}`, '#8a5d36', 11); sfx('place'); RT.decoVer++;
+  const g = (B61.growthDays || {})[kind61(sp)] || {}; toast(`幼蟲 ${g.larva} 天、蛹 ${g.pupa} 天後羽化；每天吃 1 個${grp61(sp) === 'dung' ? '糞便' : '昆蟲果凍'}（倉庫自動扣）`, true, 3200); }
+function placeBox61(M, k, T, cx, cy){
+  if (T && T.t !== 'weed'){ toast('飼育箱要放在空的草地上'); return; } if (!isUnlocked('bug_box')){ toast(lockedMsg('bug_box')); return; }
+  const cost = DEV.bug_box.buildCost; if (!spend(cost)) return; if (T) pullWeed(M, k, cx, cy);
+  M.tiles[k] = { t: 'device', id: 'bug_box', bx: { list: [], dead: [] } }; floatText(cx, cy - 24, `-${fmtN(cost)}`, '#8a5d36', 11); sfx('place'); RT.decoVer++; }
+
+/* ---------- 5. 飼育箱面板：觀察窗＋清單＋狀態＋按鈕 ---------- */
+function bugImg61(sp, st, big){ if (st === 'adult') return big ? `ui_pt_bug_${sp}` : `ui_bug_${sp}`; if (st === 'egg') return null; return `bug_${sp}_${st}`; }
+function openBox61(M, k){
+  const T0 = M.tiles[k]; if (!isBox61(T0)) return; RT.box61 = { M, k, pick: null };
+  openModal('飼育箱', null, (kk, el) => { el.classList.add('bug61'); renderBox61(el, M, k); }); }
+function renderBox61(el, M, k){
+  const T = M.tiles[k]; if (!isBox61(T)){ el.innerHTML = '<p>這個飼育箱已經不在了。</p>'; return; }
+  const X = T.bx || (T.bx = { list: [], dead: [] }), sp = X.sp, now = Date.now(), D = SP61[sp] || {}, food = grp61(sp) === 'dung' ? 'poop' : 'bug_jelly';
+  const today = dayNo40(now), pair = BOX61.pair || {};
+  let h = `<div class="hd61"><b>${sp ? escapeHTML(D.name) + '・' : ''}飼育箱</b><span>${X.list.length} / ${boxCap61()} 隻</span></div>`;
+  h += `<div class="ob61"><canvas id="ob61"></canvas>${!X.list.length && !(X.dead || []).length ? '<p class="emp61">空箱：在「昆蟲 · 甲蟲」選幼蟲再點這個箱子，或把野外抓到的放進來</p>' : ''}</div><div id="pk61"></div>`;
+  // 清單 6 格
+  h += '<div class="sl61">';
+  for (let i = 0; i < boxCap61(); i++){ const m = X.list[i];
+    if (!m){ h += '<div class="e61"></div>'; continue; }
+    const dur = m.st === 'adult' ? lifeMs61(sp) / DAYMS : stageDays61(sp, m.st), v = m.st === 'adult' ? (m.life || 0) : (m.p || 0), pct = Math.max(0, Math.min(100, v / dur * 100)), n = bugImg61(sp, m.st, true);
+    h += `<button class="m61 ${X.pick === m.id ? 'on' : ''}" data-m61="${m.id}">${n ? `<canvas data-spr="${n}" data-f="0" class="ico"></canvas>` : '<i class="egg61"></i>'}<small>${STN61[m.st]}</small><span class="pb61 ${m.st === 'adult' ? 'life' : ''}"><i style="width:${pct.toFixed(0)}%"></i></span></button>`; }
+  h += '</div>';
+  // 狀態
+  const have = S.inv[food] || 0, fedT = X.fed === today;
+  h += `<div class="st61"><span>${itemIconHTML(food)}${food === 'poop' ? '糞便' : '昆蟲果凍'}：${X.list.length ? (fedT ? '今天吃過了' : '<b class="no61">沒有，停止成長</b>') : '—'}・倉庫還有 ${fmtN(have)} ${food === 'poop' ? '坨' : '個'}</span>`;
+  if (X.pair) h += `<span>配對中：${fmtDur((X.pair - now) / 1000)}後生卵</span>`; else if (X.pairCd && now < X.pairCd) h += `<span>剛配對過：${fmtDur((X.pairCd - now) / 1000)}後才能再配對</span>`;
+  h += '</div>';
+  if (sp && grp61(sp) === 'firefly') h += `<p class="small">螢火蟲的飼育箱要在河邊 ${BOX61.fireflyNearRiver || 3} 格內；晚上看觀察窗會發光。</p>`;
+  // 按鈕
+  const ad = adults61(X).length;
+  h += `<div class="row">`;
+  if (sp) h += `<button class="btn" id="bL61" ${known61(sp) && X.list.length < boxCap61() ? '' : 'disabled'}>再放一隻幼蟲 ${coinImg()}${fmtN(rar61(sp).larvaCost || 40)}</button>`;
+  h += `<button class="btn" id="bP61" ${canPair61(X) ? '' : 'disabled'}>配對（成蟲 ${ad} 隻）</button>`;
+  if ((X.dead || []).length) h += `<button class="btn" id="bD61">撿標本 ×${X.dead.length}</button>`;
+  h += `</div><p class="small">配對要 ${pair.minAdults || 2} 隻以上成蟲，${pair.days ?? 1} 天後生 ${(pair.eggs || [2, 4]).join('～')} 顆卵（裝不下的不生）。點清單或觀察窗裡的一隻看詳細、放生。飼育箱要收回倉庫時裡面要是空的。</p>`;
+  el.innerHTML = h; paintIcons(el);
+  const sel = id => { X.pick = X.pick === id ? null : id; renderBox61(el, M, k); };
+  el.querySelectorAll('[data-m61]').forEach(b => b.onclick = () => sel(b.dataset.m61));
+  const L = el.querySelector('#bL61'); if (L) L.onclick = () => { const [x, y] = pkey(k), c = center(x, y); addLarva61(M, k, T, sp, c.cx, c.cy); afterAction(); renderBox61(el, M, k); };
+  const Pb = el.querySelector('#bP61'); if (Pb) Pb.onclick = () => { if (startPair61(T)){ toast(`${D.name}開始配對，${pair.days ?? 1} 天後生卵`, true, 2600); afterAction(); } renderBox61(el, M, k); };
+  const Db = el.querySelector('#bD61'); if (Db) Db.onclick = () => { const n = X.dead.length; for (const d of X.dead) addSpec61(d.sp); X.dead = []; if (!X.list.length) delete X.sp; sfx('harvest'); toast(`做成 ${n} 個甲蟲標本，放進倉庫「標本」`, true, 2800); RT.decoVer++; afterAction(); renderBox61(el, M, k); };
+  // 選到的那隻
+  const m = X.list.find(q => q.id === X.pick), pk = el.querySelector('#pk61');
+  if (m && pk){ const dur = m.st === 'adult' ? lifeMs61(sp) / DAYMS : stageDays61(sp, m.st), v = m.st === 'adult' ? (m.life || 0) : (m.p || 0), left = Math.max(0, (dur - v) * DAYMS / 1000);
+    pk.innerHTML = `<div class="pk61"><b>${escapeHTML(D.name)}・${STN61[m.st]}</b><span>${m.st === 'adult' ? `還能活 ${fmtDur(left)}` : `再 ${fmtDur(left)}變成${STN61[STG61[STG61.indexOf(m.st) + 1]]}${fedT ? '' : '（沒吃的時候不長）'}`}</span>${m.st === 'adult' ? '<button class="btn ghost" id="bR61">放生</button>' : ''}</div>`;
+    const Rb = pk.querySelector('#bR61'); if (Rb) Rb.onclick = () => { const [x, y] = pkey(k); X.list = X.list.filter(q => q !== m); X.pick = null; release61(sp, S.cur, x, y, (m.life || 0) * DAYMS); if (!X.list.length && !X.dead.length) delete X.sp; toast(relText61(sp), true, 3600); afterAction(); renderBox61(el, M, k); }; }
+  obLoop61(el.querySelector('#ob61'), T, X);
+}
+// 觀察窗：箱子側面剖面，土裡是幼蟲和蛹，土上的成蟲爬來爬去
+function obLoop61(cv, T, X){ if (!cv) return; const g = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = Math.max(240, cv.clientWidth || 320), H = 170; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px';
+  const ground = H * .56, slots = [];
+  cv.onclick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9;
+    for (const s of slots){ const d = Math.hypot(s.x - x, s.y - y); if (d < bd){ bd = d; best = s; } } if (best && bd < 60){ X.pick = best.id; const el = cv.closest('.bug61'), b = RT.box61; if (el && b) renderBox61(el, b.M, b.k); } };
+  const draw = ts => { if (!cv.isConnected || $('modal').hidden) return; const t = ts / 1000, sp = X.sp, night = isNightAt(Date.now()), ff = sp && grp61(sp) === 'firefly';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    // 背景：玻璃後面、木屑土
+    const sky = g.createLinearGradient(0, 0, 0, ground); sky.addColorStop(0, night ? '#1d2a3c' : '#dff1f6'); sky.addColorStop(1, night ? '#2c3a42' : '#cfe6dc'); g.fillStyle = sky; g.fillRect(0, 0, W, ground);
+    const soil = g.createLinearGradient(0, ground, 0, H); soil.addColorStop(0, '#b88752'); soil.addColorStop(1, '#7a5230'); g.fillStyle = soil; g.fillRect(0, ground, W, H - ground);
+    g.fillStyle = 'rgba(60,35,15,.35)'; for (let i = 0; i < 90; i++){ const x = (i * 97.3) % W, y = ground + 4 + ((i * 53.1) % (H - ground - 6)); g.fillRect(x, y, 2, 2); }
+    // 枯枝、果凍台
+    g.strokeStyle = '#6a4626'; g.lineWidth = 9; g.lineCap = 'round'; g.beginPath(); g.moveTo(W * .06, ground + 2); g.lineTo(W * .3, ground - 30); g.stroke(); g.lineWidth = 5; g.beginPath(); g.moveTo(W * .2, ground - 17); g.lineTo(W * .24, ground - 40); g.stroke();
+    g.fillStyle = '#9a6a3c'; g.fillRect(W * .72, ground - 12, 36, 12); g.fillStyle = '#c99a62'; g.beginPath(); g.ellipse(W * .72 + 18, ground - 12, 18, 5, 0, 0, 7); g.fill();
+    if (grp61(sp || 'stag') !== 'dung'){ g.fillStyle = '#e8562a'; g.beginPath(); g.ellipse(W * .72 + 18, ground - 14, 8, 3, 0, 0, 7); g.fill(); }
+    slots.length = 0;
+    const list = X.list, under = list.filter(m => m.st !== 'adult'), ad = list.filter(m => m.st === 'adult');
+    under.forEach((m, i) => { const x = W * (.12 + .76 * (i + .5) / Math.max(3, under.length)), y = ground + 22 + (i % 2) * 18; slots.push({ id: m.id, x, y });
+      if (m.st === 'egg'){ g.fillStyle = '#f6efd6'; g.beginPath(); g.ellipse(x, y, 5, 4, 0, 0, 7); g.fill(); g.strokeStyle = 'rgba(0,0,0,.2)'; g.lineWidth = 1; g.stroke(); }
+      else drawSpr61(g, `bug_${sp}_${m.st}`, motion ? frameOf(`bug_${sp}_${m.st}`, t, i) : 0, x, y + 16, 1, false);
+      if (X.pick === m.id){ g.strokeStyle = '#ffd34a'; g.lineWidth = 2; g.beginPath(); g.arc(x, y, 18, 0, 7); g.stroke(); } });
+    const glows = [];
+    ad.forEach((m, i) => { const ph = t * .28 + i * 2.1, w = Math.sin(ph), x = W * (.16 + .6 * (i + .5) / Math.max(2, ad.length) + .1 * w), mv = motion && Math.abs(Math.cos(ph)) > .25, flip = Math.cos(ph) < 0;
+      let y = ground + 4, n = `bug_${sp}_${mv ? 'walk' : 'idle'}`, s = 1.15;
+      if (ff && night){ n = `bug_${sp}_fly`; y = ground - 30 - 26 * Math.sin(ph * 1.7); }
+      if (!ATLAS[n]) n = `bug_${sp}_idle`;
+      drawSpr61(g, n, motion ? frameOf(n, t, i) : 0, x, y, s, flip); slots.push({ id: m.id, x, y: y - 22 });
+      if (ff && night) glows.push([x + (flip ? 14 : -14), y - 20, sp, i]);
+      if (X.pick === m.id){ g.strokeStyle = '#ffd34a'; g.lineWidth = 2; g.beginPath(); g.arc(x, y - 20, 34, 0, 7); g.stroke(); } });
+    (X.dead || []).forEach((d, i) => drawSpr61(g, `bug_${d.sp}_dead`, 0, W * (.55 + i * .1), ground + 6, 1.1, false));
+    if (ff && night){ g.fillStyle = 'rgba(5,10,25,.35)'; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'lighter';
+      for (const [x, y, s2, i] of glows){ const a = glowA61(s2, t, i); if (a <= 0) continue; const [c] = GLOW61[s2] || ['200,255,100']; const gr = g.createRadialGradient(x, y, 0, x, y, 22); gr.addColorStop(0, `rgba(${c},${.9 * a})`); gr.addColorStop(1, `rgba(${c},0)`); g.fillStyle = gr; g.beginPath(); g.arc(x, y, 22, 0, 7); g.fill(); }
+      g.globalCompositeOperation = 'source-over'; }
+    // 玻璃反光、框
+    g.fillStyle = 'rgba(255,255,255,.18)'; g.beginPath(); g.moveTo(W * .1, 0); g.lineTo(W * .16, 0); g.lineTo(W * .08, H); g.lineTo(W * .02, H); g.fill();
+    g.strokeStyle = '#3e8f3c'; g.lineWidth = 6; g.strokeRect(3, 3, W - 6, H - 6);
+    requestAnimationFrame(draw); };
+  requestAnimationFrame(draw); }
+function drawSpr61(g, name, frame, x, y, s, flip){ const a = ATLAS[name], im = IMG[name]; if (!a || !im) return;
+  const fw = a.frameWidth, fh = a.frameHeight, sc = s * (4 / (a.scale || 2)) * .5;
+  g.save(); g.translate(x, y); if (flip) g.scale(-1, 1); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+  g.drawImage(im, (a.sx || 0) + frame * fw, a.sy || 0, fw, fh, -a.anchor[0] * sc, -a.anchor[1] * sc, fw * sc, fh * sc); g.restore(); }
+function glowA61(sp, t, i){ const m = (GLOW61[sp] || [0, 'steady'])[1];
+  if (m === 'flash'){ const p = (t + i * .37) % 1.6; return .15 + (p < .6 ? .85 * Math.sin(p / .6 * Math.PI) : 0); }
+  if (m === 'faint') return .35 + .1 * Math.sin(t * 2 + i);
+  if (m === 'strong') return .95 + .05 * Math.sin(t * 3 + i);
+  return .7 + .15 * Math.sin(t * 1.3 + i); }
+
+/* ---------- 6. 地圖上畫野外／放生的昆蟲、地上的屍體、螢火蟲的光 ---------- */
+function bugPos61(B, t, fly){ const ph = t * (fly ? .5 : .3) + (B.seed || 0), w = Math.sin(ph), ax = Math.cos((B.seed || 0) * 2.3), ay = Math.sin((B.seed || 0) * 2.3), r = fly ? .45 : .22;
+  const x = B.x + (B.ox || 0) + ax * r * w + (fly ? Math.sin(ph * 1.6) * .2 : 0), y = B.y + (B.oy || 0) + ay * r * w + (fly ? Math.cos(ph * 1.3) * .2 : 0);
+  const vx = Math.cos(ph) * (ax - ay); return { x, y, mv: Math.abs(Math.cos(ph)) > .3, flip: vx < 0, ph }; }
+{ const _dwl61 = drawWorld; drawWorld = function(t, now){
+  if (S && B61){ try { const s = bs61(), idx = {}, add = (k, o) => (idx[k] = idx[k] || []).push(o);
+      for (const w of s.wild) if (w.mi === S.cur) add(tkey(w.x, w.y), { b: w, kind: 'wild' });
+      for (const r of s.rel) if (r.mi === S.cur) add(tkey(r.x, r.y), { b: r, kind: 'rel' });
+      for (const d of s.dead) if (d.mi === S.cur) add(tkey(d.x, d.y), { b: d, kind: 'dead' });
+      RT.idx61 = idx; RT.glow61 = []; } catch(e){ RT.idx61 = null; } }
+  return _dwl61(t, now); }; }
+{ const _dte61 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte61(M, k, T, x, y, t, now);
+  const L = RT.idx61 && RT.idx61[k]; if (!L) return;
+  try { const night = isNightAt(now);
+    L.forEach((o, i) => { const B = o.b, sp = B.sp;
+      if (o.kind === 'dead'){ const c = center(x + (i % 3 - 1) * .15, y + .1); spr(`bug_${sp}_dead`, 0, c.cx, c.cy); return; }
+      const ff = grp61(sp) === 'firefly', fly = (ff && night) || isDf61(sp), P = bugPos61(B, t, fly), c = center(P.x, P.y);
+      let n = `bug_${sp}_${fly ? 'fly' : P.mv && motion ? 'walk' : 'idle'}`; if (grp61(sp) === 'dung' && !fly && P.mv && ATLAS[`bug_${sp}_push`]) n = `bug_${sp}_push`;
+      if (!ATLAS[n]) n = `bug_${sp}_idle`;
+      const lift = fly ? 14 + Math.sin(P.ph * 2.1) * 4 : 0;
+      spr(n, motion ? frameOf(n, t, (B.seed || 0) * 3) : 0, c.cx, c.cy - lift, P.flip);
+      if (ff && night) RT.glow61.push({ x: c.cx + (P.flip ? 3 : -3), y: c.cy - lift - 3, sp, i: B.seed || 0 });
+      if (o.kind === 'wild' && motion && !fly){ const a = (Math.sin(t * 3 + (B.seed || 0)) + 1) / 2; ctx.fillStyle = `rgba(255,255,255,${.25 + .35 * a})`; ctx.beginPath(); ctx.arc(c.cx, c.cy - 12, 1.6, 0, 7); ctx.fill(); } }); } catch(e){ if (!RT.err61d){ RT.err61d = 1; console.warn(e); } } }; }
+{ const _ds61 = drawSky; drawSky = function(t, now, atop){ const r = _ds61(t, now, atop);
+  try { const G = RT.glow61; if (G && G.length && S){ const dark = nightDark(now), tt = performance.now() / 1000;
+      ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y); ctx.globalCompositeOperation = 'lighter';
+      for (const g of G){ const a = glowA61(g.sp, tt, g.i) * Math.min(1, .4 + dark * 1.6); if (a <= 0) continue; const [c] = GLOW61[g.sp] || ['200,255,100'], rad = 9;
+        const gr = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, rad); gr.addColorStop(0, `rgba(${c},${.95 * a})`); gr.addColorStop(.35, `rgba(${c},${.45 * a})`); gr.addColorStop(1, `rgba(${c},0)`);
+        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(g.x, g.y, rad, 0, 7); ctx.fill(); }
+      ctx.restore(); } } catch(e){}
+  return r; }; }
+
+/* ---------- 7. 每次模擬 ---------- */
+{ const _sa61 = stepAll; stepAll = function(dt, t){ _sa61(dt, t); if (!B61 || !S) return;
+  try { stepWild61(t); stepRel61(t); for (const b of boxes61()) stepBox61(b.T, t, b.M, b.k); } catch(e){ if (!RT.err61){ RT.err61 = 1; console.warn(e); } } }; }
+
+/* ---------- 8. 點擊：抓野外昆蟲、點螢火蟲、撿屍體、飼育箱、放幼蟲 ---------- */
+function bugAt61(list, mi, x, y, t, r = .75){ let best = null, bd = 9;
+  for (const B of list){ if (B.mi !== mi) continue; const fly = (grp61(B.sp) === 'firefly' && isNightAt(Date.now())) || isDf61(B.sp), P = B.x != null && B.ox != null ? bugPos61(B, t, fly) : B, d = Math.hypot(P.x - x, P.y - y);
+    if (d < bd){ bd = d; best = B; } } return bd <= r ? best : null; }
+{ const _act61 = act; act = function(x, y){
+  if (!S || UI.expand || !B61) return _act61(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act61(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act61(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y), s = bs61(), t = performance.now() / 1000;
+  if (tool === 'hand' || tool === 'insect'){
+    const W = bugAt61(s.wild, S.cur, x, y, t); if (W){ catchWild61(W, cx, cy); return; }
+    const F = isNightAt(Date.now()) && bugAt61(s.rel.filter(r => grp61(r.sp) === 'firefly'), S.cur, x, y, t);
+    if (F){ const night = dayNo40(Date.now() - 12 * 3600e3); if (F.tap !== night){ F.tap = night; gain(0, (EF61.firefly || {}).tapXp || 3, cx, cy); floatText(cx, cy - 30, `${spName61(F.sp)}好漂亮`, '#c8e65a', 11); afterAction(); } else toast('這隻螢火蟲今晚已經看過了'); return; }
+    if (tool === 'hand' && s.dead.some(d => d.mi === S.cur && d.x === x && d.y === y)){ collectDead61(S.cur, x, y, cx, cy); return; } }
+  if (isBox61(T)){
+    if ((tool === 'remove' || tool === 'store') && (boxLive61(T) || (T.bx && (T.bx.dead || []).length))){ toast('飼育箱裡還有昆蟲：先放生或撿完標本，空了才能收回或拆掉'); return; }
+    if (tool === 'insect' && String(S.sel.insect || '').startsWith('bug:')){ addLarva61(M, k, T, S.sel.insect.slice(4), cx, cy); afterAction(); return; }
+    if (tool !== 'remove' && tool !== 'store' && tool !== 'move'){ openBox61(M, k); return; } }
+  if (tool === 'insect'){ const id = String(S.sel.insect || '');
+    if (id === 'bug_box'){ placeBox61(M, k, T, cx, cy); afterAction(); UIbuildTray(); return; }
+    if (id.startsWith('bug:')){ addLarva61(M, k, T, id.slice(4), cx, cy); return; }
+    if (id.startsWith('dfly:')){ toast('蜻蜓的水蠆要等 v2.64 才開放'); return; } }
+  return _act61(x, y); }; }
+{ const _od61 = openDevice; openDevice = function(M, k, T){ if (isBox61(T)) return openBox61(M, k); return _od61(M, k, T); }; }
+
+/* ---------- 9. 昆蟲工具：設施多飼育箱；「甲蟲」分頁＝買幼蟲（圖鑑登記過才能買）；「蜻蜓」分頁等 v2.64 ---------- */
+if (B61 && !DFON61 && TT.insect) TT.insect = TT.insect.filter(t => t.id !== 'dragonfly');
+const ORDER61 = Object.keys(SP61).filter(sp => !isDf61(sp) || DFON61).sort((a, b) => (SP61[a].level || 0) - (SP61[b].level || 0));
+{ const _bit61 = buildInsectTray; buildInsectTray = function(tray){ _bit61(tray); if (!B61) return;
+  const sel = S.sel.insect || 'beehive';
+  { const lk = !isUnlocked('bug_box'), el = trayItem('device', 'bug_box', DEV.bug_box.name, [`${coinImg()}${fmtN(DEV.bug_box.buildCost)}`, `一箱一種、${boxCap61()} 隻`], sel === 'bug_box', lk, { book: 'bugs261' });
+    el.onclick = () => { if (lk){ toast(lockedMsg('bug_box')); return; } S.sel.insect = 'bug_box'; UIbuildTray(); updateHint(); }; tray.appendChild(el); }
+  const ids = [...ORDER61].sort((a, b) => (known61(a) ? 0 : 1) - (known61(b) ? 0 : 1) || (isUnlocked(bugId61(a)) ? 0 : 1) - (isUnlocked(bugId61(b)) ? 0 : 1) || (SP61[a].level || 0) - (SP61[b].level || 0));
+  for (const sp of ids){ const id = bugId61(sp), D = SP61[sp], lk = !isUnlocked(id), kn = known61(sp);
+    const el = trayItem('insect', id, D.name, [kn ? `${coinImg()}${fmtN(rar61(sp).larvaCost || 40)} · ${rar61(sp).name || ''}` : '還沒抓過', isDf61(sp) ? '放進魚池或河' : '點飼育箱放進去'], sel === id, lk, { lockLv: UNLOCK[id], book: 'bugs261' });
+    if (!kn && !lk) el.classList.add('nb61');
+    el.onclick = () => { if (lk){ toast(`${D.name}要到第 ${UNLOCK[id]} 級才開放`); return; } if (!kn){ toast(`${D.name}還沒抓過：先在野外抓到一隻，記進圖鑑才能買幼蟲`, true, 3000); return; } S.sel.insect = id; UIbuildTray(); updateHint(); };
+    tray.appendChild(el); } }; }
+{ const ti = TOOLS.find(t => t.id === 'insect'), _hi61 = ti.hint; ti.hint = () => { const id = String(S.sel.insect || '');
+  if (id === 'bug_box') return `點空草地放飼育箱 · ${fmtN(DEV.bug_box.buildCost)} 金幣 · 點已經放的飼育箱看裡面`;
+  if (id.startsWith('bug:')){ const sp = id.slice(4); return `點飼育箱放${spName61(sp)}的幼蟲 · ${fmtN(rar61(sp).larvaCost || 40)} 金幣 · 一箱一種、最多 ${boxCap61()} 隻`; }
+  return _hi61(); }; }
+{ const _is61 = itemSprite; itemSprite = function(kind, id){ const s = String(id);
+  if (s === 'bug_box') return ['ui_bug_box', 0];
+  if (s.startsWith('bug:')) return ['ui_bug_' + s.slice(4), 0];
+  if (s.startsWith('dfly:')) return [ATLAS['ui_dfly_' + s.slice(5)] ? 'ui_dfly_' + s.slice(5) : 'ui_tab_dragonfly', 0];
+  if (s === 'bug_jelly') return ['ui_it_bug_jelly', 0];
+  return _is61(kind, id); }; }
+{ const _no61 = nameOf; nameOf = function(id){ const s = String(id);
+  if (s.startsWith('bug:') && SP61[s.slice(4)]) return SP61[s.slice(4)].name + '（幼蟲）';
+  if (s.startsWith('dfly:') && SP61[s.slice(5)]) return SP61[s.slice(5)].name + '（水蠆）';
+  if (s === 'bug_box' && DEV.bug_box) return DEV.bug_box.name;
+  return _no61(id); }; }
+{ const _ui61 = unlockIcon38; unlockIcon38 = function(u){ const s = String(u);
+  if (s.startsWith('bug:')) return ['ui_bug_' + s.slice(4), 0]; if (s.startsWith('dfly:')) return ['ui_tab_dragonfly', 0];
+  if (s === 'bug_box') return ['building_bug_box_adult', 0]; if (s === 'bug_jelly') return ['ui_it_bug_jelly', 0];
+  return _ui61(u); }; }
+// 還沒開放的蜻蜓不列在升級視窗
+if (B61 && !DFON61) for (const L of LV) if (Array.isArray(L.unlocks)) L.unlocks = L.unlocks.filter(u => !String(u).startsWith('dfly:'));
+{ const _bt61 = bookTabFor252; bookTabFor252 = function(kind, id){ const s = String(id); if (s === 'bug_box' || s === 'bug_jelly' || s.startsWith('bug:') || s.startsWith('dfly:')) return 'bugs261'; return _bt61(kind, id); }; }
+HD54['飼育箱'] = 'bug_box'; HD54['抓到昆蟲'] = 'bug_box';
+
+/* ---------- 10. 圖鑑「昆蟲收集」 ---------- */
+function wildText61(sp){ const g = grp61(sp), G = (WI61.groups || {})[g] || {}, X = (G.species || {})[sp] || {}, ms = X.months || G.months || [];
+  const where = { fruitTree: '果樹', wildTree: '野樹', flower: '花', crop: '作物', poop: '糞便', river: '河', pool: '魚池', any: '島上' };
+  const span = ms.length ? (ms.length >= 12 ? '全年' : `${ms[0]}～${ms[ms.length - 1]} 月`) : '';
+  return `${span}${{ night: '晚上', day: '白天', any: '' }[G.when] || ''}・${(G.near || []).map(n => where[n] || n).join('、')}${X.nearRiver ? `（河邊 ${X.nearRiver} 格內）` : ''}`; }
+function bookHTML61(){ const s = bs61(), all = Object.keys(SP61), got = all.filter(known61).length;
+  let h = `<p class="small">登記 ${got} / ${all.length} 種。在野外點一下就能抓（不用工具），第一次抓到記進圖鑑；登記過的才能買幼蟲。活的昆蟲不能賣，死掉後撿到的甲蟲標本可以賣（倉庫「標本」）。</p>`;
+  for (const [g, G] of Object.entries(GR61)){ const sps = all.filter(sp => SP61[sp].group === g).sort((a, b) => SP61[a].level - SP61[b].level); if (!sps.length) continue;
+    const off = g === 'dragonfly' && !DFON61;
+    h += `<h3><canvas data-spr="ui_badge_bug_${g}" data-f="0" class="ico"></canvas>${escapeHTML(G.name)}${off ? '<small>（v2.64 開放）</small>' : ''}</h3><div class="bk61">`;
+    for (const sp of sps){ const D = SP61[sp], e = s.book[sp], R0 = RA61[D.rarity] || {};
+      h += `<div class="${e ? '' : 'no'}"><canvas data-spr="${ATLAS['ui_pg_bug_' + sp] ? 'ui_pg_bug_' + sp : 'ui_tab_dragonfly'}" data-f="0" class="pic61"></canvas><b>${escapeHTML(D.name)}</b><span class="pill r61-${D.rarity}">${escapeHTML(R0.name || '')}</span> Lv ${D.level}
+        <br><small>出現：${escapeHTML(wildText61(sp))}</small>
+        <br><small>${e ? `抓到 ${e.got || 0}・養出 ${e.raised || 0}・標本 ${e.spec || 0}${s.spec[sp] ? `（倉庫 ${s.spec[sp]}）` : ''}` : '還沒抓過'}・幼蟲 ${fmtN(R0.larvaCost || 0)}・標本 ${fmtN(R0.specimenPrice || 0)}</small>
+        ${sp === 'twentyeight' ? `<br><small class="no61">${escapeHTML((EF61.twentyeight || {}).bookNote || '')}</small>` : ''}</div>`; }
+    h += '</div>'; }
+  return h; }
+{ const _om61 = openModal; openModal = function(title, tabs, render, initial){
+  if (B61 && title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { if (k === 'bugs261'){ el.classList.add('bug61'); el.innerHTML = bookHTML61(); paintIcons(el); return; } return r0(k, el); }; }
+  // 倉庫「標本」：蝴蝶標本（g81）＋甲蟲標本
+  if (B61 && title === '倉庫' && Array.isArray(tabs) && typeof render === 'function' && !tabs.some(t => t[0] === 'specimen')){ const r0 = render;
+    tabs = [...tabs, ['specimen', '標本']];
+    render = (k, el) => { if (k !== 'specimen') return r0(k, el); el.classList.add('sp40'); el.innerHTML = specBfHTML61() + specBugHTML61(); paintIcons(el); bindSpec61(el); }; }
+  return _om61(title, tabs, render, initial); }; }
+function specBfHTML61(){ const inv = specInv40(), ids = Object.keys(inv).filter(sp => inv[sp] > 0 && BFS40[sp]);
+  return `<h3><img src="${IMGSRC.ui_pg_st_specimen || ''}" alt="">蝴蝶標本</h3><p class="small">蝴蝶走完一生掉在寄主植物下面，用「收成」撿起來，翅膀完整的（${Math.round((BFV40.specimenChance ?? .4) * 100)}%）會做成標本放在這裡。</p>` +
+    (ids.length ? tbl([H(''), H('標本'), H('數量', 1), H('售價', 1), H('')], ids.map(sp => ({ cells: [`<img src="${IMGSRC['ui_spec_' + sp] || ''}" alt="" style="width:40px;height:40px">`, `${bfName40(sp)}<br><small>${(BFR40[BFS40[sp].rarity] || {}).name || ''}</small>`, fmtN(inv[sp]), fmtN(specPrice40(sp)), `<button class="btn" data-spsell="${sp}">賣出</button>`] }))) : '<p>還沒有蝴蝶標本。</p>'); }
+function specBugHTML61(){ const inv = bs61().spec, ids = Object.keys(inv).filter(sp => inv[sp] > 0 && SP61[sp]);
+  return `<h3><canvas data-spr="ui_badge_bug_all" data-f="0" class="ico"></canvas>甲蟲標本</h3><p class="small">放生或飼育箱裡的昆蟲走完一生，有 ${Math.round((B61.specimenChance ?? .5) * 100)}% 留下來，撿起來做成標本。</p>` +
+    (ids.length ? tbl([H(''), H('標本'), H('數量', 1), H('售價', 1), H('')], ids.map(sp => ({ cells: [`<canvas data-spr="ui_spec_bug_${sp}" data-f="0" class="ico"></canvas>`, `${escapeHTML(spName61(sp))}<br><small>${escapeHTML(rar61(sp).name || '')}</small>`, fmtN(inv[sp]), fmtN(rar61(sp).specimenPrice || 0), `<button class="btn" data-spsell61="${sp}">賣出</button>`] }))) : '<p>還沒有甲蟲標本。</p>') +
+    `<div class="row"><button class="btn ghost" id="spBook40">看蝴蝶圖鑑</button><button class="btn ghost" id="spBook61">看昆蟲收集</button></div>`; }
+function bindSpec61(el){
+  el.querySelectorAll('[data-spsell]').forEach(b => b.onclick = () => { const sp = b.dataset.spsell, price = specPrice40(sp), inv = specInv40();
+    sellAsk49({ title: bfName40(sp) + '標本', img: IMGSRC['ui_spec_' + sp], price, max: inv[sp] || 1, onSell: q => { q = Math.min(q, inv[sp] || 0); if (!q) return; inv[sp] -= q; const c = q * price; S.player.coins += c; flyCoins(b, c); toast(`賣掉${bfName40(sp)}標本 ${q} 個，+${fmtN(c)} 金幣`); afterAction(); openStorage('specimen'); } }); });
+  el.querySelectorAll('[data-spsell61]').forEach(b => b.onclick = () => { const sp = b.dataset.spsell61, price = rar61(sp).specimenPrice || 0, inv = bs61().spec;
+    sellAsk49({ title: spName61(sp) + '標本', img: IMGSRC['ui_spec_bug_' + sp], price, max: inv[sp] || 1, onSell: q => { q = Math.min(q, inv[sp] || 0); if (!q) return; inv[sp] -= q; const c = q * price; S.player.coins += c; flyCoins(b, c); toast(`賣掉${spName61(sp)}標本 ${q} 個，+${fmtN(c)} 金幣`); afterAction(); openStorage('specimen'); } }); });
+  const b1 = el.querySelector('#spBook40'); if (b1) b1.onclick = () => openModal('蝴蝶', [['book', '蝴蝶圖鑑']], (kk, e2) => { e2.classList.add('bf40'); e2.innerHTML = bookHTML40(); });
+  const b2 = el.querySelector('#spBook61'); if (b2) b2.onclick = () => openBook('bugs261'); }
+
+/* ---------- 11. 成就 ---------- */
+{ const _av61 = achValue; achValue = function(a){ const st = a.stat || '';
+  if (st === 'bugKinds') return Object.keys(bs61().book).length;
+  if (st.startsWith('bug_') && GR61[st.slice(4)]) return Math.floor(ach39().s[st] || 0);
+  return _av61(a); }; }
+
+/* ---------- 12. 舊存檔 ---------- */
+{ const _ns61 = normalizeState; normalizeState = function(d){ const r = _ns61(d); const s = r || d;
+  try { if (s && !s.v261){ s.v261 = 1; s.bug261 = s.bug261 || { book: {}, spec: {}, wild: [], rel: [], dead: [], zones: [], seq: 1 }; } } catch(e){}
+  return r; }; }
+
+window.__farm261 = { B61, bs: () => bs61(), spawnWild61, catchWild61, catchAsk61, release61, stepRel61, stepBox61, boxes61, openBox61, addLarva61, placeBox61, startPair61, collectDead61, addSpec61, register61, bookHTML61, month61, DFON61, act: (x, y) => act(x, y), mapTiles: M => mapTiles(M), UIbuildTray: () => UIbuildTray(), RT: () => RT, y28: T => !!(RT.y28_61 && RT.y28_61.has(T)), pestRate: (...a) => pestRate(...a), yieldQty: (...a) => yieldQty(...a), harvestCrop: (...a) => harvestCrop(...a) };
+
+/* ===== 117. v2.64：蜻蜓（v2.61 昆蟲收集的第 7 類；設定在 CFG.bugs261，圖 batch79）
+   水蠆：昆蟲 · 蜻蜓 分頁選種類（圖鑑登記過才能買），點魚池的空格（佔一隻魚的位置）或河格（一格一隻）放進去；水裡 waterDays 天、不用餵
+     → 爬上岸羽化（dfly_emerge 6 格，約 emergeSeconds 秒）→ 變成放生的蜻蜓（g116 的 S.bug261.rel），記「養出」
+   放生的蜻蜓：在放的地方 flyArea×flyArea 內飛，偶爾停下來；晚上停著；每天吃掉 3×3 的害蟲一次（g116 stepRel61）；
+     壽命 7 天，死前 selfBreedChance 在範圍內的魚池空格／河格留 1 隻同種水蠆（dfBreed61）
+   存檔：S.bug261.nym = [{ id, sp, mi, k, at: 'pool'|'river', t0 }]、S.bug261.em = [{ sp, mi, x, y, t }]（羽化中，畫完就變成放生的） ===== */
+const DF64 = (B61 && B61.dragonfly) || {}, EFD64 = EF61.dragonfly || {};
+const DFON64 = !!(B61 && DFON61);
+const waterMs64 = () => (DF64.waterDays ?? 2) * DAYMS;
+const emergeMs64 = () => (DF64.emergeSeconds ?? 6) * 1000;
+function ny64(){ const s = bs61(); if (!Array.isArray(s.nym)) s.nym = []; if (!Array.isArray(s.em)) s.em = []; return s; }
+const isPoolT64 = T => !!T && T.t === 'pool';
+const nymAt64 = (mi, k) => ny64().nym.find(n => n.mi === mi && n.k === k) || null;
+// 這格能不能放水蠆：魚池沒有魚、沒有水蠆；河格沒有水蠆
+function nymWhy64(M, mi, k){ const T = M.tiles[k];
+  if (isPoolT64(T)){ if (!(DF64.nymphIn || ['pool', 'river']).includes('pool')) return '水蠆不能放魚池'; if (T.fish) return '這格魚池有魚了：水蠆要放沒有魚的格子（佔一隻魚的位置）'; }
+  else if (isRiver248(T)){ if (!(DF64.nymphIn || ['pool', 'river']).includes('river')) return '水蠆不能放河裡'; }
+  else return '水蠆要放進魚池的空格或河格';
+  if (nymAt64(mi, k)) return '這格已經有一隻水蠆了（一格一隻）';
+  return null; }
+function addNym64(sp, mi, k, t0){ const s = ny64(), T = S.maps[mi].tiles[k]; const N = { id: nid61(), sp, mi, k, at: isPoolT64(T) ? 'pool' : 'river', t0: t0 || Date.now() }; s.nym.push(N); RT.decoVer++; return N; }
+
+/* ---------- 1. 放水蠆（昆蟲 · 蜻蜓） ---------- */
+function placeNym64(M, k, sp, cx, cy){
+  const D = SP61[sp]; if (!D) return; const id = bugId61(sp);
+  if (!isUnlocked(id)){ toast(`${D.name}要到第 ${UNLOCK[id]} 級才開放`); return; }
+  if (!known61(sp)){ toast(`先在野外抓到${D.name}（記進圖鑑）才能買水蠆`, true, 3000); return; }
+  const why = nymWhy64(M, S.cur, k); if (why){ toast(why); return; }
+  const cost = rar61(sp).larvaCost || 40; if (!spend(cost)) return;
+  const N = addNym64(sp, S.cur, k);
+  floatText(cx, cy - 30, `放${D.name}水蠆 -${fmtN(cost)}`, '#2f6a8a', 11); sfx('place');
+  toast(`${D.name}的水蠆放進${N.at === 'pool' ? '魚池' : '河裡'}了：不用餵，${DF64.waterDays ?? 2} 天後爬上岸羽化`, true, 3200); afterAction(); }
+function nymInfo64(N){ const left = Math.max(0, N.t0 + waterMs64() - Date.now()) / 1000;
+  return `${spName61(N.sp)}的水蠆（${N.at === 'pool' ? '魚池' : '河裡'}）：再 ${fmtDur(left)}爬上岸羽化`; }
+
+/* ---------- 2. 每次模擬：水蠆長大 → 羽化 → 放生；格子不見了的水蠆消失 ---------- */
+function shore64(M, k){ const [x, y] = pkey(k), wet = T => isPoolT64(T) || isRiver248(T), out = [];
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]]){ const a = x + dx, b = y + dy; if (!inMap(M, a, b)) continue; const U = M.tiles[tkey(a, b)]; if (!wet(U)) out.push([a, b, dx, dy]); }
+  if (!out.length) return { x, y };
+  const [a, b, dx, dy] = out[Math.floor(Math.random() * out.length)]; return { x: x + dx * .55, y: y + dy * .55 }; }
+function emerge64(N, t, live){ const s = ny64(), M = S.maps[N.mi]; if (!M) return;
+  const P = shore64(M, N.k), lx = Math.round(P.x), ly = Math.round(P.y);
+  register61(N.sp, 'raised');
+  if (live && N.mi === S.cur){ s.em.push({ sp: N.sp, mi: N.mi, x: P.x, y: P.y, t }); return; }
+  const R = release61(N.sp, N.mi, lx, ly, 0); R.ox = P.x - lx; R.oy = P.y - ly; }
+function stepNym64(t){ const s = ny64(), live = liveT(t), keep = [];
+  for (const N of s.nym){ const M = S.maps[N.mi]; if (!M) continue; const T = M.tiles[N.k];
+    if (!(N.at === 'pool' ? isPoolT64(T) && !T.fish : isRiver248(T))){ if (live && N.mi === S.cur) toast(`${spName61(N.sp)}的水蠆那格不是水了，水蠆不見了`); continue; }
+    if (t - N.t0 >= waterMs64()){ emerge64(N, t, live); continue; }
+    keep.push(N); }
+  s.nym = keep;
+  // 羽化動畫播完 → 變成放生的蜻蜓
+  const now = Date.now(), em = [];
+  for (const E of s.em){ if (now - E.t < emergeMs64() && liveT(E.t)){ em.push(E); continue; }
+    if (!S.maps[E.mi]) continue; const x = Math.round(E.x), y = Math.round(E.y), R = release61(E.sp, E.mi, x, y, 0); R.ox = E.x - x; R.oy = E.y - y;
+    if (E.mi === S.cur){ const c = center(E.x, E.y); floatText(c.cx, c.cy - 40, `${spName61(E.sp)}羽化了！`, '#2f8a3a', 11); } }
+  s.em = em; }
+{ const _sa64 = stepAll; stepAll = function(dt, t){ _sa64(dt, t); if (!DFON64 || !S) return; try { stepNym64(t); } catch(e){ if (!RT.err64){ RT.err64 = 1; console.warn(e); } } }; }
+// 死前 30% 在範圍內的魚池空格／河格留一隻同種水蠆（g116 stepRel61 呼叫）
+function dfBreed61(R){ const M = S.maps[R.mi]; if (!M) return; const r = Math.floor((EFD64.flyArea || 5) / 2), c = [];
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const k = tkey(R.x + dx, R.y + dy); if (M.tiles[k] && !nymWhy64(M, R.mi, k)) c.push(k); }
+  if (!c.length) return null; return addNym64(R.sp, R.mi, rnd40(c), R.die || Date.now()); }
+
+/* ---------- 3. 位置：在放的地方 flyArea 內飛，偶爾停；晚上停著 ---------- */
+const FLY64 = 16, REST64 = 6;   // 一輪：飛 16 秒、停 6 秒（每隻錯開）
+function dfPos64(B, t){ const sd = B.seed || 0, cyc = FLY64 + REST64 + sd % 4, ph = (t + sd * 7.3) % cyc, k = Math.floor((t + sd * 7.3) / cyc);
+  const night = isNightAt(Date.now()), rest = night || ph >= FLY64;
+  const tau = (k * FLY64 + Math.min(ph, FLY64)) * .23 + sd * 3.1;        // 只算飛的時間，停下來再飛不會跳
+  const A = B.until ? .9 : Math.max(.6, Math.floor((EFD64.flyArea || 5) / 2) - .3);
+  const fx = q => A * (.62 * Math.sin(q * 1.0 + sd) + .38 * Math.sin(q * 2.3 + sd * 1.7)), fy = q => A * (.62 * Math.sin(q * 1.3 + sd * 2.1) + .38 * Math.cos(q * 1.9 + sd * .7));
+  const x = B.x + (B.ox || 0) + fx(tau), y = B.y + (B.oy || 0) + fy(tau);
+  const vx = fx(tau + .05) - fx(tau), vy = fy(tau + .05) - fy(tau), sxv = (vx - vy) * HW;
+  return { x, y, mv: !rest, rest, flip: sxv < 0, ph: tau, df: true }; }
+{ const _bp64 = bugPos61; bugPos61 = function(B, t, fly){ if (DFON64 && B && isDf61(B.sp) && B.x != null) return dfPos64(B, t); return _bp64(B, t, fly); }; }
+
+/* ---------- 4. 畫：停著的在格子裡畫；飛的畫在最上層（影子在地上）；水裡的水蠆；岸上羽化 ---------- */
+{ const _dte64 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){
+  const L = DFON64 && RT.idx61 && RT.idx61[k];
+  let df = null;
+  if (L && L.some(o => o.kind !== 'dead' && isDf61(o.b.sp))){ df = L.filter(o => o.kind !== 'dead' && isDf61(o.b.sp)); RT.idx61[k] = L.filter(o => !df.includes(o)); }
+  try { _dte64(M, k, T, x, y, t, now); } finally { if (df) RT.idx61[k] = L; }
+  if (!DFON64 || !S || M !== S.maps[S.cur]) return;
+  try {
+    // 水裡的水蠆：半透明、慢慢爬
+    const N = nymAt64(S.cur, k); if (N && ATLAS.dfly_nymph){ const sd = (N.id.charCodeAt(N.id.length - 1) || 0) * .37, tt = motion ? t : 0, p = center(x + .18 * Math.sin(tt * .13 + sd), y + .18 * Math.cos(tt * .11 + sd));
+      const f = motion && Math.sin(tt * .6 + sd) > .55 ? 1 : 0; spr('dfly_nymph', f, p.cx, p.cy + 4, Math.cos(tt * .13 + sd) < 0, .62); }
+    // 放生／野外的蜻蜓：停著的在這格畫，飛的記下來最後畫
+    if (df) for (const o of df){ const B = o.b, P = dfPos64(B, t), c = center(P.x, P.y), sp = B.sp;
+      if (P.rest){ spr(`bug_${sp}_idle`, 0, c.cx, c.cy, P.flip);
+        if (o.kind === 'wild' && motion){ const a = (Math.sin(t * 3 + (B.seed || 0)) + 1) / 2; ctx.fillStyle = `rgba(255,255,255,${.25 + .35 * a})`; ctx.beginPath(); ctx.arc(c.cx, c.cy - 10, 1.6, 0, 7); ctx.fill(); } }
+      else (RT.fly64 = RT.fly64 || []).push({ sp, x: c.cx, y: c.cy, flip: P.flip, seed: B.seed || 0, ph: P.ph }); }
+  } catch(e){ if (!RT.err64d){ RT.err64d = 1; console.warn(e); } } }; }
+{ const _dw64 = drawWorld; drawWorld = function(t, now){ RT.fly64 = []; return _dw64(t, now); }; }
+{ const _ds64 = drawSky; drawSky = function(t, now, atop){ const r = _ds64(t, now, atop);
+  try { if (DFON64 && S){ const F = RT.fly64 || [], s = ny64(), tt = performance.now() / 1000, wall = Date.now(), E = s.em.filter(e => e.mi === S.cur);
+      if (F.length || E.length){ ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y);
+        for (const e of E){ const c = center(e.x, e.y), n = 'dfly_emerge', a = ATLAS[n]; if (!a) continue; const f = Math.min(a.frames - 1, Math.floor((wall - e.t) / emergeMs64() * a.frames)); spr(n, f, c.cx, c.cy); }
+        for (const d of F){ const lift = 16 + Math.sin(d.ph * 3.1) * 4, n = `bug_${d.sp}_fly`;
+          ctx.fillStyle = 'rgba(20,40,20,.16)'; ctx.beginPath(); ctx.ellipse(d.x, d.y, 7, 2.4, 0, 0, 7); ctx.fill();
+          spr(ATLAS[n] ? n : `bug_${d.sp}_idle`, motion ? frameOf(n, tt, d.seed * 3) : 0, d.x, d.y - lift + 12, d.flip); }
+        ctx.restore(); } } } catch(e){}
+  return r; }; }
+
+/* ---------- 5. 點擊：放水蠆、看水蠆；有水蠆的魚池格不能放魚 ---------- */
+{ const _act64 = act; act = function(x, y){
+  if (!S || UI.expand || !DFON64) return _act64(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act64(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act64(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y), s = bs61(), t = performance.now() / 1000;
+  const N = nymAt64(S.cur, k);
+  if (tool === 'fish' && N && isPoolT64(T)){ toast(nymInfo64(N) + '（這格不能放魚）', false, 3200); return; }
+  if (tool === 'insect' && String(S.sel.insect || '').startsWith('dfly:')){
+    if (bugAt61(s.wild, S.cur, x, y, t)) return _act64(x, y);                       // 先抓野外的
+    if (N){ toast(nymInfo64(N), false, 3200); return; }
+    if (isPoolT64(T) || isRiver248(T)){ placeNym64(M, k, S.sel.insect.slice(5), cx, cy); UIbuildTray(); return; }
+    toast('水蠆要放進魚池的空格或河格'); return; }
+  if (tool === 'insect' && N){ toast(nymInfo64(N), false, 3200); return; }
+  return _act64(x, y); }; }
+
+/* ---------- 6. 文字、圖示 ---------- */
+{ const _rt64 = relText61; relText61 = function(sp){ if (!isDf61(sp)) return _rt64(sp); const a = EFD64.flyArea || 5, e = EFD64.eatArea || 3, d = Math.round(lifeMs61(sp) / DAYMS);
+  return `放生在原地：在附近 ${a}×${a} 內飛，每天把 ${e}×${e} 的害蟲吃掉一次，活 ${d} 天；死前 ${Math.round((EFD64.selfBreedChance || 0) * 100)}% 在附近的魚池或河裡留一隻水蠆。`; }; }
+{ const _bw64 = boxWhy61; boxWhy61 = function(sp){ if (isDf61(sp)) return '蜻蜓不放飼育箱：在「昆蟲 · 蜻蜓」買水蠆，放進魚池的空格或河格'; return _bw64(sp); }; }
+{ const _is64 = itemSprite; itemSprite = function(kind, id){ const s = String(id); if (s.startsWith('dfly:') && ATLAS['ui_bug_' + s.slice(5)]) return ['ui_bug_' + s.slice(5), 0]; return _is64(kind, id); }; }
+{ const _ui64 = unlockIcon38; unlockIcon38 = function(u){ const s = String(u); if (s.startsWith('dfly:') && ATLAS['ui_bug_' + s.slice(5)]) return ['ui_bug_' + s.slice(5), 0]; return _ui64(u); }; }
+{ const ti = TOOLS.find(t => t.id === 'insect'), _hi64 = ti.hint; ti.hint = () => { const id = String((S && S.sel.insect) || '');
+  if (DFON64 && id.startsWith('dfly:')){ const sp = id.slice(5); return `點魚池的空格或河格放${spName61(sp)}的水蠆 · ${fmtN(rar61(sp).larvaCost || 40)} 金幣 · 一格一隻、${DF64.waterDays ?? 2} 天後羽化`; }
+  return _hi64(); }; }
+// 點只有水蠆、沒有魚的魚池：顯示水蠆還要多久（有魚的時候照舊收成／餵食，水蠆用昆蟲工具點那格看）
+{ const _tp64 = tapPool; tapPool = function(M, pk, cx, cy){ const r = _tp64(M, pk, cx, cy);
+  try { const P = M.pools && M.pools[pk], mi = S.maps.indexOf(M); if (DFON64 && P && !P.tiles.some(q => M.tiles[q] && M.tiles[q].fish)){ const L = ny64().nym.filter(n => n.mi === mi && P.tiles.includes(n.k)); if (L.length) setTimeout(() => toast(`這個魚池有 ${L.length} 隻水蠆：` + L.map(nymInfo64).join('；'), false, 4200), 50); } } catch(e){}
+  return r; }; }
+// 河流面板：列出河裡的水蠆
+{ const _rc64 = riverCard260; riverCard260 = function(mi, k){ let h = _rc64(mi, k);
+  try { const M = S.maps[mi], T = M && M.tiles[k], g = T && terG83(M, T); if (DFON64 && g && h && h.endsWith('</div>')){ const L = ny64().nym.filter(n => n.mi === mi && g.cells.includes(n.k));
+      if (L.length) h = h.slice(0, -6) + `<p class="sm83">水蠆 ${L.length} 隻：${L.map(n => escapeHTML(nymInfo64(n))).join('；')}</p></div>`; } } catch(e){}
+  return h; }; }
+
+/* ---------- 7. 舊存檔 ---------- */
+{ const _ns64 = normalizeState; normalizeState = function(d){ const r = _ns64(d); const s = r || d;
+  try { if (s && !s.v264){ s.v264 = 1; if (s.bug261){ if (!Array.isArray(s.bug261.nym)) s.bug261.nym = []; if (!Array.isArray(s.bug261.em)) s.bug261.em = []; } } } catch(e){}
+  return r; }; }
+
+window.__farm264 = { DFON64, ny: () => ny64(), placeNym64, nymWhy64, addNym64, stepNym64, dfBreed61: R => dfBreed61(R), dfPos64, nymAt64, act: (x, y) => act(x, y), normalizeState: d => normalizeState(d) };
+
+/* ===== 118. v2.62：貓頭鷹（設定 CFG.owls262，patches/patch_v2_62.py；美術 batch77）
+   巢箱＝device 'owl_box'（T.uid），「動物 · 設施」蓋；一箱一隻，2 格內要有樹（穴鴞不用）
+   貓頭鷹存在 S.owls62 = [{ id, sp, name, box, born, rats, tn, nk, rest, fish, fn, fchk }]，圖鑑 S.owlBook62 = { 種: 1 }
+   作息：黃昏出巢、晚上工作、天亮前 homeBeforeDawnMinutes 回巢；下雨下雪待在巢箱（鬼鴞、雪鴞除外）；雪鴞冬天白天也工作
+   工作：範圍內的倉庫／垃圾站有老鼠就抓（每晚上限、抓完休息）；灰林鴞範圍內老鼠出現 ×0.8；黃魚鴞／毛腿漁鴞每晚撈河裡成熟的野生水產；大雕鴞嚇走黃鼠狼、狐狸 ===== */
+{ const st62 = document.createElement('style'); st62.textContent = `
+.owl62 .ow62{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:start}.owl62 .ow62 img{width:150px;height:150px;object-fit:contain}
+.owl62 h4{margin:0 0 6px}.owl62 h4 small{font-weight:400;color:var(--gsub);margin-left:6px}
+.owl62 .bk62{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.owl62 .bk62 > div{padding:8px;border-radius:12px;background:var(--gcard);text-align:center;font-size:12px;color:var(--gtx)}.owl62 .bk62 img{display:block;width:96px;height:96px;object-fit:contain;margin:0 auto 4px}
+.owl62 .bk62 > div.no img{filter:brightness(0) opacity(.25)}.owl62 .bk62 small{color:var(--gsub)}
+@media (max-width:600px){.owl62 .ow62{grid-template-columns:96px 1fr}.owl62 .ow62 img{width:96px;height:96px}}
+`; document.head.appendChild(st62); }
+const OW62 = CFG.owls262 || null;
+const OSP62 = (OW62 && OW62.species) || {}, OBX62 = (OW62 && OW62.box) || {}, OSK62 = (OW62 && OW62.skills) || {};
+const owls62 = () => (S.owls62 = S.owls62 || []);
+const owlBook62 = () => (S.owlBook62 = S.owlBook62 || {});
+const osp62 = O => OSP62[O.sp] || {};
+const isOwlBox62 = T => !!T && T.t === 'device' && T.id === 'owl_box';
+const nightKey62 = t => dayNo40(t - 12 * 3600e3);
+function owlBoxes62(){ const out = []; S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (!isOwlBox62(T)) continue;
+  if (!T.uid) T.uid = 'o' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); const [x, y] = pkey(k); out.push({ M, mi, k, x, y, T }); } }); return out; }
+const boxByUid62 = uid => owlBoxes62().find(b => b.T.uid === uid) || null;
+const owlIn62 = T => (T && T.uid ? owls62().find(O => O.box === T.uid) : null) || null;
+function treeNear62(M, x, y, r = OBX62.treeRange ?? 2){ for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(x + dx, y + dy)]; if (!U) continue;
+  if (U.t === 'tree' || (U.t === 'terrain' && U.kind === 'forest') || (U.t === 'deco' && /tree/.test(U.id))) return true; } return false; }
+function owlRange62(O){ const b = boxByUid62(O.box); if (!b) return null; const r = Math.floor((osp62(O).range || 7) / 2); return { mi: b.mi, b, x0: b.x - r, y0: b.y - r, x1: b.x + r, y1: b.y + r }; }
+const inRg62 = (rg, mi, x, y) => !!rg && rg.mi === mi && x >= rg.x0 && x <= rg.x1 && y >= rg.y0 && y <= rg.y1;
+const spotIn62 = (sp, rg) => { for (let dx = 0; dx < sp.w; dx++) for (let dy = 0; dy < sp.w; dy++) if (inRg62(rg, sp.mi, sp.x + dx, sp.y + dy)) return true; return false; };
+const winter62 = t => { try { return (OSK62.winterMonths || [12, 1, 2]).includes(month61(t)); } catch(e){ return winterAt(t); } };
+const nightish62 = t => { const p = dayPhase(t).phase; return p === 'night' || p === 'dusk'; };
+// 為什麼待在巢箱（null＝出門工作）
+function homeWhy62(O, t){ const sk = osp62(O).skill;
+  const rain = farmRain(t), snow = typeof farmSnow === 'function' && farmSnow(t);
+  if (rain && !snow && sk !== 'rain') return '下雨，待在巢箱';
+  if (snow && sk !== 'rain' && sk !== 'winter') return '下雪，待在巢箱';
+  if (sk === 'winter' && winter62(t)) return null;
+  if (!nightish62(t)) return '白天在巢箱裡睡覺';
+  if (!nightish62(t + (OW62.homeBeforeDawnMinutes ?? 30) * 60e3)) return '快天亮了，回巢';
+  return null; }
+
+/* ---------- 1. 每次模擬：抓老鼠、撈魚 ---------- */
+function owlCatch62(O, rg, t){ const sk = osp62(O).skill;
+  const spots = ratSpots().filter(sp => sp.n > 0 && spotIn62(sp, rg)); if (!spots.length) return false;
+  spots.sort((a, b) => (sk === 'barn' ? (a.key === 'barn' ? 0 : 1) - (b.key === 'barn' ? 0 : 1) : 0) || b.n - a.n);
+  const sp = spots[0]; sp.n--; stat('mouser'); stat('owlRats'); O.rats = (O.rats || 0) + 1; O.tn = (O.tn || 0) + 1;
+  const c = center(sp.x + (sp.w - 1) / 2, sp.y + (sp.w - 1) / 2), live = liveT(t);
+  gain(0, OW62.xpPerRat ?? 2, c.cx, c.cy - 20);
+  RT.notices.push({ kind: 'ratCaught', by: O.name, t });
+  if (live && rg.mi === S.cur){ (RT.owlFx62 = RT.owlFx62 || {})[O.id] = { x: sp.x + (sp.w - 1) / 2, y: sp.y + (sp.w - 1) / 2, t0: performance.now() }; floatText(c.cx, c.cy - 44, `${O.name}抓到老鼠了`, '#2f7fa8', 10); }
+  return true; }
+function owlFish62(O, rg, t){ const sk = osp62(O).skill, n = (OSK62.fishPerNight || {})[sk] || 0; if (!n || (sk === 'fish' && winter62(t))) return;
+  const nk = nightKey62(t); if (O.fn === nk) return; if (O.fchk && t - O.fchk < 600e3 && t >= O.fchk) return; O.fchk = t;
+  const M = S.maps[rg.mi], W = M && M.w260; if (!W || !W.list) return;
+  const got = [];
+  for (const cc of W.list.slice()){ if (got.length >= n) break; if (cc.st < 2) continue; const [x, y] = pkey(cc.k); if (!inRg62(rg, rg.mi, x, y)) continue;
+    if (typeof invFree === 'function' && invFree() < 1) break; if (!CFG.items['wild_' + cc.sp]) continue;
+    W.list.splice(W.list.indexOf(cc), 1); invAdd('wild_' + cc.sp, 1); got.push(cc.sp); }
+  if (!got.length) return; O.fn = nk; O.fish = (O.fish || 0) + got.length;
+  if (liveT(t)) toast(`${O.name}從河裡撈到${got.map(sp => (CFG.fish[sp] || {}).name || sp).join('、')}，放進倉庫水產`, true, 3600);
+  else RT.notices.push({ kind: 'owlFish62', by: O.name, n: got.length, t }); }
+function stepOwls62(dt, t){ const L = owls62(); if (!L.length) return; const nk = nightKey62(t);
+  for (const O of L){ const rg = owlRange62(O); if (!rg) continue;
+    if (O.nk !== nk){ O.nk = nk; O.tn = 0; }
+    if (homeWhy62(O, t)){ O.out = false; continue; }
+    O.out = true;
+    const D = osp62(O), cap = D.ratsPerNight || 3, rest = (D.restMinutes || 8) * 60;
+    let left = dt;
+    for (let g = 0; g < 20 && left > 0 && (O.tn || 0) < cap; g++){ const r = O.rest || 0;
+      if (r > left){ O.rest = r - left; left = 0; break; } left -= r; O.rest = 0;
+      if (!owlCatch62(O, rg, t)) break; O.rest = rest; }
+    if ((O.tn || 0) >= cap) O.rest = Math.max(0, (O.rest || 0) - left);
+    owlFish62(O, rg, t); } }
+{ const _sa62 = stepAll; stepAll = function(dt, t){ _sa62(dt, t); if (!OW62 || !S) return; try { stepOwls62(dt, t); } catch(e){ if (!RT.err62){ RT.err62 = 1; console.warn(e); } } }; }
+// 灰林鴞：範圍內的老鼠出現機率 ×0.8（同 g81 的 loud）
+{ const _sr62 = stepRats; stepRats = function(dt, t){ const L = OW62 ? owls62().filter(O => osp62(O).skill === 'deter' && !homeWhy62(O, t)) : []; if (!L.length) return _sr62(dt, t);
+  const before = new Map(ratSpots().map(sp => [sp.key, sp.n])); _sr62(dt, t);
+  for (const sp of ratSpots()){ const b = before.get(sp.key) || 0; if (sp.n > b && L.some(O => spotIn62(sp, owlRange62(O))) && Math.random() < 1 - (OSK62.deterRatMult ?? .8)){
+    sp.n = b; const i = RT.notices.map(n => n.kind).lastIndexOf('ratIn'); if (i >= 0) RT.notices.splice(i, 1); } } }; }
+// 大雕鴞：晚上範圍內的黃鼠狼、狐狸直接嚇走（野狼不行）
+{ const _spd62 = spawnPred; spawnPred = function(kind, mi, M, k, t){ const Pd = _spd62(kind, mi, M, k, t);
+  try { if (OW62 && Pd && !Pd.by && (kind === 'weasel' || kind === 'fox')){ const [x, y] = pkey(k), O = owls62().find(o => osp62(o).skill === 'guard' && !homeWhy62(o, t) && inRg62(owlRange62(o), mi, x, y));
+      if (O){ Pd.by = 'owl:' + O.id; Pd.byName = O.name; Pd.fleeAt = t + (2 + Math.random() * 3) * 1000; O.guard = (O.guard || 0) + 1;
+        if (liveT(t) && mi === S.cur){ (RT.owlFx62 = RT.owlFx62 || {})[O.id] = { x, y, t0: performance.now(), scare: true }; toast(`${O.name}衝下來嚇走了${PREDC[kind].name}！`, true, 3000); } } } } catch(e){}
+  return Pd; }; }
+
+/* ---------- 2. 畫：巢箱（空／在睡／出門＋積雪）、晚上在範圍內飛來飛去、停在樹上或建物上、俯衝抓老鼠 ---------- */
+function boxState62(T){ const O = owlIn62(T); if (!O) return 'empty'; return O.out ? 'out' : 'home'; }
+{ const _dd62 = drawDevice; drawDevice = function(T, k, cx, cy, t){
+  if (!isOwlBox62(T)) return _dd62(T, k, cx, cy, t);
+  const n = 'building_owl_box_' + boxState62(T); spr(n, 0, cx, cy);
+  if (S.snow && S.snow.cover && ATLAS['snow_' + n]){ let g = false; try { g = glassAt(S.cur, k); } catch(e){} if (!g) spr('snow_' + n, 0, cx, cy); } }; }
+function perchSpots62(rg){ const M = S.maps[rg.mi], out = [];
+  for (let y = rg.y0; y <= rg.y1; y++) for (let x = rg.x0; x <= rg.x1; x++){ const T = M.tiles[tkey(x, y)]; if (!T) continue;
+    if (T.t === 'tree' || (T.t === 'terrain' && T.kind === 'forest')) out.push([x, y, 30]);
+    else if (T.t === 'building') out.push([x, y, 38]);
+    else if (T.t === 'deco' && /fence|lamp|bench/.test(T.id)) out.push([x, y, 10]); }
+  return out; }
+const HOLE62 = () => { const a = ATLAS.building_owl_box_home; return a && a.hole ? [a.hole[0] / 2, -a.hole[1] / 2] : [-6, 33]; };
+function drawOwls62(){ const L = owls62(); if (!L.length) return; RT.oAg62 = RT.oAg62 || {}; const pn = performance.now(), t = pn / 1000, dt = Math.min(.1, (pn - (RT.oT62 || pn)) / 1000); RT.oT62 = pn;
+  const pk = (OW62.peckSeconds ?? 3) * 1000, [hx0, hz] = HOLE62();
+  for (const O of L){ const rg = owlRange62(O); if (!rg || rg.mi !== S.cur || !O.out){ delete RT.oAg62[O.id]; continue; }
+    const bx = rg.b.x, by = rg.b.y; let A = RT.oAg62[O.id];
+    if (!A) A = RT.oAg62[O.id] = { x: bx, y: by, h: hz, tx: bx, ty: by, th: hz, mode: 'perch', wait: 1 + Math.random() * 3, flip: false, box: true };
+    const fx = (RT.owlFx62 || {})[O.id];
+    if (fx && pn - fx.t0 < pk + 2500){ A.tx = fx.x; A.ty = fx.y; A.th = 0; A.hunt = true; A.box = false; }
+    else { if (fx) delete RT.owlFx62[O.id]; A.hunt = false; A.wait -= dt;
+      if (A.wait <= 0 && Math.hypot(A.tx - A.x, A.ty - A.y) < .05){ const P = perchSpots62(rg), home = Math.random() < .25 || !P.length;
+        const p = home ? [bx, by, hz] : rnd40(P); A.tx = p[0]; A.ty = p[1]; A.th = p[2]; A.box = home; A.wait = 4 + Math.random() * 6; } }
+    const dx = A.tx - A.x, dy = A.ty - A.y, d = Math.hypot(dx, dy), sp = (A.hunt ? 3.2 : 1.8) * dt;
+    if (d > .02){ const s = Math.min(1, sp / d); A.x += dx * s; A.y += dy * s; A.mode = 'fly'; const c1 = center(dx, dy), c0 = center(0, 0); if (Math.abs(c1.cx - c0.cx) > .5) A.flip = c1.cx - c0.cx < 0;
+      A.h += ((Math.max(A.th, 26) + Math.min(14, d * 6)) - A.h) * Math.min(1, dt * 3); }
+    else { A.x = A.tx; A.y = A.ty; A.h += (A.th - A.h) * Math.min(1, dt * 6); A.mode = A.hunt && !(fx && fx.scare) ? 'peck' : 'perch'; }
+    const c = center(A.x, A.y), n = `owl_${O.sp}_${A.mode}`, ox = A.mode !== 'fly' && A.box ? hx0 : 0;
+    if (A.mode === 'fly' || A.h > 4){ ctx.fillStyle = 'rgba(10,20,30,.18)'; ctx.beginPath(); ctx.ellipse(c.cx, c.cy, 7, 2.6, 0, 0, 7); ctx.fill(); }
+    if (ATLAS[n]) spr(n, motion ? frameOf(n, t, (O.born % 97) * .1) : 0, c.cx + ox, c.cy - A.h + (A.mode === 'fly' ? Math.sin(t * 4 + O.born % 7) * 2 : 0), A.flip); } }
+{ const _ds62 = drawSky; drawSky = function(t, now, atop){
+  try { if (OW62 && S && owls62().length){ ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y); drawOwls62(); ctx.restore(); } } catch(e){ if (!RT.err62d){ RT.err62d = 1; console.warn(e); } try { ctx.restore(); } catch(e2){} }
+  return _ds62(t, now, atop); }; }
+
+/* ---------- 3. 巢箱面板 ---------- */
+function owlState62(O){ const t = Date.now(), why = homeWhy62(O, t); if (why) return why; const D = osp62(O);
+  if ((O.tn || 0) >= (D.ratsPerNight || 3)) return '今晚抓夠了，在附近巡邏';
+  if ((O.rest || 0) > 0) return `剛抓完，休息中（還要 ${fmtDur(O.rest)}）`;
+  return '巡邏中：範圍內的倉庫、垃圾站有老鼠就抓'; }
+function openOwlBox62(mi, k){
+  const M = S.maps[mi], T = M.tiles[k]; if (!isOwlBox62(T)) return; if (!T.uid) owlBoxes62();
+  openModal(OBX62.name || '貓頭鷹巢箱', null, (kk, el) => { el.classList.add('owl62'); const O = owlIn62(T), [x, y] = pkey(k), tree = treeNear62(M, x, y);
+    let h = '';
+    if (O){ const D = osp62(O), rg = owlRange62(O), sz = D.range || 7, nk = nightKey62(Date.now());
+      h += `<div class="ow62"><img src="${IMGSRC['ui_pg_owl_' + O.sp] || ''}" alt=""><div><h4>${escapeHTML(O.name)}<small>${escapeHTML(D.name || '')}</small></h4>
+        <div class="kv"><span>現在</span><span>${owlState62(O)}</span><span>範圍</span><span>${sz}×${sz}（以巢箱為中心）</span>
+        <span>今晚</span><span>抓了 ${O.nk === nk ? O.tn || 0 : 0} / ${D.ratsPerNight} 隻（抓一隻休息 ${D.restMinutes} 分）</span>
+        <span>累計</span><span>老鼠 ${O.rats || 0} 隻${O.fish ? `・撈魚 ${O.fish} 隻` : ''}${O.guard ? `・嚇走天敵 ${O.guard} 次` : ''}</span><span>特色</span><span>${escapeHTML(D.skillText || '—')}</span></div>
+        <div class="row"><input type="text" maxlength="${OW62.nameMaxChars || 8}" value="${escapeHTML(O.name)}" style="font-size:16px;max-width:9em"><button class="btn ghost" id="owRen">改名</button>
+        <button class="btn warn" id="owGive">送養（退 ${fmtN(Math.floor((D.price || 0) * (OW62.sellRate ?? .5)))}）</button></div></div></div>`;
+      if (!tree && D.skill !== 'noTree') h += `<p class="small no61">巢箱 ${OBX62.treeRange ?? 2} 格內沒有樹了：貓頭鷹還住著，但下一隻要住進來需要附近有樹（穴鴞不用）。</p>`;
+      h += `<p class="small">貓頭鷹不用餵、沒有壽命，不能收進倉庫。黃昏出巢、晚上工作，天亮前回巢；下雨下雪待在巢箱（鬼鴞、雪鴞除外）。要搬家就用「搬移」搬巢箱，貓頭鷹會跟著。</p>`; }
+    else h += `<p>空巢箱：到「動物 · 貓頭鷹」選一種，點這個巢箱就會住進來。</p><p class="small">${tree ? '附近有樹，每一種都可以住。' : `${OBX62.treeRange ?? 2} 格內沒有樹（果樹、野樹、裝飾樹）：只有穴鴞可以住。`}</p>`;
+    el.innerHTML = h;
+    const rn = el.querySelector('#owRen'); if (rn) rn.onclick = () => { const v = el.querySelector('input').value.trim().slice(0, OW62.nameMaxChars || 8); if (!v){ toast('名字不能空白'); return; } O.name = v; save(); toast(`改好了：${v}`); openOwlBox62(mi, k); };
+    const gv = el.querySelector('#owGive'); if (gv) gv.onclick = () => { if (!gv.classList.contains('armed')){ gv.classList.add('armed'); gv.textContent = '再按一次確定送養'; return; }
+      const p = Math.floor((osp62(O).price || 0) * (OW62.sellRate ?? .5)); S.owls62 = owls62().filter(q => q !== O); delete (RT.oAg62 || {})[O.id]; S.player.coins += p; toast(`${O.name}找到新家了，退回 ${fmtN(p)} 金幣`); afterAction(); openOwlBox62(mi, k); }; }); }
+HD54[OBX62.name || '貓頭鷹巢箱'] = 'owl_box';
+
+/* ---------- 4. 蓋巢箱、買貓頭鷹 ---------- */
+function placeOwlBox62(M, k, T, cx, cy){
+  if (T && T.t !== 'weed'){ toast(`${OBX62.name || '巢箱'}要放在空的草地上`); return; } if (!isUnlocked('owl_box')){ toast(lockedMsg('owl_box')); return; }
+  const st = (S.storage || {}).owl_box || 0, cost = DEV.owl_box.buildCost;
+  if (st > 0) S.storage.owl_box = st - 1; else if (!spend(cost)) return;
+  if (T) pullWeed(M, k, cx, cy);
+  M.tiles[k] = { t: 'device', id: 'owl_box' }; owlBoxes62(); floatText(cx, cy - 24, st > 0 ? '從倉庫拿出' : `-${fmtN(cost)}`, '#8a5d36', 11); sfx('place'); RT.decoVer++;
+  const [x, y] = pkey(k); if (!treeNear62(M, x, y)) toast(`這裡 ${OBX62.treeRange ?? 2} 格內沒有樹：只有穴鴞可以住`, false, 3200); }
+function boxOk62(b, sp){ if (owlIn62(b.T)) return '這個巢箱已經住了一隻（一箱一隻）'; if ((OSP62[sp] || {}).skill !== 'noTree' && !treeNear62(b.M, b.x, b.y)) return `巢箱 ${OBX62.treeRange ?? 2} 格內要有樹（果樹、野樹、裝飾樹）；穴鴞不用`; return null; }
+function buyOwl62(sp, mi, k){ const D = OSP62[sp], id = 'owl:' + sp; if (!D) return;
+  if (!isUnlocked(id)){ toast(lockedMsg(id)); return; }
+  let b = null; const all = owlBoxes62();
+  if (k != null){ b = all.find(q => q.mi === mi && q.k === k) || null; if (b){ const why = boxOk62(b, sp); if (why){ toast(why); return; } } }
+  if (!b){ const ok = all.filter(q => !boxOk62(q, sp)).sort((a, c) => (a.mi === S.cur ? 0 : 1) - (c.mi === S.cur ? 0 : 1)); b = ok[0] || null;
+    if (!b){ toast(all.length ? (all.every(q => owlIn62(q.T)) ? '巢箱都住滿了：先在「動物 · 設施」再蓋一個巢箱' : boxOk62(all.find(q => !owlIn62(q.T)), sp)) : `先在「動物 · 設施」蓋${OBX62.name || '貓頭鷹巢箱'}（Lv ${UNLOCK.owl_box || OBX62.level || 14}）`, false, 3600); return; } }
+  if (!spend(D.price)) return;
+  const O = { id: 'w' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), sp, name: D.name.slice(0, OW62.nameMaxChars || 8), box: b.T.uid, born: Date.now(), rats: 0, tn: 0, rest: 0 };
+  owls62().push(O); owlBook62()[sp] = 1;
+  sfx('place'); toast(`${O.name}住進巢箱了！白天睡覺，晚上在 ${D.range}×${D.range} 範圍內抓老鼠（每晚最多 ${D.ratsPerNight} 隻）`, true, 4200); afterAction(); UIbuildTray(); }
+
+/* ---------- 5. 點擊 ---------- */
+{ const _act62 = act; act = function(x, y){
+  if (!S || UI.expand || !OW62) return _act62(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act62(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act62(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, sel = String(S.sel.animal || ''), { cx, cy } = center(x, y);
+  if (tool === 'animal' && sel === 'owl_box'){ if (isOwlBox62(T)){ openOwlBox62(S.cur, k); return; } placeOwlBox62(M, k, T, cx, cy); afterAction(); UIbuildTray(); return; }
+  if (tool === 'animal' && sel.startsWith('owl:')){ buyOwl62(sel.slice(4), S.cur, isOwlBox62(T) ? k : null); return; }
+  if (isOwlBox62(T)){
+    if ((tool === 'remove' || tool === 'store') && owlIn62(T)){ toast('巢箱裡還住著貓頭鷹：先送養，或用「搬移」把巢箱搬走（貓頭鷹會跟著）'); return; }
+    if (tool !== 'remove' && tool !== 'store' && tool !== 'move'){ openOwlBox62(S.cur, k); return; } }
+  return _act62(x, y); }; }
+{ const _od62 = openDevice; openDevice = function(M, k, T){ if (isOwlBox62(T)) return openOwlBox62(S.maps.indexOf(M), k); return _od62(M, k, T); }; }
+
+/* ---------- 6. 選項列：動物 · 設施 多巢箱；新分頁「貓頭鷹」 ---------- */
+{ const _ut62 = UIbuildTray; UIbuildTray = function(){ _ut62(); if (!OW62 || !S || S.sel.tool !== 'animal' || RT.borrow34) return;
+  const tray = $('tray'); if (!tray) return; const sel = S.sel.animal, pick = (id, tab) => () => { S.sel.animal = id; S.sel.animalTab = tab; UIbuildTray(); updateHint(); };
+  if (!tray.querySelector('.item[data-id="owl_box"]')){ const lk = !isUnlocked('owl_box'), st = (S.storage || {}).owl_box || 0;
+    const el = trayItem('device', 'owl_box', OBX62.name || '貓頭鷹巢箱', [st ? `倉庫 ×${st}` : `${coinImg()}${fmtN(DEV.owl_box.buildCost)}`, `住 1 隻貓頭鷹 · 2 格內要有樹`], sel === 'owl_box', lk, { lockLv: UNLOCK.owl_box });
+    el.onclick = lk ? () => toast(lockedMsg('owl_box')) : pick('owl_box', 'facility'); tray.appendChild(el); }
+  for (const [sp, D] of Object.entries(OSP62)){ const id = 'owl:' + sp; if (tray.querySelector(`.item[data-id="${id}"]`)) continue; const lk = !isUnlocked(id), n = owls62().filter(O => O.sp === sp).length;
+    const el = trayItem('owl', id, D.name, [`${coinImg()}${fmtN(D.price)}`, `${D.range}×${D.range} · 每晚 ${D.ratsPerNight} 隻`], sel === id, lk, { lockLv: UNLOCK[id], count: n || undefined });
+    el.onclick = lk ? () => toast(lockedMsg(id)) : pick(id, 'owl'); tray.appendChild(el); }
+  const tab = S.sel.animalTab; tray.querySelectorAll('.item').forEach(el => { const id = el.dataset.id; if (id === 'owl_box' || /^owl:/.test(id)) el.hidden = tabOf('animal', id) !== tab; });
+  if ([...tray.querySelectorAll('.item')].some(x => !x.hidden)) tray.querySelectorAll('.trayempty').forEach(e => e.remove()); }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha62 = ta.hint; ta.hint = () => { const id = String((S && S.sel.animal) || '');
+  if (OW62 && id === 'owl_box') return `點空草地蓋${OBX62.name || '貓頭鷹巢箱'} · ${(S.storage || {}).owl_box ? '從倉庫拿出' : fmtN(DEV.owl_box.buildCost) + ' 金幣'} · 一箱住一隻，2 格內要有樹（穴鴞不用）`;
+  if (OW62 && id.startsWith('owl:') && OSP62[id.slice(4)]){ const D = OSP62[id.slice(4)]; return `點空的巢箱（或任一處）買「${D.name}」· ${fmtN(D.price)} 金幣 · ${D.skillText}`; }
+  return _ha62(); }; }
+{ const _is62 = itemSprite; itemSprite = function(kind, id){ const s = String(id);
+  if (s === 'owl_box') return ['ui_owl_box', 0]; if (s.startsWith('owl:')) return ['ui_owl_' + s.slice(4), 0]; return _is62(kind, id); }; }
+{ const _no62 = nameOf; nameOf = function(id){ const s = String(id);
+  if (s === 'owl_box' && OW62) return OBX62.name || '貓頭鷹巢箱'; if (s.startsWith('owl:') && OSP62[s.slice(4)]) return OSP62[s.slice(4)].name; return _no62(id); }; }
+{ const _ui62 = unlockIcon38; unlockIcon38 = function(u){ const s = String(u);
+  if (s === 'owl_box') return ['building_owl_box_home', 0]; if (s.startsWith('owl:')) return ['ui_owl_' + s.slice(4), 0]; return _ui62(u); }; }
+{ const _bt62 = bookTabFor252; bookTabFor252 = function(kind, id){ const s = String(id); if (s === 'owl_box' || s.startsWith('owl:')) return 'owls262'; return _bt62(kind, id); }; }
+
+/* ---------- 7. 圖鑑「貓頭鷹」 ---------- */
+function bookHTML62(){ const B = owlBook62(), all = Object.keys(OSP62).sort((a, b) => OSP62[a].level - OSP62[b].level), got = all.filter(sp => B[sp]).length, mine = owls62();
+  let h = `<p class="small">登記 ${got} / ${all.length} 種（養過就登記）。貓頭鷹住在「動物 · 設施」的巢箱，一箱一隻；晚上在範圍內抓倉庫、垃圾站的老鼠。不用餵、沒有壽命，送養退半價。</p><div class="bk62">`;
+  for (const sp of all){ const D = OSP62[sp], n = mine.filter(O => O.sp === sp), rats = n.reduce((a, O) => a + (O.rats || 0), 0);
+    h += `<div class="${B[sp] ? '' : 'no'}"><img src="${IMGSRC['ui_pg_owl_' + sp] || ''}" alt=""><b>${escapeHTML(D.name)}</b> Lv ${D.level}<br><small>${coinImg()}${fmtN(D.price)}・範圍 ${D.range}×${D.range}・每晚 ${D.ratsPerNight} 隻・休息 ${D.restMinutes} 分</small>
+      <br><small>${escapeHTML(D.skillText || '')}</small>${n.length ? `<br><small>現在養 ${n.length} 隻・抓過 ${rats} 隻老鼠</small>` : ''}</div>`; }
+  return h + '</div>'; }
+{ const _om62 = openModal; openModal = function(title, tabs, render, initial){
+  if (OW62 && title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { if (k === 'owls262'){ el.classList.add('owl62'); el.innerHTML = bookHTML62(); paintIcons(el); return; } return r0(k, el); }; }
+  return _om62(title, tabs, render, initial); }; }
+
+/* ---------- 8. 舊存檔 ---------- */
+{ const _ns62 = normalizeState; normalizeState = function(d){ const r = _ns62(d); const s = r || d;
+  try { if (s && !s.v262){ s.v262 = 1; if (!Array.isArray(s.owls62)) s.owls62 = []; if (!s.owlBook62) s.owlBook62 = {}; } } catch(e){}
+  return r; }; }
+
+window.__farm262 = { OW62, owls: () => owls62(), boxes: () => owlBoxes62(), buyOwl62, placeOwlBox62, openOwlBox62, stepOwls62, homeWhy62, owlRange62, treeNear62, boxOk62, bookHTML62, ratSpots: () => ratSpots(), spawnPred: (...a) => spawnPred(...a), act: (x, y) => act(x, y), normalizeState: d => normalizeState(d), RT: () => RT };
+
+/* ===== 119. v2.62.1：貓頭鷹白天引誘彩蛋（設定 CFG.owls262.lure、items.frozen_mouse，patches/patch_v2_62_1.py；美術 batch80）
+   動物 · 貓頭鷹 選「冷凍小鼠」點空地 → 放在地上（S.lure62 = [{ id, mi, k, t0, owl, day, got }]）；範圍蓋到那格、最近的貓頭鷹來叼：
+   在巢箱裡的約 wakeSeconds 秒後飛出來，晚上出門的直接飛過來；低頭叼起來（peck）→ 叼回巢箱 → 每隻每天第一次 +經驗；第一次白天成功＝隱藏成就「白天的訪客」
+   10 分鐘沒被叼走（或貓頭鷹不在了）退回倉庫；不在看的島上直接算叼走 ===== */
+const LR62 = (OW62 && OW62.lure) || {};
+const LUREID62 = LR62.item || 'frozen_mouse';
+const lures62 = () => (S.lure62 = S.lure62 || []);
+const lureAt62 = (mi, k) => lures62().find(L => L.mi === mi && L.k === k && !L.got) || null;
+// 範圍蓋到這格、最近的貓頭鷹（同一隻一次只去叼一隻）
+function lureOwl62(mi, x, y){ const busy = new Set(lures62().map(L => L.owl)); let best = null, bd = 1e9;
+  for (const O of owls62()){ if (busy.has(O.id)) continue; const rg = owlRange62(O); if (!inRg62(rg, mi, x, y)) continue; const d = Math.hypot(rg.b.x - x, rg.b.y - y); if (d < bd){ bd = d; best = O; } }
+  return best; }
+function placeLure62(M, k, T, cx, cy){
+  if (!isUnlocked(LUREID62)){ toast(lockedMsg(LUREID62)); return; }
+  if (T){ toast('冷凍小鼠要放在空的草地上'); return; }
+  if (lureAt62(S.cur, k)){ toast('這格已經放了一隻'); return; }
+  if (!(S.inv[LUREID62] > 0)){ toast(`倉庫沒有${itemName(LUREID62)}：到飼料商店買（${fmtN(CFG.feedShop[LUREID62] || 20)} 金幣）`, false, 3200); return; }
+  const [x, y] = pkey(k), O = lureOwl62(S.cur, x, y);
+  if (!O){ toast(owls62().length ? '附近沒有貓頭鷹：要放在貓頭鷹的範圍內（點巢箱看範圍）' : '附近沒有貓頭鷹：先在「動物 · 設施」蓋巢箱、養一隻貓頭鷹', false, 3200); return; }
+  invTake(LUREID62, 1); const t = Date.now(), home = !!homeWhy62(O, t);
+  lures62().push({ id: 'l' + t.toString(36) + Math.random().toString(36).slice(2, 5), mi: S.cur, k, t0: t, owl: O.id, home, day: home && !nightish62(t) });
+  floatText(cx, cy - 20, `放一隻${itemName(LUREID62)}`, '#5a7a8a', 11); sfx('place');
+  toast(home ? `${O.name}在巢箱裡……好像聞到味道了` : `${O.name}看到了，飛過來了！`, false, 2600); afterAction(); UIbuildTray(); }
+function finishLure62(L, t){ L.got = true; const O = owls62().find(q => q.id === L.owl); lures62().splice(lures62().indexOf(L), 1); RT.decoVer++;
+  if (!O) return; O.lured = (O.lured || 0) + 1; const today = dayNo40(t);
+  const [x, y] = pkey(L.k), c = center(x, y);
+  if (O.lureDay !== today){ O.lureDay = today; gain(0, LR62.xp ?? 5, c.cx, c.cy - 20); }
+  if (L.day) stat('owlLureDay');
+  if (liveT(t) && L.mi === S.cur) floatText(c.cx, c.cy - 40, `${O.name}叼走了${itemName(LUREID62)}`, '#2f7fa8', 10);
+  afterAction(); }
+function stepLures62(t){ const L = lures62(); if (!L.length) return;
+  for (const R of L.slice()){ const O = owls62().find(q => q.id === R.owl);
+    if (!O || !S.maps[R.mi] || t - R.t0 > (LR62.expireMinutes ?? 10) * 60e3 || t < R.t0 - 60e3){ lures62().splice(lures62().indexOf(R), 1); if (!R.picked) invAdd(LUREID62, 1); RT.decoVer++;
+      if (liveT(t)) toast(`${itemName(LUREID62)}沒被叼走，退回倉庫`); continue; }
+    // 不在看的島上（或畫面沒在跑）：幾秒後直接算叼走
+    if ((R.mi !== S.cur || document.hidden) && t - R.t0 > ((LR62.wakeSeconds ?? 3) + 4) * 1000) finishLure62(R, t); } }
+{ const _sa621 = stepAll; stepAll = function(dt, t){ _sa621(dt, t); if (!OW62 || !S) return; try { stepLures62(t); } catch(e){ if (!RT.err621){ RT.err621 = 1; console.warn(e); } } }; }
+
+/* ---------- 畫：地上的冷凍小鼠、飛出來叼走再飛回巢箱 ---------- */
+{ const _dte621 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte621(M, k, T, x, y, t, now);
+  if (!OW62 || !S || M !== S.maps[S.cur]) return; const L = lureAt62(S.cur, k); if (!L || L.picked) return; const c = center(x, y); spr('item_frozen_mouse', 0, c.cx, c.cy); }; }
+// 正在叼食物的貓頭鷹，g118 的 drawOwls62 先跳過，由這裡畫
+const lureBusy62 = () => new Set(lures62().filter(L => L.mi === S.cur && !L.got).map(L => L.owl));
+{ const _do621 = drawOwls62; drawOwls62 = function(){ const busy = lureBusy62(); if (!busy.size) return _do621(); const all = S.owls62; S.owls62 = all.filter(O => !busy.has(O.id)); try { return _do621(); } finally { S.owls62 = all; } }; }
+{ const _bs621 = boxState62; boxState62 = function(T){ const O = owlIn62(T); if (O && RT.lr62 && RT.lr62[O.id] && RT.lr62[O.id].ph !== 'wake') return 'out'; return _bs621(T); }; }
+function drawLures62(){ const now = Date.now(), pn = performance.now(), dt = Math.min(.1, (pn - (RT.lrT62 || pn)) / 1000); RT.lrT62 = pn; RT.lr62 = RT.lr62 || {};
+  const [hx0, hz] = HOLE62(), pk = (LR62.peckSeconds ?? 1.2) * 1000, t = pn / 1000;
+  for (const L of lures62().slice()){ if (L.mi !== S.cur || L.got) continue; const O = owls62().find(q => q.id === L.owl), rg = O && owlRange62(O); if (!rg) continue;
+    const [lx, ly] = pkey(L.k), bx = rg.b.x, by = rg.b.y; let A = RT.lr62[O.id];
+    if (!A){ const G = (RT.oAg62 || {})[O.id], fromBox = L.home || !G; A = RT.lr62[O.id] = fromBox ? { x: bx, y: by, h: hz, ox: hx0, ph: L.home ? 'wake' : 'out', t0: pn, flip: lx - ly < bx - by } : { x: G.x, y: G.y, h: G.h, ox: 0, ph: 'out', t0: pn, flip: G.flip }; }
+    if (A.ph === 'wake'){ if (now - L.t0 >= (LR62.wakeSeconds ?? 3) * 1000){ A.ph = 'out'; A.t0 = pn; }
+      else { const c = center(bx, by); bubble(c.cx + hx0, c.cy - hz - 12, '…?', null, '#fffbe9'); continue; } }
+    const tx = A.ph === 'back' ? bx : lx, ty = A.ph === 'back' ? by : ly, th = A.ph === 'back' ? hz : 0;
+    if (A.ph === 'out' || A.ph === 'back'){ const dx = tx - A.x, dy = ty - A.y, d = Math.hypot(dx, dy), sp = 2.4 * dt;
+      A.ox += (0 - A.ox) * Math.min(1, dt * 4);
+      if (d > .03){ const s = Math.min(1, sp / d); A.x += dx * s; A.y += dy * s; const c1 = center(dx, dy), c0 = center(0, 0); if (Math.abs(c1.cx - c0.cx) > .5) A.flip = c1.cx - c0.cx < 0; A.h += ((th + Math.min(30, 10 + d * 8)) - A.h) * Math.min(1, dt * 3); A.mode = 'fly'; }
+      else { A.x = tx; A.y = ty; A.h = th;
+        if (A.ph === 'out'){ A.ph = 'peck'; A.t0 = pn; }
+        else { delete RT.lr62[O.id]; if (RT.oAg62 && RT.oAg62[O.id]) Object.assign(RT.oAg62[O.id], { x: bx, y: by, h: hz, tx: bx, ty: by, th: hz, box: true, wait: 2 }); finishLure62(L, now); continue; } } }
+    if (A.ph === 'peck'){ A.mode = 'peck'; A.h = 0; if (pn - A.t0 >= pk){ L.picked = true; A.ph = 'back'; RT.decoVer++; } }
+    const c = center(A.x, A.y), n = `owl_${O.sp}_${A.mode || 'fly'}`, y = c.cy - A.h;
+    if (A.h > 4){ ctx.fillStyle = 'rgba(10,20,30,.18)'; ctx.beginPath(); ctx.ellipse(c.cx, c.cy, 7, 2.6, 0, 0, 7); ctx.fill(); }
+    if (ATLAS[n]) spr(n, motion ? frameOf(n, t, 0) : 0, c.cx + A.ox, y, A.flip);
+    if (A.ph === 'back'){ const a = ATLAS[n], top = a && a.top ? a.top : 20; const mx = c.cx + A.ox + (A.flip ? -1 : 1) * top * .32, my = y - top * .55;   // 嘴上叼著的小老鼠
+      ctx.fillStyle = '#9aa2aa'; ctx.beginPath(); ctx.ellipse(mx, my + 3, 3.2, 1.6, A.flip ? .3 : -.3, 0, 7); ctx.fill(); ctx.strokeStyle = '#e6a6a6'; ctx.lineWidth = .6; ctx.beginPath(); ctx.moveTo(mx - (A.flip ? -3 : 3), my + 3.5); ctx.lineTo(mx - (A.flip ? -5 : 5), my + 6); ctx.stroke(); } } }
+{ const _ds621 = drawSky; drawSky = function(t, now, atop){
+  try { if (OW62 && S && lures62().length){ ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y); try { drawLures62(); } finally { ctx.restore(); } } } catch(e){ if (!RT.err621d){ RT.err621d = 1; console.warn(e); } }
+  return _ds621(t, now, atop); }; }
+
+/* ---------- 點擊、選項列、面板 ---------- */
+{ const _act621 = act; act = function(x, y){
+  if (!S || UI.expand || !OW62) return _act621(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act621(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act621(x, y);
+  if (S.sel.tool === 'animal' && S.sel.animal === LUREID62){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y);
+    if (isOwlBox62(T)){ openOwlBox62(S.cur, k); return; } placeLure62(M, k, T, cx, cy); return; }
+  return _act621(x, y); }; }
+{ const _ut621 = UIbuildTray; UIbuildTray = function(){ _ut621(); if (!OW62 || !S || S.sel.tool !== 'animal' || RT.borrow34) return;
+  const tray = $('tray'); if (!tray || tray.querySelector(`.item[data-id="${LUREID62}"]`)) return;
+  const lk = !isUnlocked(LUREID62), n = S.inv[LUREID62] || 0;
+  const el = trayItem('item', LUREID62, itemName(LUREID62), [n ? `倉庫 ×${n}` : `飼料商店 ${coinImg()}${fmtN(CFG.feedShop[LUREID62] || 20)}`, '放在地上引誘貓頭鷹'], S.sel.animal === LUREID62, lk, { lockLv: UNLOCK[LUREID62] });
+  el.onclick = lk ? () => toast(lockedMsg(LUREID62)) : () => { S.sel.animal = LUREID62; S.sel.animalTab = 'owl'; UIbuildTray(); updateHint(); };
+  el.hidden = tabOf('animal', LUREID62) !== S.sel.animalTab; tray.appendChild(el); }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha621 = ta.hint; ta.hint = () => { if (OW62 && S && S.sel.animal === LUREID62) return `點貓頭鷹範圍內的空草地放一隻${itemName(LUREID62)}（倉庫 ${S.inv[LUREID62] || 0}）· 牠會出來叼回巢箱吃 · 白天也會`; return _ha621(); }; }
+{ const _is621 = itemSprite; itemSprite = function(kind, id){ if (id === LUREID62) return ['ui_it_frozen_mouse', 0]; return _is621(kind, id); }; }
+{ const _ui621 = unlockIcon38; unlockIcon38 = function(u){ if (u === LUREID62) return ['ui_it_frozen_mouse', 0]; return _ui621(u); }; }
+{ const _bt621 = bookTabFor252; bookTabFor252 = function(kind, id){ if (id === LUREID62) return 'owls262'; return _bt621(kind, id); }; }
+// 巢箱面板多一行「被引誘」
+{ const _ob621 = openOwlBox62; openOwlBox62 = function(mi, k){ const r = _ob621(mi, k);
+  try { const T = S.maps[mi].tiles[k], O = owlIn62(T), kv = document.querySelector('#modal .owl62 .kv'); if (O && kv){ kv.insertAdjacentHTML('beforeend', `<span>被引誘</span><span>${O.lured || 0} 次（放${escapeHTML(itemName(LUREID62))}在範圍內的地上，白天也會出來叼）</span>`); } } catch(e){}
+  return r; }; }
+// 隱藏成就：還沒拿到之前說明寫「？？？」
+for (const a of (ACHC.list || [])) if (a.hidden && !Object.getOwnPropertyDescriptor(a, 'desc').get){ const d0 = a.desc;
+  Object.defineProperty(a, 'desc', { get(){ try { const G = S && ach39().got[a.id]; return G && Object.keys(G).length ? d0 : '？？？（隱藏成就：貓頭鷹白天也許會為了什麼出來……）'; } catch(e){ return d0; } }, configurable: true }); }
+
+/* ---------- 舊存檔 ---------- */
+{ const _ns621 = normalizeState; normalizeState = function(d){ const r = _ns621(d); const s = r || d;
+  try { if (s && !s.v2621){ s.v2621 = 1; if (!Array.isArray(s.lure62)) s.lure62 = []; } } catch(e){}
+  return r; }; }
+
+window.__farm2621 = { lures: () => lures62(), placeLure62, finishLure62, stepLures62, lureOwl62, act: (x, y) => act(x, y), RT: () => RT, normalizeState: d => normalizeState(d) };
+
+/* ===== 120. v2.63：青蛙（設定 CFG.frogs263，patches/patch_v2_63.py；美術 batch78）
+   存檔 S.frog263 = { book: { 種: { got, raised, first } }, wild: [], pond: [{ id, sp, mi, k, st, p, fed }], frogs: [{ id, sp, mi, x, y, life, eat, eatDay, cd, dead }], wildT }
+   野生：3～9 月下雨時（黑框蟾蜍不下雨的晚上也會）在河邊／魚池 2 格內出現；點一下抓到 → 放進魚池（住在魚池旁）或放生（住在原地）
+   魚池：動物 · 青蛙 選種類（圖鑑登記過、到等級）點魚池沒有魚的格子放蛙卵；卵 → 小蝌蚪 → 大蝌蚪 → 長後腳 → 長前腳 → 上岸；蝌蚪自己找吃的（不扣飼料）
+   上岸：在住的地方 5×5（狗蛙 7×7）內跳來跳去，有害蟲就跳過去吐舌吃掉（每天上限）；壽命 10 天（金線蛙 14 天）；冬天冬眠 ===== */
+{ const st63 = document.createElement('style'); st63.textContent = `
+.frog63 .cat63{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center}.frog63 .cat63 img{width:120px;height:120px;object-fit:contain}.frog63 h3{margin:0 0 4px}
+.frog63 .bk63{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.frog63 .bk63 > div{padding:8px;border-radius:12px;background:var(--gcard);text-align:center;font-size:12px;color:var(--gtx)}.frog63 .bk63 img{display:block;width:96px;height:96px;object-fit:contain;margin:0 auto 4px}
+.frog63 .bk63 > div.no img{filter:brightness(0) opacity(.25)}.frog63 .bk63 small{color:var(--gsub)}
+.frog63 .r63-common{background:#e7f3e2;color:#2f7a2a}.frog63 .r63-rare{background:#e3eefc;color:#1f5fa8}.frog63 .r63-epic{background:#fbe8f3;color:#a8306f}
+@media (max-width:600px){.frog63 .cat63{grid-template-columns:84px 1fr}.frog63 .cat63 img{width:84px;height:84px}}
+`; document.head.appendChild(st63); }
+const FR63 = CFG.frogs263 || null;
+const FSP63 = (FR63 && FR63.species) || {}, FRA63 = (FR63 && FR63.rarity) || {}, FWI63 = (FR63 && FR63.wild) || {}, FLD63 = (FR63 && FR63.land) || {}, FFD63 = (FR63 && FR63.feed) || {};
+const FSTG63 = ['egg', 'tad_s', 'tad_l', 'hind', 'front'], FSTN63 = { egg: '蛙卵', tad_s: '小蝌蚪', tad_l: '大蝌蚪', hind: '長後腳', front: '長前腳' };
+function fs63(){ if (!S.frog263) S.frog263 = { book: {}, wild: [], pond: [], frogs: [] }; const s = S.frog263; for (const k of ['wild', 'pond', 'frogs']) if (!Array.isArray(s[k])) s[k] = []; if (!s.book) s.book = {}; return s; }
+const fnid63 = () => 'f' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const frName63 = sp => (FSP63[sp] || {}).name || '青蛙';
+const frRar63 = sp => FRA63[(FSP63[sp] || {}).rarity] || {};
+const frKnown63 = sp => !!fs63().book[sp];
+const frWinter63 = t => (FR63.winterMonths || [12, 1, 2]).includes(month61(t));
+const frLife63 = sp => ((FSP63[sp] || {}).skill === 'long' ? FLD63.longLifeDays || 14 : FLD63.lifeDays || 10);
+const frRange63 = sp => Math.floor(((FSP63[sp] || {}).skill === 'wide' ? 7 : FLD63.range || 5) / 2);
+const pondAt63 = (mi, k) => fs63().pond.find(p => p.mi === mi && p.k === k) || null;
+const isPool63 = T => !!T && T.t === 'pool';
+function waterNear63(M, x, y, r){ for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const U = M.tiles[tkey(x + dx, y + dy)]; if (isPool63(U) || isRiver248(U)) return true; } return false; }
+function frRegister63(sp, how){ const s = fs63(); let e = s.book[sp], first = false; if (!e){ e = s.book[sp] = { got: 0, raised: 0, first: Date.now() }; first = true; }
+  e[how] = (e[how] || 0) + 1; stat('frogs'); return first; }
+
+/* ---------- 1. 野生 ---------- */
+function frWildOk63(sp, t){ if (frWinter63(t) || !(FWI63.months || []).includes(month61(t))) return false; if (farmRain(t)) return true; return (FSP63[sp] || {}).skill === 'dry' && isNightAt(t); }
+function spawnFrog63(M, mi, t){ const s = fs63(); if (s.wild.filter(w => w.mi === mi).length >= (FWI63.maxPerIsland || 2)) return null;
+  const pick = []; for (const [sp, D] of Object.entries(FSP63)){ if (!isUnlocked('frog:' + sp) || !frWildOk63(sp, t)) continue; pick.push({ sp, w: (FRA63[D.rarity] || {}).wildWeight || 1 }); }
+  if (!pick.length) return null;
+  const cand = mapTiles(M).filter(([x, y]) => !M.tiles[tkey(x, y)] && waterNear63(M, x, y, FWI63.nearWater || 2)); if (!cand.length) return null;
+  let r = Math.random() * pick.reduce((a, b) => a + b.w, 0), P = pick[0]; for (const p of pick){ r -= p.w; if (r <= 0){ P = p; break; } }
+  const [x, y] = rnd40(cand), W = { id: fnid63(), sp: P.sp, mi, x, y, until: t + (FWI63.staySeconds || 1800) * 1000, seed: Math.random() * 9 }; s.wild.push(W); return W; }
+function stepWildFrog63(t){ const s = fs63(); s.wild = s.wild.filter(w => w.until > t && S.maps[w.mi]);
+  if (!liveT(t)){ s.wildT = t; return; } const every = (FWI63.checkMinutes || 10) * 60e3; if (!s.wildT || s.wildT > t){ s.wildT = t; return; } if (t - s.wildT < every) return; s.wildT = t;
+  S.maps.forEach((M, mi) => { if (Math.random() < (FWI63.chance ?? .2)) spawnFrog63(M, mi, t); }); }
+// 抓到
+function catchFrog63(W, cx, cy){ const s = fs63(); s.wild = s.wild.filter(w => w !== W);
+  const first = frRegister63(W.sp, 'got'), R0 = frRar63(W.sp); gain(0, first ? (R0.firstXp || 20) : (R0.xp || 3), cx, cy);
+  floatText(cx, cy - 34, `抓到${frName63(W.sp)}！`, '#2f8a3a', 12); sfx('harvest'); frogAsk63(W.sp, W.mi, W.x, W.y, first); afterAction(); }
+function poolFor63(mi, x, y){ const M = S.maps[mi]; if (!M || !M.pools) return null; let best = null, bd = 1e9;
+  for (const pk in M.pools){ const P = M.pools[pk]; if (!P || !P.tiles || !P.tiles.length) continue; const n = fs63().frogs.filter(f => !f.dead && f.pool === pk && f.mi === mi).length; if (n >= (FLD63.maxPerPool || 4)) continue;
+    const [px, py] = pkey(P.tiles[0]), d = Math.hypot(px - x, py - y); if (d < bd){ bd = d; best = { pk, P }; } }
+  return best; }
+function frogAsk63(sp, mi, x, y, first){ const D = FSP63[sp] || {}, R0 = frRar63(sp), pl = poolFor63(mi, x, y), done = { v: false };
+  const rel = () => { if (done.v) return; done.v = true; addFrog63(sp, mi, x, y, null); };
+  pendingPrompt = () => rel();
+  openModal('抓到青蛙', null, (k, el) => { el.classList.add('frog63');
+    el.innerHTML = `<div class="cat63"><img src="${IMGSRC['ui_pg_frog_' + sp] || ''}" alt=""><div><h3>${escapeHTML(D.name || '')}</h3>
+      <p><span class="pill r63-${D.rarity}">${escapeHTML(R0.name || '')}</span>${first ? ' <span class="pill ok">新登記</span>' : ''}</p>
+      <p class="small">${first ? '第一次抓到，記進圖鑑「青蛙」，之後可以在「動物 · 青蛙」買蛙卵。' : `圖鑑已經有了（累計抓到 ${(fs63().book[sp] || {}).got || 1} 隻）。`}活的青蛙不能賣、也不進倉庫。</p></div></div>
+      <div class="row"><button class="btn" id="fPool63" ${pl ? '' : 'disabled'}>放進魚池</button><button class="btn ghost" id="fRel63">放生</button></div>
+      <p class="small">${pl ? `住在最近的魚池旁，在周圍 ${frRange63(sp) * 2 + 1}×${frRange63(sp) * 2 + 1} 吃害蟲。` : `這座島沒有魚池，或每個魚池旁都已經住了 ${FLD63.maxPerPool || 4} 隻。`}放生的就住在抓到的地方。每天最多吃 ${D.bugsPerDay} 次害蟲，活 ${frLife63(sp)} 天。</p>`;
+    el.querySelector('#fPool63').onclick = () => { if (done.v || !pl) return; done.v = true; pendingPrompt = null; const [px, py] = pkey(pl.P.tiles[0]); addFrog63(sp, mi, px, py, pl.pk); closeModal(); toast(`${frName63(sp)}住到魚池旁了`, true, 2600); afterAction(); };
+    el.querySelector('#fRel63').onclick = () => { pendingPrompt = null; closeModal(); rel(); afterAction(); }; }); }
+function addFrog63(sp, mi, x, y, pool){ const F = { id: fnid63(), sp, mi, x, y, pool: pool || null, life: 0, eat: 0, seed: Math.random() * 9 }; fs63().frogs.push(F); RT.decoVer++; return F; }
+
+/* ---------- 2. 魚池：放蛙卵、成長 ---------- */
+function eggWhy63(M, mi, k){ const T = M.tiles[k]; if (!isPool63(T)) return '蛙卵要放進魚池沒有魚的格子'; if (T.fish) return '這格魚池有魚了：蛙卵要放沒有魚的格子（佔一隻魚的位置）';
+  if (pondAt63(mi, k)) return '這格已經有蛙卵或蝌蚪了'; try { if (typeof nymAt64 === 'function' && nymAt64(mi, k)) return '這格有蜻蜓的水蠆'; } catch(e){} return null; }
+function placeEgg63(M, k, sp, cx, cy){ const D = FSP63[sp]; if (!D) return; const id = 'frog:' + sp;
+  if (!isUnlocked(id)){ toast(`${D.name}要到第 ${UNLOCK[id]} 級才開放`); return; }
+  if (!frKnown63(sp)){ toast(`先在野外抓到${D.name}（記進圖鑑）才能買蛙卵`, true, 3000); return; }
+  const why = eggWhy63(M, S.cur, k); if (why){ toast(why); return; }
+  const cost = frRar63(sp).eggCost || 30; if (!spend(cost)) return;
+  fs63().pond.push({ id: fnid63(), sp, mi: S.cur, k, st: 'egg', p: 0 }); RT.decoVer++;
+  floatText(cx, cy - 30, `放${D.name}蛙卵 -${fmtN(cost)}`, '#2f6a8a', 11); sfx('place');
+  toast(`${D.name}的蛙卵放進魚池了：蝌蚪自己找吃的，2 天後上岸`, true, 3200); afterAction(); }
+function stepPond63(dt, t){ const s = fs63(); if (!s.pond.length) return; const today = dayNo40(t), win = frWinter63(t), keep = [];
+  for (const E of s.pond){ const M = S.maps[E.mi], T = M && M.tiles[E.k]; if (!isPool63(T) || T.fish) continue;
+    if (win){ keep.push(E); continue; }
+    // 2026-11-12 玩家：蝌蚪自己在魚池找吃的，不扣飼料（設定 feed.item 有填才扣）
+    if (FFD63.item && E.st !== 'egg' && E.fed !== today){ if (invTake(FFD63.item, FFD63.perDay || 1)){ E.fed = today; E.hungry = false; } else E.hungry = true; }
+    if (!FFD63.item || E.st === 'egg' || E.fed === today){ E.p += dt / 86400; let g = 0;
+      while (E.p >= ((FR63.growthDays || {})[E.st] || .4) && g++ < 6){ E.p -= (FR63.growthDays || {})[E.st] || .4; const i = FSTG63.indexOf(E.st);
+        if (i >= FSTG63.length - 1){ E.done = true; break; } E.st = FSTG63[i + 1]; } }
+    if (E.done){ const [x, y] = pkey(E.k), pk = poolOf(M, E.k); addFrog63(E.sp, E.mi, x, y, pk); frRegister63(E.sp, 'raised');
+      if (liveT(t) && E.mi === S.cur){ const c = center(x, y); floatText(c.cx, c.cy - 40, `${frName63(E.sp)}上岸了！`, '#2f8a3a', 11); } continue; }
+    keep.push(E); }
+  s.pond = keep; }
+
+/* ---------- 3. 上岸的青蛙：吃害蟲、壽命、冬眠 ---------- */
+function pestsNear63(F, M){ const r = frRange63(F.sp), tree = (FSP63[F.sp] || {}).skill === 'tree', out = [];
+  for (let dy = -r; dy <= r; dy++) for (let dx = -r; dx <= r; dx++){ const x = F.x + dx, y = F.y + dy, U = M.tiles[tkey(x, y)]; if (!U || !U.pest) continue;
+    if (U.t === 'soil' || (tree && U.t === 'tree')) out.push([x, y, Math.abs(dx) + Math.abs(dy)]); }
+  return out.sort((a, b) => a[2] - b[2]); }
+function stepFrogs63(dt, t){ const s = fs63(); if (!s.frogs.length) return; const today = dayNo40(t), win = frWinter63(t), keep = [], ev = (FLD63.eatEveryMinutes || 20) * 60;
+  for (const F of s.frogs){ const M = S.maps[F.mi]; if (!M) continue;
+    if (F.dead){ if (t - F.dead < (FLD63.deadHours || 6) * 3600e3) keep.push(F); continue; }
+    if (win){ keep.push(F); continue; }
+    F.life = (F.life || 0) + dt / 86400; if (F.life >= frLife63(F.sp)){ F.dead = t; keep.push(F); continue; }
+    if (F.eatDay !== today){ F.eatDay = today; F.eat = 0; }
+    const D = FSP63[F.sp] || {}, cap = (D.bugsPerDay || 6) + (D.skill === 'rain' && farmRain(t) ? FLD63.rainExtra || 3 : 0);
+    F.cd = (F.cd || 0) - dt;
+    for (let g = 0; g < 8 && F.cd <= 0 && F.eat < cap; g++){ const P = pestsNear63(F, M); if (!P.length){ F.cd = 0; break; }
+      const [x, y] = P[0], hit = D.skill === 'area' ? P.filter(q => Math.abs(q[0] - x) <= 1 && Math.abs(q[1] - y) <= 1) : [P[0]];
+      for (const [hx, hy] of hit){ const U = M.tiles[tkey(hx, hy)]; U.pest = false; U.pestTaps = 0; }
+      F.eat++; F.total = (F.total || 0) + hit.length; F.cd += ev;
+      if (liveT(t) && F.mi === S.cur){ (RT.frFx63 = RT.frFx63 || {})[F.id] = { x, y, t0: performance.now() }; const c = center(x, y); floatText(c.cx, c.cy - 30, `${frName63(F.sp)}吃掉害蟲`, '#2f8a3a', 10); } }
+    keep.push(F); }
+  s.frogs = keep; }
+{ const _sa63 = stepAll; stepAll = function(dt, t){ _sa63(dt, t); if (!FR63 || !S) return; try { stepWildFrog63(t); stepPond63(dt, t); stepFrogs63(dt, t); } catch(e){ if (!RT.err63){ RT.err63 = 1; console.warn(e); } } }; }
+
+/* ---------- 4. 畫：魚池裡的卵和蝌蚪、野生的青蛙、上岸的青蛙跳來跳去 ---------- */
+{ const _dte63 = drawTileExtras; drawTileExtras = function(M, k, T, x, y, t, now){ _dte63(M, k, T, x, y, t, now);
+  if (!FR63 || !S || M !== S.maps[S.cur]) return;
+  try { const E = pondAt63(S.cur, k); if (E){ const n = `frog_${E.sp}_${E.st}`, sd = (E.id.charCodeAt(E.id.length - 1) || 0) * .41, tt = motion ? t : 0, sw = E.st === 'egg' ? 0 : Math.sin(tt * .5 + sd) * .22, c = center(x + sw, y - sw * .3);
+      spr(n, motion ? frameOf(n, t, sd) : 0, c.cx, c.cy + 4, Math.cos(tt * .5 + sd) < 0, .78);
+      if (E.hungry) bubble(c.cx, c.cy - 8, '餓', 'ui_tool_fishpool'); }
+    for (const W of fs63().wild){ if (W.mi !== S.cur || W.x !== x || W.y !== y) continue; const c = center(x, y), n = `frog_${W.sp}_idle`;
+      spr(n, motion ? frameOf(n, t, W.seed) : 0, c.cx, c.cy, W.seed > 4.5);
+      if (motion){ const a = (Math.sin(t * 3 + W.seed) + 1) / 2; ctx.fillStyle = `rgba(255,255,255,${.25 + .35 * a})`; ctx.beginPath(); ctx.arc(c.cx, c.cy - 12, 1.6, 0, 7); ctx.fill(); } }
+    for (const F of fs63().frogs){ if (F.mi !== S.cur || !F.dead || F.x !== x || F.y !== y) continue; const c = center(x, y); spr(`frog_${F.sp}_dead`, 0, c.cx, c.cy); }
+  } catch(e){ if (!RT.err63d){ RT.err63d = 1; console.warn(e); } } }; }
+function drawFrogs63(){ const L = fs63().frogs; if (!L.length) return; RT.fAg63 = RT.fAg63 || {}; const pn = performance.now(), t = pn / 1000, win = frWinter63(Date.now());
+  for (const F of L){ if (F.mi !== S.cur || F.dead || win){ delete RT.fAg63[F.id]; continue; } const M = S.maps[F.mi], r = frRange63(F.sp);
+    let A = RT.fAg63[F.id]; if (!A) A = RT.fAg63[F.id] = { x: F.x + (Math.random() - .5), y: F.y + (Math.random() - .5), ph: 'idle', t0: pn, wait: 2 + Math.random() * 5, flip: Math.random() < .5 };
+    const fx = (RT.frFx63 || {})[F.id];
+    if (fx && A.ph === 'idle'){ const d = Math.hypot(fx.x - A.x, fx.y - A.y); A.from = [A.x, A.y]; A.to = d > .6 ? [fx.x - (fx.x - A.x) / d * .45, fx.y - (fx.y - A.y) / d * .45] : [A.x, A.y]; A.ph = d > .6 ? 'jump' : 'tongue'; A.t0 = pn; A.eat = true; delete RT.frFx63[F.id];
+      const c1 = center(fx.x - A.x, fx.y - A.y), c0 = center(0, 0); A.flip = c1.cx - c0.cx < 0; }
+    if (A.ph === 'idle'){ A.wait -= Math.min(.1, (pn - (A.last || pn)) / 1000);
+      if (A.wait <= 0){ const tx = F.x + (Math.random() * 2 - 1) * r * .8, ty = F.y + (Math.random() * 2 - 1) * r * .8, U = M.tiles[tkey(Math.round(tx), Math.round(ty))];
+        if (!U || U.t === 'soil' || U.t === 'weed'){ A.from = [A.x, A.y]; A.to = [tx, ty]; A.ph = 'jump'; A.t0 = pn; const c1 = center(tx - A.x, ty - A.y), c0 = center(0, 0); A.flip = c1.cx - c0.cx < 0; } A.wait = 3 + Math.random() * 6; } }
+    const nJ = `frog_${F.sp}_jump`, aJ = ATLAS[nJ], durJ = aJ ? aJ.frames / aJ.fps * 1000 : 420;
+    let n = `frog_${F.sp}_idle`, fr = motion ? frameOf(n, t, F.seed) : 0;
+    if (A.ph === 'jump'){ const k = Math.min(1, (pn - A.t0) / durJ); A.x = A.from[0] + (A.to[0] - A.from[0]) * k; A.y = A.from[1] + (A.to[1] - A.from[1]) * k; n = nJ; fr = aJ ? Math.min(aJ.frames - 1, Math.floor(k * aJ.frames)) : 0;
+      if (k >= 1){ A.ph = A.eat ? 'tongue' : 'idle'; A.t0 = pn; } }
+    if (A.ph === 'tongue'){ const nT = `frog_${F.sp}_tongue`, aT = ATLAS[nT], dur = aT ? aT.frames / aT.fps * 1000 : 400, k = (pn - A.t0) / dur; n = nT; fr = aT ? Math.min(aT.frames - 1, Math.floor(k * aT.frames)) : 0; if (k >= 1){ A.ph = 'idle'; A.eat = false; } }
+    A.last = pn; const c = center(A.x, A.y); if (ATLAS[n]) spr(n, fr, c.cx, c.cy, A.flip); } }
+{ const _ds63 = drawSky; drawSky = function(t, now, atop){
+  try { if (FR63 && S && fs63().frogs.length){ ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y); try { drawFrogs63(); } finally { ctx.restore(); } } } catch(e){ if (!RT.err63s){ RT.err63s = 1; console.warn(e); } }
+  return _ds63(t, now, atop); }; }
+
+/* ---------- 5. 點擊：抓野生青蛙、放蛙卵、看蝌蚪；有蛙卵的魚池格不能放魚 ---------- */
+{ const _act63 = act; act = function(x, y){
+  if (!S || UI.expand || !FR63) return _act63(x, y);
+  const M = curMap(); if (!inMap(M, x, y)) return _act63(x, y);
+  if (RT.mv || RT.gmv || RT.plmv56 || RT.psel62) return _act63(x, y);
+  const k = tkey(x, y), T = M.tiles[k], tool = S.sel.tool, { cx, cy } = center(x, y), sel = String(S.sel.animal || '');
+  if (tool === 'hand' || tool === 'animal' || tool === 'insect'){ const W = fs63().wild.find(w => w.mi === S.cur && w.x === x && w.y === y); if (W){ catchFrog63(W, cx, cy); return; } }
+  if (tool === 'hand'){ const D = fs63().frogs.find(f => f.mi === S.cur && f.dead && f.x === x && f.y === y); if (D){ fs63().frogs = fs63().frogs.filter(f => f !== D); RT.decoVer++; toast(`${frName63(D.sp)}走完一生了，把牠埋在田邊`); afterAction(); return; } }
+  const E = pondAt63(S.cur, k);
+  if (tool === 'fish' && E){ toast(`這格有${frName63(E.sp)}的${FSTN63[E.st]}（不能放魚）`); return; }
+  if (tool === 'animal' && sel.startsWith('frog:')){ if (E){ toast(`${frName63(E.sp)}的${FSTN63[E.st]}`); return; } placeEgg63(M, k, sel.slice(5), cx, cy); UIbuildTray(); return; }
+  return _act63(x, y); }; }
+// 蜻蜓水蠆也不能放在有蛙卵的格子
+{ const _nw63 = nymWhy64; nymWhy64 = function(M, mi, k){ const E = FR63 && pondAt63(mi, k); if (E) return `這格有${frName63(E.sp)}的${FSTN63[E.st]}`; return _nw63(M, mi, k); }; }
+
+/* ---------- 6. 選項列、圖示、提示 ---------- */
+{ const _ut63 = UIbuildTray; UIbuildTray = function(){ _ut63(); if (!FR63 || !S || S.sel.tool !== 'animal' || RT.borrow34) return;
+  const tray = $('tray'); if (!tray) return; const sel = S.sel.animal;
+  const ids = Object.keys(FSP63).sort((a, b) => (frKnown63(a) ? 0 : 1) - (frKnown63(b) ? 0 : 1) || FSP63[a].level - FSP63[b].level);
+  for (const sp of ids){ const id = 'frog:' + sp; if (tray.querySelector(`.item[data-id="${id}"]`)) continue; const D = FSP63[sp], lk = !isUnlocked(id), kn = frKnown63(sp);
+    const el = trayItem('frog', id, D.name, [kn ? `蛙卵 ${coinImg()}${fmtN(frRar63(sp).eggCost || 30)}` : '還沒抓過', '點魚池空格放蛙卵'], sel === id, lk, { lockLv: UNLOCK[id] });
+    if (!kn && !lk) el.classList.add('nb61');
+    el.onclick = () => { if (lk){ toast(lockedMsg(id)); return; } if (!kn){ toast(`${D.name}還沒抓過：先在野外抓到一隻（3～9 月下雨時在水邊），記進圖鑑才能買蛙卵`, true, 3200); return; } S.sel.animal = id; S.sel.animalTab = 'frog'; UIbuildTray(); updateHint(); };
+    el.hidden = tabOf('animal', id) !== S.sel.animalTab; tray.appendChild(el); }
+  if ([...tray.querySelectorAll('.item')].some(x => !x.hidden)) tray.querySelectorAll('.trayempty').forEach(e => e.remove()); }; }
+{ const ta = TOOLS.find(t => t.id === 'animal'), _ha63 = ta.hint; ta.hint = () => { const id = String((S && S.sel.animal) || '');
+  if (FR63 && id.startsWith('frog:') && FSP63[id.slice(5)]){ const sp = id.slice(5); return `點魚池沒有魚的格子放${frName63(sp)}的蛙卵 · ${fmtN(frRar63(sp).eggCost || 30)} 金幣 · 蝌蚪自己找吃的，2 天後上岸吃害蟲`; }
+  return _ha63(); }; }
+{ const _is63 = itemSprite; itemSprite = function(kind, id){ const s = String(id); if (s.startsWith('frog:')) return [ATLAS['ui_frog_' + s.slice(5)] ? 'ui_frog_' + s.slice(5) : 'ui_tab_frog', 0]; return _is63(kind, id); }; }
+{ const _no63 = nameOf; nameOf = function(id){ const s = String(id); if (s.startsWith('frog:') && FSP63[s.slice(5)]) return FSP63[s.slice(5)].name + '（蛙卵）'; return _no63(id); }; }
+{ const _ui63 = unlockIcon38; unlockIcon38 = function(u){ const s = String(u); if (s.startsWith('frog:')) return ['ui_frog_' + s.slice(5), 0]; return _ui63(u); }; }
+{ const _bt63 = bookTabFor252; bookTabFor252 = function(kind, id){ if (String(id).startsWith('frog:')) return 'frogs263'; return _bt63(kind, id); }; }
+
+/* ---------- 7. 圖鑑「青蛙」 ---------- */
+function bookHTML63(){ const s = fs63(), all = Object.keys(FSP63).sort((a, b) => FSP63[a].level - FSP63[b].level), got = all.filter(frKnown63).length;
+  let h = `<p class="small">登記 ${got} / ${all.length} 種。3～9 月下雨的時候在河邊、魚池旁出現（黑框蟾蜍不下雨的晚上也會），點一下就抓到；登記過的可以在「動物 · 青蛙」買蛙卵放進魚池養。活的青蛙不能賣；冬天（12～2 月）冬眠。</p><div class="bk63">`;
+  for (const sp of all){ const D = FSP63[sp], e = s.book[sp], R0 = FRA63[D.rarity] || {}, n = s.frogs.filter(f => f.sp === sp && !f.dead).length;
+    h += `<div class="${e ? '' : 'no'}"><img src="${IMGSRC['ui_pg_frog_' + sp] || ''}" alt=""><b>${escapeHTML(D.name)}</b> <span class="pill r63-${D.rarity}">${escapeHTML(R0.name || '')}</span> Lv ${D.level}
+      <br><small>蛙卵 ${fmtN(R0.eggCost || 0)}・每天吃蟲 ${D.bugsPerDay} 次・壽命 ${frLife63(sp)} 天</small><br><small>${escapeHTML(D.skillText || '—')}</small>
+      <br><small>${e ? `抓到 ${e.got || 0}・養出 ${e.raised || 0}${n ? `・現在 ${n} 隻` : ''}` : '還沒抓過'}</small></div>`; }
+  return h + '</div>'; }
+{ const _om63 = openModal; openModal = function(title, tabs, render, initial){
+  if (FR63 && title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { if (k === 'frogs263'){ el.classList.add('frog63'); el.innerHTML = bookHTML63(); paintIcons(el); return; } return r0(k, el); }; }
+  return _om63(title, tabs, render, initial); }; }
+
+/* ---------- 8. 舊存檔 ---------- */
+{ const _ns63 = normalizeState; normalizeState = function(d){ const r = _ns63(d); const s = r || d;
+  try { if (s && !s.v263){ s.v263 = 1; s.frog263 = s.frog263 || { book: {}, wild: [], pond: [], frogs: [] }; } } catch(e){}
+  return r; }; }
+
+window.__farm263 = { FR63, fs: () => fs63(), spawnFrog63, catchFrog63, frogAsk63, addFrog63, placeEgg63, stepPond63, stepFrogs63, frWildOk63, poolFor63, bookHTML63, act: (x, y) => act(x, y), normalizeState: d => normalizeState(d), RT: () => RT };
+
+/* ===== 121. v2.65：獲得徽章過場動畫（規則文件 v2.65；照升級過場 #lvup 的版面）
+   achCheck 拿到新階段時，原本的「獲得徽章：…」小卡片改成過場：灰色徽章 → 0.4 秒後蓋章變彩色、光芒旋轉、緞帶寫階段、成就名稱＋條件、彩帶、金幣飛到 HUD
+   每個階段都播；一次 2～3 個依序播（按「太好了」換下一個），4 個以上合併成一張「獲得 N 個徽章」（格子最多 8 個）
+   順序：流星、升級（#lvup／RT.lvQ）都播完才播；拖曳中、選擇農場畫面開著時等一下；只有按按鈕才收起；「動畫」關掉時只顯示卡片 ===== */
+{ const st65 = document.createElement('style'); st65.textContent = `
+#bdg65{position:fixed;inset:0;z-index:401;display:flex;align-items:center;justify-content:center;background:rgba(10,20,30,.62);animation:lvIn .25s ease-out}
+#bdg65 canvas.cf65{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#bdg65 .bx65{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:min(92vw,520px);padding:0 12px}
+#bdg65 .md65{position:relative;width:180px;height:180px;animation:lvPop .55s cubic-bezier(.2,1.6,.4,1)}
+#bdg65 .md65::before{content:'';position:absolute;inset:-60px;background:repeating-conic-gradient(rgba(255,236,140,.55) 0 10deg,transparent 10deg 24deg);border-radius:50%;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%);animation:lvSpin 9s linear infinite;opacity:0;transition:opacity .3s}
+#bdg65 .md65.on::before{opacity:1}
+#bdg65 .md65 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#bdg65 .md65 img.c65{opacity:0;transform:scale(1.35)}
+#bdg65 .md65.on img.c65{opacity:1;transform:scale(1);transition:opacity .12s,transform .28s cubic-bezier(.2,1.8,.4,1)}
+#bdg65 .md65 .fl65{position:absolute;inset:10%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(255,255,255,0) 70%);opacity:0;pointer-events:none}
+#bdg65 .md65.on .fl65{animation:fl65 .45s ease-out}
+@keyframes fl65{0%{opacity:.95;transform:scale(.6)}100%{opacity:0;transform:scale(1.6)}}
+#bdg65 .md65 svg.md48{position:absolute;right:-6px;bottom:-4px;width:52px;height:60px}
+#bdg65 .rb65{position:relative;margin-top:-6px;padding:4px 26px;color:#fff;font-weight:900;font-size:18px;letter-spacing:.1em;text-shadow:0 1px 2px rgba(0,0,0,.35);clip-path:polygon(0 0,100% 0,94% 50%,100% 100%,0 100%,6% 50%)}
+#bdg65 h2{margin:0;color:#fff;font-size:26px;text-align:center;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+#bdg65 .cd65{background:rgba(255,255,255,.96);border-radius:18px;padding:12px 16px;width:100%;box-shadow:0 8px 30px rgba(0,0,0,.3);color:#1e3a2a}
+#bdg65 .cd65 p{margin:0 0 4px}
+#bdg65 .ft65{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;flex-wrap:wrap}
+#bdg65 .cn65{font-weight:800;color:#b8860b;font-size:18px}
+#bdg65 .gr65{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:2px 0 6px}
+#bdg65 .gr65 > span{position:relative;display:flex;flex-direction:column;align-items:center;font-size:11px;text-align:center;color:#33402f;line-height:1.25}
+#bdg65 .gr65 img{width:58px;height:58px;object-fit:contain}#bdg65 .gr65 svg.md48{position:absolute;top:34px;left:50%;margin-left:12px;width:22px;height:26px}
+#bdg65 .gr65 .more65{justify-content:center;color:#6a7a8a;font-weight:700}
+#bdg65 .nx65{position:absolute;bottom:-26px;left:0;right:0;text-align:center;color:#fff;font-size:12px;opacity:.85}
+#bdg65.still .md65::before{animation:none}#bdg65.still .md65,#bdg65.still{animation:none}
+@media (max-width:600px){#bdg65 .md65{width:140px;height:140px}#bdg65 h2{font-size:22px}}
+`; document.head.appendChild(st65); }
+const TCOL65 = { bronze: ['#c47a3a', '#8a4f1e'], silver: ['#9aa7b4', '#5f6c78'], gold: ['#e0a92a', '#a87410'], platinum: ['#5fc8d6', '#2f8c9a'], single: ['#6aa84f', '#3d7a2a'] };
+const tName65 = t => (ACHC.tierNames || {})[t] || '';
+RT.badgeQ65 = [];
+// 拿到新階段 → 排進佇列（小卡片和音效不出來）
+{ const _tt65 = toast; toast = function(msg, ...a){ if (RT.achMute65 && typeof msg === 'string' && msg.startsWith('獲得徽章')) return; return _tt65(msg, ...a); }; }
+{ const _sf65 = sfx; sfx = function(n, ...a){ if (RT.achMute65 && n === 'levelup') return; return _sf65(n, ...a); }; }
+{ const _ac65 = achCheck; achCheck = function(quiet){ if (!S || quiet) return _ac65(quiet);
+  const A = ach39(), before = {}; for (const a of ACHC.list || []) before[a.id] = { ...(A.got[a.id] || {}) };
+  RT.achMute65 = true; try { _ac65(quiet); } finally { RT.achMute65 = false; }
+  const got = []; for (const a of ACHC.list || []){ const G = A.got[a.id] || {}, B = before[a.id] || {};
+    for (const [tier, need] of achTiers(a)) if (G[tier] && !B[tier] && !G[tier + 'Old']) got.push({ a, tier, need, rw: (ACHC.tierRewards || {})[tier] || 0 }); }
+  if (got.length){ RT.badgeQ65.push(...got); clearTimeout(RT.bdgT65); RT.bdgT65 = setTimeout(showBadges65, 500); } }; }
+function badgeWait65(){ if (document.getElementById('lvup') || document.getElementById('bdg65') || RT.lvQ || RT.pendingLv) return true;
+  if (typeof drag !== 'undefined' && drag) return true; if (document.hidden) return true;
+  try { if (!$('modal').hidden && $('modalTitle').textContent === '選擇農場') return true; } catch(e){} return false; }
+function bimg65(a, on){ return IMGSRC[`ui_badge_${a.id}${on ? '' : '_off'}`] || IMGSRC[`ui_badge_${a.id}`] || ''; }
+function cond65(g){ const a = g.a; return `${escapeHTML(a.desc || '')}${g.tier === 'single' ? '' : `：${fmtN(g.need)}`}`; }
+function showBadges65(){
+  if (!RT.badgeQ65.length) return; if (badgeWait65()){ clearTimeout(RT.bdgT65); RT.bdgT65 = setTimeout(showBadges65, 700); return; }
+  const Q = RT.badgeQ65; let list;
+  if (Q.length >= 4){ list = Q.splice(0, Q.length); } else list = Q.splice(0, 1);
+  const multi = list.length >= 4, g = list[0], coins = list.reduce((s, x) => s + x.rw, 0), left = RT.badgeQ65.length;
+  const ov = document.createElement('div'); ov.id = 'bdg65'; if (!motion) ov.classList.add('still');
+  const [c1, c2] = TCOL65[g.tier] || TCOL65.single;
+  let h = `<canvas class="cf65"></canvas><div class="bx65">`;
+  if (multi){ const more = Math.max(0, list.length - 8);
+    h += `<h2>獲得 ${list.length} 個徽章！</h2><div class="cd65"><div class="gr65">${list.slice(0, 8).map(x => `<span><img src="${bimg65(x.a, true)}" alt="" onerror="this.style.visibility='hidden'">${x.tier !== 'single' && typeof medal48 === 'function' ? medal48(x.tier) : ''}${escapeHTML(x.a.name)}<small>${tName65(x.tier)}</small></span>`).join('')}${more ? `<span class="more65">…還有 ${more} 個</span>` : ''}</div>`; }
+  else { h += `<div class="md65"><img class="o65" src="${bimg65(g.a, false)}" alt="" onerror="this.style.visibility='hidden'"><img class="c65" src="${bimg65(g.a, true)}" alt="" onerror="this.style.visibility='hidden'"><i class="fl65"></i>${g.tier !== 'single' && typeof medal48 === 'function' ? medal48(g.tier) : ''}</div>
+      <div class="rb65" style="background:linear-gradient(${c1},${c2})">${tName65(g.tier)}</div><h2>獲得徽章！</h2>
+      <div class="cd65"><p><b>${escapeHTML(g.a.name)}${g.tier === 'single' ? '' : `・${tName65(g.tier)}`}</b></p><p class="small">${cond65(g)}</p>`; }
+  h += `<div class="ft65"><span class="cn65">金幣 +${fmtN(coins)}${multi ? `（${list.length} 個合計）` : ''}</span><span><button class="btn ghost" id="bdAch65">看成就</button> <button class="btn" id="bdOk65">太好了</button></span></div></div>
+    ${left ? `<div class="nx65">還有 ${left} 個徽章</div>` : ''}</div>`;
+  ov.innerHTML = h; document.body.appendChild(ov);
+  const md = ov.querySelector('.md65');
+  if (md){ if (motion) setTimeout(() => { md.classList.add('on'); try { sfx('levelup'); } catch(e){} }, 400); else { md.classList.add('on'); try { sfx('levelup'); } catch(e){} } }
+  else try { sfx('levelup'); } catch(e){}
+  setTimeout(() => { try { if (coins) flyCoins(ov.querySelector('.cn65'), coins); } catch(e){} }, 900);
+  let done = false;
+  const close = next => { if (done) return; done = true; ov.remove(); renderHUD(); if (next && RT.badgeQ65.length){ clearTimeout(RT.bdgT65); RT.bdgT65 = setTimeout(showBadges65, 250); } };
+  ov.querySelector('#bdOk65').onclick = e => { e.stopPropagation(); close(true); };
+  ov.querySelector('#bdAch65').onclick = e => { e.stopPropagation(); RT.badgeQ65.length = 0; close(false); try { openAch(g.a.id); } catch(e2){ openAch(); } };
+  if (motion){ const c = ov.querySelector('canvas'), gx = c.getContext('2d'), W = c.width = innerWidth, Hh = c.height = innerHeight, t0 = performance.now();
+    const cols = ['#ffd84a', '#ff7a8a', '#6fd3ff', '#8ee08a', '#c79bff', '#fff'];
+    const P = Array.from({ length: 80 }, (_, i) => ({ x: Math.random() * W, y: -Math.random() * Hh * .6, v: 1.4 + Math.random() * 2.8, r: Math.random() * 6, s: 4 + Math.random() * 6, c: cols[i % cols.length], w: Math.random() * 6, star: i % 5 === 0 }));
+    const step = () => { if (done) return; const el = (performance.now() - t0) / 1000; gx.clearRect(0, 0, W, Hh);
+      for (const p of P){ p.y += p.v; p.x += Math.sin(el * 2 + p.w) * .8; p.r += .08; gx.save(); gx.translate(p.x, p.y); gx.rotate(p.r); gx.fillStyle = p.c;
+        if (p.star){ gx.beginPath(); for (let k = 0; k < 10; k++){ const rr = k % 2 ? p.s * .35 : p.s * .8, an = k * Math.PI / 5; gx.lineTo(Math.cos(an) * rr, Math.sin(an) * rr); } gx.closePath(); gx.fill(); }
+        else gx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); gx.restore(); }
+      if (el < 3.4) requestAnimationFrame(step); else gx.clearRect(0, 0, W, Hh); };
+    requestAnimationFrame(step); } }
+// 升級過場收起後，有排隊的徽章就接著播
+document.addEventListener('click', () => { if (RT.badgeQ65 && RT.badgeQ65.length && !document.getElementById('bdg65')){ clearTimeout(RT.bdgT65); RT.bdgT65 = setTimeout(showBadges65, 600); } }, true);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && RT.badgeQ65 && RT.badgeQ65.length){ clearTimeout(RT.bdgT65); RT.bdgT65 = setTimeout(showBadges65, 500); } });
+window.__farm265 = { Q: () => RT.badgeQ65, showBadges65, achCheck: q => achCheck(q), stat: (k, n) => stat(k, n) };
 
   })(CFG, ATLAS_JSON);
 })();
