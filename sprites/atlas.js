@@ -68177,6 +68177,294 @@ window.GAME_ATLAS = {
         120,
         120
       ]
+    },
+    "ui_ic66_specimen": {
+      "file": "ui_ic66_specimen.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        13,
+        8,
+        146,
+        152
+      ]
+    },
+    "ui_ic66_bugbox": {
+      "file": "ui_ic66_bugbox.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        21,
+        152,
+        139
+      ]
+    },
+    "ui_ic66_pest": {
+      "file": "ui_ic66_pest.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        14,
+        152,
+        146
+      ]
+    },
+    "ui_ic66_calendar": {
+      "file": "ui_ic66_calendar.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        12,
+        8,
+        147,
+        152
+      ]
+    },
+    "ui_ic66_frogegg": {
+      "file": "ui_ic66_frogegg.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        13,
+        152,
+        147
+      ]
+    },
+    "ui_ic66_glow": {
+      "file": "ui_ic66_glow.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        13,
+        8,
+        147,
+        152
+      ]
+    },
+    "ui_ic66_moon": {
+      "file": "ui_ic66_moon.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        13,
+        152,
+        146
+      ]
+    },
+    "ui_ic66_fish": {
+      "file": "ui_ic66_fish.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        10,
+        152,
+        150
+      ]
+    },
+    "ui_ic66_owlbox": {
+      "file": "ui_ic66_owlbox.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        30,
+        8,
+        129,
+        152
+      ]
+    },
+    "ui_ic66_release": {
+      "file": "ui_ic66_release.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        22,
+        152,
+        137
+      ]
+    },
+    "ui_ic66_dfspec": {
+      "file": "ui_ic66_dfspec.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        15,
+        152,
+        144
+      ]
+    },
+    "ui_ic66_nymph": {
+      "file": "ui_ic66_nymph.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        22,
+        152,
+        137
+      ]
+    },
+    "ui_ic66_frame": {
+      "file": "ui_ic66_frame.png",
+      "frames": 1,
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    "ui_ic66_dungball": {
+      "file": "ui_ic66_dungball.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        152,
+        151
+      ]
+    },
+    "ui_ic66_dung_today": {
+      "file": "ui_ic66_dung_today.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        8,
+        151,
+        152
+      ]
+    },
+    "ui_ic66_dung_range": {
+      "file": "ui_ic66_dung_range.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ],
+      "trim": [
+        8,
+        21,
+        152,
+        139
+      ]
     }
   }
 };

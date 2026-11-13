@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.63",
+  "configVersion": "2.66",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -16185,5 +16185,16 @@
    1,
    2
   ]
+ },
+ "import266": {
+  "note": "v2.66：圖鑑還沒登記、到等級、這個月野外不會出現的昆蟲／蜻蜓／青蛙，可以從另一個半球進口（北半球的玩家叫「南半球進口」，南半球的叫「北半球進口」）；價格＝幼蟲／水蠆／蛙卵價 × priceMul；下單後等 shipHours（真實時間，離線也算），到貨後照平常的方式放，放下去那一刻記進圖鑑；第一次抓到的經驗只有野外抓到才給",
+  "priceMul": 3,
+  "shipHours": {
+   "common": 6,
+   "rare": 12,
+   "epic": 24
+  },
+  "nameNorth": "南半球進口",
+  "nameSouth": "北半球進口"
  }
 }
