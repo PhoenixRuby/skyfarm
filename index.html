@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.66-d78b491fd6'), getJSON('sprites/atlas.json?v=2.66-d78b491fd6')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.67-f45aa956bf'), getJSON('sprites/atlas.json?v=2.67-f45aa956bf')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -11746,6 +11746,53 @@ const LP55 = 'lamp:';
 .ck55.ok{background:#e6f5e8;color:#245c2e}.ck55.diff{background:#fff3d6;color:#6a4b00}
 .bk55{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:4px 10px;padding:4px 12px 8px;font-size:13px}
 .bk55 span:nth-child(odd){opacity:.7}
+.bp267 .rule267{display:flex;align-items:center;gap:12px;padding:9px 14px;margin-bottom:10px;border-radius:12px;background:rgba(255,255,255,.6);border:1px solid rgba(120,160,200,.3);font-size:13px}
+.bp267 .rule267 b{white-space:nowrap;font-size:15px;padding-right:12px;border-right:1px solid rgba(120,150,180,.4)}
+.bp267 .cols267{display:grid;grid-template-columns:minmax(230px,34%) 1fr;gap:12px;align-items:start}
+.bp267 .lf267,.bp267 .rt267{padding:12px;border-radius:14px;background:rgba(255,255,255,.55);border:1px solid rgba(120,160,200,.25);min-width:0}
+.bp267 .hd267{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.bp267 .hd267 h3{margin:0}
+.bp267 .pl267{font-size:12px;padding:3px 10px;border-radius:999px;font-weight:700}
+.bp267 .pl267.ok{background:#e6f5e8;color:#245c2e}.bp267 .pl267.warn{background:#fff3d6;color:#8a5a00}
+.bp267 .th267,.bp267 .rw267{display:grid;grid-template-columns:14px 1fr auto;gap:6px;align-items:center}
+.bp267 .th267{padding:6px 10px;font-size:12px;opacity:.75;background:rgba(120,160,200,.15);border-radius:8px;margin-bottom:4px}
+.bp267 .th267 span:first-child{grid-column:1/3}
+.bp267 .rw267{width:100%;text-align:left;font:inherit;color:inherit;padding:9px 10px;margin:4px 0;border-radius:10px;background:rgba(255,255,255,.7);border:1px solid rgba(120,160,200,.25);cursor:pointer;font-variant-numeric:tabular-nums}
+.bp267 .rw267 i{font-style:normal;font-size:11px;opacity:.6}
+.bp267 .rw267 .am{white-space:nowrap}
+.bp267 .rw267.on{border:2px solid #4a8fd8;background:#eaf3fd;padding:8px 9px}
+.bp267 .rw267.unp{box-shadow:inset 4px 0 0 #f0a030}
+.bp267 .tt267{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:20px}
+.bp267 .tt267 img{width:26px;height:26px}
+.bp267 .top267{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.bp267 .per267{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:700}
+.bp267 .st267{font-size:12px;padding:4px 12px;border-radius:999px;background:#e6f5e8;color:#245c2e;border:1px solid #9fd3a8}
+.bp267 .st267.warn{background:#fff3d6;color:#8a5a00;border-color:#e8c880}
+.bp267 .st267.bad{background:#fbe1dc;color:#9a2f1f;border-color:#e8a99c}
+.bp267 .pb267{display:flex;align-items:baseline;gap:8px;padding:6px 16px;border-radius:12px;background:#e6f5e8;border:1px solid #9fd3a8}
+.bp267 .pb267 b{font-size:28px;font-variant-numeric:tabular-nums}
+.bp267 .pb267.warn{background:#fff3d6;border-color:#e8c880}
+.bp267 .tb267{border:1px solid rgba(120,160,200,.35);border-radius:12px;overflow:hidden;margin-bottom:8px;background:rgba(255,255,255,.5)}
+.bp267 .tr267{display:grid;grid-template-columns:minmax(80px,1fr) 2fr minmax(70px,1fr);gap:8px;padding:6px 12px;border-top:1px solid rgba(120,150,180,.2);font-variant-numeric:tabular-nums}
+.bp267 .tr267.h{background:rgba(120,160,200,.18);font-size:12px;border-top:0;font-weight:700}
+.bp267 .tr267 span:last-child{text-align:right}
+.bp267 .sm267{display:flex;justify-content:space-between;padding:7px 12px;border-radius:8px;font-variant-numeric:tabular-nums}
+.bp267 .sm267.disc{background:#e6f5e8;color:#245c2e}.bp267 .sm267.late{background:#fbe1dc;color:#9a2f1f}
+.bp267 .sm267.tot{background:#d6e6f8;font-weight:800;font-size:17px;margin-top:4px}
+.bp267 .pay267{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 0;font-size:13px}
+.bp267 .hr267{margin-top:10px;border:1px solid rgba(120,160,200,.35);border-radius:12px;background:rgba(255,255,255,.5)}
+.bp267 .hr267>summary{cursor:pointer;padding:10px 14px;font-weight:700;list-style:none}
+.bp267 .hr267>summary::-webkit-details-marker{display:none}
+.bp267 .hr267>summary::before{content:"▸";display:inline-block;margin-right:8px;font-size:12px;opacity:.6;transition:transform .15s}
+.bp267 .hr267[open]>summary::before{transform:rotate(90deg)}
+@media (max-width:720px){.bp267 .cols267{grid-template-columns:1fr}.bp267 .tr267{grid-template-columns:1fr 1.4fr auto}.bp267 .rule267{flex-direction:column;align-items:flex-start;gap:4px}.bp267 .rule267 b{border-right:0;padding-right:0}}
+body.night .bp267 .rule267,body.night .bp267 .lf267,body.night .bp267 .rt267,body.night .bp267 .tb267,body.night .bp267 .hr267{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.2)}
+body.night .bp267 .rw267{background:rgba(255,255,255,.08);border-color:rgba(150,185,255,.2)}
+body.night .bp267 .rw267.on{background:rgba(74,143,216,.25);border-color:#6fb4ff}
+body.night .bp267 .pl267.ok,body.night .bp267 .st267,body.night .bp267 .pb267,body.night .bp267 .sm267.disc{background:rgba(90,200,120,.15);color:#bff0c9;border-color:rgba(90,200,120,.4)}
+body.night .bp267 .pl267.warn,body.night .bp267 .st267.warn,body.night .bp267 .pb267.warn{background:rgba(255,200,90,.15);color:#ffe2a3;border-color:rgba(255,200,90,.4)}
+body.night .bp267 .sm267.tot{background:rgba(111,180,255,.2)}
+body.night .bp267 .sm267.late,body.night .bp267 .st267.bad{background:rgba(255,120,100,.15);color:#ffb3a6}
 body.night .cl55 details{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.2)}
 body.night .cl55 .cin{color:#7fdc8c}body.night .cl55 .cout{color:#ff9b8a}
 body.night .cl55 .bl55{background:rgba(111,180,255,.18);border-color:#6fb4ff;color:#dbeaff}
@@ -11840,29 +11887,70 @@ function usageHTML55(){ ulSample55(Date.now()); const L = (S.ulog55 || []).slice
   h += '<div class="cl55">' + [...days.values()].map((rows, i) => { const s = rows.reduce((a, r) => [a[0] + r[2], a[1] + r[3] + r[4], a[2] + r[5]], [0, 0, 0]);
     return `<details data-u55="${i}"${i === 0 ? ' open' : ''}><summary><span class="lb">${dayLabel(rows[0][0])}</span><span class="ds">自來水 ${f0_55(s[0])} 滴　用電 ${f1_55(s[1])} 度</span><span class="v">電費 ${f1_55(s[2])}</span></summary>${hourTable55(rows.slice().reverse(), false).html}</details>`; }).join('') + '</div>';
   return h; }
-function billDetailHTML55(b){ const rows = (S.ulog55 || []).filter(r => r[1] === b.from).sort((a, c) => a[0] - c[0]);
+function billHourly55(b){ const rows = (S.ulog55 || []).filter(r => r[1] === b.from).sort((a, c) => a[0] - c[0]), drops = b.waterDrops;
+  if (!rows.length) return `<div class="ck55 diff">這張帳單沒有逐時紀錄（v2.23 之前開的，或已超過 ${UL55.keepDays || 14} 天）。</div>`;
+  const T = hourTable55(rows, true), dw = drops === undefined ? 0 : drops - T.sw;
+  const ok = Math.abs(dw) < .5 && Math.abs(T.sd - b.kwhDay) < .01 && Math.abs(T.sn - b.kwhNight) < .01 && Math.abs(T.se - b.elec) < .05;
+  return T.html + (ok ? `<div class="ck55 ok">逐時合計和帳單一致：自來水 ${f0_55(T.sw)} 滴、白天 ${f1_55(T.sd)} 度、夜間 ${f1_55(T.sn)} 度、電費 ${f1_55(T.se)}。</div>`
+    : `<div class="ck55 diff">逐時紀錄只涵蓋這期的一部分（v2.23 之前或超過 ${UL55.keepDays || 14} 天的沒有逐時紀錄）：差 ${drops === undefined ? '' : `自來水 ${f0_55(dw)} 滴、`}白天 ${f1_55(b.kwhDay - T.sd)} 度、夜間 ${f1_55(b.kwhNight - T.sn)} 度、電費 ${f1_55(b.elec - T.se)}。</div>`); }
+function billDetailHTML55(b){
   const eDays = ELEC.baseFeePerDay ? (b.elecBase || 0) / ELEC.baseFeePerDay : 0, wDays = WAT.baseFeePerDay ? (b.waterBase || 0) / WAT.baseFeePerDay : 0, drops = b.waterDrops;
   let h = `<div class="bk55"><span>用電 白天</span><span>${f1_55(b.kwhDay)} 度</span><span>用電 夜間</span><span>${f1_55(b.kwhNight)} 度</span>
     <span>電費</span><span>${f1_55(b.elec)}</span><span>電基本費</span><span>${f1_55(b.elecBase || 0)}（${eDays.toFixed(2)} 天 × ${ELEC.baseFeePerDay}）</span>
     <span>自來水</span><span>${drops === undefined ? '—' : f0_55(drops) + ' 滴'}</span><span>水費</span><span>${f1_55(b.water || 0)}</span>
     <span>水基本費</span><span>${f1_55(b.waterBase || 0)}（${Math.round(wDays)} 天 × ${WAT.baseFeePerDay}）</span><span>賣電折抵</span><span>${b.sell ? '−' + f1_55(b.sell) : '—'}</span>
     <span>金額</span><span><b>${fmtN(b.total)}</b></span><span>實付</span><span>${b.paid ? fmtN(b.paid) : '—'}</span></div>`;
-  if (!rows.length) return h + `<div class="ck55 diff">這張帳單沒有逐時紀錄（v2.23 之前開的，或已超過 ${UL55.keepDays || 14} 天）。</div>`;
-  const T = hourTable55(rows, true), dw = drops === undefined ? 0 : drops - T.sw;
-  const ok = Math.abs(dw) < .5 && Math.abs(T.sd - b.kwhDay) < .01 && Math.abs(T.sn - b.kwhNight) < .01 && Math.abs(T.se - b.elec) < .05;
-  return h + T.html + (ok ? `<div class="ck55 ok">逐時合計和帳單一致：自來水 ${f0_55(T.sw)} 滴、白天 ${f1_55(T.sd)} 度、夜間 ${f1_55(T.sn)} 度、電費 ${f1_55(T.se)}。</div>`
-    : `<div class="ck55 diff">逐時紀錄只涵蓋這期的一部分（v2.23 之前或超過 ${UL55.keepDays || 14} 天的沒有逐時紀錄）：差 ${drops === undefined ? '' : `自來水 ${f0_55(dw)} 滴、`}白天 ${f1_55(b.kwhDay - T.sd)} 度、夜間 ${f1_55(b.kwhNight - T.sn)} 度、電費 ${f1_55(b.elec - T.se)}。</div>`); }
-function billsListHTML55(){ const list = S.bill.list.slice(0, BILL.historyKeep);
-  if (!list.length) return '<p>還沒有帳單。</p>';
-  return '<div class="cl55">' + list.map(b => `<details data-b55="${b.id}"${RT.billOpen55 === b.id ? ' open' : ''}><summary><span class="lb">${fmtDate(b.from)}～${fmtDate(b.to)}</span><span class="ds">${billStatusText(b)}</span><span class="v">${fmtN(b.total)} 金幣</span></summary>${billDetailHTML55(b)}</details>`).join('') + '</div>'; }
-function openBillDetail55(id){ RT.billOpen55 = id; if (!$('modal').hidden) closeModal(); openUtilities('bills');
-  setTimeout(() => { const d = document.querySelector(`#modalBody details[data-b55="${id}"]`); if (d){ d.open = true; d.scrollIntoView({ block: 'nearest' }); } else toast('這張帳單已經不在最近的帳單裡了'); RT.billOpen55 = null; }, 30); }
+  return h + billHourly55(b); }
+/* ---------- v2.66.1 帳單分頁：左右兩欄（左：最近帳單，右：選中那張的明細；玩家 2026-11-14 給示意圖） ---------- */
+const fc267 = v => (Math.round(v * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const billRateOf267 = b => b.paid && b.total ? Math.round(b.paid / b.total * 100) / 100 : 1;
+function billPillText267(b){ if (b.status === 'unpaid') return '未繳'; if (b.status === 'auto') return '自動扣款・95 折'; if (b.status === 'late') return '逾期 +' + Math.round(BILL.lateFeeRate * 100) + '%';
+  const r = billRateOf267(b); return r < 1 ? `已繳・${Math.round(r * 100)} 折` : '已繳'; }
+function billDetail267(b, now){
+  const eDays = ELEC.baseFeePerDay ? (b.elecBase || 0) / ELEC.baseFeePerDay : 0, wDays = WAT.baseFeePerDay ? (b.waterBase || 0) / WAT.baseFeePerDay : 0, drops = b.waterDrops;
+  const unpaid = b.status === 'unpaid', r = unpaid ? billRate(b, now) : billRateOf267(b), amt = unpaid ? Math.round(b.total * r) : (b.paid || b.total);
+  const rt = r < 1 ? `${Math.round(r * 100)} 折` : r > 1 ? `加收 ${Math.round((r - 1) * 100)}%` : '原價';
+  const row = (a, m, c) => `<div class="tr267"><span>${a}</span><span>${m}</span><span>${c}</span></div>`;
+  const icons = (IMGSRC.ui_tap ? `<img src="${IMGSRC.ui_tap}" alt="">` : '') + (IMGSRC.ui_electric ? `<img src="${IMGSRC.ui_electric}" alt="">` : '');
+  const disc = r < 1 ? `<div class="sm267 disc"><span>${Math.round(r * 100)} 折優惠</span><b>−${fmtN(b.total - amt)}</b></div>` : r > 1 ? `<div class="sm267 late"><span>逾期加收 ${Math.round((r - 1) * 100)}%</span><b>+${fmtN(amt - b.total)}</b></div>` : '';
+  return `<h3 class="tt267">${icons}水電費帳單</h3>
+    <div class="top267"><div class="per267"><span>帳期　${fmtDate(b.from)}～${fmtDate(b.to)}</span><span class="st267${unpaid ? ' warn' : b.status === 'late' ? ' bad' : ''}">${billPillText267(b)}${unpaid ? `・現在繳 ${rt}` : ''}</span></div>
+      <div class="pb267${unpaid ? ' warn' : ''}"><span>${unpaid ? '現在繳' : '實付'}</span><b>${fmtN(amt)}</b><span>金幣</span></div></div>
+    <h4>費用明細</h4>
+    <div class="tb267"><div class="tr267 h"><span>項目</span><span>用量／說明</span><span>費用（金幣）</span></div>
+      ${row('電費', `白天 ${fc267(b.kwhDay)} 度、夜間 ${fc267(b.kwhNight)} 度`, fc267(b.elec))}
+      ${row('電基本費', `${eDays.toFixed(2)} 天 × ${ELEC.baseFeePerDay}`, fc267(b.elecBase || 0))}
+      ${row('水費', drops === undefined ? '—' : `${f0_55(drops)} 滴`, fc267(b.water || 0))}
+      ${row('水基本費', `${Math.round(wDays)} 天 × ${WAT.baseFeePerDay}`, fc267(b.waterBase || 0))}
+      ${row('賣電折抵', '—', b.sell ? '−' + fc267(b.sell) : '—')}</div>
+    <div class="sm267"><span>帳單原額</span><b>${fmtN(b.total)}</b></div>${disc}
+    <div class="sm267 tot"><span>${unpaid ? '現在繳' : '實付'}</span><b>${fmtN(amt)}</b></div>
+    ${unpaid ? `<div class="pay267"><span>期限　${fmtDate(b.dueAt)}</span><button class="btn" data-pay="${b.id}">繳費 ${fmtN(amt)}</button></div>` : ''}
+    <details class="hr267"><summary>每小時用量明細</summary>${billHourly55(b)}</details>`; }
+function billsPanel267(){
+  const list = S.bill.list.slice(0, BILL.historyKeep), now = Date.now(), unpaid = list.filter(b => b.status === 'unpaid');
+  const rule = `<div class="rule267"><b>📖 繳費規則</b><span>出帳 1 小時內 95 折、期限前一半 98 折、期限內原價、逾期加 ${Math.round(BILL.lateFeeRate * 100)}% 自動扣款。</span></div>`;
+  if (!list.length) return `<div class="bp267">${rule}<p>還沒有帳單。</p></div>`;
+  const sel = list.find(b => String(b.id) === String(RT.bill267)) || list[0], est = computeBill(S.bill.cur, cycleDays());
+  const pill = unpaid.length ? `<span class="pl267 warn">⚠ ${unpaid.length} 張未繳</span>` : '<span class="pl267 ok">✓ 目前無未繳帳單</span>';
+  const left = `<div class="lf267"><div class="hd267"><h3>最近帳單</h3>${pill}</div><div class="th267"><span>帳期</span><span>帳單原額</span></div>` +
+    list.map(b => `<button class="rw267${b === sel ? ' on' : ''}${b.status === 'unpaid' ? ' unp' : ''}" data-sel267="${b.id}"><i>▸</i><span class="pd">${fmtDate(b.from)}～${fmtDate(b.to)}</span><span class="am">${fmtN(b.total)} 金幣</span></button>`).join('') +
+    `<p class="small">本期到目前約 ${fmtN(est.total)} 金幣，${fmtDate(nextClose())} 出帳。</p></div>`;
+  return `<div class="bp267">${rule}<div class="cols267">${left}<div class="rt267">${billDetail267(sel, now)}</div></div></div>`; }
+function wireBills267(el){
+  el.onclick = e => {
+    const s = e.target.closest('[data-sel267]');
+    if (s){ RT.bill267 = s.dataset.sel267; el.innerHTML = billsPanel267(); const rt = el.querySelector('.rt267'); if (rt && rt.scrollIntoView) rt.scrollIntoView({ block: 'nearest' }); return; }
+    const b = e.target.closest('button[data-pay]'); if (!b) return;
+    const bill = S.bill.list.find(x => String(x.id) === b.dataset.pay); if (!bill) return;
+    const paid = payBill(bill); toast(`繳了 ${fmtN(paid)} 金幣`); RT.bill267 = String(bill.id); afterAction(); openUtilities('bills'); }; }
+function openBillDetail55(id){ RT.bill267 = String(id); if (!$('modal').hidden) closeModal(); openUtilities('bills');
+  setTimeout(() => { if (!S.bill.list.slice(0, BILL.historyKeep).some(b => String(b.id) === String(id))) toast('這張帳單已經不在最近的帳單裡了'); }, 30); }
 { const _om55 = openModal; openModal = function(title, tabs, render, initial){
   if (title === '水電與帳單' && Array.isArray(tabs)){
     if (!tabs.some(t => t[0] === 'usage')){ tabs = tabs.slice(); const i = tabs.findIndex(t => t[0] === 'bills'); tabs.splice(i < 0 ? tabs.length : i + 1, 0, ['usage', '用量歷程']); }
     const r0 = render; render = (k, el) => { if (k === 'usage'){ el.innerHTML = usageHTML55(); return; } r0(k, el);
-      if (k === 'bills') queueMicrotask(() => { const h3 = [...el.querySelectorAll('h3')].find(x => /最近帳單/.test(x.textContent)); if (!h3) return;
-        while (h3.nextSibling) h3.nextSibling.remove(); h3.insertAdjacentHTML('afterend', '<p class="small">點一張帳單看它的水電明細：每小時的用量、基本費，和帳單金額對帳。</p>' + billsListHTML55()); }); }; }
+      if (k === 'bills'){ el.innerHTML = billsPanel267(); wireBills267(el); } }; }
   return _om55(title, tabs, render, initial); }; }
 
 /* ---------- 3. 拖曳一律移動地圖：不再連續塗刷 ---------- */
@@ -14391,7 +14479,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.66-d78b491fd6';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.67-f45aa956bf';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -19295,9 +19383,17 @@ function bookPreds252(el){ const P = CFG.predators || {}, Rt = CFG.rats || {}, W
 /* ---------- 建築（含溫室） ---------- */
 const BSPR252 = { barn: 'building_barn_half', shed: 'building_shed_idle', farmhouse: 'building_farmhouse_idle', water_tower: 'building_water_tower_level', drone_pad: 'building_drone_pad_idle', robot_charger: 'building_robot_charger_idle',
   water_tower_extra: 'building_water_tower2_level', sweeper_dock: 'building_sweeper_dock_idle', trash_station: 'building_trash_station', truck_pad: 'ui_truck_garbage', material_shed: 'ui_material_shed', heavy_charger: 'ui_heavy_charger' };
-const BUSE252 = { barn: '收成的東西都放這裡，可以賣、可以擴充容量', shed: '放收回來的裝飾、建築、設施', farmhouse: '農場的家；接電線桿、晚上亮燈', water_tower: '存水給澆水、無人機用；接水錶', drone_pad: '澆水無人機的基座（停機、充電、補水）',
+const BUSE252 = { barn: '收成的東西都放這裡，可以賣；可用金幣擴充容量（見下方「擴充規則」）', shed: '放收回來的裝飾、建築、設施', farmhouse: '農場的家；接電線桿、晚上亮燈', water_tower: '存水給澆水、無人機用；接水錶', drone_pad: '澆水無人機的基座（停機、充電、補水）',
   robot_charger: '餵食等機器人的充電站', water_tower_extra: '接在主水塔旁，多存水', sweeper_dock: '掃地機器人的基座（充電、倒垃圾）', trash_station: '放垃圾袋、資源回收袋，等垃圾車來收', truck_pad: '垃圾車停在浮島邊緣',
-  material_shed: '放伐木、採礦、整地採回來的建材，可以賣；每座島 1 間', heavy_charger: '伐木、採礦、整地機器人的充電樁' };
+  material_shed: '放伐木、採礦、整地採回來的建材，可以賣；每座島 1 間；可用金幣擴充容量（見下方「擴充規則」）', heavy_charger: '伐木、採礦、整地機器人的充電樁' };
+/* 金幣擴充規則（農產倉庫、建材小屋）：數字全部讀設定檔，改設定就跟著變 */
+function boostRows252(){
+  const BC = CFG.boost || {}, rd = BC.roundTo || 10, K = BC.kinds || {}, SB = ((CFG.terrain243 || {}).shed || {}).boost || K.material || {}, MS = (CFG.buildings || {}).material_shed || {}, MC = MS.capacity || {};
+  const price = (B, n) => Math.round(B.price * Math.pow(B.mult, n) / rd) * rd;
+  const sum = B => { let t = 0; for (let i = 0; i < (B.max || 0); i++) t += price(B, i); return t; };
+  const mk = (spr, name, B, note) => ({ cells: [ic252(spr), name, `+${fmtN(B.add)} ${B.unit || ''}`.trim(), `${fmtN(B.price)} 起，每次 ×${B.mult}（第 ${B.max} 次 ${fmtN(price(B, B.max - 1))}）`, `${B.max} 次`, fmtN(sum(B)), note] });
+  return [mk(BSPR252.barn, '農產倉庫', K.produce || {}, '全農場共用，所有島加在一起算；基本容量照等級，擴充另外加'),
+    mk(BSPR252.material_shed, '建材小屋', Object.assign({ unit: (K.material || {}).unit || '份' }, SB), `每座島各自算、各自買；基本容量 Lv${MC.baseLevel || 3} ${MC.base || 200} 份，每升一級 +${MC.perLevel || 40}，擴充另外加`)]; }
 function bookBuildings252(el){ const G = CFG.greenhouse || {};
   const rows = Object.entries(BLD).map(([id, B]) => { const lv = B.unlockLevel || UNLOCK[id];
     const cost = B.builtIn || (B.startIn && !B.cost) ? '一開始就有' : B.freeFirst ? `第 1 座免費，之後 ${fmtN(B.cost)}` : B.comesWith ? `買${(RB && RB.kinds.sweep || {}).name || '掃地機器人'}附 1 座，之後 ${fmtN(B.cost)}` : fmtN(B.cost || 0);
@@ -19306,6 +19402,8 @@ function bookBuildings252(el){ const G = CFG.greenhouse || {};
     return row252(id, lv, [ic252(BSPR252[id]), B.name, lv252(lv), cost, `${(B.size || [1, 1]).join('×')}`, lim, BUSE252[id] || '', ex || '—']); });
   const cap = G.capByLevel || {}, ks = Object.keys(cap).map(Number).sort((a, b) => a - b), curCap = ks.filter(l => l <= S.player.level).reduce((m, l) => cap[l], 0);
   el.innerHTML = `<p>${IN252.buildings || ''}</p>` + tbl([H(''), H('建築'), H('解鎖'), H('價格'), H('大小'), H('數量'), H('用途'), H('其他')], rows) +
+    `<h3>擴充規則</h3><p>農產倉庫和建材小屋都能用金幣擴充容量：每買一次，容量加固定數量，價格 ＝ 起始價 × 漲幅 ^ 已擴充次數（四捨五入到 10），買到上限就不能再買。農產倉庫在等級面板的「擴充」分頁或倉庫面板買；建材小屋要點那座島的小屋，在小屋面板買。</p>` +
+    tbl([H(''), H('項目'), H('每次增加'), H('價格'), H('上限'), H('買滿合計'), H('說明')], boostRows252()) +
     `<h3>溫室</h3>` + tbl([H(''), H('項目'), H('說明')], [
       row252('greenhouse', G.unlockLevel, [ic252('ui_greenhouse'), G.name || '溫室', `一格 ${fmtN(G.perTileCost || 0)} 金幣，${lv252(G.unlockLevel)}；拖曳一次蓋好幾格，相鄰的連成一座；拆掉退 ${pct252(G.sellRate || .5)}`]),
       { cells: ['', '上限', `目前最多 ${curCap} 格（Lv ${ks[0]} ${cap[ks[0]]} 格 → Lv ${ks[ks.length - 1]} ${cap[ks[ks.length - 1]]} 格）`] },
@@ -19375,7 +19473,7 @@ function itemCats252(el){ const tw = el.querySelector('.tw'); if (!tw) return; c
     tabs = BK252.tabs.map(t => [t[0], t[1]]);
     render = (k, el) => {
       if (k === 'birds') bookBirds252(el); else if (k === 'insects') bookInsects252(el); else if (k === 'preds') bookPreds252(el);
-      else if (k === 'buildings') bookBuildings252(el); else if (k === 'terrain') bookTerrain252(el); else if (k === 'auto') bookAuto252(el);
+      else if (k === 'buildings') bookBuildings252(el); else if (k === 'terrain') bookTerrain252(el); else if (k === 'auto') bookAuto252(el); else if (k === 'levels') bookLevels267(el);
       else { r0(k, el); if (k === 'items') itemCats252(el); else if (k === 'weather'){ el.insertAdjacentHTML('beforeend', dollsHTML252()); paintIcons(el); } } };
     const r = _om252(title, tabs, render, initial); decorTabs252(); return r; }
   return _om252(title, tabs, render, initial); }; }
@@ -19386,6 +19484,69 @@ function decorTabs252(){ const te = $('modalTabs'); if (!te || te.dataset.d252) 
 // other panels reuse #modalTabs: drop our decorations when they rebuild it
 { const _om252b = openModal; openModal = function(title, ...a){ const te = $('modalTabs'); if (te) delete te.dataset.d252; return _om252b(title, ...a); }; }
 $('modalBody').addEventListener('click', e => { const a = e.target.closest('[data-bk252]'); if (!a) return; e.preventDefault(); const b = $('modalTabs').querySelector(`button[data-k="${a.dataset.bk252}"]`); if (b) b.click(); });
+
+/* ---------- v2.66.1 圖鑑「等級」：上方三張卡＋進度條，解鎖項目用遊戲裡的小圖（玩家 2026-11-14 給示意圖） ---------- */
+const lvIc267 = n => IMGSRC[n] ? `<img class="li267" src="${IMGSRC[n]}" alt="">` : '';
+function lvChip267(u){ let spr = null, f = 0, nm;
+  if (u.startsWith('block:')){ nm = `第 ${u.split(':')[1]} 塊地`; spr = IMGSRC.ui_shed ? 'ui_shed' : null; }
+  else { nm = nameOf(u); if (!nm) return ''; try { const r = unlockIcon38(u) || []; spr = r[0]; f = r[1] || 0; } catch(e){} }
+  return `<span class="ch267">${spr ? `<canvas data-spr="${spr}" data-f="${f}" class="ico"></canvas>` : ''}${escapeHTML(String(nm))}</span>`; }
+function bookLevels267(el){ RT.noBoost = true;
+  try { const P = S.player, L = lvInfo(P.level), N = LV[P.level], max = !N;
+    const got = max ? 0 : Math.max(0, P.xp - L.xpToReach), span = max ? 1 : N.xpToReach - L.xpToReach, pct = max ? 100 : Math.min(100, Math.round(got / span * 100));
+    let h = `<div class="lv267"><div class="top267">
+      <div class="cd267">${lvIc267('ui_lv_star')}<div><small>目前等級</small><b>${P.level}</b></div></div>
+      <div class="cd267">${lvIc267('ui_lv_gift')}<div><small>累計經驗</small><b>${fmtN(P.xp)}</b></div></div>
+      <div class="cd267">${lvIc267('ui_lv_coin')}<div><small>${max ? '已經滿級' : `距離 ${N.level} 級還差`}</small><b>${max ? '—' : fmtN(Math.max(0, N.xpToReach - P.xp))}</b>${max ? '' : '<span>經驗</span>'}</div></div></div>
+      <div class="pg267"><span class="lp267">${P.level} 級</span><div class="pm267"><small>${max ? `累計 ${fmtN(P.xp)} 經驗` : `${fmtN(got)} / ${fmtN(span)} 經驗（${pct}%）`}</small><div class="bar267"><i style="width:${pct}%">${pct >= 8 ? pct + '%' : ''}</i></div></div><span class="lp267">${max ? '滿級' : N.level + ' 級'}</span></div>
+      <div class="tb267l"><div class="th267l"><span>等級</span><span>累計經驗</span><span>金幣獎勵</span><span>特殊裝飾</span><span>解鎖</span></div>`;
+    for (const X of LV){ const st = X.level === P.level ? ' cur' : X.level === P.level + 1 ? ' nxt' : X.level > P.level ? ' lock' : '';
+      const chips = (X.unlocks || []).map(lvChip267).join('');
+      h += `<div class="tr267l${st}" data-lv267="${X.level}"><span class="lv">${X.level}${st === ' cur' ? '<em>目前</em>' : st === ' nxt' ? '<em class="n">下一級</em>' : ''}</span>
+        <span class="n"><small>累計經驗</small>${fmtN(X.xpToReach)}</span><span class="n"><small>金幣獎勵</small>${fmtN(X.coinReward)}</span>
+        <span class="sd"><small>特殊裝飾</small>${X.specialDeco ? lvChip267(X.specialDeco) || escapeHTML(nameOf(X.specialDeco) || '') : '—'}</span>
+        <span class="ul"><span class="chs267">${chips || '<span class="none267">—</span>'}</span>
+          <small class="ex267">雨水儲量 ${fmtN(X.rainStorage)}・倉庫容量 ${fmtN(X.produceCapacity)}・動物上限 ${fmtN(X.animalCap)}・魚池格數 ${fmtN(X.fishPoolTileCap)}</small></span></div>`; }
+    el.innerHTML = h + `</div><p class="small">表格的雨水儲量、倉庫容量、動物上限、魚池格數是等級本身的額度，不含金幣擴充。</p></div>`;
+  } finally { RT.noBoost = false; }
+  paintIcons(el);
+  requestAnimationFrame(() => { const c = el.querySelector('.tr267l.cur'), box = el.closest('#modalBody') || el.parentElement; if (c && box && !RT.bookFocus) box.scrollTop = Math.max(0, c.offsetTop - box.clientHeight / 3); }); }
+{ const st = document.createElement('style'); st.textContent = `
+.lv267 .top267{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.lv267 .cd267{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.65);border:1px solid rgba(120,160,200,.25)}
+.lv267 .cd267 small{display:block;font-size:13px;opacity:.75}.lv267 .cd267 b{font-size:28px;font-variant-numeric:tabular-nums}.lv267 .cd267 span{margin-left:4px;font-weight:700}
+.lv267 .li267{width:36px;height:36px;object-fit:contain}
+.lv267 .pg267{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:12px;border-radius:14px;background:rgba(255,255,255,.55);border:1px solid rgba(120,160,200,.2)}
+.lv267 .lp267{padding:6px 14px;border-radius:12px;background:#e3edf8;font-weight:800;white-space:nowrap}
+.lv267 .pm267{flex:1;min-width:0}.lv267 .pm267 small{display:block;margin-bottom:4px;opacity:.8}
+.lv267 .bar267{height:16px;border-radius:999px;background:rgba(120,150,180,.25);overflow:hidden}
+.lv267 .bar267 i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#3d86d8,#5aa6f0);color:#fff;font-size:11px;font-style:normal;font-weight:700;text-align:center;line-height:16px;min-width:2px}
+.lv267 .tb267l{border-radius:14px;overflow:hidden;border:1px solid rgba(120,160,200,.3);background:rgba(255,255,255,.55)}
+.lv267 .th267l,.lv267 .tr267l{display:grid;grid-template-columns:90px 110px 90px 110px 1fr;gap:10px;align-items:center;padding:8px 12px}
+.lv267 .th267l{background:rgba(120,160,200,.18);font-weight:700;font-size:13px}
+.lv267 .tr267l{border-top:1px solid rgba(120,150,180,.2);font-variant-numeric:tabular-nums}
+.lv267 .tr267l small{display:none}.lv267 .tr267l .ex267{display:block;font-size:11px;opacity:.6;margin-top:3px}
+.lv267 .tr267l .n{text-align:right}
+.lv267 .tr267l .lv{font-size:18px;font-weight:800;display:flex;align-items:center;gap:6px}
+.lv267 .tr267l .lv em{font-style:normal;font-size:11px;padding:2px 8px;border-radius:999px;background:#b8860b;color:#fff;white-space:nowrap}
+.lv267 .tr267l .lv em.n{background:#3d86d8}
+.lv267 .tr267l.cur{background:#fbefc8}.lv267 .tr267l.nxt{background:#e3eefa}.lv267 .tr267l.lock{opacity:.8}
+.lv267 .chs267{display:flex;flex-wrap:wrap;gap:5px}
+.lv267 .ch267{display:inline-flex;align-items:center;gap:4px;padding:2px 9px 2px 3px;border-radius:999px;background:rgba(255,255,255,.85);border:1px solid rgba(120,160,200,.3);font-size:13px;white-space:nowrap}
+.lv267 .ch267 canvas{width:24px;height:24px}
+.lv267 .none267{opacity:.5}
+@media (max-width:720px){
+  .lv267 .top267{grid-template-columns:1fr;gap:6px}.lv267 .cd267{padding:8px 12px}.lv267 .cd267 b{font-size:22px}
+  .lv267 .th267l{display:none}
+  .lv267 .tr267l{grid-template-columns:1fr 1fr 1fr;gap:4px 10px}
+  .lv267 .tr267l .lv{grid-column:1/-1}.lv267 .tr267l .n{text-align:left}
+  .lv267 .tr267l small{display:block;font-size:11px;opacity:.6}
+  .lv267 .tr267l .ul{grid-column:1/-1}}
+body.night .lv267 .cd267,body.night .lv267 .pg267,body.night .lv267 .tb267l{background:rgba(255,255,255,.06);border-color:rgba(150,185,255,.2)}
+body.night .lv267 .lp267{background:rgba(111,180,255,.2)}
+body.night .lv267 .tr267l.cur{background:rgba(230,180,60,.18)}body.night .lv267 .tr267l.nxt{background:rgba(111,180,255,.15)}
+body.night .lv267 .ch267{background:rgba(255,255,255,.08);border-color:rgba(150,185,255,.25)}
+`; document.head.appendChild(st); }
 
 /* ---------- 選項列「i」：新分頁 ---------- */
 const TERR_IDS252 = new Set(['rail', 'rail_cart', 'rail_station', 'rail_cross', 'rail_fence', 'collect_point', 'garage', 'rail_lamp', 'bridge_steel', 'bridge_wood', 'bridge_stone', 'river_dig', 'river_fill', 'dynamite', 'clear']);
@@ -22954,7 +23115,7 @@ function stepBox61(T, t, M, k){ const X = T.bx || (T.bx = { list: [], dead: [] }
     for (let i = 0; i < n && X.list.length < boxCap61(); i++) X.list.push({ id: nid61(), st: 'egg', p: 0 }); }
   if (!X.list.length && !X.dead.length) delete X.sp; }
 const adults61 = X => X.list.filter(m => m.st === 'adult');
-const canPair61 = X => adults61(X).length >= ((BOX61.pair || {}).minAdults || 2) && !X.pair && !(X.pairCd && Date.now() < X.pairCd) && X.list.length < boxCap61();
+const canPair61 = X => !!pairSp267(X) /* v2.67 混養：同一種要有 2 隻成蟲（g123） */ && !X.pair && !(X.pairCd && Date.now() < X.pairCd) && X.list.length < boxCap61();
 function startPair61(T){ const X = T.bx; if (!canPair61(X)) return false; X.pair = Date.now() + ((BOX61.pair || {}).days ?? 1) * DAYMS; return true; }
 function boxState61(T){ const L = (T.bx && T.bx.list) || []; return L.some(m => m.st === 'adult') ? 'adult' : L.length ? 'larva' : 'empty'; }
 { const _dd61 = drawDevice; drawDevice = function(T, k, cx, cy, t){
@@ -23321,8 +23482,8 @@ function dfPos64(B, t){ const sd = B.seed || 0, cyc = FLY64 + REST64 + sd % 4, p
   try { if (DFON64 && S){ const F = RT.fly64 || [], s = ny64(), tt = performance.now() / 1000, wall = Date.now(), E = s.em.filter(e => e.mi === S.cur);
       if (F.length || E.length){ ctx.save(); ctx.setTransform(dpr * cam.z, 0, 0, dpr * cam.z, dpr * cam.x, dpr * cam.y);
         for (const e of E){ const c = center(e.x, e.y), n = 'dfly_emerge', a = ATLAS[n]; if (!a) continue; const f = Math.min(a.frames - 1, Math.floor((wall - e.t) / emergeMs64() * a.frames)); spr(n, f, c.cx, c.cy); }
-        for (const d of F){ const lift = 16 + Math.sin(d.ph * 3.1) * 4, n = `bug_${d.sp}_fly`;
-          ctx.fillStyle = 'rgba(20,40,20,.16)'; ctx.beginPath(); ctx.ellipse(d.x, d.y, 7, 2.4, 0, 0, 7); ctx.fill();
+        for (const d of F){ const lift = 13 + Math.sin(d.ph * 3.1) * 3, n = `bug_${d.sp}_fly`;
+          ctx.fillStyle = 'rgba(20,40,20,.16)'; ctx.beginPath(); ctx.ellipse(d.x, d.y, 3.6, 1.3, 0, 0, 7); ctx.fill();   /* v2.67 蜻蜓縮一半，影子跟著縮 */
           spr(ATLAS[n] ? n : `bug_${d.sp}_idle`, motion ? frameOf(n, tt, d.seed * 3) : 0, d.x, d.y - lift + 12, d.flip); }
         ctx.restore(); } } } catch(e){}
   return r; }; }
@@ -24657,6 +24818,420 @@ window.__farm266 = { IM66, imps: () => imps66(), kindOf66, months66, span66, inS
   openOwlBox62: (mi, k) => openOwlBox62(mi, k), openFrog66, openRel66, frogAt: frogAtPx66, relAt: relAt66, drawMap66, register61: (...a) => register61(...a), frRegister63: (...a) => frRegister63(...a),
   stepAll: (dt, t) => stepAll(dt, t), stepRel61: t => stepRel61(t), stepPond63: (dt, t) => stepPond63(dt, t), release61: (...a) => release61(...a), addFrog63: (...a) => addFrog63(...a),
   act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), normalizeState: d => normalizeState(d), RT: () => RT, openBox61: (M, k) => openBox61(M, k), poolInfo61: (M, k) => poolInfo61(M, k), openTerrain: (mi, k) => openTerrain83(mi, k), meteorTap: (x, y) => meteorTap(x, y), setMonth: m => { RT.fakeMonth66 = m || null; try { UIbuildTray(); } catch(e){} return m || '取消，照真的月份'; } };
+
+/* ===== 123. v2.67（玩家 2026-11-15）=====
+   1. 圖鑑「等級」版面：上面一張「30 級 → 31 級」卡、下一級解鎖預覽、等級列表（一級一列，點了往下展開解鎖項目）
+   2. 選項列「倉庫還有 n」不重複；貓頭鷹巢箱、飼育箱收回倉庫（S.buildStore）後選項列看得到、再放免費
+   3. 抓到蜻蜓：不顯示「放進飼育箱」，改成免費「養水蠆」（最近的魚池空格／河格；沒位子先進倉庫「撈網與河鮮」S.bug261.nst）
+   4. 飼育箱混養（每隻記自己的種類 m.sp）、各吃各的飼料、同一種 2 隻成蟲才能配對（面板提醒）、換箱
+   5. 蜻蜓縮一半：美術在 art/v264_79.py；影子在 g117 直接改
+   6. 家畜＋家禽改成畫的（batch82，同名蓋掉 batch70，程式不用改）
+   7. 垃圾車改成畫的開放式貨車（batch83）：車頭朝島飛來 → 原地掉頭 → 倒車入庫；停著沒有火焰、車頭燈還亮、收垃圾時警示燈一閃一閃；貨斗 10 級（S.trash.tl267），
+      滿了那台車飛走倒光、60 秒後回來繼續收（這段時間機器人拿著那一類的東西先等） */
+const TL267 = (CFG.trash || {}).truckLoad267 || {}, LVN267 = TL267.levels || 10, AWAY267 = (TL267.awaySeconds || 60) * 1000, TFLY267 = (TL267.flySeconds || 8) * 1000;
+const NEWTRK267 = !!(ATLAS.truck_garbage_sw && ATLAS.truck_garbage_sw.frames > LVN267);
+
+/* ---------- 1. 圖鑑「等級」 ---------- */
+function bookLevels267(el){ RT.noBoost = true;
+  try { const P = S.player, L = lvInfo(P.level), N = LV[P.level], max = !N, f = fmtN;
+    const got = max ? 0 : Math.max(0, P.xp - L.xpToReach), span = max ? 1 : N.xpToReach - L.xpToReach, pct = max ? 100 : Math.min(100, Math.round(got / span * 100));
+    const all = X => (X.unlocks || []).map(lvChip267).concat(X.specialDeco ? [(lvChip267(X.specialDeco) || `<span class="ch267">${escapeHTML(nameOf(X.specialDeco) || '')}</span>`).replace('</span>', '<i>特殊裝飾</i></span>')] : []).filter(Boolean);
+    const ex = X => `雨水儲量 ${f(X.rainStorage)}・倉庫容量 ${f(X.produceCapacity)}・動物上限 ${f(X.animalCap)}・魚池格數 ${f(X.fishPoolTileCap)}`;
+    let h = `<div class="lv267 lv268"><div class="hero268"><div class="tt268">${P.level}<small>級</small>${max ? '' : `<i>→</i>${N.level}<small>級</small>`}</div>
+      <div class="pb268"><i style="width:${pct}%"></i><span>${max ? '滿級' : pct + '%'}</span></div>
+      <div class="st268"><div class="acc">累計經驗 <b>${f(P.xp)}</b></div>${max ? '' : `<div>還差 <b>${f(Math.max(0, N.xpToReach - P.xp))}</b> 經驗</div>`}</div></div>`;
+    if (!max){ const A = all(N); h += `<section class="sec268 nx268"><h4>${lvIc267('ui_lv_star')}${N.level} 級解鎖預覽<em>升級獎勵 ${f(N.coinReward)} 金幣</em></h4><div class="grid268">${A.join('') || '<span class="cnt">這一級沒有新解鎖</span>'}</div><small class="ex268">${ex(N)}</small></section>`; }
+    h += `<section class="sec268"><h4>等級列表<em>點一列展開看解鎖項目</em></h4>`;
+    const row = X => { const st = X.level === P.level ? ' cur' : X.level === P.level + 1 ? ' nxt' : X.level > P.level ? ' lock' : '', A = all(X);
+      return `<details class="rw268 tr267l${st}" data-lv267="${X.level}"><summary><i class="cv"></i><span class="lvw"><span class="lvn">${X.level}<small>級</small></span>${st === ' cur' ? '<span class="tag">目前</span>' : st === ' nxt' ? '<span class="tag n">下一級</span>' : ''}</span><span class="cnt">解鎖 ${A.length} 項</span><span class="xp">${f(X.xpToReach)} 經驗</span><span class="cn">${f(X.coinReward)} 金幣</span></summary>
+        <div class="grid268">${A.join('') || '<span class="cnt">這一級沒有新解鎖</span>'}</div><small class="ex268">${ex(X)}</small></details>`; };
+    const past = LV.filter(X => X.level < P.level);
+    if (past.length) h += `<details class="past268"><summary><i class="cv"></i>已經升過的等級（1～${P.level - 1} 級）</summary>${past.map(row).join('')}</details>`;
+    h += LV.filter(X => X.level >= P.level).map(row).join('');
+    el.innerHTML = h + `</section><p class="small">雨水儲量、倉庫容量、動物上限、魚池格數是等級本身的額度，不含金幣擴充。</p></div>`;
+  } finally { RT.noBoost = false; }
+  paintIcons(el);
+  el.querySelectorAll('details.rw268').forEach(d => d.addEventListener('toggle', () => { if (d.open) paintIcons(d); }));
+  if (RT.bookFocus){ const d = el.querySelector(`.rw268[data-lv267="${RT.bookFocus}"]`); if (d){ const p = d.closest('.past268'); if (p) p.open = true; d.open = true; } } }
+{ const st = document.createElement('style'); st.textContent = `
+.lv268{--bd268:rgba(110,150,200,.35)}
+.lv268 .hero268{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;padding:16px 22px;border-radius:16px;background:rgba(255,255,255,.72);border:1px solid var(--bd268);margin-bottom:12px}
+.lv268 .tt268{font-size:30px;font-weight:800;white-space:nowrap}.lv268 .tt268 small{font-size:20px;font-weight:700;margin:0 2px}.lv268 .tt268 i{font-style:normal;margin:0 8px;opacity:.7}
+.lv268 .pb268{height:26px;border-radius:13px;background:#d9e2ee;position:relative;overflow:hidden}
+.lv268 .pb268 i{position:absolute;left:0;top:0;bottom:0;border-radius:13px;background:linear-gradient(180deg,#4aa3f5,#1f7fe0);min-width:26px}
+.lv268 .pb268 span{position:absolute;left:0;right:0;top:0;line-height:26px;text-align:center;font-weight:800;font-size:14px;color:#17324d}
+.lv268 .st268{border-left:1px solid var(--bd268);padding-left:20px;font-size:15px;line-height:1.7;white-space:nowrap}.lv268 .st268 b{font-size:19px;font-variant-numeric:tabular-nums;margin:0 2px}
+.lv268 .sec268{border-radius:16px;background:rgba(255,255,255,.6);border:1px solid var(--bd268);margin-bottom:12px;overflow:hidden}
+.lv268 .sec268>h4{margin:0;padding:10px 16px;font-size:18px;background:linear-gradient(180deg,rgba(190,215,245,.9),rgba(205,225,248,.75));display:flex;align-items:center;gap:8px}
+.lv268 .sec268>h4 em{font-style:normal;font-size:13px;font-weight:500;opacity:.75;margin-left:auto}.lv268 .sec268>h4 .li267{width:26px;height:26px}
+.lv268 .grid268{display:flex;flex-wrap:wrap;gap:10px;padding:12px 14px 6px}
+.lv268 .grid268 .ch267{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:14px;background:rgba(255,255,255,.88);border:1px solid var(--bd268);font-size:15px;font-weight:600;box-shadow:0 1px 2px rgba(40,80,120,.08);color:inherit}
+.lv268 .grid268 .ch267 i{font-style:normal;font-size:11px;font-weight:500;opacity:.7;margin-left:4px}
+.lv268 .nx268 .grid268 .ch267{font-size:16px;padding:8px 16px 8px 10px}.lv268 .nx268 .grid268 .ch267 canvas.ico{width:40px;height:40px}
+.lv268 .grid268 .ch267 canvas.ico{width:28px;height:28px;flex:none}
+.lv268 .ex268{display:block;padding:4px 16px 12px;font-size:13px;opacity:.8}
+.lv268 .rw268{display:block;margin:8px 10px;border-radius:12px;background:rgba(255,255,255,.8);border:1px solid var(--bd268);padding:0;grid-template-columns:none}
+.lv268 .rw268.cur{border-color:#5fae5a;box-shadow:0 0 0 1px #5fae5a inset}
+.lv268 .rw268>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:22px 150px 1fr 190px 170px;align-items:center;gap:8px;padding:10px 14px;font-size:17px}
+.lv268 .rw268>summary::-webkit-details-marker{display:none}
+.lv268 .cv{width:9px;height:9px;border-right:3px solid #1f5fa8;border-bottom:3px solid #1f5fa8;transform:rotate(-45deg);margin-left:2px;transition:.15s}
+.lv268 .rw268[open]>summary .cv,.lv268 .past268[open]>summary .cv{transform:rotate(45deg)}
+.lv268 .past268{margin:8px 0}.lv268 .past268>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:8px 24px;font-size:15px;opacity:.8}.lv268 .past268>summary::-webkit-details-marker{display:none}
+.lv268 .lvn{font-weight:800;font-size:22px}.lv268 .lvn small{font-size:15px;margin-left:3px}
+.lv268 .tag{display:inline-block;margin-left:8px;padding:1px 9px;border-radius:9px;font-size:12px;font-weight:700;background:#4a9e4a;color:#fff;vertical-align:3px}.lv268 .tag.n{background:#cfe3fb;color:#1f5fa8}
+.lv268 .cnt{font-size:13px;opacity:.7}
+.lv268 .xp,.lv268 .cn{font-variant-numeric:tabular-nums;white-space:nowrap}.lv268 .xp::before{content:'★';color:#f2b300;margin-right:6px;font-size:19px}
+.lv268 .cn::before{content:'';display:inline-block;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe27a,#f0a800);border:1px solid #c98a00;margin-right:6px;vertical-align:-3px}
+.lv268 .rw268 .grid268{padding:2px 14px 6px 44px;gap:8px}.lv268 .rw268 .grid268 .ch267{padding:4px 12px 4px 6px;font-size:14px;border-radius:11px}
+.lv268 .rw268 .ex268{padding-left:44px}.lv268 .rw268.lock>summary{opacity:.78}
+body.m-port .lv268 .hero268{grid-template-columns:1fr;gap:8px;text-align:center;padding:12px}
+body.m-port .lv268 .tt268{font-size:24px}body.m-port .lv268 .st268{border:0;padding:0;font-size:14px;line-height:1.4}body.m-port .lv268 .st268 .acc{display:none}
+body.m-port .lv268 .sec268>h4{font-size:16px;padding:8px 12px}
+body.m-port .lv268 .grid268{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px}
+body.m-port .lv268 .grid268 .ch267,body.m-port .lv268 .nx268 .grid268 .ch267{font-size:14px;padding:5px 8px 5px 6px;gap:6px;min-width:0}body.m-port .lv268 .nx268 .grid268 .ch267 canvas.ico{width:30px;height:30px}
+body.m-port .lv268 .rw268>summary{grid-template-columns:18px 1fr 1fr;row-gap:2px;font-size:14px;padding:8px 10px}
+body.m-port .lv268 .rw268>summary .lvw{grid-column:2 / 4}body.m-port .lv268 .rw268>summary .cnt{display:none}
+body.m-port .lv268 .rw268>summary .xp{grid-column:2}body.m-port .lv268 .rw268>summary .cn{grid-column:3}
+body.m-port .lv268 .rw268 .grid268{padding:2px 8px 6px 8px}body.m-port .lv268 .rw268 .ex268{padding-left:10px}
+.night .lv268 .hero268,.night .lv268 .sec268,.night .lv268 .rw268,.night .lv268 .grid268 .ch267{background:rgba(30,44,64,.72)}.night .lv268 .sec268>h4{background:rgba(60,90,130,.6)}.night .lv268 .pb268{background:#34455c}.night .lv268 .pb268 span{color:#fff}
+`; document.head.appendChild(st); }
+
+/* ---------- 2. 選項列：「倉庫還有 n」只留一個；巢箱、飼育箱讀 S.buildStore ---------- */
+const boxStock267 = id => (S.buildStore && S.buildStore[id]) || 0;
+function trayFix267(){ const tray = $('tray'); if (!tray || !S) return;
+  tray.querySelectorAll('.item').forEach(el => { const L = [...el.querySelectorAll('small.st51')]; for (let i = 1; i < L.length; i++) if (L.slice(0, i).some(a => a.textContent.trim() === L[i].textContent.trim())) L[i].remove(); });
+  for (const id of ['owl_box', 'bug_box']){ const el = tray.querySelector(`.item[data-id="${id}"]`), n = boxStock267(id); if (!el || !n) continue;
+    let s = el.querySelector('small.st51'); const price = [...el.querySelectorAll('small')].find(q => q.querySelector('img') && !q.classList.contains('st51'));
+    if (!s){ s = document.createElement('small'); s.className = 'st51'; (price || el.querySelector('b')).insertAdjacentElement(price ? 'beforebegin' : 'afterend', s); }
+    s.textContent = `倉庫還有 ${fmtN(n)}`; if (price) price.remove(); el.classList.remove('locked'); }
+  try { const s = bs61().nst || {}; tray.querySelectorAll('.item[data-id^="dfly:"]').forEach(el => { const n = s[el.dataset.id.slice(5)] || 0; if (!n || el.querySelector('small.st51')) return; const q = document.createElement('small'); q.className = 'st51'; q.textContent = `倉庫還有 ${fmtN(n)}`; const b = el.querySelector('b'); if (b) b.insertAdjacentElement('afterend', q); }); } catch(e){} }
+{ const _ut267 = UIbuildTray; UIbuildTray = function(){ const r = _ut267(); try { trayFix267(); } catch(e){ console.warn(e); } return r; }; }
+// 巢箱（原本讀 S.storage，但收回是進 S.buildStore；兩邊都認）
+function placeOwlBox62(M, k, T, cx, cy){
+  if (T && T.t !== 'weed'){ toast(`${OBX62.name || '巢箱'}要放在空的草地上`); return; } if (!isUnlocked('owl_box') && !boxStock267('owl_box')){ toast(lockedMsg('owl_box')); return; }
+  const st = boxStock267('owl_box'), st0 = (S.storage || {}).owl_box || 0, cost = DEV.owl_box.buildCost;
+  if (st > 0) S.buildStore.owl_box = st - 1; else if (st0 > 0) S.storage.owl_box = st0 - 1; else if (!spend(cost)) return;
+  if (T) pullWeed(M, k, cx, cy);
+  M.tiles[k] = { t: 'device', id: 'owl_box' }; owlBoxes62(); floatText(cx, cy - 24, st > 0 || st0 > 0 ? '從倉庫拿出' : `-${fmtN(cost)}`, '#8a5d36', 11); sfx('place'); RT.decoVer++; }
+function placeBox61(M, k, T, cx, cy){
+  if (T && T.t !== 'weed'){ toast('飼育箱要放在空的草地上'); return; } const st = boxStock267('bug_box'); if (!isUnlocked('bug_box') && !st){ toast(lockedMsg('bug_box')); return; }
+  const cost = DEV.bug_box.buildCost; if (st > 0) S.buildStore.bug_box = st - 1; else if (!spend(cost)) return; if (T) pullWeed(M, k, cx, cy);
+  M.tiles[k] = { t: 'device', id: 'bug_box', bx: { list: [], dead: [] } }; floatText(cx, cy - 24, st > 0 ? '從倉庫拿出' : `-${fmtN(cost)}`, '#8a5d36', 11); sfx('place'); RT.decoVer++; }
+{ const _uh267 = updateHint; updateHint = function(){ _uh267(); try { if (!S) return; const h = $('hint'), id = S.sel.tool === 'insect' ? S.sel.insect : S.sel.tool === 'animal' ? S.sel.animal : null;
+    if (h && (id === 'bug_box' || id === 'owl_box') && boxStock267(id) && !/倉庫還有/.test(h.textContent)) h.textContent = `點空草地放${nameOf(id) || ''} · 倉庫還有 ${boxStock267(id)}，免費`; } catch(e){} }; }
+
+/* ---------- 3. 抓到蜻蜓：免費養水蠆；沒位子先進倉庫「撈網與河鮮」 ---------- */
+const nst267 = () => { const s = bs61(); if (!s.nst || typeof s.nst !== 'object') s.nst = {}; return s.nst; };
+function nymSpot267(mi, x, y){ const M = S.maps[mi]; if (!M) return null; let best = null, bd = 1e9;
+  for (const k in M.tiles){ const T = M.tiles[k]; if (!(T && (T.t === 'pool' || isRiver248(T)))) continue; if (nymWhy64(M, mi, k)) continue; const [a, b] = pkey(k), d = Math.hypot(a - x, b - y); if (d < bd){ bd = d; best = k; } }
+  return best; }
+function keepNym267(sp, mi, x, y){ const k = DFON64 ? nymSpot267(mi, x, y) : null;
+  if (k){ const N = addNym64(sp, mi, k), [a, b] = pkey(k), c = center(a, b); if (mi === S.cur) floatText(c.cx, c.cy - 30, `${spName61(sp)}的水蠆`, '#2f6a8a', 11);
+    toast(`${spName61(sp)}的水蠆放進最近的${N.at === 'pool' ? '魚池' : '河裡'}了：不用餵，${DF64.waterDays ?? 2} 天後爬上岸羽化`, true, 3600); return 'placed'; }
+  const st = nst267(); st[sp] = (st[sp] || 0) + 1; toast(`魚池和河都沒有空位：${spName61(sp)}的水蠆先收進倉庫「撈網與河鮮」，之後在「昆蟲 · 蜻蜓」選牠來放（免費）`, true, 4600); return 'stored'; }
+function catchAsk61(sp, mi, x, y, first){
+  const D = SP61[sp] || {}, R0 = rar61(sp), df = isDf61(sp), bx = df ? null : bestBox61(sp, mi), done = { v: false };
+  const release = () => { if (done.v) return; done.v = true; release61(sp, mi, x, y, 0); };
+  pendingPrompt = () => release();
+  openModal('抓到昆蟲', null, (k, el) => { el.classList.add('bug61');
+    const spot = df ? nymSpot267(mi, x, y) : null, n = bx ? bx.T.bx.list.length : 0;
+    el.innerHTML = `<div class="cat61"><img src="${IMGSRC['ui_pg_bug_' + sp] || ''}" alt=""><div><h3>${escapeHTML(D.name || '')}</h3>
+      <p><span class="pill">${escapeHTML((GR61[D.group] || {}).name || '')}</span> <span class="pill r61-${D.rarity}">${escapeHTML(R0.name || '')}</span>${first ? ' <span class="pill ok">新登記</span>' : ''}</p>
+      <p class="small">${first ? '第一次抓到，記進圖鑑「昆蟲收集」。' : `圖鑑已經有了（累計抓到 ${(book61(sp) || {}).got || 1} 隻）。`}活的昆蟲不能賣、也不進倉庫。</p></div></div>
+      <div class="row">${df ? '<button class="btn" id="cNym267">養水蠆（免費）</button>' : `<button class="btn" id="cBox61" ${bx ? '' : 'disabled'}>放進飼育箱</button>`}<button class="btn ghost" id="cRel61">放生</button></div>
+      <p class="small">${df ? (spot ? '養水蠆：這隻留下 1 隻同種水蠆，放進這座島最近的魚池空格或河格（佔一隻魚的位置），' + (DF64.waterDays ?? 2) + ' 天後羽化。' : '養水蠆：魚池和河都沒有空位，水蠆會先收進倉庫「撈網與河鮮」，之後在「昆蟲 · 蜻蜓」選牠來放。')
+        : bx ? `會放進${bx.mi === S.cur ? '這座島' : '另一座島'}的飼育箱（${n ? `裡面已經有 ${n} 隻，可以混養` : '空箱'}）。` : escapeHTML(boxWhy61(sp))}</p>
+      <p class="small">${relText61(sp)}</p>`;
+    const b1 = el.querySelector('#cBox61'); if (b1) b1.onclick = () => { if (done.v) return; done.v = true; pendingPrompt = null; const X = bx.T.bx; fixBox267(X); if (!X.list.length) X.sp = sp; X.list.push({ id: nid61(), sp, st: 'adult', p: 0, life: 0 }); X.lastT = X.lastT || Date.now();
+      closeModal(); toast(`${spName61(sp)}放進飼育箱了，點飼育箱可以看裡面`, true, 3000); RT.decoVer++; afterAction(); };
+    const b2 = el.querySelector('#cNym267'); if (b2) b2.onclick = () => { if (done.v) return; done.v = true; pendingPrompt = null; closeModal(); keepNym267(sp, mi, x, y); afterAction(); UIbuildTray(); };
+    el.querySelector('#cRel61').onclick = () => { pendingPrompt = null; closeModal(); release(); afterAction(); }; }); }
+// 「昆蟲 · 蜻蜓」放水蠆：倉庫有的先用（免費）
+function placeNym64(M, k, sp, cx, cy){
+  const D = SP61[sp]; if (!D) return; const id = bugId61(sp), st = nst267(), have = st[sp] || 0;
+  if (!have){ if (!isUnlocked(id)){ toast(`${D.name}要到第 ${UNLOCK[id]} 級才開放`); return; }
+    if (!known61(sp)){ toast(`先在野外抓到${D.name}（記進圖鑑）才能買水蠆`, true, 3000); return; } }
+  const why = nymWhy64(M, S.cur, k); if (why){ toast(why); return; }
+  const cost = rar61(sp).larvaCost || 40; if (have){ st[sp] = have - 1; if (!st[sp]) delete st[sp]; } else if (!spend(cost)) return;
+  const N = addNym64(sp, S.cur, k);
+  floatText(cx, cy - 30, have ? `放${D.name}水蠆（倉庫的）` : `放${D.name}水蠆 -${fmtN(cost)}`, '#2f6a8a', 11); sfx('place');
+  toast(`${D.name}的水蠆放進${N.at === 'pool' ? '魚池' : '河裡'}了：不用餵，${DF64.waterDays ?? 2} 天後爬上岸羽化`, true, 3200); afterAction(); }
+{ const _rv267 = rvSec260; rvSec260 = function(){ let h = _rv267(); try { const st = nst267(), rows = Object.keys(st).filter(sp => st[sp] > 0 && SP61[sp]); if (!rows.length) return h;
+    const tr = rows.map(sp => `<tr><td>${IMGSRC['ui_bug_' + sp] ? `<img class="ico" src="${IMGSRC['ui_bug_' + sp]}" alt="">` : ''}</td><td>${escapeHTML(spName61(sp))}的水蠆<br><small>昆蟲 · 蜻蜓 選這一種，點魚池空格或河格放（免費）</small></td><td class="num">${fmtN(st[sp])}</td><td></td></tr>`).join('');
+    const i = h.lastIndexOf('</tbody>'); if (i > 0) h = h.slice(0, i) + tr + h.slice(i); } catch(e){ console.warn(e); } return h; }; }
+{ const _sp267 = storageProduceHTML; storageProduceHTML = function(){ const h = _sp267(); try { if (S && Object.values(nst267()).some(n => n > 0) && !h.includes('rvs260')) return h + rvSec260(); } catch(e){} return h; }; }
+
+/* ---------- 4. 飼育箱混養、各吃各的、配對提醒、換箱 ---------- */
+// 每隻記自己的種類；舊資料（或舊程式碼剛放進來、還沒寫 sp 的）補上那箱當時的 X.sp。X.sp 留著＝第一隻的種類（舊程式碼還會讀）
+function fixBox267(X){ if (!X) return X; if (!Array.isArray(X.list)) X.list = []; if (!Array.isArray(X.dead)) X.dead = [];
+  for (const m of X.list) if (!m.sp) m.sp = X.sp || 'tw_rhino'; return X; }
+const foodOf267 = sp => grp61(sp) === 'dung' ? ((BOX61.food || {}).dungEats || 'poop') : ((BOX61.food || {}).item || 'bug_jelly');
+const foodName267 = f => f === 'poop' ? '糞便' : (CFG.items[f] || {}).name || '昆蟲果凍';
+function adultsBy267(X){ const o = {}; for (const m of X.list) if (m.st === 'adult') o[m.sp] = (o[m.sp] || 0) + 1; return o; }
+// 可以配對的種類（同一種成蟲最多的那種），沒有就 null
+function pairSp267(X){ fixBox267(X); const o = adultsBy267(X), need = (BOX61.pair || {}).minAdults || 2; let best = null; for (const sp in o) if (o[sp] >= need && (!best || o[sp] > o[best])) best = sp; return best; }
+function boxOk61(b, sp){ const X = fixBox267(b.T.bx || (b.T.bx = { list: [], dead: [] })); if (X.list.length >= boxCap61()) return `這箱滿了（最多 ${boxCap61()} 隻）`;
+  if (BOX61.noDragonfly && isDf61(sp)) return '蜻蜓不能養在飼育箱'; if (grp61(sp) === 'firefly' && !riverNear61(b.M, b.x, b.y, BOX61.fireflyNearRiver || 3)) return `螢火蟲的飼育箱要放在河邊 ${BOX61.fireflyNearRiver || 3} 格內`; return null; }
+function bestBox61(sp, mi){ const L = boxes61().filter(b => !boxOk61(b, sp));
+  L.sort((a, b) => (b.T.bx.list.some(m => m.sp === sp) - a.T.bx.list.some(m => m.sp === sp)) || (a.mi === mi ? 0 : 1) - (b.mi === mi ? 0 : 1) || b.T.bx.list.length - a.T.bx.list.length); return L[0] || null; }
+function startPair61(T, sp){ const X = T.bx; if (!canPair61(X)) return false; const o = adultsBy267(X), need = (BOX61.pair || {}).minAdults || 2; if (!sp || !(o[sp] >= need)) sp = pairSp267(X); if (!sp) return false;
+  X.pair = Date.now() + ((BOX61.pair || {}).days ?? 1) * DAYMS; X.pairSp = sp; return true; }
+function stepBox61(T, t, M, k){ const X = fixBox267(T.bx || (T.bx = { list: [], dead: [] }));
+  if (!X.list.length){ X.lastT = t; delete X.pair; delete X.pairSp; if (!X.dead.length) delete X.sp; return; }
+  const last = X.lastT || t; X.lastT = t; if (t <= last) return; const today = dayNo40(t);
+  // 各吃各的：這箱今天有吃果凍的就扣 1 個果凍、有糞金龜就扣 1 坨糞便；沒吃到的那一類不長
+  if (!X.fedF || X.fedF.d !== today) X.fedF = { d: today, ok: {} };
+  const foods = [...new Set(X.list.map(m => foodOf267(m.sp)))]; let hungry = false;
+  for (const f of foods){ if (X.fedF.ok[f]) continue; if (invTake(f, (BOX61.food || {}).perDay || 1)) X.fedF.ok[f] = 1; else hungry = true; }
+  X.hungry = hungry; if (!hungry) X.fed = today; else if (X.fed === today) delete X.fed;
+  const dd = (t - last) / DAYMS, keep = [];
+  for (const m of X.list){ const sp = m.sp;
+    if (m.st === 'adult'){ m.life = (m.life || 0) + dd; if (m.life * DAYMS >= lifeMs61(sp)){ if (Math.random() < (B61.specimenChance ?? .5)) X.dead.push({ sp, t }); continue; } keep.push(m); continue; }
+    if (X.fedF.ok[foodOf267(sp)]){ m.p = (m.p || 0) + dd; let g = 0; while (m.st !== 'adult' && m.p >= stageDays61(sp, m.st) && g++ < 4){ m.p -= stageDays61(sp, m.st); m.st = STG61[STG61.indexOf(m.st) + 1];
+        if (m.st === 'adult'){ m.p = 0; m.life = 0; register61(sp, 'raised'); if (liveT(t) && M === curMap()){ const [x, y] = pkey(k), c = center(x, y); floatText(c.cx, c.cy - 50, `${spName61(sp)}羽化了！`, '#2f8a3a', 11); } } } }
+    keep.push(m); }
+  X.list = keep;
+  const P = BOX61.pair || {};
+  if (X.pair && t >= X.pair){ const sp = X.pairSp || pairSp267(X) || X.sp; delete X.pair; delete X.pairSp; X.pairCd = t + (P.cooldownDays ?? 1) * DAYMS; const [a, b] = P.eggs || [2, 4], n = a + Math.floor(Math.random() * (b - a + 1));
+    if (sp) for (let i = 0; i < n && X.list.length < boxCap61(); i++) X.list.push({ id: nid61(), sp, st: 'egg', p: 0 }); }
+  if (X.list.length) X.sp = X.list[0].sp; else if (!X.dead.length) delete X.sp; }
+function boxSpText267(X){ const o = {}; for (const m of X.list) o[m.sp] = (o[m.sp] || 0) + 1; return Object.keys(o).map(sp => `${spName61(sp)} ${o[sp]}`).join('、'); }
+function moveBug267(M, k, id, B){ const X = M.tiles[k].bx, m = X.list.find(q => q.id === id); if (!m || !B || boxOk61(B, m.sp)) return false; const Y = B.T.bx;
+  X.list = X.list.filter(q => q !== m); if (X.pick === id) X.pick = null; Y.list.push(m); Y.lastT = Y.lastT || Date.now(); if (!Y.sp) Y.sp = m.sp;
+  if (X.list.length) X.sp = X.list[0].sp; else if (!X.dead.length) delete X.sp; if (X.pair && !((adultsBy267(X)[X.pairSp] || 0) >= 2)){ delete X.pair; delete X.pairSp; }
+  RT.decoVer++; return true; }
+function renderBox61(el, M, k){
+  const T = M.tiles[k]; if (!isBox61(T)){ el.innerHTML = '<p>這個飼育箱已經不在了。</p>'; return; }
+  const X = fixBox267(T.bx || (T.bx = { list: [], dead: [] })), now = Date.now(), today = dayNo40(now), pair = BOX61.pair || {}, need = pair.minAdults || 2;
+  const pick = X.list.find(q => q.id === X.pick) || null, sp = pick ? pick.sp : (X.list[0] || {}).sp || X.sp, D = SP61[sp] || {};
+  let h = `<div class="hd61"><b>飼育箱</b><span>${X.list.length} / ${boxCap61()} 隻</span></div>`;
+  h += `<div class="ob61"><canvas id="ob61"></canvas>${!X.list.length && !X.dead.length ? '<p class="emp61">空箱：在「昆蟲 · 甲蟲」選幼蟲再點這個箱子，或把野外抓到的放進來（可以混養）</p>' : ''}</div><div id="pk61"></div>`;
+  h += '<div class="sl61">';
+  for (let i = 0; i < boxCap61(); i++){ const m = X.list[i];
+    if (!m){ h += '<div class="e61"></div>'; continue; }
+    const dur = m.st === 'adult' ? lifeMs61(m.sp) / DAYMS : stageDays61(m.sp, m.st), v = m.st === 'adult' ? (m.life || 0) : (m.p || 0), pct = Math.max(0, Math.min(100, v / dur * 100)), n = m.st === 'egg' ? `ui_bug_${m.sp}` : bugImg61(m.sp, m.st, true);
+    h += `<button class="m61 ${X.pick === m.id ? 'on' : ''} ${m.st === 'egg' ? 'eg267' : ''}" data-m61="${m.id}" title="${escapeHTML(spName61(m.sp))}">${n && ATLAS[n] ? `<canvas data-spr="${n}" data-f="0" class="ico"></canvas>` : '<i class="egg61"></i>'}<small>${escapeHTML(spName61(m.sp))}・${STN61[m.st]}</small><span class="pb61 ${m.st === 'adult' ? 'life' : ''}"><i style="width:${pct.toFixed(0)}%"></i></span></button>`; }
+  h += '</div>';
+  // 狀態：每一類飼料各一行
+  const foods = [...new Set(X.list.map(m => foodOf267(m.sp)))], ok = (X.fedF && X.fedF.d === today && X.fedF.ok) || {};
+  h += `<div class="st61">${foods.length ? foods.map(f => `<span>${itemIconHTML(f)}${foodName267(f)}：${ok[f] ? '今天吃過了' : '<b class="no61">沒有，停止成長</b>'}・倉庫還有 ${fmtN(S.inv[f] || 0)} ${f === 'poop' ? '坨' : '個'}</span>`).join('') : `<span>${itemIconHTML('bug_jelly')}昆蟲果凍：—・倉庫還有 ${fmtN(S.inv.bug_jelly || 0)} 個</span>`}`;
+  if (X.pair) h += `<span>${escapeHTML(spName61(X.pairSp || sp))}配對中：${fmtDur((X.pair - now) / 1000)}後生卵</span>`; else if (X.pairCd && now < X.pairCd) h += `<span>剛配對過：${fmtDur((X.pairCd - now) / 1000)}後才能再配對</span>`;
+  h += '</div>';
+  if (X.list.some(m => grp61(m.sp) === 'firefly')) h += `<p class="small">螢火蟲的飼育箱要在河邊 ${BOX61.fireflyNearRiver || 3} 格內；晚上看觀察窗會發光。</p>`;
+  const o = adultsBy267(X), psp = pairSp267(X), tot = Object.values(o).reduce((a, b) => a + b, 0);
+  h += `<div class="row">`;
+  if (sp) h += `<button class="btn" id="bL61" ${known61(sp) && X.list.length < boxCap61() ? '' : 'disabled'}>再放一隻${escapeHTML(D.name || '')}幼蟲 ${coinImg()}${fmtN(rar61(sp).larvaCost || 40)}</button>`;
+  h += `<button class="btn" id="bP61" ${canPair61(X) ? '' : 'disabled'}>配對${psp ? `（${escapeHTML(spName61(pick && o[pick.sp] >= need ? pick.sp : psp))}）` : `（成蟲 ${tot} 隻）`}</button>`;
+  if (X.dead.length) h += `<button class="btn" id="bD61">撿標本 ×${X.dead.length}</button>`;
+  h += `</div>`;
+  if (tot && !psp && !X.pair) h += `<p class="small pw267"><b>同一種要有 ${need} 隻成蟲才能配對</b>：現在是 ${Object.keys(o).map(q => `${escapeHTML(spName61(q))} ${o[q]} 隻`).join('、')}。</p>`;
+  h += `<p class="small">可以混養；配對要同一種 ${need} 隻以上成蟲，${pair.days ?? 1} 天後生 ${(pair.eggs || [2, 4]).join('～')} 顆卵（裝不下的不生）。點清單或觀察窗裡的一隻看詳細、放生、換箱。飼育箱要收回倉庫時裡面要是空的。</p>`;
+  el.innerHTML = h; paintIcons(el);
+  const sel = id => { X.pick = X.pick === id ? null : id; renderBox61(el, M, k); };
+  el.querySelectorAll('[data-m61]').forEach(b => b.onclick = () => sel(b.dataset.m61));
+  const L = el.querySelector('#bL61'); if (L) L.onclick = () => { const [x, y] = pkey(k), c = center(x, y), n0 = X.list.length; addLarva61(M, k, T, sp, c.cx, c.cy); if (X.list.length > n0) X.list[X.list.length - 1].sp = sp; fixBox267(X); afterAction(); renderBox61(el, M, k); };
+  const Pb = el.querySelector('#bP61'); if (Pb) Pb.onclick = () => { const want = pick && o[pick.sp] >= need ? pick.sp : psp; if (startPair61(T, want)){ toast(`${spName61(X.pairSp)}開始配對，${pair.days ?? 1} 天後生卵`, true, 2600); afterAction(); } renderBox61(el, M, k); };
+  const Db = el.querySelector('#bD61'); if (Db) Db.onclick = () => { const n = X.dead.length; for (const d of X.dead) addSpec61(d.sp); X.dead = []; if (!X.list.length) delete X.sp; sfx('harvest'); toast(`做成 ${n} 個甲蟲標本，放進倉庫「標本」`, true, 2800); RT.decoVer++; afterAction(); renderBox61(el, M, k); };
+  // 選到的那隻：詳細＋放生＋換箱
+  const m = pick, pk = el.querySelector('#pk61');
+  if (m && pk){ const dur = m.st === 'adult' ? lifeMs61(m.sp) / DAYMS : stageDays61(m.sp, m.st), v = m.st === 'adult' ? (m.life || 0) : (m.p || 0), left = Math.max(0, (dur - v) * DAYMS / 1000), fed = !!ok[foodOf267(m.sp)];
+    const others = boxes61().filter(b => b.T !== T && !boxOk61(b, m.sp));
+    pk.innerHTML = `<div class="pk61"><b>${escapeHTML(spName61(m.sp))}・${STN61[m.st]}</b><span>${m.st === 'adult' ? `還能活 ${fmtDur(left)}` : `再 ${fmtDur(left)}變成${STN61[STG61[STG61.indexOf(m.st) + 1]]}${fed ? '' : '（沒吃的時候不長）'}`}</span>${m.st === 'adult' ? '<button class="btn ghost" id="bR61">放生</button>' : ''}<button class="btn ghost" id="bM267" ${others.length ? '' : 'disabled'}>換箱</button></div><div id="mv267" hidden></div>`;
+    const Rb = pk.querySelector('#bR61'); if (Rb) Rb.onclick = () => { const [x, y] = pkey(k); X.list = X.list.filter(q => q !== m); X.pick = null; release61(m.sp, S.maps.indexOf(M), x, y, (m.life || 0) * DAYMS); if (X.list.length) X.sp = X.list[0].sp; else if (!X.dead.length) delete X.sp; toast(relText61(m.sp), true, 3600); afterAction(); renderBox61(el, M, k); };
+    const Mb = pk.querySelector('#bM267'), mv = pk.querySelector('#mv267');
+    if (Mb) Mb.onclick = () => { if (!others.length){ toast('沒有別的飼育箱有空位：先在「昆蟲 · 設施」再放一個飼育箱'); return; } mv.hidden = !mv.hidden; if (mv.hidden) return;
+      mv.innerHTML = `<p class="small">把這隻${escapeHTML(spName61(m.sp))}換到哪一箱？（成長進度、壽命照舊）</p>` + others.map((b, i) => `<button class="btn" data-mv267="${i}">${escapeHTML(islName63(b.mi))}（${b.x},${b.y}）・${b.T.bx.list.length} / ${boxCap61()} 隻${b.T.bx.list.length ? '：' + escapeHTML(boxSpText267(b.T.bx)) : '・空箱'}</button>`).join('');
+      mv.querySelectorAll('[data-mv267]').forEach(q => q.onclick = () => { const B = others[+q.dataset.mv267]; if (moveBug267(M, k, m.id, B)){ sfx('place'); toast(`${spName61(m.sp)}換到${islName63(B.mi)}的另一個飼育箱了`, true, 2600); afterAction(); } renderBox61(el, M, k); }); }; }
+  obLoop61(el.querySelector('#ob61'), T, X);
+}
+// g122 的包裝把抬頭改成「第一隻的名字」：混養時改回「飼育箱（n 種）」
+{ const _rb267 = renderBox61; renderBox61 = function(el, M, k){ const r = _rb267(el, M, k);
+  try { const T = M.tiles[k]; if (!isBox61(T)) return r; const X = T.bx, kinds = [...new Set(X.list.map(m => m.sp))], b = el.querySelector('.hd61 b');
+    if (b) b.textContent = !X.list.length ? '空的飼育箱' : kinds.length === 1 ? spName61(kinds[0]) : `混養 ${kinds.length} 種`;
+    const bt = el.querySelector('.bt66'), pw = el.querySelector('.pw267'); if (bt && pw) bt.after(pw); } catch(e){ console.warn(e); }
+  return r; }; }
+// 地圖上箱子的泡泡：缺哪一種飼料畫哪一種
+{ const _dd267 = drawDevice; drawDevice = function(T, k, cx, cy, t){ if (isBox61(T) && T.bx) fixBox267(T.bx); return _dd267(T, k, cx, cy, t); }; }
+{ const st = document.createElement('style'); st.textContent = `
+.bug61 .m61 small{white-space:normal;line-height:1.15;font-size:11px}.bug61 .m61.eg267 canvas{opacity:.45;filter:grayscale(.3)}
+.bug61 .pw267{background:rgba(255,236,170,.6);border-radius:10px;padding:6px 10px}
+.bug61 #mv267{display:flex;flex-direction:column;gap:6px;margin:6px 0 10px}.bug61 #mv267[hidden]{display:none}.bug61 #mv267 .btn{text-align:left;white-space:normal}
+.bug61 .pk61{flex-wrap:wrap}
+`; document.head.appendChild(st); }
+// 觀察窗：每一隻畫自己的種類（照抄 g122 的放大版，只把種類改成 m.sp）
+obLoop61 = function(cv, T, X){ if (!cv) return; const g = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = Math.max(240, cv.clientWidth || 320), H = Math.round(Math.max(170, Math.min(340, W * .3))), K = H / 170; cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px';
+  const ground = H * .56, slots = [];
+  cv.onclick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9;
+    for (const s2 of slots){ const d = Math.hypot(s2.x - x, s2.y - y); if (d < bd){ bd = d; best = s2; } } if (!best || bd >= 60 * K) return; const el = cv.closest('.bug61'), bx = RT.box61;
+    if (String(best.id).startsWith('dead:')){ const d = (X.dead || [])[+best.id.slice(5)]; if (d){ X.dead.splice(X.dead.indexOf(d), 1); addSpec61(d.sp); if (!X.list.length && !X.dead.length) delete X.sp; sfx('harvest');
+        toast(`撿起${spName61(d.sp)}，做成甲蟲標本放進倉庫「標本」`, true, 2600); RT.decoVer++; afterAction(); } if (el && bx) renderBox61(el, bx.M, bx.k); return; }
+    X.pick = best.id; if (el && bx) renderBox61(el, bx.M, bx.k); };
+  const draw = ts => { if (!cv.isConnected || $('modal').hidden) return; const t = ts / 1000, sp = X.sp, night = isNightAt(Date.now()), ff = sp && grp61(sp) === 'firefly';
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    const sky = g.createLinearGradient(0, 0, 0, ground); sky.addColorStop(0, night ? '#1a2740' : '#dff1f6'); sky.addColorStop(1, night ? '#24384a' : '#cfe6dc'); g.fillStyle = sky; g.fillRect(0, 0, W, ground);
+    const soil = g.createLinearGradient(0, ground, 0, H); soil.addColorStop(0, '#c99258'); soil.addColorStop(1, '#a8743f'); g.fillStyle = soil; g.fillRect(0, ground, W, H - ground);
+    g.fillStyle = 'rgba(70,40,15,.3)'; for (let i = 0; i < 160; i++){ const x = (i * 97.3) % W, y = ground + 4 + ((i * 53.1) % (H - ground - 6)); g.fillRect(x, y, 2, 2); }
+    // 枯枝、果凍台
+    g.strokeStyle = '#a8703a'; g.lineCap = 'round'; g.lineWidth = 12 * K; g.beginPath(); g.moveTo(W * .03, ground + 6 * K); g.lineTo(W * .29, ground - 34 * K); g.stroke();
+    g.lineWidth = 7 * K; g.beginPath(); g.moveTo(W * .18, ground - 18 * K); g.lineTo(W * .23, ground - 42 * K); g.stroke();
+    const jx = W * .8, jw = 40 * K, jh = 18 * K; g.fillStyle = '#d29a5c'; g.fillRect(jx - jw / 2, ground - jh, jw, jh); g.fillStyle = '#e7b77a'; g.beginPath(); g.ellipse(jx, ground - jh, jw / 2, 6 * K, 0, 0, 7); g.fill();
+    if (!X.list.length || X.list.some(m => grp61(m.sp || sp) !== 'dung')){ g.fillStyle = '#ef5a2a'; g.beginPath(); g.ellipse(jx, ground - jh - 1.5 * K, 11 * K, 4 * K, 0, 0, 7); g.fill(); }
+    slots.length = 0;
+    const list = X.list, under = list.filter(m => m.st !== 'adult'), ad = list.filter(m => m.st === 'adult');
+    under.forEach((m, i) => { const x = W * (.12 + .76 * (i + .5) / Math.max(3, under.length)), y = ground + (22 + (i % 2) * 22) * K; slots.push({ id: m.id, x, y });
+      if (m.st === 'egg'){ g.fillStyle = '#f6efd6'; g.beginPath(); g.ellipse(x, y, 6 * K, 5 * K, 0, 0, 7); g.fill(); g.strokeStyle = 'rgba(0,0,0,.2)'; g.lineWidth = 1; g.stroke(); }
+      else drawSpr61(g, `bug_${m.sp || sp}_${m.st}`, motion ? frameOf(`bug_${m.sp || sp}_${m.st}`, t, i) : 0, x, y + 16 * K, K, false);
+      if (X.pick === m.id){ g.strokeStyle = '#ffd34a'; g.lineWidth = 2; g.beginPath(); g.arc(x, y, 20 * K, 0, 7); g.stroke(); } });
+    const glows = [];
+    ad.forEach((m, i) => { const ph = t * .28 + i * 2.1, w = Math.sin(ph), x = W * (.36 + .4 * (i + .5) / Math.max(2, ad.length) + .1 * w), mv = motion && Math.abs(Math.cos(ph)) > .25, flip = Math.cos(ph) < 0;
+      let y = ground + 4 * K, n = `bug_${m.sp || sp}_${mv ? 'walk' : 'idle'}`;
+      if (grp61(m.sp || sp) === 'firefly' && night){ n = `bug_${m.sp || sp}_fly`; y = ground - (30 + 26 * Math.sin(ph * 1.7)) * K; }
+      if (!ATLAS[n]) n = `bug_${m.sp || sp}_idle`;
+      drawSpr61(g, n, motion ? frameOf(n, t, i) : 0, x, y, 1.15 * K, flip); slots.push({ id: m.id, x, y: y - 22 * K });
+      if (grp61(m.sp || sp) === 'firefly' && night) glows.push([x + (flip ? 14 : -14) * K, y - 20 * K, m.sp || sp, i]);
+      if (X.pick === m.id){ g.strokeStyle = '#ffd34a'; g.lineWidth = 2; g.beginPath(); g.arc(x, y - 20 * K, 34 * K, 0, 7); g.stroke(); } });
+    (X.dead || []).forEach((d, i) => { const x = W * (.55 + i * .1), y = ground + 6 * K; drawSpr61(g, `bug_${d.sp}_dead`, 0, x, y, 1.1 * K, false); slots.push({ id: 'dead:' + i, x, y: y - 12 * K });
+      if (motion){ const a = (Math.sin(t * 3 + i) + 1) / 2; g.fillStyle = `rgba(255,236,150,${.35 + .45 * a})`; g.beginPath(); g.arc(x + 18 * K, y - 30 * K, 3 * K, 0, 7); g.fill(); } });
+    if (glows.length){ g.fillStyle = 'rgba(5,10,25,.35)'; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'lighter';
+      for (const [x, y, s2, i] of glows){ const a = glowA61(s2, t, i); if (a <= 0) continue; const [c] = GLOW61[s2] || ['200,255,100']; const gr = g.createRadialGradient(x, y, 0, x, y, 22 * K); gr.addColorStop(0, `rgba(${c},${.9 * a})`); gr.addColorStop(1, `rgba(${c},0)`); g.fillStyle = gr; g.beginPath(); g.arc(x, y, 22 * K, 0, 7); g.fill(); }
+      g.globalCompositeOperation = 'source-over'; }
+    // 玻璃反光
+    g.fillStyle = 'rgba(255,255,255,.16)'; g.beginPath(); g.moveTo(W * .12, 0); g.lineTo(W * .17, 0); g.lineTo(W * .06, H); g.lineTo(W * .01, H); g.fill();
+    g.fillStyle = 'rgba(255,255,255,.08)'; g.beginPath(); g.moveTo(W * .18, 0); g.lineTo(W * .2, 0); g.lineTo(W * .09, H); g.lineTo(W * .07, H); g.fill();
+    requestAnimationFrame(draw); };
+  requestAnimationFrame(draw); };
+
+// 選項列的飼育箱說明
+{ const _bit267 = buildInsectTray; buildInsectTray = function(tray){ _bit267(tray); try { const el = tray.querySelector('.item[data-id="bug_box"]'); if (el) el.querySelectorAll('small').forEach(s => { if (/一箱一種/.test(s.textContent)) s.textContent = `可以混養、${boxCap61()} 隻`; }); } catch(e){} }; }
+
+/* ---------- 7. 垃圾車：貨斗 10 級、滿了飛走倒光再回來 ---------- */
+function capOf267(kind){ const c = (BLD.trash_station || {}).capacity || {}; return (TL267.cap || {})[kind] || (kind === 'g' ? c.general : c.recycle) || 5; }
+function tl267(){ const G = S.trash || (S.trash = {}), R = G.route, key = R && R.phase !== 'gone' ? `${R.day}:${R.i}:${R.mi}` : ''; let L = G.tl267; if (!L || L.key !== key) L = G.tl267 = { key, g: 0, r: 0, qg: 0, qr: 0, ag: 0, ar: 0, lt: 0 }; return L; }
+// 倒進來的東西先排隊（qg／qr），車子停妥後每秒裝 loadBagsPerSecond 袋，貨斗一級一級變多；裝滿就飛走倒光，回來繼續裝排隊的
+const RATE267 = TL267.loadBagsPerSecond || .5;
+function tick267(t){ const R = routeState65(); if (!R) return; const L = tl267(), dt = L.lt ? Math.max(0, Math.min(t - L.lt, 3600e3)) : 0; L.lt = Math.max(L.lt || 0, t);
+  const parked = R.phase === 'stay' && t >= R.at + ARR65;
+  for (const [k, a, q] of [['g', 'ag', 'qg'], ['r', 'ar', 'qr']]){ if (L[a] && t >= L[a]) L[a] = 0; const cap = capOf267(k);
+    if (!parked || L[a]) continue;
+    if (L[q] > 0 && dt > 0){ const mv = Math.min(L[q], RATE267 * dt / 1000, Math.max(0, cap - L[k])); L[q] -= mv; L[k] += mv; if (L[q] < 1e-6) L[q] = 0; }
+    if (L[k] >= cap - 1e-6){ L[k] = 0; L[a] = t + AWAY267;
+      if (liveT(t) && R.mi === S.cur) toast(`${k === 'g' ? '垃圾車' : '資源回收車'}裝滿了，先飛去倒光，${Math.round(AWAY267 / 1000)} 秒後回來繼續收`, true, 3600); } } }
+const level267 = kind => { const L = tl267(), v = L[kind] || 0; return v <= .001 ? 0 : Math.max(1, Math.min(LVN267, Math.round(v / capOf267(kind) * LVN267))); };
+const away267 = (kind, t) => { const L = tl267(), a = L[kind === 'g' ? 'ag' : 'ar']; return a && t < a ? a : 0; };
+{ const _pl267 = payLoad; payLoad = function(L, overdue, x, y, live){ try { if (L && routeState65()){ const T = tl267(), t = RT.t267 || Date.now(); tick267(t); T.qg += (L.g || 0) + (L.s || 0) / (TL267.sewagePerBag || 40); T.qr += (L.r || 0); } } catch(e){ console.warn(e); } return _pl267(L, overdue, x, y, live); }; }
+{ const _st267 = stepTrash; stepTrash = function(dt, t){ RT.t267 = t; const r = _st267(dt, t); try { tick267(t); } catch(e){ console.warn(e); } return r; }; }
+// 那台車不在的時候，機器人手上有那一類的東西就先等
+{ const _tp267 = trashPlan; trashPlan = function(kind, W, M, key, getC){ try { const C = getC && getC(), t = simNow53(); if (C && trucksHere65(W.mi, t) && (((C.g || 0) + (C.s || 0) > .01 && away267('g', t)) || ((C.r || 0) > .01 && away267('r', t)))) return null; } catch(e){} return _tp267(kind, W, M, key, getC); }; }
+// 畫一台車：v＝truckLook72 的結果；回傳 { name, frame, k（離停車位多遠 0～1）, flip, lamp（警示燈那一層要不要疊） } 或 null（飛去倒垃圾、畫面外）
+const OPP267 = { sw: 'ne', ne: 'sw', se: 'nw', nw: 'se' }, TURN267 = TL267.turn || [.4, .2];
+// 到站：車頭朝島飛來（k 1 → .4）→ 在停車位外面原地掉頭（.4 → .2）→ 倒車入庫（.2 → 0）
+function arrive267(kind, side, k){ const [a, b] = TURN267, tn = `truck_${kind}_turn_${side}`;
+  if (!ATLAS[tn]) return { name: `truck_${kind}_fly_${side}`, frame: 0, k, flip: false };
+  if (k > a) return { name: `truck_${kind}_fly_${OPP267[side]}`, frame: 0, k: b + (a - b) * .5 + (k - a) * (1 - b - (a - b) * .5) / (1 - a), flip: false };
+  if (k > b){ const u = (a - k) / (a - b), n = ATLAS[tn].frames - 1; return { name: tn, frame: Math.max(0, Math.min(n, Math.round(u * n))), k: b + (k - b) * .5, flip: false }; }
+  return { name: `truck_${kind}_fly_${side}`, frame: 0, k, flip: false }; }
+function truckDraw267(kind, side, v, now){ const kk = kind === 'garbage' ? 'g' : 'r'; if (RT.tk267 !== now){ RT.tk267 = now; try { if (Math.abs(Date.now() - now) < 5000) tick267(now); } catch(e){} }
+  if (!NEWTRK267) return { name: TRK72(kind, side, v), frame: 0, k: v.k, flip: v.out };
+  const a = away267(kk, now), lv = level267(kk), nm = fly => `truck_${kind}_${fly ? 'fly_' : ''}${side}`;
+  if (a && !v.fly){ const el = AWAY267 - (a - now); if (el < TFLY267) return { name: nm(true), frame: LVN267, k: el / TFLY267, flip: false }; if (el > AWAY267 - TFLY267 * 1.6) return arrive267(kind, side, (AWAY267 - el) / (TFLY267 * 1.6)); return null; }
+  if (v.fly && !v.out) return arrive267(kind, side, v.k);
+  return { name: nm(v.fly), frame: lv, k: v.k, flip: false, lamp: !v.fly && !!v.open && Math.floor(now / (TL267.blinkMs || 450)) % 2 === 0 }; }
+// 圖是用到才載入的（IMG[name] 第一次讀才開始載），換圖那一刻新圖還沒載好車子會閃一下：
+// 車子一出現就把這台車會用到的圖全部先讀一次；真的還沒載好就先畫上一張
+function sprTruck267(d, kind, side, x, y){ const last = RT.trk267 || (RT.trk267 = {}), key = kind + ':' + side; let n = d.name, f = d.frame;
+  try { for (const q of [`truck_${kind}_${side}`, `truck_${kind}_fly_${side}`, `truck_${kind}_fly_${OPP267[side]}`, `truck_${kind}_turn_${side}`, `truck_${kind}_lamp_${side}`]) if (ATLAS[q]) void IMG[q];
+    if (IMG[n]) last[key] = [n, f]; else if (last[key] && IMG[last[key][0]]) [n, f] = last[key]; } catch(e){}
+  spr(n, f, x, y, d.flip); if (d.lamp){ const q = `truck_${kind}_lamp_${side}`; if (ATLAS[q]) spr(q, 0, x, y); } }
+// replaces g72 (g66 / g70 still wrap it)
+function drawPad(P, t, now, ghost){
+  const m = padMid(P), c = center(m.x, m.y);
+  if (ghost){ ctx.save(); ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.fillStyle = 'rgba(120,200,255,.18)';
+    for (const [x, y] of padCells(P)){ const q = center(x, y); diamondPath(q.cx, q.cy, .96); ctx.fill(); ctx.stroke(); } ctx.restore(); }
+  drawPadBase65(P, c, ghost);
+  if (ghost) return; const v = truckLook72(P.mi, now); if (!v) return;
+  const [ox, oy] = OUTV34[P.side];
+  const bays = padBays(P).map((b, i) => ({ ...b, kind: i ? 'recycle' : 'garbage' })).sort((a, b) => (a.x + a.y) - (b.x + b.y));
+  for (const b of bays){ const d = truckDraw267(b.kind, P.side, v, now); if (!d) continue; const q = center(b.x, b.y), k = d.k, fly = k * 300, bob = motion ? Math.sin(t * 2 + (b.kind === 'recycle' ? 1.3 : 0)) * (k > 0 ? 1.5 : 0) : 0;
+    sprTruck267(d, b.kind, P.side, q.cx + ox * fly * .9, q.cy + oy * fly * .45 - k * 150 + bob); }
+  if ((trashState().collectUntil || 0) > now){ const ts = truckStop(P.mi); if (ts){ const q = center(ts.x, ts.y); spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, q.cx, q.cy - 4); } }
+}
+drawTrucks = function(M, now, t){
+  const P = S.truckPad; if (P && P.mi === S.cur) return; const v = truckLook72(S.cur, now); if (!v) return; const ts = truckStop(S.cur); if (!ts) return;
+  const c = center(ts.x, ts.y), X = RTE65.besideOffsets || [[96, -4], [76, 46]];
+  [['garbage', 0, 1], ['recycle', 1, -1]].forEach(([kind, i, sg]) => { const d = truckDraw267(kind, 'se', v, now); if (!d) return; const off = d.k * 420, bob = motion && (d.k > 0 || !NEWTRK267) ? Math.sin(t * 2) * 1.5 * sg : 0;
+    sprTruck267(d, kind, 'se', c.cx + X[i][0] + off, c.cy + X[i][1] - off * .3 + bob); });
+  if ((trashState().collectUntil || 0) > now) spr('robot_collector_recycle', motion ? frameOf('robot_collector_recycle', t) : 0, c.cx + 22, c.cy + 6); };
+// 垃圾站面板（玩家 2026-11-15 給的示意圖）：上排「這座垃圾站」＋「下次收運」，中排老鼠＋擴充，下排「收垃圾」（左邊費用表、右邊說明）
+function nextTruck267(mi, now){ const R = routeState65(), hm = t => fmtHM(t);
+  if (trucksHere65(mi, now)) return { here: true, text: '現在在這座島' };
+  if (R && R.day === dayKeyLocal(now) && R.phase !== 'gone' && now >= truckWindowStart(now)){ if (R.phase === 'stay') return { text: `正在「${islName63(R.mi)}」` }; if (R.phase === 'fly') return { text: `飛往「${islName63(R.to)}」` }; }
+  const st = truckWindowStart(now); return { text: now < st && !(R && R.day === dayKeyLocal(now) && R.phase === 'gone') ? `今天 ${hm(st)}` : `明天 ${hm(st)}` }; }
+function truckLine267(now){ const L = tl267(), one = (nm, kk) => { const a = away267(kk, now), q = L['q' + kk] || 0; return `<div class="tl267r"><img src="${IMGSRC['ui_truck_' + (kk === 'g' ? 'garbage' : 'recycle')] || ''}" alt=""><span>${nm}</span>${a ? `<b>裝滿了，飛去倒垃圾，${fmtDur(Math.max(1, (a - now) / 1000))}後回來</b>` : `<div class="tbar tr"><i class="${kk}" style="width:${level267(kk) / LVN267 * 100}%"></i></div><b>貨斗 ${level267(kk)} / ${LVN267}${q > .05 ? `・還有 ${q.toFixed(1)} 袋等著裝` : ''}</b>`}</div>`; };
+  return one('垃圾車', 'g') + one('資源回收車', 'r'); }
+function layoutTrash267(mi, k){ const el = $('modalBody'), sh = document.querySelector('#modal .sheet'); if (!el || el.querySelector('.tg267')) return;
+  const cards = [...el.querySelectorAll(':scope > .pcard')], st = cards.find(c => c.querySelector('.trrow')), info = cards.find(c => c.querySelector('.kv')), box = cards.find(c => c.classList.contains('tbx2543')), rat = cards.find(c => /隻老鼠/.test((c.querySelector('h4') || {}).textContent || ''));
+  if (!st || !info) return; if (sh) sh.classList.add('pg-wide', 'tr267s');
+  const now = Date.now(), N = nextTruck267(mi, now), kv = info.querySelector('.kv'), val = name => { const sp = [...kv.querySelectorAll('span')].find(s => s.textContent.trim() === name); return sp && sp.nextElementSibling ? sp.nextElementSibling.textContent.trim() : ''; };
+  const ic = n => IMGSRC[n] ? `<img class="hi267" src="${IMGSRC[n]}" alt="">` : '';
+  // 下次收運
+  const nx = document.createElement('div'); nx.className = 'pcard nx267';
+  nx.innerHTML = `<div class="nxt267"><div><h4>${ic('ui_cl_calendar')}下次收運</h4><span class="pl267${N.here ? ' on' : ''}">${escapeHTML(N.text)}</span></div><div class="tk267">${ic('ui_truck_garbage')}${ic('ui_truck_recycle')}</div></div>
+    ${N.here ? `<div class="tls267">${truckLine267(now)}</div>` : ''}<div class="ls267"><h4>${ic('ui_cl_calendar')}上次倒垃圾</h4><span class="pl267">${escapeHTML(val('上次倒垃圾') || '—')}</span></div>`;
+  const dump = st.querySelector('#trDump'); if (dump){ const row = dump.closest('.row') || dump; if (N.here){ nx.querySelector('.nxt267 > div').appendChild(row); } else row.remove(); }
+  // 收垃圾：左邊費用表、右邊說明
+  el.querySelectorAll('.trucks2').forEach(q => q.remove());   // g33 把兩張大車圖塞進「第 2 張卡」：有老鼠卡時會跑到「這座垃圾站」裡，全部拿掉
+  const fee = document.createElement('div'); fee.className = 'fee267'; fee.innerHTML = ['一般垃圾', '污水', '資源回收'].map(n => `<span>${n}</span><b>${escapeHTML(val(n).replace(/（隨袋徵收）/, ''))}</b>`).join('');
+  const body = document.createElement('div'); body.className = 'ib267'; kv.before(body); body.appendChild(fee); body.appendChild(kv);
+  const ps = [...info.querySelectorAll(':scope > p.small'), ...st.querySelectorAll(':scope > p.small')];   // 停車場的說明有老鼠卡時也會跑到「這座垃圾站」，一起移到最下面 if (ps.length){ const ft = document.createElement('div'); ft.className = 'ft267'; ps.forEach(p => ft.appendChild(p)); info.appendChild(ft); }
+  // 排版
+  const g = document.createElement('div'); g.className = 'tg267';
+  const r1 = document.createElement('div'); r1.className = 'r1267'; r1.append(st, nx);
+  const r2 = document.createElement('div'); r2.className = 'r2267' + (rat && box ? '' : ' one'); if (rat) r2.append(rat); if (box) r2.append(box);
+  g.append(r1); if (rat || box) g.append(r2); g.append(info);
+  [...el.children].forEach(c => { if (c !== g) g.append(c); }); el.prepend(g); paintIcons(el);
+  // 晚一點才補上的說明（停車場）也移到最下面
+  const tidy = () => { try { const ft = info.querySelector('.ft267') || info.appendChild(Object.assign(document.createElement('div'), { className: 'ft267' })); st.querySelectorAll(':scope > p.small').forEach(p => ft.appendChild(p)); [...g.children].forEach(c => { if (c.matches && c.matches('p.small')) ft.appendChild(c); }); el.querySelectorAll('.trucks2').forEach(q => q.remove()); } catch(e){} };
+  setTimeout(tidy, 0); setTimeout(tidy, 60); }
+// 擴充卡（g106）、老鼠卡是在 microtask 裡補上的：排在它們後面再排版
+{ const _ot267 = openTrash; openTrash = function(mi, k){ const r = _ot267(mi, k); queueMicrotask(() => queueMicrotask(() => { try { layoutTrash267(mi, k); } catch(e){ console.warn(e); } })); return r; }; }
+{ const _om267t = openModal; openModal = function(title, ...a){ try { const sh = document.querySelector('#modal .sheet'); if (sh && title !== '垃圾站') sh.classList.remove('tr267s'); } catch(e){} return _om267t(title, ...a); }; }
+// 車子停著時，面板開著就每秒更新貨斗
+setInterval(() => { try { const el = $('modalBody'), box = el && el.querySelector('.tls267'); if (!box || $('modal').hidden) return; box.innerHTML = truckLine267(Date.now()); } catch(e){} }, 1000);
+{ const st = document.createElement('style'); st.textContent = `
+.tr267s{width:min(1180px,100%)}
+.tg267{display:flex;flex-direction:column;gap:14px}
+.tg267 .r1267{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+.tg267 .r2267{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tg267 .r2267.one{grid-template-columns:1fr}
+.tg267 .pcard h4{display:flex;align-items:center;gap:10px;font-size:19px;margin:0}
+.tg267 .pcard h4 img,.tg267 .hi267{width:34px;height:34px;object-fit:contain}
+.tg267 .trrow{grid-template-columns:30px 92px 1fr auto;gap:12px;font-size:17px;margin:8px 0}.tg267 .trrow img{width:28px;height:28px}.tg267 .trrow b{font-size:18px;font-variant-numeric:tabular-nums}
+.tg267 .tbar.tr{height:12px;border-radius:6px}
+.nx267{justify-content:space-between}
+.nxt267{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.nxt267>div:first-child{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.pl267{display:inline-block;padding:6px 18px;border-radius:12px;background:rgba(80,120,170,.28);font-weight:800;font-size:22px}.pl267.on{background:rgba(70,170,90,.35)}
+.ls267 .pl267{font-size:17px;padding:4px 14px}
+.tk267{display:flex;gap:8px}.tk267 .hi267{width:84px;height:84px}
+.ls267{display:flex;align-items:center;gap:18px;border-top:1px solid var(--gline);padding-top:12px;margin-top:4px}
+.tls267{display:flex;flex-direction:column;gap:4px}.tl267r{display:grid;grid-template-columns:28px 86px 1fr auto;gap:10px;align-items:center;font-size:15px}.tl267r img{width:28px;height:28px}.tl267r b{white-space:nowrap}.tl267r>b:nth-child(3){grid-column:3 / 5;white-space:normal}
+.ib267{display:grid;grid-template-columns:minmax(220px,.75fr) 1.8fr;gap:22px;align-items:start}
+.fee267{display:grid;grid-template-columns:auto 1fr;border:1px solid var(--gline);border-radius:14px;overflow:hidden}
+.fee267 span,.fee267 b{padding:12px 16px;border-bottom:1px solid var(--gline);font-size:17px}.fee267 span{border-right:1px solid var(--gline);font-weight:700}.fee267 :nth-last-child(-n+2){border-bottom:0}
+.ib267 .kv{border-left:1px solid var(--gline);padding-left:22px;font-size:16px;row-gap:6px}
+.ft267{border-top:1px solid var(--gline);padding-top:10px;margin-top:6px}.ft267 p.small{margin:4px 0;font-size:14px}
+body.m-port .tg267 .r1267,body.m-port .tg267 .r2267,body.m-port .ib267{grid-template-columns:1fr}body.m-port .ib267 .kv{border-left:0;padding-left:0}
+body.m-port .tg267 .trrow{grid-template-columns:26px 72px 1fr auto;font-size:15px;gap:8px}body.m-port .tg267 .trrow b{font-size:15px}body.m-port .tk267 .hi267{width:60px;height:60px}body.m-port .pl267{font-size:18px}
+body.m-port .fee267 span,body.m-port .fee267 b{padding:9px 12px;font-size:15px}
+`; document.head.appendChild(st); }
+
+/* ---------- 舊存檔 ---------- */
+{ const _ns267 = normalizeState; normalizeState = function(d){ const r = _ns267(d); const s = r || d;
+  try { if (s && !s.v267){ s.v267 = 1; for (const M of s.maps || []) for (const k in (M.tiles || {})){ const T = M.tiles[k]; if (T && T.t === 'device' && T.id === 'bug_box' && T.bx){ if (!Array.isArray(T.bx.list)) T.bx.list = []; for (const m of T.bx.list) if (!m.sp) m.sp = T.bx.sp || 'tw_rhino'; } }
+      if (s.bug261 && (!s.bug261.nst || typeof s.bug261.nst !== 'object')) s.bug261.nst = {}; } } catch(e){ console.warn(e); }
+  return r; }; }
+window.__farm267 = { NEWTRK267, tl: () => tl267(), tick267, level267, away267: (k, t) => away267(k, t), capOf267, payLoad: (...a) => payLoad(...a), truckDraw267, arrive267, keepNym267, nymSpot267, nst: () => nst267(), catchAsk61: (...a) => catchAsk61(...a),
+  fixBox267, pairSp267, moveBug267, stepBox61: (...a) => stepBox61(...a), startPair61: (...a) => startPair61(...a), boxOk61: (...a) => boxOk61(...a), bestBox61: (...a) => bestBox61(...a), openBox61: (...a) => openBox61(...a), boxes61: () => boxes61(),
+  placeBox61: (...a) => placeBox61(...a), act: (x, y) => act(x, y), normalizeState: d => normalizeState(d) };
 
   })(CFG, ATLAS_JSON);
 })();

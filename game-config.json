@@ -1,7 +1,7 @@
 {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.66",
+  "configVersion": "2.67",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -9940,9 +9940,9 @@
    "garbageTruck": "飛天垃圾車 (general + sewage)",
    "recycleTruck": "飛天資源回收車 (recycle)",
    "art": {
-    "garbage": "player art: yellow hover truck (45°)",
-    "recycle": "player art: white hover truck with 4-colour sorting labels (45°)",
-    "panel": "player side views"
+    "garbage": "Claude 畫（batch83）：開放式貨斗的飛天貨車，白＋黃",
+    "recycle": "Claude 畫（batch83）：開放式貨斗的飛天貨車，白＋綠",
+    "panel": "batch83 ui_pg_truck_*"
    }
   },
   "fees": {
@@ -9992,6 +9992,13 @@
     "3": 10
    },
    "note257": "v2.57：每座島停留分鐘依島的數量 stayByIslands（沒列到的用最大那一項，3 座以上都是 10 分）；singleIslandMinutes／stayMinutes 只是舊的備用值"
+  },
+  "truckLoad267": {
+   "levels": 10,
+   "awaySeconds": 60,
+   "flySeconds": 8,
+   "sewagePerBag": 40,
+   "note": "v2.67：貨斗分 levels 級；一車的量＝一座垃圾站的基本容量（buildings.trash_station.capacity 的 general／recycle；污水 sewagePerBag 滴算 1 袋，裝在垃圾車）。倒垃圾機器人／資源回收機器人每回來倒一次（或玩家手動倒、逾期代收），那台車的貨斗就多一些；裝滿那台車飛走倒光，awaySeconds 秒後回來繼續收（飛出去、飛回來各 flySeconds 秒），這段時間機器人手上有那一類的東西先等；停靠時間到了還在外面就不再回來。要改一車的量可以加 cap: { g: 袋, r: 袋 }"
   }
  },
  "consumables": {
@@ -15835,7 +15842,7 @@
    "level": 12,
    "cost": 2000,
    "cap": 6,
-   "oneSpecies": true,
+   "oneSpecies": false,
    "noDragonfly": true,
    "food": {
     "item": "bug_jelly",
@@ -15864,7 +15871,13 @@
     "canPair": "heart",
     "dead": "specimen"
    },
-   "note": "一箱一種、最多 cap 隻（卵＋幼蟲＋蛹＋成蟲）；每箱每天吃 1 個昆蟲果凍（倉庫自動扣），沒有就停止成長、成蟲壽命照算；糞金龜改吃 1 坨糞便；螢火蟲的箱子要在河邊 3 格內。面板：觀察窗（側面剖面、成蟲 walk／idle、幼蟲蠕動、螢火蟲晚上發光）、點單隻小卡、6 格清單、果凍狀態、按鈕（放幼蟲、配對、放生、撿標本、收回倉庫）"
+   "note": "可以混養、最多 cap 隻（卵＋幼蟲＋蛹＋成蟲）；見 mixed267。每箱每天吃 1 個昆蟲果凍（倉庫自動扣），沒有就停止成長、成蟲壽命照算；糞金龜改吃 1 坨糞便；螢火蟲的箱子要在河邊 3 格內。面板：觀察窗（側面剖面、成蟲 walk／idle、幼蟲蠕動、螢火蟲晚上發光）、點單隻小卡、6 格清單、果凍狀態、按鈕（放幼蟲、配對、放生、撿標本、收回倉庫）",
+   "mixed267": {
+    "on": true,
+    "pairSameSpeciesAdults": 2,
+    "swapBox": true,
+    "note": "v2.67：一箱 cap 隻不限種類（糞金龜也可以同箱），每隻記自己的種類；飼料各吃各的（這箱有吃果凍的每天扣 1 個果凍、有糞金龜每天扣 1 坨糞便，沒吃到的那一類不長）；同一種有 2 隻成蟲才能配對，卵是那一種；面板點一隻可以「換箱」到別的有空位的飼育箱"
+   }
   },
   "effects": {
    "lady": {
@@ -15918,7 +15931,14 @@
     "nymph": "dfly_nymph",
     "emerge": "dfly_emerge"
    },
-   "note": "水蠆放進魚池（佔一隻魚的位置）或河格（一格一隻），2 天後爬上岸羽化（共用一組圖）；死前 30% 在範圍內的魚池／河格留 1 隻同種水蠆"
+   "note": "水蠆放進魚池（佔一隻魚的位置）或河格（一格一隻），2 天後爬上岸羽化（共用一組圖）；死前 30% 在範圍內的魚池／河格留 1 隻同種水蠆",
+   "catch267": {
+    "keepNymph": true,
+    "free": true,
+    "whenFull": "storage",
+    "note": "v2.67：抓到蜻蜓不顯示「放進飼育箱」，改成免費「養水蠆」：在這座島最近的魚池空格／河格放 1 隻同種水蠆；都沒有空位就收進倉庫「撈網與河鮮」（存檔 bug261.nst），之後在「昆蟲 · 蜻蜓」選那一種先用倉庫的（免費）"
+   },
+   "mapSize267": "整隻寬 12～17 世界 px（原本 23～34 的一半），art/v264_79.py"
   }
  },
  "owls262": {
