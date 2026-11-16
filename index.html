@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.67-f45aa956bf'), getJSON('sprites/atlas.json?v=2.67-f45aa956bf')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.67-e199fb48b4'), getJSON('sprites/atlas.json?v=2.67-e199fb48b4')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -10959,20 +10959,24 @@ const robotLine53 = (k, o) => { const r = x => Math.round(x * 10) / 10, mo = m =
   switch (k){
     case 'water': return o.tiles ? `澆了 ${fmtN(o.tiles)} 格` : '';
     case 'feed': return o.n ? `餵了 ${fmtN(o.n)} 次` : '';
-    case 'sweep': return o.tiles || o.sewage ? `清了 ${fmtN(o.tiles || 0)} 格（雜草 ${fmtN(o.weeds || 0)}、垃圾 ${fmtN(o.trash || 0)}）${o.sewage > .5 ? `，產生污水 ${fmtN(Math.round(o.sewage))} 滴` : ''}` : '';
+    case 'sweep': { if (!o.tiles && !(o.sewage > .5)) return ''; const sw = o.sewage > .5 ? `產生污水 ${fmtN(Math.round(o.sewage))} 滴` : '';   // v2.68：0 的項目不寫；什麼都沒清到就說很乾淨（玩家 2026-11-16）
+      if (!o.tiles) return `巡了一圈，很乾淨，沒發現雜草或垃圾${sw ? `（洗地仍${sw}）` : ''}`;
+      const parts = [o.weeds ? `雜草 ${fmtN(o.weeds)}` : '', o.trash ? `垃圾 ${fmtN(o.trash)}` : ''].filter(Boolean);
+      return `清了 ${fmtN(o.tiles)} 格${parts.length ? `（${parts.join('、')}）` : ''}${sw ? `，${sw}` : ''}`; }
     case 'wellbot': return o.drops ? `運了 ${fmtN(Math.round(o.drops))} 滴水進水塔` : '';
     case 'snow': return o.tiles ? `鏟了 ${fmtN(o.tiles)} 格雪` : '';
     case 'poop': return o.n ? `撿了 ${fmtN(o.n)} 坨糞便` : '';
     case 'honey': return o.jars ? `採了 ${fmtN(o.jars)} 罐蜂蜜` : '';
-    case 'trashbot': return o.bags || o.sewage ? `倒了 ${r(o.bags || 0)} 袋一般垃圾${o.sewage > .5 ? `、污水 ${fmtN(Math.round(o.sewage))} 滴` : ''}，${mo(o.money || 0)}` : '';
+    case 'trashbot': { const b = r(o.bags || 0), sw = o.sewage > .5 ? `污水 ${fmtN(Math.round(o.sewage))} 滴` : ''; if (!b && !sw) return '';
+      return `倒了${[b ? ` ${b} 袋一般垃圾` : '', sw].filter(Boolean).join('、')}${Math.round(o.money || 0) ? `，${mo(o.money)}` : ''}`; }
     case 'recyclebot': return o.bags ? `回收 ${r(o.bags)} 袋，${mo(o.money || 0)}` : '';
   } return ''; };
 { const _ni53 = newsItems; newsItems = function(list){ const out = _ni53(list), add = [];
   for (const n of list.filter(x => x.kind === 'robots53')){
-    for (const kind of Object.keys(n.L)){ const s = robotLine53(kind, n.L[kind]); if (s) add.push({ icon: R_ICON[kind], text: `${KIND_NAME(kind)}：${s}` }); }
+    for (const kind of Object.keys(n.L)){ const s = robotLine53(kind, n.L[kind]); if (s) add.push({ icon: R_ICON[kind], text: `${KIND_NAME(kind)}：${s}`, grp53: 'c' }); }
     const seen = new Set(); for (const s of n.stall){ const key = s.kind + s.why; if (seen.has(key)) continue; seen.add(key);
-      add.push({ icon: R_ICON[s.kind], text: `${KIND_NAME(s.kind)}${s.why === 'part' ? '缺耗材，停工中（倉庫補耗材後會自己換）' : '沒電躺著，停工中'}` }); } }
-  if (add.length) add.unshift({ icon: 'ui_news', text: '<b>機器人做了什麼</b>' });
+      add.push({ icon: R_ICON[s.kind], text: `${KIND_NAME(s.kind)}${s.why === 'part' ? '缺耗材，停工中（倉庫補耗材後會自己換）' : '沒電躺著，停工中'}`, grp53: 'c' }); } }
+  if (add.length) add.unshift({ icon: 'ui_news', text: '<b>機器人做了什麼</b>', grp53: 'h' });   // v2.68：grp53 給 g124 併成一張卡
   return out.concat(add); }; }
 
 /* ---------- 2. sweeper start threshold; robots of the same kind take turns ---------- */
@@ -14479,7 +14483,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.67-f45aa956bf';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.67-e199fb48b4';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -25232,6 +25236,413 @@ body.m-port .fee267 span,body.m-port .fee267 b{padding:9px 12px;font-size:15px}
 window.__farm267 = { NEWTRK267, tl: () => tl267(), tick267, level267, away267: (k, t) => away267(k, t), capOf267, payLoad: (...a) => payLoad(...a), truckDraw267, arrive267, keepNym267, nymSpot267, nst: () => nst267(), catchAsk61: (...a) => catchAsk61(...a),
   fixBox267, pairSp267, moveBug267, stepBox61: (...a) => stepBox61(...a), startPair61: (...a) => startPair61(...a), boxOk61: (...a) => boxOk61(...a), bestBox61: (...a) => bestBox61(...a), openBox61: (...a) => openBox61(...a), boxes61: () => boxes61(),
   placeBox61: (...a) => placeBox61(...a), act: (x, y) => act(x, y), normalizeState: d => normalizeState(d) };
+
+/* ===== 124. v2.68（玩家 2026-11-16）=====
+   1. 剷除工具點到有作物（或花苗）的田：跳小選單「只移除作物（田留著）／整個移除」
+   2. 飼育箱：「新增幼蟲」按了沒放進去（g47 購買確認先空跑一次，空跑時面板重畫、按鈕換新，真的要買時找不到原本的按鈕 →「請再按一次」）；
+      面板照玩家的圖重新排版（左邊玩家畫的箱子＋右邊清單／詳細，下方果凍、配對、新增幼蟲；手機直拿上下排），箱子底圖 batch84 `ui_pg_bugbox_wide|tall`
+   3. 選項列的貓頭鷹：已經養的隻數被寫成「倉庫還有 n」→ 拿掉（其他動物也不顯示已養幾隻）
+   4. 伐木／採礦／整地機器人：建材小屋、小森林、礦山（含水晶礦）、土丘的面板也看得到對應機器人的狀態，按鈕直接開機器人面板（買／租／升級）
+   5. 圖鑑的昆蟲圖：原本照 28px 小圖示畫再放大成 84px，看起來糊 → 照顯示大小重畫（320 的大圖）
+   6. 農產倉庫「肉」的分類圖換成玩家的圖 `ui_pg_st_meat` ===== */
+
+/* ---------- 1. 剷除：田上有作物先問；溫室格的選單多「田地」、作物用作物自己的圖；溫室棚、生長燈一律收回倉庫 ---------- */
+const plantName268 = T => T.crop ? ((CFG.crops[T.crop.id] || {}).name || '作物') : T.flower ? (((typeof FL !== 'undefined' && FL[T.flower.id]) || (CFG.flowers || {})[T.flower.id] || {}).name || '花苗') : '';
+function plantIcon268(T){ if (T.crop){ const [n, f] = itemSprite('crop', T.crop.id); return ATLAS[n] ? [n, f] : null; }
+  if (T.flower){ const n = `flower_${T.flower.id}_bloom`; return ATLAS[n] ? [n, 0] : null; } return null; }
+const SOIL268 = ['ground_soil22_m2', 'ground_soil_m2_idle'].find(n => ATLAS[n]);
+const icCv268 = ic => ic ? `<canvas data-spr="${ic[0]}" data-f="${ic[1] || 0}" class="ico"></canvas>` : '';
+// 只移除作物（田留著）
+function rmPlant268(M, k, x, y){ const T = M.tiles[k], { cx, cy } = center(x, y); if (!T || T.t !== 'soil') return; const what = plantName268(T);
+  T.crop = null; if (T.flower) delete T.flower; floatText(cx, cy - 20, `已移除${what}`, '#8a5d36', 11); sfx('click'); RT.decoVer++; afterAction(); }
+// 作物和田一起剷掉（溫室棚留著）
+function rmSoil268(M, k, x, y){ const gl = M.glass && M.glass[k], np = RT.noPick53; if (gl) delete M.glass[k]; RT.rm268 = true; RT.noPick53 = true;
+  try { act(x, y); } finally { RT.rm268 = false; RT.noPick53 = np; if (gl && !M.glass[k]) M.glass[k] = gl; } }
+function rmCropMenu268(M, x, y){ const k = tkey(x, y), T = M.tiles[k], { cx, cy } = center(x, y); if (!T || T.t !== 'soil' || !(T.crop || T.flower)) return false;
+  const what = plantName268(T), one = T.crop ? '作物' : '花苗';
+  showPop53(cx, cy - 30, `<h5>這格田種著${escapeHTML(what)}</h5>
+    <button data-rm268="crop" class="rm268">${icCv268(plantIcon268(T))}<span><b>只移除${escapeHTML(what)}</b><small>田留著，可以直接再播種</small></span></button>
+    <button data-rm268="all" class="rm268">${icCv268(SOIL268 ? [SOIL268, 0] : null)}<span><b>整個移除</b><small>${one}和田一起剷掉，變回草地</small></span></button>`);
+  try { paintIcons(POP53); } catch(e){}
+  POP53.querySelectorAll('[data-rm268]').forEach(b => b.onclick = () => { const v = b.dataset.rm268; closePop53(); if (M.tiles[k] !== T) return; if (v === 'crop') rmPlant268(M, k, x, y); else rmSoil268(M, k, x, y); });
+  return true; }
+{ const _a268 = act; act = function(x, y){
+  try { if (S && !UI.expand && !RT.rm268 && !RT.pass47 && !RT.dry47 && S.sel.tool === 'remove' && !(RT.mv || RT.gmv || RT.mv254 || RT.mv246 || RT.mv247)){ const M = curMap();
+      if (inMap(M, x, y)){ const k = tkey(x, y), T = M.tiles[k], glass = !RT.noPick53 && M.glass && M.glass[k], edges = typeof efOf254 === 'function' && efOf254(M, x, y).length;
+        if (T && T.t === 'soil' && (T.crop || T.flower) && !glass && !edges && rmCropMenu268(M, x, y)) return; } } } catch(e){ console.warn(e); }
+  return _a268(x, y); }; }
+// 溫室格的「要剷除哪一個？」：作物用自己的圖、只移除作物；多一個「田地」（作物和田一起剷）
+{ const _gc268 = glassChoose53; glassChoose53 = function(M, k, x, y, T, tool){ const r = _gc268(M, k, x, y, T, tool);
+  try { if (!r || POP53.hidden) return r; const ob = POP53.querySelector('[data-p53="obj"]'), plant = T && T.t === 'soil' && (T.crop || T.flower);
+    if (ob && T){ const ic = T.t === 'soil' ? plantIcon268(T) : T.t === 'tree' ? [`tree_${T.id}_fruiting_sway`, 0] : null, im = ob.querySelector('img');
+      if (ic && ATLAS[ic[0]] && im){ im.insertAdjacentHTML('beforebegin', icCv268(ic)); im.remove(); }
+      if (T.t === 'soil' && !plant && tool === 'remove') ob.lastChild.textContent = '田地';
+      if (plant) ob.lastChild.textContent = `${T.crop ? '作物' : '花苗'}（${plantName268(T)}）`; }
+    if (tool === 'remove' && plant && ob){ ob.onclick = () => { closePop53(); rmPlant268(M, k, x, y); };
+      ob.insertAdjacentHTML('afterend', `<button data-p53="soil268">${icCv268(SOIL268 ? [SOIL268, 0] : null)}田地（${T.crop ? '作物' : '花苗'}一起剷掉）</button>`);
+      const sb = POP53.querySelector('[data-p53="soil268"]'); sb.onpointerenter = () => { if (RT.pick53) RT.pick53.hl = 'obj'; }; sb.onclick = () => { closePop53(); rmSoil268(M, k, x, y); }; }
+    POP53.querySelectorAll('[data-p53] canvas').forEach(c => { c.style.width = '26px'; c.style.height = '26px'; c.style.flex = '0 0 26px'; });
+    paintIcons(POP53); } catch(e){ console.warn(e); }
+  return r; }; }
+// 溫室棚：剷除＝收回倉庫（S.buildStore.greenhouse），蓋的時候倉庫有就免費拿出來
+sellGlass = function(M, k, cx, cy){ if (!M.glass || !M.glass[k]) return; delete M.glass[k]; S.buildStore.greenhouse = (S.buildStore.greenhouse || 0) + 1;
+  floatText(cx, cy - 24, '溫室收進倉庫', '#2f7fa8', 11); sfx('place'); RT.decoVer++; RT.regionsAt = 0; };
+{ const _pg268 = placeGlass; placeGlass = function(M, k, T, cx, cy){ const st = S.buildStore.greenhouse || 0; if (!st) return _pg268(M, k, T, cx, cy);
+  const had = !!(M.glass && M.glass[k]), sp = spend; spend = () => true; try { _pg268(M, k, T, cx, cy); } finally { spend = sp; }
+  if (!had && M.glass && M.glass[k]){ S.buildStore.greenhouse = st - 1; floatText(cx, cy - 44, '從倉庫拿出（免費）', '#2f7fa8', 10); } }; }
+{ const _gd268 = glassDo53; glassDo53 = function(M, k, x, y, what, tool){ if (what === 'glass' && tool === 'store'){ const c = center(x, y); sellGlass(M, k, c.cx, c.cy); afterAction(); UIbuildTray(); return; } return _gd268(M, k, x, y, what, tool); }; }
+// 溫室生長燈：剷除＝收回倉庫
+sellGhLamp53 = function(M, k, silent){ const T = ghlAt53(M, k); if (!T) return 0; delete M.ghl[k]; S.buildStore[GHL53] = (S.buildStore[GHL53] || 0) + 1; RT.decoVer++;
+  if (!silent){ try { const [x, y] = pkey(k), c = center(x, y); floatText(c.cx, c.cy - 30, '收進倉庫', '#2f7fa8', 11); } catch(e){} } return 0; };
+{ const _ut268g = UIbuildTray; UIbuildTray = function(){ const r = _ut268g();
+  try { const n = (S && S.buildStore && S.buildStore.greenhouse) || 0, el = n && document.querySelector('#tray .item[data-id="greenhouse"]'); if (el && !el.querySelector('small.gh268')){
+      const sm = document.createElement('small'); sm.className = 'st51 gh268'; sm.textContent = `倉庫還有 ${fmtN(n)} 格（免費）`; const b = el.querySelector(':scope > b'); if (b) b.insertAdjacentElement('afterend', sm); } } catch(e){}
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+#pick53 .rm268{display:flex;align-items:center;gap:10px;text-align:left;width:100%}#pick53 .rm268 canvas{width:40px;height:40px;flex:0 0 40px}
+#pick53 .rm268 span{display:flex;flex-direction:column;gap:1px}#pick53 .rm268 small{opacity:.72;font-size:12px;font-weight:400}
+`; document.head.appendChild(st); }
+
+/* ---------- 2a. 購買確認重播：按鈕被重畫過就找同 id 的新按鈕（飼育箱「新增幼蟲」、其他面板一樣） ---------- */
+// g47 的監聽（document capture）是匿名的，包不到。面板按鈕自己避免空跑時重畫（見 2b）；另外補一層保險：
+// window capture 比 document 早，先記下按的是哪個 id 的按鈕；「請再按一次」出現時，同 id 的新按鈕還在就直接幫玩家再按一次。
+{ const _t268 = toast; toast = function(msg, ...a){ try { if (msg === '請再按一次' && RT.lastBtn268 && Date.now() - RT.lastBtn268.t < 1500){ const b = document.getElementById(RT.lastBtn268.id); RT.lastBtn268 = null;
+      if (b && !b.disabled){ RT.pass47 = true; try { b.click(); } finally { RT.pass47 = false; } return; } } } catch(e){} return _t268(msg, ...a); }; }
+window.addEventListener('click', e => { try { const b = e.target.closest && e.target.closest('#modal button[id]'); if (b) RT.lastBtn268 = { id: b.id, t: Date.now() }; } catch(err){} }, true);
+
+/* ---------- 2b. 飼育箱新版面 ---------- */
+const BXI268 = { wide: 'ui_pg_bugbox_wide', tall: 'ui_pg_bugbox_tall' };
+const tall268 = () => window.innerWidth <= 760 && window.innerHeight > window.innerWidth;
+function stLeft268(m){ const dur = m.st === 'adult' ? lifeMs61(m.sp) / DAYMS : stageDays61(m.sp, m.st), v = m.st === 'adult' ? (m.life || 0) : (m.p || 0);
+  return { pct: Math.max(0, Math.min(100, v / dur * 100)), left: Math.max(0, (dur - v) * DAYMS / 1000) }; }
+// 幼蟲、蛹的精靈圖在 160 的格子裡只佔一小塊：照不透明範圍裁切再放大（file:// 讀不到像素就照舊畫）
+const BB268 = {};
+function bbOf268(name){ if (BB268[name] !== undefined) return BB268[name]; const a = ATLAS[name], im = IMG[name]; if (!a || !im || !im.complete || !im.naturalWidth) return null;
+  let bb = null; try { const t = document.createElement('canvas'); t.width = a.frameWidth; t.height = a.frameHeight; const tg = t.getContext('2d'); tg.drawImage(im, a.sx || 0, a.sy || 0, a.frameWidth, a.frameHeight, 0, 0, a.frameWidth, a.frameHeight);
+    const d = tg.getImageData(0, 0, t.width, t.height).data; let x0 = t.width, y0 = t.height, x1 = -1, y1 = -1;
+    for (let y = 0; y < t.height; y++) for (let x = 0; x < t.width; x++) if (d[(y * t.width + x) * 4 + 3] > 8){ if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    if (x1 >= x0) bb = [x0, y0, x1 + 1, y1 + 1]; } catch(e){}
+  return (BB268[name] = bb); }
+function paintFit268(c, name, size){ const a = ATLAS[name], im = IMG[name];
+  if (!a || a.trim || /^ui_/.test(name)) return paintInto75(c, name, 0, size);
+  if (!im || !im.complete || !im.naturalWidth){ paintInto75(c, name, 0, size); if (im && !im.complete) im.addEventListener('load', () => { if (c.isConnected) paintFit268(c, name, size); }, { once: true }); return; }
+  const bb = bbOf268(name);
+  if (!bb) return paintInto75(c, name, 0, size);
+  const r = Math.min(2, window.devicePixelRatio || 1), B = Math.round(size * r), cw = bb[2] - bb[0], ch = bb[3] - bb[1], s = Math.min(B * .84 / cw, B * .84 / ch), w = cw * s, h = ch * s, g = c.getContext('2d');
+  c.width = B; c.height = B; g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high'; g.drawImage(im, (a.sx || 0) + bb[0], (a.sy || 0) + bb[1], cw, ch, (B - w) / 2, B * .92 - h, w, h); }
+renderBox61 = function(el, M, k){
+  const T = M.tiles[k]; if (!isBox61(T)){ el.innerHTML = '<p>這個飼育箱已經不在了。</p>'; return; }
+  const X = fixBox267(T.bx || (T.bx = { list: [], dead: [] })), now = Date.now(), today = dayNo40(now), pair = BOX61.pair || {}, need = pair.minAdults || 2, cap = boxCap61();
+  const pick = X.list.find(q => q.id === X.pick) || X.list[0] || null, kinds = [...new Set(X.list.map(m => m.sp))];
+  const sp = pick ? pick.sp : X.sp, D = SP61[sp] || {}, o = adultsBy267(X), psp = pairSp267(X), tot = Object.values(o).reduce((a, b) => a + b, 0);
+  const title = !X.list.length ? '空的飼育箱' : kinds.length === 1 ? spName61(kinds[0]) : `混養 ${kinds.length} 種`;
+  let h = `<div class="bx268"><div class="tk268"><canvas id="ob61"></canvas>${!X.list.length && !(X.dead || []).length ? '<p class="emp268">空箱：在「昆蟲 · 甲蟲」選幼蟲再點這個箱子，或把野外抓到的放進來（可以混養）</p>' : ''}</div>
+    <div class="sd268"><div class="hd268"><b>${escapeHTML(title)}</b><span>${X.list.length} / ${cap} 隻</span></div><div class="sl268">`;
+  for (let i = 0; i < cap; i++){ const m = X.list[i];
+    if (!m){ h += '<div class="e268"></div>'; continue; }
+    const { pct } = stLeft268(m), n = m.st === 'egg' ? `ui_bug_${m.sp}` : bugImg61(m.sp, m.st, true);
+    h += `<button class="m268 ${pick === m ? 'on' : ''} ${m.st === 'egg' ? 'eg' : ''}" data-m268="${m.id}" title="${escapeHTML(spName61(m.sp))}・${STN61[m.st]}">${n && ATLAS[n] ? `<canvas data-ic268="${n}"></canvas>` : '<i class="egg61"></i>'}<small>${escapeHTML(spName61(m.sp))}</small><span class="pb268 ${m.st === 'adult' ? 'life' : ''}"><i style="width:${pct.toFixed(0)}%"></i></span></button>`; }
+  h += '</div>';
+  // 選到的那隻
+  const foods = [...new Set(X.list.map(m => foodOf267(m.sp)))], ok = (X.fedF && X.fedF.d === today && X.fedF.ok) || {};
+  if (pick){ const { left } = stLeft268(pick), fed = !!ok[foodOf267(pick.sp)], n = pick.st === 'egg' ? `ui_bug_${pick.sp}` : bugImg61(pick.sp, pick.st, true);
+    h += `<div class="dt268"><span class="ic268">${n && ATLAS[n] ? `<canvas data-ic268="${n}" class="${pick.st === 'egg' ? 'eg' : ''}"></canvas>` : '<i class="egg61"></i>'}</span><div><b>${STN61[pick.st]}</b><small>${escapeHTML(spName61(pick.sp))}</small>
+      <span>${pick.st === 'adult' ? `還能活 ${fmtDur(left)}` : `再 ${fmtDur(left)}變成${STN61[STG61[STG61.indexOf(pick.st) + 1]]}${fed ? '' : '（沒吃的時候不長）'}`}</span></div></div>`; }
+  else h += `<div class="dt268 none"><div><b>還沒有昆蟲</b><span>放幼蟲或野外抓到的進來</span></div></div>`;
+  const others = pick ? boxes61().filter(b => b.T !== T && !boxOk61(b, pick.sp)) : [];
+  h += `<div class="ac268"><button class="btn ghost" id="bR61" ${pick && pick.st === 'adult' ? '' : 'disabled'} title="${pick && pick.st !== 'adult' ? '只有成蟲可以放生' : ''}">放生</button><button class="btn ghost" id="bM267" ${pick && others.length ? '' : 'disabled'}>換箱</button></div><div id="mv267" hidden></div></div>`;
+  // 下方：飼料、配對、新增幼蟲
+  const F = foods.length ? foods : ['bug_jelly'];
+  h += `<div class="ft268"><div class="fd268">${F.map(f => { const has = X.list.length && foods.includes(f);
+      return `<div class="fr268"><span class="ic268">${f === 'bug_jelly' && IMGSRC.ui_pg_jelly268 ? `<img src="${IMGSRC.ui_pg_jelly268}" alt="">` : itemIconHTML(f)}</span><b>${escapeHTML(foodName267(f))}</b>${has ? `<span class="pl268 ${ok[f] ? 'ok' : 'no'}">${ok[f] ? '今天吃過了' : '沒得吃，停止成長'}</span>` : ''}<span class="pl268">倉庫 ${fmtN(S.inv[f] || 0)} ${f === 'poop' ? '坨' : '個'}</span></div>`; }).join('')}</div>`;
+  const pairTxt = X.pair ? `配對中・${fmtDur((X.pair - now) / 1000)}後生卵` : X.pairCd && now < X.pairCd ? `剛配對過・${fmtDur((X.pairCd - now) / 1000)}後` : `配對${psp ? `（${escapeHTML(spName61(pick && o[pick.sp] >= need ? pick.sp : psp))}）` : ''}`;
+  const [bx0, by0] = pkey(k), why = sp ? boxOk61({ M, mi: S.maps.indexOf(M), k, x: bx0, y: by0, T }, sp) : null, larvaOk = sp && known61(sp) && X.list.length < cap && !why, cost = sp ? (rar61(sp).larvaCost || 40) : 40;
+  h += `<button class="btn pr268" id="bP61" ${canPair61(X) ? '' : 'disabled'}>${pairTxt}</button>
+    <button class="btn by268 ${(D.name || '').length > 6 ? 'long' : ''}" id="bL61" ${larvaOk ? '' : 'disabled'} title="${sp ? '' : '空箱：在「昆蟲 · 甲蟲」選幼蟲再點箱子'}"><span>${sp ? `新增${escapeHTML(D.name || '')}幼蟲` : '新增幼蟲'}</span><em>${coinImg()}${fmtN(cost)}</em></button></div>`;
+  RT.larva268 = sp ? { sp, n: X.list.length } : null;
+  const notes = [];
+  if (tot && !psp && !X.pair) notes.push(`<b>同一種要有 ${need} 隻成蟲才能配對</b>：現在是 ${Object.keys(o).map(q => `${escapeHTML(spName61(q))} ${o[q]} 隻`).join('、')}。`);
+  if (sp && why && X.list.length < cap) notes.push(`<b>不能再放${escapeHTML(D.name || '')}幼蟲</b>：${escapeHTML(why)}。`);
+  if (sp && !known61(sp)) notes.push(`${escapeHTML(D.name || '')}還沒登記進圖鑑（野外抓到過才能買幼蟲）。`);
+  if (X.list.some(m => grp61(m.sp) === 'firefly')) notes.push(`螢火蟲的飼育箱要在河邊 ${BOX61.fireflyNearRiver || 3} 格內；晚上看箱子會發光。`);
+  notes.push(`可以混養；配對要同一種 ${need} 隻以上成蟲，${pair.days ?? 1} 天後生 ${(pair.eggs || [2, 4]).join('～')} 顆卵（裝不下的不生）。點昆蟲看狀態${(X.dead || []).length ? '；點翻肚的那隻撿起來做成標本' : ''}。飼育箱清空後才能收回倉庫。`);
+  h += `<div class="nt268">${notes.map(n => `<p>${n}</p>`).join('')}</div></div>`;
+  el.innerHTML = h; el.classList.add('bug61'); el.classList.remove('bx66');
+  el.querySelectorAll('canvas[data-ic268]').forEach(c => paintFit268(c, c.dataset.ic268, c.closest('.dt268') ? 96 : 64));
+  paintIcons(el.querySelector('.ft268'));
+  const rr = () => renderBox61(el, M, k);
+  el.querySelectorAll('[data-m268]').forEach(b => b.onclick = () => { X.pick = b.dataset.m268; rr(); });
+  // 新增幼蟲：只有真的放進去才重畫（購買確認會先空跑一次，空跑時重畫會把按鈕換掉，確認後就找不到原本的按鈕）
+  const L = el.querySelector('#bL61'); if (L) L.onclick = () => { if (!sp) return; const [x, y] = pkey(k), c = center(x, y), n0 = X.list.length; addLarva61(M, k, T, sp, c.cx, c.cy);
+    if (X.list.length > n0){ X.list[X.list.length - 1].sp = sp; fixBox267(X); afterAction(); rr(); } };
+  const Pb = el.querySelector('#bP61'); if (Pb) Pb.onclick = () => { const want = pick && o[pick.sp] >= need ? pick.sp : psp; if (startPair61(T, want)){ toast(`${spName61(X.pairSp)}開始配對，${pair.days ?? 1} 天後生卵`, true, 2600); sfx('place'); afterAction(); rr(); } };
+  const Rb = el.querySelector('#bR61'); if (Rb && pick) Rb.onclick = () => { if (pick.st !== 'adult') return; const [x, y] = pkey(k); X.list = X.list.filter(q => q !== pick); X.pick = null; release61(pick.sp, S.maps.indexOf(M), x, y, (pick.life || 0) * DAYMS);
+    if (X.list.length) X.sp = X.list[0].sp; else if (!X.dead.length) delete X.sp; toast(relText61(pick.sp), true, 3600); afterAction(); rr(); };
+  const Mb = el.querySelector('#bM267'), mv = el.querySelector('#mv267');
+  if (Mb && pick) Mb.onclick = () => { if (!others.length){ toast('沒有別的飼育箱有空位：先在「昆蟲 · 設施」再放一個飼育箱'); return; } mv.hidden = !mv.hidden; if (mv.hidden) return;
+    mv.innerHTML = `<p class="small">把這隻${escapeHTML(spName61(pick.sp))}換到哪一箱？（成長進度、壽命照舊）</p>` + others.map((b, i) => `<button class="btn" data-mv267="${i}">${escapeHTML(islName63(b.mi))}（${b.x},${b.y}）・${b.T.bx.list.length} / ${cap} 隻${b.T.bx.list.length ? '：' + escapeHTML(boxSpText267(b.T.bx)) : '・空箱'}</button>`).join('');
+    mv.querySelectorAll('[data-mv267]').forEach(q => q.onclick = () => { const B = others[+q.dataset.mv267]; if (moveBug267(M, k, pick.id, B)){ sfx('place'); toast(`${spName61(pick.sp)}換到${islName63(B.mi)}的另一個飼育箱了`, true, 2600); afterAction(); } rr(); }); };
+  obLoop61(el.querySelector('#ob61'), T, X);
+  try { const sh = document.querySelector('#modal .sheet'); if (sh){ sh.classList.add('box268s'); sh.classList.remove('box66s'); } } catch(e){}
+};
+// 購買確認：寫清楚是哪一種幼蟲
+{ const _bi268 = btnInfo47; btnInfo47 = function(b, price){ try { const L = RT.larva268; if (b && b.id === 'bL61' && L){ const D = SP61[L.sp] || {}, g = (B61.growthDays || {})[kind61(L.sp)] || {};
+      return { cat: 'insect', title: `${D.name || ''}幼蟲`, spr: ['ui_pg_bug_', 'ui_pt_bug_', 'ui_bug_'].map(q => q + L.sp).filter(n => ATLAS[n]).map(n => [n, 0])[0] || null,   // 320 的大圖，不會糊 q: '確定要買一隻放進飼育箱嗎？', price, okText: '確定購買',
+        rows: [['放進', `這個飼育箱（${L.n} → ${L.n + 1} / ${boxCap61()} 隻）`], ['長大', `幼蟲 ${g.larva ?? '?'} 天、蛹 ${g.pupa ?? '?'} 天後羽化`], ['每天吃', `1 個${grp61(L.sp) === 'dung' ? '糞便' : '昆蟲果凍'}（倉庫自動扣）`]] }; } } catch(e){}
+  return _bi268(b, price); }; }
+{ const _om268b = openModal; openModal = function(title, ...a){ try { const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.toggle('box268s', title === '飼育箱'); } catch(e){} return _om268b(title, ...a); }; }
+// 箱子：玩家畫的底圖（沒載到就用程式畫的），昆蟲走在土面上，卵、幼蟲、蛹在土裡
+obLoop61 = function(cv, T, X){ if (!cv) return; const g = cv.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1), tall = tall268(), bn = tall ? BXI268.tall : BXI268.wide, A = ATLAS[bn] || {};
+  const W = Math.max(240, cv.clientWidth || 600), H = Math.round(W * (A.frameHeight && A.frameWidth ? A.frameHeight / A.frameWidth : .53)); cv.width = W * dpr; cv.height = H * dpr; cv.style.height = H + 'px';
+  const gy = H * (A.ground || .63), x0 = W * .27, x1 = W * .76, K = W / 330, slots = [], SZ = sp => ({ lady: 1.25, firefly: 1.25 })[grp61(sp)] || 1;
+  cv.onclick = e => { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9;
+    for (const s2 of slots){ const d = Math.hypot(s2.x - x, s2.y - y); if (d < bd){ bd = d; best = s2; } } if (!best || bd >= Math.max(30, 60 * K)) return; const el = cv.closest('.bug61'), bx = RT.box61;
+    if (String(best.id).startsWith('dead:')){ const d = (X.dead || [])[+best.id.slice(5)]; if (d){ X.dead.splice(X.dead.indexOf(d), 1); addSpec61(d.sp); if (!X.list.length && !X.dead.length) delete X.sp; sfx('harvest');
+        toast(`撿起${spName61(d.sp)}，做成甲蟲標本放進倉庫「標本」`, true, 2600); RT.decoVer++; afterAction(); } if (el && bx) renderBox61(el, bx.M, bx.k); return; }
+    X.pick = best.id; if (el && bx) renderBox61(el, bx.M, bx.k); };
+  const draw = ts => { if (!cv.isConnected || $('modal').hidden) return; const t = ts / 1000, night = isNightAt(Date.now()), im = IMG[bn];
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, W, H);
+    if (im && im.complete && im.naturalWidth){ g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high'; g.drawImage(im, A.sx || 0, A.sy || 0, A.frameWidth, A.frameHeight, 0, 0, W, H); }
+    else { g.fillStyle = '#4caf3c'; g.beginPath(); g.roundRect(0, 0, W, H, 18); g.fill(); g.fillStyle = '#0d2c33'; g.fillRect(W * .03, H * .12, W * .94, gy - H * .12);
+      const soil = g.createLinearGradient(0, gy, 0, H); soil.addColorStop(0, '#d39a5c'); soil.addColorStop(1, '#9c6634'); g.fillStyle = soil; g.fillRect(W * .03, gy, W * .94, H * .93 - gy);
+      g.fillStyle = '#e9d3a8'; g.fillRect(W * .8, gy - 30 * K, 50 * K, 30 * K); g.fillStyle = '#ef5a2a'; g.beginPath(); g.ellipse(W * .8 + 25 * K, gy - 30 * K, 18 * K, 6 * K, 0, 0, 7); g.fill(); }
+    slots.length = 0;
+    const list = X.list, under = list.filter(m => m.st !== 'adult'), ad = list.filter(m => m.st === 'adult'), ring = (x, y, r) => { g.strokeStyle = '#ffd34a'; g.lineWidth = Math.max(2, 2.5 * K); g.beginPath(); g.arc(x, y, r, 0, 7); g.stroke(); };
+    const pickId = (X.list.find(q => q.id === X.pick) || X.list[0] || {}).id;
+    // 卵、幼蟲、蛹在土裡：先畫一個洞，幼蟲用捲起來那張（第 0 格）微微轉動
+    const sb = H * .93, rot = (n, x, yc, sc0, ang) => { const a = ATLAS[n]; if (!a) return; const bb = bbOf268(n) || [0, 0, a.frameWidth, a.frameHeight], sc = sc0 * (4 / (a.scale || 2)) * .5;
+      const ox = ((bb[0] + bb[2]) / 2 - a.anchor[0]) * sc, oy = ((bb[1] + bb[3]) / 2 - a.anchor[1]) * sc; g.save(); g.translate(x, yc); g.rotate(ang); drawSpr61(g, n, 0, -ox, -oy, sc0, false); g.restore();
+      return { w: (bb[2] - bb[0]) * sc, h: (bb[3] - bb[1]) * sc }; };
+    const hole = (x, y, rx, ry) => { const gr = g.createRadialGradient(x, y - ry * .2, 1, x, y, Math.max(rx, ry)); gr.addColorStop(0, 'rgba(40,20,8,.92)'); gr.addColorStop(.75, 'rgba(62,34,14,.85)'); gr.addColorStop(1, 'rgba(90,52,24,0)');
+      g.fillStyle = gr; g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, 7); g.fill(); g.strokeStyle = 'rgba(30,14,4,.35)'; g.lineWidth = 1.2; g.beginPath(); g.ellipse(x, y + ry * .05, rx * .9, ry * .88, 0, 0, 7); g.stroke(); };
+    // 洞整個在土面以下：直的放不下就橫著放，還放不下就縮小
+    const top0 = gy + 6 * K, room = Math.max(10, sb - top0 - 4 * K);
+    under.forEach((m, i) => { const x = W * (.14 + .72 * (i + .5) / Math.max(3, under.length));
+      let s0 = K * .9 * SZ(m.sp); const n = `bug_${m.sp}_${m.st}`, a = ATLAS[n], bb = a && bbOf268(n), sc0 = a ? (4 / (a.scale || 2)) * .5 : 0;
+      let bw = bb ? (bb[2] - bb[0]) * sc0 * s0 : 14 * K, bh = bb ? (bb[3] - bb[1]) * sc0 * s0 : 11 * K, side = 0;
+      if (m.st !== 'egg' && bh * 1.24 + 10 > room && bw < bh){ side = Math.PI / 2; [bw, bh] = [bh, bw]; }
+      if (m.st !== 'egg' && bh * 1.24 + 10 > room){ const f = (room - 10) / 1.24 / bh; s0 *= f; bw *= f; bh *= f; }
+      const rx = m.st === 'egg' ? 10 * K : Math.max(12 * K, bw * .62 + 6), ry = m.st === 'egg' ? 8 * K : Math.min(room / 2, Math.max(9 * K, bh * .62 + 5));
+      const y = Math.max(top0 + ry, Math.min(sb - ry - 2, gy + (sb - gy) * (i % 2 ? .66 : .45))); slots.push({ id: m.id, x, y });
+      hole(x, y, rx, ry);
+      if (m.st === 'egg'){ g.fillStyle = '#f6efd6'; g.beginPath(); g.ellipse(x, y + K, 5.5 * K, 4.5 * K, 0, 0, 7); g.fill(); g.strokeStyle = 'rgba(0,0,0,.25)'; g.lineWidth = 1; g.stroke(); }
+      else rot(n, x, y, s0, side + (motion ? (m.st === 'larva' ? .09 : .025) * Math.sin(t * (m.st === 'larva' ? 1.3 : .7) + i * 1.7) : 0));
+      if (pickId === m.id) ring(x, y, Math.max(rx, ry) + 4); });
+    const glows = [];
+    ad.forEach((m, i) => { const ph = t * .25 + i * 2.1, w = Math.sin(ph), x = x0 + (x1 - x0) * ((i + .5) / Math.max(2, ad.length) + .12 * w), mv = motion && Math.abs(Math.cos(ph)) > .25, flip = Math.cos(ph) < 0, ff = grp61(m.sp) === 'firefly';
+      let y = gy + 8 * K, n = `bug_${m.sp}_${mv ? 'walk' : 'idle'}`; const fly = ff && night;
+      if (fly) n = `bug_${m.sp}_fly`;
+      if (!ATLAS[n]) n = `bug_${m.sp}_idle`;
+      const a = ATLAS[n] || { anchor: [0, 0] }, s0 = K * SZ(m.sp), sc = s0 * (4 / (a.scale || 2)) * .5, bb = bbOf268(n) || bbOf268(`bug_${m.sp}_idle`);
+      // 晚上飛的螢火蟲：整隻都留在箱子裡（上面到蓋子下緣、下面到土面）
+      if (fly){ const top = H * ((A.top || .24) + .02) + (bb ? (a.anchor[1] - bb[1]) * sc : 30 * K), bot = gy - 6 * K, lo = Math.min(top, bot); y = lo + (bot - lo) * (.5 + .5 * Math.sin(ph * 1.7)); }
+      drawSpr61(g, n, motion ? frameOf(n, t, i) : 0, x, y, s0, flip);
+      const cx = bb ? x + (flip ? -1 : 1) * ((bb[0] + bb[2]) / 2 - a.anchor[0]) * sc : x, cy = bb ? y + ((bb[1] + bb[3]) / 2 - a.anchor[1]) * sc : y - 16 * K, rr = bb ? Math.max(bb[2] - bb[0], bb[3] - bb[1]) * sc * .6 + 4 : 26 * K;
+      slots.push({ id: m.id, x: cx, y: cy });
+      if (fly) glows.push([cx + (flip ? 1 : -1) * rr * .45, cy + rr * .25, m.sp, i]);
+      if (pickId === m.id) ring(cx, cy, rr); });
+    (X.dead || []).forEach((d, i) => { const x = W * (.5 + i * .08), y = gy + 10 * K; drawSpr61(g, `bug_${d.sp}_dead`, 0, x, y, K * .95, false); slots.push({ id: 'dead:' + i, x, y: y - 10 * K });
+      if (motion){ const a = (Math.sin(t * 3 + i) + 1) / 2; g.fillStyle = `rgba(255,236,150,${.35 + .45 * a})`; g.beginPath(); g.arc(x + 16 * K, y - 26 * K, 3 * K, 0, 7); g.fill(); } });
+    if (glows.length){ g.fillStyle = 'rgba(5,10,25,.3)'; g.fillRect(0, 0, W, H); g.globalCompositeOperation = 'lighter';
+      for (const [x, y, s2, i] of glows){ const a = glowA61(s2, t, i); if (a <= 0) continue; const [c] = GLOW61[s2] || ['200,255,100']; const gr = g.createRadialGradient(x, y, 0, x, y, 22 * K); gr.addColorStop(0, `rgba(${c},${.9 * a})`); gr.addColorStop(1, `rgba(${c},0)`); g.fillStyle = gr; g.beginPath(); g.arc(x, y, 22 * K, 0, 7); g.fill(); }
+      g.globalCompositeOperation = 'source-over'; }
+    requestAnimationFrame(draw); };
+  requestAnimationFrame(draw); };
+{ const st = document.createElement('style'); st.textContent = `
+#modal .sheet.box268s{width:min(1180px,100%);background:linear-gradient(180deg,rgba(28,40,62,.97),rgba(18,28,46,.97));color:#e9f0fa;border-color:rgba(255,255,255,.14)}
+#modal .sheet.box268s #modalTitle,#modal .sheet.box268s .pgsub{color:#f3f7ff}
+#modal .sheet.box268s #modalClose{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.2)}
+.bx268{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(280px,1fr);gap:16px 18px;align-items:start}
+.bx268 .tk268{position:relative}.bx268 #ob61{display:block;width:100%;cursor:pointer}
+.bx268 .emp268{position:absolute;left:12%;right:12%;top:28%;margin:0;text-align:center;color:#d8e8ef;font-size:14px;line-height:1.5;text-shadow:0 1px 3px #000}
+.bx268 .sd268{display:flex;flex-direction:column;gap:12px;border-left:1px solid rgba(255,255,255,.12);padding-left:18px}
+.bx268 .hd268{display:flex;align-items:center;justify-content:space-between;gap:10px}.bx268 .hd268 b{font-size:22px;color:#fff}
+.bx268 .hd268 span{padding:4px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);font-weight:700;font-size:16px;white-space:nowrap}
+.bx268 .sl268{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bx268 .sl268>*{min-height:96px;border-radius:14px}
+.bx268 .e268{border:2px dashed rgba(255,255,255,.18)}
+.bx268 .m268{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 4px 10px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);color:#fff;cursor:pointer;position:relative}
+.bx268 .m268.on{border-color:#ffc83a;box-shadow:0 0 0 1px #ffc83a inset,0 0 12px rgba(255,200,58,.35)}
+.bx268 .m268 canvas{width:52px;height:52px}.bx268 .m268.eg canvas{opacity:.45;filter:grayscale(.3)}
+.bx268 .m268 small{font-size:13px;font-weight:700;line-height:1.15;text-align:center;color:#fff}
+.bx268 .pb268{position:absolute;left:12px;right:12px;bottom:6px;height:4px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}.bx268 .pb268 i{display:block;height:100%;background:#f3a81e}
+.bx268 .dt268{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14)}
+.bx268 .ic268{display:flex;align-items:center;justify-content:center;flex:0 0 auto;padding-right:14px;border-right:1px solid rgba(255,255,255,.16)}
+.bx268 .ic268 canvas,.bx268 .ic268 img{display:block;padding:0;border:0;box-sizing:content-box}
+.bx268 .dt268 .ic268 canvas{width:80px;height:80px}.bx268 .dt268 canvas.eg{opacity:.5}
+.bx268 .dt268>div{display:flex;flex-direction:column;gap:2px;min-width:0}.bx268 .dt268 b{font-size:20px;color:#fff}.bx268 .dt268 small{opacity:.7;font-size:12px}.bx268 .dt268 span{font-size:16px}
+.bx268 .ac268{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bx268 .ac268 .btn{min-height:44px;font-size:16px;border-radius:12px;background:rgba(120,140,175,.28);color:#fff;border:1px solid rgba(255,255,255,.18)}
+.bx268 .ac268 .btn[disabled]{opacity:.4}
+.bx268 #mv267{display:flex;flex-direction:column;gap:6px}.bx268 #mv267[hidden]{display:none}.bx268 #mv267 .btn{text-align:left;white-space:normal}.bx268 #mv267 p{margin:0;color:#cfdbea}
+.bx268 .ft268{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.62fr) minmax(200px,.62fr);gap:14px;align-items:stretch;padding:12px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.bx268 .fd268{display:flex;flex-direction:column;justify-content:center;gap:6px}
+.bx268 .fr268{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.bx268 .fr268 .ic268{padding-right:12px}.bx268 .fr268 .ic268 img,.bx268 .fr268 .ic268 canvas{width:46px;height:46px;object-fit:contain}
+.bx268 .fr268 b{font-size:18px;color:#fff}
+.bx268 .pl268{padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);font-size:14px;white-space:nowrap}.bx268 .pl268.no{background:rgba(220,70,60,.35);border-color:rgba(255,120,110,.5)}
+.bx268 .ft268>.btn{min-height:56px;font-size:19px;font-weight:800;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:10px;margin:0;color:#fff;border:1px solid rgba(255,255,255,.25)}
+.bx268 .pr268{background:linear-gradient(180deg,#3d73b6,#24508c)}
+.bx268 .by268{background:linear-gradient(180deg,#f3c24a,#d9962a);color:#3a2604!important;border-color:#ffe08a!important}
+.bx268 .by268 span{display:flex;flex-direction:column;align-items:center;line-height:1.1}.bx268 .by268 small{font-size:11px;font-weight:700;opacity:.8}
+.bx268 .by268.long{font-size:16px}.bx268 .by268 span{text-align:center}
+.bx268 .by268 em{display:inline-flex;align-items:center;gap:4px;font-style:normal}.bx268 .by268 em img{width:28px;height:28px}
+.bx268 .ft268>.btn[disabled]{opacity:.45;filter:saturate(.5)}
+.bx268 .nt268{grid-column:1/-1;font-size:12px;color:#b8c6d8}.bx268 .nt268 p{margin:2px 0}.bx268 .nt268 b{color:#ffd77a}
+@media (max-width:760px){.bx268{grid-template-columns:minmax(0,1fr);gap:12px}.bx268 .sd268{border-left:0;padding-left:0}
+  .bx268 .hd268 b{font-size:19px}.bx268 .sl268{gap:8px}.bx268 .sl268>*{min-height:84px}.bx268 .m268 canvas{width:44px;height:44px}.bx268 .m268 small{font-size:12px}
+  .bx268 .dt268 .ic268 canvas{width:64px;height:64px}
+  .bx268 .ft268{grid-template-columns:1fr 1fr;padding:10px;background:transparent;border:0;gap:10px}.bx268 .fd268{grid-column:1/-1;padding:10px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+  .bx268 .fr268{flex-wrap:nowrap;gap:8px}.bx268 .fr268 .ic268{padding-right:8px}.bx268 .fr268 .ic268 img,.bx268 .fr268 .ic268 canvas{width:36px;height:36px}.bx268 .fr268 b{font-size:15px;white-space:nowrap}.bx268 .pl268{font-size:12px;padding:4px 8px}.bx268 .fr268 .pl268:last-child{margin-left:auto}
+  .bx268 .ft268>.btn{min-height:52px;font-size:16px;line-height:1.2}.bx268 .ft268>.by268{flex-direction:column;gap:2px;font-size:15px;padding:6px 8px}.bx268 .by268.long{font-size:13px}.bx268 .by268 em img{width:22px;height:22px}}
+@media (max-height:500px) and (orientation:landscape){.bx268{grid-template-columns:minmax(0,1.3fr) minmax(250px,1fr)}.bx268 .sl268>*{min-height:72px}.bx268 .m268 canvas{width:38px;height:38px}}
+`; document.head.appendChild(st); }
+
+/* ---------- 3. 選項列的貓頭鷹：已養幾隻不是倉庫數量 ---------- */
+{ const _ut268 = UIbuildTray; UIbuildTray = function(){ const r = _ut268();
+  try { const tray = $('tray'); if (tray && S && OW62) tray.querySelectorAll('.item[data-id^="owl:"]').forEach(el => { 
+      el.querySelectorAll('small.st51, span.count').forEach(s => s.remove()); }); } catch(e){ console.warn(e); }   // 玩家 2026-11-16：不用顯示已養幾隻，拿掉就好
+  return r; }; }
+
+/* ---------- 4. 重型機器人提示：建材小屋、小森林、礦山（水晶礦也是礦山）、土丘 ---------- */
+const RBK268 = { forest: 'lumber', mine: 'mine', mound: 'grade' };
+const RBS268 = { work: '工作中', walk: '出門中', go: '出門中', back: '回去充電', charge: '充電中', full: '待命', idle: '待命', rest: '待命' };
+function rbLine268(kind, mi){ if (!TK84.includes(kind)) return ''; const now = Date.now(), L = fleet(kind).filter(u => unitTier(kind, u) || (u.rentUntil && u.rentUntil > now)), hc = basesOf(HC89), hcHere = hc.filter(b => b.mi === mi).length;
+  const st = {}; for (const u of L){ const s = RBS268[u.state] || '待命'; st[s] = (st[s] || 0) + 1; }
+  const what = (RB84.what || {})[kind] || '', name = KIND_NAME(kind);
+  const info = L.length ? `你有 ${L.length} 台：${Object.entries(st).map(([a, b]) => `${a} ${b}`).join('・')}` : `還沒有${escapeHTML(name)}：買了會自己去${({ lumber: '砍', mine: '採', grade: '挖' })[kind] || '採'}${escapeHTML(what || '')}`;
+  const warn = !hcHere ? `這座島還沒有重型充電樁（建設 · 機器人）：${escapeHTML(name)}只在重型充電樁充電，蓋好才會出門` : `這座島有重型充電樁 ${hcHere} 座`;
+  return `<div class="rb268"><img src="${IMGSRC['ui_' + kind + 'bot'] || ''}" alt=""><div><b>${escapeHTML(name)}</b><span>${info}</span><small class="${hcHere ? '' : 'wn'}">${warn}</small></div><button class="btn" data-rb268="${kind}">${L.length ? '查看' : '買／租'}</button></div>`; }
+function rbWire268(el){ el.querySelectorAll('[data-rb268]').forEach(b => b.onclick = () => { const kind = b.dataset.rb268; openUnitPanel(kind); }); }
+{ const _ot268 = openTerrain83; openTerrain83 = function(mi, k){ const r = _ot268(mi, k);
+  try { const T = S.maps[mi] && S.maps[mi].tiles[k], kind = T && RBK268[T.kind], el = $('modalBody'); if (kind && el && !el.querySelector('.rb268')){
+      const box = document.createElement('div'); box.className = 'k66 rbw268'; box.innerHTML = `<h4>機器人</h4>${rbLine268(kind, mi)}`;
+      const col = el.querySelectorAll('.g66 > .c66')[1] || el.querySelector('.g66') || el; col.appendChild(box); rbWire268(box); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const _os268 = openShed84; openShed84 = function(mi){ const r = _os268(mi);
+  try { const el = $('modalBody'); if (el && !el.querySelector('.rb268')){ const box = document.createElement('div'); box.className = 'pcard rbs268';
+      box.innerHTML = `<h4>伐木、採礦、整地機器人</h4><p class="small">建材是這三種機器人採回來的：小森林 → 伐木、礦山和水晶礦 → 採礦、土丘 → 整地。都要在重型充電樁充電。</p>` + TK84.map(kd => rbLine268(kd, mi)).join('');
+      el.appendChild(box); rbWire268(box); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const st = document.createElement('style'); st.textContent = `
+.rb268{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;margin:6px 0;border-radius:12px;background:var(--gcard,rgba(255,255,255,.5));border:1px solid var(--glb,rgba(0,0,0,.08))}
+.rb268 img{width:48px;height:48px;object-fit:contain}.rb268>div{display:flex;flex-direction:column;gap:2px;min-width:0}.rb268 b{font-size:15px}.rb268 span{font-size:13px}.rb268 small{font-size:12px;opacity:.75}.rb268 small.wn{color:#d9534f;opacity:1}
+.rb268 .btn{white-space:nowrap;margin:0}.rbs268{margin-top:12px}.rbs268 h4{margin:0 0 4px}
+`; document.head.appendChild(st); }
+
+/* ---------- 5. 圖鑑的昆蟲圖：照顯示大小重畫 ---------- */
+{ const _om268 = openModal; openModal = function(title, tabs, render, initial){
+  if (title === '圖鑑' && typeof render === 'function'){ const r0 = render; render = (k, el) => { const r = r0(k, el); try { sharp268(el); } catch(e){} return r; }; }
+  return _om268(title, tabs, render, initial); }; }
+function sharp268(el){ if (!el) return; el.querySelectorAll('canvas.pic61[data-spr]').forEach(c => { const w = c.clientWidth || 84; paintInto75(c, c.dataset.spr, +c.dataset.f || 0, Math.max(84, Math.round(w))); }); }
+// 圖鑑「清單｜圖示」切換、進口標籤等會重畫：觀察內容變了再補畫一次
+{ const mb = $('modalBody'); if (mb && typeof MutationObserver === 'function'){ let q = 0; new MutationObserver(() => { if (q) return; q = requestAnimationFrame(() => { q = 0;
+    try { if ($('modalTitle') && /圖鑑/.test($('modalTitle').textContent)) mb.querySelectorAll('canvas.pic61[data-spr]').forEach(c => { if (c.width < 100) paintInto75(c, c.dataset.spr, +c.dataset.f || 0, Math.max(84, Math.round(c.clientWidth || 84))); }); } catch(e){} }); }).observe(mb, { childList: true, subtree: true }); } }
+
+/* ---------- 6. 農產倉庫「肉」的分類圖 ---------- */
+{ const f = ST_CAT.find(c => c[0] === 'meat'); if (f && IMGSRC.ui_pg_st_meat) f[2] = 'st_meat'; }
+
+/* ---------- 7. 縮放限制（玩家 2026-11-16：手機縮放有時縮到看不到島）：放大、縮小都有上下限，島至少留一部分在畫面裡 ---------- */
+function zLim268(){ const M = S && curMap(); let fit = .5;
+  try { const b = mapBounds(M); fit = Math.min(VW / Math.max(1, b.maxX - b.minX), VH / Math.max(1, b.maxY - b.minY)); } catch(e){}
+  return isM() ? [Math.max(.3, Math.min(.6, fit * .8)), 2] : [.35, 2.4]; }
+function camClamp268(){ try { if (!S) return; const b = mapBounds(curMap()), z = cam.z, x0 = b.minX * z + cam.x, x1 = b.maxX * z + cam.x, y0 = b.minY * z + cam.y, y1 = b.maxY * z + cam.y;
+    const mx = Math.min(VW * .3, (x1 - x0) / 2), my = Math.min(VH * .3, (y1 - y0) / 2);   // 島至少有一段（畫面 30% 或半個島）在畫面裡
+    if (x1 < mx) cam.x += mx - x1; if (x0 > VW - mx) cam.x -= x0 - (VW - mx);
+    if (y1 < my) cam.y += my - y1; if (y0 > VH - my) cam.y -= y0 - (VH - my); } catch(e){} }
+zoomAt = function(sx, sy, z){ const r = cv.getBoundingClientRect(), px = sx - r.left, py = sy - r.top, wx = (px - cam.x) / cam.z, wy = (py - cam.y) / cam.z, [lo, hi] = zLim268();
+  cam.z = Math.max(lo, Math.min(hi, z)); cam.x = px - wx * cam.z; cam.y = py - wy * cam.z; camClamp268(); };
+cv.addEventListener('pointermove', () => camClamp268());
+cv.addEventListener('pointerup', () => camClamp268());
+
+/* ---------- 8a. ✋／🖌 改成跟拍照鈕同一套線條圖示（24 格、線寬 1.8、currentColor），不加字 ---------- */
+// 移動：四個方向的箭頭（拖曳移動地圖）；連續：伸出食指、左右箭頭（手指滑過去，玩家 2026-11-16 給的參考圖樣式，自己畫的線條）；只用圖示不加字（玩家 2026-11-16），說明放在 title／aria-label
+const IC_MOVE268 = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><path d="M9.2 5.8 12 3l2.8 2.8M9.2 18.2 12 21l2.8-2.8M5.8 9.2 3 12l2.8 2.8M18.2 9.2 21 12l-2.8 2.8"/></g></svg>';
+const IC_PAINT268 = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5h4.2M4.6 4.4 2.5 6.5l2.1 2.1M21.5 6.5h-4.2M19.4 4.4l2.1 2.1-2.1 2.1"/><path d="M9.6 15.2V5.4a1.6 1.6 0 0 1 3.2 0v6"/><path d="M12.8 11.2V10a1.5 1.5 0 0 1 3 0v1.6M15.8 11.2a1.5 1.5 0 0 1 3 0v4.3c0 3.7-2.4 6.2-5.8 6.2h-.9c-2.3 0-3.7-.9-5-2.8l-2.2-3.3a1.4 1.4 0 0 1 2.2-1.7l1.5 1.7"/></g></svg>';
+{ const st = document.createElement('style'); st.textContent = `
+#zPaint255{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1;color:var(--gtx,#234)}
+#zPaint255 svg{display:block}
+#zPaint255.on255{background:#ffd75e;color:#4a2c00;border-color:#f3b81f}
+#zPaint255[hidden]{display:none!important}
+`; document.head.appendChild(st); }
+
+/* ---------- 8. 連續操作（滑過去收成／澆水／照顧／播種／鏟雪）電腦版也能用；鏟雪加回連續 ---------- */
+// 原本 g107 只在手機（isM）開；開關在 #zoomCtl 的 ✋／🖌 鈕（電腦版也顯示）。電腦版用滑鼠拖曳；連續模式下滑鼠右鍵或中鍵拖曳還是移動地圖。
+// 鏟雪：g55 把拖曳塗刷整個關掉（paintDrag false）之後鏟雪就只能一格一格點，這裡加回連續模式。
+{ const PT = new Set([...(typeof PT255 !== 'undefined' ? PT255 : ['seed', 'hand', 'water', 'care']), 'shovel']);
+  const on = () => !!(S && S.settings && S.settings.paint255 && PT.has(S.sel.tool) && !RT.btn268);
+  { const _pt = paintTool; paintTool = function(){ if (on()) return true; return _pt(); }; }
+  // 每格做一次（照 g107 的規則，加上鏟雪；g107 那層只在手機才會跑）
+  { const _po = paintOk; paintOk = function(M, k){ if (!on()) return _po(M, k);
+      if (RT.pset255.has(k)) return false; const T = M.tiles[k], tl = S.sel.tool; let ok = false;
+      if (tl === 'shovel') ok = snowyAt(S.cur, k);
+      else if (tl === 'seed') ok = !!T && T.t === 'soil' && !T.crop && !T.flower && !!CFG.crops[S.sel.seed];
+      else if (tl === 'hand') ok = !!T && ((T.t === 'soil' && !!T.crop && (T.crop.wither || T.crop.prog >= CFG.crops[T.crop.id].growSeconds)) || (T.t === 'tree' && !!CFG.trees[T.id] && treeReady(T)));
+      else if (tl === 'water') ok = !!T && (T.t === 'soil' || T.t === 'tree');
+      else if (tl === 'care') ok = !!hostOf(T);
+      if (ok) RT.pset255.add(k); return ok; }; }
+  cv.addEventListener('pointerdown', e => { RT.btn268 = e.pointerType === 'mouse' && e.button !== 0; }, true);
+  cv.addEventListener('contextmenu', e => { if (S && S.settings && S.settings.paint255 && PT.has(S.sel.tool)) e.preventDefault(); });
+  window.addEventListener('pointerup', () => { RT.btn268 = false; });
+  // 開關鈕：電腦版也顯示，鏟雪也顯示
+  syncPaint255 = function(){ const b = paintBtn255(); if (!b) return; const show = !!S && PT.has(S.sel.tool); b.hidden = !show; if (!show) return;
+    const v = !!S.settings.paint255; b.classList.toggle('on255', v); if (b.dataset.m268 !== String(v)){ b.dataset.m268 = String(v); b.innerHTML = v ? IC_PAINT268 : IC_MOVE268; }
+    const tip = v ? `連續模式：${isM() ? '一指' : '按住滑鼠'}滑過去，每格做一次（${isM() ? '兩指移動地圖' : '右鍵拖曳移動地圖'}）；點一下切回移動` : '移動模式：拖曳移動地圖；點一下切成連續（滑過去收成、澆水、照顧、播種、鏟雪）';
+    b.setAttribute('aria-label', tip); b.title = tip; }; }
+
+/* ---------- 9. 蜂箱、熊蜂箱收回倉庫後拿不出來（玩家 2026-11-16 問到）----------
+   v2.60.1 起蜂箱有蜂群也能收（蜂群記在 S.up2601[id] 的 col），但「昆蟲 · 設施」放蜂箱走的是 g33 的路（借建設工具／直接扣錢），
+   不看 S.buildStore：倉庫的蜂箱永遠用不到、又要再付一次錢、蜂群也回不來。→ 倉庫有就免費拿出來，蜂群、等級照舊；選項列寫「倉庫還有 n」。 */
+const HIVES268 = ['beehive', 'bumble_hive'];
+const hiveCol268 = id => ((S.up2601 || {})[id] || []).filter(r => r && r.col && r.col.queen).length;
+{ const _a268h = act; act = function(x, y){
+  try { if (S && !UI.expand && !RT.mv && S.sel.tool === 'insect' && HIVES268.includes(S.sel.insect) && (S.buildStore[S.sel.insect] || 0) > 0){ const M = curMap();
+      if (inMap(M, x, y)){ const k = tkey(x, y), T = M.tiles[k], id = S.sel.insect, { cx, cy } = center(x, y);
+        if (!T || T.t === 'weed'){ if (T) pullWeed(M, k, cx, cy);
+          M.tiles[k] = { t: 'device', id, frames: 0, queen: false, honey: {} }; S.buildStore[id] = Math.max(0, S.buildStore[id] - 1);
+          const got = give2601(M, x, y, id), T2 = M.tiles[k];
+          floatText(cx, cy - 30, T2 && T2.queen ? '從倉庫拿出（蜂群還在）' : '從倉庫拿出（免費）', '#2f7fa8', 10); sfx('place'); RT.decoVer++; afterAction(); UIbuildTray(); updateHint(); return; } } } } catch(e){ console.warn(e); }
+  return _a268h(x, y); }; }
+{ const _ut268h = UIbuildTray; UIbuildTray = function(){ const r = _ut268h();
+  try { if (S && S.sel.tool === 'insect') for (const id of HIVES268){ const n = S.buildStore[id] || 0, el = document.querySelector(`#tray .item[data-id="${id}"]`); if (!el || !n || el.querySelector('small.hv268')) continue;
+      [...el.querySelectorAll('small')].forEach(q => { if (q.querySelector('img') || /^[\d,]+$/.test(q.textContent.trim())) q.remove(); });
+      const c = hiveCol268(id), sm = document.createElement('small'); sm.className = 'st51 hv268'; sm.textContent = `倉庫還有 ${fmtN(n)}${c ? `（${c} 箱有蜂群）` : ''}`;
+      const b = el.querySelector(':scope > b'); if (b) b.insertAdjacentElement('afterend', sm); else el.appendChild(sm); el.classList.remove('locked'); } } catch(e){ console.warn(e); }
+  return r; }; }
+{ const ti = TOOLS.find(t => t.id === 'insect'); if (ti){ const _h = ti.hint; ti.hint = () => { const id = S && S.sel.insect; if (S && HIVES268.includes(id) && (S.buildStore[id] || 0) > 0) return `點空草地放${nameOf(id) || '蜂箱'} · 倉庫還有 ${S.buildStore[id]}，免費${hiveCol268(id) ? '，收的時候裡面有蜂群的會連蜂群一起拿出來' : ''}`; return typeof _h === 'function' ? _h() : _h; }; } }
+
+/* ---------- 10. 農場新聞「機器人做了什麼」：標題和底下每台機器人併成一張卡（玩家 2026-11-16：一條一行看起來像不同的事）----------
+   g53 的標題 grp53 'h'、每台 grp53 'c'；g63 多座島時會在前面加【島名】→ 島名留在標題，裡面的每一行拿掉。 */
+{ const _ni268 = newsItems; newsItems = function(list){ const out = _ni268(list), res = [];
+  try { for (let i = 0; i < out.length; i++){ const it = out[i];
+      if (it && it.grp53 === 'h'){ const sub = []; while (i + 1 < out.length && out[i + 1] && out[i + 1].grp53 === 'c'){ sub.push(out[++i]); }
+        if (!sub.length) continue;
+        const rows = sub.map(c => `<li><img src="${IMGSRC[c.icon] || IMGSRC.ui_news}" alt=""><span>${String(c.text).replace(/^【[^】]*】/, '')}</span></li>`).join('');
+        res.push({ ...it, grp53: 'g', text: `${it.text}<ul class="nsub268">${rows}</ul>` }); continue; }
+      res.push(it); } } catch(e){ console.warn(e); return out; }
+  return res; }; }
+// 歷史新聞（☰ → 農場新聞）重開的是存起來的 S.lastNews.items：舊版存的沒有 grp53、文字也是舊的 → 打開時照文字補併、補改字
+const RB_IC268 = () => new Set(Object.values(R_ICON || {}));
+function fixLine268(t){ return String(t)
+  .replace(/清了 0 格（雜草 0、垃圾 0）(?:，產生污水 ([\d,]+) 滴)?/, (m, w) => `巡了一圈，很乾淨，沒發現雜草或垃圾${w ? `（洗地仍產生污水 ${w} 滴）` : ''}`)
+  .replace(/（雜草 ([\d,]+)、垃圾 0）/, '（雜草 $1）').replace(/（雜草 0、垃圾 ([\d,]+)）/, '（垃圾 $1）').replace(/倒了 0 袋一般垃圾、/, '倒了').replace(/倒了 0 袋一般垃圾，/, '倒了，'); }
+function regroup268(items){ if (!Array.isArray(items)) return items; const ic = RB_IC268(), out = [];
+  for (let i = 0; i < items.length; i++){ const it = items[i]; if (!it) continue; const m = /^<b>(【[^】]*】)?機器人做了什麼<\/b>$/.exec(String(it.text || ''));
+    if (!m){ out.push(it.text && !/nsub268/.test(it.text) ? { ...it, text: fixLine268(it.text) } : it); continue; }
+    const tag = m[1] || '', sub = [];
+    while (i + 1 < items.length){ const c = items[i + 1], tx = String((c && c.text) || ''); if (!c || !ic.has(c.icon) || /^<b>/.test(tx) || (tag ? !tx.startsWith(tag) : /^【/.test(tx))) break; sub.push(c); i++; }
+    if (!sub.length){ out.push(it); continue; }
+    const rows = sub.map(c => `<li><img src="${IMGSRC[c.icon] || IMGSRC.ui_news}" alt=""><span>${fixLine268(String(c.text).replace(/^【[^】]*】/, ''))}</span></li>`).join('');
+    out.push({ ...it, grp53: 'g', text: `${it.text}<ul class="nsub268">${rows}</ul>` }); }
+  return out; }
+{ const _on268 = openNews; openNews = function(items, ...a){ let L = items; try { L = regroup268(items); if (S && S.lastNews && S.lastNews.items === items) S.lastNews.items = L; } catch(e){ console.warn(e); } return _on268(L, ...a); }; }
+{ const st = document.createElement('style'); st.textContent = `
+ul.news li .nsub268{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+ul.news li .nsub268 li{display:flex;align-items:center;gap:8px;margin:0;padding:6px 0 0;border:0;border-top:1px solid var(--glb,rgba(0,0,0,.08));background:none;box-shadow:none;border-radius:0;font-weight:400}
+ul.news li .nsub268 li img{width:24px;height:24px;flex:0 0 24px;object-fit:contain}
+ul.news li:has(> span > .nsub268) > img{align-self:flex-start}
+`; document.head.appendChild(st); }
+
+window.__farm268 = { openNews: (...a) => openNews(...a), paintTool: () => paintTool(), paintOk: (M, k) => paintOk(M, k), rmCropMenu268, rbLine268, sharp268, act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), openBox61: (M, k) => openBox61(M, k), openTerrain: (mi, k) => openTerrain83(mi, k), openShed: mi => openShed84(mi) };
 
   })(CFG, ATLAS_JSON);
 })();
