@@ -68765,6 +68765,78 @@ window.GAME_ATLAS = {
         0,
         0
       ]
+    },
+    "ui_item_treat_bone": {
+      "file": "ui_item_treat_bone.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_item_treat_fish": {
+      "file": "ui_item_treat_fish.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_item_treat_millet": {
+      "file": "ui_item_treat_millet.png",
+      "frames": 1,
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_hd_mc268": {
+      "file": "ui_hd_mc268.png",
+      "frames": 1,
+      "frameWidth": 160,
+      "frameHeight": 160,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_wheel268": {
+      "file": "ui_pg_wheel268.png",
+      "frames": 1,
+      "frameWidth": 512,
+      "frameHeight": 512,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
+    },
+    "ui_pg_pin268": {
+      "file": "ui_pg_pin268.png",
+      "frames": 1,
+      "frameWidth": 63,
+      "frameHeight": 84,
+      "fps": 0,
+      "loop": false,
+      "anchor": [
+        0,
+        0
+      ]
     }
   }
 };

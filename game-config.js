@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.67",
+  "configVersion": "2.68.1",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",
@@ -4030,6 +4030,24 @@ window.GAME_CONFIG = {
    "category": "feed",
    "sellPrice": 5,
    "shopOnly": true
+  },
+  "treat_bone": {
+   "name": "狗骨頭",
+   "category": "feed",
+   "sellPrice": 10,
+   "shopOnly": true
+  },
+  "treat_fish": {
+   "name": "小魚乾",
+   "category": "feed",
+   "sellPrice": 8,
+   "shopOnly": true
+  },
+  "treat_millet": {
+   "name": "小米穗",
+   "category": "feed",
+   "sellPrice": 6,
+   "shopOnly": true
   }
  },
  "feedShop": {
@@ -4040,7 +4058,10 @@ window.GAME_CONFIG = {
   "cat_food": 6,
   "bird_food": 6,
   "bug_jelly": 5,
-  "frozen_mouse": 20
+  "frozen_mouse": 20,
+  "treat_bone": 30,
+  "treat_fish": 25,
+  "treat_millet": 20
  },
  "machines": {
   "corn_cake_machine": {

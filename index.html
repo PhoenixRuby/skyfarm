@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.67-83ae78fe1e'), getJSON('sprites/atlas.json?v=2.67-83ae78fe1e')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.68.1-8174a71a0f'), getJSON('sprites/atlas.json?v=2.68.1-8174a71a0f')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14483,7 +14483,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.67-83ae78fe1e';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.68.1-8174a71a0f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -25643,6 +25643,1056 @@ ul.news li:has(> span > .nsub268) > img{align-self:flex-start}
 `; document.head.appendChild(st); }
 
 window.__farm268 = { openNews: (...a) => openNews(...a), paintTool: () => paintTool(), paintOk: (M, k) => paintOk(M, k), rmCropMenu268, rbLine268, sharp268, act: (x, y) => act(x, y), UIbuildTray: () => UIbuildTray(), openBox61: (M, k) => openBox61(M, k), openTerrain: (mi, k) => openTerrain83(mi, k), openShed: mi => openShed84(mi) };
+
+/* ===== v2.67.1 =====
+   1. 動物會過橋：regionsFor／walkK（g93）早就把有橋的河格算成同一區，但 updateAnimals 挑下一步時只看 stepOk（const，不含橋），
+      所以被河隔開的動物永遠走不到橋上。這裡重新宣告 updateAnimals（照 g103 最裡層），下一步改用 animStep2671：
+      ‧ 橋格（T.bw248）可以走，但只能順著橋的方向（T.bax248）上下橋、在橋上走；不能從河的側邊跳上橋
+      ‧ 兩座並排的橋（bid248 不同）之間不互通
+   ===== */
+function brOn2671(T){ return typeof isRiver248 === 'function' && isRiver248(T) && !!T.bw248; }
+function brAlong2671(T, fx, fy, x, y){ return T.bax248 === 'x' ? fy === y : fx === x; }
+function animStep2671(M, fx, fy, x, y){
+  const n = tkey(x, y), T = M.tiles[n], F = M.tiles[tkey(fx, fy)];
+  if (M.glass && M.glass[n]) return false;
+  if (brOn2671(F) && !brAlong2671(F, fx, fy, x, y)) return false;                 // 下橋只能從橋頭
+  if (brOn2671(T)){ if (!brAlong2671(T, fx, fy, x, y)) return false;               // 上橋只能從橋頭
+    if (brOn2671(F) && F.bid248 !== T.bid248) return false; return true; }
+  return stepOk(T);
+}
+function updateAnimals(M, t){
+  const mi = S.cur, reg = regionsFor(mi), dt = Math.min(.1, RT.frameDt || .016);
+  RT.animAt = new Map(); RT.animHit = [];
+  for (const k in M.tiles){ const T = M.tiles[k]; if (T.t !== 'animal') continue;
+    const [hx,hy] = pkey(k), key = `${mi}:${k}`; let ag = RT.agents[key];
+    if (!ag) ag = RT.agents[key] = { x: hx, y: hy, cx: hx, cy: hy, tx: null, ty: null, wait: 1 + (T.r || 0) % 3, flip: false };
+    const lifted = liftOf(k), home = reg.get(k);
+    if (!motion || lifted){ ag.x = hx; ag.y = hy; ag.cx = hx; ag.cy = hy; ag.tx = null; }
+    else {
+      const ck = tkey(ag.cx, ag.cy); if (ck !== k && (reg.get(ck) !== home || !walkK(M, ck))){ ag.x = hx; ag.y = hy; ag.cx = hx; ag.cy = hy; ag.tx = null; }
+      if (ag.tx === null){
+        if (ag.wait > 0) ag.wait -= dt;
+        else { const opts = [[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy]) => [ag.cx+dx, ag.cy+dy]).filter(([x,y]) => { const n = tkey(x,y); return reg.get(n) === home && !efBetween254(M, ag.cx, ag.cy, x, y) && (n === k || animStep2671(M, ag.cx, ag.cy, x, y)); });
+          if (opts.length){ const [x,y] = opts[Math.floor(Math.random()*opts.length)]; ag.tx = x; ag.ty = y; ag.flip = (x - y) < (ag.cx - ag.cy); } else ag.wait = 2; }
+      } else {
+        const dx = ag.tx - ag.x, dy = ag.ty - ag.y, d = Math.hypot(dx, dy), sp = (ROAM.tilesPerSecond || .35) * dt;
+        if (d <= sp){ ag.x = ag.tx; ag.y = ag.ty; ag.cx = ag.tx; ag.cy = ag.ty; ag.tx = null; const [a,b] = ROAM.pauseSeconds || [2,6]; ag.wait = Math.random() < .45 ? 0 : a + Math.random()*(b - a); }
+        else { ag.x += dx/d*sp; ag.y += dy/d*sp; }
+      }
+    }
+    const c = center(ag.x, ag.y), dk = tkey(Math.round(ag.x), Math.round(ag.y));
+    const e = { T, k, px: c.cx + (lifted ? lifted.x : 0), py: c.cy + (lifted ? lifted.y : 0), moving: ag.tx !== null || !!lifted, flip: ag.flip };
+    if (!RT.animAt.has(lifted ? k : dk)) RT.animAt.set(lifted ? k : dk, []); RT.animAt.get(lifted ? k : dk).push(e);
+    RT.animHit.push({ k, x: e.px, y: e.py });
+  }
+  for (const key in RT.agents){ const [m, kk] = [key.split(':')[0], key.slice(key.indexOf(':')+1)]; if (+m === mi && !(M.tiles[kk] && M.tiles[kk].t === 'animal')) delete RT.agents[key]; }
+}
+
+window.__farm2671 = { RT, updateAnimals: (...a) => updateAnimals(...a), animStep2671: (...a) => animStep2671(...a), regionsFor: (...a) => regionsFor(...a) };
+
+
+/* ===== 3. 下方提示的倉庫數量跟著變（玩家 2026-11-17：施有機肥後選項列「倉庫還有」會少，下方提示「倉庫有 n 包」不會）=====
+   施有機肥（g17）直接 return、沒走 afterAction，所以提示沒更新。倉庫數量一變（invAdd／invTake）就排一次 updateHint。 */
+function hintSoon2671(){ if (RT.hint2671) return; RT.hint2671 = setTimeout(() => { RT.hint2671 = 0; try { if (S) updateHint(); } catch(e){} }, 0); }
+{ const _ia = invAdd; invAdd = function(...a){ const r = _ia(...a); hintSoon2671(); return r; }; }
+{ const _it = invTake; invTake = function(...a){ const r = _it(...a); hintSoon2671(); return r; }; }
+
+/* ===== 2. 農場週報（玩家 2026-11-16／17）=====
+   每週一第一次上線，跳出上週（週一～週日）的報告。上半部是報導區：頭條給這週投入最多的那一類，其他有在玩的類別各一欄專欄
+   （作物、牧場、機器人、昆蟲、狗貓、鳥、貓頭鷹、魚）；下半部是圖表區。文案每個玩家、每週都不同（農場＋週次當亂數種子；
+   連霸／換冠軍／創紀錄／大增／變少／幸運數字等情境；四週內同一句不重複）。
+   存檔 S.wk2671：days['YYYY-MM-DD'] 每天的統計（留 70 天）、snap 成就計數的基準、kn 動物／寵物／鳥的名單、hist 已出的週報（留 12 份）、
+   used 用過的句子（句子 id → 週次）、shown 最後出過的週、issue 期數。舊存檔沒有這個欄位：第一次讀到時從今天開始記。
+   資料來源：成就計數 S.ach.s 的每日差（harvest、ranch、mouser、owlRats、guard、nurse、butterfly、frogs、birdBugs、fisher、hours、bug_*）、
+   deliver（收成與產品數量）、plantCrop／plantTree、addXP、logCoin、S.acts、RT.log53（機器人日誌；線上也記，見 robot tee）。 */
+const DAY2671 = 86400e3, WKR = CFG.weeklyReport || {};
+const pad2671 = n => String(n).padStart(2, '0');
+const dayKey2671 = t => { const d = new Date(t); return `${d.getFullYear()}-${pad2671(d.getMonth() + 1)}-${pad2671(d.getDate())}`; };
+const addDays2671 = (t, n) => { const d = new Date(t); d.setDate(d.getDate() + n); return d.getTime(); };
+const monday2671 = t => { const d = new Date(t); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (d.getDay() + 6) % 7); return d.getTime(); };
+const wkIdx2671 = mon => Math.round(mon / (7 * DAY2671));
+const esc2671 = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const STATK2671 = /^(harvest|ranch|ship|fisher|mouser|owlRats|guard|nurse|butterfly|frogs|birdBugs|hours|bug_.*)$/;
+function wk2671(){ if (!S) return null; const W = S.wk2671 = S.wk2671 || {}; if (!W.v){ W.v = 1; W.start = dayKey2671(Date.now()); }
+  W.days = W.days || {}; W.used = W.used || {}; W.hist = W.hist || []; return W; }
+function day2671(t){ const W = wk2671(); if (!W) return null; const k = dayKey2671(t == null ? Date.now() : t);
+  return W.days[k] || (W.days[k] = { ms: 0, xp: 0, ci: 0, co: 0, acts: 0, lv: S.player.level, l0: S.player.level, pl: {}, tr: 0, g: {}, add: {}, gone: {}, pet: 0, bird: 0, rb: {}, s: {}, rain: 0, snow: 0 }); }
+const inc2671 = (o, k, n = 1) => { o[k] = (o[k] || 0) + n; };
+
+// --- 記錄 ---
+{ const _ax = addXP; addXP = function(n, ...a){ try { if (n > 0){ const d = day2671(); if (d) d.xp += n; } } catch(e){} return _ax(n, ...a); }; }
+{ const _lc = logCoin; logCoin = function(st, dlt, ...a){ try { if (st && st === S && dlt){ const d = day2671(); if (d){ if (dlt > 0) d.ci += dlt; else d.co -= dlt; } } } catch(e){} return _lc(st, dlt, ...a); }; }
+{ const _pc = plantCrop; plantCrop = function(T, ...a){ const had = !!(T && T.crop); const r = _pc(T, ...a); try { if (!had && T && T.crop){ const d = day2671(); if (d) inc2671(d.pl, T.crop.id); } } catch(e){} return r; }; }
+{ const _pt = plantTree; plantTree = function(M, k, ...a){ const was = !!(M.tiles[k] && M.tiles[k].t === 'tree'); const r = _pt(M, k, ...a); try { if (!was && M.tiles[k] && M.tiles[k].t === 'tree'){ const d = day2671(); if (d) d.tr++; } } catch(e){} return r; }; }
+const GCAT2671 = { crop: 1, fruit: 1, product: 1, meat: 1, fish: 1, honey: 1 };
+{ const _dl = deliver; deliver = function(goods, ...a){ try { const d = S && day2671(); if (d) for (const g of goods || []){ if (!g || !(g.qty > 0)) continue; const I = CFG.items[g.id]; if (!I || !GCAT2671[I.category]) continue; const id = I.organicOf || g.id; inc2671(d.g, id, g.qty); const gi = d.gi || (d.gi = {}); inc2671(gi[S.cur] || (gi[S.cur] = {}), id, g.qty); } } catch(e){} return _dl(goods, ...a); }; }
+// 機器人日誌：RT.log53 原本只在離線補算時有（g53／g63 設、用完設回 null）。這裡把它變成 getter／setter：
+//   離線補算時照舊（沒人設就是 null，g53／g63 照常建自己的日誌出新聞）；其他時候給一個「影子日誌」，線上機器人做的事也記得到。
+//   不管哪一本，每次 log53 加數字都順便加進今天的 d.rb。
+const RBK2671 = ['water', 'feed', 'sweep', 'wellbot', 'snow', 'poop', 'honey', 'trashbot', 'recyclebot'];
+function teeKind2671(kind, o){ return new Proxy(o, { set(t, f, v){ const dv = typeof v === 'number' ? v - (t[f] || 0) : 0; t[f] = v;
+  if (dv > 0 && S){ try { const d = day2671(); const r = d.rb[kind] || (d.rb[kind] = {}); inc2671(r, f, dv); } catch(e){} } return true; } }); }
+function tee2671(L){ return new Proxy(L, { get(t, k){ if (typeof k !== 'string') return t[k]; let v = t[k];
+  if (v === undefined && RBK2671.includes(k)){ t[k] = {}; v = t[k]; } return v && typeof v === 'object' && RBK2671.includes(k) ? teeKind2671(k, v) : v; } }); }
+{ let real = RT.log53 ? tee2671(RT.log53) : null; const SHADOW = tee2671({});
+  Object.defineProperty(RT, 'log53', { configurable: true, get(){ return real || (RT.off2671 || !S ? null : SHADOW); }, set(v){ real = v ? tee2671(v) : null; } }); }
+{ const _st = simulateTo; simulateTo = function(toMs){ const gap = (toMs - ((S && S.lastSim) || toMs)) / 1000, NW = V53.NW || {};
+  const was = RT.off2671; RT.off2671 = NW.robotLog !== false && gap >= (NW.robotLogMinOfflineSeconds || 120); try { return _st(toMs); } finally { RT.off2671 = was; } }; }
+
+function scan2671(W, d){
+  const an = {}, pet = {}, bird = {};
+  S.maps.forEach((M, mi) => { for (const k in M.tiles){ const T = M.tiles[k]; if (T && T.t === 'animal') an[T.no258 != null ? `${T.id}#${T.no258}` : `${mi}:${k}`] = T.id; } });
+  for (const P of S.pets || []) if (P && P.id != null) pet[P.id] = 1;
+  for (const B of S.birds40 || []) if (B && B.id != null) bird[B.id] = 1;
+  if (!W.kn){ W.kn = { an, pet: Object.keys(pet), bird: Object.keys(bird) }; return; }
+  for (const k in an) if (!(k in W.kn.an)) inc2671(d.add, an[k]);
+  for (const k in W.kn.an) if (!(k in an)) inc2671(d.gone, W.kn.an[k]);
+  const op = new Set(W.kn.pet.map(String)), ob = new Set(W.kn.bird.map(String));
+  for (const k in pet) if (!op.has(String(k))) d.pet++;
+  for (const k in bird) if (!ob.has(String(k))) d.bird++;
+  W.kn = { an, pet: Object.keys(pet), bird: Object.keys(bird) }; }
+function tick2671(){ if (!S || !S.player) return; const W = wk2671(), now = Date.now(), d = day2671(now);
+  if (RT.tkS2671 !== S){ RT.tkS2671 = S; RT.tk2671 = now; }
+  if (!document.hidden && now - (RT.userAt49 || 0) < (WKR.idleSeconds || 90) * 1000) d.ms += Math.max(0, Math.min(now - (RT.tk2671 || now), 15e3));
+  RT.tk2671 = now; d.lv = S.player.level;
+  const st = (S.ach && S.ach.s) || {};
+  if (!W.snapOk){ W.snap = {}; for (const k in st) if (STATK2671.test(k)) W.snap[k] = st[k]; W.snapOk = 1; }
+  else for (const k in st){ if (!STATK2671.test(k)) continue; const dv = st[k] - (W.snap[k] || 0); if (dv > 0) d.s[k] = (d.s[k] || 0) + dv; W.snap[k] = st[k]; }
+  const a = S.acts || 0; if (W.acts0 == null || a < W.acts0) W.acts0 = a; else if (a > W.acts0){ d.acts += a - W.acts0; W.acts0 = a; }
+  try { scan2671(W, d); } catch(e){}
+  if (S.rainSlot !== W.rainSlot){ try { if (W.rainSlot !== undefined && farmRain(now)) d.rain++; } catch(e){} W.rainSlot = S.rainSlot; }
+  const sc = !!(S.snow && S.snow.cover); if (sc && !W.snowC) d.snow++; W.snowC = sc;
+  const old = dayKey2671(addDays2671(now, -(WKR.keepDays || 70))); for (const k in W.days) if (k < old) delete W.days[k]; }
+setInterval(() => { try { tick2671(); } catch(e){ if (!RT.err2671){ RT.err2671 = 1; console.warn(e); } } }, 5000);
+
+// --- 一週加總 ---
+function agg2671(mon){ const W = wk2671(), A = { mon, any: false, ms: 0, mins: [], played: 0, xp: 0, ci: 0, co: 0, acts: 0, lv0: null, lv1: null, pl: {}, tr: 0, g: {}, add: {}, gone: {}, pet: 0, bird: 0, rb: {}, s: {}, rain: 0, snow: 0, first: null, gi: {} };
+  for (let i = 0; i < 7; i++){ const k = dayKey2671(addDays2671(mon, i)), D = W.days[k]; if (!D){ A.mins.push(0); continue; }
+    A.any = true; if (!A.first) A.first = k; A.mins.push(Math.round(D.ms / 60000)); if (D.ms >= 60000) A.played++;
+    A.ms += D.ms; A.xp += D.xp; A.ci += D.ci; A.co += D.co; A.acts += D.acts; A.tr += D.tr; A.pet += D.pet; A.bird += D.bird; A.rain += D.rain; A.snow += D.snow;
+    if (A.lv0 == null) A.lv0 = D.l0 != null ? D.l0 : D.lv; A.lv1 = D.lv;
+    for (const f of ['pl', 'g', 'add', 'gone', 's']) for (const x in D[f]) inc2671(A[f], x, D[f][x]);
+    if (D.gi) for (const mi in D.gi){ const o = A.gi[mi] || (A.gi[mi] = {}); for (const x in D.gi[mi]) inc2671(o, x, D.gi[mi][x]); }
+    for (const kd in D.rb){ const r = A.rb[kd] || (A.rb[kd] = {}); for (const f in D.rb[kd]) inc2671(r, f, D.rb[kd][f]); } }
+  return A; }
+
+// --- 文案 ---
+// 每個句型：id（記錄用過沒）、when(f)（什麼情況可以用）、t(f)（文字，可以有 <b>）。同一個「槽」依序試每一池：池裡有可以用、四週內沒用過的就從中抽；
+// 都用過就挑最久沒用的那句。亂數種子＝農場（存檔 id＋農場名）＋週次＋槽名，所以每個玩家、每週都不一樣。
+const B2671 = x => `<b>${x}</b>`, N2671 = x => fmtN(Math.round(x));
+const HEAD_CROP2671 = [
+  [ // 彩蛋
+    { id: 'ce1', when: f => f.streak >= 10, t: f => `${f.crop} ${f.streak} 連霸！這座島乾脆改名叫「${f.crop}島」吧` },
+    { id: 'ce2', when: f => f.lucky, t: f => `幸運數字降臨！${f.crop}剛好收成 ${B2671(N2671(f.q))} 份` },
+    { id: 'ce3', when: f => f.lucky, t: f => `${N2671(f.q)}！這個收成數字好像在跟你說些什麼` } ],
+  [ // 破紀錄
+    { id: 'cr1', when: f => f.record, t: f => `史上最強一週！總收成 ${B2671(N2671(f.t))} 份，倉庫門都快關不上了` },
+    { id: 'cr2', when: f => f.record, t: f => `破紀錄！本週收成 ${B2671(N2671(f.t))} 份，刷新農場史上最高` },
+    { id: 'cr3', when: f => f.record, t: f => `新紀錄出爐：${N2671(f.t)} 份收成，農場主人手速驚人` },
+    { id: 'cr4', when: f => f.record, t: f => `倉庫管理員緊急加班！本週收成創新高 ${B2671(N2671(f.t))} 份` } ],
+  [ // 換冠軍
+    { id: 'cd1', when: f => f.dethrone, t: f => `改朝換代！${f.crop}終結${f.prevCrop}連續 ${f.prevStreak} 週的統治` },
+    { id: 'cd2', when: f => f.dethrone, t: f => `${f.prevCrop}王朝落幕，新王${f.crop}登基` },
+    { id: 'cd3', when: f => f.dethrone, t: f => `爆冷門！${f.crop}擠下${f.prevCrop}，奪下本週冠軍` },
+    { id: 'cd4', when: f => f.dethrone, t: f => `${f.prevCrop}：「我的王座呢？」${f.crop}：「謝謝，我坐了。」` } ],
+  [ // 連霸
+    { id: 'c61', when: f => f.streak >= 6, t: f => `${f.crop}王朝第 ${f.streak} 週，鄰居開始懷疑你只會種${f.crop}` },
+    { id: 'c62', when: f => f.streak >= 6, t: f => `${f.streak} 連霸！${f.crop}已經是這座島的代名詞` },
+    { id: 'c63', when: f => f.streak >= 6, t: f => `傳說誕生：${f.crop}連續 ${f.streak} 週穩坐冠軍寶座` },
+    { id: 'c64', when: f => f.streak >= 6, t: f => `第 ${f.streak} 週，${f.crop}的冠軍獎盃已經擺不下了` },
+    { id: 'c31', when: f => f.streak >= 3 && f.streak < 6, t: f => `連續 ${f.streak} 週稱霸，${f.crop}在這座島上已經無人能敵` },
+    { id: 'c32', when: f => f.streak >= 3 && f.streak < 6, t: f => `${f.crop} ${f.streak} 連霸！其他作物開始懷疑人生` },
+    { id: 'c33', when: f => f.streak >= 3 && f.streak < 6, t: f => `第 ${f.streak} 週還是${f.crop}，冠軍獎盃都快被摸到發亮了` },
+    { id: 'c34', when: f => f.streak >= 3 && f.streak < 6, t: f => `${f.crop}霸榜 ${f.streak} 週，倉庫管理員表示：又是你` },
+    { id: 'c35', when: f => f.streak >= 3 && f.streak < 6, t: f => `${f.crop}連莊第 ${f.streak} 週，田裡的其他作物已經放棄掙扎` },
+    { id: 'c21', when: f => f.streak === 2, t: f => `${f.crop}二連霸，對手連車尾燈都看不到` },
+    { id: 'c22', when: f => f.streak === 2, t: f => `${f.crop}再度奪冠！連續 2 週稱王` },
+    { id: 'c23', when: f => f.streak === 2, t: f => `又是${f.crop}！連莊成功，收成 ${B2671(N2671(f.q))} 份` },
+    { id: 'c24', when: f => f.streak === 2, t: f => `${f.crop}衛冕成功，看來是要開始寫王朝史了` } ],
+  [ // 大增／變少
+    { id: 'cu1', when: f => f.pct >= 30, t: f => `收成暴增 ${f.pct}%！${f.crop}領軍衝出 ${B2671(N2671(f.q))} 份` },
+    { id: 'cu2', when: f => f.pct >= 30, t: f => `農場火力全開，收成比上週多 ${B2671(f.pct + '%')}` },
+    { id: 'cu3', when: f => f.pct >= 30, t: f => `這週的田像開了外掛，收成多了 ${f.pct}%` },
+    { id: 'cw1', when: f => f.pct <= -30, t: f => `這週農場比較悠閒，${f.crop}們表示：主人你去哪了？` },
+    { id: 'cw2', when: f => f.pct <= -30, t: f => `收成小休息，${f.crop}仍以 ${B2671(N2671(f.q))} 份守住冠軍` },
+    { id: 'cw3', when: f => f.pct <= -30, t: f => `慢活的一週：田裡安安靜靜，${f.crop}默默撐起場面` } ],
+  [ // 一般
+    { id: 'cg1', t: f => `${f.crop}大豐收！一週收成 ${B2671(N2671(f.q))} 份` },
+    { id: 'cg2', t: f => `${f.crop}出道！一週收成 ${B2671(N2671(f.q))} 份，直接登上本週冠軍` },
+    { id: 'cg3', t: f => `本週最佳農作物：${f.crop}！收成 ${B2671(N2671(f.q))} 份打趴全場` },
+    { id: 'cg4', t: f => `倉庫被${f.crop}佔領了！一週進帳 ${B2671(N2671(f.q))} 份` },
+    { id: 'cg5', t: f => `${f.crop}當家作主，收成 ${B2671(N2671(f.q))} 份登上週冠軍` },
+    { id: 'cg6', t: f => `本週最紅：${f.crop}！田裡一片${f.crop}色` },
+    { id: 'cg7', t: f => `${f.crop}熱潮來襲，本週收成 ${B2671(N2671(f.q))} 份` },
+    { id: 'cg8', t: f => `本週冠軍作物揭曉——${f.crop}！` } ] ];
+const BODY_CROP2671 = [[
+  { id: 'cb1', t: f => `本週農場主人種下 ${B2671(N2671(f.p))} 株作物，${f.crop}收成 ${B2671(N2671(f.q))} 份最多。` },
+  { id: 'cb2', when: f => f.k > 1, t: f => `這週一共收成了 ${f.k} 種作物、總計 ${B2671(N2671(f.t))} 份。` },
+  { id: 'cb3', t: f => `${f.crop}這週表現最亮眼，${B2671(N2671(f.q))} 份全都乖乖進了倉庫。` },
+  { id: 'cb4', when: f => f.k > 1, t: f => `一週下來田裡收成了 ${B2671(N2671(f.t))} 份作物，其中${f.crop}佔了 ${f.share}%。` },
+  { id: 'cb5', when: f => f.p > 0, t: f => `鋤頭揮了一整週：播種 ${N2671(f.p)} 株、收成 ${N2671(f.t)} 份。` },
+  { id: 'cb6', t: f => `${f.crop}一共收了 ${B2671(N2671(f.q))} 份，堆起來大概比農舍還高。` } ]];
+const MORE_CROP2671 = [[
+  { id: 'cm1', when: f => f.c3, t: f => `${f.c2}（${N2671(f.q2)}）和${f.c3}（${N2671(f.q3)}）緊追在後。` },
+  { id: 'cm2', when: f => f.c2, t: f => `第二名${f.c2}收成 ${N2671(f.q2)} 份，差一點就能挑戰王座。` },
+  { id: 'cm3', when: f => f.c2, t: f => `亞軍${f.c2}也不遑多讓，交出 ${N2671(f.q2)} 份成績。` },
+  { id: 'cm4', when: f => f.d > 0, t: f => `總收成比上週多了 ${B2671(N2671(f.d))} 份。` },
+  { id: 'cm5', when: f => f.d < 0, t: f => `總收成比上週少了 ${N2671(-f.d)} 份，下週加油！` },
+  { id: 'cm6', when: f => !f.c2, t: f => `整週只收了${f.crop}一種，專一的農場主人。` },
+  { id: 'cm7', t: f => `下週的冠軍會是誰？田裡的作物們已經開始暗中較勁。` } ]];
+const TITLE2671 = {
+  crop: ['田間快報', '農作物專欄', '田裡的大小事', '作物觀察站'],
+  animal: ['牧場消息', '牧場快報', '動物新鮮事', '牧場日報'],
+  robot: ['機器人專欄', '機器人日誌', '鐵皮小隊週報', '機器人工作簿'],
+  bug: ['昆蟲專欄', '昆蟲獵人週報', '野外觀察', '草叢裡的祕密'],
+  pet: ['寵物專欄', '毛孩值勤表', '狗狗貓貓週報', '毛孩巡邏隊'],
+  bird: ['鳥屋消息', '鳥兒週報', '枝頭快報'],
+  owl: ['夜間巡邏隊', '貓頭鷹夜班報告', '月光下的獵人'],
+  fish: ['漁池消息', '水裡的大小事', '魚池快報'] };
+const HEAD_OTHER2671 = {
+  animal: [
+    { id: 'ah1', when: f => f.prodTop, t: f => `${f.prodTop}大豐收！一週收了 ${B2671(N2671(f.prodQ))} 份` },
+    { id: 'ah2', when: f => f.addTxt, t: f => `新成員報到！${f.addTxt}搬進牧場` },
+    { id: 'ah3', when: f => f.prodTop, t: f => `牧場加班中：${f.prodTop}一週 ${B2671(N2671(f.prodQ))} 份` },
+    { id: 'ah4', when: f => f.prodTop, t: f => `動物們今天也很努力！${f.prodTop}產量 ${B2671(N2671(f.prodQ))}` },
+    { id: 'ah5', when: f => f.addN >= 3, t: f => `牧場擴編！本週一口氣新來 ${B2671(f.addN)} 隻動物` } ],
+  robot: [
+    { id: 'rh1', t: f => `主人不在家，機器人顧家！` },
+    { id: 'rh2', t: f => `機器人小隊撐起整座農場` },
+    { id: 'rh3', t: f => `主人度假中，鐵皮小隊照常上班` } ],
+  bug: [
+    { id: 'bh1', t: f => `昆蟲獵人出動！本週捕獲 ${B2671(N2671(f.bugs))} 隻昆蟲` },
+    { id: 'bh2', t: f => `網子揮不停，草叢裡的昆蟲都在傳你的名字` },
+    { id: 'bh3', t: f => `本週的你，是昆蟲界最可怕的傳說` } ],
+  pet: [
+    { id: 'ph1', t: f => f.petNamed ? `毛孩大活躍！${f.petName}帶隊守護農場` : `毛孩大活躍！狗狗貓貓一起守護農場` },
+    { id: 'ph2', when: f => f.petRats, t: f => `老鼠剋星出沒！本週抓到 ${B2671(N2671(f.petRats))} 隻` } ],
+  bird: [ { id: 'dh1', t: f => `鳥兒當班！果樹上的害蟲被吃掉 ${B2671(N2671(f.birdBugs))} 隻` } ],
+  owl: [ { id: 'oh1', t: f => `夜班英雄：貓頭鷹抓到 ${B2671(N2671(f.owlRats))} 隻老鼠` } ],
+  fish: [ { id: 'fh1', t: f => `漁獲滿滿！魚池撈起 ${B2671(N2671(f.fish))} 條魚` } ] };
+const BODY_OTHER2671 = {
+  animal: [
+    { id: 'ab1', when: f => f.addTxt && f.prodTop, t: f => `歡迎新住民！${f.addTxt}搬進牧場，牧場本週交出${f.prodList}。` },
+    { id: 'ab2', when: f => f.prodTop, t: f => `${f.prodTop}大爆量，一週收了 ${B2671(N2671(f.prodQ))} 份，動物們表示今天也很努力。` },
+    { id: 'ab3', when: f => f.prodList, t: f => `牧場本週交出${f.prodList}。` },
+    { id: 'ab4', when: f => f.addTxt && !f.prodTop, t: f => `${f.addTxt}剛搬進來，還在熟悉新家，下週就會開始上工。` },
+    { id: 'ab5', when: f => f.goneN, t: f => `另外有 ${f.goneN} 隻動物找到了新家。` },
+    { id: 'ab6', when: f => f.prodTop, t: f => `動物們吃飽睡好，${f.prodTop}一份接一份，倉庫天天有新貨。` } ],
+  robot: [
+    { id: 'rb1', when: f => f.rbHours >= 1, t: f => `機器人小隊本週工作 ${B2671(N2671(f.rbHours))} 小時，${f.rbList}。` },
+    { id: 'rb2', when: f => f.rbWater >= 50, t: f => `機器人加班警報：澆水 ${B2671(N2671(f.rbWater))} 格，它們要求加電。` },
+    { id: 'rb3', when: f => f.rbSweep, t: f => `掃地機器人巡了一整週，清了 ${B2671(N2671(f.rbSweep))} 格${f.rbWeeds ? `，拔掉雜草 ${N2671(f.rbWeeds)} 叢` : ''}。` },
+    { id: 'rb4', when: f => f.rbShare >= 50, t: f => `本週機器人扛下 ${B2671(f.rbShare + '%')} 的農務，你可以放心喝茶了。` },
+    { id: 'rb5', when: f => f.rbHoney, t: f => `採蜜機器人採了 ${B2671(N2671(f.rbHoney))} 罐蜂蜜，甜到不行。` },
+    { id: 'rb6', when: f => f.rbSnow, t: f => `鏟雪機器人鏟了 ${N2671(f.rbSnow)} 格雪，田裡乾乾淨淨。` },
+    { id: 'rb7', when: f => f.rbFeed, t: f => `餵食機器人跑了 ${B2671(N2671(f.rbFeed))} 趟，動物們沒餓到一餐。` },
+    { id: 'rb8', when: f => f.rbList, t: f => `鐵皮小隊的本週成績：${f.rbList}。` } ],
+  bug: [
+    { id: 'bb1', when: f => f.bugs, t: f => `昆蟲獵人出動，本週捕獲 ${B2671(N2671(f.bugs))} 隻昆蟲！` },
+    { id: 'bb2', when: f => f.bf, t: f => `花叢裡有 ${B2671(N2671(f.bf))} 隻蝴蝶羽化，農場變得好熱鬧。` },
+    { id: 'bb3', when: f => f.frogs, t: f => `青蛙池傳來好消息：本週抓到 ${B2671(N2671(f.frogs))} 隻青蛙。` },
+    { id: 'bb4', when: f => f.bugs, t: f => `網子揮了一整週，${N2671(f.bugs)} 隻昆蟲成了你的收藏。` } ],
+  pet: [
+    { id: 'pb1', when: f => f.petRats, t: f => `${f.petTeam}本週抓到 ${B2671(N2671(f.petRats))} 隻老鼠，宣布自己是農場保全隊長。` },
+    { id: 'pb2', when: f => f.guard, t: f => `看門狗趕走 ${B2671(N2671(f.guard))} 次天敵，雞舍平安無事。` },
+    { id: 'pb3', when: f => f.nurse, t: f => `救護犬出動 ${B2671(N2671(f.nurse))} 次，受傷的動物都被照顧好了。` },
+    { id: 'pb4', when: f => f.petAdd, t: f => `歡迎新毛孩！本週有 ${f.petAdd} 隻寵物加入農場。` },
+    { id: 'pb5', when: f => f.petRats, t: f => `倉庫的老鼠聽到${f.petName}的名字就發抖：一週被抓走 ${N2671(f.petRats)} 隻。` } ],
+  bird: [
+    { id: 'db1', when: f => f.birdBugs, t: f => `鳥兒們本週在果樹上抓了 ${B2671(N2671(f.birdBugs))} 隻害蟲，比農藥還好用。` },
+    { id: 'db2', when: f => f.birdAdd, t: f => `鳥屋來了 ${f.birdAdd} 位新房客，嘰嘰喳喳好熱鬧。` },
+    { id: 'db3', when: f => f.birdBugs, t: f => `果樹們想謝謝鳥兒：${N2671(f.birdBugs)} 隻害蟲再也不會來咬葉子了。` } ],
+  owl: [
+    { id: 'ob1', when: f => f.owlRats, t: f => `貓頭鷹夜班抓到 ${B2671(N2671(f.owlRats))} 隻老鼠，倉庫的糧食安全了。` },
+    { id: 'ob2', when: f => f.owlRats, t: f => `月亮出來後就是貓頭鷹的時間，本週戰果 ${N2671(f.owlRats)} 隻老鼠。` } ],
+  fish: [
+    { id: 'fb1', when: f => f.fish, t: f => `魚池本週撈起 ${B2671(N2671(f.fish))} 條魚，鍋子已經準備好了。` },
+    { id: 'fb2', when: f => f.fish, t: f => `魚兒長得又快又壯，一週收了 ${N2671(f.fish)} 條。` } ] };
+const EXTRA2671 = [
+  { id: 'xa1', when: f => f.played >= 7, t: f => `全勤獎！7 天天天報到，農場離不開你。` },
+  { id: 'xa2', when: f => f.played >= 7, t: f => `一週 7 天都上線，農場主人敬業度滿分。` },
+  { id: 'xa3', when: f => f.played === 6, t: f => `差一天就全勤了，下週挑戰 7 天報到吧！` },
+  { id: 'xw1', when: f => f.rain >= 2, t: f => `天氣插播：本週下了 ${f.rain} 場雨，水塔笑了，你的澆水壺失業了。` },
+  { id: 'xw2', when: f => f.rain >= 1, t: f => `天氣插播：${f.rain} 場雨送來免費的水，荷包省下一筆。` },
+  { id: 'xw3', when: f => f.snow >= 1, t: f => `天氣插播：下了 ${f.snow} 次雪，島上白茫茫一片。` },
+  { id: 'xl1', when: f => f.lvUp, t: f => `恭喜升級！本週從 ${f.lv0} 級升到 ${B2671(f.lv1 + ' 級')}。` },
+  { id: 'xl2', when: f => f.lvUp >= 2, t: f => `一週連升 ${f.lvUp} 級，這是要直衝排行榜嗎？` },
+  { id: 'xn1', when: f => f.net >= 10000, t: f => `本週淨賺 ${B2671(N2671(f.net))} 金幣，錢包變得好重。` },
+  { id: 'xn2', when: f => f.net < 0, t: f => `這週花的比賺的多，看來是投資週，下週等著回本！` } ];
+
+function hash2671(s){ let h = 2166136261; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rng2671(seed){ let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const catOf2671 = id => (CFG.items[id] || {}).category;
+const anName2671 = id => (CFG.animals[id] || {}).name || id;
+function facts2671(A, W, mon){
+  const wi = wkIdx2671(mon), prev = W.hist.find(h => h.wi === wi - 1) || null;
+  const crops = Object.keys(A.g).filter(id => ['crop', 'fruit'].includes(catOf2671(id))).map(id => ({ id, n: itemName(id), q: A.g[id], p: A.pl[id] || 0 })).sort((a, b) => b.q - a.q);
+  const prods = Object.keys(A.g).filter(id => ['product', 'meat', 'honey'].includes(catOf2671(id))).map(id => ({ id, n: itemName(id), q: A.g[id] })).sort((a, b) => b.q - a.q);
+  const sum = (o, f) => Object.keys(o).filter(f || (() => true)).reduce((a, k) => a + (o[k] || 0), 0), st = A.s, rb = A.rb, R = (k, f) => (rb[k] && rb[k][f]) || 0;
+  const totH = crops.reduce((a, c) => a + c.q, 0), plants = sum(A.pl) + A.tr, top = crops[0] || null;
+  const f = { wi, played: A.played, rain: A.rain, snow: A.snow, net: Math.round(A.ci - A.co), lv0: A.lv0, lv1: A.lv1, lvUp: A.lv1 > A.lv0 ? A.lv1 - A.lv0 : 0,
+    t: totH, p: plants, k: crops.length, crops, prods };
+  if (top){ Object.assign(f, { crop: top.n, cropId: top.id, q: top.q, share: totH ? Math.round(top.q / totH * 100) : 0,
+    c2: crops[1] && crops[1].n, q2: crops[1] && crops[1].q, c3: crops[2] && crops[2].n, q3: crops[2] && crops[2].q });
+    const pc = prev && prev.top && prev.top.crop, ps = (prev && prev.top && prev.top.streak) || 0;
+    f.streak = pc === top.id ? ps + 1 : 1; f.prevCrop = pc && pc !== top.id ? itemName(pc) : null; f.prevStreak = ps; f.dethrone = !!(f.prevCrop && ps >= 2);
+    const pt = prev ? prev.totH || 0 : null; f.d = pt == null ? 0 : totH - pt; f.pct = pt ? Math.round((totH - pt) / pt * 100) : 0;
+    const best = W.hist.filter(h => h.wi < wi).reduce((m, h) => Math.max(m, h.totH || 0), 0); f.record = W.hist.filter(h => h.wi < wi).length >= 2 && totH > best;
+    f.lucky = [77, 777, 7777, 1234, 2026].includes(top.q) || /^(\d)\1{2,}$/.test(String(top.q)); }
+  const add = Object.keys(A.add).filter(id => CFG.animals[id]).map(id => `${A.add[id]} 隻${anName2671(id)}`);
+  f.addN = sum(A.add, id => CFG.animals[id]); f.addTxt = add.slice(0, 3).join('、'); f.goneN = sum(A.gone, id => CFG.animals[id]);
+  f.prodTop = prods[0] && prods[0].n; f.prodQ = prods[0] && prods[0].q; f.prodTotal = prods.reduce((a, p) => a + p.q, 0);
+  f.prodList = prods.slice(0, 3).map(p => `${p.n} ${B2671(N2671(p.q))} 份`).join('、');
+  f.bugs = sum(st, k => k.startsWith('bug_')); f.bf = st.butterfly || 0; f.frogs = st.frogs || 0;
+  f.owlRats = st.owlRats || 0; f.petRats = Math.max(0, (st.mouser || 0) - f.owlRats); f.guard = st.guard || 0; f.nurse = st.nurse || 0; f.petAdd = A.pet; f.birdAdd = A.bird;
+  f.birdBugs = st.birdBugs || 0; f.fish = st.fisher || 0; f.rbHours = st.hours || 0;
+  const pets = (S.pets || []).filter(P => P && P.name); f.petNamed = pets.length > 0; f.petName = pets.length ? esc2671(pets[Math.floor(rng2671(hash2671(seed2671() + wi + 'pet'))() * pets.length)].name) : '毛孩們'; f.petTeam = f.petNamed ? `${f.petName}等毛孩` : '毛孩們';
+  f.rbWater = R('water', 'tiles'); f.rbFeed = R('feed', 'n'); f.rbSweep = R('sweep', 'tiles'); f.rbWeeds = R('sweep', 'weeds'); f.rbSnow = R('snow', 'tiles'); f.rbPoop = R('poop', 'n'); f.rbHoney = R('honey', 'jars');
+  f.rbBags = Math.round(R('trashbot', 'bags') + R('recyclebot', 'bags'));
+  f.rbEvents = f.rbWater + f.rbFeed + f.rbSweep + f.rbSnow + f.rbPoop + f.rbHoney + f.rbBags; f.acts = A.acts;
+  f.rbShare = f.rbEvents + A.acts ? Math.round(f.rbEvents / (f.rbEvents + A.acts) * 100) : 0;
+  f.rbList = [f.rbWater && `澆水 ${N2671(f.rbWater)} 格`, f.rbFeed && `餵食 ${N2671(f.rbFeed)} 次`, f.rbSweep && `清掃 ${N2671(f.rbSweep)} 格`, f.rbSnow && `鏟雪 ${N2671(f.rbSnow)} 格`,
+    f.rbPoop && `撿糞便 ${N2671(f.rbPoop)} 坨`, f.rbHoney && `採蜜 ${N2671(f.rbHoney)} 罐`, f.rbBags && `倒垃圾 ${N2671(f.rbBags)} 袋`].filter(Boolean).slice(0, 3).join('、');
+  // 投入程度：決定頭條和專欄順序（機器人只有在主人幾乎沒來時才上頭條）
+  f.score = { crop: totH + plants, animal: f.prodTotal + f.addN * 5, bug: (f.bugs + f.bf + f.frogs) * 8, pet: (f.petRats + f.guard + f.nurse) * 6 + f.petAdd * 5,
+    bird: f.birdBugs * 3 + f.birdAdd * 5, owl: f.owlRats * 6, fish: f.fish * 3, robot: f.rbEvents ? Math.max(1, f.rbEvents / 20 + f.rbHours * 2) : 0 };
+  return { f, prev }; }
+function seed2671(){ return `${typeof SLOT !== 'undefined' ? SLOT : ''}|${(S.profile && S.profile.name) || ''}`; }
+
+function build2671(mon){
+  const W = wk2671(), A = agg2671(mon); if (!A.any) return null;
+  const { f, prev } = facts2671(A, W, mon), wi = f.wi, mine = new Set();
+  const recent = id => W.used[id] != null && wi - W.used[id] < (WKR.noRepeatWeeks || 4) && W.used[id] !== wi;
+  const pick = (slot, pools) => { const rnd = rng2671(hash2671(seed2671() + '|' + wi + '|' + slot));
+    for (const pool of pools){ const c = pool.filter(x => !mine.has(x.id) && (!x.when || x.when(f))); if (!c.length) continue;
+      const fresh = c.filter(x => !recent(x.id)), from = fresh.length ? fresh : c.slice().sort((a, b) => (W.used[a.id] || 0) - (W.used[b.id] || 0)).slice(0, 1);
+      const x = from[Math.floor(rnd() * from.length)]; mine.add(x.id); return x.t(f); }
+    return ''; };
+  const pickT = (cat, salt) => { const L = TITLE2671[cat] || ['專欄']; return L[Math.floor(rng2671(hash2671(seed2671() + wi + cat + salt))() * L.length)]; };
+  const cats = Object.keys(f.score).filter(c => f.score[c] > 0).sort((a, b) => f.score[b] - f.score[a]);
+  let head = cats.find(c => c !== 'robot') || (cats.includes('robot') ? 'robot' : null); if (!head) return null;
+  const R = { wk: dayKey2671(mon), wi, made: Date.now(), head: { cat: head }, cols: [], extra: [] };
+  if (head === 'crop'){ R.head.h = pick('h', HEAD_CROP2671); R.head.b = [pick('b', BODY_CROP2671), pick('m', MORE_CROP2671)].filter(Boolean).join(''); R.head.icon = f.cropId; }
+  else { R.head.h = pick('h', [HEAD_OTHER2671[head] || []]); const b1 = pick('b1', [BODY_OTHER2671[head] || []]), b2 = pick('b2', [BODY_OTHER2671[head] || []]); R.head.b = b1 + b2; }
+  // 有兩座島以上：頭條標出是哪座島（頭條作物／產品收最多的那座）
+  try { const item = head === 'crop' ? f.cropId : head === 'animal' && f.prods[0] ? f.prods[0].id : null;
+    if (item && S.maps.length > 1){ let best = null, bq = 0; for (const mi in A.gi){ const q = A.gi[mi][item] || 0; if (q > bq){ bq = q; best = +mi; } }
+      if (best != null && S.maps[best]) R.head.isl = islName63(best); } } catch(e){}
+  for (const c of cats.filter(c => c !== head).slice(0, WKR.maxColumns || 4)){
+    let b; if (c === 'crop') b = pick('cc', BODY_CROP2671) + pick('cm', MORE_CROP2671); else b = pick('c1' + c, [BODY_OTHER2671[c] || []]) + (f.score[c] > 40 ? pick('c2' + c, [BODY_OTHER2671[c] || []]) : '');
+    if (b) R.cols.push({ cat: c, t: pickT(c, 't'), b }); }
+  for (let i = 0; i < 2; i++){ const x = pick('x' + i, [EXTRA2671]); if (x) R.extra.push(x); }
+  for (const id of mine) W.used[id] = wi;
+  R.top = { crop: f.cropId || null, streak: f.cropId ? f.streak : 0, cat: head }; R.totH = f.t;
+  R.ch = { ms: A.ms, mins: A.mins, net: f.net, ci: Math.round(A.ci), co: Math.round(A.co), xp: Math.round(A.xp), lv0: A.lv0, lv1: A.lv1,
+    crops: f.crops.slice(0, 6).map(c => [c.id, c.q, c.p]), prods: f.prods.slice(0, 8).map(p => [p.id, p.q]), acts: A.acts, rb: f.rbEvents, rbList: f.rbList, rbHours: Math.round(f.rbHours * 10) / 10,
+    first: A.first && A.first > R.wk ? A.first : null };
+  if (prev && prev.ch) R.pv = { ms: prev.ch.ms, net: prev.ch.net, xp: prev.ch.xp };
+  else { const pA = agg2671(addDays2671(mon, -7)); if (pA.any) R.pv = { ms: pA.ms, net: Math.round(pA.ci - pA.co), xp: Math.round(pA.xp) }; }
+  return R; }
+function make2671(mon){ const W = wk2671(), key = dayKey2671(mon); let R = W.hist.find(h => h.wk === key); if (R) return R;
+  R = build2671(mon); if (!R) return null; W.issue = (W.issue || 0) + 1; R.no = W.issue; W.hist.push(R); W.hist.sort((a, b) => a.wi - b.wi);
+  while (W.hist.length > (WKR.keepReports || 12)) W.hist.shift(); return R; }
+
+// --- 畫面 ---
+const WKIC2671 = { robot: 'ui_hd_st_robot', bug: 'ui_hd_bug_box', pet: 'ui_dog_house', bird: 'ui_hd_bird_house', owl: 'ui_hd_owl_box', fish: 'ui_ic66_fish', animal: 'ui_tool_animal', crop: 'ui_badge_harvest' };
+function ico2671(cat, id, cls){ if (id){ try { const [n, fr] = itemSprite('item', id); if (n) return `<canvas class="${cls}" data-wk-spr="${n}" data-f="${fr || 0}"></canvas>`; } catch(e){} }
+  const src = IMGSRC[WKIC2671[cat]] || IMGSRC.ui_news; return `<img class="${cls}" src="${src}" alt="">`; }
+const md2671 = k => { const [, m, d] = k.split('-'); return `${+m}/${+d}`; };
+const hm2671 = ms => { const m = Math.round(ms / 60000), h = Math.floor(m / 60); return h ? `${h}時${pad2671(m % 60)}分` : `${m} 分`; };
+function dlt2671(cur, pv, kind){ if (pv == null) return '<span class="wkd0">—</span>';
+  const d = cur - pv; if (Math.abs(d) < (kind === 'ms' ? 60000 : 1)) return '<span class="wkd0">和上週一樣</span>';
+  const up = d > 0, txt = kind === 'ms' ? hm2671(Math.abs(d)) : (pv > 0 ? `${Math.round(Math.abs(d) / pv * 100)}%` : fmtN(Math.abs(d)));
+  return `<span class="${up ? 'wkup' : 'wkdn'}">${up ? '▲' : '▼'} ${txt}</span>`; }
+function html2671(R){ const C = Object.assign({ mins: [0, 0, 0, 0, 0, 0, 0], crops: [], prods: [], ms: 0, net: 0, xp: 0, ci: 0, co: 0 }, R.ch); if (C.mins.length !== 7) C.mins = [0, 0, 0, 0, 0, 0, 0]; R.cols = R.cols || []; R.extra = R.extra || []; const mx = Math.max(1, ...C.mins), best = C.mins.indexOf(Math.max(...C.mins)), days = '一二三四五六日';
+  const cmax = Math.max(1, ...C.crops.map(c => c[1])), tot = (C.acts || 0) + (C.rb || 0), me = tot ? Math.round((C.acts || 0) / tot * 100) : 0;
+  const end = dayKey2671(addDays2671(new Date(R.wk.replace(/-/g, '/')).getTime(), 6));
+  const heroIc = R.head.cat === 'crop' ? ico2671('crop', R.head.icon, 'wkhero') : ico2671(R.head.cat, null, 'wkhero');
+  return `<div class="wk26">
+  <div class="wksub small">${md2671(R.wk)}（一）～ ${md2671(end)}（日）· 第 ${R.no || 1} 期${C.first ? ` · 從 ${md2671(C.first)} 開始記錄` : ''}</div>
+  <div class="wktop">
+    <section class="wkhead">${R.head.isl ? `<span class="wkisl">【${esc2671(R.head.isl)}】</span>` : ''}<h3>${R.head.h}</h3><div class="wkhb">${heroIc}<p>${R.head.b}</p></div>
+      ${R.extra.length ? `<ul class="wkx">${R.extra.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</section>
+    ${R.cols.length ? `<div class="wkcols">${R.cols.map(c => `<section class="wkcol"><h4>${ico2671(c.cat, c.cat === 'crop' ? (R.top.crop || null) : null, 'wkci')}<span>${c.t}</span></h4><p>${c.b}</p></section>`).join('')}</div>` : ''}
+  </div>
+  <div class="wkch">
+    <div class="wkc1">
+      <div class="wkkpi">
+        <div class="card"><img src="${IMGSRC.ui_badge_hours || IMGSRC.ui_news}" alt=""><span class="small">投入時間</span><b>${hm2671(C.ms)}</b>${dlt2671(C.ms, R.pv && R.pv.ms, 'ms')}</div>
+        <div class="card"><img src="${IMGSRC.ui_cl_net || IMGSRC.ui_coin}" alt=""><span class="small">淨賺金幣</span><b>${C.net >= 0 ? '+' : '−'}${fmtN(Math.abs(C.net))}</b>${dlt2671(C.net, R.pv && R.pv.net)}</div>
+        <div class="card"><img src="${IMGSRC.ui_lv_star || IMGSRC.ui_xp_star}" alt=""><span class="small">經驗值${C.lv1 > C.lv0 ? `（${C.lv0}→${C.lv1} 級）` : ''}</span><b>+${fmtN(C.xp)}</b>${dlt2671(C.xp, R.pv && R.pv.xp)}</div>
+      </div>
+      <div class="card"><div class="wkct"><b>每天玩多久</b><span class="small">分鐘</span></div>
+        <div class="wkbars">${C.mins.map((m, i) => `<div><span class="small">${m}</span><i style="height:${m ? Math.max(4, Math.round(m / mx * 100)) : 2}%" class="${m && i === best ? 'hi' : m ? '' : 'z'}"></i></div>`).join('')}</div>
+        <div class="wkdays">${[...days].map(d => `<span>${d}</span>`).join('')}</div></div>
+      ${tot ? `<div class="card"><div class="wkct"><b>誰做的工作</b></div><div class="wksplit"><i style="width:${Math.max(me, 8)}%">你 ${me}%</i><i style="width:${Math.max(100 - me, 8)}%">機器人 ${100 - me}%</i></div>
+        ${C.rbList ? `<span class="small">機器人：${C.rbList.replace(/<\/?b>/g, '')}${C.rbHours ? `（工作 ${C.rbHours} 小時）` : ''}</span>` : ''}</div>` : ''}
+    </div>
+    <div class="wkc2">
+      ${C.crops.length ? `<div class="card"><div class="wkct"><b>收成排行</b><span class="small">收成（種下）</span></div>
+        ${C.crops.map(([id, q, p], i) => `<div class="wkrow">${ico2671('crop', id, 'wkri')}<span class="wkrn">${itemName(id)}</span><span class="wkbar"><i style="width:${Math.max(3, Math.round(q / cmax * 100))}%" class="${i ? '' : 'hi'}"></i></span><b>${fmtN(q)}</b><span class="small">${p ? `(${fmtN(p)})` : ''}</span></div>`).join('')}</div>` : ''}
+      ${C.prods.length ? `<div class="card"><div class="wkct"><b>牧場產品</b></div><div class="wkprods">${C.prods.map(([id, q]) => `<div>${ico2671('animal', id, 'wkpi')}<b>${fmtN(q)}</b><span class="small">${itemName(id)}</span></div>`).join('')}</div></div>` : ''}
+      ${C.ci || C.co ? `<div class="card"><div class="wkct"><b>金幣進出</b></div><div class="wkmoney"><span>收入</span><b>+${fmtN(C.ci)}</b><span>支出</span><b class="wkdn">−${fmtN(C.co)}</b></div></div>` : ''}
+    </div>
+  </div>
+  <div class="row wkbtn"><button class="btn ghost" id="wkHist">歷史週報</button><button class="btn" id="wkOk">知道了</button></div></div>`; }
+function paint2671(el){ el.querySelectorAll('canvas[data-wk-spr]').forEach(c => { const w = c.clientWidth || 40; try { paintInto75(c, c.dataset.wkSpr, +c.dataset.f || 0, Math.max(48, Math.round(w * (window.devicePixelRatio || 1)))); } catch(e){} }); }
+function openWeekly2671(R){ const W = wk2671(); if (!W) return; R = R || W.hist[W.hist.length - 1];
+  if (!R){ toast('第一份農場週報會在下週一出刊，這週先好好經營吧！', false, 3600); return; }
+  openModal('農場週報', null, (k, el) => { el.innerHTML = html2671(R); requestAnimationFrame(() => paint2671(el));
+    $('wkOk').onclick = closeModal; const hb = $('wkHist'); if (W.hist.length < 2) hb.hidden = true; hb.onclick = () => histView2671(el); }); }
+function histView2671(el){ const W = wk2671(), L = W.hist.slice().reverse();
+  el.innerHTML = `<div class="wk26"><p class="small">最近 ${L.length} 期週報，點一份打開：</p><div class="wkhist">${L.map((R, i) => `<button class="card" data-wkh="${i}"><span class="small">第 ${R.no || ''} 期 · ${md2671(R.wk)} 那週</span><b>${R.head.isl ? `【${esc2671(R.head.isl)}】` : ''}${String(R.head.h).replace(/<[^>]+>/g, '')}</b></button>`).join('')}</div>
+    <div class="row wkbtn"><button class="btn" id="wkBack">回到最新一期</button></div></div>`;
+  el.querySelectorAll('[data-wkh]').forEach(b => b.onclick = () => openWeekly2671(L[+b.dataset.wkh])); $('wkBack').onclick = () => openWeekly2671(); }
+HD54['農場週報'] = 'news';
+{ const _om = openModal; openModal = function(title, ...a){ try { const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.toggle('wk2671s', title === '農場週報'); } catch(e){} return _om(title, ...a); }; }
+{ const st = document.createElement('style'); st.textContent = `
+#modal .sheet.wk2671s{width:min(1000px,100%)}
+.wk26{display:flex;flex-direction:column;gap:12px}
+.wk26 .wksub{margin-top:-2px}
+.wk26 .wktop{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px;align-items:start}
+.wk26 .wkhead{background:#fffbe9;border:2px solid #eadfb8;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.wk26 .wkisl{align-self:flex-start;font-weight:700;font-size:13px;color:#8a5d36;margin-bottom:-6px}
+.wk26 .wkhead h3{margin:0;font-family:var(--font-display);font-size:clamp(22px,3.2vw,30px);line-height:1.3;color:#2b2a24}
+.wk26 .wkhb{display:flex;gap:14px;align-items:flex-start}
+.wk26 .wkhero{flex:none;width:clamp(84px,14vw,128px);height:clamp(84px,14vw,128px);object-fit:contain;background:#fff3c4;border:1px solid #eadfb8;border-radius:10px;padding:6px;box-sizing:border-box}
+.wk26 .wkhb p{margin:0;line-height:1.75;font-size:14.5px}
+.wk26 .wkx{margin:0;padding:8px 0 0 18px;border-top:1px dashed #d9cc9c;display:flex;flex-direction:column;gap:4px;line-height:1.6;font-size:13.5px}
+.wk26 .wkcols{display:flex;flex-direction:column;gap:10px}
+.wk26 .wkcol{background:#fffbe9;border:2px solid #eadfb8;border-radius:14px;padding:10px 12px}
+.wk26 .wkcol h4{margin:0 0 6px;font-family:var(--font-display);font-size:18px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2b2a24;padding-bottom:4px}
+.wk26 .wkci{width:30px;height:30px;object-fit:contain}
+.wk26 .wkcol p{margin:0;line-height:1.7;font-size:13.5px}
+.wk26 .wkch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}
+.wk26 .wkc1,.wk26 .wkc2{display:flex;flex-direction:column;gap:10px}
+.wk26 .wkkpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wk26 .wkkpi .card{align-items:center;text-align:center;gap:2px;padding:8px 4px}
+.wk26 .wkkpi img{width:38px;height:38px;object-fit:contain}
+.wk26 .wkkpi b{font-size:18px}
+.wk26 .wkup{color:#2f7a45;font-weight:700;font-size:12px}.wk26 .wkdn{color:#c5452f;font-weight:700;font-size:12px}.wk26 .wkd0{color:var(--muted);font-size:12px}
+.wk26 .wkct{display:flex;justify-content:space-between;align-items:baseline}
+.wk26 .wkbars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;height:120px;align-items:end}
+.wk26 .wkbars div{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:2px}
+.wk26 .wkbars i{display:block;width:100%;background:#5aa86b;border-radius:5px 5px 0 0}.wk26 .wkbars i.hi{background:#2f7a45}.wk26 .wkbars i.z{background:#cfe1c4;border-radius:0}
+.wk26 .wkdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;text-align:center;font-size:12px;color:var(--muted)}
+.wk26 .wksplit{display:flex;height:22px;border-radius:11px;overflow:hidden;font-size:12px;font-weight:700}
+.wk26 .wksplit i{font-style:normal;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.wk26 .wksplit i:first-child{background:#f2c23c;color:#1e3a2a}.wk26 .wksplit i:last-child{background:#2f7a45;color:#fff}
+.wk26 .wkrow{display:flex;align-items:center;gap:8px}
+.wk26 .wkri{width:30px;height:30px;object-fit:contain;flex:none}
+.wk26 .wkrn{width:4.6em;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk26 .wkbar{flex:1;height:14px;background:#eef4ea;border-radius:7px;overflow:hidden}.wk26 .wkbar i{display:block;height:100%;background:#5aa86b}.wk26 .wkbar i.hi{background:#f2c23c}
+.wk26 .wkrow b{min-width:3em;text-align:right}
+.wk26 .wkprods{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.wk26 .wkprods div{background:var(--panel);border-radius:10px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.wk26 .wkpi{width:34px;height:34px;object-fit:contain}
+.wk26 .wkmoney{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:4px 10px;align-items:baseline}
+.wk26 .wkbtn{justify-content:center;gap:10px}.wk26 .wkbtn .btn{min-width:150px;min-height:42px}
+.wk26 .wkhist{display:flex;flex-direction:column;gap:8px}.wk26 .wkhist .card{text-align:left;cursor:pointer;font:inherit}
+@media (max-width:720px){.wk26 .wktop,.wk26 .wkch{grid-template-columns:minmax(0,1fr)}.wk26 .wkhb{flex-direction:column;align-items:center}.wk26 .wkbtn .btn{min-width:0;flex:1}}
+`; document.head.appendChild(st); }
+
+// --- 什麼時候出刊：週一（含之後第一次上線）、畫面空著（沒有其他視窗、升級動畫、購買確認）才跳 ---
+function due2671(){ if (!S || !S.player) return null; const W = wk2671(), mon = addDays2671(monday2671(Date.now()), -7), key = dayKey2671(mon);
+  if (W.shown === key) return null; if (W.start && W.start > dayKey2671(addDays2671(mon, 6))){ W.shown = key; return null; }
+  if (!agg2671(mon).any){ W.shown = key; return null; } return mon; }
+function free2671(){ return !document.hidden && $('modal').hidden && !document.getElementById('ask47') && !document.getElementById('lvup') && !RT.lvQ && !RT.pendingLv
+  && !(S.tutorial && S.tutorial.done === false) && !(document.getElementById('catch260') && !document.getElementById('catch260').hidden) && !RT.mv; }
+function check2671(){ try { const mon = due2671(); if (mon == null || !free2671()) return; const W = wk2671(); W.shown = dayKey2671(mon);
+  const R = make2671(mon); try { save(); } catch(e){} if (R) openWeekly2671(R); } catch(e){ if (!RT.err2671b){ RT.err2671b = 1; console.warn(e); } } }
+setTimeout(() => setInterval(check2671, 3000), WKR.firstDelayMs || 8000);
+
+// --- 入口：☰ 更多功能、手機「更多」 ---
+{ const _mh = moreHTML; moreHTML = function(...a){ let h = _mh(...a); const btn = `<button class="mi" data-m="week2671"><img src="${IMGSRC.ui_cl_calendar || IMGSRC.ui_news}" alt=""><span>農場週報</span></button>`;
+  const i = h.indexOf('data-m="news"'); if (i >= 0){ const j = h.indexOf('</button>', i) + 9; h = h.slice(0, j) + btn + h.slice(j); } else h += btn; return h; }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="week2671"]'); if (b){ e.stopPropagation(); closeMore(); openWeekly2671(); } });
+{ const _om = openMore; openMore = function(...a){ const r = _om(...a); try { const g = document.querySelector('#modalBody .moregrid'); if (g && !g.querySelector('[data-more="week2671"]')){
+    const b = document.createElement('button'); b.dataset.more = 'week2671'; b.innerHTML = `<img src="${IMGSRC.ui_cl_calendar || IMGSRC.ui_news}" alt=""><span>農場週報</span>`;
+    b.addEventListener('click', e => { e.stopPropagation(); closeModal(); openWeekly2671(); }); const at = g.querySelector('[data-more="fc"]'); g.insertBefore(b, at); } } catch(e){} return r; }; }
+$('moreBtn').onclick = openMore;
+
+window.__farm2671 = Object.assign(window.__farm2671 || {}, { tick: () => tick2671(), agg: m => agg2671(m), build: m => build2671(m), make: m => make2671(m), open: R => openWeekly2671(R),
+  check: () => check2671(), due: () => due2671(), monday: t => monday2671(t), dayKey: t => dayKey2671(t), addDays: (t, n) => addDays2671(t, n), wk: () => wk2671() });
+
+/* ===== v2.67.2 寵物好感度（玩家 2026-11-17）=====
+   狗、貓、寵物鳥各自有好感度：最多 5 顆愛心，每顆 50 點（AFF.perHeart）。點地圖上的寵物跳小選單：
+     摸摸 +1（每天 5 次）、一起玩 +2（3 次；狗丟飛盤、貓逗貓棒、鳥吹口哨）、給零食 +3（2 次；狗骨頭／小魚乾／小米穗，飼料商店買）、
+     每天第一次點到牠＝打招呼 +2、髒了（下雨後、偶爾自己弄髒）洗澡／梳毛 +3、詳細資料（原本的面板）。
+   很久沒互動（AFF.decayAfterHours，預設 48 小時）：每天扣 AFF.decayPerDay 點，但只扣目前這顆心的進度，已經滿的心不會掉。
+   好處：每顆心工作效率 +5%（貓／抓鼠狗抓老鼠、鳥抓害蟲）；3 顆心起切換到牠住的島會跑來迎接；5 顆心「最好的朋友」（名字旁金色愛心）。
+   存檔：P.aff2672 / B.aff2672 = { p 點數, d 今天的次數 { day, pet, play, treat, greet }, last 最後互動時間, dec 最後扣分那天, dirty, best }
+   每週報告：升心記在週報的當天資料 d.hu = [[名字, 'pet'|'bird', 第幾顆心]]。 */
+const AFF = Object.assign({ perHeart: 50, hearts: 5, pet: 1, play: 2, treat: 3, greet: 2, bath: 3, capPet: 5, capPlay: 3, capTreat: 2,
+  decayAfterHours: 48, decayPerDay: 5, workBonusPerHeart: .05, greetHearts: 3, dirtyOnRain: .4, dirtyPerDay: .15 }, CFG.petAffection || {});
+const TREAT2672 = { dog: 'treat_bone', cat: 'treat_fish', bird: 'treat_millet' };
+ITEM_ICON.treat_bone = 'ui_item_treat_bone'; ITEM_ICON.treat_fish = 'ui_item_treat_fish'; ITEM_ICON.treat_millet = 'ui_item_treat_millet';
+{ const _is = itemSprite; itemSprite = function(kind, id){ if (kind === 'item' && TREAT2672.dog === id || kind === 'item' && TREAT2672.cat === id || kind === 'item' && TREAT2672.bird === id) return ['ui_item_' + id, 0]; return _is(kind, id); }; }
+const today2672 = () => dayKey2671(Date.now());
+const kindOf2672 = X => X && X.kind === 'dog' ? 'dog' : X && X.kind === 'cat' ? 'cat' : 'bird';
+function aff2672(X){ const A = X.aff2672 = X.aff2672 || { p: 0, last: 0 }; const t = today2672(); if (!A.d || A.d.day !== t) A.d = { day: t, pet: 0, play: 0, treat: 0, greet: 0 }; return A; }
+const max2672 = () => AFF.perHeart * AFF.hearts;
+const hearts2672 = X => Math.min(AFF.hearts, Math.floor(((X && X.aff2672 && X.aff2672.p) || 0) / AFF.perHeart));
+function gain2672(X, n, why){ const A = aff2672(X), h0 = hearts2672(X); A.p = Math.min(max2672(), A.p + n); A.last = Date.now(); const h1 = hearts2672(X);
+  if (h1 > h0){ try { const d = day2671(); if (d) (d.hu = d.hu || []).push([X.name, kindOf2672(X) === 'bird' ? 'bird' : 'pet', h1]); } catch(e){}
+    if (h1 >= AFF.hearts && !A.best){ A.best = Date.now(); toast(`${X.name}成為你「最好的朋友」了！`, true, 4200); sfx('harvest'); }
+    else toast(`${X.name}對你的好感升到第 ${h1} 顆心了！${h1 === AFF.greetHearts ? '之後回到牠住的島，牠會跑來迎接你' : ''}`, true, 3600); }
+  return h1 > h0; }
+
+// --- 地圖上的位置（這一格畫面的 critHit） ---
+function hitOf2672(X){ for (const h of RT.critHit || []) if ((h.kind === 'pet' && h.P === X) || (h.kind === 'bird2543' && h.B === X)) return h; return null; }
+function fx2672(X, type){ (RT.fx2672 = RT.fx2672 || []).push({ X, type, t0: performance.now() }); if (X.kind === 'dog' || X.kind === 'cat') RT.heartFx = { id: X.id, t0: performance.now() }; }
+
+// --- 互動 ---
+const LBL2672 = { dog: { pet: '摸摸頭', play: '丟飛盤', bath: '洗澡', say: ['尾巴搖個不停！', '汪！開心地轉圈圈', '把頭靠過來討摸'] },
+  cat: { pet: '摸下巴', play: '逗貓棒', bath: '梳毛', say: ['呼嚕呼嚕……', '瞇起眼睛，好舒服', '翻肚肚給你摸'] },
+  bird: { pet: '輕撫羽毛', play: '吹口哨', bath: '洗羽毛', say: ['啾啾！', '歪著頭看你', '在你手上跳來跳去'] } };
+function act2672(X, what){ const A = aff2672(X), k = kindOf2672(X), L = LBL2672[k], h = hitOf2672(X), say = (t, c) => { if (h) floatText(h.x, h.y - 30, t, c || '#c0396b', 11); };
+  if (what === 'pet'){ if (A.d.pet >= AFF.capPet){ toast(`今天已經摸夠了，${X.name}明天還想要`); return; } A.d.pet++; fx2672(X, 'pet'); sfx('click');
+    say(`${L.say[Math.floor(Math.random() * L.say.length)]} ♥+${AFF.pet}`); gain2672(X, AFF.pet); }
+  else if (what === 'play'){ if (A.d.play >= AFF.capPlay){ toast(`${X.name}今天玩累了，明天再一起玩`); return; } A.d.play++; fx2672(X, 'play'); sfx('place');
+    say(`${L.play}！♥+${AFF.play}`, '#2f7fa8'); gain2672(X, AFF.play); }
+  else if (what === 'treat'){ const it = TREAT2672[k];
+    if (A.d.treat >= AFF.capTreat){ toast(`${X.name}今天零食吃夠了，太多會胖喔`); return; }
+    if (!(S.inv[it] > 0)){ toast(`倉庫沒有${itemName(it)}：到飼料商店買（${fmtN(CFG.feedShop[it] || 0)} 金幣）`, false, 3200); return; }
+    invTake(it, 1); A.d.treat++; fx2672(X, 'treat'); sfx('harvest'); say(`好吃！${itemName(it)} ♥+${AFF.treat}`, '#8a5d36'); gain2672(X, AFF.treat); }
+  else if (what === 'bath'){ if (!A.dirty) return; A.dirty = false; fx2672(X, 'bath'); sfx('place'); say(`${L.bath}完香噴噴 ♥+${AFF.bath}`, '#2f7fa8'); gain2672(X, AFF.bath); }
+  afterAction(); }
+function greet2672(X){ const A = aff2672(X); if (A.d.greet) return false; A.d.greet = 1; fx2672(X, 'pet'); const h = hitOf2672(X);
+  if (h) floatText(h.x, h.y - 44, `${X.name}跑過來迎接你 ♥+${AFF.greet}`, '#c0396b', 11); gain2672(X, AFF.greet); return true; }
+function menu2672(X, h){ const A = aff2672(X), k = kindOf2672(X), L = LBL2672[k], it = TREAT2672[k], n = S.inv[it] || 0, H = hearts2672(X);
+  const left = (u, cap) => Math.max(0, cap - u), b = (v, ic, txt, sub, off) => `<button data-af2672="${v}"${off ? ' class="dim2672"' : ''}>${ic}<span>${txt}<small>${sub}</small></span></button>`;
+  const img = s => `<img src="${IMGSRC[s] || ''}" alt="">`;
+  showPop53(h.x, h.y - 18, `<h5>${escapeHTML(X.name)} ${heartsHTML2672(X, 'sm')}</h5>
+    ${A.dirty ? b('bath', img('ui_tool_water'), L.bath, `髒了 · ♥+${AFF.bath}`) : ''}
+    ${b('pet', img('ui_tool_care'), L.pet, `還可以 ${left(A.d.pet, AFF.capPet)} 次 · ♥+${AFF.pet}`, A.d.pet >= AFF.capPet)}
+    ${b('play', img(k === 'bird' ? 'ui_bird_house' : k === 'dog' ? 'ui_dog_house' : 'ui_cat_tree'), `一起玩（${L.play}）`, `還可以 ${left(A.d.play, AFF.capPlay)} 次 · ♥+${AFF.play}`, A.d.play >= AFF.capPlay)}
+    ${b('treat', img('ui_item_' + it), `給${itemName(it)}`, n ? `倉庫 ${n} 個 · 還可以 ${left(A.d.treat, AFF.capTreat)} 次 · ♥+${AFF.treat}` : `倉庫沒有，飼料商店 ${fmtN(CFG.feedShop[it] || 0)} 金幣`, !n || A.d.treat >= AFF.capTreat)}
+    ${b('info', img(k === 'bird' ? 'ui_hd_bird_house' : 'ui_tool_book'), '詳細資料', H >= AFF.hearts ? '最好的朋友' : `第 ${Math.min(AFF.hearts, H + 1)} 顆心 ${A.p % AFF.perHeart}/${AFF.perHeart}`)}`);
+  POP53.querySelectorAll('[data-af2672]').forEach(el => el.onclick = e => { e.stopPropagation(); const v = el.dataset.af2672; closePop53();
+    if (v === 'info'){ if (k === 'bird') openBird2543(X); else openPet(X); } else act2672(X, v); }); }
+{ const _mt = meteorTap; meteorTap = function(sx, sy, ...a){
+  try { if (S && !UI.expand && !RT.mv && RT.critHit && RT.critHit.length){ const tool = S.sel.tool;
+      if (!['remove', 'store', 'move'].includes(tool) && !(tool === 'animal' && (isPetSel(S.sel.animal) || String(S.sel.animal || '').startsWith('bird_')))){
+        const { wx, wy } = toWorld(sx, sy); let best = null, bd = 1e9; for (const h of RT.critHit){ const dd = Math.hypot(wx - h.x, wy - h.y); if (dd < h.r && dd < bd){ bd = dd; best = h; } }
+        const X = best && (best.kind === 'pet' ? best.P : best.kind === 'bird2543' ? best.B : null);
+        if (X){ const ag = best.kind === 'pet' && RT.petAg && RT.petAg[X.id];
+          if (!(ag && ag.sleep)){ sfx('click'); greet2672(X); menu2672(X, best); return true; } } } } } catch(e){ console.warn(e); }
+  return _mt(sx, sy, ...a); }; }
+
+// --- 愛心顯示 ---
+const HEART2672 = (fill, cls) => `<svg class="ht2672 ${cls || ''}" viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21s-8.5-5.3-10.6-10.2C-0.2 6.9 2.4 2 6.6 2c2.4 0 4.2 1.4 5.4 3.2C13.2 3.4 15 2 17.4 2c4.2 0 6.8 4.9 5.2 8.8C20.5 15.7 12 21 12 21z" fill="${fill}" stroke="#b03a5b" stroke-width="1.6"/></svg>`;
+function heartsHTML2672(X, size){ const A = (X && X.aff2672) || { p: 0 }, H = hearts2672(X), part = H >= AFF.hearts ? 0 : (A.p % AFF.perHeart) / AFF.perHeart, best = H >= AFF.hearts;
+  let s = ''; for (let i = 0; i < AFF.hearts; i++){ const fill = i < H ? (best ? '#f2c23c' : '#e2557a') : i === H && part > 0 ? `url(#hp2672_${Math.round(part * 10)})` : '#f3e6ea'; s += HEART2672(fill); }
+  const defs = part > 0 ? `<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="hp2672_${Math.round(part * 10)}" x1="0" x2="1" y1="0" y2="0"><stop offset="${part}" stop-color="#f29ab0"/><stop offset="${part}" stop-color="#f3e6ea"/></linearGradient></defs></svg>` : '';
+  return `<span class="hts2672 ${size || ''}" role="img" aria-label="好感度 ${H} 顆心">${defs}${s}</span>`; }
+function affCard2672(X){ const A = aff2672(X), H = hearts2672(X), k = kindOf2672(X), L = LBL2672[k], it = TREAT2672[k], pct = Math.round(H * AFF.workBonusPerHeart * 100);
+  const job = k === 'bird' ? '抓害蟲' : (X.kind === 'cat' || /ratter/.test((breedOf(X) || {}).skill || '')) ? '抓老鼠' : null;
+  return `<div class="card aff2672"><div class="afh2672"><b>好感度</b>${heartsHTML2672(X)}<span class="small">${H >= AFF.hearts ? '<b class="best2672">最好的朋友</b>' : `第 ${H + 1} 顆心 ${A.p % AFF.perHeart}/${AFF.perHeart}`}</span></div>
+    <p class="small">今天：${L.pet} ${A.d.pet}/${AFF.capPet}、一起玩 ${A.d.play}/${AFF.capPlay}、${itemName(it)} ${A.d.treat}/${AFF.capTreat}${A.d.greet ? '、打過招呼了' : ''}。在地圖上點${escapeHTML(X.name)}就能互動。</p>
+    <p class="small">${[job ? (H ? `${job}效率 +${pct}%` : `每多一顆心，${job}效率 +${Math.round(AFF.workBonusPerHeart * 100)}%`) : '', H >= AFF.greetHearts ? '回到這座島會跑來迎接你' : `${AFF.greetHearts} 顆心起，回到這座島會跑來迎接你`].filter(Boolean).join('・')}</p></div>`; }
+function put2672(el, html){ const kv = el.querySelector('.ipkv2543'); if (kv) kv.insertAdjacentHTML('afterend', html); else el.insertAdjacentHTML('afterbegin', html); }
+{ const _op = openPet; openPet = function(P, ...a){ const r = _op(P, ...a); try { const el = $('modalBody'); if (P && el && !el.querySelector('.aff2672')) put2672(el, affCard2672(P)); } catch(e){ console.warn(e); } return r; }; }
+{ const _ob = openBird255; openBird255 = function(B, ...a){ const r = _ob(B, ...a); try { const el = $('modalBody'); if (B && el && !el.querySelector('.aff2672')) put2672(el, affCard2672(B)); } catch(e){ console.warn(e); } return r; }; }
+// 鳥屋面板裡每隻鳥的卡片、寵物窩裡的名字旁邊也顯示愛心
+{ const _obh = openBirdHouse40; openBirdHouse40 = function(...a){ const r = _obh(...a); try { document.querySelectorAll('#modalBody .bird40[data-b]').forEach(c => { const B = (S.birds40 || []).find(q => String(q.id) === c.dataset.b); if (B && !c.querySelector('.hts2672')) c.insertAdjacentHTML('beforeend', heartsHTML2672(B, 'sm')); }); } catch(e){} return r; }; }
+
+// --- 地圖上的效果：飛盤、逗貓棒、音符、零食、泡泡；髒了的泡泡框；最好的朋友名字旁金色愛心 ---
+function drawFx2672(t){ const now = performance.now(), L = RT.fx2672 || []; RT.fx2672 = L.filter(f => now - f.t0 < 1800);
+  for (const f of RT.fx2672){ const h = hitOf2672(f.X); if (!h) continue; const e = (now - f.t0) / 1800, x = h.x, y = h.y, k = kindOf2672(f.X); ctx.save();
+    if (f.type === 'play' && k === 'dog'){ const a = Math.sin(e * Math.PI), dx = 46 * a * (f.X.id % 2 ? 1 : -1), dy = -30 * Math.sin(e * Math.PI * 2) - 10;
+      ctx.translate(x + dx, y + dy); ctx.rotate(e * 12); ctx.fillStyle = '#e2453a'; ctx.strokeStyle = '#8c241d'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(0, 0, 7, 3.2, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+    else if (f.type === 'play' && k === 'cat'){ const sw = Math.sin(e * Math.PI * 6) * .6; ctx.translate(x + 14, y - 26); ctx.rotate(sw); ctx.strokeStyle = '#8a5d36'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-16, 18); ctx.stroke();
+      ctx.strokeStyle = '#c0396b'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, 0); ctx.quadraticCurveTo(6, 8, 2, 16); ctx.stroke(); ctx.fillStyle = '#f29ab0'; ctx.beginPath(); ctx.ellipse(2, 18, 3, 5, .3, 0, Math.PI * 2); ctx.fill(); }
+    else if (f.type === 'play' && k === 'bird'){ ctx.fillStyle = '#2f7fa8'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center'; ctx.globalAlpha = 1 - e;
+      for (let i = 0; i < 3; i++){ const q = (e + i / 3) % 1; ctx.fillText(i % 2 ? '♫' : '♪', x - 12 + i * 12, y - 18 - q * 26); } }
+    else if (f.type === 'treat'){ const it = TREAT2672[k]; ctx.globalAlpha = Math.min(1, (1 - e) * 2); spr('ui_item_' + it, 0, x, y - 26 - e * 10); }
+    else if (f.type === 'bath'){ ctx.strokeStyle = 'rgba(80,150,210,.9)'; ctx.fillStyle = 'rgba(220,240,255,.7)'; ctx.globalAlpha = 1 - e;
+      for (let i = 0; i < 6; i++){ const q = (e * 1.4 + i / 6) % 1, bx = x + Math.sin(i * 2.1 + e * 6) * 12, by = y - 6 - q * 30, r = 2 + (i % 3); ctx.beginPath(); ctx.arc(bx, by, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); } }
+    else if (f.type === 'pet' && k === 'bird'){ const n = 'fx_pet_heart'; spr(n, Math.min(5, Math.floor(e * 6)), x, y - 16); }
+    ctx.restore(); }
+  for (const h of RT.critHit || []){ const X = h.kind === 'pet' ? h.P : h.kind === 'bird2543' ? h.B : null; if (!X || !X.aff2672) continue;
+    if (X.aff2672.dirty){ ctx.save(); ctx.fillStyle = 'rgba(120,86,50,.75)'; for (let i = 0; i < 3; i++){ ctx.beginPath(); ctx.arc(h.x - 6 + i * 6, h.y + 2 - (i % 2) * 4, 2, 0, Math.PI * 2); ctx.fill(); } ctx.restore();
+      bubble(h.x, h.y - (h.kind === 'pet' ? 46 : 26), '髒了', 'ui_tool_water'); }
+    else if (hearts2672(X) >= AFF.hearts && h.kind === 'pet'){ ctx.save(); ctx.fillStyle = '#f2c23c'; ctx.strokeStyle = '#8a5d36'; ctx.lineWidth = 1; const x = h.x, y = h.y - 44; ctx.beginPath();
+      ctx.moveTo(x, y + 4); ctx.bezierCurveTo(x - 6, y - 1, x - 3, y - 6, x, y - 3); ctx.bezierCurveTo(x + 3, y - 6, x + 6, y - 1, x, y + 4); ctx.fill(); ctx.stroke(); ctx.restore(); } } }
+{ const _du = drawUnits; drawUnits = function(...a){ const r = _du(...a); try { if (S) drawFx2672(a[1]); } catch(e){ if (!RT.err2672){ RT.err2672 = 1; console.warn(e); } } return r; }; }
+
+// --- 每分鐘：髒了、很久沒互動扣目前這顆心的進度 ---
+function allPals2672(){ return [...(S.pets || []), ...(S.birds40 || [])].filter(Boolean); }
+function tick2672(){ if (!S) return; const now = Date.now(), t = today2672(), W = (RT.af2672 = RT.af2672 || {});
+  let rainNew = false; try { if (S.rainSlot !== W.rs){ rainNew = W.rs !== undefined && farmRain(now); W.rs = S.rainSlot; } } catch(e){}
+  for (const X of allPals2672()){ const A = aff2672(X);
+    if (rainNew && X.kind === 'dog' && Math.random() < AFF.dirtyOnRain) A.dirty = true;
+    if (A.dd !== t){ A.dd = t; if (Math.random() < AFF.dirtyPerDay) A.dirty = true; }
+    if (A.dec !== t){ A.dec = t; if (A.last && now - A.last > AFF.decayAfterHours * 3600e3){ const floor = Math.floor(A.p / AFF.perHeart) * AFF.perHeart; A.p = Math.max(floor, A.p - AFF.decayPerDay); } } } }
+setInterval(() => { try { tick2672(); } catch(e){} }, 60e3);
+
+// --- 好處：工作效率（抓老鼠的累積時間、鳥抓害蟲的累積時間）每顆心 +5% ---
+{ const _sa = stepAll; stepAll = function(dt, t){ const pre = []; try { if (S) for (const X of allPals2672()){ const H = hearts2672(X); if (H > 0) pre.push([X, H, X.catchAcc || 0, X.work || 0]); } } catch(e){}
+  const r = _sa(dt, t);
+  try { for (const [X, H, c0, w0] of pre){ const m = H * AFF.workBonusPerHeart; if ((X.catchAcc || 0) > c0) X.catchAcc += (X.catchAcc - c0) * m; if ((X.work || 0) > w0) X.work += (X.work - w0) * m; } } catch(e){}
+  return r; }; }
+
+// --- 3 顆心：回到牠住的島會跑來迎接 ---
+{ const _gi = goIsland63; goIsland63 = function(mi, ...a){ const was = S && S.cur; const r = _gi(mi, ...a);
+  try { if (S && S.cur === mi && was !== mi){ const meet = (S.pets || []).filter(P => hearts2672(P) >= AFF.greetHearts && (denByUid(P.den) || {}).mi === mi);
+      if (meet.length){ const P = meet[Math.floor(Math.random() * meet.length)], A = aff2672(P); if (!(A.meet > Date.now() - 10 * 60e3)){ A.meet = Date.now();
+        setTimeout(() => { RT.heartFx = { id: P.id, t0: performance.now() }; const h = hitOf2672(P); if (h) floatText(h.x, h.y - 44, `${P.name}跑過來迎接你！`, '#c0396b', 12); }, 900); } } } } catch(e){}
+  return r; }; }
+
+// --- 週報：寵物／鳥專欄多一句升心的消息 ---
+{ const _ag = agg2671; agg2671 = function(mon){ const A = _ag(mon); A.hu = []; try { for (let i = 0; i < 7; i++){ const D = wk2671().days[dayKey2671(addDays2671(mon, i))]; if (D && D.hu) A.hu.push(...D.hu); } } catch(e){} return A; }; }
+{ const _fa = facts2671; facts2671 = function(A, ...a){ const o = _fa(A, ...a), f = o.f, best = (A.hu || []).reduce((m, x) => { m[x[0] + '|' + x[1]] = x; return m; }, {});
+  const L = Object.values(best); f.petHu = L.filter(x => x[1] === 'pet'); f.birdHu = L.filter(x => x[1] === 'bird');
+  f.petHuTxt = f.petHu.slice(0, 2).map(x => `${esc2671(x[0])}升到第 ${B2671(x[2])} 顆心`).join('、'); f.birdHuTxt = f.birdHu.slice(0, 2).map(x => `${esc2671(x[0])}升到第 ${B2671(x[2])} 顆心`).join('、');
+  f.petBest = f.petHu.find(x => x[2] >= AFF.hearts); f.score.pet += f.petHu.length * 15; f.score.bird += f.birdHu.length * 15; return o; }; }
+BODY_OTHER2671.pet.push(
+  { id: 'ph61', when: f => f.petHuTxt, t: f => `好感度快報：${f.petHuTxt}，現在走到哪跟到哪。` },
+  { id: 'ph62', when: f => f.petHuTxt, t: f => `${f.petHuTxt}！每天摸摸頭果然有用。` },
+  { id: 'ph63', when: f => f.petBest, t: f => `${esc2671(f.petBest[0])}滿 5 顆心，正式成為你「最好的朋友」！` });
+BODY_OTHER2671.bird.push(
+  { id: 'dh61', when: f => f.birdHuTxt, t: f => `鳥屋傳來好消息：${f.birdHuTxt}，一看到你就啾啾叫。` },
+  { id: 'dh62', when: f => f.birdHuTxt, t: f => `${f.birdHuTxt}，口哨沒白吹！` });
+
+{ const st = document.createElement('style'); st.textContent = `
+.hts2672{display:inline-flex;gap:2px;vertical-align:middle}.hts2672 .ht2672{width:20px;height:18px}.hts2672.sm .ht2672{width:13px;height:12px}
+.aff2672{margin:10px 0}.aff2672 .afh2672{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.aff2672 p{margin:0}.best2672{color:#b8860b}
+#pick53 [data-af2672] small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}#pick53 [data-af2672] span{text-align:left}
+#pick53 [data-af2672].dim2672{opacity:.55}
+`; document.head.appendChild(st); }
+
+window.__farm2672 = { aff: X => aff2672(X), hearts: X => hearts2672(X), act: (X, w) => act2672(X, w), greet: X => greet2672(X), menu: (X, h) => menu2672(X, h), tick: () => tick2672(), gain: (X, n) => gain2672(X, n), AFF };
+
+/* ===== v2.68 每月挑戰（自我挑戰賽，玩家 2026-11-17）=====
+   每個月一季：4 輪 × 4 個任務（共 16 個）。完成一個任務就得到一次轉盤（一輪 4 次），同一輪轉到的獎勵不會重複；4 個任務都完成就進下一輪。
+   4 輪做完就是這個月完成（先不開放重來）。月底沒完成的直接清掉，下個月是全新的挑戰。
+   任務：每個玩家、每個月都不同（存檔 id＋農場名＋月份＋輪次當種子）；只出玩家做得到的（沒貓不出逗貓、沒河不出撈河鮮、
+   不會下雪的月份不出除雪、還沒解鎖的作物不出），數量依等級和輪次調整（輪次 ×1／1.5／2／3）。只算玩家自己動手做的，機器人做的不算。
+   轉盤 8 格：金幣（小／中／大）、經驗（小／大）、免費播種、道具（寵物零食、有機肥、昆蟲果凍…用得到的才出）、大獎；金額依等級放大、
+   輪次越後面越多；大獎在第 4 輪機率較高。按下就決定結果並存檔（關掉重開不能重轉）。
+   任務完成：跟抓到流星一樣的過場（彩帶背景）。入口：☰「每月挑戰」、上方狀態列的小標籤。
+   存檔 S.mc268 = { m: 'YYYY-MM', r: 目前輪次 0～4（4＝全部完成）, c: 本月計數, T: [[任務 ×4] ×4]（到那一輪才出題）, spins: [{ r }]（還沒轉的）, won: [[獎勵]] ×4 }
+   任務 { k: 計數鍵, n: 目標, s: 開始時的計數, done } */
+const MC = Object.assign({ roundMult: [1, 1.5, 2, 3], wheelMult: [1, 1.3, 1.7, 2.2] }, CFG.monthlyChallenge || {});
+const ym268 = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; };
+const daysLeft268 = () => { const d = new Date(), e = new Date(d.getFullYear(), d.getMonth() + 1, 1); return Math.max(1, Math.ceil((e - d) / 86400e3)); };
+function mc268(){ if (!S) return null; const m = ym268(Date.now()); let C = S.mc268;
+  if (!C || C.m !== m){ C = S.mc268 = { m, r: 0, c: {}, T: [], spins: [], won: [[], [], [], []] }; } if (!C.T[C.r] && C.r < 4) C.T[C.r] = gen268(C, C.r); return C; }
+const user268 = () => Date.now() - Math.max(RT.userAt49 || 0, RT.drag268 || 0) < 4000;
+window.addEventListener('pointermove', e => { if (e.buttons && e.isTrusted) RT.drag268 = Date.now(); }, true);
+function cnt268(k, n = 1){ if (!S || !(n > 0)) return; const C = mc268(); if (!C) return; C.c[k] = (C.c[k] || 0) + n; RT.mcDirty268 = 1; }
+
+// --- 出題 ---
+function snowMonth268(){ try { if (!CLIM) return false; const G = geo(), sh = CLIM.snowShare && CLIM.snowShare[G.zone]; if (!sh) return false; const d = new Date();
+  return [1, 10, 20, 28].some(day => { const t = new Date(d.getFullYear(), d.getMonth(), day).getTime(), ss = climSeason(t, G.lat); return (sh[ss] ?? ((ss === 'spring' || ss === 'autumn') ? sh.shoulder : 0) ?? 0) > 0; }); } catch(e){ return false; } }
+function have268(){ const h = { trees: {}, an: {}, pools: 0, river: false, prod: {} }; S.maps.forEach(M => { for (const k in M.tiles){ const T = M.tiles[k]; if (!T) continue;
+    if (T.t === 'tree') h.trees[T.id] = (h.trees[T.id] || 0) + 1; else if (T.t === 'animal') h.an[T.id] = (h.an[T.id] || 0) + 1; else if (T.t === 'terrain' && T.kind === 'river') h.river = true; }
+    for (const pk in M.pools || {}) if (M.pools[pk].fish) h.pools++; });
+  for (const id in h.an){ const A = CFG.animals[id]; if (A && A.type === 'producer' && A.productItem && CFG.items[A.productItem]) h.prod[A.productItem] = 1; }
+  const pets = S.pets || []; h.cat = pets.some(P => P.kind === 'cat'); h.dog = pets.some(P => P.kind === 'dog'); h.bird = (S.birds40 || []).length > 0; return h; }
+const nice268 = n => n >= 100 ? Math.round(n / 10) * 10 : n >= 20 ? Math.round(n / 5) * 5 : Math.max(1, Math.round(n));
+function gen268(C, r){ const L = S.player.level, h = have268(), rnd = rng2671(hash2671(seed2671() + '|mc|' + C.m + '|' + r)), pickOne = a => a[Math.floor(rnd() * a.length)];
+  const lvM = 1 + Math.max(0, L - 10) * .03, rm = MC.roundMult[r] || 1, crops = Object.keys(CFG.crops).filter(id => id !== 'pasture' && isUnlocked(id));
+  const cropN = (id, base) => nice268(base * Math.max(.15, Math.min(2, 1800 / (CFG.crops[id].growSeconds || 600))) * lvM * rm);
+  const cats = {
+    plant: () => { const id = pickOne(crops); return id && { k: 'plant:' + id, n: cropN(id, 40) }; },
+    harvest: () => { const id = pickOne(crops); return id && { k: 'hv:' + id, n: cropN(id, 40) }; },
+    water: () => ({ k: 'water', n: nice268(25 * lvM * rm) }),
+    care: () => { const o = [];
+      if (L >= ((CFG.pests || {}).startLevel || 3)) o.push({ k: 'pest', n: nice268(8 * rm) });
+      const tr = Object.keys(h.trees); if (tr.length){ o.push({ k: 'tree', n: nice268(8 * rm) }); const id = pickOne(tr); if (h.trees[id] >= 2) o.push({ k: 'tree:' + id, n: nice268(5 * rm) }); }
+      if (Object.keys(h.an).length) o.push({ k: 'poop', n: nice268(10 * rm) });
+      if (snowMonth268()) o.push({ k: 'snow', n: nice268(15 * rm) });
+      return o.length ? pickOne(o) : null; },
+    wild: () => { const o = [];
+      if (L >= ((CFG.rats || {}).startLevel || 9)) o.push({ k: 'rat', n: nice268(4 * rm) });
+      if (h.river && (S.got260 || 0) > 0) o.push({ k: 'river', n: nice268(6 * rm) });
+      const mo = new Date().getMonth() + 1; if (mo >= 4 && mo <= 10 && S.bug261 && Object.keys(S.bug261.book || {}).length) o.push({ k: 'bug', n: nice268(4 * rm) });
+      return o.length ? pickOne(o) : null; },
+    ranch: () => { const o = []; for (const it in h.prod) o.push({ k: 'prod:' + it, n: nice268(30 * lvM * rm) }); if (h.pools) o.push({ k: 'fish', n: nice268(10 * lvM * rm) });
+      if (Object.keys(h.prod).length > 1) o.push({ k: 'prod', n: nice268(50 * lvM * rm) }); return o.length ? pickOne(o) : null; },
+    pet: () => { const o = []; if (h.cat) o.push({ k: 'play:cat', n: nice268(4 * rm) }); if (h.dog) o.push({ k: 'play:dog', n: nice268(4 * rm) }); if (h.bird) o.push({ k: 'play:bird', n: nice268(4 * rm) });
+      if ((S.pets || []).length + (S.birds40 || []).length){ o.push({ k: 'pet', n: nice268(6 * rm) }); o.push({ k: 'treat', n: nice268(3 * rm) }); } return o.length ? pickOne(o) : null; } };
+  const order = Object.keys(cats).sort(() => rnd() - .5), out = [];
+  for (const c of order){ if (out.length >= 4) break; const t = cats[c](); if (t && !out.some(o => o.k === t.k)) out.push(t); }
+  for (const c of ['water', 'plant', 'harvest']){ if (out.length >= 4) break; const t = cats[c](); if (t && !out.some(o => o.k === t.k)) out.push(t); }
+  while (out.length < 4) out.push({ k: 'plant', n: nice268(60 * lvM * rm) });
+  return out.slice(0, 4).map(t => ({ ...t, s: C.c[t.k] || 0, done: false })); }
+
+// --- 任務文字、圖示 ---
+const crN268 = id => (CFG.crops[id] || {}).name || itemName(id), trN268 = id => (CFG.trees[id] || {}).name || id;
+function txt268(t){ const [a, b] = t.k.split(':'), n = fmtN(t.n);
+  switch (a){
+    case 'plant': return b ? `種 ${n} 株${crN268(b)}` : `種 ${n} 株作物`;
+    case 'hv': return b ? `收成 ${n} 份${crN268(b)}` : `收成 ${n} 份作物`;
+    case 'water': return `澆水 ${n} 次`; case 'pest': return `捉蟲 ${n} 次`; case 'tree': return b ? `採收${trN268(b)} ${n} 次` : `搖果樹採收 ${n} 次`;
+    case 'poop': return `鏟大便 ${n} 次`; case 'snow': return `鏟雪 ${n} 格`; case 'rat': return `抓老鼠 ${n} 隻`; case 'river': return `撈到河鮮 ${n} 隻`; case 'bug': return `抓昆蟲 ${n} 隻`;
+    case 'prod': return b ? `收 ${n} 份${itemName(b)}` : `收牧場產品 ${n} 份`; case 'fish': return `收魚池的魚 ${n} 條`;
+    case 'play': return b === 'cat' ? `逗貓 ${n} 次` : b === 'dog' ? `和狗狗丟飛盤 ${n} 次` : `對鳥吹口哨 ${n} 次`;
+    case 'pet': return `摸摸寵物 ${n} 次`; case 'treat': return `給寵物零食 ${n} 次`; }
+  return t.k; }
+function ico268(t){ const [a, b] = t.k.split(':'), im = n => `<img src="${IMGSRC[n] || IMGSRC.ui_news}" alt="">`, it = id => { try { const [n, f] = itemSprite('item', id); if (n) return `<canvas data-mc-spr="${n}" data-f="${f || 0}"></canvas>`; } catch(e){} return im('ui_news'); };
+  switch (a){ case 'plant': case 'hv': return b ? it(b) : im('ui_badge_harvest'); case 'water': return im('ui_tool_water'); case 'pest': return im('ui_pest'); case 'tree': return b ? it(b) : im('ui_badge_orchard');
+    case 'poop': return im('ui_poop'); case 'snow': return im('ui_weather_snow'); case 'rat': return im('ui_rat'); case 'river': return im('ui_ic66_fish'); case 'bug': return im('ui_hd_bug_box');
+    case 'prod': return b ? it(b) : im('ui_tool_animal'); case 'fish': return im('ui_ic66_fish'); case 'play': return im(b === 'cat' ? 'ui_cat_tree' : b === 'dog' ? 'ui_dog_house' : 'ui_bird_house');
+    case 'pet': return im('ui_tool_care'); case 'treat': return im('ui_item_treat_bone'); }
+  return im('ui_news'); }
+const prog268 = (C, t) => Math.min(t.n, Math.max(0, (C.c[t.k] || 0) - t.s));
+
+// --- 計數：只算玩家自己做的 ---
+{ const _act = act; act = function(x, y, ...a){ if (!S || !user268()) return _act(x, y, ...a);
+  const M = S.maps[S.cur], k = tkey(x, y), T0 = M.tiles[k], tool = S.sel.tool, pest = T => !!(T && (T.pest || (T.crop && T.crop.pest)));
+  const b = T0 ? { t: T0.t, crop: T0.crop && T0.crop.id, m: T0.m || 0, prog: T0.prog, id: T0.id, pest: pest(T0) } : null; let snowy = false; try { snowy = snowyAt(S.cur, k); } catch(e){}
+  RT.inAct268 = (RT.inAct268 || 0) + 1; let r; try { r = _act(x, y, ...a); } finally { RT.inAct268--; }
+  try { const T1 = M.tiles[k];
+    if (b && T1){ if (tool === 'water' && (T1.m || 0) > b.m) cnt268('water');
+      if (b.t === 'soil' && !b.crop && T1.crop){ cnt268('plant:' + T1.crop.id); cnt268('plant'); }
+      if (b.t === 'tree' && T1.t === 'tree' && (T1.prog || 0) < (b.prog || 0)){ cnt268('tree'); cnt268('tree:' + b.id); }
+      if (b.pest && !pest(T1)) cnt268('pest'); }
+    if (b && b.t === 'poop' && (!T1 || T1.t !== 'poop')) cnt268('poop');
+    if (snowy && !snowyAt(S.cur, k)) cnt268('snow'); } catch(e){}
+  return r; }; }
+{ const _dl = deliver; deliver = function(goods, ...a){ try { if (S && (RT.inAct268 || user268())) for (const g of goods || []){ if (!g || !(g.qty > 0)) continue; const I = CFG.items[g.id]; if (!I) continue; const id = I.organicOf || g.id;
+      if (I.category === 'crop' && CFG.crops[id]){ cnt268('hv:' + id, g.qty); cnt268('hv', g.qty); } else if (I.category === 'product' || I.category === 'meat'){ cnt268('prod:' + id, g.qty); cnt268('prod', g.qty); } else if (I.category === 'fish') cnt268('fish', g.qty); } } catch(e){}
+  return _dl(goods, ...a); }; }
+{ const _cr = catchRat; catchRat = function(...a){ const ok = _cr(...a); try { if (ok && user268()) cnt268('rat'); } catch(e){} return ok; }; }
+{ const _a72 = act2672; act2672 = function(X, what){ const A = aff2672(X), k = kindOf2672(X), before = what === 'bath' ? (A.dirty ? 1 : 0) : (A.d[what] || 0); const r = _a72(X, what);
+  try { const A2 = aff2672(X); if (what !== 'bath' && (A2.d[what] || 0) > before){ if (what === 'play') cnt268('play:' + k); else if (what === 'treat') cnt268('treat'); else if (what === 'pet') cnt268('pet'); } } catch(e){} return r; }; }
+// 撈河鮮、抓昆蟲：看計數器有沒有變多（這兩個都只有玩家自己會做）
+function poll268(){ if (!S) return; const R0 = RT.pl268 = RT.pl268 || {}, st = (S.ach && S.ach.s) || {}, now = { river: S.got260 || 0, bug: Object.keys(st).filter(k => k.startsWith('bug_')).reduce((a, k) => a + st[k], 0) };
+  if (R0.S === S) for (const k in now) if (now[k] > (R0[k] || 0)) cnt268(k, now[k] - (R0[k] || 0)); Object.assign(R0, now, { S }); }
+
+// --- 任務完成、進下一輪 ---
+function check268(){ if (!S) return; const C = mc268(); if (!C || C.r >= 4) return; const T = C.T[C.r]; let any = false;
+  for (const t of T) if (!t.done && prog268(C, t) >= t.n){ t.done = true; any = true; C.spins.push({ r: C.r }); celebrate268('task', t); }
+  if (T.every(t => t.done)){ C.r++; if (C.r < 4){ C.T[C.r] = gen268(C, C.r); celebrate268('round', C.r); } else celebrate268('all'); }
+  if (any){ try { save(); } catch(e){} renderHUD(); } }
+setInterval(() => { try { poll268(); if (RT.mcDirty268){ RT.mcDirty268 = 0; check268(); } } catch(e){ if (!RT.err268b){ RT.err268b = 1; console.warn(e); } } }, 1000);
+
+// --- 過場（跟抓到流星一樣的彩帶背景）---
+function celebrate268(kind, x){ (RT.mcQ268 = RT.mcQ268 || []).push({ kind, x }); clearTimeout(RT.mcT268); RT.mcT268 = setTimeout(showQ268, 300); }
+function showQ268(){ const Q = RT.mcQ268 || []; if (!Q.length) return;
+  if (document.getElementById('lvup') || document.getElementById('bdg65') || RT.lvQ){ clearTimeout(RT.mcT268); RT.mcT268 = setTimeout(showQ268, 800); return; }
+  const e = Q.shift(), C = mc268(); let title, body, btn = '太好了';
+  if (e.kind === 'task'){ title = '任務完成！'; body = `<div class="mcico268">${ico268(e.x)}</div><div class="rw53">${txt268(e.x)}</div><p class="small">得到一次轉盤機會（還有 ${C.spins.length} 次）</p>`; btn = '去轉盤'; }
+  else if (e.kind === 'round'){ title = `第 ${e.x} 輪完成！`; body = `<div class="rw53">第 ${e.x + 1} 輪的任務出爐了</div><p class="small">每月挑戰 ${e.x}/4 輪</p>`; btn = '看新任務'; }
+  else { title = '本月挑戰全部完成！'; body = `<div class="rw53">4 輪 16 個任務都完成了</div><p class="small">下個月 1 號會有全新的挑戰</p>`; }
+  showOv268(title, body, btn, () => { if (e.kind !== 'all' || C.spins.length) openMC268(); }); }
+function showOv268(title, body, btn, onBtn, img){ const ov = document.createElement('div'); ov.id = 'lvup'; ov.className = 'met53 mc268ov' + (motion ? '' : ' still');
+  ov.innerHTML = `<canvas class="lvconf"></canvas><div class="lvbox"><div class="lvmedal">${img || `<img src="${IMGSRC.ui_lv_gift || IMGSRC.ui_levelup_medal || ''}" alt="">`}</div><h2>${title}</h2>
+    <div class="lvcard">${body}<div class="lvfoot" style="justify-content:center;gap:8px">${onBtn ? `<button class="btn ghost" id="mcLater268">等一下</button>` : ''}<button class="btn" id="lvOk">${btn}</button></div></div><div class="lvskip">點一下可以跳過</div></div>`;
+  document.body.appendChild(ov); sfx('levelup'); let done = false; const stopC = confetti53(ov, 'star');
+  const close = go => { if (done) return; done = true; stopC(); clearTimeout(tm); ov.remove(); renderHUD(); if (go && onBtn) onBtn(); if ((RT.mcQ268 || []).length){ clearTimeout(RT.mcT268); RT.mcT268 = setTimeout(showQ268, 400); } else if (RT.lvQ){ clearTimeout(RT.lvT); RT.lvT = setTimeout(showLevelUp, 200); } };
+  const tm = setTimeout(() => close(false), 6000); ov.addEventListener('click', () => close(false));
+  ov.querySelector('#lvOk').addEventListener('click', ev => { ev.stopPropagation(); close(true); }); const lt = ov.querySelector('#mcLater268'); if (lt) lt.addEventListener('click', ev => { ev.stopPropagation(); close(false); }); }
+
+// --- 轉盤 ---
+const WCOL268 = ['#ffd84a', '#8ee08a', '#6fd3ff', '#ff9aa8', '#c79bff', '#ffb35c', '#9fe6d6', '#f7e08a'];
+function wheel268(r){ const L = S.player.level, m = MC.wheelMult[r] || 1, coin = Math.round((200 + L * 60) * m / 10) * 10, xp = Math.round(Math.max(30, L * 15) * m / 5) * 5, h = have268();
+  const items = [];
+  if ((S.pets || []).some(P => P.kind === 'dog')) items.push(['treat_bone', 3]); if ((S.pets || []).some(P => P.kind === 'cat')) items.push(['treat_fish', 3]); if ((S.birds40 || []).length) items.push(['treat_millet', 3]);
+  if (CFG.items.organic_fert) items.push(['organic_fert', 5]); if (Object.keys(h.an).length && CFG.items.corn_cake) items.push(['corn_cake', 20]);
+  if (S.bug261 && Object.keys(S.bug261.book || {}).length && CFG.items.bug_jelly) items.push(['bug_jelly', 10]);
+  if (h.pools && CFG.items.fish_feed) items.push(['fish_feed', 20]);
+  const rnd = rng2671(hash2671(seed2671() + '|wheel|' + S.mc268.m + '|' + r)), pick = () => items.length ? items.splice(Math.floor(rnd() * items.length), 1)[0] : null;
+  const it1 = pick() || ['corn_cake', 10], it2 = pick() || ['organic_fert', 3];
+  return [ { id: 'c1', type: 'coins', n: coin, w: 22, t: `${fmtN(coin)} 金幣` }, { id: 'x1', type: 'xp', n: xp, w: 18, t: `${fmtN(xp)} 經驗` },
+    { id: 'i1', type: 'item', item: it1[0], n: Math.round(it1[1] * m), w: 16, t: `${itemName(it1[0])} ×${Math.round(it1[1] * m)}` },
+    { id: 'c2', type: 'coins', n: coin * 2, w: 12, t: `${fmtN(coin * 2)} 金幣` }, { id: 's1', type: 'seeds', n: Math.round(5 * m), w: 14, t: `免費播種 ${Math.round(5 * m)} 次` },
+    { id: 'x2', type: 'xp', n: xp * 2, w: 9, t: `${fmtN(xp * 2)} 經驗` }, { id: 'i2', type: 'item', item: it2[0], n: Math.round(it2[1] * m), w: 12, t: `${itemName(it2[0])} ×${Math.round(it2[1] * m)}` },
+    { id: 'jp', type: 'coins', n: coin * 8, w: r >= 3 ? 8 : 3, t: `大獎 ${fmtN(coin * 8)} 金幣`, jp: 1 } ]; }
+function spin268(){ const C = mc268(); if (!C || !C.spins.length) return null; const sp = C.spins[0], W = wheel268(sp.r), got = new Set((C.won[sp.r] || []).map(w => w.id));
+  const left = W.map((w, i) => ({ w, i })).filter(o => !got.has(o.w.id)); const tot = left.reduce((a, o) => a + o.w.w, 0); let x = Math.random() * tot, hit = left[0];
+  for (const o of left){ x -= o.w.w; if (x <= 0){ hit = o; break; } }
+  const w = hit.w; C.spins.shift(); (C.won[sp.r] = C.won[sp.r] || []).push({ id: w.id, t: w.t });
+  if (w.type === 'coins'){ (RT.coinWhy = RT.coinWhy || []).push('每月挑戰'); try { S.player.coins += w.n; try { watchCoins(S); } catch(e){} renderHUD(); } finally { RT.coinWhy.pop(); } }
+  else if (w.type === 'xp') addXP(w.n); else if (w.type === 'seeds') S.freeSeeds = (S.freeSeeds || 0) + w.n; else if (w.type === 'item') invAdd(w.item, w.n);
+  try { save(); } catch(e){} return { r: sp.r, i: hit.i, w, W }; }
+function wheelSVG268(W, won){ const n = W.length, R = 120, seg = 360 / n, p = (a, r) => [Math.round((130 + r * Math.sin(a * Math.PI / 180)) * 10) / 10, Math.round((130 - r * Math.cos(a * Math.PI / 180)) * 10) / 10];
+  const img = IMGSRC.ui_pg_wheel268;
+  return `<div class="whw268"><div class="whr268">${img ? `<img class="whimg268" src="${img}" alt="">` : ''}<svg viewBox="0 0 260 260" class="wh268" aria-hidden="true">${W.map((w, i) => { const a0 = i * seg, a1 = a0 + seg, [x0, y0] = p(a0, R), [x1, y1] = p(a1, R), mid = a0 + seg / 2, [tx, ty] = p(mid, R * .6), off = won.has(w.id);
+    return `<path d="M130 130 L${x0} ${y0} A${R} ${R} 0 0 1 ${x1} ${y1} Z" fill="${off ? 'rgba(90,90,90,.55)' : img ? 'transparent' : WCOL268[i % 8]}" ${img ? '' : 'stroke="#fff" stroke-width="2"'}/>
+      <text x="${tx}" y="${ty}" transform="rotate(${mid <= 180 ? mid - 90 : mid + 90} ${tx} ${ty})" text-anchor="middle" dominant-baseline="middle" font-size="${w.t.length > 7 ? 9.5 : 11}" font-weight="800" fill="${off ? '#e8e8e8' : '#3a2d10'}" stroke="${off ? 'none' : 'rgba(255,255,255,.7)'}" stroke-width="2.4" paint-order="stroke">${escapeHTML(w.jp ? '大獎' : w.t.replace(/ ×/, '×'))}</text>`; }).join('')}
+    ${img ? '' : `<circle cx="130" cy="130" r="${R}" fill="none" stroke="#8a5d36" stroke-width="5"/><circle cx="130" cy="130" r="14" fill="#f2c23c" stroke="#8a5d36" stroke-width="3"/>`}</svg></div>
+    ${IMGSRC.ui_pg_pin268 ? `<img class="whpin268" src="${IMGSRC.ui_pg_pin268}" alt="">` : '<svg class="whpin268" viewBox="0 0 30 40"><path d="M15 39 L4 14 A11 11 0 1 1 26 14 Z" fill="#e2453a" stroke="#8c241d" stroke-width="2"/><circle cx="15" cy="12" r="5" fill="#ffe9b8"/></svg>'}</div>`; }
+// 轉盤轉動：每經過一格的分隔線就撥一下指針（往轉動方向甩，再彈回來），並發出喀一聲
+function spinAnim268(el, toDeg, ms, done){ const g = el.querySelector('.whr268'), pin = el.querySelector('.whpin268'), seg = 360 / 8, t0 = performance.now(), from = 0; let lastB = 0, kickT = 0;
+  if (!g || !motion){ if (g) g.style.transform = `rotate(${toDeg}deg)`; done(); return; }
+  const ease = x => 1 - Math.pow(1 - x, 3.2);
+  const step = now => { const x = Math.min(1, (now - t0) / ms), a = from + (toDeg - from) * ease(x); g.style.transform = `rotate(${a}deg)`;
+    const bIdx = Math.floor((a + 1e-6) / seg); if (bIdx !== lastB){ lastB = bIdx; const v = (toDeg - from) * 3.2 * Math.pow(1 - x, 2.2) / ms * 16;   // 這一格的速度（度／幀）
+      const kick = Math.min(28, 10 + v * 2.2); if (pin){ pin.style.transition = 'none'; pin.style.transform = `rotate(${-kick}deg)`; clearTimeout(kickT); kickT = setTimeout(() => { pin.style.transition = 'transform .16s cubic-bezier(.3,1.8,.5,1)'; pin.style.transform = 'rotate(0deg)'; }, 40); }
+      if (now - (RT.tick268 || 0) > 55){ RT.tick268 = now; try { sfx('click'); } catch(e){} } }
+    if (x < 1) requestAnimationFrame(step); else { if (pin){ pin.style.transition = 'transform .25s ease-out'; pin.style.transform = 'rotate(0deg)'; } done(); } };
+  requestAnimationFrame(step); }
+
+// --- 面板 ---
+function openMC268(){ if (!S) return; const C = mc268(); openModal('每月挑戰', null, (k, el) => draw268(el)); }
+function draw268(el){ const C = mc268(), r = Math.min(C.r, 3), T = C.T[r] || [], d = new Date();
+  const roundsHTML = [0, 1, 2, 3].map(i => `<span class="${i < C.r ? 'ok' : i === C.r ? 'on' : ''}">${i < C.r ? '✓ ' : ''}第 ${i + 1} 輪</span>`).join('');
+  const spinR = C.spins.length ? C.spins[0].r : r, W = wheel268(spinR), won = new Set((C.won[spinR] || []).map(w => w.id));
+  el.innerHTML = `<div class="mc268"><div class="mchd268"><b>${d.getMonth() + 1} 月挑戰</b><span class="small">還有 ${daysLeft268()} 天 · 月底沒完成會清掉</span></div>
+    <div class="mcr268">${roundsHTML}</div>
+    <div class="mcbody268"><div class="mctasks268">${C.r >= 4 ? '<div class="card mcall268"><b>本月 16 個任務全部完成！</b><span class="small">下個月 1 號會有全新的挑戰</span></div>' : T.map(t => { const p = prog268(C, t), pc = Math.round(p / t.n * 100);
+      return `<div class="card mct268${t.done ? ' done' : ''}"><div class="mci268">${ico268(t)}</div><div class="mcx268"><b>${txt268(t)}</b><div class="mcbar268"><i style="width:${pc}%"></i></div><span class="small">${t.done ? '完成！' : `${fmtN(p)} / ${fmtN(t.n)}`}</span></div></div>`; }).join('')}</div>
+    <div class="card mcw268"><b>轉盤 ${C.spins.length ? `<span class="mcn268">還可以轉 ${C.spins.length} 次</span>` : ''}</b>${wheelSVG268(W, won)}
+      <button class="btn" id="mcSpin268" ${C.spins.length ? '' : 'disabled'}>${C.spins.length ? '轉！' : '完成任務就能轉'}</button>
+      <div class="small mcwon268">${(C.won[spinR] || []).length ? `第 ${spinR + 1} 輪已得到：${C.won[spinR].map(w => escapeHTML(w.t)).join('、')}` : '同一輪轉到的獎勵不會重複'}</div></div></div></div>`;
+  el.querySelectorAll('canvas[data-mc-spr]').forEach(c => { try { paintInto75(c, c.dataset.mcSpr, +c.dataset.f || 0, 64); } catch(e){} });
+  const b = el.querySelector('#mcSpin268'); if (b) b.onclick = () => { if (RT.spinning268) return; const res = spin268(); if (!res) return; RT.spinning268 = 1; b.disabled = true;
+    const seg = 360 / res.W.length, target = 360 * 5 + (360 - (res.i * seg + seg / 2)) + (Math.random() - .5) * seg * .6;
+    sfx('click'); spinAnim268(el, target, 4200, () => setTimeout(() => { RT.spinning268 = 0; showOv268(res.w.jp ? '大獎！' : '轉盤獎勵', `<div class="rw53">${escapeHTML(res.w.t)}</div><p class="small">${mc268().spins.length ? `還可以再轉 ${mc268().spins.length} 次` : '繼續完成任務，拿下一次轉盤'}</p>`, '好', () => { if (!$('modal').hidden && $('modalTitle').textContent === '每月挑戰') draw268($('modalBody')); });
+      if (!$('modal').hidden && $('modalTitle').textContent === '每月挑戰') draw268($('modalBody')); }, 350)); }; }
+HD54['每月挑戰'] = 'mc268';
+{ const _om = openModal; openModal = function(title, ...a){ try { const sh = document.querySelector('#modal .sheet'); if (sh) sh.classList.toggle('mc268s', title === '每月挑戰'); } catch(e){} return _om(title, ...a); }; }
+
+// --- 入口：☰、狀態列小標籤 ---
+{ const _mh = moreHTML; moreHTML = function(...a){ let h = _mh(...a); const C = S && mc268(), dot = C && C.spins.length ? '<i class="rd"></i>' : '';
+  const btn = `<button class="mi" data-m="mc268"><img src="${IMGSRC.ui_hd_mc268 || IMGSRC.ui_hd_ach || IMGSRC.ui_news}" alt=""><span>每月挑戰</span>${dot}</button>`;
+  const i = h.indexOf('data-m="week2671"'); if (i >= 0){ const j = h.indexOf('</button>', i) + 9; h = h.slice(0, j) + btn + h.slice(j); } else h += btn; return h; }; }
+MPAN.addEventListener('click', e => { const b = e.target.closest('[data-m="mc268"]'); if (b){ e.stopPropagation(); closeMore(); openMC268(); } });
+{ const _om = openMore; openMore = function(...a){ const r = _om(...a); try { const g = document.querySelector('#modalBody .moregrid'); if (g && !g.querySelector('[data-more="mc268"]')){
+    const b = document.createElement('button'); b.dataset.more = 'mc268'; b.innerHTML = `<img src="${IMGSRC.ui_hd_mc268 || IMGSRC.ui_hd_ach || IMGSRC.ui_news}" alt=""><span>每月挑戰</span>`;
+    b.addEventListener('click', e => { e.stopPropagation(); closeModal(); openMC268(); }); g.insertBefore(b, g.querySelector('[data-more="fc"]')); } } catch(e){} return r; }; }
+$('moreBtn').onclick = openMore;
+{ const _sc = snowChips; snowChips = function(st, now, ...a){ const r = _sc(st, now, ...a); try { const C = S && mc268(); if (C && S.player.level >= (MC.startLevel || 3)){
+    const txt = C.r >= 4 ? '本月挑戰完成' : `挑戰 第${C.r + 1}輪 ${C.T[C.r].filter(t => t.done).length}/4`;
+    st.push(`<div class="chip mcchip268" data-open="mc268"><img src="${IMGSRC.ui_hd_mc268 || IMGSRC.ui_hd_ach || IMGSRC.ui_news}" alt="">${txt}${C.spins.length ? `<b class="mcsp268">轉盤×${C.spins.length}</b>` : ''}</div>`); } } catch(e){} return r; }; }
+$('status').addEventListener('click', e => { if (e.target.closest('[data-open="mc268"]')) openMC268(); });
+
+{ const st = document.createElement('style'); st.textContent = `
+#modal .sheet.mc268s{width:min(900px,100%)}
+.mc268{display:flex;flex-direction:column;gap:10px}
+.mc268 .mchd268{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.mc268 .mchd268 b{font-family:var(--font-display);font-size:20px}
+.mc268 .mcr268{display:flex;gap:6px;flex-wrap:wrap}.mc268 .mcr268 span{padding:4px 10px;border-radius:999px;background:#eef4ea;color:var(--muted);font-size:12.5px;font-weight:700}
+.mc268 .mcr268 span.on{background:#1e3a2a;color:#fff}.mc268 .mcr268 span.ok{background:#cfe9c4;color:#2f7a45}
+.mc268 .mcbody268{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px;align-items:start}
+.mc268 .mctasks268{display:flex;flex-direction:column;gap:8px}
+.mc268 .mct268{flex-direction:row;align-items:center;gap:10px}.mc268 .mct268.done{background:#f2fbe9;border-color:#a9d79a}
+.mc268 .mci268{flex:none;width:48px;height:48px;display:flex;align-items:center;justify-content:center}.mc268 .mci268 img,.mc268 .mci268 canvas{width:44px;height:44px;object-fit:contain}
+.mc268 .mcx268{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.mc268 .mcbar268{height:10px;background:#eef4ea;border-radius:5px;overflow:hidden}.mc268 .mcbar268 i{display:block;height:100%;background:#5aa86b}.mc268 .mct268.done .mcbar268 i{background:#f2c23c}
+.mc268 .mcw268{align-items:center;text-align:center}
+.mc268 .whw268{position:relative;width:min(280px,86vw);aspect-ratio:1;margin:14px auto 4px}
+.mc268 .whr268{position:absolute;inset:0;transform-origin:50% 50%}
+.mc268 .whimg268,.mc268 .wh268{position:absolute;inset:0;width:100%;height:100%}
+.mc268 .whimg268+.wh268{inset:2.4%;width:95.2%;height:95.2%}
+.mc268 .whpin268{position:absolute;left:50%;top:-16px;width:34px;height:auto;margin-left:-17px;transform-origin:50% 30%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));z-index:2}
+.mc268 .mcn268{color:#c5452f;font-size:13px;margin-left:6px}.mc268 #mcSpin268{min-width:140px;min-height:42px;font-size:16px}
+.mc268 .mcall268{align-items:center;text-align:center;padding:24px}
+.mcico268{display:flex;justify-content:center}.mcico268 img,.mcico268 canvas{width:56px;height:56px;object-fit:contain}
+.mcchip268{cursor:pointer}.mcchip268 .mcsp268{margin-left:6px;background:#c5452f;color:#fff;border-radius:999px;padding:0 6px;font-size:11px}
+@media (max-width:640px){.mc268 .mcbody268{grid-template-columns:minmax(0,1fr)}}
+`; document.head.appendChild(st); }
+
+// 週報：插播一句每月挑戰的進度
+EXTRA2671.push({ id: 'xm1', when: f => f.mcR != null && f.mcR > 0 && f.mcR < 4, t: f => `每月挑戰進行中：已經完成 ${f.mcR} 輪，加油！` },
+  { id: 'xm2', when: f => f.mcR >= 4, t: f => `本月挑戰 16 個任務全部完成，太強了！` });
+{ const _fa = facts2671; facts2671 = function(...a){ const o = _fa(...a); try { const C = S.mc268; if (C && C.m === ym268(Date.now())) o.f.mcR = C.r; } catch(e){} return o; }; }
+
+window.__farm268m = { mc: () => mc268(), gen: r => gen268(mc268(), r), cnt: (k, n) => cnt268(k, n), check: () => check268(), spin: () => spin268(), wheel: r => wheel268(r), open: () => openMC268(), txt: t => txt268(t), prog: t => prog268(mc268(), t) };
+
+/* ===== v2.68.1 倉庫擴充要施工（玩家 2026-11-17）=====
+   農產倉庫（全農場共用，S.boost.produce）和建材小屋（每座島各自，S.shedB243[mi]）都可以擴充到 40 次，每次 +100。
+   ‧ 第 1～20 次：價錢照舊（2,000 起每次 ×1.15）；第 21～40 次：農產倉庫 160,000／180,000／200,000／220,000，建材小屋 100,000／115,000／130,000／145,000（每 5 次一段）。
+   ‧ 每次付錢後要施工，倒數完容量才加上去；施工時間每 5 次一段、段內逐次拉長（DUR2681，分鐘）；建材小屋 ×0.7。離線也照算。
+     1～5：1→5 分、6～10：10→30 分、11～15：35→55 分、16～20：1→1 小時 40 分、21～25：2→4 小時、26～30：4.5→8 小時、31～35：8.5→12 小時、36～40：13→24 小時
+   ‧ 同一棟一次只能蓋一期；農產倉庫和各島建材小屋可以同時各蓋一期。施工中照常存取（還是舊容量）。
+   ‧ 蓋好（含立刻完成、離線蓋好回來時）：建物冒出升級光柱 6 秒（從底部往上、下亮上淡，先長出來最後淡掉；不用星星，免得像失火）。
+   ‧ 「立刻完成」：剩下的時間 × 這期價錢 × 60%（最少 50 金幣），給喜歡快速玩的玩家。
+   ‧ 施工畫面分 4 段（props2681）：圍籬＋建材堆 → 加鷹架 → 加吊車 → 鷹架拆一半、彩旗、閃光；頭上「施工中 n% · 倒數」。
+   ‧ 施工中：倉庫、建材小屋前面圍施工圍籬（橘白路障），頭上「施工中 剩 …」；建材小屋接鐵軌的那一側圍籬留缺口，火車照常進出。
+   存檔 S.cons2681 = { produce: { n 擴完是第幾次, t0, t1, p 價錢 } | null, shed: { [mi]: {…} } } */
+const CS2681 = Object.assign({ max: 40, rushRate: .6,
+  tierPrice: { produce: [160000, 180000, 200000, 220000], shed: [100000, 115000, 130000, 145000] },
+  dur: [[1, 5], [10, 30], [35, 55], [60, 100], [120, 240], [270, 480], [510, 720], [780, 1440]], shedTime: .7 }, CFG.storageBuild || {});
+if (BK38.produce) BK38.produce.max = CS2681.max;
+if (SH84.boost) SH84.boost.max = CS2681.max; else SH84.boost = { add: 100, price: 2000, mult: 1.15, max: CS2681.max };
+function durMin2681(n, kind){ const t = Math.min(CS2681.dur.length - 1, Math.floor((n - 1) / 5)), [a, b] = CS2681.dur[t], i = (n - 1) % 5;
+  return Math.round((a + (b - a) * i / 4) * (kind === 'shed' ? CS2681.shedTime : 1)); }
+function cons2681(){ const C = S.cons2681 = S.cons2681 || { produce: null, shed: {} }; C.shed = C.shed || {}; return C; }
+const job2681 = (kind, mi) => { const C = cons2681(); return kind === 'produce' ? C.produce : C.shed[mi] || null; };
+const fmtMin2681 = m => m < 60 ? `${m} 分鐘` : m % 60 ? `${Math.floor(m / 60)} 小時 ${m % 60} 分` : `${m / 60} 小時`;
+const left2681 = J => Math.max(0, (J.t1 - Date.now()) / 1000);
+const rush2681 = J => Math.max(50, Math.round(J.p * CS2681.rushRate * (J.t1 - Date.now()) / Math.max(1, J.t1 - J.t0) / 10) * 10);
+// 價錢：第 21 次起照表
+{ const _bp = boostPrice; boostPrice = function(k, n = boostN(k)){ if (k === 'produce' && n >= 20) return CS2681.tierPrice.produce[Math.min(3, Math.floor((n - 20) / 5))]; return _bp(k, n); }; }
+{ const _sp = shedBoostPrice84; shedBoostPrice84 = function(mi){ const n = shedB84(mi); if (n >= 20) return CS2681.tierPrice.shed[Math.min(3, Math.floor((n - 20) / 5))]; return _sp(mi); }; }
+
+// --- 開工 ---
+function start2681(kind, mi){ const C = cons2681(), n = (kind === 'produce' ? boostN('produce') : shedB84(mi)) + 1, nm = kind === 'produce' ? '農產倉庫' : '建材小屋';
+  if (job2681(kind, mi)){ toast(`${nm}正在施工中，蓋好才能再擴充`); return false; }
+  if (n > CS2681.max){ toast(`${nm}已經擴充到最多 ${CS2681.max} 次`); return false; }
+  const p = kind === 'produce' ? boostPrice('produce') : shedBoostPrice84(mi), m = durMin2681(n, kind);
+  const go = () => { (RT.coinWhy = RT.coinWhy || []).push(`${nm}擴充`); let ok; try { ok = spend(p); } finally { RT.coinWhy.pop(); } if (!ok) return false;
+    const J = { n, t0: Date.now(), t1: Date.now() + m * 60e3, p }; if (kind === 'produce') C.produce = J; else C.shed[mi] = J;
+    sfx('place'); toast(`${nm}開始施工（第 ${n} 次擴充），${fmtMin2681(m)}後完成`, true, 3200); afterAction(); refresh2681(); return true; };
+  if (noAsk47('boost')) return go();
+  buyAsk47({ cat: 'boost', title: `擴充${nm}`, price: p, okText: '開始施工',
+    rows: [['每次', `+100 ${kind === 'produce' ? '格' : '份'}`], ['已擴充', `${n - 1} → ${n} / ${CS2681.max} 次`], ['施工時間', fmtMin2681(m)], ['施工中', '照常可以存取，蓋好才加容量']] }, () => { RT.pass47 = true; try { go(); } finally { RT.pass47 = false; } });
+  return false; }
+function finish2681(kind, mi, live){ const C = cons2681(), J = job2681(kind, mi); if (!J) return;
+  if (kind === 'produce'){ S.boost = S.boost || {}; S.boost.produce = Math.max(boostN('produce'), J.n); C.produce = null; }
+  else { S.shedB243 = S.shedB243 || {}; S.shedB243[mi] = Math.max(shedB84(mi), J.n); delete C.shed[mi]; }
+  RT.decoVer++; const nm = kind === 'produce' ? '農產倉庫' : `「${islName63(mi)}」的建材小屋`;
+  (RT.glow2681 = RT.glow2681 || []).push({ kind, mi: kind === 'produce' ? null : mi, t0: 0 });   // 蓋好閃閃發光（第一次畫到才開始計時，離線蓋好的回來看到也有）
+  if (live){ toast(`${nm}擴充完成！容量 +100（第 ${J.n} 次）`, true, 3200); sfx('harvest'); } else RT.notices.push({ kind: 'cons2681', name: nm, n: J.n });
+  try { save(); } catch(e){} refresh2681(); }
+function rushNow2681(kind, mi){ const J = job2681(kind, mi); if (!J) return; const c = rush2681(J), nm = kind === 'produce' ? '農產倉庫' : '建材小屋';
+  const go = () => { (RT.coinWhy = RT.coinWhy || []).push(`${nm}立刻完成`); let ok; try { ok = spend(c); } finally { RT.coinWhy.pop(); } if (ok) finish2681(kind, mi, true); };
+  if (noAsk47('boost')) return go();
+  buyAsk47({ cat: 'boost', title: `${nm}立刻完成`, price: c, okText: '立刻完成', rows: [['剩下', fmtShort(left2681(J))], ['完成後', `第 ${J.n} 次擴充，容量 +100`]] }, () => { RT.pass47 = true; try { go(); } finally { RT.pass47 = false; } }); }
+function tick2681(){ if (!S) return; const C = cons2681(), now = Date.now(), live = !!RT.live2681;
+  if (C.produce && C.produce.t1 <= now) finish2681('produce', null, live);
+  for (const mi in C.shed) if (C.shed[mi] && C.shed[mi].t1 <= now) finish2681('shed', +mi, live);
+  RT.live2681 = 1;
+  document.querySelectorAll('[data-cd2681]').forEach(el => { const [k, mi] = el.dataset.cd2681.split(':'), J = job2681(k, +mi); if (J) el.textContent = fmtShort(left2681(J)); }); }
+setInterval(() => { try { tick2681(); } catch(e){ if (!RT.err2681){ RT.err2681 = 1; console.warn(e); } } }, 1000);
+{ const _ni = newsItems; newsItems = function(list){ const out = _ni(list); try { for (const n of list.filter(x => x.kind === 'cons2681')) out.push({ icon: 'ui_hd_st_produce', text: `${n.name}擴充完成（第 ${n.n} 次），容量 +100` }); } catch(e){} return out; }; }
+
+// --- 按鈕：農產倉庫（倉庫面板的擴充卡、等級 · 擴充表）、建材小屋面板 ---
+{ const _bb = buyBoost; buyBoost = function(k, ...a){ if (k === 'produce' && S){ start2681('produce'); return false; } return _bb(k, ...a); }; }
+{ const _bs = buyShedBoost84; buyShedBoost84 = function(mi){ if (S){ start2681('shed', mi); return false; } return _bs(mi); }; }
+function btnHTML2681(kind, mi){ const J = job2681(kind, mi), n = (kind === 'produce' ? boostN('produce') : shedB84(mi));
+  if (J) return `<span class="pill warn cons2681">施工中 · 剩 <b data-cd2681="${kind}:${mi == null ? '' : mi}">${fmtShort(left2681(J))}</b></span><button class="btn" data-rush2681="${kind}:${mi == null ? '' : mi}">立刻完成 · ${coinI()}${fmtN(rush2681(J))}</button>`;
+  if (n >= CS2681.max) return '<span class="pill ok">已擴充到最多</span>';
+  const p = kind === 'produce' ? boostPrice('produce') : shedBoostPrice84(mi);
+  return `<button class="btn" ${kind === 'produce' ? 'data-boost42="produce"' : 'data-sh2681="' + mi + '"'}>擴充 · ${coinI()}${fmtN(p)} · 施工 ${fmtMin2681(durMin2681(n + 1, kind))}</button>`; }
+{ const _bc = boostCardHTML; boostCardHTML = function(k){ let h = _bc(k); if (k !== 'produce' || !S) return h;
+  try { const box = document.createElement('div'); box.innerHTML = h; const row = box.querySelector('.row'), all = row && row.querySelector('[data-boostall]');
+    if (row){ row.innerHTML = btnHTML2681('produce'); if (all) row.appendChild(all); } const pill = box.querySelector('h4 .pill'); if (pill) pill.textContent = `已加 ${boostN('produce')} / ${CS2681.max} 次`;
+    h = box.innerHTML; } catch(e){} return h; }; }
+{ const _rb = renderBoost; renderBoost = function(el){ const r = _rb(el); try { const b = el.querySelector('button[data-boost="produce"]'), J = job2681('produce');
+    if (b && J){ const td = b.parentNode; td.innerHTML = `<span class="pill warn">施工中 <b data-cd2681="produce:">${fmtShort(left2681(J))}</b></span>`; } } catch(e){} return r; }; }
+{ const _os = openShed84; openShed84 = function(mi){ const r = _os(mi); try { const el = $('modalBody'), b1 = el && el.querySelector('#shb84'), b2 = el && el.querySelector('#shb2552');
+    for (const b of [b1, b2]){ if (!b) continue; const span = document.createElement('span'); span.className = 'sb2681'; span.innerHTML = btnHTML2681('shed', mi); b.replaceWith(span); }
+    el && el.querySelectorAll('.sm84').forEach(s => { s.textContent = s.textContent.replace(/已擴充 (\d+) \/ \d+ 次/, `已擴充 $1 / ${CS2681.max} 次`); }); } catch(e){ console.warn(e); } return r; }; }
+document.addEventListener('click', e => { const r = e.target.closest('[data-rush2681]'), s = e.target.closest('[data-sh2681]'); if (!r && !s) return; if (e.isTrusted && e.target.closest('#modal')) return;   // 購買確認（g47）會用假點擊重放一次，真的點擊交給它
+  e.stopPropagation();
+  if (r){ const [k, mi] = r.dataset.rush2681.split(':'); rushNow2681(k, mi === '' ? null : +mi); } else start2681('shed', +s.dataset.sh2681); }, true);
+function refresh2681(){ try { if ($('modal').hidden) return; const t = $('modalTitle').textContent;
+  if (t === '倉庫') openStorage('produce'); else if (t === '建材小屋' && RT.shedMi2681 != null) openShed84(RT.shedMi2681); else if (/等級/.test(t) && typeof openBoost === 'function') openBoost(); } catch(e){} }
+{ const _os = openShed84; openShed84 = function(mi){ RT.shedMi2681 = mi; return _os(mi); }; }
+
+// --- 地圖：施工圍籬（前面兩邊；建材小屋接鐵軌的那格留缺口）、頭上倒數 ---
+function fence2681(x0, y0, w, h, gap, t){ const P = (gx, gy) => center(gx, gy), ph = HH * .95, seg = (a, b) => { ctx.save();
+    ctx.lineCap = 'round'; for (const lift of [ph * .38, ph * .78]){ ctx.lineWidth = 3.4; ctx.strokeStyle = '#d9541e'; ctx.beginPath(); ctx.moveTo(a.cx, a.cy - lift); ctx.lineTo(b.cx, b.cy - lift); ctx.stroke();
+      ctx.setLineDash([4, 4]); ctx.lineDashOffset = 0; ctx.strokeStyle = '#fff6e0'; ctx.lineWidth = 3.4; ctx.beginPath(); ctx.moveTo(a.cx, a.cy - lift); ctx.lineTo(b.cx, b.cy - lift); ctx.stroke(); ctx.setLineDash([]); }
+    for (const q of [a, b]){ ctx.fillStyle = '#7a5230'; ctx.fillRect(q.cx - 1.5, q.cy - ph, 3, ph); ctx.fillStyle = '#f2c23c'; ctx.beginPath(); ctx.arc(q.cx, q.cy - ph, 2, 0, 7); ctx.fill(); }
+    ctx.restore(); };
+  for (let j = 0; j < h; j++){ if (gap.has(tkey(x0 + w, y0 + j))) continue; for (let s = 0; s < 2; s++) seg(P(x0 + w - .5, y0 + j - .5 + s * .5), P(x0 + w - .5, y0 + j + s * .5)); }
+  for (let i = 0; i < w; i++){ if (gap.has(tkey(x0 + i, y0 + h))) continue; for (let s = 0; s < 2; s++) seg(P(x0 + i - .5 + s * .5, y0 + h - .5), P(x0 + i + s * .5, y0 + h - .5)); }
+  const c = P(x0 + w - .5, y0 + h - .5); ctx.save(); ctx.fillStyle = '#f2c23c'; ctx.strokeStyle = '#7a5230'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(c.cx, c.cy - ph - 16); ctx.lineTo(c.cx + 9, c.cy - ph - 2); ctx.lineTo(c.cx - 9, c.cy - ph - 2); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#3a2d10'; ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', c.cx, c.cy - ph - 5); ctx.restore(); }
+// 施工進度分四個階段（玩家 2026-11-17：不要只有「正常」和「施工中」兩種畫面）：
+//   0～25% 圍籬＋建材堆（木材、磚）；25～50% 再加鷹架；50～75% 再加吊車（吊鉤擺動）；75～100% 鷹架拆一半、圍籬掛三角彩旗、閃光
+function stage2681(J){ const f = Math.max(0, Math.min(1, (Date.now() - J.t0) / Math.max(1, J.t1 - J.t0))); return { f, st: Math.min(3, Math.floor(f * 4)) }; }
+function props2681(x0, y0, w, h, J, now, gap, door){ gap = gap || new Set(); const { st } = stage2681(J), P = (gx, gy) => center(gx, gy), ph = HH * .95, H = HH * (w + .8);
+  const a = P(x0 + w - .5, y0 - .5), c = P(x0 + w - .5, y0 + h - .5), d = P(x0 - .5, y0 + h - .5);   // 右後角、前角、左前角（地面）
+  ctx.save();
+  // 建材堆：前角左右兩邊各一堆
+  const pile = (q, kind) => { const n = st >= 3 ? 1 : 3; for (let i = 0; i < n; i++){ const y = q.cy - 3 - i * 4;
+      if (kind === 'wood'){ ctx.fillStyle = '#b07a42'; ctx.strokeStyle = '#6b4520'; ctx.lineWidth = 1; ctx.fillRect(q.cx - 9, y - 3, 18, 4); ctx.strokeRect(q.cx - 9, y - 3, 18, 4); ctx.fillStyle = '#e2b77a'; ctx.beginPath(); ctx.arc(q.cx + 9, y - 1, 2, 0, 7); ctx.fill(); }
+      else { ctx.fillStyle = '#c96a4a'; ctx.strokeStyle = '#7a3a22'; ctx.lineWidth = 1; for (let j = 0; j < 3 - i; j++){ ctx.fillRect(q.cx - 8 + j * 6 + i * 3, y - 3, 5, 4); ctx.strokeRect(q.cx - 8 + j * 6 + i * 3, y - 3, 5, 4); } } } };
+  // 建材堆放在沒有門的那一面前面（建材小屋門口要讓火車過）
+  const [m1, m2] = door === 'L' ? [P(x0 + w + .3, y0 + h - .35), P(x0 + w + .3, y0 + h - 1.2)] : door === 'R' ? [P(x0 + w - .35, y0 + h + .3), P(x0 + w - 1.2, y0 + h + .3)] : [P(x0 + w - .1, y0 + h + .25), P(x0 + w + .25, y0 + h - .1)];
+  pile(m1, 'wood'); pile(m2, 'brick');
+  // 鷹架：沿前面兩邊立竿、橫板
+  if (st >= 1 && st <= 3){ const cols = st === 3 ? 2 : 4, lv = st === 3 ? 2 : 3; ctx.strokeStyle = '#8a8f96'; ctx.lineWidth = 1.6;
+    for (const [p0, p1, fc] of [[d, c, 'L'], [c, a, 'R']]) for (let i = 0; i <= cols; i++){ if (fc === door) continue; if (st === 3 && i % 2) continue; const x = p0.cx + (p1.cx - p0.cx) * i / cols, y = p0.cy + (p1.cy - p0.cy) * i / cols - ph * .2;
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - H * .9); ctx.stroke(); }
+    ctx.strokeStyle = '#b88a4a'; ctx.lineWidth = 2.4;
+    for (const [p0, p1, fc] of [[d, c, 'L'], [c, a, 'R']]) for (let k = 1; k <= lv; k++){ if (fc === door) continue; const dy = H * .9 * k / (lv + .3); ctx.beginPath(); ctx.moveTo(p0.cx, p0.cy - ph * .2 - dy); ctx.lineTo(st === 3 ? (p0.cx + p1.cx) / 2 : p1.cx, (st === 3 ? (p0.cy + p1.cy) / 2 : p1.cy) - ph * .2 - dy); ctx.stroke(); } }
+  // 吊車：右後角立塔，橫臂＋擺動的吊鉤和一捆建材
+  if (st === 2){ const bx = a.cx + 6, by = a.cy, top = by - H * 1.45, arm = 46, sw = Math.sin(now / 700) * 6;
+    ctx.strokeStyle = '#e0a020'; ctx.lineWidth = 2.6; ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx, top); ctx.lineTo(bx - arm, top + 4); ctx.moveTo(bx, top); ctx.lineTo(bx + 14, top + 2); ctx.stroke();
+    ctx.lineWidth = 1; for (let y = by; y > top; y -= 7){ ctx.beginPath(); ctx.moveTo(bx - 3, y); ctx.lineTo(bx + 3, y - 7); ctx.stroke(); }
+    const hx = bx - arm * .7 + sw, hy = top + 30 + Math.cos(now / 700) * 2; ctx.strokeStyle = '#555'; ctx.beginPath(); ctx.moveTo(bx - arm * .7, top + 3); ctx.lineTo(hx, hy); ctx.stroke();
+    ctx.fillStyle = '#b07a42'; ctx.fillRect(hx - 7, hy, 14, 6); ctx.strokeStyle = '#6b4520'; ctx.strokeRect(hx - 7, hy, 14, 6); ctx.fillStyle = '#7a5230'; ctx.fillRect(bx + 10, top + 2, 8, 6); }
+  // 快完成：三角彩旗、閃光
+  if (st === 3){ const cols = ['#e2453a', '#f2c23c', '#5aa86b', '#4a90d9']; for (const [p0, p1, e] of [[d, c, 0], [c, a, 1]]) for (let i = 0; i < 6; i++){ const u = (i + .5) / 6; if ((e ? 'R' : 'L') === door) continue; if (e && gap.has(tkey(x0 + w, y0 + h - 1 - Math.floor(u * h)))) continue; const x = p0.cx + (p1.cx - p0.cx) * u, y = p0.cy + (p1.cy - p0.cy) * u - ph - 1;
+      ctx.fillStyle = cols[i % 4]; ctx.beginPath(); ctx.moveTo(x - 3, y); ctx.lineTo(x + 3, y); ctx.lineTo(x, y + 6); ctx.closePath(); ctx.fill(); }
+    if (motion){ const k = (now / 300) % 1; ctx.globalAlpha = 1 - k; ctx.fillStyle = '#fff7b0'; const q = P(x0 + (w - 1) / 2, y0 + (h - 1) / 2); for (let i = 0; i < 3; i++){ const ang = i * 2.1 + now / 900; ctx.beginPath(); ctx.arc(q.cx + Math.cos(ang) * 18, q.cy - H * .6 + Math.sin(ang) * 10 - k * 8, 2.2, 0, 7); ctx.fill(); } } }
+  ctx.restore(); }
+// 圖層：圍籬、建材堆、鷹架、吊車在建物最前面那格（建物也是在那格畫）畫完後接著畫，前面的樹、動物會照順序蓋在上面；
+//   頭上的倒數泡泡最後才畫（drawUnits 之後），永遠在最上層。每一格畫完都會呼叫 drawAnimalsAt(k)，就借它當掛點。
+function sites2681(){ const out = [], C = cons2681(), M = S.maps[S.cur]; if (!M) return out;
+  if (C.produce) for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'building' || T.id !== 'barn') continue; const [x, y] = pkey(k); if (x !== T.rx || y !== T.ry) continue; const [w, h] = bldSize('barn'); out.push({ x, y, w, h, J: C.produce, gap: new Set() }); }
+  const J = C.shed[S.cur]; if (J){ const sh = shedOf84(S.cur); if (sh){ const [w, h] = bldSize('material_shed'), gap = new Set(), x0 = sh.T.rx, y0 = sh.T.ry;
+    // 有接軌道的那一道才留缺口（玩家 2026-11-17）：沒有軌道就整圈圍起來；門口兩道只接一道時，另一道照樣圍。
+    //   門口那兩格就算鋪了短短一截（門口自帶的、待命站），也要再往外接到別的軌道才算「有接」；門預設在左下（+y 面），dir254 = 'x' 時在右下（+x 面）
+    const door = sh.T.dir254 === 'x' ? 'R' : 'L', doors = door === 'R' ? Array.from({ length: h }, (_, j) => tkey(x0 + w, y0 + j)) : Array.from({ length: w }, (_, i) => tkey(x0 + i, y0 + h)), dset = new Set(doors);
+    const inShed = (x, y) => x >= x0 && x < x0 + w && y >= y0 && y < y0 + h;
+    const linked = k => { if (!isRail89(M.tiles[k])) return false; const [x, y] = pkey(k);
+      return [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => { const nx = x + dx, ny = y + dy, nk = tkey(nx, ny); return !inShed(nx, ny) && !dset.has(nk) && isRail89(M.tiles[nk]); }); };
+    for (const k of doors) if (linked(k)) gap.add(k);
+    try { for (const k of shedSides89(S.cur)) if (!dset.has(k) && isRail89(M.tiles[k])) gap.add(k); } catch(e){}   // 其他面：旁邊就是軌道就留缺口
+    const doorOpen = door === 'R' ? [...gap].some(k => pkey(k)[0] === sh.T.rx + w) : [...gap].some(k => pkey(k)[1] === sh.T.ry + h);   // 門那面有接軌道才不搭鷹架、不掛彩旗
+    out.push({ x: sh.T.rx, y: sh.T.ry, w, h, J, gap, door: doorOpen ? door : null }); } }
+  return out; }
+{ const _da = drawAnimalsAt; drawAnimalsAt = function(k, t, ...a){ const r = _da(k, t, ...a);
+  try { const L = RT.site2681 && RT.site2681.get(k); if (L) for (const o of L){ const go = () => { fence2681(o.x, o.y, o.w, o.h, o.gap, t); props2681(o.x, o.y, o.w, o.h, o.J, performance.now(), o.gap, o.door); };
+      if (typeof withFade2523 === 'function') withFade2523(rect2523(o.x, o.y, o.w, o.h), go); else go(); }   // 指到建物後面時，建物半透明，鷹架、吊車一起半透明
+  } catch(e){ if (!RT.err2681f){ RT.err2681f = 1; console.warn(e); } }
+  return r; }; }
+function drawCons2681(t){ if (!S) return; const L = sites2681(), m = new Map();
+  for (const o of L){ const k = tkey(o.x + o.w - 1, o.y + o.h - 1); if (!m.has(k)) m.set(k, []); m.get(k).push(o);
+    const c = center(o.x + (o.w - 1) / 2, o.y + (o.h - 1) / 2), { f } = stage2681(o.J); bubble(c.cx, c.cy - HH * (o.w + 2.2), `施工中 ${Math.floor(f * 100)}% · ${fmtShort(left2681(o.J))}`, 'ui_tool_build', '#fff3c4'); }
+  RT.site2681 = m.size ? m : null; }
+{ const _du = drawUnits; drawUnits = function(...a){ const r = _du(...a); try { drawCons2681(a[1]); } catch(e){ if (!RT.err2681d){ RT.err2681d = 1; console.warn(e); } } return r; }; }
+
+// --- 蓋好：升級光柱 6 秒 ---
+function glowSites2681(){ const out = [], M = S.maps[S.cur]; if (!M || !RT.glow2681 || !RT.glow2681.length) return out;
+  for (const g of RT.glow2681){ if (g.kind === 'produce'){ for (const k in M.tiles){ const T = M.tiles[k]; if (!T || T.t !== 'building' || T.id !== 'barn') continue; const [x, y] = pkey(k); if (x !== T.rx || y !== T.ry) continue; const [w, h] = bldSize('barn'); out.push({ g, x, y, w, h }); } }
+    else if (g.mi === S.cur){ const sh = shedOf84(S.cur); if (sh){ const [w, h] = bldSize('material_shed'); out.push({ g, x: sh.T.rx, y: sh.T.ry, w, h }); } } }
+  return out; }
+function drawGlow2681(){ const now = performance.now(), L = glowSites2681(); if (!L.length) return; const D = 6000;
+  for (const o of L){ if (!o.g.t0) o.g.t0 = now; const e = (now - o.g.t0) / D; if (e >= 1) continue;
+    // 升級的光柱：從建物底部往上的光，下面亮、往上漸漸消失；先往上長出來，最後整個淡掉（玩家 2026-11-17：不要星星，像失火）
+    const fade = e < .12 ? e / .12 : e > .7 ? (1 - e) / .3 : 1, grow = Math.min(1, e / .2), H = HH * (o.w + .8) * 2.6 * grow, n = 7;
+    const L0 = center(o.x - .5, o.y + o.h - .5), R0 = center(o.x + o.w - .5, o.y - .5), B0 = center(o.x + o.w - .5, o.y + o.h - .5);   // 底部左、右、前角
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; try { ctx.filter = 'blur(3px)'; } catch(err){}
+    for (let i = 0; i < n; i++){ const u = (i + .5) / n, bx = u < .5 ? L0.cx + (B0.cx - L0.cx) * u * 2 : B0.cx + (R0.cx - B0.cx) * (u - .5) * 2, by = u < .5 ? L0.cy + (B0.cy - L0.cy) * u * 2 : B0.cy + (R0.cy - B0.cy) * (u - .5) * 2;
+      const wv = HW * o.w / n * (1.5 + .4 * Math.sin(now / 420 + i * 1.7)), a = fade * (.32 + .18 * Math.sin(now / 300 + i * 2.3)), top = by - H * (.75 + .25 * Math.sin(i * 1.9 + now / 900));
+      const g = ctx.createLinearGradient(0, by, 0, top); g.addColorStop(0, `rgba(255,244,190,${a})`); g.addColorStop(.55, `rgba(255,236,160,${a * .45})`); g.addColorStop(1, 'rgba(255,230,150,0)');
+      ctx.fillStyle = g; ctx.fillRect(bx - wv / 2, top, wv, by - top); }
+    ctx.restore(); }
+  RT.glow2681 = RT.glow2681.filter(g => !g.t0 || now - g.t0 < D); }
+{ const _du = drawUnits; drawUnits = function(...a){ const r = _du(...a); try { if (S) drawGlow2681(); } catch(e){ if (!RT.err2681g){ RT.err2681g = 1; console.warn(e); } } return r; }; }
+
+/* ===== 每月挑戰：每個月第一次打開農場時自動跳出（玩家 2026-11-17）=====
+   順序：每日簽到 → 天氣預報 → 每月挑戰 → 雞鳴（早上 06:00～09:00 才有）。等升級動畫、徽章、購買確認、新聞、教學都結束才跳。
+   本月跳過了就記在 S.mc268.shown（月份），同一個月不再自動跳。 */
+const mcPending2681 = () => { if (!S || !S.player || S.player.level < ((typeof MC !== 'undefined' && MC.startLevel) || 3)) return false; const C = mc268(); return !!C && C.shown !== C.m; };
+function mcAuto2681(){ if (!mcPending2681() || document.hidden || busy54() || document.getElementById('bdg65') || (RT.newsQ54 && RT.newsQ54.length) || ckPending54() || fcPending54()) return;
+  const C = mc268(); C.shown = C.m; try { save(); } catch(e){} openMC268(); }
+setInterval(() => { try { mcAuto2681(); } catch(e){ if (!RT.err2681m){ RT.err2681m = 1; console.warn(e); } } }, 1500);
+{ const _cr = checkRooster; checkRooster = function(now){ if (mcPending2681()) return; return _cr(now); }; }
+
+/* ===== 點農舍＝農場總部選單（玩家 2026-11-17：農舍原本沒有功能）=====
+   用收成、澆水等一般工具點農舍，跳出小選單：農場週報、每月挑戰（有轉盤次數會標）、農場新聞、每日簽到、圖鑑。
+   收回、剷除、搬移、鏟雪（鏟屋頂的雪）照舊。 */
+function houseMenu2681(M, T){ const c = center((T.rx ?? 0) + .5, (T.ry ?? 0) + .5), mc = (() => { try { return mc268(); } catch(e){ return null; } })(), img = n => `<img src="${IMGSRC[n] || IMGSRC.ui_news}" alt="">`;
+  let ck = false; try { ck = ckNeeded(); } catch(e){}
+  const news = !!(S.lastNews && S.lastNews.items && S.lastNews.items.length), newsNew = news && S.lastNews.t > (S.newsSeenAt || 0);
+  const b = (v, ic, t, sub) => `<button data-hm2681="${v}">${img(ic)}<span>${t}${sub ? `<small>${sub}</small>` : ''}</span></button>`;
+  showPop53(c.cx, c.cy - HH * 3, `<h5>${escapeHTML((S.profile && S.profile.name) || '農舍')}・農舍</h5>
+    ${b('week', 'ui_cl_calendar', '農場週報', (wk2671().hist || []).length ? `最近一期：第 ${wk2671().hist[wk2671().hist.length - 1].no || 1} 期` : '每週一出刊')}
+    ${S.player.level >= ((typeof MC !== 'undefined' && MC.startLevel) || 3) && mc ? b('mc', 'ui_hd_mc268', '每月挑戰', mc.r >= 4 ? '本月全部完成' : `第 ${mc.r + 1} 輪 ${mc.T[mc.r].filter(t => t.done).length}/4${mc.spins.length ? `・轉盤×${mc.spins.length}` : ''}`) : ''}
+    ${b('news', 'ui_news', '農場新聞', newsNew ? '有新的消息' : news ? '看最近的新聞' : '最近沒有新聞')}
+    ${b('ck', 'ui_cl_checkin', '每日簽到', ck ? '今天還沒簽到' : '今天簽到過了')}
+    ${b('book', 'ui_tool_book', '圖鑑', '')}`);
+  POP53.querySelectorAll('[data-hm2681]').forEach(el => el.onclick = e => { e.stopPropagation(); const v = el.dataset.hm2681; closePop53();
+    if (v === 'week') openWeekly2671(); else if (v === 'mc') openMC268();
+    else if (v === 'news'){ S.newsSeenAt = Date.now(); if (news) openNews(S.lastNews.items, S.lastNews.t); else toast('最近沒有新聞'); try { renderAttention(); } catch(err){} }
+    else if (v === 'ck'){ if (ck) openCheckin(); else toast('今天已經簽到過了，明天再來'); } else if (v === 'book') openBook('crops'); }); }
+{ const _act = act; act = function(x, y, ...a){ try { if (S && !UI.expand && !['store', 'remove', 'move', 'shovel'].includes(S.sel.tool)){ const M = curMap(), T = M.tiles[tkey(x, y)];
+      if (T && T.t === 'house' && !(T.snowRoof || (S.snow && S.snow.cover && S.sel.tool === 'shovel'))){ sfx('click'); houseMenu2681(M, T.rx !== undefined ? T : (Object.values(M.tiles).find(q => q.t === 'house' && q.rx !== undefined) || T)); return; } } } catch(e){ console.warn(e); }
+  return _act(x, y, ...a); }; }
+{ const st = document.createElement('style'); st.textContent = `.pill.warn.cons2681,.pill.warn{background:#fff3c4;color:#8a5d36;border-color:#eadfb8}.sb2681{display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center}#pick53 [data-hm2681] span{text-align:left}#pick53 [data-hm2681] small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}`; document.head.appendChild(st); }
+
+window.__farm2681 = { sites: () => sites2681().map(o => ({ x: o.x, y: o.y, door: o.door, gap: [...o.gap] })), houseMenu: (M, T) => houseMenu2681(M, T), mcPending: () => mcPending2681(), mcAuto: () => mcAuto2681(), openShed: mi => openShed84(mi), start: (k, mi) => start2681(k, mi), finish: (k, mi, l) => finish2681(k, mi, l), rush: (k, mi) => rushNow2681(k, mi), job: (k, mi) => job2681(k, mi), dur: (n, k) => durMin2681(n, k), cons: () => cons2681(), tick: () => tick2681(), rushCost: J => rush2681(J) };
 
   })(CFG, ATLAS_JSON);
 })();
