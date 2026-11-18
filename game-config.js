@@ -2,7 +2,7 @@
 window.GAME_CONFIG = {
  "meta": {
   "name": "浮島農場",
-  "configVersion": "2.68.1",
+  "configVersion": "2.68.2",
   "saveFormatVersion": 1,
   "units": {
    "time": "seconds",

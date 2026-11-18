@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.68.1-8174a71a0f'), getJSON('sprites/atlas.json?v=2.68.1-8174a71a0f')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.68.2-8f28d1af0d'), getJSON('sprites/atlas.json?v=2.68.2-8f28d1af0d')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14483,7 +14483,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.68.1-8174a71a0f';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.68.2-8f28d1af0d';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -26693,6 +26693,84 @@ function houseMenu2681(M, T){ const c = center((T.rx ?? 0) + .5, (T.ry ?? 0) + .
 { const st = document.createElement('style'); st.textContent = `.pill.warn.cons2681,.pill.warn{background:#fff3c4;color:#8a5d36;border-color:#eadfb8}.sb2681{display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center}#pick53 [data-hm2681] span{text-align:left}#pick53 [data-hm2681] small{display:block;font-size:10.5px;color:var(--muted);font-weight:400}`; document.head.appendChild(st); }
 
 window.__farm2681 = { sites: () => sites2681().map(o => ({ x: o.x, y: o.y, door: o.door, gap: [...o.gap] })), houseMenu: (M, T) => houseMenu2681(M, T), mcPending: () => mcPending2681(), mcAuto: () => mcAuto2681(), openShed: mi => openShed84(mi), start: (k, mi) => start2681(k, mi), finish: (k, mi, l) => finish2681(k, mi, l), rush: (k, mi) => rushNow2681(k, mi), job: (k, mi) => job2681(k, mi), dur: (n, k) => durMin2681(n, k), cons: () => cons2681(), tick: () => tick2681(), rushCost: J => rush2681(J) };
+
+/* ===== v2.68.2 修正：租用的伐木／採礦／整地機器人一直在休息（玩家 2026-11-18）=====
+   原因：租的機器人以前一律從農舍大門出發、只管農舍那座島（g25 workerHome(kind, null)）。
+   重型機器人要「這座島的建材小屋＋接上軌道的採集點＋走得到」才有工作；森林、礦山、小屋在別座島，
+   或農舍大門被田圍住、採集點都被自己的機器人用掉時，租的就整段租期待在屋頂睡覺，面板也只寫「租用的…・一起工作」，看不出原因。
+   1. 租的重型機器人自己挑島：農舍那座島 → 目前畫面那座島 → 其他島；每座島依序試 農舍大門（只有農舍島）→ 重型充電樁 → 建材小屋旁邊的空地，
+      第一個「why84 沒有原因」（有工作、走得到）的就是它的家。在家裡（沒出門、列車沒在跑）時每 15 秒重挑一次，換島時背袋的東西跟著走。
+      試的時候 pointFor247 會順手佔採集點：試完把 RT.cpc247 還原成選中的那座島（沒選中就清掉），不會擋到自己買的機器人。
+   2. 沒有任何島能做時寫原因：自動化面板「租用」那一列、建材小屋／查看地形的機器人卡、unitStateText 都寫
+      「待命：【島名】原因」（最多列 2 座有這種地形的島；都沒有就寫「每座島都沒有〇〇」）。
+   沒有新的存檔欄位；狀態放在 RT.rh2682（執行期）。 ===== */
+const RH2682 = { every: 15000 };
+RT.rh2682 = RT.rh2682 || {};
+// 某座島可以當「家」的格子（依序）
+function starts2682(mi){ const M = S.maps[mi], out = [], seen = new Set(); if (!M) return out;
+  const add = (x, y) => { const k = tkey(x, y); if (seen.has(k) || !inMap(M, x, y)) return; seen.add(k); out.push({ mi, x, y }); };
+  if (mi === houseMapIndex()){ const d = swDoor(mi); if (d) add(d.x, d.y); }
+  for (const b of basesOf(HC89)) if (b.mi === mi) add(b.x, b.y);
+  try { for (const k of shedSides89(mi)){ if (walkK(M, k)){ const [x, y] = pkey(k); add(x, y); } } } catch(e){}
+  return out; }
+function isleOrder2682(){ const h = houseMapIndex(), out = [h]; if (S.cur !== h && S.maps[S.cur]) out.push(S.cur); S.maps.forEach((_, i) => { if (!out.includes(i)) out.push(i); }); return out; }
+// 用某個家試 why84（'' = 有工作、走得到）
+function tryWhy2682(kind, c){ const o = RT.try2682; RT.try2682 = { kind, c }; RT.regionsAt = 0;
+  try { return why84(kind, null) || ''; } catch(e){ console.warn(e); return '?'; } finally { RT.try2682 = o; } }
+function pick2682(kind){ const key = wKey(kind, null), cl = RT.cpc247 = RT.cpc247 || {};
+  let best = null; const why = [];
+  for (const mi of isleOrder2682()){ const st = starts2682(mi); if (!st.length) continue; let first = null;
+    for (const c of st){ const w = tryWhy2682(kind, c); if (!w){ best = c; break; } if (first == null) first = w; }
+    if (best) break; why.push({ mi, why: first || '' }); }
+  // 還原採集點的佔用：只留選中那座島的
+  delete cl[key]; if (best) tryWhy2682(kind, best);
+  return { c: best, ok: !!best, why, t: Date.now() }; }
+// 租的重型機器人的家
+{ const _wh2682 = workerHome; workerHome = function(kind, u){
+  if (!u && TK84.includes(kind)){ const T = RT.try2682; if (T && T.kind === kind) return { mi: T.c.mi, x: T.c.x, y: T.c.y };
+    const R = RT.rh2682[kind]; if (R && R.c && S.maps[R.c.mi]) return { mi: R.c.mi, x: R.c.x, y: R.c.y }; }
+  return _wh2682(kind, u); }; }
+// 在家（沒出門、列車沒在跑）才重挑；換家時把 W 搬過去（背袋留著）
+function refresh2682(kind, force){ if (!rentActive(kind, Date.now())){ delete RT.rh2682[kind]; return; }
+  const key = wKey(kind, null), W = WS[key], R = RT.rh2682[kind], old = workerHome(kind, null);
+  if (!force && R && Date.now() - R.t < RH2682.every) return;
+  if (W && old && walkAway(W, old)) return;
+  try { const TR = W && S.rail246 && S.rail246[W.mi] && S.rail246[W.mi].tr[key]; if (TR && TR.job) return; } catch(e){}
+  const N = pick2682(kind); if (!N.c && R && R.c) N.c = R.c;   // 都不行：留在原地（上次的家；第一次就是農舍大門）
+  RT.rh2682[kind] = N; const h = workerHome(kind, null);
+  if (W && h && (W.mi !== h.mi || W.x !== h.x || W.y !== h.y)){ const bag = W.bag84; Object.assign(W, { mi: h.mi, x: h.x, y: h.y, path: null, i: 0, el: 0, phase: 'home', goal: null, target: null, lp246: null, g246: null, wait246: '', nf246: 0 }); if (bag) W.bag84 = bag; } }
+{ const _sr2682 = stepRobots; stepRobots = function(dt, t, rainNow){
+  try { for (const kind of TK84) refresh2682(kind); } catch(e){ if (!RT.err2682){ RT.err2682 = 1; console.warn(e); } }
+  return _sr2682(dt, t, rainNow); }; }
+// 剛租好：馬上挑
+{ const _rr2682 = rentRobot; rentRobot = function(kind, opt){ const r = _rr2682(kind, opt); try { if (r && TK84.includes(kind)) refresh2682(kind, true); } catch(e){ console.warn(e); } return r; }; }
+
+/* ---------- 2. 原因 ---------- */
+function rentWhy2682(kind){ if (!TK84.includes(kind) || !rentActive(kind, Date.now())) return '';
+  if (RT.rw && RT.rw[kind]) return '';
+  const R = RT.rh2682[kind] || (refresh2682(kind, true), RT.rh2682[kind]); if (!R) return '';
+  if (R.ok){ const W = WS[wKey(kind, null)]; return W && W.wait246 ? `【${isle2543(R.c.mi)}】${W.wait246}` : `待命：【${isle2543(R.c.mi)}】現在沒有工作`; }
+  const want = TERK84[kind], what = (RB84.what || {})[kind] || '地形';
+  const has = R.why.filter(o => { const M = S.maps[o.mi]; return M && M.ter242 && Object.values(M.ter242.g).some(g => g.kind === want); });
+  if (!has.length) return `待命：每座島都沒有${what}`;
+  return '待命：' + has.slice(0, 2).map(o => `【${isle2543(o.mi)}】${String(o.why).replace(/^待命：/, '')}`).join('；') + (has.length > 2 ? `；還有 ${has.length - 2} 座島` : ''); }
+const rentLine2682 = kind => { const w = rentWhy2682(kind); if (w) return w; const W = WS[wKey(kind, null)], R = RT.rh2682[kind];
+  return `工作中${R && R.c ? `（【${isle2543((W && W.mi != null) ? W.mi : R.c.mi)}】）` : ''}`; };
+{ const _us2682 = unitStateText; unitStateText = function(kind){ if (TK84.includes(kind) && rentActive(kind, Date.now())){ try { const w = rentWhy2682(kind); if (w) return w; } catch(e){} } return _us2682(kind); }; }
+// 自動化面板：租用那一列加狀態
+{ const _ar2682 = autoRowHTML; autoRowHTML = function(kind){ let h = _ar2682(kind);
+  try { if (TK84.includes(kind) && rentActive(kind, Date.now())){ const line = escapeHTML(rentLine2682(kind)), warn = /^待命/.test(line);
+      h = h.replace(/(<div class="urow47 rent47">[\s\S]*?<span class="un47">)([\s\S]*?)(<\/span>)/, (m, a, b, c) => `${a}${b}<small class="${warn ? 'wn2682' : ''}">${line}</small>${c}`); } } catch(e){ console.warn(e); }
+  return h; }; }
+// 建材小屋／查看地形的機器人卡：多一行租用
+{ const _rl2682 = rbLine268; rbLine268 = function(kind, mi){ let h = _rl2682(kind, mi);
+  try { if (TK84.includes(kind) && rentActive(kind, Date.now())){ const line = escapeHTML(`租用 1 台：${rentLine2682(kind)}`);
+      h = h.replace(/(<small class="[^"]*">)/, `<small class="${/待命/.test(line) ? 'wn' : ''}">${line}</small>$1`);
+      if (!fleet(kind).some(u => unitTier(kind, u))) h = h.replace(/<span>還沒有[^<]*<\/span>/, '<span>只有租的（不用重型充電樁）</span>').replace(/<small class="wn">[^<]*<\/small>/, '<small>自己買的才要重型充電樁</small>'); } } catch(e){ console.warn(e); }
+  return h; }; }
+{ const st = document.createElement('style'); st.textContent = `.urow47 .un47 small.wn2682{color:#d9534f}`; document.head.appendChild(st); }
+
+window.__farm2682 = { pick: k => pick2682(k), refresh: (k, f) => refresh2682(k, f), why: k => rentWhy2682(k), line: k => rentLine2682(k), starts: mi => starts2682(mi), home: k => workerHome(k, null), autoRow: k => autoRowHTML(k), openShed: mi => openShed84(mi), openTerrain: (mi, k) => openTerrain83(mi, k) };
 
   })(CFG, ATLAS_JSON);
 })();
