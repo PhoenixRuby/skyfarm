@@ -785,7 +785,7 @@ body.night #catch260 .cc260{background:#1f2c38;color:#e6eef4}body.night #catch26
     el.onload = () => window[name] ? ok(window[name]) : no(new Error(src)); el.onerror = () => no(new Error(src)); document.head.appendChild(el); });
   try {
     if (location.protocol === 'file:') throw new Error('file');
-    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.68.2-8f28d1af0d'), getJSON('sprites/atlas.json?v=2.68.2-8f28d1af0d')]);   // v2.33.1: same version as the page
+    [CFG, ATLAS_JSON] = await Promise.all([getJSON('game-config.json?v=2.68.2-3c61685ef9'), getJSON('sprites/atlas.json?v=2.68.2-3c61685ef9')]);   // v2.33.1: same version as the page
   } catch (e) {
     try { [CFG, ATLAS_JSON] = await Promise.all([viaScript('game-config.js', 'GAME_CONFIG'), viaScript('sprites/atlas.js', 'GAME_ATLAS')]); }
     catch (e2) { document.getElementById('loading').textContent = '讀不到遊戲定義檔。\n請確認 game-config.json（或 game-config.js）和 sprites 資料夾跟這個頁面放在一起。'; return; }
@@ -14483,7 +14483,7 @@ body:not(.m) .zoomctl{display:flex}
    四、手機發燙：選項列分頁／作物分類列的定位每秒 4 次（原本每個畫面更新都算）；設定「手機與效能」（解析度、每秒張數、
        沒操作時降速、動態效果）
    五、選項列分頁最後一個捲不到（placeTrayTabs 先設寬再縮，瀏覽器把捲動位置截掉）＋列尾留空白 ===== */
-var BUILD69 = '2.68.2-8f28d1af0d';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
+var BUILD69 = '2.68.2-3c61685ef9';                       // build2.py 換成這次打包的版本（和 version.json、sw.js 一樣）
 var PS69 = null, PK69 = null;                     // var：resize() 在本檔執行前就會被叫到，不能用 const（TDZ）
 const okBuild69 = () => !/^__/.test(BUILD69);
 const shortVer69 = v => String(v || '').split('-')[0];
@@ -26771,6 +26771,70 @@ const rentLine2682 = kind => { const w = rentWhy2682(kind); if (w) return w; con
 { const st = document.createElement('style'); st.textContent = `.urow47 .un47 small.wn2682{color:#d9534f}`; document.head.appendChild(st); }
 
 window.__farm2682 = { pick: k => pick2682(k), refresh: (k, f) => refresh2682(k, f), why: k => rentWhy2682(k), line: k => rentLine2682(k), starts: mi => starts2682(mi), home: k => workerHome(k, null), autoRow: k => autoRowHTML(k), openShed: mi => openShed84(mi), openTerrain: (mi, k) => openTerrain83(mi, k) };
+
+/* ===== 132. v2.68.3: Google 登入修正（參考 site 的 plugins/google-drive.js） =====
+   - 不再用 prompt 'consent'：GIS 授權完成後 token 回不到主頁（error_callback 收到 popup_closed），全新環境、無痕、Edge 都登不進去
+   - 已知帳號：prompt '' ＋ login_hint，彈窗閃一下就關、不用再選帳號；沒有帳號或換帳號：'select_account'
+   - callback／error_callback 在 initTokenClient 時就設好，同一時間只等一個請求，兩條登入路不會互相蓋掉 callback
+   - 檢查 hasGrantedAllScopes（同意畫面可以取消勾選 Drive 權限）
+   - 只重新宣告 g23／g27 的函式，不依賴 v2.69 的檔案，可以單獨放進修正版 */
+const SCOPE2683 = CLOUD.scope || 'https://www.googleapis.com/auth/drive.appdata';
+const GT2683 = { wait: null };
+const hint2683 = () => { const e = curEmail(); return e ? { prompt: '', login_hint: e } : { prompt: 'select_account' }; };
+const loginErr2683 = e => {
+  const m = (e && e.message) || '';
+  return m === 'popup_failed_to_open' ? '登入視窗被擋住了，請允許彈出視窗後再按一次'
+    : m === 'popup_closed' ? '沒有收到 Google 登入結果，請再按一次'
+    : m === 'scope' ? '要勾選 Google Drive 權限，才能把農場存到雲端'
+    : '沒有完成 Google 登入';
+};
+
+function tokenClient(){
+  if (CL.client) return CL.client;
+  CL.client = google.accounts.oauth2.initTokenClient({
+    client_id: CLOUD.clientId, scope: SCOPE2683, include_granted_scopes: false,
+    callback: r => {
+      const w = GT2683.wait; GT2683.wait = null;
+      if (w){
+        if (r && r.access_token && google.accounts.oauth2.hasGrantedAllScopes(r, SCOPE2683)){
+          CL.tok = r.access_token; CL.exp = Date.now() + (Number(r.expires_in) || 3600) * 1000;
+          try { sessionStorage.setItem(CLOUD_TOK, JSON.stringify({ tok: CL.tok, exp: CL.exp })); } catch(e){}
+          w.ok();
+        } else w.no(new Error(r && r.access_token ? 'scope' : ((r && r.error) || 'denied')));
+      }
+    },
+    error_callback: e => { const w = GT2683.wait; GT2683.wait = null; if (w) w.no(new Error((e && e.type) || 'popup')); }
+  });
+  return CL.client;
+}
+// 舊呼叫端傳字串：'' → 用記住的帳號（login_hint）；含 consent／select_account → 讓玩家選帳號
+function gisToken(opt){
+  const o = opt && typeof opt === 'object' ? opt : (/consent|select_account/.test(opt || '') ? { prompt: 'select_account' } : hint2683());
+  return new Promise((ok, no) => {
+    const go = () => {
+      if (GT2683.wait) GT2683.wait.no(new Error('replaced'));
+      GT2683.wait = { ok, no };
+      try { tokenClient().requestAccessToken(o); } catch(e){ GT2683.wait = null; no(new Error('popup_failed_to_open')); }
+    };
+    if (window.google && google.accounts && google.accounts.oauth2) go(); else loadGIS().then(go, no);
+  });
+}
+function cloudLogin(consent){ return gisToken(consent ? { prompt: 'select_account' } : ''); }
+
+async function googleLogin(opts = {}){
+  if (!cloudOK()){ toast('Google 登入要到網頁版才能用'); return false; }
+  loadGIS();
+  try { await gisToken(opts.switching ? { prompt: 'select_account' } : hint2683()); }
+  catch(e){ toast(loginErr2683(e)); return false; }
+  let u; try { u = await driveUser(); } catch(e){ toast('讀不到 Google 帳號資料，等一下再試'); return false; }
+  const prev = useAccount(u); CL.files = null; CL.status = 'ok';
+  if (prev && prev !== u.email){ const hid = slotList().filter(e => ownerOf(e.id) === prev).length;
+    toast(`已切換到 ${maskEmail(u.email)}${hid ? `，前一個帳號的 ${hid} 座農場先收起來` : ''}`, true, 4200); }
+  else toast(`已用 ${u.email} 登入`, true);
+  if (SLOT && !slotVisible(SLOT)) leaveFarm();
+  afterLogin(opts.from);
+  return true;
+}
 
   })(CFG, ATLAS_JSON);
 })();
