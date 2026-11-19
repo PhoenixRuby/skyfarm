@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<script src="https://accounts.google.com/gsi/client"></script>
+</head><body>
+<button id="b">測試授權</button>
+<pre id="o"></pre>
+<script>
+const log = (...a) => { console.log(...a); o.textContent += a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ') + '\n'; };
+window.addEventListener('message', e => log('MSG', e.origin), true);
+b.onclick = () => google.accounts.oauth2.initTokenClient({
+  client_id: '838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com',
+  scope: 'https://www.googleapis.com/auth/drive.appdata',
+  callback: r => log('CB', r.access_token ? 'token OK' : r),
+  error_callback: e => log('ERR', e.type),
+}).requestAccessToken({ prompt: 'consent' });
+</script></body></html>
