@@ -1,16 +1,66 @@
 <!DOCTYPE html>
 <html><head><meta charset="utf-8">
+<title>GIS 授權測試</title>
 <script src="https://accounts.google.com/gsi/client"></script>
+<style>
+  body { font-family: sans-serif; padding: 12px; }
+  button { display: block; margin: 6px 0; padding: 6px 10px; text-align: left; }
+  pre { background: #f4f4f4; padding: 8px; white-space: pre-wrap; }
+</style>
 </head><body>
-<button id="b">測試授權</button>
+<div id="btns"></div>
+<button id="clr">清除記錄</button>
 <pre id="o"></pre>
 <script>
-const log = (...a) => { console.log(...a); o.textContent += a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ') + '\n'; };
-window.addEventListener('message', e => log('MSG', e.origin), true);
-b.onclick = () => google.accounts.oauth2.initTokenClient({
-  client_id: '838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com',
-  scope: 'https://www.googleapis.com/auth/drive.appdata',
-  callback: r => log('CB', r.access_token ? 'token OK' : r),
-  error_callback: e => log('ERR', e.type),
-}).requestAccessToken({ prompt: 'consent' });
-</script></body></html>
+const CLIENT_ID = '838768484038-kkc878gqrmiv3hspt5eccqkhq2p4e3tc.apps.googleusercontent.com';
+const SCOPE = 'https://www.googleapis.com/auth/drive.appdata';
+
+const log = (...a) => {
+  const t = new Date().toLocaleTimeString();
+  console.log(t, ...a);
+  o.textContent += t + ' ' + a.map(x => typeof x === 'string' ? x : JSON.stringify(x)).join(' ') + '\n';
+};
+clr.onclick = () => { o.textContent = ''; };
+window.addEventListener('message', e => {
+  if (e.origin === 'https://accounts.google.com') log('  MSG 收到 Google 訊息');
+}, true);
+
+// igs: include_granted_scopes（undefined = 不設定，GIS 預設 true）
+// prompt: undefined = 不帶 prompt
+// preinit: true = 頁面載入時就建立 client（同 site）；false = 按下才建立（同浮島農場）
+const cases = [
+  { id: 'A', igs: undefined, prompt: 'consent',        preinit: false, note: '浮島農場現況' },
+  { id: 'B', igs: false,     prompt: 'consent',        preinit: false },
+  { id: 'C', igs: undefined, prompt: 'select_account', preinit: false },
+  { id: 'D', igs: false,     prompt: 'select_account', preinit: false },
+  { id: 'E', igs: undefined, prompt: undefined,        preinit: false },
+  { id: 'F', igs: false,     prompt: undefined,        preinit: false },
+  { id: 'G', igs: false,     prompt: 'select_account', preinit: true,  note: '完全同 site' },
+  { id: 'H', igs: undefined, prompt: 'consent',        preinit: true },
+];
+
+const makeClient = c => {
+  const config = {
+    client_id: CLIENT_ID,
+    scope: SCOPE,
+    callback: r => log(c.id, r.access_token ? 'CB token OK ✅' : 'CB 錯誤 ❌ ' + JSON.stringify(r)),
+    error_callback: e => log(c.id, 'ERR ❌ ' + e.type),
+  };
+  if (c.igs !== undefined) config.include_granted_scopes = c.igs;
+  return google.accounts.oauth2.initTokenClient(config);
+};
+
+for (const c of cases) {
+  if (c.preinit) c.client = makeClient(c);
+  const label = `${c.id}｜include_granted_scopes=${c.igs === undefined ? '預設' : c.igs}｜prompt=${c.prompt === undefined ? '不帶' : c.prompt}｜${c.preinit ? '載入時建立' : '按下才建立'}${c.note ? '（' + c.note + '）' : ''}`;
+  const b = document.createElement('button');
+  b.textContent = label;
+  b.onclick = () => {
+    log(c.id, '開始');
+    const client = c.client || makeClient(c);
+    client.requestAccessToken(c.prompt === undefined ? {} : { prompt: c.prompt });
+  };
+  btns.append(b);
+}
+</script>
+</body></html>
